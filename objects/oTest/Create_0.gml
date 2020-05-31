@@ -1,4 +1,3 @@
-v1 = new Vector2([2, 5, 7, 7, 7])
+r = new Range(1, 4);
 
-
-show_message(v1.ToFormattedString());
+show_message(r.t);

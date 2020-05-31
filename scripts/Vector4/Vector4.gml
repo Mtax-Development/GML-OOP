@@ -1,5 +1,5 @@
 /// @function				Vector4();
-/// @description			Constructs a four value x1-x2/y1-y2 vector.
+/// @description			Constructs a four-value numeric x1-x2/y1-y2 vector.
 ///							Construction methods:
 ///							- {real} x1, x2, y1, y2 
 ///							- {real} (single for all values)
@@ -110,7 +110,12 @@ function Vector4() constructor
 
 	static Equals = function(_other)
 	{
-		return ((x1 == _other.x1) and (x2 == _other.x2) and (y1 == _other.y1) and (y2 == _other.y2))
+		return ((x1 == _other.x1) and (x2 == _other.x2) and (y1 == _other.y1) and (y2 == _other.y2));
+	}
+	
+	static IsBetween = function(_x, _y)
+	{
+		return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
 	}
 
 #endregion

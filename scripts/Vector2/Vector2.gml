@@ -1,5 +1,5 @@
 /// @function				Vector2();
-/// @description			Constructs a two value x/y vector.
+/// @description			Constructs a two-value numeric x/y vector.
 ///							Construction methods:
 ///							- {real} x, y
 ///							- {real} (single for both values)
@@ -85,7 +85,12 @@ function Vector2() constructor
 
 	static Equals = function(_other)
 	{
-		return ((x == _other.x) and (y == _other.y))
+		return ((x == _other.x) and (y == _other.y));
+	}
+	
+	static IsBetween = function(_number)
+	{
+		return (_number == clamp(_number, x, y));
 	}
 
 #endregion
