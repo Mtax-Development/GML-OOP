@@ -1,8 +1,4 @@
-vec1 = new Vector2(x, y);
-vec2 = new Vector2(x/2, y/2);
+v1 = new Vector2([2, 5, 7, 7, 7])
 
-show_message(vec1.Divide(vec2));
-show_message(vec1.ToString());
-show_message(vec1.ToArray());
-show_message(vec1.Equals(vec1));
-show_message(vec1.Equals(vec2));
+
+show_message(v1.ToFormattedString());

@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"Vector2","path":"scripts/Vector2/Vector2.yy",},"order":0,},
     {"id":{"name":"oTest","path":"objects/oTest/oTest.yy",},"order":0,},
+    {"id":{"name":"Vector4","path":"scripts/Vector4/Vector4.yy",},"order":1,},
     {"id":{"name":"rTest","path":"rooms/rTest/rTest.yy",},"order":0,},
   ],
   "Options": [
