@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Scripts",
-    "path": "folders/Scripts.yy",
+    "name": "Data Types",
+    "path": "folders/Scripts/Data Types.yy",
   },
   "resourceVersion": "1.0",
   "name": "Vector4",

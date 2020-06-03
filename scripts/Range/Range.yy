@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Scripts",
-    "path": "folders/Scripts.yy",
+    "name": "Mathematical",
+    "path": "folders/Scripts/Mathematical.yy",
   },
   "resourceVersion": "1.0",
   "name": "Range",

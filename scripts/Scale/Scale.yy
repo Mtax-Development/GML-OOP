@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Data Types",
-    "path": "folders/Scripts/Data Types.yy",
+    "name": "Rendering",
+    "path": "folders/Scripts/Rendering.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Vector2",
+  "name": "Scale",
   "tags": [],
   "resourceType": "GMScript",
 }

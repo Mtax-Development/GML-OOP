@@ -94,10 +94,10 @@ function Vector4() constructor
 	static ToFormattedString = function()
 	{
 		return 
-		"x1: " + string(x1) + "\n" +
-		"x2: " + string(x2) + "\n" +
-		"y1: " + string(y1) + "\n" +
-		"y2: " + string(y2);
+		("x1: " + string(x1) + "\n" +
+		 "x2: " + string(x2) + "\n" +
+		 "y1: " + string(y1) + "\n" +
+		 "y2: " + string(y2));
 	}
 	
 	static ToArray = function()
