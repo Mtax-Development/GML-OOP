@@ -36,25 +36,25 @@ function Vector2() constructor
 	
 #region [Basic Calculations]
 	
-	static Add = function(_other)
+	static add = function(_other)
 	{
 		x += _other.x;
 		y += _other.y;
 	}
 	
-	static Substract = function(_other)
+	static substract = function(_other)
 	{
 		x -= _other.x;
 		y -= _other.y;
 	}
 	
-	static Multiply = function(_other)
+	static multiply = function(_other)
 	{
 		x *= _other.x;
 		y *= _other.y;
 	}
 	
-	static Divide = function(_other)
+	static divide = function(_other)
 	{
 		x /= _other.x;
 		y /= _other.y;
@@ -63,19 +63,19 @@ function Vector2() constructor
 #endregion
 #region [Re-typing]
 
-	static ToString = function()
+	static toString = function()
 	{
 		return (string(x) + "/" + string(y));
 	}
 	
-	static ToFormattedString = function()
+	static toFormattedString = function()
 	{
 		return 
 		"x: " + string(x) + "\n" +
 		"y: " + string(y);
 	}
 	
-	static ToArray = function()
+	static toArray = function()
 	{
 		return [x, y];
 	}
@@ -83,12 +83,12 @@ function Vector2() constructor
 #endregion
 #region [Asserts]
 
-	static Equals = function(_other)
+	static equals = function(_other)
 	{
 		return ((x == _other.x) and (y == _other.y));
 	}
 	
-	static IsBetween = function(_number)
+	static is_between = function(_number)
 	{
 		return (_number == clamp(_number, x, y));
 	}

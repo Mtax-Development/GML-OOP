@@ -10,12 +10,12 @@ function Range(_min, _max) constructor
 
 #region [Randomization]
 
-	static Random_Real = function()
+	static random_real = function()
 	{
 		return random_range(minimum, maximum);
 	}
 	
-	static Random_Int = function()
+	static random_int = function()
 	{
 		return irandom_range(minimum, maximum);
 	}
@@ -23,7 +23,7 @@ function Range(_min, _max) constructor
 #endregion
 #region [Asserts]
 
-	static IsBetween = function(_number)
+	static is_between = function(_number)
 	{
 		return (_number == clamp(_number, minimum, maximum));
 	}

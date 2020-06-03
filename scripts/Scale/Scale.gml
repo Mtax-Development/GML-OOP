@@ -18,18 +18,18 @@ function Scale() constructor
 		break;
 	}
 	
-	static Mirror = function()
+	static mirror = function()
 	{
 		x = -x;
 		y = -y;
 	}
 	
-	static Mirror_X = function()
+	static mirror_x = function()
 	{
 		x = -x;
 	}
 	
-	static Mirror_Y = function()
+	static mirror_y = function()
 	{
 		y = -y;
 	}

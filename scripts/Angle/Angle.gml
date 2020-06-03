@@ -2,7 +2,7 @@ function Angle(_value) constructor
 {
 	value = clamp(_value, 0, 359);
 	
-	static Modify = function(_value)
+	static modify = function(_value)
 	{
 		value += _value;
 		

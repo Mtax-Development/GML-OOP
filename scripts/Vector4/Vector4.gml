@@ -51,7 +51,7 @@ function Vector4() constructor
 	
 #region [Basic Calculations]
 	
-	static Add = function(_other)
+	static add = function(_other)
 	{
 		x1 += _other.x1;
 		x2 += _other.x2;
@@ -59,7 +59,7 @@ function Vector4() constructor
 		y2 += _other.y2;
 	}
 	
-	static Substract = function(_other)
+	static substract = function(_other)
 	{
 		x1 -= _other.x1;
 		x2 -= _other.x2;
@@ -67,7 +67,7 @@ function Vector4() constructor
 		y2 -= _other.y2;
 	}
 	
-	static Multiply = function(_other)
+	static multiply = function(_other)
 	{
 		x1 *= _other.x1;
 		x2 *= _other.x2;
@@ -75,7 +75,7 @@ function Vector4() constructor
 		y2 *= _other.y2;
 	}
 	
-	static Divide = function(_other)
+	static divide = function(_other)
 	{
 		x1 /= _other.x1;
 		x2 /= _other.x2;
@@ -86,12 +86,12 @@ function Vector4() constructor
 #endregion
 #region [Re-typing]
 
-	static ToString = function()
+	static toString = function()
 	{
 		return (string(x1) + "-" + string(x2) + "/" + string(y1) + "-" + string(y2));
 	}
 	
-	static ToFormattedString = function()
+	static toFormattedString = function()
 	{
 		return 
 		("x1: " + string(x1) + "\n" +
@@ -100,7 +100,7 @@ function Vector4() constructor
 		 "y2: " + string(y2));
 	}
 	
-	static ToArray = function()
+	static toArray = function()
 	{
 		return [x1, x2, y1, y2];
 	}
@@ -108,12 +108,12 @@ function Vector4() constructor
 #endregion
 #region [Asserts]
 
-	static Equals = function(_other)
+	static equals = function(_other)
 	{
 		return ((x1 == _other.x1) and (x2 == _other.x2) and (y1 == _other.y1) and (y2 == _other.y2));
 	}
 	
-	static IsBetween = function(_x, _y)
+	static is_between = function(_x, _y)
 	{
 		return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
 	}
