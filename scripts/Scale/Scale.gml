@@ -1,3 +1,12 @@
+/// @function				Scale();
+/// @description			Construct a Vector2-like scale container, ready
+///							to be used with draw-related code, as well as 
+///							manipulated using its own functions.
+///
+///							Construction methods:
+///							- {void} (creates default scale with values of 1)
+///							- {real} (populates both scales with the same value)
+///							- {real}. {real}
 function Scale() constructor
 {
 	switch(argument_count)
@@ -17,6 +26,7 @@ function Scale() constructor
 			y = argument[1];
 		break;
 	}
+	
 	
 	static mirror = function()
 	{

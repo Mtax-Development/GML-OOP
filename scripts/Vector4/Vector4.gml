@@ -1,5 +1,6 @@
 /// @function				Vector4();
 /// @description			Constructs a four-value numeric x1-x2/y1-y2 vector.
+///
 ///							Construction methods:
 ///							- {real} x1, x2, y1, y2 
 ///							- {real} (single for all values)
@@ -48,7 +49,8 @@ function Vector4() constructor
 			y2 = argument[0];
 		}
 	}
-	
+
+
 #region [Basic Calculations]
 	
 	static add = function(_other)

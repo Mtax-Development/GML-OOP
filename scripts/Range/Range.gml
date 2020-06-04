@@ -1,12 +1,10 @@
 /// @function				Range();
-/// @Description			Construct a two-value numeric range, with one number greater than the other.
+/// @Description			Construct a two-value numeric range with two different numbers.
 function Range(_min, _max) constructor
 {
-	if (_min < _max)
-	{
-		minimum = _min;
-		maximum = _max;
-	}
+	minimum = _min;
+	maximum = _max;
+
 
 #region [Randomization]
 

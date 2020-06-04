@@ -1,3 +1,14 @@
+/// @function				TextDraw();
+/// @description			Constructs a text draw based on draw_text(),
+///							executed using the render() function.
+///
+///							Construction arguments:
+///							- _text: {string}
+///							- _font: {font}
+///							- _location: {Vector2}
+///							- _align: {TextAlign}
+///							- _color: {color}
+///							- _alpha: {real} (within range: 0-1)
 function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 {
 	text	  = _text;
@@ -6,6 +17,7 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 	align	  = _align;
 	color	  = _color;
 	alpha	  = _alpha;
+	
 	
 	static render = function()
 	{

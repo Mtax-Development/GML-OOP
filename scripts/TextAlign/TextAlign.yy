@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Rendering.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Align",
+  "name": "TextAlign",
   "tags": [],
   "resourceType": "GMScript",
 }
