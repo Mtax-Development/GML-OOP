@@ -1,5 +1,8 @@
 /// @function				Vector2();
+/// @argument				x
+/// @argument				y?
 /// @description			Constructs a two-value numeric x/y vector.
+///
 ///							Construction methods:
 ///							- {real} x, y
 ///							- {real} (single for both values)

@@ -1,5 +1,8 @@
 /// @function				Range();
-/// @Description			Construct a two-value numeric range with two different numbers.
+/// @argument				minimum {real}
+/// @argument				maximum {real}
+///
+/// @description			Construct a two-value numeric range with two different numbers.
 function Range(_min, _max) constructor
 {
 	minimum = _min;

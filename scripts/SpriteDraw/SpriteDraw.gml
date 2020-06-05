@@ -1,16 +1,14 @@
 /// @function				SpriteDraw();
+/// @argument				sprite {sprite}
+/// @argument				frame {real}
+/// @argument				animationSpeed {fps}
+/// @argument				location {Vector2}
+/// @argument				scale {Scale}
+/// @argument				color {color}
+/// @argument				alpha {real}
+///
 /// @description			Constructs a sprite draw based on draw_sprite_ext(),
 ///							execuded using the render() function.
-///
-///							Construction arguments:
-///							- _sprite: {sprite}
-///							- _frame: {real} 
-///							- _animationSpeed: {fps}
-///							- _location: {Vector2}
-///							- _scale: {Scale}
-///							- _angle: {Angle}
-///							- _color: {color}
-///							- _alpha: {real} (within range: 0-1)
 function SpriteDraw(_sprite, _frame, _animationSpeed, _location, _scale, _angle, _color, _alpha) constructor
 {
 	sprite			= _sprite;

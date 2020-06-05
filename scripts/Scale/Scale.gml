@@ -1,4 +1,7 @@
 /// @function				Scale();
+/// @argument				x? {real}
+/// @argument				y? {real}
+///
 /// @description			Construct a Vector2-like scale container, ready
 ///							to be used with draw-related code, as well as 
 ///							manipulated using its own functions.

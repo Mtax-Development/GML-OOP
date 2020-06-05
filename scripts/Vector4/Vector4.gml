@@ -1,5 +1,9 @@
 /// @function				Vector4();
 /// @description			Constructs a four-value numeric x1-x2/y1-y2 vector.
+/// @argument				x1
+/// @argument				x2?
+/// @argument				y1?
+/// @argument				y2?
 ///
 ///							Construction methods:
 ///							- {real} x1, x2, y1, y2 

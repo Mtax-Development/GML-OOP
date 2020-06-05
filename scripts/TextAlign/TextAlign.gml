@@ -1,11 +1,10 @@
 /// @function				TextAlign();
+/// @argument				x {halign}
+/// @argument				y {valign}
+///
 /// @description			Construct a Vector2-like text align container, ready
 ///							to be used with text draw-related code, as well as
 ///							manipulated using its own functions.
-///
-///							Construction arguments:
-///							- _x: {halign}
-///							- _y: {valign}
 function TextAlign(_x, _y) constructor
 {
 	x = _x;
