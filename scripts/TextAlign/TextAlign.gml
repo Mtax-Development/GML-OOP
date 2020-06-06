@@ -7,9 +7,7 @@
 ///							manipulated using its own functions.
 function TextAlign(_x, _y) constructor
 {
-	x = _x;
-	y = _y;
-	
+#region [Methods]
 	
 	static mirror = function()
 	{
@@ -34,4 +32,12 @@ function TextAlign(_x, _y) constructor
 			case fa_bottom: y = fa_top;	   break;
 		}
 	}
+	
+#endregion
+#region [Constructor]
+	
+	x = _x;
+	y = _y;
+	
+#endregion
 }

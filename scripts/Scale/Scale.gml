@@ -12,6 +12,27 @@
 ///							- {real}. {real}
 function Scale() constructor
 {
+#region [Methods]
+
+	static mirror = function()
+	{
+		x = -x;
+		y = -y;
+	}
+	
+	static mirror_x = function()
+	{
+		x = -x;
+	}
+	
+	static mirror_y = function()
+	{
+		y = -y;
+	}
+	
+#endregion
+#region [Constructor]
+
 	switch(argument_count)
 	{
 		case 0:
@@ -30,20 +51,5 @@ function Scale() constructor
 		break;
 	}
 	
-	
-	static mirror = function()
-	{
-		x = -x;
-		y = -y;
-	}
-	
-	static mirror_x = function()
-	{
-		x = -x;
-	}
-	
-	static mirror_y = function()
-	{
-		y = -y;
-	}
+#endregion
 }

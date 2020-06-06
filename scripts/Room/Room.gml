@@ -6,7 +6,7 @@
 ///							relevant functions and extends some of them.
 function Room() constructor
 {
-	#region [Methods]
+#region [Methods]
 	
 	static set_size = function(_size)
 	{
@@ -94,8 +94,8 @@ function Room() constructor
 		return name;
 	}
 	
-	#endregion
-	
+#endregion
+#region [Constructor]
 	
 	var _size = (argument_count >= 1 ? argument[0] : new Vector2(0, 0));
 	
@@ -109,4 +109,6 @@ function Room() constructor
 	room_set_width(ID, size.x);
 	room_set_height(ID, size.y);
 	room_set_persistent(ID, persistent);
+	
+#endregion
 }

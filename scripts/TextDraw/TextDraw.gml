@@ -10,13 +10,7 @@
 ///							executed using the render() function.
 function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 {
-	text	  = _text;
-	font	  = _font;
-	location  = _location;
-	align	  = _align;
-	color	  = _color;
-	alpha	  = _alpha;
-	
+#region [Methods]
 	
 	static render = function()
 	{
@@ -28,4 +22,16 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 
 		draw_text(location.x, location.y, text);
 	}
+	
+#endregion
+#region [Constructor]
+	
+	text	  = _text;
+	font	  = _font;
+	location  = _location;
+	align	  = _align;
+	color	  = _color;
+	alpha	  = _alpha;
+	
+#endregion
 }

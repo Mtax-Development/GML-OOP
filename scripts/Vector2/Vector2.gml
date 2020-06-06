@@ -10,92 +10,96 @@
 ///							- {real[]} (with the following structure: [x, y])
 function Vector2() constructor
 {
-	if (argument_count == 2)
-	{
-		x = argument[0];
-		y = argument[1];
-	}
-	else if (argument_count == 1)
-	{
-		if (is_struct(argument[0]))
+	#region [Methods]
+		#region <Basic Calculations>
+	
+		static add = function(_other)
 		{
-			x = argument[0].x;
-			y = argument[0].y;
+			x += _other.x;
+			y += _other.y;
+		}
+	
+		static substract = function(_other)
+		{
+			x -= _other.x;
+			y -= _other.y;
+		}
+	
+		static multiply = function(_other)
+		{
+			x *= _other.x;
+			y *= _other.y;
+		}
+	
+		static divide = function(_other)
+		{
+			x /= _other.x;
+			y /= _other.y;
+		}
+	
+		#endregion
+		#region <Typing>
 
-		}
-		else if (is_array(argument[0]))
+		static toString = function()
 		{
-			var array = argument[0];
-			
-			x = array[0];
-			y = array[1];
+			return (string(x) + "/" + string(y));
 		}
-		else
+	
+		static toFormattedString = function()
+		{
+			return 
+			"x: " + string(x) + "\n" +
+			"y: " + string(y);
+		}
+	
+		static toArray = function()
+		{
+			return [x, y];
+		}
+
+		#endregion
+		#region <Asserts>
+
+		static equals = function(_other)
+		{
+			return ((x == _other.x) and (y == _other.y));
+		}
+	
+		static is_between = function(_number)
+		{
+			return (_number == clamp(_number, x, y));
+		}
+
+		#endregion
+	#endregion
+	#region [Constructor]
+
+		if (argument_count == 2)
 		{
 			x = argument[0];
-			y = argument[0];
+			y = argument[1];
 		}
-	}
-	
-#region [Basic Calculations]
-	
-	static add = function(_other)
-	{
-		x += _other.x;
-		y += _other.y;
-	}
-	
-	static substract = function(_other)
-	{
-		x -= _other.x;
-		y -= _other.y;
-	}
-	
-	static multiply = function(_other)
-	{
-		x *= _other.x;
-		y *= _other.y;
-	}
-	
-	static divide = function(_other)
-	{
-		x /= _other.x;
-		y /= _other.y;
-	}
-	
-#endregion
-#region [Re-typing]
+		else if (argument_count == 1)
+		{
+			if (is_struct(argument[0]))
+			{
+				x = argument[0].x;
+				y = argument[0].y;
 
-	static toString = function()
-	{
-		return (string(x) + "/" + string(y));
-	}
-	
-	static toFormattedString = function()
-	{
-		return 
-		"x: " + string(x) + "\n" +
-		"y: " + string(y);
-	}
-	
-	static toArray = function()
-	{
-		return [x, y];
-	}
+			}
+			else if (is_array(argument[0]))
+			{
+				var array = argument[0];
+			
+				x = array[0];
+				y = array[1];
+			}
+			else
+			{
+				x = argument[0];
+				y = argument[0];
+			}
+		}
 
-#endregion
-#region [Asserts]
-
-	static equals = function(_other)
-	{
-		return ((x == _other.x) and (y == _other.y));
-	}
-	
-	static is_between = function(_number)
-	{
-		return (_number == clamp(_number, x, y));
-	}
-
-#endregion
-
+	#endregion
 }

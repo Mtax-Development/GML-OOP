@@ -9,10 +9,8 @@
 ///							it clockwise, negative in opposite direction.
 function Angle(_value) constructor
 {
-	value = clamp(_value, 0, 359);
-	
-	
-	/// @function modify
+#region [Methods]
+
 	static modify = function(_value)
 	{
 		value += _value;
@@ -26,4 +24,11 @@ function Angle(_value) constructor
 			value = (360 - value);
 		}
 	}
+	
+#endregion
+#region [Constructor]
+
+	value = clamp(_value, 0, 359);
+		
+#endregion
 }
