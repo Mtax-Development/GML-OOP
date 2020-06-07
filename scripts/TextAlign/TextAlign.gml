@@ -7,37 +7,37 @@
 ///							manipulated using its own functions.
 function TextAlign(_x, _y) constructor
 {
-#region [Methods]
+	#region [Methods]
 	
-	static mirror = function()
-	{
-		mirror_x();
-		mirror_y();
-	}
-	
-	static mirror_x = function()
-	{
-		switch (x)
+		static mirror = function()
 		{
-			case fa_left:  x = fa_right; break;
-			case fa_right: x = fa_left;  break;
+			mirror_x();
+			mirror_y();
 		}
-	}
 	
-	static mirror_y = function()
-	{
-		switch (y)
+		static mirror_x = function()
 		{
-			case fa_top:	y = fa_bottom; break;
-			case fa_bottom: y = fa_top;	   break;
+			switch (x)
+			{
+				case fa_left:  x = fa_right; break;
+				case fa_right: x = fa_left;  break;
+			}
 		}
-	}
 	
-#endregion
-#region [Constructor]
+		static mirror_y = function()
+		{
+			switch (y)
+			{
+				case fa_top:	y = fa_bottom; break;
+				case fa_bottom: y = fa_top;	   break;
+			}
+		}
 	
-	x = _x;
-	y = _y;
+	#endregion
+	#region [Constructor]
 	
-#endregion
+		x = _x;
+		y = _y;
+	
+	#endregion
 }

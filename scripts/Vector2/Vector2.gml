@@ -40,12 +40,12 @@ function Vector2() constructor
 	
 		#endregion
 		#region <Typing>
-/*
+
 		static toString = function()
 		{
 			return (string(x) + "/" + string(y));
 		}
-*/	
+		
 		static toFormattedString = function()
 		{
 			return 

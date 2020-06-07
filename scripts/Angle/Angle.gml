@@ -9,26 +9,36 @@
 ///							it clockwise, negative in opposite direction.
 function Angle(_value) constructor
 {
-#region [Methods]
+	#region [Methods]
+		#region <Manipulation>
 
-	static modify = function(_value)
-	{
-		value += _value;
+			static modify = function(_value)
+			{
+				value += _value;
 		
-		if (value >= 360)
-		{
-			value -= 360;
-		}
-		else if (value < 0)
-		{
-			value = (360 - value);
-		}
-	}
+				if (value >= 360)
+				{
+					value -= 360;
+				}
+				else if (value < 0)
+				{
+					value = (360 - value);
+				}
+			}
 	
-#endregion
-#region [Constructor]
+		#endregion
+		#region <Typing>
 
-	value = clamp(_value, 0, 359);
+			static toString = function()
+			{
+				return string(value);
+			}
+
+		#endregion
+	#endregion
+	#region [Constructor]
+
+		value = clamp(_value, 0, 359);
 		
-#endregion
+	#endregion
 }
