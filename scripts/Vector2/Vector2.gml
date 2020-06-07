@@ -1,5 +1,5 @@
 /// @function				Vector2();
-/// @argument				x
+/// @argument				x?
 /// @argument				y?
 /// @description			Constructs a two-value numeric x/y vector.
 ///
@@ -8,6 +8,7 @@
 ///							- {real} (single for both values)
 ///							- {Vector2}
 ///							- {real[]} (with the following structure: [x, y])
+///							- {void} (instance's x/y will be set to both values)
 function Vector2() constructor
 {
 	#region [Methods]
@@ -39,12 +40,12 @@ function Vector2() constructor
 	
 		#endregion
 		#region <Typing>
-
+/*
 		static toString = function()
 		{
 			return (string(x) + "/" + string(y));
 		}
-	
+*/	
 		static toFormattedString = function()
 		{
 			return 
@@ -99,6 +100,11 @@ function Vector2() constructor
 				x = argument[0];
 				y = argument[0];
 			}
+		}
+		else if (argument_count == 0)
+		{
+			x = other.x
+			y = other.y
 		}
 
 	#endregion

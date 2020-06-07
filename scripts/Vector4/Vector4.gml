@@ -1,6 +1,6 @@
 /// @function				Vector4();
 /// @description			Constructs a four-value numeric x1-x2/y1-y2 vector.
-/// @argument				x1
+/// @argument				x1?
 /// @argument				x2?
 /// @argument				y1?
 /// @argument				y2?
@@ -11,6 +11,7 @@
 ///							- {Vector2}, {Vector2}
 ///							- {Vector4}
 ///							- {real[]} (with the following structure: [x1, x2, y1, y2])
+///							- {void} (instance's x/y will be set to all values)
 function Vector4() constructor
 {
 #region [Methods]
@@ -126,6 +127,13 @@ function Vector4() constructor
 			y1 = argument[0];
 			y2 = argument[0];
 		}
+	}
+	else if (argument_count == 0)
+	{
+		x1 = self.x;
+		x2 = self.x;
+		y1 = self.y;
+		y1 = self.y;
 	}
 
 #endregion
