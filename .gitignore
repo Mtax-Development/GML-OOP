@@ -2,4 +2,6 @@ objects/
 datafiles/
 sprites/
 rooms/
+sounds/
+shaders/
 README.md
