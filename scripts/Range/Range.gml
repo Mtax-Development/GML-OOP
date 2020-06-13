@@ -29,10 +29,10 @@ function Range(_min, _max) constructor
 		#endregion
 		#region <Typing>
 	
-		static toString = function()
-		{
-			return (string(minimum) + "-" + string(maximum));
-		}
+			static toString = function()
+			{
+				return (string(minimum) + "-" + string(maximum));
+			}
 	
 		#endregion
 	#endregion

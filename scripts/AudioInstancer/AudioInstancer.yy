@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Resources.yy",
   },
   "resourceVersion": "1.0",
-  "name": "AudioInstance",
+  "name": "AudioInstancer",
   "tags": [],
   "resourceType": "GMScript",
 }
