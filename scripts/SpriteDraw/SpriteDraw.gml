@@ -12,7 +12,8 @@
 function SpriteDraw(_sprite, _frame, _animationSpeed, _location, _scale, _angle, _color, _alpha) constructor
 {
 	#region [Methods]
-
+		
+		// @description			Execute the draw and advance the animation.
 		static render = function()
 		{		
 			draw_sprite_ext(sprite, frame, location.x, location.y, scale.x, scale.y, angle.value, color, alpha);
@@ -22,7 +23,8 @@ function SpriteDraw(_sprite, _frame, _animationSpeed, _location, _scale, _angle,
 				advanceFrames(animationSpeed);
 			}
 		}
-	
+		
+		// @description			Advance the animation and wrap it numbers.
 		static advanceFrames = function(_number)
 		{
 			frame += animationSpeed;

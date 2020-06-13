@@ -8,7 +8,9 @@ function Room() constructor
 {
 	#region [Methods]
 		#region <Property Setters>
-	
+			
+			// @argument			size {Vector2}
+			// @description			Resize the room to set location limitation of added instances.
 			static set_size = function(_size)
 			{
 				if (room_exists(ID))
@@ -26,7 +28,9 @@ function Room() constructor
 					}
 				}
 			}
-	
+			
+			// @argument			value {bool}
+			// @description			Change the persistence flag for the room.
 			static set_persistent = function(_value)
 			{		
 				if (room_exists(ID))
@@ -37,10 +41,13 @@ function Room() constructor
 	
 		#endregion
 		#region <Resource Manipulation>
-	
+			
+			// @argument			object {object}
+			// @argument			location {Vector2}
+			// @description			Add an instance to the room if it's not active.
 			static instance_add = function(_object, _location)
 			{
-				if (room_exists(ID))
+				if ((room_exists(ID)) and (room != ID))
 				{
 					room_instance_add(ID, _location.x, _location.y, _object);
 			
@@ -51,7 +58,9 @@ function Room() constructor
 					}
 				}
 			}
-	
+			
+			// @argument			room {room | Room}
+			// @description			Make this room a duplicate of any existing one.
 			static duplicate = function(_room)
 			{
 				if (is_struct(_room))
@@ -87,7 +96,8 @@ function Room() constructor
 	
 		#endregion
 		#region <Execution>
-	
+			
+			// @description			Set this room as active.
 			static goto = function()
 			{
 				if (room_exists(ID))
@@ -97,14 +107,6 @@ function Room() constructor
 			}
 	
 		#endregion
-		#region <Typing>
-	
-			static toString = function()
-			{
-				return name;
-			}
-	
-		#endregion	
 	#endregion
 	#region [Constructor]
 	

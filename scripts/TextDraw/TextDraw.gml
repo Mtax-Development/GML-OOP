@@ -11,7 +11,8 @@
 function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
 			draw_set_font(font);

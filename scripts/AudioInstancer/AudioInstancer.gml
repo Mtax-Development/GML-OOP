@@ -17,11 +17,12 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 	#region [Methods]
 		#region <Instancing>
 			
+			// @description			Refresh the instance list by checking which still exist.
 			static list_instances = function()
 			{
 				var instances_new = [];
 		
-				var instances_length = array_length(instances)
+				var instances_length = array_length(instances);
 		
 				for (var i = 0; i < instances_length; i++)
 				{
@@ -37,6 +38,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 		#endregion
 		#region <Playback Manipulation>
 			
+			// @description			Execute the sound playback.
 			static play = function()
 			{
 				if (audio_exists(file))
@@ -60,6 +62,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 				}
 			}
 			
+			// @description			Stop all instances of the sound and clear their list.
 			static stop = function()
 			{
 				for (var i = 0; i < array_length(instances); i++)
@@ -69,8 +72,11 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 						audio_stop_sound(instances[i]);
 					}
 				}
+				
+				instances = [];
 			}
 			
+			// @description			Pause all instances or resume all of the paused ones at once.
 			static pause = function(_state)
 			{
 				for (var i = 0; i < array_length(instances); i++)

@@ -15,17 +15,20 @@ function Scale() constructor
 	#region [Methods]
 		#region <Manipulation>
 
+			// @description			Reverse the x/y values of the scale.
 			static mirror = function()
 			{
 				x = -x;
 				y = -y;
 			}
-	
+			
+			// @description			Reverse the x value of the scale.
 			static mirror_x = function()
 			{
 				x = -x;
 			}
-	
+			
+			// @description			Reverse the y value of the scale.
 			static mirror_y = function()
 			{
 				y = -y;
@@ -33,7 +36,8 @@ function Scale() constructor
 	
 		#endregion
 		#region <Typing>
-	
+			
+			// @description			Override the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(x) + "/" + string(y));

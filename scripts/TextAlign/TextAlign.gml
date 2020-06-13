@@ -2,19 +2,21 @@
 /// @argument				x {halign}
 /// @argument				y {valign}
 ///
-/// @description			Construct a Vector2-like text align container, ready
+/// @description			Construct a two-value text align container, ready
 ///							to be used with text draw-related code, as well as
 ///							manipulated using its own functions.
 function TextAlign(_x, _y) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Mirror the non-centered x/y values of the align.
 		static mirror = function()
 		{
 			mirror_x();
 			mirror_y();
 		}
-	
+		
+		// @description			Mirror the non-centered x value of the align.
 		static mirror_x = function()
 		{
 			switch (x)
@@ -23,7 +25,8 @@ function TextAlign(_x, _y) constructor
 				case fa_right: x = fa_left;  break;
 			}
 		}
-	
+		
+		// @description			Mirror the non-centered y value of the align.
 		static mirror_y = function()
 		{
 			switch (y)

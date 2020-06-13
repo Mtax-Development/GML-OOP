@@ -11,7 +11,8 @@ function Angle(_value) constructor
 {
 	#region [Methods]
 		#region <Manipulation>
-
+			
+			// @description			Change the value of the angle and wrap it.
 			static modify = function(_value)
 			{
 				value += _value;
@@ -29,6 +30,7 @@ function Angle(_value) constructor
 		#endregion
 		#region <Typing>
 
+			// @description			Override the string conversion with a simple value output.
 			static toString = function()
 			{
 				return string(value);
@@ -39,6 +41,8 @@ function Angle(_value) constructor
 	#region [Constructor]
 
 		value = clamp(_value, 0, 359);
+		
+		//+TODO
 		
 	#endregion
 }

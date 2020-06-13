@@ -11,12 +11,14 @@
 ///							- {Vector2}, {Vector2}
 ///							- {Vector4}
 ///							- {real[]} (with the following structure: [x1, x2, y1, y2])
-///							- {void} (instance's x/y will be set to all values)
+///							- {void} (instance's own x/y will be set to all values)
 function Vector4() constructor
 {
 	#region [Methods]
 		#region <Basic Calculations>
-	
+			
+			// @argument			other {Vector4}
+			// @description			Add values of the current Vector4 from other one.
 			static add = function(_other)
 			{
 				x1 += _other.x1;
@@ -24,7 +26,9 @@ function Vector4() constructor
 				y1 += _other.y1;
 				y2 += _other.y2;
 			}
-	
+			
+			// @argument			other {Vector4}
+			// @description			Substract values of the current Vector4 from other one.
 			static substract = function(_other)
 			{
 				x1 -= _other.x1;
@@ -32,7 +36,9 @@ function Vector4() constructor
 				y1 -= _other.y1;
 				y2 -= _other.y2;
 			}
-	
+			
+			// @argument			other {Vector4}
+			// @description			Multiply values of the current Vector4 by other one.
 			static multiply = function(_other)
 			{
 				x1 *= _other.x1;
@@ -40,7 +46,9 @@ function Vector4() constructor
 				y1 *= _other.y1;
 				y2 *= _other.y2;
 			}
-	
+						
+			// @argument			other {Vector4}
+			// @description			Divide values of the current Vector4 by other one.
 			static divide = function(_other)
 			{
 				x1 /= _other.x1;
@@ -49,6 +57,7 @@ function Vector4() constructor
 				y2 /= _other.y2;
 			}
 			
+			// @description			Swap X and Y values of this Vector4.
 			static flip = function()
 			{
 				var x1_new = y1;
@@ -65,11 +74,15 @@ function Vector4() constructor
 		#endregion
 		#region <Typing>
 
+			// @returns				{string}
+			// @description			Override the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(x1) + "-" + string(x2) + "/" + string(y1) + "-" + string(y2));
 			}
-	
+			
+			// @returns				{string}
+			// @description			Create a multi-line string with value output.
 			static toFormattedString = function()
 			{
 				return 
@@ -78,7 +91,9 @@ function Vector4() constructor
 				 "y1: " + string(y1) + "\n" +
 				 "y2: " + string(y2));
 			}
-	
+			
+			// @returns				{array}
+			// @description			Return an array containing all values of the Vector.
 			static toArray = function()
 			{
 				return [x1, x2, y1, y2];
@@ -86,12 +101,19 @@ function Vector4() constructor
 
 		#endregion
 		#region <Asserts>
-
+			
+			// @argument			other {Vector4}
+			// @returns				{bool}
+			// @description			Check whether two Vector4 have the same values.
 			static equals = function(_other)
 			{
 				return ((x1 == _other.x1) and (x2 == _other.x2) and (y1 == _other.y1) and (y2 == _other.y2));
 			}
-	
+			
+			// @argument			x {real}
+			// @argument			y {real}
+			// @returns				{bool}
+			// @description			Check if two x/y values are between the range of this Vector4's.
 			static is_between = function(_x, _y)
 			{
 				return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
