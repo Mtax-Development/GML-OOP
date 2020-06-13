@@ -48,6 +48,19 @@ function Vector4() constructor
 				y1 /= _other.y1;
 				y2 /= _other.y2;
 			}
+			
+			static flip = function()
+			{
+				var x1_new = y1;
+				var x2_new = y2;
+				var y1_new = x1;
+				var y2_new = x2;
+				
+				x1 = x1_new;
+				x2 = x2_new;
+				y1 = y1_new;
+				y2 = y2_new;
+			}
 	
 		#endregion
 		#region <Typing>

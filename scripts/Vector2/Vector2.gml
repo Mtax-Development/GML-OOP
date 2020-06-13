@@ -37,6 +37,15 @@ function Vector2() constructor
 			x /= _other.x;
 			y /= _other.y;
 		}
+		
+		static flip = function()
+		{
+			var x_new = y;
+			var y_new = x;
+			
+			x = y_new;
+			y = x_new;
+		}
 	
 		#endregion
 		#region <Typing>
