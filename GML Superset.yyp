@@ -8,11 +8,10 @@
     {"id":{"name":"Room","path":"scripts/Room/Room.yy",},"order":0,},
     {"id":{"name":"sTest","path":"sprites/sTest/sTest.yy",},"order":0,},
     {"id":{"name":"TextAlign","path":"scripts/TextAlign/TextAlign.yy",},"order":5,},
-    {"id":{"name":"oTest","path":"objects/oTest/oTest.yy",},"order":0,},
     {"id":{"name":"Angle","path":"scripts/Angle/Angle.yy",},"order":3,},
     {"id":{"name":"Vector4","path":"scripts/Vector4/Vector4.yy",},"order":1,},
     {"id":{"name":"TextDraw","path":"scripts/TextDraw/TextDraw.yy",},"order":1,},
-    {"id":{"name":"rTest","path":"rooms/rTest/rTest.yy",},"order":0,},
+    {"id":{"name":"sTest2","path":"sprites/sTest2/sTest2.yy",},"order":1,},
   ],
   "Options": [
     {"name":"Amazon Fire","path":"options/amazonfire/options_amazonfire.yy",},
@@ -36,9 +35,7 @@
     "name": "Default",
     "children": [],
   },
-  "RoomOrder": [
-    {"name":"rTest","path":"rooms/rTest/rTest.yy",},
-  ],
+  "RoomOrder": [],
   "Folders": [
     {"folderPath":"folders/Scripts.yy","order":5,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Objects.yy","order":9,"resourceVersion":"1.0","name":"Objects","tags":[],"resourceType":"GMFolder",},
