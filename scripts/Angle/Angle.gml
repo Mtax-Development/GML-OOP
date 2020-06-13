@@ -14,18 +14,11 @@ function Angle(_value) constructor
 			
 			// @description			Change the value of the angle and wrap it.
 			static modify = function(_value)
-			{
-				value += _value;
-		
-				if (value >= 360)
-				{
-					value -= 360;
-				}
-				else if (value < 0)
-				{
-					value = (360 - value);
-				}
-			}
+            {
+                value += _value;
+
+                value -= (360 * (floor(value / 360)))
+            }
 	
 		#endregion
 		#region <Typing>
