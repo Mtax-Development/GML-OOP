@@ -1,7 +1,8 @@
-objects/
 datafiles/
-sprites/
+objects/
+options/
 rooms/
-sounds/
 shaders/
+sprites/
+sounds/
 README.md
