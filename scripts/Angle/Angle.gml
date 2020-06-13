@@ -37,7 +37,7 @@ function Angle() constructor
 		
 		if (argument_count >= 1)
 		{
-			modify(argument[0]);
+			self.modify(argument[0]);
 		}
 		
 	#endregion

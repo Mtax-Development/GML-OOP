@@ -12,8 +12,8 @@ function TextAlign(_x, _y) constructor
 		// @description			Mirror the non-centered x/y values of the align.
 		static mirror = function()
 		{
-			mirror_x();
-			mirror_y();
+			self.mirror_x();
+			self.mirror_y();
 		}
 		
 		// @description			Mirror the non-centered x value of the align.

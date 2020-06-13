@@ -54,7 +54,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 						audio_sound_pitch(instance, pitch);
 					}
 			
-					list_instances();
+					self.list_instances();
 			
 					instances[array_length(instances)] = instance;
 			

@@ -9,7 +9,7 @@
 ///							Construction methods:
 ///							- {void} (creates default scale with values of 1)
 ///							- {real} (populates both scales with the same value)
-///							- {real}. {real}
+///							- {real}, {real}
 function Scale() constructor
 {
 	#region [Methods]
