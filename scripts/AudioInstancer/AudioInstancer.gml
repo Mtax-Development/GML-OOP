@@ -45,7 +45,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 				{	
 					var instance = audio_play_sound(file, 0, false);
 			
-					if (is_struct(pitch))
+					if (instanceof(pitch) == "Range")
 					{
 						audio_sound_pitch(instance, pitch.random_real());
 					}

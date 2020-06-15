@@ -63,7 +63,7 @@ function Room() constructor
 			// @description			Make this room a duplicate of any existing one.
 			static duplicate = function(_room)
 			{
-				if (is_struct(_room))
+				if (instanceof(_room) == "Room")
 				{
 					if (room_exists(_room.ID))
 					{

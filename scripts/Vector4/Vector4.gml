@@ -122,53 +122,55 @@ function Vector4() constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-
-		if (argument_count == 4)
+	
+		switch(argument_count)
 		{
-			x1 = argument[0];
-			x2 = argument[1];
-			y1 = argument[2];
-			y2 = argument[3];
-		}
-		else if ((argument_count == 2) and (is_struct(argument[0])) and (is_struct(argument[1])))
-		{		
-			x1 = argument[0].x;
-			x2 = argument[1].x;
-			y1 = argument[0].y;
-			y2 = argument[1].y;
-		}
-		else if (argument_count == 1)
-		{
-			if (is_struct(argument[0]))
-			{
-				x1 = argument[0].x1;
-				x2 = argument[0].x2;
-				y1 = argument[0].y1;
-				y2 = argument[0].y2;
-			}
-			else if (is_array(argument[0]))
-			{
-				var array = argument[0];
-			
-				x1 = array[0];
-				x2 = array[1];
-				y1 = array[2];
-				y2 = array[3];
-			}
-			else
-			{
+			case 4:
 				x1 = argument[0];
-				x2 = argument[0];
-				y1 = argument[0];
-				y2 = argument[0];
-			}
-		}
-		else if (argument_count == 0)
-		{
-			x1 = self.x;
-			x2 = self.x;
-			y1 = self.y;
-			y1 = self.y;
+				x2 = argument[1];
+				y1 = argument[2];
+				y2 = argument[3];
+			break;
+			
+			case 2:
+				x1 = argument[0].x;
+				x2 = argument[1].x;
+				y1 = argument[0].y;
+				y2 = argument[1].y;
+			break;
+			
+			case 1:
+				if (is_array(argument[0]))
+				{
+					var array = argument[0];
+			
+					x1 = array[0];
+					x2 = array[1];
+					y1 = array[2];
+					y2 = array[3];
+				}
+				else if (instanceof(argument[0]) == "Vector4")
+				{
+					x1 = argument[0].x1;
+					x2 = argument[0].x2;
+					y1 = argument[0].y1;
+					y2 = argument[0].y2;
+				}
+				else
+				{
+					x1 = argument[0];
+					x2 = argument[0];
+					y1 = argument[0];
+					y2 = argument[0];
+				}
+			break;
+			
+			case 0:
+				x1 = other.x;
+				x2 = other.x;
+				y1 = other.y;
+				y1 = other.y;
+			break;
 		}
 
 	#endregion

@@ -96,37 +96,38 @@ function Vector2() constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-
-		if (argument_count == 2)
+	
+		switch (argument_count)
 		{
-			x = argument[0];
-			y = argument[1];
-		}
-		else if (argument_count == 1)
-		{
-			if (is_struct(argument[0]))
-			{
-				x = argument[0].x;
-				y = argument[0].y;
-
-			}
-			else if (is_array(argument[0]))
-			{
-				var array = argument[0];
-			
-				x = array[0];
-				y = array[1];
-			}
-			else
-			{
+			case 2:	
 				x = argument[0];
-				y = argument[0];
-			}
-		}
-		else if (argument_count == 0)
-		{
-			x = other.x
-			y = other.y
+				y = argument[1];
+			break;
+			
+			case 1:
+				if (is_array(argument[0]))
+				{
+					var array = argument[0];
+					
+					x = array[0];
+					y = array[1];
+				}
+				else if (instanceof(argument[0]) == "Vector2")
+				{
+					x = argument[0].x;
+					y = argument[0].y;
+				}
+				else
+				{
+					x = argument[0];
+					y = argument[0];
+				}
+			break;
+			
+			case 0:
+				x = other.x;
+				y = other.y;
+			break;
 		}
 
 	#endregion

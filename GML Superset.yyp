@@ -44,7 +44,6 @@
     {"folderPath":"folders/Scripts/Data Types.yy","order":6,"resourceVersion":"1.0","name":"Data Types","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Rendering.yy","order":7,"resourceVersion":"1.0","name":"Rendering","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Mathematical.yy","order":8,"resourceVersion":"1.0","name":"Mathematical","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Sprites.yy","order":3,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Resources.yy","order":9,"resourceVersion":"1.0","name":"Resources","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [

@@ -17,7 +17,7 @@ function Rectangle(_location) constructor
 			{
 				draw_set_alpha(alpha);
 			
-				if (is_struct(fill))
+				if (instanceof(fill) == "Color4")
 				{
 					draw_rectangle_color(location.x1, location.y1, location.x2, location.y2,
 										 fill.x1y1, fill.x2y1, fill.x2y2, fill.x1y2, false);
@@ -32,13 +32,13 @@ function Rectangle(_location) constructor
 		
 			if (outline != undefined)
 			{
-				if (is_struct(outline))
+				if (instanceof(outline) == "Outline")
 				{
 					if (outline.size > 0) and (outline.alpha > 0)
 					{
 						draw_set_alpha(outline.alpha);
 					
-						if (is_struct(outline.color))
+						if (instanceof(outline.color) == "Color4")
 						{
 							for (var i = 0; i < outline.size; i++)
 							{
