@@ -1,6 +1,6 @@
 {
   "resources": [
-    {"id":{"name":"SpriteDraw","path":"scripts/SpriteDraw/SpriteDraw.yy",},"order":4,},
+    {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":4,},
     {"id":{"name":"Vector2","path":"scripts/Vector2/Vector2.yy",},"order":0,},
     {"id":{"name":"Scale","path":"scripts/Scale/Scale.yy",},"order":0,},
     {"id":{"name":"AudioInstancer","path":"scripts/AudioInstancer/AudioInstancer.yy",},"order":1,},
