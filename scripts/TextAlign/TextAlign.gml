@@ -9,13 +9,6 @@ function TextAlign(_x, _y) constructor
 {
 	#region [Methods]
 		
-		// @description			Mirror the non-centered x/y values of the align.
-		static mirror = function()
-		{
-			self.mirror_x();
-			self.mirror_y();
-		}
-		
 		// @description			Mirror the non-centered x value of the align.
 		static mirror_x = function()
 		{
@@ -34,6 +27,13 @@ function TextAlign(_x, _y) constructor
 				case fa_top:	y = fa_bottom; break;
 				case fa_bottom: y = fa_top;	   break;
 			}
+		}
+		
+		// @description			Mirror the non-centered x/y values of the align.
+		static mirror = function()
+		{
+			self.mirror_x();
+			self.mirror_y();
 		}
 	
 	#endregion

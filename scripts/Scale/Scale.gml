@@ -14,13 +14,6 @@ function Scale() constructor
 {
 	#region [Methods]
 		#region <Manipulation>
-
-			// @description			Reverse the x/y values of the scale.
-			static mirror = function()
-			{
-				x = -x;
-				y = -y;
-			}
 			
 			// @description			Reverse the x value of the scale.
 			static mirror_x = function()
@@ -33,7 +26,13 @@ function Scale() constructor
 			{
 				y = -y;
 			}
-	
+			
+			// @description			Reverse the x/y values of the scale.
+			static mirror = function()
+			{
+				self.mirror_x();
+				self.mirror_y();
+			}
 		#endregion
 		#region <Typing>
 			

@@ -15,7 +15,7 @@ function Vector2() constructor
 		#region <Basic Calculations>
 			
 			// @argument			other {Vector2}
-			// @description			Add values of the current Vector2 from other one.
+			// @description			Add to values of the current Vector2 from other one's.
 			static add = function(_other)
 			{
 				x += _other.x;
@@ -23,7 +23,7 @@ function Vector2() constructor
 			}
 			
 			// @argument			other {Vector2}
-			// @description			Substract values of the current Vector2 from other one.
+			// @description			Substract from values of the current Vector2 by other one's.
 			static substract = function(_other)
 			{
 				x -= _other.x;
@@ -31,22 +31,22 @@ function Vector2() constructor
 			}
 			
 			// @argument			other {Vector2}
-			// @description			Multiply values of the current Vector2 by other one.
+			// @description			Multiply values of the current Vector2 by other one's.
 			static multiply = function(_other)
 			{
 				x *= _other.x;
 				y *= _other.y;
 			}
 						
-			// @argument			otHer {Vector2}
-			// @description			Divide values of the current Vector2 by other one.
+			// @argument			other {Vector2}
+			// @description			Divide values of the current Vector2 by other one's.
 			static divide = function(_other)
 			{
 				x /= _other.x;
 				y /= _other.y;
 			}
 			
-			// @description			Swap X and Y values of this Vector2.
+			// @description			Swap the X and Y values of this Vector2.
 			static flip = function()
 			{
 				var x_new = y;
@@ -59,15 +59,15 @@ function Vector2() constructor
 		#endregion
 		#region <Typing>
 			
-			// @description			Override the string conversion with a simple value output.
 			// @returns				{string}
+			// @description			Override the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(x) + "/" + string(y));
 			}
 			
-			// @description			Create a multi-line string with value output.
 			// @returns				{string}
+			// @description			Create a multi-line string with value output.
 			static toFormattedString = function()
 			{
 				return 
@@ -75,8 +75,8 @@ function Vector2() constructor
 				"y: " + string(y);
 			}
 			
-			// @description			Return an array containing all values of the Vector.
 			// @returns				{array}
+			// @description			Return an array containing all values of the Vector.
 			static toArray = function()
 			{
 				return [x, y];
@@ -86,8 +86,8 @@ function Vector2() constructor
 		#region <Asserts>
 			
 			// @argument			other {Vector2}
-			// @description			Check whether two Vector2 have the same values.
 			// @returns				{bool}
+			// @description			Check whether two Vector2 have the same values.
 			static equals = function(_other)
 			{
 				return ((x == _other.x) and (y == _other.y));

@@ -18,7 +18,7 @@ function Vector4() constructor
 		#region <Basic Calculations>
 			
 			// @argument			other {Vector4}
-			// @description			Add values of the current Vector4 from other one.
+			// @description			Add to values of the current Vector4 from other one's.
 			static add = function(_other)
 			{
 				x1 += _other.x1;
@@ -28,7 +28,7 @@ function Vector4() constructor
 			}
 			
 			// @argument			other {Vector4}
-			// @description			Substract values of the current Vector4 from other one.
+			// @description			Substract from values of the current Vector4 by other one's.
 			static substract = function(_other)
 			{
 				x1 -= _other.x1;
@@ -38,7 +38,7 @@ function Vector4() constructor
 			}
 			
 			// @argument			other {Vector4}
-			// @description			Multiply values of the current Vector4 by other one.
+			// @description			Multiply values of the current Vector4 by other one's.
 			static multiply = function(_other)
 			{
 				x1 *= _other.x1;
@@ -48,7 +48,7 @@ function Vector4() constructor
 			}
 						
 			// @argument			other {Vector4}
-			// @description			Divide values of the current Vector4 by other one.
+			// @description			Divide values of the current Vector4 by other one's.
 			static divide = function(_other)
 			{
 				x1 /= _other.x1;
@@ -57,7 +57,7 @@ function Vector4() constructor
 				y2 /= _other.y2;
 			}
 			
-			// @description			Swap X and Y values of this Vector4.
+			// @description			Swap the X and Y values of this Vector4.
 			static flip = function()
 			{
 				var x1_new = y1;

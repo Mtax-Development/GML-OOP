@@ -6,7 +6,7 @@
 ///							If an asset (such as sprite) is rendered at an angle
 ///							of 0, it will be drawn in unrotated state, as in sprite
 ///							editor. Upon modifying the angle, positive values rotate
-///							it clockwise, negative in opposite direction.
+///							it anti-clockwise, negative in opposite direction.
 function Angle() constructor
 {
 	#region [Methods]
@@ -16,7 +16,6 @@ function Angle() constructor
 			static modify = function(_value)
             {
                 value += _value;
-
                 value -= (360 * (floor(value / 360)))
             }
 	

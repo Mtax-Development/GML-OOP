@@ -10,7 +10,7 @@ function Room() constructor
 		#region <Property Setters>
 			
 			// @argument			size {Vector2}
-			// @description			Resize the room to set location limitation of added instances.
+			// @description			Resize the room to set location limitations of added instances.
 			static set_size = function(_size)
 			{
 				if (room_exists(ID))
@@ -44,7 +44,7 @@ function Room() constructor
 			
 			// @argument			object {object}
 			// @argument			location {Vector2}
-			// @description			Add an instance to the room if it's not active.
+			// @description			Add an instance to this room when it's inactive.
 			static instance_add = function(_object, _location)
 			{
 				if ((room_exists(ID)) and (room != ID))
@@ -97,7 +97,7 @@ function Room() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Set this room as active.
+			// @description			Switch the active room to this one.
 			static goto = function()
 			{
 				if (room_exists(ID))
