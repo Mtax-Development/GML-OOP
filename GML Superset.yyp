@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"Triangle","path":"scripts/Triangle/Triangle.yy",},"order":9,},
     {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":4,},
     {"id":{"name":"Vector2","path":"scripts/Vector2/Vector2.yy",},"order":0,},
     {"id":{"name":"Scale","path":"scripts/Scale/Scale.yy",},"order":0,},
@@ -12,6 +13,7 @@
     {"id":{"name":"Angle","path":"scripts/Angle/Angle.yy",},"order":3,},
     {"id":{"name":"Vector4","path":"scripts/Vector4/Vector4.yy",},"order":1,},
     {"id":{"name":"Outline","path":"scripts/Outline/Outline.yy",},"order":8,},
+    {"id":{"name":"Color3","path":"scripts/Color3/Color3.yy",},"order":10,},
     {"id":{"name":"TextDraw","path":"scripts/TextDraw/TextDraw.yy",},"order":1,},
   ],
   "Options": [

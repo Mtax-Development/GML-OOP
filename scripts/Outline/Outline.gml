@@ -1,6 +1,6 @@
 /// @function				Outline
 /// @argument				size {int}
-/// @argument				color? {color}
+/// @argument				color? {color | Color3 | Color4}
 /// @argument				alpha? {real}
 ///
 /// @description			Construct a container for information
