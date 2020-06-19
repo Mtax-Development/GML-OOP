@@ -12,6 +12,7 @@
     {"id":{"name":"Range","path":"scripts/Range/Range.yy",},"order":0,},
     {"id":{"name":"Line","path":"scripts/Line/Line.yy",},"order":14,},
     {"id":{"name":"Room","path":"scripts/Room/Room.yy",},"order":0,},
+    {"id":{"name":"RoundRectangle","path":"scripts/RoundRectangle/RoundRectangle.yy",},"order":17,},
     {"id":{"name":"TextAlign","path":"scripts/TextAlign/TextAlign.yy",},"order":5,},
     {"id":{"name":"Rectangle","path":"scripts/Rectangle/Rectangle.yy",},"order":6,},
     {"id":{"name":"Color4","path":"scripts/Color4/Color4.yy",},"order":7,},
