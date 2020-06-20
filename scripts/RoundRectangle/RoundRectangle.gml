@@ -1,9 +1,9 @@
 /// @function				RoundRectangle();
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
-/// @argument				color? {color | Color2 | undefined}
-/// @argument				isOutline? {bool}
-/// @argument				radius? {Vector2}
+/// @argument				fill? {color | Color2 | undefined}
+/// @argument				outline? {color | Outline | undefined}
+/// @argument				radius? {Vector2 | undefined}
 ///
 /// @description			Constructs a round rectangle connected by two
 ///							points in a space, which can be rendered with
@@ -15,52 +15,84 @@ function RoundRectangle(_location) constructor
 		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((alpha > 0) and (color != undefined))
+			if ((alpha > 0) and (fill != undefined))
 			{
 				draw_set_alpha(alpha);
 				
 				if (radius != undefined)
 				{
-					if (isOutline)
+					if (instanceof(fill) == "Color2")
 					{
-						draw_set_color(color);
-						draw_roundrect_ext(location.x1, location.y1, location.x2, location.y2,
-										   radius.x, radius.y, true);
+						draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
+												 radius.x, radius.y, fill.color1, fill.color2, false);
 					}
 					else
 					{
-						if (instanceof(color) == "Color2")
+						draw_set_color(fill);
+						draw_roundrect_ext(location.x1, location.y1, location.x2, location.y2,
+										   radius.x, radius.y, false);
+					}
+					
+				}
+				else
+				{
+					if (instanceof(fill) == "Color2")
+					{
+						draw_roundrect_color(location.x1, location.y1, location.x2, location.y2,
+											 fill.color1, fill.color2, false);
+					}
+					else
+					{
+						draw_set_color(fill);
+						draw_roundrect(location.x1, location.y1, location.x2, location.y2, false);
+					}
+				}
+			}
+			
+			if (outline != undefined)
+			{
+				if (instanceof(outline) == "Outline")
+				{
+					if ((outline.alpha > 0) and (outline.size > 0))
+					{
+						draw_set_alpha(outline.alpha);
+						draw_set_color(outline.color);
+						
+						if (radius != undefined)
 						{
-							draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
-													 radius.x, radius.y, color.color1, color.color2, 
-													 false);
+							for (var i = 0; i < outline.size; i += outline.spacing)
+							{
+								draw_roundrect_ext((location.x1 - i), (location.y1 - i), 
+												   (location.x2 + i), (location.y2 + i), 
+												   radius.x, radius.y, true);
+							}
 						}
 						else
 						{
-							draw_set_color(color);
-							draw_roundrect_ext(location.x1, location.y1, location.x2, location.y2,
-											   radius.x, radius.y, false);
+							for (var i = 0; i < outline.size; i += outline.spacing)
+							{
+								draw_roundrect((location.x1 - i), (location.y1 - i),
+											   (location.x2 + i), (location.y2 + i), 
+											   true);
+							}
 						}
 					}
 				}
 				else
 				{
-					if (isOutline)
+					if (alpha > 0)
 					{
-						draw_set_color(color);
-						draw_roundrect(location.x1, location.y1, location.x2, location.y2, true);
-					}
-					else
-					{
-						if (instanceof(color) == "Color2")
+						draw_set_alpha(alpha);
+						draw_set_color(outline);
+						
+						if (radius != undefined)
 						{
-							draw_roundrect_color(location.x1, location.y1, location.x2, location.y2,
-												 color.color1, color.color2, false);
+							draw_roundrect_ext(location.x1, location.y1, location.x2, location.y2,
+											   radius.x, radius.y, true);
 						}
 						else
 						{
-							draw_set_color(color);
-							draw_roundrect(location.x1, location.y1, location.x2, location.y2, false);
+							draw_roundrect(location.x1, location.y1, location.x2, location.y2, true);
 						}
 					}
 				}
@@ -71,10 +103,10 @@ function RoundRectangle(_location) constructor
 	#region [Constructor]
 	
 		location = _location;
-		alpha	  = (argument_count >= 2 ? argument[1] : 1);
-		color	  = (argument_count >= 3 ? argument[2] : undefined);
-		isOutline = (argument_count >= 4 ? argument[3] : false);
-		radius	  = (argument_count >= 5 ? argument[4] : undefined);
+		alpha	 = (argument_count >= 2 ? argument[1] : 1);
+		fill	 = (argument_count >= 3 ? argument[2] : undefined);
+		outline	 = (argument_count >= 4 ? argument[3] : undefined);
+		radius	 = (argument_count >= 5 ? argument[4] : undefined);
 
 	#endregion
 }

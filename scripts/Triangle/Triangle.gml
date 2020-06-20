@@ -68,11 +68,14 @@ function Triangle(_location1, _location2, _location3) constructor
 				}
 				else*/
 				{
-					draw_set_alpha(alpha);
-					draw_set_color(outline);
+					if (alpha > 0)
+					{
+						draw_set_alpha(alpha);
+						draw_set_color(outline);
 				
-					draw_triangle(location1.x, location1.y, location2.x, location2.y,
-								  location3.x, location3.y, true);
+						draw_triangle(location1.x, location1.y, location2.x, location2.y,
+									  location3.x, location3.y, true);
+					}
 				}
 			}
 

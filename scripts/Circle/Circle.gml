@@ -33,15 +33,14 @@ function Circle(_location, _radius) constructor
 		
 			if (outline != undefined)
 			{
-				// +TODO: Draw circle on circle if alpha of both fill and outline is 1.
 				if (instanceof(outline) == "Outline")
 				{
-					if (outline.size > 0) and (outline.alpha > 0)
+					if ((outline.alpha > 0) and (outline.size > 0))
 					{
 						draw_set_alpha(outline.alpha);
 						draw_set_color(outline.color);
 						
-						for (var i = 0; i < outline.size; i++)
+						for (var i = 0; i < outline.size; i += outline.spacing)
 						{
 							draw_circle(location.x, location.y, (radius + i), true);
 						}
@@ -49,10 +48,13 @@ function Circle(_location, _radius) constructor
 				}
 				else
 				{
-					draw_set_alpha(alpha);
-					draw_set_color(outline);
+					if (alpha > 0)
+					{
+						draw_set_alpha(alpha);
+						draw_set_color(outline);
 					
-					draw_circle(location.x, location.y, radius, true);
+						draw_circle(location.x, location.y, radius, true);
+					}
 				}
 			}
 		}

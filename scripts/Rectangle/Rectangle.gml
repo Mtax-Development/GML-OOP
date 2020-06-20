@@ -38,10 +38,10 @@ function Rectangle(_location) constructor
 					if (outline.size > 0) and (outline.alpha > 0)
 					{
 						draw_set_alpha(outline.alpha);
-					
+						
 						if (instanceof(outline.color) == "Color4")
 						{
-							for (var i = 0; i < outline.size; i++)
+							for (var i = 0; i < outline.size; i += outline.spacing)
 							{
 								draw_rectangle_color((location.x1 - i), (location.y1 - i), (location.x2 + i), (location.y2 + i), 
 													 outline.color.x1y1, outline.color.x2y1, outline.color.x2y2, outline.color.x1y2, true);
@@ -50,8 +50,8 @@ function Rectangle(_location) constructor
 						else
 						{
 							draw_set_color(outline.color);
-						
-							for (var i = 0; i < outline.size; i++)
+							
+							for (var i = 0; i < outline.size; i += outline.spacing)
 							{
 								draw_rectangle((location.x1 - i), (location.y1 - i), (location.x2 + i), (location.y2 + i), true);
 							}
@@ -60,10 +60,13 @@ function Rectangle(_location) constructor
 				}
 				else
 				{
-					draw_set_alpha(alpha);
-					draw_set_color(outline);
+					if (alpha > 0)
+					{
+						draw_set_alpha(alpha);
+						draw_set_color(outline);
 				
-					draw_rectangle(location.x1, location.y1, location.x2, location.y2, true);
+						draw_rectangle(location.x1, location.y1, location.x2, location.y2, true);
+					}
 				}
 			}
 		}
