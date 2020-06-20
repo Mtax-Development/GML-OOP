@@ -1,5 +1,5 @@
 /// @function				Outline
-/// @argument				size {int}
+/// @argument				size {real}
 /// @argument				color? {color | Color3 | Color4}
 /// @argument				alpha? {real}
 ///

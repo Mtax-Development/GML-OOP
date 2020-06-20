@@ -4,16 +4,17 @@
 /// @argument				fill? {color | Color4 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 ///
-/// @description			Constructs a rectangle connected by four points
-///							in a space, which can be rendered or operated in
-///							other ways.
+/// @description			Constructs a rectangle connected by two points
+///							in a space, which can be rendered with its full
+///							configuration or operated in other ways.
 function Rectangle(_location) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((fill != undefined) and (alpha > 0))
+			if ((alpha > 0) and (fill != undefined))
 			{
 				draw_set_alpha(alpha);
 			
@@ -66,7 +67,7 @@ function Rectangle(_location) constructor
 				}
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 	

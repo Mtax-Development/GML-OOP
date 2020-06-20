@@ -1,16 +1,23 @@
 /// @function				Ellipse();
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
-/// @argument				color? {color | Color2}
+/// @argument				color? {color | Color2 | undefined}
 /// @argument				isOutline? {bool}
+///
+/// @description			Constructs an ellipse connected by two points
+///							in a space, which can be rendered with its full
+///							configuration or operated in other ways.
 function Ellipse(_location) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((color != undefined) and (alpha > 0))
+			if ((alpha > 0) and (color != undefined))
 			{
+				draw_set_alpha(alpha);
+				
 				if (isOutline)
 				{
 					draw_set_color(color);
@@ -31,7 +38,7 @@ function Ellipse(_location) constructor
 				}
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 		

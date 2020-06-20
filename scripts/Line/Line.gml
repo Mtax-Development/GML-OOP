@@ -5,16 +5,19 @@
 /// @argument				width? {real}
 ///
 /// @description			Construct a line connected by two points
-///							in a space, which can be rendered or 
-///							operated in other ways.
+///							in a space, which can be rendered with its
+///							full configuration or operated in other ways.
 function Line(_location) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((color != undefined) and (alpha > 0))
+			if ((alpha > 0) and (color != undefined))
 			{
+				draw_set_alpha(alpha);
+				
 				if (width > 1)
 				{
 					if (instanceof(color) == "Color2")
@@ -45,7 +48,7 @@ function Line(_location) constructor
 				}
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 	

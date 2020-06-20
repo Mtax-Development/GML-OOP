@@ -3,16 +3,17 @@
 /// @argument				alpha? {real}
 /// @argument				color? {color | undefined}
 ///
-///  @description			Constructs a single pixel in space,
-///							which can be rendered or operated in
-///							other ways.
+///  @description			Constructs a single pixel in a space,
+///							which can be rendered with its full
+///							configuration or operated in other ways.
 function Point(_location) constructor
 {
 	#region [Methods]
 	
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((color != undefined) and (alpha > 0))
+			if ((alpha > 0) and (color != undefined))
 			{
 				draw_set_alpha(alpha);
 				draw_set_color(color);
@@ -20,7 +21,7 @@ function Point(_location) constructor
 				draw_point(location.x, location.y);
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 	

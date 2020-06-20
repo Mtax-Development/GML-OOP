@@ -1,7 +1,7 @@
 /// @function				Sprite();
 /// @argument				sprite {sprite}
 /// @argument				frame {real}
-/// @argument				animationSpeed {fps}
+/// @argument				animationSpeed {real}
 /// @argument				location {Vector2}
 /// @argument				scale {Scale}
 /// @argument				angle {Angle}
@@ -9,7 +9,7 @@
 /// @argument				alpha {real}
 ///
 /// @description			Constructs a container for sprite and its draw information,
-///							which can be rendered and animated using the render() method.
+///							which can be rendered with its full configuration and animated.
 function Sprite(_sprite) constructor
 {
 	#region [Methods]
@@ -60,7 +60,7 @@ function Sprite(_sprite) constructor
 				}
 			}
 		}
-
+		
 	#endregion
 	#region [Constructor]
 	

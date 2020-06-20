@@ -1,15 +1,20 @@
 /// @function				Arrow();
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
-/// @argument				color? {color}
-/// @argument				size? {int}
+/// @argument				color? {color | undefined}
+/// @argument				size? {real}
+///
+/// @description			Constructs an arrow connected by two points
+///							in a space, which can be rendered with its
+///							full configuration or operated in other ways.
 function Arrow(_location) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((color != undefined) and (alpha > 0))
+			if ((alpha > 0) and (color != undefined))
 			{
 				draw_set_alpha(alpha);
 				draw_set_color(color);
@@ -17,7 +22,7 @@ function Arrow(_location) constructor
 				draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 		

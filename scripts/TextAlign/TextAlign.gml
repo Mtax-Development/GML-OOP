@@ -2,7 +2,7 @@
 /// @argument				x {halign}
 /// @argument				y {valign}
 ///
-/// @description			Construct a two-value text align container, ready
+/// @description			Constructs a two-value text align container, ready
 ///							to be used with text draw-related code, as well as
 ///							manipulated using its own functions.
 function TextAlign(_x, _y) constructor
@@ -34,7 +34,7 @@ function TextAlign(_x, _y) constructor
 			switch (y)
 			{
 				case fa_top:	self.y_setBottom(); break;
-				case fa_bottom: self.y_setTop()	   break;
+				case fa_bottom: self.y_setTop();	break;
 			}
 		}
 		
@@ -44,7 +44,7 @@ function TextAlign(_x, _y) constructor
 			self.mirror_x();
 			self.mirror_y();
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 	

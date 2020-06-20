@@ -2,7 +2,7 @@
 /// @argument				x? {real}
 /// @argument				y? {real}
 ///
-/// @description			Construct a Vector2-like scale container, ready
+/// @description			Constructs a Vector2-like scale container, ready
 ///							to be used with draw-related code, as well as 
 ///							manipulated using its own functions.
 ///
@@ -33,6 +33,7 @@ function Scale() constructor
 				self.mirror_x();
 				self.mirror_y();
 			}
+			
 		#endregion
 		#region <Typing>
 			

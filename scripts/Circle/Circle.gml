@@ -1,19 +1,21 @@
 /// @function				Circle();
 /// @argument				location {Vector2}
-/// @argument				radius {int}
+/// @argument				radius {real}
 /// @argument				alpha? {real}
 /// @argument				fill? {color | Color2 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 ///
-/// @description			Constructs a circle in a point in the space,
-///							which can be rendered or operated in other ways.
+/// @description			Constructs a circle in a point in the space at
+///							specified radius, which can be rendered with its
+///							full configuration or operated in other ways.
 function Circle(_location, _radius) constructor
 {
 	#region [Methods]
-	
+		
+		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((fill != undefined) and (alpha > 0))
+			if ((alpha > 0) and (fill != undefined))
 			{
 				draw_set_alpha(alpha);
 			
@@ -54,7 +56,7 @@ function Circle(_location, _radius) constructor
 				}
 			}
 		}
-	
+		
 	#endregion
 	#region [Constructor]
 	
