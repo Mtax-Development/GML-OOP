@@ -14,7 +14,7 @@ function Line(_location) constructor
 		// @description			Execute the draw.
 		static render = function()
 		{
-			if ((alpha > 0) and (color != undefined))
+			if ((alpha > 0) and (color != undefined) and (width > 0))
 			{
 				draw_set_alpha(alpha);
 				
