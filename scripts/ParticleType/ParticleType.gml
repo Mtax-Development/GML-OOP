@@ -1,36 +1,9 @@
 /// @function				ParticleType();
 /// @description			Constructs a particle type resource, which can 
 ///							have its properties changed and then be executed.
-function Particle() constructor
+function ParticleType() constructor
 {
 	#region [Methods]
-		#region <Execution>
-		
-			// @argument			particleSystem {particle system}
-			// @argument			location {Vector2}
-			// @argument			number {int}
-			// @argument			color? {color}
-			// @description			Directly create the particle(s) of this type in a space.
-			static create = function(_particleSystem, _location, _number)
-			{
-				if (part_type_exists(ID))
-				{
-					var _color = (argument_count >= 4 ? argument[3] : undefined);
-				
-					if (_color != undefined)
-					{
-						part_particles_create_color(_particleSystem, _location.x, _location.y,
-													ID, _color, _number);
-					}
-					else
-					{
-						part_particles_create(_particleSystem, _location.x, _location.y, 
-											  ID, _number);
-					}
-				}
-			}
-		
-		#endregion
 		#region <Property Setters>
 		
 			// @argument			shape {particle shape}
@@ -433,7 +406,7 @@ function Particle() constructor
 				}
 			}
 		
-			// @argument			step_type {Particle}
+			// @argument			step_type {ParticleType}
 			// @argument			step_number {int}
 			// @description			Set the step stream properties of this Particle Type.
 			static setStep = function(_step_type, _step_number)
@@ -448,7 +421,7 @@ function Particle() constructor
 				}
 			}
 		
-			// @argument			death_type {Particle}
+			// @argument			death_type {ParticleType}
 			// @argument			death_number {int}
 			// @description			Set the death stream properties of this Particle Type.
 			static setDeath = function(_death_type, _death_number)
@@ -464,56 +437,111 @@ function Particle() constructor
 			}
 		
 		#endregion
+		#region <Execution>
+		
+			// @argument			particleSystem {particle system}
+			// @argument			location {Vector2}
+			// @argument			number {int}
+			// @argument			color? {color}
+			// @description			Directly create the particle(s) of this type in a space.
+			static create = function(_particleSystem, _location, _number)
+			{
+				if (part_type_exists(ID))
+				{
+					var _color = (argument_count >= 4 ? argument[3] : undefined);
+				
+					if (_color != undefined)
+					{
+						part_particles_create_color(_particleSystem, _location.x, _location.y,
+													ID, _color, _number);
+					}
+					else
+					{
+						part_particles_create(_particleSystem, _location.x, _location.y, 
+											  ID, _number);
+					}
+				}
+			}
+		
+		#endregion
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{
+				destroyed = false;
+				
+				sprite = undefined;
+				sprite_animate = false;
+				sprite_stretch = false;
+				sprite_random = false;
+
+				size = 1;
+				size_increase = 0;
+				size_wiggle = 0;
+
+				scale = new Scale();
+
+				speed = 1;
+				speed_increase = 0;
+				speed_wiggle = 0;
+
+				direction = 0;
+				direction_increase = 0;
+				direction_wiggle = 0;
+
+				gravity_amount = 0;
+				gravity_direction = undefined;
+
+				orientation = 0;
+				orientation_increase = 0;
+				orientation_wiggle = 0;
+				orientation_relative = false;
+
+				color = c_white;
+				color_type = "color";
+		
+				alpha = [1, undefined, undefined];
+
+				blend_additive = false;
+
+				life = 100;
+
+				shape = pt_shape_pixel;
+
+				step_type = undefined;
+				step_number = 0;
+
+				death_type = undefined;
+				death_number = 0;	
+			}
+			
+			// @description			Remove internal Particle Type information from the memory.
+			static destroy = function()
+			{
+				if (part_type_exists(ID))
+				{
+					part_type_destroy(ID);
+					
+					destroyed = true;
+				}
+			}
+			
+			// @description			Reset all properties to default.
+			static clear = function()
+			{
+				part_type_clear(ID);
+				
+				self.construct();
+			}
+		
+		#endregion
 	#endregion
 	#region [Constructor]
 	
 		ID = part_type_create();
 		
-		sprite = undefined;
-		sprite_animate = false;
-		sprite_stretch = false;
-		sprite_random = false;
-
-		size = 1;
-		size_increase = 0;
-		size_wiggle = 0;
-
-		scale = new Scale();
-
-		speed = 1;
-		speed_increase = 0;
-		speed_wiggle = 0;
-
-		direction_minimum = new Angle();
-		direction_maximum = new Angle();
-		direction_increase = 0;
-		direction_wiggle = 0;
-
-		gravity_amount = 0;
-		gravity_direction = undefined;
-
-		orientation_minimum = new Angle();
-		orientation_maximum = new Angle();
-		orientation_increase = 0;
-		orientation_wiggle = 0;
-		orientation_relative = false;
-
-		color = c_white;
-		color_type = "color";
-		
-		alpha = [1, undefined, undefined];
-
-		blend_additive = false;
-
-		life = 100;
-
-		shape = pt_shape_pixel;
-
-		step_type = undefined;
-		step_number = 0;
-
-		death_type = undefined;
-		death_number = 0;
+		self.construct();
 	
 	#endregion
 }
