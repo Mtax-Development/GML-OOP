@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"Triangle","path":"scripts/Triangle/Triangle.yy",},"order":9,},
     {"id":{"name":"Color2","path":"scripts/Color2/Color2.yy",},"order":12,},
+    {"id":{"name":"ParticleSystem","path":"scripts/ParticleSystem/ParticleSystem.yy",},"order":3,},
     {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":4,},
     {"id":{"name":"ParticleType","path":"scripts/ParticleType/ParticleType.yy",},"order":2,},
     {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},"order":15,},
