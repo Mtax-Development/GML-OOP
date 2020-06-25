@@ -1,10 +1,84 @@
 /// @function				ParticleType();
-/// @description			Constructs a particle type resource, which can 
+/// @description			Constructs a Particle Type resource, which can 
 ///							have its properties changed and then be executed.
 function ParticleType() constructor
 {
 	#region [Methods]
-		#region <Property Setters>
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{				
+				sprite = undefined;
+				sprite_animate = false;
+				sprite_stretch = false;
+				sprite_random = false;
+
+				size = 1;
+				size_increase = 0;
+				size_wiggle = 0;
+
+				scale = new Scale();
+
+				speed = 1;
+				speed_increase = 0;
+				speed_wiggle = 0;
+
+				direction = 0;
+				direction_increase = 0;
+				direction_wiggle = 0;
+
+				gravity_amount = 0;
+				gravity_direction = undefined;
+
+				orientation = 0;
+				orientation_increase = 0;
+				orientation_wiggle = 0;
+				orientation_relative = false;
+
+				color = c_white;
+				color_type = "color";
+		
+				alpha = [1, undefined, undefined];
+
+				blend_additive = false;
+
+				life = 100;
+
+				shape = pt_shape_pixel;
+
+				step_type = undefined;
+				step_number = 0;
+
+				death_type = undefined;
+				death_number = 0;	
+			}
+			
+			// @returns				{undefined}
+			// @description			Remove the internal information from the memory.
+			static destroy = function()
+			{
+				if (part_type_exists(ID))
+				{
+					part_type_destroy(ID);
+				}
+				
+				return undefined;
+			}
+			
+			// @description			Reset all properties to default.
+			static clear = function()
+			{
+				if (part_type_exists(ID))
+				{
+					part_type_clear(ID);
+				}
+				
+				self.construct();
+			}
+		
+		#endregion
+		#region <Setters>
 		
 			// @argument			shape {particle shape}
 			// @description			Set the shape property of this Particle Type.
@@ -181,7 +255,8 @@ function ParticleType() constructor
 					}
 				
 					part_type_orientation(ID, _orientation_minimum, _orientation_maximum, 
-										  orientation_increase, orientation_wiggle, orientation_relative);
+										  orientation_increase, orientation_wiggle, 
+										  orientation_relative);
 				}
 			}
 		
@@ -439,100 +514,29 @@ function ParticleType() constructor
 		#endregion
 		#region <Execution>
 		
-			// @argument			particleSystem {particle system}
+			// @argument			particleSystem {ParticleSystem}
 			// @argument			location {Vector2}
 			// @argument			number {int}
 			// @argument			color? {color}
 			// @description			Directly create the particle(s) of this type in a space.
 			static create = function(_particleSystem, _location, _number)
 			{
-				if (part_type_exists(ID))
+				if (part_type_exists(ID)) and (_particleSystem != undefined)
+				and (part_system_exists(_particleSystem.ID))
 				{
 					var _color = (argument_count >= 4 ? argument[3] : undefined);
 				
 					if (_color != undefined)
 					{
-						part_particles_create_color(_particleSystem, _location.x, _location.y,
+						part_particles_create_color(_particleSystem.ID, _location.x, _location.y,
 													ID, _color, _number);
 					}
 					else
 					{
-						part_particles_create(_particleSystem, _location.x, _location.y, 
+						part_particles_create(_particleSystem.ID, _location.x, _location.y, 
 											  ID, _number);
 					}
 				}
-			}
-		
-		#endregion
-		#region <Management>
-			
-			// @description			Initialize the constructor.
-			static construct = function()
-			{
-				destroyed = false;
-				
-				sprite = undefined;
-				sprite_animate = false;
-				sprite_stretch = false;
-				sprite_random = false;
-
-				size = 1;
-				size_increase = 0;
-				size_wiggle = 0;
-
-				scale = new Scale();
-
-				speed = 1;
-				speed_increase = 0;
-				speed_wiggle = 0;
-
-				direction = 0;
-				direction_increase = 0;
-				direction_wiggle = 0;
-
-				gravity_amount = 0;
-				gravity_direction = undefined;
-
-				orientation = 0;
-				orientation_increase = 0;
-				orientation_wiggle = 0;
-				orientation_relative = false;
-
-				color = c_white;
-				color_type = "color";
-		
-				alpha = [1, undefined, undefined];
-
-				blend_additive = false;
-
-				life = 100;
-
-				shape = pt_shape_pixel;
-
-				step_type = undefined;
-				step_number = 0;
-
-				death_type = undefined;
-				death_number = 0;	
-			}
-			
-			// @description			Remove internal Particle Type information from the memory.
-			static destroy = function()
-			{
-				if (part_type_exists(ID))
-				{
-					part_type_destroy(ID);
-					
-					destroyed = true;
-				}
-			}
-			
-			// @description			Reset all properties to default.
-			static clear = function()
-			{
-				part_type_clear(ID);
-				
-				self.construct();
 			}
 		
 		#endregion
