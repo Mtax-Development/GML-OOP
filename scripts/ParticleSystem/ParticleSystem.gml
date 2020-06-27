@@ -1,6 +1,8 @@
 /// @function				ParticleSystem();
 /// @argument				layer?
 /// @argument				persistent?
+/// @description			Constructs a Particle System resource, required to create
+///							Particles in a space.
 function ParticleSystem() constructor
 {
 	#region [Methods]
@@ -21,6 +23,8 @@ function ParticleSystem() constructor
 				
 				drawOrder_oldToNew = true;
 				
+				emitterList = ds_list_create();
+				
 				if (layer != undefined)
 				{
 					ID = part_system_create_layer(layer, persistent);
@@ -39,6 +43,8 @@ function ParticleSystem() constructor
 				{
 					part_system_destroy(ID);
 				}
+				
+				ds_list_destroy(emitterList);
 			
 				return undefined; 
 			}

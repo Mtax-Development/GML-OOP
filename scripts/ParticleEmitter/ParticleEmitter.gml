@@ -15,6 +15,8 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 				particleType = _particleType;
 		
 				ID = part_emitter_create(particleSystem.ID);
+				
+				ds_list_add(particleSystem.emitterList, self);
 		
 				location = undefined;
 				shape = undefined;
@@ -33,6 +35,19 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 				and (part_emitter_exists(particleSystem.ID, ID))
 				{
 					part_emitter_destroy(particleSystem.ID, ID);
+					
+					var i = 0;
+					
+					repeat(ds_list_size(particleSystem.emitterList))
+					{
+						if (ds_list_find_value(particleSystem.emitterList, i))
+						{
+							ds_list_delete(particleSystem.emitterList, i);
+							break;
+						}
+						
+						i++;
+					}
 				}
 		
 				return undefined;
