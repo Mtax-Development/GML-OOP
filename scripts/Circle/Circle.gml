@@ -58,6 +58,24 @@ function Circle(_location, _radius) constructor
 				}
 			}
 		}
+			
+		// @argument			point {Vector2 | Point}
+		// @returns				{bool}
+		// @description			Checks whether a point in space is within this Circle.
+		static pointIn = function(_point)
+		{
+			switch(instanceof(_point))
+			{
+				case "Vector2":
+					return point_in_circle(_point.x, _point.y, location.x, location.y, radius);
+				break;
+				
+				case "Point":
+					return point_in_circle(_point.location.x, _point.location.y, location.x, 
+										   location.y, radius);
+				break;
+			}
+		}
 		
 	#endregion
 	#region [Constructor]

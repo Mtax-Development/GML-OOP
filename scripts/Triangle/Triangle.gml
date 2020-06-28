@@ -78,7 +78,26 @@ function Triangle(_location1, _location2, _location3) constructor
 					}
 				}
 			}
-
+		}
+		
+		// @argument			point {Vector2 | Point}
+		// @returns				{bool}
+		// @description			Checks whether a point in space is within this Triangle.
+		static pointIn = function(_point)
+		{
+			switch(instanceof(_point))
+			{
+				case "Vector2":
+					return point_in_triangle(_point.x, _point.y, location1.x, location1.y,
+											 location2.x, location2.y, location3.x, location3.y);
+				break;
+				
+				case "Point":
+					return point_in_triangle(_point.location.x, _point.location.y, location1.x,
+											 location2.y, location2.x, location2.y, location3.x, 
+											 location3.y);
+				break;
+			}
 		}
 		
 	#endregion

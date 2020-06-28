@@ -71,6 +71,25 @@ function Rectangle(_location) constructor
 			}
 		}
 		
+		// @argument			point {Vector2 | Point}
+		// @returns				{bool}
+		// @description			Checks whether a point in space is within this Rectangle.
+		static pointIn = function(_point)
+		{
+			switch(instanceof(_point))
+			{
+				case "Vector2":
+					return point_in_rectangle(_point.x, _point.y, location.x1, location.y1,
+											  location.x2, location.y2);
+				break;
+				
+				case "Point":
+					return point_in_rectangle(_point.location.x, _point.location.y, location.x1,
+											  location.y1, location.x2, location.y2);
+				break;
+			}
+		}
+		
 	#endregion
 	#region [Constructor]
 	
