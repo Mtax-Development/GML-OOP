@@ -1,10 +1,10 @@
-/// @function				Rectangle();
+/// @function				Rectangle()
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
 /// @argument				fill? {color | Color4 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 ///
-/// @description			Constructs a rectangle connected by two points
+/// @description			Constructs a Rectangle connected by two points
 ///							in a space, which can be rendered with its full
 ///							configuration or operated in other ways.
 function Rectangle(_location) constructor

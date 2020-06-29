@@ -1,10 +1,10 @@
-/// @function				Arrow();
+/// @function				Arrow()
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
 /// @argument				color? {color | undefined}
 /// @argument				size? {real}
 ///
-/// @description			Constructs an arrow connected by two points
+/// @description			Constructs an Arrow connected by two points
 ///							in a space, which can be rendered with its
 ///							full configuration or operated in other ways.
 function Arrow(_location) constructor

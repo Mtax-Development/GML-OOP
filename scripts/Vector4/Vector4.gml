@@ -1,21 +1,22 @@
-/// @function				Vector4();
-/// @description			Constructs a four-value numeric x1-x2/y1-y2 vector.
+/// @function				Vector4()
 /// @argument				x1?
 /// @argument				x2?
 /// @argument				y1?
 /// @argument				y2?
 ///
+/// @description			Constructs a four-value numeric x1-x2/y1-y2 Vector container.
+///
 ///							Construction methods:
-///							- {real} x1, x2, y1, y2 
+///							- {real}, {real}, {real}, {real} (x1, x2, y1, y2) 
 ///							- {real} (single for all values)
+///							- {real[]} (with the following structure: [x1, x2, y1, y2])
 ///							- {Vector2}, {Vector2}
 ///							- {Vector4}
-///							- {real[]} (with the following structure: [x1, x2, y1, y2])
-///							- {void} (instance's own x/y will be set to all values)
+///							- {void} (instance's own x/y will be set to all appriopate values)
 function Vector4() constructor
 {
 	#region [Methods]
-		#region <Basic Calculations>
+		#region <Operations>
 			
 			// @argument			other {Vector4}
 			// @description			Add to values of the current Vector4 from other one's.

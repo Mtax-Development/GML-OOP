@@ -1,18 +1,19 @@
-/// @function				Vector2();
+/// @function				Vector2()
 /// @argument				x?
 /// @argument				y?
-/// @description			Constructs a two-value numeric x/y vector.
+///
+/// @description			Constructs a two-value numeric x/y Vector container.
 ///
 ///							Construction methods:
-///							- {real} x, y
+///							- {real}, {real} (x, y)
 ///							- {real} (single for both values)
-///							- {Vector2}
 ///							- {real[]} (with the following structure: [x, y])
+///							- {Vector2}
 ///							- {void} (instance's own x/y will be set to both values)
 function Vector2() constructor
 {
 	#region [Methods]
-		#region <Basic Calculations>
+		#region <Operations>
 			
 			// @argument			other {Vector2}
 			// @description			Add to values of the current Vector2 from other one's.

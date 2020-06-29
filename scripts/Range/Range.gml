@@ -1,12 +1,12 @@
-/// @function				Range();
+/// @function				Range()
 /// @argument				minimum {real}
 /// @argument				maximum {real}
 ///
-/// @description			Construct a two-value numeric range with two different numbers.
+/// @description			Construct a container for two-value numeric Range with different numbers.
 function Range(_minimum, _maximum) constructor
 {
 	#region [Methods]
-		#region <Randomization>
+		#region <Operations>
 			
 			// @returns				{real}
 			// @description			Return a random real number from the range.

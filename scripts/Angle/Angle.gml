@@ -1,12 +1,7 @@
-/// @function				Angle();
+/// @function				Angle()
 /// @argument				value? {real}
 ///
-/// @description			Construct an 360-degree angle that's wrapped in a
-///							range of 0 to 359 (as 0 and 360 are the same values).
-///							If an asset (such as sprite) is rendered at angle of 0,
-///							it will be drawn in its default, unrotated state.
-///							Upon modifying the angle, positive values rotate
-///							it anti-clockwise, negative clockwise.
+/// @description			Construct a container for a 360 degree Angle, wrapped from 0 to 359.
 function Angle() constructor
 {
 	#region [Methods]

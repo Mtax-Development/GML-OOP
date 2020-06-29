@@ -1,11 +1,11 @@
-/// @function				Circle();
+/// @function				Circle()
 /// @argument				location {Vector2}
 /// @argument				radius {real}
 /// @argument				alpha? {real}
 /// @argument				fill? {color | Color2 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 ///
-/// @description			Constructs a circle in a point in the space at
+/// @description			Constructs a Circle in a point in the space at
 ///							specified radius, which can be rendered with its
 ///							full configuration or operated in other ways.
 function Circle(_location, _radius) constructor

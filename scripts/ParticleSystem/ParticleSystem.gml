@@ -1,8 +1,9 @@
-/// @function				ParticleSystem();
+/// @function				ParticleSystem()
 /// @argument				layer?
 /// @argument				persistent?
-/// @description			Constructs a Particle System resource, required to create
-///							Particles in a space.
+///
+/// @description			Constructs a Particle System resource, required to
+///							create Particles in a space.
 function ParticleSystem() constructor
 {
 	#region [Methods]

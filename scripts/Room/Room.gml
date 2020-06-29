@@ -1,46 +1,12 @@
-/// @function				Room();
+/// @function				Room()
 /// @argument				size? {Vector2}
+/// @argument				persistent? {bool}
 ///
-/// @description			Constructs and creates a room resource, then saves
-///							its information in a container. Also handles all
-///							relevant functions and extends some of them.
+/// @description			Constructs and creates a Room resource with its information.
 function Room() constructor
 {
 	#region [Methods]
-		#region <Property Setters>
-			
-			// @argument			size {Vector2}
-			// @description			Resize the room to set location limitations of added instances.
-			static set_size = function(_size)
-			{
-				if (room_exists(ID))
-				{
-					if (size.x != _size.x)
-					{
-						size.x = _size.x;
-						room_set_width(ID, size.x);
-					}
-			
-					if (size.y != _size.y)
-					{
-						size.y = _size.y;
-						room_set_height(ID, size.y);
-					}
-				}
-			}
-			
-			// @argument			value {bool}
-			// @description			Change the persistence flag for the room.
-			static set_persistent = function(_value)
-			{		
-				if (room_exists(ID))
-				{
-					room_set_persistent(ID, _value);
-				}
-			}
-	
-		#endregion
-		#region <Resource Manipulation>
+		#region <Management>
 			
 			// @argument			object {object}
 			// @argument			location {Vector2}
@@ -95,6 +61,39 @@ function Room() constructor
 			}
 	
 		#endregion
+		#region <Setters>
+			
+			// @argument			size {Vector2}
+			// @description			Resize the room to set location limitations of added instances.
+			static set_size = function(_size)
+			{
+				if (room_exists(ID))
+				{
+					if (size.x != _size.x)
+					{
+						size.x = _size.x;
+						room_set_width(ID, size.x);
+					}
+			
+					if (size.y != _size.y)
+					{
+						size.y = _size.y;
+						room_set_height(ID, size.y);
+					}
+				}
+			}
+			
+			// @argument			value {bool}
+			// @description			Change the persistence flag for the room.
+			static set_persistent = function(_value)
+			{		
+				if (room_exists(ID))
+				{
+					room_set_persistent(ID, _value);
+				}
+			}
+	
+		#endregion
 		#region <Execution>
 			
 			// @description			Switch the active room to this one.
@@ -111,12 +110,13 @@ function Room() constructor
 	#region [Constructor]
 	
 		var _size = (argument_count >= 1 ? argument[0] : new Vector2(0, 0));
+		var _persistent = (argument_count >= 2 ? argument[1] : false);
 	
 		size = _size;
+		persistent = _persistent;
 	
 		ID = room_add();
 		name = room_get_name(ID);
-		persistent = false;
 		instances = [];
 	
 		room_set_width(ID, size.x);

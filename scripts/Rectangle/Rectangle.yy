@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Rendering",
-    "path": "folders/Scripts/Rendering.yy",
+    "name": "Shapes",
+    "path": "folders/Scripts/Shapes.yy",
   },
   "resourceVersion": "1.0",
   "name": "Rectangle",

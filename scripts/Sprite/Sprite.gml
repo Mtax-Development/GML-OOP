@@ -1,4 +1,4 @@
-/// @function				Sprite();
+/// @function				Sprite()
 /// @argument				sprite {sprite}
 /// @argument				frame {real}
 /// @argument				animationSpeed {real}
@@ -8,8 +8,8 @@
 /// @argument				color {color}
 /// @argument				alpha {real}
 ///
-/// @description			Constructs a container for sprite and its draw information,
-///							which can be rendered with its full configuration and animated.
+/// @description			Constructs a Sprite resource with its draw information, which
+///							can be rendered with its full configuration and then animated.
 function Sprite(_sprite) constructor
 {
 	#region [Methods]

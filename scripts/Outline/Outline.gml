@@ -4,8 +4,7 @@
 /// @argument				alpha? {real}
 /// @argument				spacing? {real}
 ///
-/// @description			Construct a container for information
-///							about outline drawing for shapes.
+/// @description			Construct a container for information about Outline drawing for shapes.
 function Outline(_size) constructor
 {
 	size	 = _size;

@@ -1,11 +1,11 @@
-/// @function				RoundRectangle();
+/// @function				RoundRectangle()
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
 /// @argument				fill? {color | Color2 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 /// @argument				radius? {Vector2 | undefined}
 ///
-/// @description			Constructs a round rectangle connected by two
+/// @description			Constructs a Round Rectangle connected by two
 ///							points in a space, which can be rendered with
 ///							its full configuration or operated in other ways.
 function RoundRectangle(_location) constructor

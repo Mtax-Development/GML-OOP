@@ -1,8 +1,8 @@
-/// @function				Scale();
+/// @function				Scale()
 /// @argument				x? {real}
 /// @argument				y? {real}
 ///
-/// @description			Constructs a Vector2-like scale container, ready
+/// @description			Constructs a Vector2-like Scale container, ready
 ///							to be used with draw-related code, as well as 
 ///							manipulated using its own functions.
 ///
@@ -13,7 +13,7 @@
 function Scale() constructor
 {
 	#region [Methods]
-		#region <Manipulation>
+		#region <Operations>
 			
 			// @description			Reverse the x value of the scale.
 			static mirror_x = function()

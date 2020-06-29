@@ -1,4 +1,4 @@
-/// @function				TextDraw();
+/// @function				TextDraw()
 /// @argument				text {string}
 /// @argument				font {font}
 /// @argument				location {Vector2}
@@ -6,7 +6,7 @@
 /// @argument				color {color}
 /// @argument				alpha {real}
 ///
-/// @description			Constructs a text draw which can be rendered with
+/// @description			Constructs a Text Draw which can be rendered with
 ///							full configurationor operated in other ways.
 function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 {

@@ -1,10 +1,10 @@
-/// @function				Line();
+/// @function				Line()
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
 /// @argument				color? {color | color2 | undefined}
 /// @argument				width? {real}
 ///
-/// @description			Construct a line connected by two points
+/// @description			Construct a Line connected by two points
 ///							in a space, which can be rendered with its
 ///							full configuration or operated in other ways.
 function Line(_location) constructor

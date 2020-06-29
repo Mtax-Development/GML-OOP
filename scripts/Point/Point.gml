@@ -1,11 +1,10 @@
-/// @function				Point();
+/// @function				Point()
 /// @argument				location {Vector2}
 /// @argument				alpha? {real}
 /// @argument				color? {color | undefined}
 ///
-///  @description			Constructs a single pixel in a space,
-///							which can be rendered with its full
-///							configuration or operated in other ways.
+///  @description			Constructs a Point in a space, which can be rendered as a single
+///							pixel with its full configuration or operated in other ways.
 function Point(_location) constructor
 {
 	#region [Methods]

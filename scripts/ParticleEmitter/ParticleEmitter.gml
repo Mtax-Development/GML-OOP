@@ -1,6 +1,7 @@
-/// @function				ParticleEmitter();
+/// @function				ParticleEmitter()
 /// @argument				particleSystem {ParticleSystem}
 /// @argument				particleType {ParticleType}
+///
 /// @description			Constructs a Particle Emitter resource, actively bound to a 
 ///							Particle System, used to create a Particles Type in a region.
 function ParticleEmitter(_particleSystem, _particleType) constructor

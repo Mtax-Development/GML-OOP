@@ -1,9 +1,8 @@
-/// @function				AudioInstancer();
+/// @function				AudioInstancer()
 /// @argument				file {sound}
 /// @argument				pitch {real | Range}
 /// @argument				priority {real} (within range: 0-100)
-///
-/// @description			Constructs an instance tracker of single audio playback.
+/// @description			Constructs an instance tracker of single Audio resource playback.
 ///
 ///							A single selected sound can be played and then manipulated.
 ///							The constructed object will track all instances of the sound
@@ -15,7 +14,7 @@
 function AudioInstancer(_file, _pitch, _priority) constructor
 {
 	#region [Methods]
-		#region <Instancing>
+		#region <Management>
 			
 			// @description			Refresh the instance list by checking which still exist.
 			static list_instances = function()
@@ -36,7 +35,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 			}
 			
 		#endregion
-		#region <Playback Manipulation>
+		#region <Execution>
 			
 			// @description			Execute the sound playback.
 			static play = function()

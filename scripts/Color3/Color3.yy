@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Rendering",
-    "path": "folders/Scripts/Rendering.yy",
+    "name": "Containers",
+    "path": "folders/Scripts/Containers.yy",
   },
   "resourceVersion": "1.0",
   "name": "Color3",

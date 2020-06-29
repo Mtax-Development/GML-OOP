@@ -1,4 +1,5 @@
-/// @function				ParticleType();
+/// @function				ParticleType()
+///
 /// @description			Constructs a Particle Type resource, which can 
 ///							have its properties changed and then be executed.
 function ParticleType() constructor

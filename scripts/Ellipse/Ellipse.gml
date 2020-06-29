@@ -1,10 +1,10 @@
-/// @function				Ellipse();
+/// @function				Ellipse()
 /// @argument				location {Vector4}
 /// @argument				alpha? {real}
 /// @argument				fill? {color | Color2 | undefined}
 /// @argument				outline? {color | Outline | undefined}
 ///
-/// @description			Constructs an ellipse connected by two points
+/// @description			Constructs an Ellipse connected by two points
 ///							in a space, which can be rendered with its full
 ///							configuration or operated in other ways.
 function Ellipse(_location) constructor

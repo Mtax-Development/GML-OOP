@@ -1,11 +1,11 @@
-/// @function				TextAlign();
-/// @argument				x {halign}
-/// @argument				y {valign}
+/// @function				TextAlign()
+/// @argument				x? {halign}
+/// @argument				y? {valign}
 ///
-/// @description			Constructs a two-value text align container, ready
+/// @description			Constructs a two-value Text Align container, ready
 ///							to be used with text draw-related code, as well as
 ///							manipulated using its own functions.
-function TextAlign(_x, _y) constructor
+function TextAlign() constructor
 {
 	#region [Methods]
 		
@@ -48,8 +48,8 @@ function TextAlign(_x, _y) constructor
 	#endregion
 	#region [Constructor]
 	
-		x = _x;
-		y = _y;
+		x = (argument_count >= 1 ? argument[0] : fa_left);
+		y = (argument_count >= 2 ? argument[1] : fa_top);
 	
 	#endregion
 }

@@ -1,4 +1,4 @@
-/// @function				Triangle();
+/// @function				Triangle()
 /// @argument				location1 {Vector2}
 /// @argument				location2 {Vector2}
 /// @argument				location3 {Vector2}
@@ -6,7 +6,7 @@
 /// @argument				fill? {color | Color3 | undefined}
 /// @argument				outline? {color | undefined}
 ///
-/// @description			Constructrs a triangle connected by three points
+/// @description			Constructrs a Triangle connected by three points
 ///							in a space, which can be rendered with its full
 ///							configuration or operated in other ways.
 function Triangle(_location1, _location2, _location3) constructor
