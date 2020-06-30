@@ -73,6 +73,24 @@ function Vector4() constructor
 			}
 	
 		#endregion
+		#region <Getters>
+		
+			static distance = function()
+			{
+				return point_distance(x1, y1, x2, y2);
+			}
+			
+			static angle_1to2 = function()
+			{
+				return point_direction(x1, y1, x2, y2);
+			}
+			
+			static angle_2to1 = function()
+			{
+				return point_direction(x2, y2, x1, y1);
+			}
+		
+		#endregion
 		#region <Typing>
 
 			// @returns				{string}
