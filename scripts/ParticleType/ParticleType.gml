@@ -612,11 +612,46 @@ function ParticleType() constructor
 									var _theta = (random(1) * 2 * pi);
 									
 									var _location_x = ceil((_shape.location.x + 1 
-									+ (_r * cos(_theta))));
+													+ (_r * cos(_theta))));
 									var _location_y = ceil((_shape.location.y + 1 
-									+ (_r * sin(_theta))));
+													+ (_r * sin(_theta))));
 									
 									part_particles_create(_particleSystem.ID, _location_x, 
+														  _location_y, ID, 1);
+								}
+							}
+						break;
+						
+						case "Line":
+							if (_color != undefined)
+							{
+								repeat(_number)
+								{													
+									var _lenght_particle = irandom_range(0, _shape.location.distance());
+									var _angle = _shape.location.angle_1to2();
+									
+									var _location_x = (_shape.location.x1 
+													+ lengthdir_x(_lenght_particle, _angle));
+									var _location_y = (_shape.location.y1 
+													+ lengthdir_y(_lenght_particle, _angle));
+	 								
+									part_particles_create_color(_particleSystem.ID, _location_x,
+																_location_y, ID, _color, 1);
+								}
+							}
+							else
+							{
+								repeat(_number)
+								{													
+									var _lenght_particle = irandom_range(0, _shape.location.distance());
+									var _angle = _shape.location.angle_1to2();
+									
+									var _location_x = (_shape.location.x1 
+													+ lengthdir_x(_lenght_particle, _angle));
+									var _location_y = (_shape.location.y1 
+													+ lengthdir_y(_lenght_particle, _angle));
+	 								
+									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);
 								}
 							}
