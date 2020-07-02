@@ -39,7 +39,7 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 					
 					var i = 0;
 					
-					repeat(ds_list_size(particleSystem.emitterList))
+					repeat (ds_list_size(particleSystem.emitterList))
 					{
 						if (ds_list_find_value(particleSystem.emitterList, i))
 						{

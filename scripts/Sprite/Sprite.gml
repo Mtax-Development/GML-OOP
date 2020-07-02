@@ -52,7 +52,8 @@ function Sprite(_sprite) constructor
 					location_y = location.y;
 				}
 				
-				draw_sprite_ext(ID, frame, location_x, location_y, scale.x, scale.y, angle.value, color, alpha);
+				draw_sprite_ext(ID, frame, location_x, location_y, scale.x, 
+								scale.y, angle.value, color, alpha);
 		
 				if (animationSpeed != 0)
 				{

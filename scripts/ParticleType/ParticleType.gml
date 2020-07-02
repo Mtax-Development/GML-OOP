@@ -542,7 +542,7 @@ function ParticleType() constructor
 			}
 			
 			// @argument			particleSystem {ParticleSystem}
-			// @argument			shape {Rectangle | Circle | Line | Triangle}
+			// @argument			shape {Rectangle | Triangle | Line | Circle | Ellipse}
 			// @argument			number? {int}
 			// @argument			color? {color}
 			// @description			Directly create the particle(s) of this within random
@@ -556,7 +556,7 @@ function ParticleType() constructor
 					var _color = (argument_count >= 4 ? argument[3] : undefined);
 					
 					switch (instanceof(_shape))
-					{
+					{	
 						case "Rectangle":
 							if (_color != undefined)
 							{
@@ -582,47 +582,6 @@ function ParticleType() constructor
 														  irandom_range(_shape.location.y1, 
 																		_shape.location.y2), 
 																		ID, 1);
-								}
-							}
-						break;
-						
-						case "Line":
-							if (_color != undefined)
-							{
-								repeat (_number)
-								{													
-									var _lenght_particle = irandom_range(0, 
-														   _shape.location.distance());
-														   
-									var _angle = _shape.location.angle_1to2();
-									
-									var _location_x = (_shape.location.x1 
-													+ lengthdir_x(_lenght_particle, _angle));
-									
-									var _location_y = (_shape.location.y1 
-													+ lengthdir_y(_lenght_particle, _angle));
-	 								
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								repeat (_number)
-								{													
-									var _lenght_particle = irandom_range(0, 
-														   _shape.location.distance());
-														   
-									var _angle = _shape.location.angle_1to2();
-									
-									var _location_x = (_shape.location.x1 
-													+ lengthdir_x(_lenght_particle, _angle));
-									
-									var _location_y = (_shape.location.y1 
-													+ lengthdir_y(_lenght_particle, _angle));
-	 								
-									part_particles_create(_particleSystem.ID, _location_x,
-														  _location_y, ID, 1);
 								}
 							}
 						break;
@@ -668,6 +627,47 @@ function ParticleType() constructor
 							}
 						break;
 						
+						case "Line":
+							if (_color != undefined)
+							{
+								repeat (_number)
+								{													
+									var _lenght_particle = irandom_range(0, 
+														   _shape.location.distance());
+														   
+									var _angle = _shape.location.angle_1to2();
+									
+									var _location_x = (_shape.location.x1 
+													+ lengthdir_x(_lenght_particle, _angle));
+									
+									var _location_y = (_shape.location.y1 
+													+ lengthdir_y(_lenght_particle, _angle));
+	 								
+									part_particles_create_color(_particleSystem.ID, _location_x,
+																_location_y, ID, _color, 1);
+								}
+							}
+							else
+							{
+								repeat (_number)
+								{													
+									var _lenght_particle = irandom_range(0, 
+														   _shape.location.distance());
+														   
+									var _angle = _shape.location.angle_1to2();
+									
+									var _location_x = (_shape.location.x1 
+													+ lengthdir_x(_lenght_particle, _angle));
+									
+									var _location_y = (_shape.location.y1 
+													+ lengthdir_y(_lenght_particle, _angle));
+	 								
+									part_particles_create(_particleSystem.ID, _location_x,
+														  _location_y, ID, 1);
+								}
+							}
+						break;
+						
 						case "Circle":
 							if (_color != undefined)
 							{
@@ -706,7 +706,6 @@ function ParticleType() constructor
 						break;
 						
 						case "Ellipse":
-						
 							if (_color != undefined)
 							{
 								repeat (_number)
@@ -753,8 +752,7 @@ function ParticleType() constructor
 														  _location_y, ID, 1);
 								}
 							}
-						
-						break
+						break;
 					}
 				}
 			}

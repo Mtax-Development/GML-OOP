@@ -74,17 +74,23 @@ function Vector4() constructor
 	
 		#endregion
 		#region <Getters>
-		
+			
+			// @returns				{real}
+			// @description			Return the shortest distance between two points.
 			static distance = function()
 			{
 				return point_distance(x1, y1, x2, y2);
 			}
 			
+			// @returns				{real}
+			// @description			Return the direction from the first point towards the second.
 			static angle_1to2 = function()
 			{
 				return point_direction(x1, y1, x2, y2);
 			}
 			
+			// @returns				{real}
+			// @description			Return the direction from the second point towards the first.
 			static angle_2to1 = function()
 			{
 				return point_direction(x2, y2, x1, y1);
@@ -126,7 +132,8 @@ function Vector4() constructor
 			// @description			Check whether two Vector4 have the same values.
 			static equals = function(_other)
 			{
-				return ((x1 == _other.x1) and (x2 == _other.x2) and (y1 == _other.y1) and (y2 == _other.y2));
+				return ((x1 == _other.x1) and (x2 == _other.x2) 
+						and (y1 == _other.y1) and (y2 == _other.y2));
 			}
 			
 			// @argument			x {real}

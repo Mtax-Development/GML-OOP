@@ -21,7 +21,8 @@ function Circle(_location, _radius) constructor
 			
 				if (instanceof(fill) == "Color2")
 				{
-					draw_circle_color(location.x, location.y, radius, fill.color1, fill.color2, false);
+					draw_circle_color(location.x, location.y, radius, 
+									  fill.color1, fill.color2, false);
 				}
 				else
 				{

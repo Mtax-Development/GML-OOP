@@ -43,8 +43,11 @@ function Rectangle(_location) constructor
 						{
 							for (var i = 0; i < outline.size; i += outline.spacing)
 							{
-								draw_rectangle_color((location.x1 - i), (location.y1 - i), (location.x2 + i), (location.y2 + i), 
-													 outline.color.x1y1, outline.color.x2y1, outline.color.x2y2, outline.color.x1y2, true);
+								draw_rectangle_color((location.x1 - i), (location.y1 - i), 
+													 (location.x2 + i), (location.y2 + i), 
+													 outline.color.x1y1, outline.color.x2y1, 
+													 outline.color.x2y2, outline.color.x1y2, 
+													 true);
 							}
 						}
 						else
@@ -53,7 +56,9 @@ function Rectangle(_location) constructor
 							
 							for (var i = 0; i < outline.size; i += outline.spacing)
 							{
-								draw_rectangle((location.x1 - i), (location.y1 - i), (location.x2 + i), (location.y2 + i), true);
+								draw_rectangle((location.x1 - i), (location.y1 - i), 
+											   (location.x2 + i), (location.y2 + i), 
+											   true);
 							}
 						}
 					}
