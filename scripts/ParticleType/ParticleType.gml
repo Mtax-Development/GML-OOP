@@ -19,7 +19,7 @@ function ParticleType() constructor
 				size_increase = 0;
 				size_wiggle = 0;
 
-				scale = new Scale();
+				scale = new Scale(1, 1);
 
 				speed = 1;
 				speed_increase = 0;
@@ -586,43 +586,6 @@ function ParticleType() constructor
 							}
 						break;
 						
-						case "Circle":
-							if (_color != undefined)
-							{
-								repeat (_number)
-								{
-									var _r = (_shape.radius * sqrt(random(1)));
-									var _theta = (random(1) * 2 * pi);
-									
-									var _location_x = ceil((_shape.location.x
-													+ (_r * cos(_theta))));
-									
-									var _location_y = ceil((_shape.location.y
-													+ (_r * sin(_theta))));
-									
-									part_particles_create_color(_particleSystem.ID, _location_x, 
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								repeat (_number)
-								{
-									var _r = (_shape.radius * sqrt(random(1)));
-									var _theta = (random(1) * 2 * pi);
-									
-									var _location_x = ceil((_shape.location.x
-													+ (_r * cos(_theta))));
-									
-									var _location_y = ceil((_shape.location.y
-													+ (_r * sin(_theta))));
-									
-									part_particles_create(_particleSystem.ID, _location_x, 
-														  _location_y, ID, 1);
-								}
-							}
-						break;
-						
 						case "Line":
 							if (_color != undefined)
 							{
@@ -704,6 +667,94 @@ function ParticleType() constructor
 								}
 							}
 						break;
+						
+						case "Circle":
+							if (_color != undefined)
+							{
+								repeat (_number)
+								{
+									var _r = (_shape.radius * sqrt(random(1)));
+									var _theta = (random(1) * 2 * pi);
+									
+									var _location_x = ceil((_shape.location.x
+													+ (_r * cos(_theta))));
+									
+									var _location_y = ceil((_shape.location.y
+													+ (_r * sin(_theta))));
+									
+									part_particles_create_color(_particleSystem.ID, _location_x, 
+																_location_y, ID, _color, 1);
+								}
+							}
+							else
+							{
+								repeat (_number)
+								{
+									var _r = (_shape.radius * sqrt(random(1)));
+									var _theta = (random(1) * 2 * pi);
+									
+									var _location_x = ceil((_shape.location.x
+													+ (_r * cos(_theta))));
+									
+									var _location_y = ceil((_shape.location.y
+													+ (_r * sin(_theta))));
+									
+									part_particles_create(_particleSystem.ID, _location_x, 
+														  _location_y, ID, 1);
+								}
+							}
+						break;
+						
+						case "Ellipse":
+						
+							if (_color != undefined)
+							{
+								repeat (_number)
+								{									
+									var _width = ((max(_shape.location.x1, _shape.location.x2) 
+											   - min(_shape.location.x1, _shape.location.x2)) / 2);
+											   
+									var _height = ((max(_shape.location.y1, _shape.location.y2)
+												- min(_shape.location.y1, _shape.location.y2)) / 2);
+												
+									var _angle = random(2 * pi);			
+									var _point = random(1);
+												
+									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
+													+ ((sqrt(_point) * cos(_angle)) * (_width));
+													
+									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
+													+ ((sqrt(_point) * sin(_angle)) * (_height));
+									
+									part_particles_create_color(_particleSystem.ID, _location_x, 
+																_location_y, ID, _color, 1);
+								}
+							}
+							else
+							{
+								repeat (_number)
+								{									
+									var _width = ((max(_shape.location.x1, _shape.location.x2) 
+											   - min(_shape.location.x1, _shape.location.x2)) / 2);
+											   
+									var _height = ((max(_shape.location.y1, _shape.location.y2)
+												- min(_shape.location.y1, _shape.location.y2)) / 2);
+												
+									var _angle = random(2 * pi);			
+									var _point = random(1);
+												
+									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
+													+ ((sqrt(_point) * cos(_angle)) * (_width));
+													
+									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
+													+ ((sqrt(_point) * sin(_angle)) * (_height));
+									
+									part_particles_create(_particleSystem.ID, _location_x, 
+														  _location_y, ID, 1);
+								}
+							}
+						
+						break
 					}
 				}
 			}
