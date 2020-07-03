@@ -117,7 +117,7 @@ function Vector4() constructor
 				 "y2: " + string(y2));
 			}
 			
-			// @returns				{array}
+			// @returns				{real[]}
 			// @description			Return an array containing all values of the Vector.
 			static toArray = function()
 			{

@@ -7,7 +7,8 @@ function Angle() constructor
 	#region [Methods]
 		#region <Manipulation>
 			
-			// @description			Change the value of the angle and wrap it.
+			// @argument			value {real}
+			// @description			Change the value of the Angle and wrap it.
 			static modify = function(_value)
             {
                 value += _value;
@@ -18,7 +19,7 @@ function Angle() constructor
 		#region <Calculations>
 			
 			// @returns				{real}
-			// @description			Returns the difference between two angles, considering wrap.
+			// @description			Returns the difference between two Angles, considering wrap.
 			static difference = function(_other)
 			{
 				result = (max(value, _other.value) - min(value, _other.value));
