@@ -19,7 +19,7 @@ function ParticleType() constructor
 				size_increase = 0;
 				size_wiggle = 0;
 
-				scale = new Scale(1, 1);
+				scale = new Scale();
 
 				speed = 1;
 				speed_increase = 0;
@@ -198,29 +198,36 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			direction {real | Range}
+			// @argument			direction {real | Angle | Range}
 			// @argument			direction_increase? {real}
 			// @argument			direction_wiggle? {real}
 			// @description			Set the direction properties of this Particle Type.
 			static setDirection = function(_direction)
 			{
 				if (part_type_exists(ID))
-				{
+				{					
 					direction = _direction
 					direction_increase = (argument_count >= 2 ? argument[1] : 0);
 					direction_wiggle = (argument_count >= 3 ? argument[2] : 0);
 				
 					var _direction_minimum, _direction_maximum;
-				
-					if (instanceof(direction) == "Range")
+					
+					switch(instanceof(direction))
 					{
-						_direction_minimum = direction.minimum;
-						_direction_maximum = direction.maximum;
-					}
-					else
-					{
-						_direction_minimum = direction;
-						_direction_maximum = direction;
+						case "Range":
+							_direction_minimum = direction.minimum;
+							_direction_maximum = direction.maximum;
+						break;
+						
+						case "Angle":
+							_direction_minimum = direction.value;
+							_direction_maximum = direction.value;
+						break;
+						
+						default:
+							_direction_minimum = direction;
+							_direction_maximum = direction;
+						break;
 					}
 				
 					part_type_direction(ID, _direction_minimum, _direction_maximum, 
@@ -243,16 +250,23 @@ function ParticleType() constructor
 					orientation_relative = (argument_count >= 4 ? argument[3] : false);
 				
 					var _orientation_minimum, _orientation_maximum;
-				
-					if (instanceof(orientation) == "Range")
+					
+					switch(instanceof(orientation))
 					{
-						_orientation_minimum = orientation.minimum;
-						_orientation_maximum = orientation.maximum;
-					}
-					else
-					{
-						_orientation_minimum = orientation;
-						_orientation_maximum = orientation;
+						case "Range":
+							_orientation_minimum = orientation.minimum;
+							_orientation_maximum = orientation.maximum;
+						break;
+						
+						case "Angle":
+							_orientation_minimum = orientation.value;
+							_orientation_maximum = orientation.value;
+						break;
+						
+						default:
+							_orientation_minimum = orientation;
+							_orientation_maximum = orientation;
+						break;
 					}
 				
 					part_type_orientation(ID, _orientation_minimum, _orientation_maximum, 
