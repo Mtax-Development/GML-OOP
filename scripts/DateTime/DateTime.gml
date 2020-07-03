@@ -136,81 +136,81 @@ function DateTime() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the date component of this DateTime.
 			static getDate = function()
 			{				
 				return (ID != undefined ? date_date_of(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the time component of this DateTime.
 			static getTime = function()
 			{				
 				return (ID != undefined ? date_time_of(ID) : undefined);
 			}
 			
-			// @returns				{int}
-			// @description			Get the day count in the week of the date component.
-			static getWeekday = function()
-			{				
-				return (ID != undefined ? date_get_weekday(ID) : undefined);
-			}
-			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of days in the year of the date component.
 			static getDaysInYear = function()
 			{
 				return (ID != undefined ? date_days_in_year(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of days in the month of the date component.
 			static getDaysInMonth = function()
 			{				
 				return (ID != undefined ? date_days_in_month(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of which week in the year the date component is.
 			static getWeekOfYear = function()
 			{				
 				return (ID != undefined ? date_get_week(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of which day in the year the date component is.
 			static getDayOfYear = function()
 			{				
 				return (ID != undefined ? date_get_day_of_year(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of which hour in the year the date component is.
 			static getHourOfYear = function()
 			{				
 				return (ID != undefined ? date_get_hour_of_year(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of which minute in the year the date component is.
 			static getMinuteOfYear = function()
 			{				
 				return (ID != undefined ? date_get_minute_of_year(ID) : undefined);
 			}
 			
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Get the number of which second in the year the date component is.
 			static getSecondOfYear = function()
 			{				
 				return (ID != undefined ? date_get_second_of_year(ID) : undefined);
 			}
 			
+			// @returns				{int | undefined}
+			// @description			Get the day count in the week of the date component.
+			static getWeekday = function()
+			{				
+				return (ID != undefined ? date_get_weekday(ID) : undefined);
+			}
+			
 		#endregion
 		#region <Calculations>
 			
 			// @argument			other {DateTime}
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Compare two DateTimes and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
 			static compareDateTime = function(_other)
@@ -220,7 +220,7 @@ function DateTime() constructor
 			}
 		
 			// @argument			other {DateTime}
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Compare two dates (without time) and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
 			static compareDate = function(_other)
@@ -230,7 +230,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{int}
+			// @returns				{int | undefined}
 			// @description			Compare time values of two DateTimes and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
 			static compareTime = function(_other)
@@ -240,7 +240,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of years between date components of two DateTimes.
 			//						Incomplete years are returned as a fraction.
 			static spanOfYears = function(_other)
@@ -250,7 +250,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of months between date components of two DateTimes.
 			//						Incomplete months are returned as a fraction.
 			static spanOfMonths = function(_other)
@@ -260,7 +260,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of weeks between date components of two DateTimes.
 			//						Incomplete weeks are returned as a fraction.
 			static spanOfWeeks = function(_other)
@@ -270,7 +270,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of days between date components of two DateTimes.
 			//						Incomplete days are returned as a fraction.
 			static spanOfDays = function(_other)
@@ -280,7 +280,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of hours between time components of two DateTimes.
 			//						Incomplete hours are returned as a fraction.
 			static spanOfHours = function(_other)
@@ -290,7 +290,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of minutes between time components of two DateTimes.
 			//						Incomplete minutes are returned as a fraction.
 			static spanOfMinutes = function(_other)
@@ -300,7 +300,7 @@ function DateTime() constructor
 			}
 			
 			// @argument			other {DateTime}
-			// @returns				{real}
+			// @returns				{real | undefined}
 			// @description			Return number of seconds between time components of two DateTimes.
 			//						This is always a whole number.
 			static spanOfSeconds = function(_other)
@@ -312,7 +312,7 @@ function DateTime() constructor
 		#endregion
 		#region <Asserts>
 		
-			// @returns				{bool}
+			// @returns				{bool | undefined}
 			// @description			Check if the date component is the same as device's local date, 
 			//						following set timezone.
 			static isToday = function()
@@ -320,7 +320,7 @@ function DateTime() constructor
 				return (ID != undefined ? date_is_today(ID) : undefined);
 			}
 			
-			// @returns				{bool}
+			// @returns				{bool | undefined}
 			// @description			Check if the date component is a leap year - a calendar year 
 			//						that contains an additional day			
 			static isLeapYear = function()
@@ -352,13 +352,25 @@ function DateTime() constructor
 				return (ID != undefined ? date_time_string(ID) : string(undefined));
 			}
 			
-			/* +TODO
+			// @returns				{string}
+			// @description			Return information of all readable getters about this DateTime.
 			static toString_info = function()
 			{
-				
-			}*/
+				return ("Date: " + self.toString_date() + "\n" +
+						"Time: " + self.toString_time() + "\n" +
+						"Is Today: " + string(self.isToday()) + "\n" +
+						"Is Leap Year: " + string(self.isLeapYear()) + "\n" +
+						"Weekday: " + string(self.getWeekday()) + "\n" +
+						"Days in year: " + string(self.getDaysInYear()) + "\n" +
+						"Days in month: " + string(self.getDaysInMonth()) + "\n" +
+						"Week of year: " + string(self.getWeekOfYear()) + "\n" + 
+						"Day of year: " + string(self.getDayOfYear()) + "\n" +
+						"Hour of year: " + string(self.getHourOfYear()) + "\n" +
+						"Minute of year: " + string(self.getMinuteOfYear()) + "\n" +
+						"Second of year: " + string(self.getSecondOfYear()) + "\n");
+			}
 			
-			// @returns				{int[]}
+			// @returns				{int[] | undefined[]}
 			// @description			Return all elements of the DateTime as an array, ordered from
 			//						the longest elements to the shortest.
 			static toArray = function()
@@ -366,7 +378,7 @@ function DateTime() constructor
 				return [year, month, day, hour, minute, second];
 			}
 			
-			// @returns				{int[]}
+			// @returns				{int[] | undefined[]}
 			// @description			Return all elements of the date component as an array, ordered
 			//						from the longest elements to the shortest.
 			static toArray_date = function()
@@ -374,7 +386,7 @@ function DateTime() constructor
 				return [year, month, day];
 			}
 			
-			// @returns				{int[]}
+			// @returns				{int[] | undefined[]}
 			// @description			Return all elements of the time component as an array, ordered
 			//						from the longest elements to the shortest.
 			static toArray_time = function()

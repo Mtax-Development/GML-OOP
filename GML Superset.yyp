@@ -13,6 +13,7 @@
     {"id":{"name":"Scale","path":"scripts/Scale/Scale.yy",},"order":4,},
     {"id":{"name":"AudioInstancer","path":"scripts/AudioInstancer/AudioInstancer.yy",},"order":1,},
     {"id":{"name":"Range","path":"scripts/Range/Range.yy",},"order":2,},
+    {"id":{"name":"Object1","path":"objects/Object1/Object1.yy",},"order":0,},
     {"id":{"name":"Line","path":"scripts/Line/Line.yy",},"order":14,},
     {"id":{"name":"ParticleEmitter","path":"scripts/ParticleEmitter/ParticleEmitter.yy",},"order":4,},
     {"id":{"name":"Room","path":"scripts/Room/Room.yy",},"order":0,},
@@ -25,6 +26,7 @@
     {"id":{"name":"Point","path":"scripts/Point/Point.yy",},"order":13,},
     {"id":{"name":"Outline","path":"scripts/Outline/Outline.yy",},"order":9,},
     {"id":{"name":"Color3","path":"scripts/Color3/Color3.yy",},"order":6,},
+    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
     {"id":{"name":"TextDraw","path":"scripts/TextDraw/TextDraw.yy",},"order":6,},
   ],
   "Options": [
@@ -49,7 +51,9 @@
     "name": "Default",
     "children": [],
   },
-  "RoomOrder": [],
+  "RoomOrder": [
+    {"name":"Room1","path":"rooms/Room1/Room1.yy",},
+  ],
   "Folders": [
     {"folderPath":"folders/Scripts.yy","order":0,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Objects.yy","order":1,"resourceVersion":"1.0","name":"Objects","tags":[],"resourceType":"GMFolder",},
