@@ -1,8 +1,8 @@
 /// @function				Line()
-/// @argument				location {Vector4}
-/// @argument				alpha? {real}
-/// @argument				color? {color | color2 | undefined}
-/// @argument				width? {real}
+/// @argument				{Vector4} location
+/// @argument				{real} alpha?
+/// @argument				{color | color2 | undefined} color?
+/// @argument				{real} width?
 ///
 /// @description			Construct a Line connected by two points
 ///							in a space, which can be rendered with its

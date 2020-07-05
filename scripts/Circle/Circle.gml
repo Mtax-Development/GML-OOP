@@ -1,9 +1,9 @@
 /// @function				Circle()
-/// @argument				location {Vector2}
-/// @argument				radius {real}
-/// @argument				alpha? {real}
-/// @argument				fill? {color | Color2 | undefined}
-/// @argument				outline? {color | Outline | undefined}
+/// @argument				{Vector2} location
+/// @argument				{real} radius
+/// @argument				{real} alpha?
+/// @argument				{color | Color2 | undefined} fill?
+/// @argument				{color | Outline | undefined} outline?
 ///
 /// @description			Constructs a Circle in a point in the space at
 ///							specified radius, which can be rendered with its
@@ -60,7 +60,7 @@ function Circle(_location, _radius) constructor
 			}
 		}
 			
-		// @argument			point {Vector2}
+		// @argument			{Vector2} point
 		// @returns				{bool}
 		// @description			Checks whether a point in space is within this Circle.
 		static pointIn = function(_point)

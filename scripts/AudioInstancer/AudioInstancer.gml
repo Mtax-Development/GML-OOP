@@ -1,7 +1,7 @@
 /// @function				AudioInstancer()
-/// @argument				file {sound}
-/// @argument				pitch {real | Range}
-/// @argument				priority {real} (within range: 0-100)
+/// @argument				{sound} file
+/// @argument				{real | Range} pitch
+/// @argument				{real} priority (within range: 0-100)
 /// @description			Constructs an instance tracker of single Audio resource playback.
 ///
 ///							A single selected sound can be played and then manipulated.
@@ -75,14 +75,15 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 				instances = [];
 			}
 			
+			// @argument			{bool} pause
 			// @description			Pause all instances or resume all of the paused ones at once.
-			static pause = function(_state)
+			static pause = function(_pause)
 			{
 				for (var i = 0; i < array_length(instances); i++)
 				{
 					if (audio_exists(instances[i]))
 					{
-						if (_state)
+						if (_pause)
 						{
 							audio_pause_sound(instances[i]);
 						}

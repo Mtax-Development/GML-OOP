@@ -1,6 +1,6 @@
 /// @function				ParticleEmitter()
-/// @argument				particleSystem {ParticleSystem}
-/// @argument				particleType {ParticleType}
+/// @argument				{ParticleSystem} particleSystem
+/// @argument				{ParticleType} particleType
 ///
 /// @description			Constructs a Particle Emitter resource, actively bound to a 
 ///							Particle System, used to create a Particles Type in a region.
@@ -9,6 +9,8 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 	#region [Methods]
 		#region <Management>
 			
+			// @argument			{ParticleSystem} particleSystem
+			// @argument			{ParticleType} particleType
 			// @description			Initialize the constructor.
 			static construct = function(_particleSystem, _particleType)
 			{
@@ -70,9 +72,9 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			location {Vector4}
-			// @argument			shape {particle emitter shape}
-			// @argument			distribution {particle emitter distribution}
+			// @argument			{Vector4} location
+			// @argument			{ps_shape_*} shape
+			// @argument			{ps_distr_*} distribution
 			// @description			Set the particle creation information.
 			static setRegion = function(_location, _shape, _distribution)
 			{
@@ -89,7 +91,7 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Set the number of created particles during a stream.
 			static setStreamNumber = function(_number)
 			{
@@ -101,7 +103,7 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 				}
 			}
 			
-			// @argument			streamEnabled {bool}
+			// @argument			{bool} streamEnabled
 			// @description			Toggle the continous particle streaming.
 			static setStreamEnabled = function(_streamEnabled)
 			{
@@ -116,8 +118,8 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			particleType {ParticleType}
-			// @argument			number {int}
+			// @argument			{ParticleType} particleType
+			// @argument			{int} number
 			// @description			Create a number of Particles within the region.
 			static burst = function(_number)
 			{

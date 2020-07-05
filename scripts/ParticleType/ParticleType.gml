@@ -80,8 +80,8 @@ function ParticleType() constructor
 		
 		#endregion
 		#region <Setters>
-		
-			// @argument			shape {particle shape}
+			
+			// @argument			{pt_shape_*} shape
 			// @description			Set the shape property of this Particle Type.
 			static setShape = function(_shape)
 			{
@@ -93,10 +93,10 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			sprite {sprite}
-			// @argument			sprite_animate {bool}
-			// @argument			sprite_stretch {bool}
-			// @argument			sprite_random {bool}
+			// @argument			{sprite} sprite
+			// @argument			{bool} sprite_animate
+			// @argument			{bool} sprite_stretch
+			// @argument			{bool} sprite_random
 			// @description			Set the sprite properties of this Particle Type.
 			static setSprite = function(_sprite)
 			{
@@ -112,9 +112,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			size {real | Range}
-			// @argument			size_increase? {real}
-			// @argument			size_wiggle? {real}
+			// @argument			{real | Range} size
+			// @argument			{real} size_increase?
+			// @argument			{real} size_wiggle?
 			// @description			Set the size properties of this Particle Type.
 			static setSize = function(_size)
 			{
@@ -142,7 +142,7 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			scale {Scale}
+			// @argument			{Scale} scale
 			// @description			Set the scale property of this Particle Type.
 			static setScale = function(_scale)
 			{
@@ -154,9 +154,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			speed {real | Range}
-			// @argument			speed_increase? {real}
-			// @argument			speed_wiggle? {real}
+			// @argument			{real | Range} speed
+			// @argument			{real} speed_increase?
+			// @argument			{real} speed_wiggle?
 			// @description			Set the speed properties of this Particle Type.
 			static setSpeed = function(_speed)
 			{
@@ -184,8 +184,8 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			gravity_amount {real}
-			// @argument			gravity_direction {Angle}
+			// @argument			{real} gravity_amount
+			// @argument			{Angle} gravity_direction
 			// @description			Set the gravity properties of this Particle Type.
 			static setGravity = function(_gravity_amount, _gravity_direction)
 			{
@@ -198,9 +198,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			direction {real | Angle | Range}
-			// @argument			direction_increase? {real}
-			// @argument			direction_wiggle? {real}
+			// @argument			{real | Angle | Range} direction
+			// @argument			{real} direction_increase?
+			// @argument			{real} direction_wiggle?
 			// @description			Set the direction properties of this Particle Type.
 			static setDirection = function(_direction)
 			{
@@ -235,10 +235,10 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			orientation {real | Range}
-			// @argument			orientation_increase? {real}
-			// @argument			orientation_wiggle? {real}
-			// @argument			orientation_relative? {bool}
+			// @argument			{real | Range} orientation
+			// @argument			{real} orientation_increase?
+			// @argument			{real} orientation_wiggle?
+			// @argument			{bool} orientation_relative?
 			// @description			Set the orientation propierties of this Particle Type.
 			static setOrientation = function(_orientation)
 			{
@@ -275,7 +275,7 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			color {color | Color2 | Color3}
+			// @argument			{color | Color2 | Color3} color
 			// @description			Set the color property of this Particle Type to gradient change.
 			static setColor = function(_color)
 			{
@@ -307,7 +307,7 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			colors {Color2}
+			// @argument			{Color2} colors
 			// @description			Set the color property of this Particle Type to static random mix.
 			static setColor_mix = function(_colors)
 			{
@@ -320,9 +320,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			red {real | Range}
-			// @argument			green {real | Range}
-			// @argument			blue {real | Range}
+			// @argument			{real | Range} red
+			// @argument			{real | Range} green
+			// @argument			{real | Range} blue
 			// @description			Set the color property of this Particle Type to static random rgb.
 			static setColor_rgb = function(_red, _green, _blue)
 			{
@@ -374,9 +374,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			hue {Range}
-			// @argument			saturation {Range}
-			// @argument			value {Range}
+			// @argument			{real | Range} hue
+			// @argument			{real | Range} saturation
+			// @argument			{real | Range} value
 			// @description			Set the color property of this Particle Type to static random hsv.
 			static setColor_hsv = function(_hue, _saturation, _value)
 			{
@@ -428,9 +428,9 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @function			alpha1  {real}
-			// @function			alpha2? {real}
-			// @function			alpha3? {real}
+			// @function			{real} alpha1
+			// @function			{real} alpha2?
+			// @function			{real} alpha3?
 			// @description			Set the alpha property of this Particle Type.
 			static setAlpha = function(_alpha1)
 			{
@@ -459,7 +459,7 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			blend_additive {bool}
+			// @argument			{bool} blend_additive
 			// @description			Set the blending property of this Particle Type.
 			static setBlend = function(_blend_additive)
 			{
@@ -471,7 +471,7 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			life {int | Range}
+			// @argument			{int | Range} life
 			// @description			Set the life lenght property of this Particle Type.
 			static setLife = function(_life)
 			{
@@ -496,8 +496,8 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			step_type {ParticleType}
-			// @argument			step_number {int}
+			// @argument			{ParticleType} step_type
+			// @argument			{int} step_number
 			// @description			Set the step stream properties of this Particle Type.
 			static setStep = function(_step_type, _step_number)
 			{
@@ -511,8 +511,8 @@ function ParticleType() constructor
 				}
 			}
 		
-			// @argument			death_type {ParticleType}
-			// @argument			death_number {int}
+			// @argument			{ParticleType} death_type
+			// @argument			{int} death_number
 			// @description			Set the death stream properties of this Particle Type.
 			static setDeath = function(_death_type, _death_number)
 			{
@@ -529,10 +529,10 @@ function ParticleType() constructor
 		#endregion
 		#region <Execution>
 		
-			// @argument			particleSystem {ParticleSystem}
-			// @argument			location {Vector2}
-			// @argument			number? {int}
-			// @argument			color? {color}
+			// @argument			{ParticleSystem} particleSystem
+			// @argument			{Vector2} location
+			// @argument			{int} number?
+			// @argument			{color} color?
 			// @description			Directly create the particle(s) of this type in a space.
 			static create = function(_particleSystem, _location)
 			{
@@ -555,10 +555,10 @@ function ParticleType() constructor
 				}
 			}
 			
-			// @argument			particleSystem {ParticleSystem}
-			// @argument			shape {Rectangle | Triangle | Line | Circle | Ellipse}
-			// @argument			number? {int}
-			// @argument			color? {color}
+			// @argument			{ParticleSystem} particleSystem
+			// @argument			{Rectangle | Triangle | Line | Circle | Ellipse} shape
+			// @argument			{int} number?
+			// @argument			{color} color?
 			// @description			Directly create the particle(s) of this within random
 			//						spots of a Shape.
 			static createShape = function(_particleSystem, _shape)

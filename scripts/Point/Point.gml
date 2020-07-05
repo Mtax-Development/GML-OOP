@@ -1,7 +1,7 @@
 /// @function				Point()
-/// @argument				location {Vector2}
-/// @argument				alpha? {real}
-/// @argument				color? {color | undefined}
+/// @argument				{Vector2} location
+/// @argument				{real} alpha?
+/// @argument				{color | undefined} color?
 ///
 ///  @description			Constructs a Point in a space, which can be rendered as a single
 ///							pixel with its full configuration or operated in other ways.

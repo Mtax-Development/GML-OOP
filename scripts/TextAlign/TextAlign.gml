@@ -1,6 +1,6 @@
 /// @function				TextAlign()
-/// @argument				x? {halign}
-/// @argument				y? {valign}
+/// @argument				{halign} x?
+/// @argument				{valign} y?
 ///
 /// @description			Constructs a two-value Text Align container, ready
 ///							to be used with text draw-related code, as well as

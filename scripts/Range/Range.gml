@@ -1,6 +1,6 @@
 /// @function				Range()
-/// @argument				minimum {real}
-/// @argument				maximum {real}
+/// @argument				{real} minimum
+/// @argument				{real} maximum
 ///
 /// @description			Construct a container for two-value numeric Range with different numbers.
 function Range(_minimum, _maximum) constructor
@@ -25,7 +25,7 @@ function Range(_minimum, _maximum) constructor
 		#endregion
 		#region <Asserts>
 			
-			// @argument			{real}
+			// @argument			{real} number
 			// @description			Check whether a number is between or equal to the range.
 			static is_between = function(_number)
 			{

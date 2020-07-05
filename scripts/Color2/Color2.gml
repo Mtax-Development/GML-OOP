@@ -1,6 +1,6 @@
 /// @function				Color2()
-/// @function				color1 {color}
-/// @function				color2 {color}
+/// @function				{color} color1
+/// @function				{color} color2
 ///
 /// @description			Constructs a container for two colors, used mostly
 ///							for rendering with linnear color grading.

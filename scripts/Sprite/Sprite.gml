@@ -1,12 +1,12 @@
 /// @function				Sprite()
-/// @argument				sprite {sprite}
-/// @argument				frame {real}
-/// @argument				animationSpeed {real}
-/// @argument				location {Vector2}
-/// @argument				scale {Scale}
-/// @argument				angle {Angle}
-/// @argument				color {color}
-/// @argument				alpha {real}
+/// @argument				{sprite} sprite
+/// @argument				{Scale} scale?
+/// @argument				{Angle} angle?
+/// @argument				{color} color?
+/// @argument				{real} alpha?
+/// @argument				{Vector2} location?
+/// @argument				{real} animationSpeed?
+/// @argument				{real} frame?
 ///
 /// @description			Constructs a Sprite resource with its draw information, which
 ///							can be rendered with its full configuration and then animated.
@@ -15,7 +15,7 @@ function Sprite(_sprite) constructor
 	#region [Methods]
 		
 		// @description			Advance the animation and wrap its numbers.
-		static advanceFrames = function(_number)
+		static advanceFrames = function()
 		{
 			if (sprite_exists(ID))
 			{
@@ -66,13 +66,13 @@ function Sprite(_sprite) constructor
 	#region [Constructor]
 	
 		ID				= _sprite;
-		frame			= (argument_count >= 2 ? argument[1] : 0);
-		animationSpeed	= (argument_count >= 3 ? argument[2] : 0);
-		location		= (argument_count >= 4 ? argument[3] : undefined);
-		scale			= (argument_count >= 5 ? argument[4] : new Scale());
-		angle			= (argument_count >= 6 ? argument[5] : new Angle());
-		color			= (argument_count >= 7 ? argument[6] : c_white);
-		alpha			= (argument_count >= 8 ? argument[7] : 1);
+		scale			= (argument_count >= 2 ? argument[1] : new Scale());
+		angle			= (argument_count >= 3 ? argument[2] : new Angle());
+		color			= (argument_count >= 4 ? argument[3] : c_white);
+		alpha			= (argument_count >= 5 ? argument[4] : 1);
+		location		= (argument_count >= 6 ? argument[5] : undefined);
+		frame			= (argument_count >= 7 ? argument[6] : 0);
+		animationSpeed	= (argument_count >= 8 ? argument[7] : 0);
 	
 	#endregion
 }

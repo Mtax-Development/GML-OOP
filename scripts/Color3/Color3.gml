@@ -1,7 +1,7 @@
 /// @function				Color3()
-/// @function				color1 {color}
-/// @function				color2 {color}
-/// @function				color3 {color}
+/// @function				{color} color1
+/// @function				{color} color2
+/// @function				{color} color3
 ///
 /// @description			Constructs a container for three colors,
 ///							used mostly for rendering triangular shapes.

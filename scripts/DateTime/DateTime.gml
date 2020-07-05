@@ -1,5 +1,5 @@
 /// @function				DateTime()
-/// @argument				value? {datetime}
+/// @argument				 {datetime} value?
 ///
 /// @description			Constructs a container for a DateTime.
 function DateTime() constructor
@@ -41,12 +41,12 @@ function DateTime() constructor
 				self.construct();
 			}
 			
-			// @argument			year {int}
-			// @argument			month {int}
-			// @argument			day {int}
-			// @argument			hour {int}
-			// @argument			minute {int}
-			// @argument			second {int}
+			// @argument			{int} year
+			// @argument			{int} month
+			// @argument			{int} day
+			// @argument			{int} hour
+			// @argument			{int} minute
+			// @argument			{int} second
 			// @description			Set this DateTime to a newly created one.
 			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
 			{
@@ -54,12 +54,12 @@ function DateTime() constructor
 				self.construct();
 			}
 			
-			// @argument			years {int}
-			// @argument			months {int}
-			// @argument			days {int}
-			// @argument			hours {int}
-			// @argument			minutes {int}
-			// @argument			seconds {int}
+			// @argument			{int} years
+			// @argument			{int} months
+			// @argument			{int} days
+			// @argument			{int} hours
+			// @argument			{int} minutes
+			// @argument			{int} seconds
 			// @description			Modify any component of this DateTime by a specified number.
 			static modify = function(_years, _months, _days, _hours, _minutes, _seconds)
 			{
@@ -76,7 +76,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the years in this DateTime by a specified number.
 			static modifyYears = function(_number)
 			{
@@ -88,7 +88,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the months in this DateTime by a specified number.
 			static modifyMonths = function(_number)
 			{
@@ -100,7 +100,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the weeks in this DateTime by a specified number.
 			static modifyeWeeks = function(_number)
 			{
@@ -112,7 +112,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the days in this DateTime by a specified number.
 			static modifyDays = function(_number)
 			{
@@ -124,7 +124,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the hours in this DateTime by a specified number.
 			static modifyHours = function(_number)
 			{
@@ -136,7 +136,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the minutes in this DateTime by a specified number.
 			static modifyMinutes = function(_number)
 			{
@@ -148,7 +148,7 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			number {int}
+			// @argument			{int} number
 			// @description			Modify the seconds in this DateTime by a specified number.
 			static modifySeconds = function(_number)
 			{
@@ -236,7 +236,7 @@ function DateTime() constructor
 		#endregion
 		#region <Calculations>
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{int | undefined}
 			// @description			Compare two DateTimes and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
@@ -246,7 +246,7 @@ function DateTime() constructor
 					   date_compare_datetime(ID, _other.ID) : undefined);
 			}
 		
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{int | undefined}
 			// @description			Compare two dates (without time) and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
@@ -256,7 +256,7 @@ function DateTime() constructor
 					   date_compare_date(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{int | undefined}
 			// @description			Compare time values of two DateTimes and check which is first.
 			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
@@ -266,7 +266,7 @@ function DateTime() constructor
 					   date_compare_time(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of years between date components of two DateTimes.
 			//						Incomplete years are returned as a fraction.
@@ -276,7 +276,7 @@ function DateTime() constructor
 					   date_year_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of months between date components of two DateTimes.
 			//						Incomplete months are returned as a fraction.
@@ -286,7 +286,7 @@ function DateTime() constructor
 					   date_month_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of weeks between date components of two DateTimes.
 			//						Incomplete weeks are returned as a fraction.
@@ -296,7 +296,7 @@ function DateTime() constructor
 					   date_week_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of days between date components of two DateTimes.
 			//						Incomplete days are returned as a fraction.
@@ -306,7 +306,7 @@ function DateTime() constructor
 					   date_day_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of hours between time components of two DateTimes.
 			//						Incomplete hours are returned as a fraction.
@@ -316,7 +316,7 @@ function DateTime() constructor
 					   date_hour_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of minutes between time components of two DateTimes.
 			//						Incomplete minutes are returned as a fraction.
@@ -326,7 +326,7 @@ function DateTime() constructor
 					   date_minute_span(ID, _other.ID) : undefined);
 			}
 			
-			// @argument			other {DateTime}
+			// @argument			{DateTime} other
 			// @returns				{real | undefined}
 			// @description			Return number of seconds between time components of two DateTimes.
 			//						This is always a whole number.

@@ -18,7 +18,7 @@ function Vector4() constructor
 	#region [Methods]
 		#region <Operations>
 			
-			// @argument			other {Vector4}
+			// @argument			{Vector4} other
 			// @description			Add to values of the current Vector4 from other one's.
 			static add = function(_other)
 			{
@@ -28,7 +28,7 @@ function Vector4() constructor
 				y2 += _other.y2;
 			}
 			
-			// @argument			other {Vector4}
+			// @argument			{Vector4} other
 			// @description			Substract from values of the current Vector4 by other one's.
 			static substract = function(_other)
 			{
@@ -38,7 +38,7 @@ function Vector4() constructor
 				y2 -= _other.y2;
 			}
 			
-			// @argument			other {Vector4}
+			// @argument			{Vector4} other
 			// @description			Multiply values of the current Vector4 by other one's.
 			static multiply = function(_other)
 			{
@@ -48,7 +48,7 @@ function Vector4() constructor
 				y2 *= _other.y2;
 			}
 						
-			// @argument			other {Vector4}
+			// @argument			{Vector4} other
 			// @description			Divide values of the current Vector4 by other one's.
 			static divide = function(_other)
 			{
@@ -127,7 +127,7 @@ function Vector4() constructor
 		#endregion
 		#region <Asserts>
 			
-			// @argument			other {Vector4}
+			// @argument			{Vector4} other
 			// @returns				{bool}
 			// @description			Check whether two Vector4 have the same values.
 			static equals = function(_other)
@@ -136,8 +136,8 @@ function Vector4() constructor
 						and (y1 == _other.y1) and (y2 == _other.y2));
 			}
 			
-			// @argument			x {real}
-			// @argument			y {real}
+			// @argument			{real} x
+			// @argument			{real} y
 			// @returns				{bool}
 			// @description			Check if two x/y values are between the range of this Vector4's.
 			static is_between = function(_x, _y)

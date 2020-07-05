@@ -1,10 +1,10 @@
 /// @function				Triangle()
-/// @argument				location1 {Vector2}
-/// @argument				location2 {Vector2}
-/// @argument				location3 {Vector2}
-/// @argument				alpha? {real}
-/// @argument				fill? {color | Color3 | undefined}
-/// @argument				outline? {color | undefined}
+/// @argument				{Vector2} location1
+/// @argument				{Vector2} location2
+/// @argument				{Vector2} location3
+/// @argument				{real} alpha?
+/// @argument				{color | Color3 | undefined} fill?
+/// @argument				{color | undefined} outline?
 ///
 /// @description			Constructrs a Triangle connected by three points
 ///							in a space, which can be rendered with its full
@@ -80,7 +80,7 @@ function Triangle(_location1, _location2, _location3) constructor
 			}
 		}
 		
-		// @argument			point {Vector2}
+		// @argument			{Vector2} point
 		// @returns				{bool}
 		// @description			Checks whether a point in space is within this Triangle.
 		static pointIn = function(_point)

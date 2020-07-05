@@ -1,8 +1,8 @@
 /// @function				Outline
-/// @argument				size {real}
-/// @argument				color? {color | Color3 | Color4}
-/// @argument				alpha? {real}
-/// @argument				spacing? {real}
+/// @argument				{real} size
+/// @argument				{color | Color3 | Color4} color?
+/// @argument				{real} alpha?
+/// @argument				{real} spacing?
 ///
 /// @description			Construct a container for information about Outline drawing for shapes.
 function Outline(_size) constructor

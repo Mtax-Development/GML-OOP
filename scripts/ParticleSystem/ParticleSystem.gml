@@ -1,6 +1,6 @@
 /// @function				ParticleSystem()
-/// @argument				layer?
-/// @argument				persistent?
+/// @argument				{layer} layer?
+/// @argument				{bool} persistent?
 ///
 /// @description			Constructs a Particle System resource, required to
 ///							create Particles in a space.
@@ -64,7 +64,7 @@ function ParticleSystem() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			depth {int}
+			// @argument			{int} depth
 			// @description			Set a render depth that's independent from any layer depth.
 			static setDepth = function(_depth)
 			{
@@ -77,7 +77,7 @@ function ParticleSystem() constructor
 				}
 			}
 		
-			// @argument			layer {layer}
+			// @argument			{layer} layer
 			// @description			Set the render depth to layer, ignoring previous depth settings.
 			static setLayer = function(_layer)
 			{
@@ -90,7 +90,7 @@ function ParticleSystem() constructor
 				}
 			}
 		
-			// @argument			location {Vector2}
+			// @argument			{Vector2} location
 			// @description			Set the origin point of this particle system.
 			static setLocation = function(_location)
 			{
@@ -101,7 +101,8 @@ function ParticleSystem() constructor
 					part_system_position(ID, location.x, location.y);
 				}
 			}
-		
+			
+			// @argument			{bool} automaticUpdate
 			// @description			Set whether created Particles are executed without update call.
 			static setAutomaticUpdate = function(_automaticUpdate)
 			{
@@ -112,7 +113,8 @@ function ParticleSystem() constructor
 					part_system_automatic_update(ID, automaticUpdate);
 				}
 			}
-		
+			
+			// @argument			{bool} automaticRender
 			// @description			Set whether created Particles are executed without render call.
 			static setAutomaticRender = function(_automaticRender)
 			{
@@ -123,7 +125,8 @@ function ParticleSystem() constructor
 					part_system_automatic_draw(ID, automaticRender);
 				}
 			}
-		
+			
+			// @argument			{bool} drawOrder_oldToNew
 			// @description			Set whether older Particles are drawn benath newer.
 			static setDrawOrder_oldToNew = function(_drawOrder_oldToNew)
 			{

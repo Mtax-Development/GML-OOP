@@ -1,10 +1,10 @@
 /// @function				TextDraw()
-/// @argument				text {string}
-/// @argument				font {font}
-/// @argument				location {Vector2}
-/// @argument				align {TextAlign}
-/// @argument				color {color}
-/// @argument				alpha {real}
+/// @argument				{string} text
+/// @argument				{font} font
+/// @argument				{Vector2} location
+/// @argument				{TextAlign} align
+/// @argument				{color} color
+/// @argument				{real} alpha
 ///
 /// @description			Constructs a Text Draw which can be rendered with
 ///							full configurationor operated in other ways.

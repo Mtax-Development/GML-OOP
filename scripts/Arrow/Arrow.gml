@@ -1,8 +1,8 @@
 /// @function				Arrow()
-/// @argument				location {Vector4}
-/// @argument				alpha? {real}
-/// @argument				color? {color | undefined}
-/// @argument				size? {real}
+/// @argument				{Vector4} location
+/// @argument				{real} alpha? 
+/// @argument				{color | undefined} color?
+/// @argument				{real} size?
 ///
 /// @description			Constructs an Arrow connected by two points
 ///							in a space, which can be rendered with its

@@ -1,5 +1,5 @@
 /// @function				Angle()
-/// @argument				value? {real}
+/// @argument				{real} value?
 ///
 /// @description			Construct a container for a 360 degree Angle, wrapped from 0 to 359.
 function Angle() constructor
@@ -7,7 +7,7 @@ function Angle() constructor
 	#region [Methods]
 		#region <Manipulation>
 			
-			// @argument			value {real}
+			// @argument			{real} value
 			// @description			Change the value of the Angle and wrap it.
 			static modify = function(_value)
             {

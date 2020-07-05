@@ -1,8 +1,8 @@
 /// @function				Rectangle()
-/// @argument				location {Vector4}
-/// @argument				alpha? {real}
-/// @argument				fill? {color | Color4 | undefined}
-/// @argument				outline? {color | Outline | undefined}
+/// @argument				{Vector4} location
+/// @argument				{real} alpha?
+/// @argument				{color | Color4 | undefined} fill?
+/// @argument				{color | Outline | undefined} outline?
 ///
 /// @description			Constructs a Rectangle connected by two points
 ///							in a space, which can be rendered with its full
@@ -76,13 +76,13 @@ function Rectangle(_location) constructor
 			}
 		}
 		
-		// @argument			point {Vector2}
+		// @argument			{Vector2} point
 		// @returns				{bool}
 		// @description			Checks whether a point in space is within this Rectangle.
 		static pointIn = function(_point)
 		{
 			return point_in_rectangle(_point.x, _point.y, location.x1, location.y1,
-										location.x2, location.y2);
+									  location.x2, location.y2);
 		}
 		
 	#endregion

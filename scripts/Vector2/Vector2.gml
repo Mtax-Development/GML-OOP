@@ -15,7 +15,7 @@ function Vector2() constructor
 	#region [Methods]
 		#region <Operations>
 			
-			// @argument			other {Vector2}
+			// @argument			{Vector2} other
 			// @description			Add to values of the current Vector2 from other one's.
 			static add = function(_other)
 			{
@@ -23,7 +23,7 @@ function Vector2() constructor
 				y += _other.y;
 			}
 			
-			// @argument			other {Vector2}
+			// @argument			{Vector2} other
 			// @description			Substract from values of the current Vector2 by other one's.
 			static substract = function(_other)
 			{
@@ -31,7 +31,7 @@ function Vector2() constructor
 				y -= _other.y;
 			}
 			
-			// @argument			other {Vector2}
+			// @argument			{Vector2} other
 			// @description			Multiply values of the current Vector2 by other one's.
 			static multiply = function(_other)
 			{
@@ -39,7 +39,7 @@ function Vector2() constructor
 				y *= _other.y;
 			}
 						
-			// @argument			other {Vector2}
+			// @argument			{Vector2} other
 			// @description			Divide values of the current Vector2 by other one's.
 			static divide = function(_other)
 			{
@@ -86,7 +86,7 @@ function Vector2() constructor
 		#endregion
 		#region <Asserts>
 			
-			// @argument			other {Vector2}
+			// @argument			{Vector2} other
 			// @returns				{bool}
 			// @description			Check whether two Vector2 have the same values.
 			static equals = function(_other)

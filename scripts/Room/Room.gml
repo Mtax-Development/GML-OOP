@@ -1,6 +1,6 @@
 /// @function				Room()
-/// @argument				size? {Vector2}
-/// @argument				persistent? {bool}
+/// @argument				{Vector2} size?
+/// @argument				{bool} persistent?
 ///
 /// @description			Constructs and creates a Room resource with its information.
 function Room() constructor
@@ -8,10 +8,10 @@ function Room() constructor
 	#region [Methods]
 		#region <Management>
 			
-			// @argument			object {object}
-			// @argument			location {Vector2}
+			// @argument			{object} object
+			// @argument			{Vector2} location
 			// @description			Add an instance to this room when it's inactive.
-			static instance_add = function(_object, _location)
+			static addInstance = function(_object, _location)
 			{
 				if ((room_exists(ID)) and (room != ID))
 				{
@@ -25,7 +25,7 @@ function Room() constructor
 				}
 			}
 			
-			// @argument			room {room | Room}
+			// @argument			{room | Room} room
 			// @description			Make this room a duplicate of any existing one.
 			static duplicate = function(_room)
 			{
@@ -63,9 +63,9 @@ function Room() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			size {Vector2}
+			// @argument			{Vector2} size
 			// @description			Resize the room to set location limitations of added instances.
-			static set_size = function(_size)
+			static setSize = function(_size)
 			{
 				if (room_exists(ID))
 				{
@@ -83,13 +83,15 @@ function Room() constructor
 				}
 			}
 			
-			// @argument			value {bool}
-			// @description			Change the persistence flag for the room.
-			static set_persistent = function(_value)
+			// @argument			{bool} value
+			// @description			Change the persistence flag for this room.
+			static setPersistent = function(_persistent)
 			{		
 				if (room_exists(ID))
 				{
-					room_set_persistent(ID, _value);
+					persistent = _persistent;
+					
+					room_set_persistent(ID, persistent);
 				}
 			}
 	
