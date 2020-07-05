@@ -54,81 +54,108 @@ function DateTime() constructor
 				self.construct();
 			}
 			
-			//+TODO: Increase functions › Change (allowing negative changes as well)
+			// @argument			years {int}
+			// @argument			months {int}
+			// @argument			days {int}
+			// @argument			hours {int}
+			// @argument			minutes {int}
+			// @argument			seconds {int}
+			// @description			Modify any component of this DateTime by a specified number.
+			static modify = function(_years, _months, _days, _hours, _minutes, _seconds)
+			{
+				if (ID != undefined)
+				{
+					ID = date_inc_year(ID, _years);
+					ID = date_inc_month(ID, _months);
+					ID = date_inc_day(ID, _days);
+					ID = date_inc_hour(ID, _hours);
+					ID = date_inc_minute(ID, _minutes);
+					ID = date_inc_second(ID, _seconds);
+					
+					self.construct();
+				}
+			}
 			
 			// @argument			number {int}
-			// @description			Increase the years in this DateTime by a specified number.
-			static increaseYears = function(_number)
+			// @description			Modify the years in this DateTime by a specified number.
+			static modifyYears = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_year(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the months in this DateTime by a specified number.
-			static increaseMonths = function(_number)
+			// @description			Modify the months in this DateTime by a specified number.
+			static modifyMonths = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_month(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the weeks in this DateTime by a specified number.
-			static increaseWeeks = function(_number)
+			// @description			Modify the weeks in this DateTime by a specified number.
+			static modifyeWeeks = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_week(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the days in this DateTime by a specified number.
-			static increaseDays = function(_number)
+			// @description			Modify the days in this DateTime by a specified number.
+			static modifyDays = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_day(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the hours in this DateTime by a specified number.
-			static increaseHours = function(_number)
+			// @description			Modify the hours in this DateTime by a specified number.
+			static modifyHours = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_hour(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the minutes in this DateTime by a specified number.
-			static increaseMinutes = function(_number)
+			// @description			Modify the minutes in this DateTime by a specified number.
+			static modifyMinutes = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_minute(ID, _number);
+					
 					self.construct();
 				}
 			}
 			
 			// @argument			number {int}
-			// @description			Increase the seconds in this DateTime by a specified number.
-			static increaseSeconds = function(_number)
+			// @description			Modify the seconds in this DateTime by a specified number.
+			static modifySeconds = function(_number)
 			{
 				if (ID != undefined)
 				{
 					ID = date_inc_second(ID, _number);
+					
 					self.construct();
 				}
 			}
