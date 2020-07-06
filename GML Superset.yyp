@@ -8,6 +8,7 @@
     {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},"order":15,},
     {"id":{"name":"Ellipse","path":"scripts/Ellipse/Ellipse.yy",},"order":16,},
     {"id":{"name":"Vector2","path":"scripts/Vector2/Vector2.yy",},"order":0,},
+    {"id":{"name":"Layer","path":"scripts/Layer/Layer.yy",},"order":7,},
     {"id":{"name":"Circle","path":"scripts/Circle/Circle.yy",},"order":11,},
     {"id":{"name":"DateTime","path":"scripts/DateTime/DateTime.yy",},"order":10,},
     {"id":{"name":"Scale","path":"scripts/Scale/Scale.yy",},"order":4,},
