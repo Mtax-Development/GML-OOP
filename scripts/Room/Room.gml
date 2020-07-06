@@ -94,6 +94,14 @@ function Room() constructor
 					room_set_persistent(ID, persistent);
 				}
 			}
+			
+			static setLayerTarget = function()
+			{
+				if (room_exists(ID))
+				{
+					layer_set_target_room(ID);
+				}
+			}
 	
 		#endregion
 		#region <Execution>
