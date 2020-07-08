@@ -17,6 +17,9 @@ function Layer(_depth) constructor
 					layer_destroy(ID);
 			
 					ID = undefined;
+					
+					ds_list_destroy(instanceList);
+					ds_list_destroy(spriteList);
 				}
 		
 				return undefined;
@@ -62,7 +65,7 @@ function Layer(_depth) constructor
 					layer_set_visible(ID, visible);
 				}
 			}
-	
+			
 			// @argument			{int} depth
 			// @description			Set depth of this Layer, affecting its render sorting.
 			static setDepth = function(_depth)
@@ -74,7 +77,7 @@ function Layer(_depth) constructor
 					layer_depth(ID, depth);
 				}
 			}
-	
+			
 			// @argument			{script} script
 			// @description			Set a script to be called during this Layer's Draw Begin.
 			static setScript_drawBegin = function(_script)
@@ -86,7 +89,7 @@ function Layer(_depth) constructor
 					layer_script_begin(ID, script_drawBegin);
 				}
 			}
-	
+			
 			// @argument			{script} script
 			// @description			Set a script to be called during this Layer's Draw End.
 			static setScript_drawEnd = function(_script)
@@ -132,6 +135,30 @@ function Layer(_depth) constructor
 			
 		#endregion
 		#region <Execution>
+		
+			// @argument			{layerElementID} element
+			// @argument			{Layer|layer} other
+			// @description			Move a specified Layer element from this Layer to other one.
+			static moveElement = function(_element, _other)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (_other != undefined))
+				{			
+					if (instanceof(_other) == "Layer")
+					{
+						if (layer_exists(_other.ID))
+						{
+							layer_element_move(_element, _other.ID);
+						}
+					}
+					else
+					{
+						if (layer_exists(_other))
+						{
+							layer_element_move(_element, _other);
+						}
+					}
+				}
+			}
 			
 			// @argument			{Vector2} location
 			// @argument			{object} object
@@ -139,8 +166,16 @@ function Layer(_depth) constructor
 			// @description			Create an instance on this layer and return its internal ID.
 			static createInstance = function(_location, _object)
 			{
-				return (((ID != undefined) and (layer_exists(ID))) ? 
-						instance_create_layer(_location.x, _location.y, ID, _object) : noone);
+				if ((ID != undefined) and (layer_exists(ID)))
+				{
+					ds_list_add(instanceList, _object);
+					
+					return instance_create_layer(_location.x, _location.y, ID, _object);
+				}
+				else
+				{
+					return noone;
+				}
 			}
 				
 			// @argument			{bool} instancesActive
@@ -167,34 +202,84 @@ function Layer(_depth) constructor
 			{
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
+					ds_list_clear(instanceList);
+					
 					layer_destroy_instances(ID);
 				}
 			}
 			
-			// @argument			{layerElementID} element
-			// @argument			{Layer|layer} other
-			// @description			Move a specified Layer element from this Layer to other one.
-			static moveElement = function(_element, _other)
+			static spriteCreate = function(_sprite)
 			{
-				if ((ID != undefined) and (layer_exists(ID)) and (_other != undefined))
-				{			
-					if (instanceof(_other) == "Layer")
+				if ((ID != undefined) and (layer_exists(ID)) and (_sprite.location != undefined))
+				{	
+					var _spriteElement = layer_sprite_create(ID, _sprite.location.x, 
+															 _sprite.location.y,
+															 _sprite.ID);
+					
+					ds_list_add(spriteList, {spriteElement: _spriteElement, 
+											 sprite: _sprite});
+					
+					layer_sprite_xscale(_spriteElement, _sprite.scale.x);
+					layer_sprite_yscale(_spriteElement, _sprite.scale.y);
+					layer_sprite_angle(_spriteElement, _sprite.angle);
+					layer_sprite_blend(_spriteElement, _sprite.color);
+					layer_sprite_alpha(_spriteElement, _sprite.alpha);
+					layer_sprite_index(_spriteElement, _sprite.frame);
+					layer_sprite_speed(_spriteElement, _sprite.speed);
+					
+					return _spriteElement;
+				}
+				else
+				{
+					return noone;
+				}
+			}
+			
+			static spriteUpdate = function(_spriteElement, _sprite)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_spriteElement)) 
+				and (layer_sprite_exists(ID, _spriteElement)))
+				{
+					var i = 0;
+					
+					repeat(ds_list_size(spriteList))
 					{
-						if (layer_exists(_other.ID))
+						if (spriteList[| i].spriteElement == _spriteElement)
 						{
-							layer_element_move(_element, _other.ID);
+							spriteList[| i] = {spriteElement: _spriteElement,
+											   sprite: _sprite};
+											   
+							break;
 						}
+						
+						i++;
+					}
+					
+					if (_sprite == -1)
+					{
+						layer_sprite_change(_spriteElement, _sprite);
 					}
 					else
-					{
-						if (layer_exists(_other))
+					{						
+						layer_sprite_change(_spriteElement, _sprite.ID);
+						
+						if (_sprite.location != undefined)
 						{
-							layer_element_move(_element, _other);
+							layer_sprite_x(_spriteElement, _location_x);
+							layer_sprite_y(_spriteElement, _location_y);
 						}
+						
+						layer_sprite_xscale(_spriteElement, _sprite.scale.x);
+						layer_sprite_yscale(_spriteElement, _sprite.scale.y);
+						layer_sprite_angle(_spriteElement, _sprite.angle);
+						layer_sprite_blend(_spriteElement, _sprite.color);
+						layer_sprite_alpha(_spriteElement, _sprite.alpha);
+						layer_sprite_index(_spriteElement, _sprite.frame);
+						layer_sprite_speed(_spriteElement, _sprite.speed);
 					}
 				}
 			}
-		
+			
 		#endregion
 	#endregion
 	#region [Constructor]
@@ -211,6 +296,9 @@ function Layer(_depth) constructor
 		script_drawEnd = undefined;
 		
 		shader = undefined;
+		
+		instanceList = ds_list_create();
+		spriteList = ds_list_create();
 		
 		ID = layer_create(depth);
 		
