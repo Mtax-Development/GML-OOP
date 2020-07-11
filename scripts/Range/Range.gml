@@ -21,7 +21,7 @@ function Range(_minimum, _maximum) constructor
 			{
 				return irandom_range(minimum, maximum);
 			}
-	
+			
 		#endregion
 		#region <Asserts>
 			
@@ -31,7 +31,7 @@ function Range(_minimum, _maximum) constructor
 			{
 				return (_number == clamp(_number, minimum, maximum));
 			}
-
+			
 		#endregion
 		#region <Typing>
 			
@@ -40,13 +40,13 @@ function Range(_minimum, _maximum) constructor
 			{
 				return (string(minimum) + "-" + string(maximum));
 			}
-	
+			
 		#endregion
 	#endregion
 	#region [Constructor]
-
+		
 		minimum = _minimum;
 		maximum = _maximum;
-	
+		
 	#endregion
 }

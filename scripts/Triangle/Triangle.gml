@@ -3,8 +3,8 @@
 /// @argument				{Vector2} location2
 /// @argument				{Vector2} location3
 /// @argument				{real} alpha?
-/// @argument				{color | Color3 | undefined} fill?
-/// @argument				{color | undefined} outline?
+/// @argument				{color|Color3|undefined} fill?
+/// @argument				{color|undefined} outline?
 ///
 /// @description			Constructrs a Triangle connected by three points
 ///							in a space, which can be rendered with its full
@@ -91,13 +91,13 @@ function Triangle(_location1, _location2, _location3) constructor
 		
 	#endregion
 	#region [Constructor]
-	
+		
 		location1 = _location1;
 		location2 = _location2;
 		location3 = _location3;
 		alpha	  = (argument_count >= 4 ? argument[3] : 1);
 		fill	  = (argument_count >= 5 ? argument[4] : undefined);
 		outline   = (argument_count >= 6 ? argument[5] : undefined);
-	
+		
 	#endregion
 }

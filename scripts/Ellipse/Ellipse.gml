@@ -1,8 +1,8 @@
 /// @function				Ellipse()
 /// @argument				{Vector4} location
 /// @argument				{real} alpha?
-/// @argument				{color | Color2 | undefined} fill?
-/// @argument				{color | Outline | undefined} outline?
+/// @argument				{color|Color2|undefined} fill?
+/// @argument				{color|Outline|undefined} outline?
 ///
 /// @description			Constructs an Ellipse connected by two points
 ///							in a space, which can be rendered with its full

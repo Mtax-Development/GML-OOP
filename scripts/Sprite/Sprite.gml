@@ -10,7 +10,7 @@
 ///
 /// @description			Constructs a Sprite resource with its draw information, which
 ///							can be rendered with its full configuration and then animated.
-function Sprite(_sprite) constructor
+function Sprite(_sprite, _location, _frame, _speed, _scale, _angle, _color, _alpha) constructor
 {
 	#region [Methods]
 		
@@ -66,13 +66,13 @@ function Sprite(_sprite) constructor
 	#region [Constructor]
 		
 		ID				= _sprite;
-		location		= (argument_count >= 2 ? argument[1] : undefined);
-		frame			= (argument_count >= 3 ? argument[2] : 0);
-		speed			= (argument_count >= 4 ? argument[3] : 0);
-		scale			= (argument_count >= 5 ? argument[4] : new Scale());
-		angle			= (argument_count >= 6 ? argument[5] : new Angle());
-		color			= (argument_count >= 7 ? argument[6] : c_white);
-		alpha			= (argument_count >= 8 ? argument[7] : 1);
-	
+		location		= ((_location != undefined) ? _location : undefined);
+		frame			= ((_frame != undefined) ? _frame : 0);
+		speed			= ((_speed != undefined) ? _speed : 0);
+		scale			= ((_scale != undefined) ? _scale : new Scale());
+		angle			= ((_angle != undefined) ? _angle : new Angle());
+		color			= ((_color != undefined) ? _color : c_white);
+		alpha			= ((_alpha != undefined) ? _alpha : 1);
+		
 	#endregion
 }

@@ -47,7 +47,7 @@ function Vector4() constructor
 				y1 *= _other.y1;
 				y2 *= _other.y2;
 			}
-						
+			
 			// @argument			{Vector4} other
 			// @description			Divide values of the current Vector4 by other one's.
 			static divide = function(_other)
@@ -71,7 +71,7 @@ function Vector4() constructor
 				y1 = y1_new;
 				y2 = y2_new;
 			}
-	
+			
 		#endregion
 		#region <Getters>
 			
@@ -95,10 +95,10 @@ function Vector4() constructor
 			{
 				return point_direction(x2, y2, x1, y1);
 			}
-		
+			
 		#endregion
 		#region <Typing>
-
+			
 			// @returns				{string}
 			// @description			Override the string conversion with a simple value output.
 			static toString = function()
@@ -123,7 +123,7 @@ function Vector4() constructor
 			{
 				return [x1, x2, y1, y2];
 			}
-
+			
 		#endregion
 		#region <Asserts>
 			
@@ -144,7 +144,7 @@ function Vector4() constructor
 			{
 				return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
 			}
-
+			
 		#endregion
 	#endregion
 	#region [Constructor]
@@ -198,6 +198,6 @@ function Vector4() constructor
 				y1 = other.y;
 			break;
 		}
-
+		
 	#endregion
 }

@@ -2,8 +2,8 @@
 /// @argument				{Vector2} location
 /// @argument				{real} radius
 /// @argument				{real} alpha?
-/// @argument				{color | Color2 | undefined} fill?
-/// @argument				{color | Outline | undefined} outline?
+/// @argument				{color|Color2|undefined} fill?
+/// @argument				{color|Outline|undefined} outline?
 ///
 /// @description			Constructs a Circle in a point in the space at
 ///							specified radius, which can be rendered with its
@@ -18,7 +18,7 @@ function Circle(_location, _radius) constructor
 			if ((alpha > 0) and (fill != undefined))
 			{
 				draw_set_alpha(alpha);
-			
+				
 				if (instanceof(fill) == "Color2")
 				{
 					draw_circle_color(location.x, location.y, radius, 
@@ -31,7 +31,7 @@ function Circle(_location, _radius) constructor
 					draw_circle(location.x, location.y, radius, false);
 				}
 			}
-		
+			
 			if (outline != undefined)
 			{
 				if (instanceof(outline) == "Outline")
@@ -59,7 +59,7 @@ function Circle(_location, _radius) constructor
 				}
 			}
 		}
-			
+		
 		// @argument			{Vector2} point
 		// @returns				{bool}
 		// @description			Checks whether a point in space is within this Circle.
@@ -70,12 +70,12 @@ function Circle(_location, _radius) constructor
 		
 	#endregion
 	#region [Constructor]
-	
+		
 		location = _location;
 		radius	 = _radius;
 		alpha	 = (argument_count >= 3 ? argument[2] : 1);
 		fill	 = (argument_count >= 4 ? argument[3] : undefined);
 		outline	 = (argument_count >= 5 ? argument[4] : undefined);
-	
+		
 	#endregion
 }

@@ -1,6 +1,6 @@
 /// @function				AudioInstancer()
 /// @argument				{sound} file
-/// @argument				{real | Range} pitch
+/// @argument				{real|Range} pitch
 /// @argument				{real} priority (within range: 0-100)
 /// @description			Constructs an instance tracker of single Audio resource playback.
 ///
@@ -20,7 +20,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 			static list_instances = function()
 			{
 				var instances_new = [];
-		
+				
 				var instances_length = array_length(instances);
 		
 				for (var i = 0; i < instances_length; i++)
@@ -30,7 +30,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 						instances_new[array_length(instances_new)] = instances[i];
 					}
 				}
-		
+				
 				instances = instances_new;
 			}
 			
@@ -52,11 +52,11 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 					{
 						audio_sound_pitch(instance, pitch);
 					}
-			
+					
 					self.list_instances();
-			
+					
 					instances[array_length(instances)] = instance;
-			
+					
 					return instance;
 				}
 			}
@@ -98,11 +98,11 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-	
+		
 		file = _file;
 		pitch = _pitch;
 		priority = _priority;
 		instances = [];
-	
+		
 	#endregion
 }

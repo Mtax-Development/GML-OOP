@@ -3,7 +3,7 @@
 /// @argument				{bool} persistent?
 ///
 /// @description			Constructs and creates a Room resource with its information.
-function Room() constructor
+function Room(_size, _persistent) constructor
 {
 	#region [Methods]
 		#region <Management>
@@ -16,7 +16,7 @@ function Room() constructor
 				if ((room_exists(ID)) and (room != ID))
 				{
 					room_instance_add(ID, _location.x, _location.y, _object);
-			
+					
 					instances[array_length(instances)] = 
 					{
 						object: _object,
@@ -25,7 +25,7 @@ function Room() constructor
 				}
 			}
 			
-			// @argument			{room | Room} room
+			// @argument			{room|Room} room
 			// @description			Make this room a duplicate of any existing one.
 			static duplicate = function(_room)
 			{
@@ -59,7 +59,7 @@ function Room() constructor
 					}
 				}
 			}
-	
+			
 		#endregion
 		#region <Setters>
 			
@@ -74,7 +74,7 @@ function Room() constructor
 						size.x = _size.x;
 						room_set_width(ID, size.x);
 					}
-			
+					
 					if (size.y != _size.y)
 					{
 						size.y = _size.y;
@@ -95,6 +95,7 @@ function Room() constructor
 				}
 			}
 			
+			// @description			Set all further Layer-related functions to this room.
 			static setLayerTarget = function()
 			{
 				if (room_exists(ID))
@@ -102,7 +103,7 @@ function Room() constructor
 					layer_set_target_room(ID);
 				}
 			}
-	
+			
 		#endregion
 		#region <Execution>
 			
@@ -114,24 +115,21 @@ function Room() constructor
 					room_goto(ID);
 				}
 			}
-	
+			
 		#endregion
 	#endregion
 	#region [Constructor]
-	
-		var _size = (argument_count >= 1 ? argument[0] : new Vector2(0, 0));
-		var _persistent = (argument_count >= 2 ? argument[1] : false);
-	
-		size = _size;
-		persistent = _persistent;
-	
+		
+		size = ((_size != undefined) ? _size : new Vector2(0, 0));
+		persistent = ((_persistent != undefined) ? _persistent : false);
+		
 		ID = room_add();
 		name = room_get_name(ID);
 		instances = [];
-	
+		
 		room_set_width(ID, size.x);
 		room_set_height(ID, size.y);
 		room_set_persistent(ID, persistent);
-	
+		
 	#endregion
 }

@@ -16,11 +16,11 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 			{
 				particleSystem = _particleSystem;
 				particleType = _particleType;
-		
+				
 				ID = part_emitter_create(particleSystem.ID);
 				
 				ds_list_add(particleSystem.emitterList, self);
-		
+				
 				location = undefined;
 				shape = undefined;
 				distribution = undefined;
@@ -65,7 +65,7 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 				{
 					part_emitter_destroy(particleSystem.ID, ID);
 				}
-		
+				
 				self.construct(originalArguments.particleSystem);
 			}
 			
@@ -85,7 +85,7 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 					location = _location;
 					shape = _shape;
 					distribution = _distribution;
-		
+					
 					part_emitter_region(particleSystem.ID, ID, location.x1, location.x2,
 										location.y1, location.y2, shape, distribution);
 				}
@@ -156,14 +156,14 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-	
+		
 		originalArguments =
 		{
 			particleSystem: _particleSystem,
 			particleType: _particleType
 		};
-	
+		
 		self.construct(originalArguments.particleSystem, originalArguments.particleType);
-	
+		
 	#endregion
 }

@@ -1,9 +1,9 @@
 /// @function				RoundRectangle()
 /// @argument				{Vector4} location
 /// @argument				{real} alpha?
-/// @argument				{color | Color2 | undefined} fill?
-/// @argument				{color | Outline | undefined} outline?
-/// @argument				{Vector2 | undefined} radius?
+/// @argument				{color|Color2|undefined} fill?
+/// @argument				{color|Outline|undefined} outline?
+/// @argument				{Vector2|undefined} radius?
 ///
 /// @description			Constructs a Round Rectangle connected by two
 ///							points in a space, which can be rendered with
@@ -101,12 +101,12 @@ function RoundRectangle(_location) constructor
 		
 	#endregion
 	#region [Constructor]
-	
+		
 		location = _location;
 		alpha	 = (argument_count >= 2 ? argument[1] : 1);
 		fill	 = (argument_count >= 3 ? argument[2] : undefined);
 		outline	 = (argument_count >= 4 ? argument[3] : undefined);
 		radius	 = (argument_count >= 5 ? argument[4] : undefined);
-
+		
 	#endregion
 }

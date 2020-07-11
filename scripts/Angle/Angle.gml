@@ -2,10 +2,10 @@
 /// @argument				{real} value?
 ///
 /// @description			Construct a container for a 360 degree Angle, wrapped from 0 to 359.
-function Angle() constructor
+function Angle(_value) constructor
 {
 	#region [Methods]
-		#region <Manipulation>
+		#region <Management>
 			
 			// @argument			{real} value
 			// @description			Change the value of the Angle and wrap it.
@@ -14,7 +14,7 @@ function Angle() constructor
                 value += _value;
                 value -= (360 * (floor(value / 360)))
             }
-	
+			
 		#endregion
 		#region <Calculations>
 			
@@ -34,22 +34,22 @@ function Angle() constructor
 			
 		#endregion
 		#region <Typing>
-
+			
 			// @description			Override the string conversion with a simple value output.
 			static toString = function()
 			{
 				return string(value);
 			}
-
+			
 		#endregion
 	#endregion
 	#region [Constructor]
-
+		
 		value = 0;
 		
-		if (argument_count >= 1)
+		if (_value != undefined)
 		{
-			self.modify(argument[0]);
+			self.modify(_value);
 		}
 		
 	#endregion

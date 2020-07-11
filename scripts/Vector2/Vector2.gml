@@ -38,7 +38,7 @@ function Vector2() constructor
 				x *= _other.x;
 				y *= _other.y;
 			}
-						
+			
 			// @argument			{Vector2} other
 			// @description			Divide values of the current Vector2 by other one's.
 			static divide = function(_other)
@@ -56,7 +56,7 @@ function Vector2() constructor
 				x = y_new;
 				y = x_new;
 			}
-	
+			
 		#endregion
 		#region <Typing>
 			
@@ -82,7 +82,7 @@ function Vector2() constructor
 			{
 				return [x, y];
 			}
-
+			
 		#endregion
 		#region <Asserts>
 			
@@ -93,11 +93,11 @@ function Vector2() constructor
 			{
 				return ((x == _other.x) and (y == _other.y));
 			}
-
+			
 		#endregion
 	#endregion
 	#region [Constructor]
-	
+		
 		switch (argument_count)
 		{
 			case 2:	
@@ -130,6 +130,6 @@ function Vector2() constructor
 				y = other.y;
 			break;
 		}
-
+		
 	#endregion
 }

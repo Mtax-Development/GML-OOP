@@ -4,16 +4,18 @@
 ///
 /// @description			Constructs a Particle System resource, required to
 ///							create Particles in a space.
-function ParticleSystem() constructor
+function ParticleSystem(_layer, _persistent) constructor
 {
 	#region [Methods]
 		#region <Management>
 			
+			// @argument			{layer} layer?
+			// @argument			{bool} persistent?
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_layer, _persistent)
 			{
-				layer = ((argument[0] != undefined) ? argument[0] : undefined);
-				persistent = ((argument[1] != undefined) ? argument[1] : false);
+				layer = _layer;
+				persistent = ((_persistent != undefined) ? _persistent : false);
 				
 				depth = undefined;
 				
@@ -46,7 +48,7 @@ function ParticleSystem() constructor
 				}
 				
 				ds_list_destroy(emitterList);
-			
+				
 				return undefined; 
 			}
 			
@@ -57,7 +59,7 @@ function ParticleSystem() constructor
 				{
 					part_system_destroy(ID);
 				}
-			
+				
 				self.construct(originalArguments.layer, originalArguments.persistent);
 			}
 			
@@ -72,11 +74,11 @@ function ParticleSystem() constructor
 				{
 					layer = undefined;
 					depth = _depth;
-				
+					
 					part_system_depth(ID, depth);
 				}
 			}
-		
+			
 			// @argument			{layer} layer
 			// @description			Set the render depth to layer, ignoring previous depth settings.
 			static setLayer = function(_layer)
@@ -85,11 +87,11 @@ function ParticleSystem() constructor
 				{
 					layer = _layer;
 					depth = undefined;
-				
+					
 					part_system_layer(ID, layer);
 				}
 			}
-		
+			
 			// @argument			{Vector2} location
 			// @description			Set the origin point of this particle system.
 			static setLocation = function(_location)
@@ -97,7 +99,7 @@ function ParticleSystem() constructor
 				if (part_system_exists(ID))
 				{
 					location = _location;
-				
+					
 					part_system_position(ID, location.x, location.y);
 				}
 			}
@@ -109,7 +111,7 @@ function ParticleSystem() constructor
 				if (part_system_exists(ID))
 				{
 					automaticUpdate = _automaticUpdate;
-				
+					
 					part_system_automatic_update(ID, automaticUpdate);
 				}
 			}
@@ -121,7 +123,7 @@ function ParticleSystem() constructor
 				if (part_system_exists(ID))
 				{
 					automaticRender = _automaticRender;
-				
+					
 					part_system_automatic_draw(ID, automaticRender);
 				}
 			}
@@ -133,15 +135,15 @@ function ParticleSystem() constructor
 				if (part_system_exists(ID))
 				{
 					drawOrder_oldToNew = _drawOrder_oldToNew;
-				
+					
 					part_system_draw_order(ID, _drawOrder_oldToNew);
 				}
 			}
 			
 		#endregion
 		#region <Getters>
-		
-			// @returns				{int | undefined}
+			
+			// @returns				{int|undefined}
 			// @description			Return a number of currently existing Particles of this Particle
 			//						System or undefined if it does not exist.
 			static getParticlesCount = function()
@@ -149,17 +151,17 @@ function ParticleSystem() constructor
 				return (part_system_exists(ID) ? part_particles_count(ID) : undefined);
 			}
 			
-			// @returns				{layerID | undefined}
+			// @returns				{layerID|undefined}
 			// @description			Return the ID of the layer the system is internally operated in.
 			//						Returns undefined if the Particle System does not exist.
 			static getLayer = function()
 			{
 				return (part_system_exists(ID) ? part_system_get_layer(ID) : undefined);
 			}
-		
+			
 		#endregion
 		#region <Execution>
-		
+			
 			// @description			Render the created Particles.
 			static render = function()
 			{
@@ -168,7 +170,7 @@ function ParticleSystem() constructor
 					part_system_drawit(ID);
 				}
 			}
-		
+			
 			// @description			Advance all actions of created Particles.
 			static update = function()
 			{
@@ -186,18 +188,18 @@ function ParticleSystem() constructor
 					part_particles_clear(ID);
 				}
 			}
-		
+			
 		#endregion
 	#endregion
 	#region [Constructor]
+		
+		originalArguments =
+		{
+			layer: _layer,
+			persistent: (_persistent != undefined ? _persistent : false)
+		}
 	
-	originalArguments =
-	{
-		layer: (argument_count >= 1 ? argument[0] : undefined),
-		persistent: (argument_count >= 2 ? argument[1] : undefined)
-	}
-	
-	self.construct(originalArguments.layer, originalArguments.persistent);
-	
+		self.construct(originalArguments.layer, originalArguments.persistent);
+		
 	#endregion
 }

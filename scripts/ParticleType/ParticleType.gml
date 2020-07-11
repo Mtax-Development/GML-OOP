@@ -14,43 +14,43 @@ function ParticleType() constructor
 				sprite_animate = false;
 				sprite_stretch = false;
 				sprite_random = false;
-
+				
 				size = 1;
 				size_increase = 0;
 				size_wiggle = 0;
-
+				
 				scale = new Scale();
-
+				
 				speed = 1;
 				speed_increase = 0;
 				speed_wiggle = 0;
-
+				
 				direction = 0;
 				direction_increase = 0;
 				direction_wiggle = 0;
-
+				
 				gravity_amount = 0;
 				gravity_direction = undefined;
-
+				
 				orientation = 0;
 				orientation_increase = 0;
 				orientation_wiggle = 0;
 				orientation_relative = false;
-
+				
 				color = c_white;
 				color_type = "color";
-		
+				
 				alpha = [1, undefined, undefined];
-
+				
 				blend_additive = false;
-
+				
 				life = 100;
-
+				
 				shape = pt_shape_pixel;
-
+				
 				step_type = undefined;
 				step_number = 0;
-
+				
 				death_type = undefined;
 				death_number = 0;	
 			}
@@ -77,7 +77,7 @@ function ParticleType() constructor
 				
 				self.construct();
 			}
-		
+			
 		#endregion
 		#region <Setters>
 			
@@ -88,44 +88,44 @@ function ParticleType() constructor
 				if (part_type_exists(ID))
 				{
 					shape = _shape;
-				
+					
 					part_type_shape(ID, shape);
 				}
 			}
-		
+			
 			// @argument			{sprite} sprite
 			// @argument			{bool} sprite_animate
 			// @argument			{bool} sprite_stretch
 			// @argument			{bool} sprite_random
 			// @description			Set the sprite properties of this Particle Type.
-			static setSprite = function(_sprite)
+			static setSprite = function(_sprite, _animate, _stretch, _random)
 			{
 				if (part_type_exists(ID))
 				{
 					sprite = _sprite;
-					sprite_animate = (argument_count >= 2 ? argument[1] : false);
-					sprite_stretch = (argument_count >= 3 ? argument[2] : false);
-					sprite_random = (argument_count >= 4 ? argument[3] : false);
-				
+					sprite_animate = ((_animate != undefined) ? _animate : false);
+					sprite_stretch = ((_stretch != undefined) ? _stretch : false);
+					sprite_random = ((_random != undefined) ? _random : false);
+					
 					part_type_sprite(ID, sprite, sprite_animate, sprite_stretch,
 									 sprite_random);
 				}
 			}
-		
-			// @argument			{real | Range} size
-			// @argument			{real} size_increase?
-			// @argument			{real} size_wiggle?
+			
+			// @argument			{real|Range} size
+			// @argument			{real} increase?
+			// @argument			{real} wiggle?
 			// @description			Set the size properties of this Particle Type.
-			static setSize = function(_size)
+			static setSize = function(_size, _increase, _wiggle)
 			{
 				if (part_type_exists(ID))
 				{
 					size = _size;
-					size_increase = (argument_count >= 2 ? argument[1] : 0);
-					size_wiggle = (argument_count >= 3 ? argument[2] : 0);
-				
+					size_increase = ((_increase != undefined) ? _increase : 0);
+					size_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					
 					var _size_minimum, _size_maximum;
-				
+					
 					if (instanceof(size) == "Range")
 					{
 						_size_minimum = size.minimum;
@@ -136,12 +136,12 @@ function ParticleType() constructor
 						_size_minimum = size;
 						_size_maximum = size;
 					}
-				
+					
 					part_type_size(ID, _size_minimum, _size_maximum, 
 								   size_increase, size_wiggle);
 				}
 			}
-		
+			
 			// @argument			{Scale} scale
 			// @description			Set the scale property of this Particle Type.
 			static setScale = function(_scale)
@@ -149,25 +149,25 @@ function ParticleType() constructor
 				if (part_type_exists(ID))
 				{
 					scale = _scale;
-				
+					
 					part_type_scale(ID, scale.x, scale.y);
 				}
 			}
-		
-			// @argument			{real | Range} speed
+			
+			// @argument			{real|Range} speed
 			// @argument			{real} speed_increase?
 			// @argument			{real} speed_wiggle?
 			// @description			Set the speed properties of this Particle Type.
-			static setSpeed = function(_speed)
+			static setSpeed = function(_speed, _increase, _wiggle)
 			{
 				if (part_type_exists(ID))
 				{
 					speed = _speed;
-					speed_increase = (argument_count >= 2 ? argument[1] : 0);
-					speed_wiggle = (argument_count >= 3 ? argument[2] : 0);
-				
+					speed_increase = ((_increase != undefined) ? _increase : 0);
+					speed_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					
 					var _speed_minimum, _speed_maximum;
-				
+					
 					if (instanceof(speed) == "Range")
 					{
 						_speed_minimum = speed.minimum;
@@ -178,38 +178,38 @@ function ParticleType() constructor
 						_speed_minimum = speed;
 						_speed_maximum = speed;
 					}
-				
+					
 					part_type_speed(ID, _speed_minimum, _speed_maximum, 
 									speed_increase, speed_wiggle);
 				}
 			}
-		
-			// @argument			{real} gravity_amount
-			// @argument			{Angle} gravity_direction
+			
+			// @argument			{real} amount
+			// @argument			{Angle} direction
 			// @description			Set the gravity properties of this Particle Type.
-			static setGravity = function(_gravity_amount, _gravity_direction)
+			static setGravity = function(_amount, _direction)
 			{
 				if (part_type_exists(ID))
 				{
-					gravity_amount = _gravity_amount;
-					gravity_direction = _gravity_direction;
-				
+					gravity_amount = _amount;
+					gravity_direction = _direction;
+					
 					part_type_gravity(ID, gravity_amount, gravity_direction.value);
 				}
 			}
 		
-			// @argument			{real | Angle | Range} direction
-			// @argument			{real} direction_increase?
-			// @argument			{real} direction_wiggle?
+			// @argument			{real|Angle|Range} direction
+			// @argument			{real} increase?
+			// @argument			{real} wiggle?
 			// @description			Set the direction properties of this Particle Type.
-			static setDirection = function(_direction)
+			static setDirection = function(_direction, _increase, _wiggle)
 			{
 				if (part_type_exists(ID))
 				{					
 					direction = _direction
-					direction_increase = (argument_count >= 2 ? argument[1] : 0);
-					direction_wiggle = (argument_count >= 3 ? argument[2] : 0);
-				
+					direction_increase = ((_increase != undefined) ? _increase : 0);
+					direction_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					
 					var _direction_minimum, _direction_maximum;
 					
 					switch(instanceof(direction))
@@ -229,26 +229,26 @@ function ParticleType() constructor
 							_direction_maximum = direction;
 						break;
 					}
-				
+					
 					part_type_direction(ID, _direction_minimum, _direction_maximum, 
 										direction_increase, direction_wiggle);
 				}
 			}
-		
-			// @argument			{real | Range} orientation
-			// @argument			{real} orientation_increase?
-			// @argument			{real} orientation_wiggle?
-			// @argument			{bool} orientation_relative?
+			
+			// @argument			{real|Range} orientation
+			// @argument			{real} increase?
+			// @argument			{real} wiggle?
+			// @argument			{bool} relative?
 			// @description			Set the orientation propierties of this Particle Type.
-			static setOrientation = function(_orientation)
+			static setOrientation = function(_orientation, _increase, _wiggle, _relative)
 			{
 				if (part_type_exists(ID))
 				{
 					orientation = _orientation;
-					orientation_increase = (argument_count >= 2 ? argument[1] : 0);
-					orientation_wiggle = (argument_count >= 3 ? argument[2] : 0);
-					orientation_relative = (argument_count >= 4 ? argument[3] : false);
-				
+					orientation_increase = ((_increase != undefined) ? _increase : 0);
+					orientation_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					orientation_relative = ((_relative != undefined) ? _relative : false);
+					
 					var _orientation_minimum, _orientation_maximum;
 					
 					switch(instanceof(orientation))
@@ -268,21 +268,21 @@ function ParticleType() constructor
 							_orientation_maximum = orientation;
 						break;
 					}
-				
+					
 					part_type_orientation(ID, _orientation_minimum, _orientation_maximum, 
 										  orientation_increase, orientation_wiggle, 
 										  orientation_relative);
 				}
 			}
-		
-			// @argument			{color | Color2 | Color3} color
+			
+			// @argument			{color|Color2|Color3} color
 			// @description			Set the color property of this Particle Type to gradient change.
 			static setColor = function(_color)
 			{
 				if (part_type_exists(ID))
 				{
 					color = _color;
-				
+					
 					switch(instanceof(color))
 					{
 						case "Color3":
@@ -291,13 +291,13 @@ function ParticleType() constructor
 							part_type_color3(ID, color.color1, color.color2, 
 											 color.color3);
 						break;
-				
+						
 						case "Color2":
 							color_type = "Color2";
 					
 							part_type_color2(ID, color.color1, color.color2);
 						break;
-				
+						
 						default:
 							color_type = "color";
 						
@@ -306,7 +306,7 @@ function ParticleType() constructor
 					}
 				}
 			}
-		
+			
 			// @argument			{Color2} colors
 			// @description			Set the color property of this Particle Type to static random mix.
 			static setColor_mix = function(_colors)
@@ -315,14 +315,14 @@ function ParticleType() constructor
 				{
 					color = _colors;
 					color_type = "mix";
-				
+					
 					part_type_color_mix(ID, color.color1, color.color2);
 				}
 			}
-		
-			// @argument			{real | Range} red
-			// @argument			{real | Range} green
-			// @argument			{real | Range} blue
+			
+			// @argument			{real|Range} red
+			// @argument			{real|Range} green
+			// @argument			{real|Range} blue
 			// @description			Set the color property of this Particle Type to static random rgb.
 			static setColor_rgb = function(_red, _green, _blue)
 			{
@@ -330,7 +330,7 @@ function ParticleType() constructor
 				{
 					color = [_red, _green, _blue];
 					color_type = "rgb";
-				
+					
 					var _red_minimum, _red_maximum, 
 						_green_minimum, _green_maximum, 
 						_blue_minimum, _blue_maximum;
@@ -345,7 +345,7 @@ function ParticleType() constructor
 						_red_minimum = _red;
 						_red_maximum = _red;
 					}
-				
+					
 					if (instanceof(_green) == "Range")
 					{
 						_green_minimum = _green.minimum;
@@ -356,7 +356,7 @@ function ParticleType() constructor
 						_green_minimum = _green;
 						_green_maximum = _green;
 					}
-				
+					
 					if (instanceof(_blue) == "Range")
 					{
 						_blue_minimum = _blue.minimum;
@@ -367,16 +367,16 @@ function ParticleType() constructor
 						_blue_minimum = _blue;
 						_blue_maximum = _blue;
 					}
-				
+					
 					part_type_color_rgb(ID, _red_minimum, _red_maximum,
 										_green_minimum, _green_maximum, _blue_minimum,
 										_blue_maximum);
 				}
 			}
 		
-			// @argument			{real | Range} hue
-			// @argument			{real | Range} saturation
-			// @argument			{real | Range} value
+			// @argument			{real|Range} hue
+			// @argument			{real|Range} saturation
+			// @argument			{real|Range} value
 			// @description			Set the color property of this Particle Type to static random hsv.
 			static setColor_hsv = function(_hue, _saturation, _value)
 			{
@@ -384,7 +384,7 @@ function ParticleType() constructor
 				{
 					color = [_hue, _saturation, _value];
 					color_type = "hsv";
-				
+					
 					var _hue_minimum, _hue_maximum, 
 						_saturation_minimum, _saturation_maximum, 
 						_value_minimum, _value_maximum;
@@ -399,7 +399,7 @@ function ParticleType() constructor
 						_hue_minimum = _hue;
 						_hue_maximum = _hue;
 					}
-				
+					
 					if (instanceof(_saturation) == "Range")
 					{
 						_saturation_minimum = _saturation.minimum;
@@ -410,7 +410,7 @@ function ParticleType() constructor
 						_saturation_minimum = _saturation;
 						_saturation_maximum = _saturation;
 					}
-				
+					
 					if (instanceof(_value) == "Range")
 					{
 						_value_minimum = _value.minimum;
@@ -421,13 +421,13 @@ function ParticleType() constructor
 						_value_minimum = _value;
 						_value_maximum = _value;
 					}
-				
+					
 					part_type_color_hsv(ID, _hue_minimum, _hue_maximum,
 										_saturation_minimum, _saturation_maximum, 
 										_value_minimum, _value_maximum);
 				}
 			}
-		
+			
 			// @function			{real} alpha1
 			// @function			{real} alpha2?
 			// @function			{real} alpha3?
@@ -443,13 +443,13 @@ function ParticleType() constructor
 					
 							part_type_alpha1(ID, alpha[0]);
 						break;
-					
+						
 						case 2:
 							alpha = [_alpha1, argument[1], undefined];
 						
 							part_type_alpha2(ID, alpha[0], alpha[1]);
 						break;
-					
+						
 						case 3:
 							alpha = [_alpha1, argument[1], argument[2]];
 						
@@ -458,7 +458,7 @@ function ParticleType() constructor
 					}
 				}
 			}
-		
+			
 			// @argument			{bool} blend_additive
 			// @description			Set the blending property of this Particle Type.
 			static setBlend = function(_blend_additive)
@@ -466,21 +466,21 @@ function ParticleType() constructor
 				if (part_type_exists(ID))
 				{
 					blend_additive = _blend_additive;
-				
+					
 					part_type_blend(ID, blend_additive);
 				}
 			}
-		
-			// @argument			{int | Range} life
+			
+			// @argument			{int|Range} life
 			// @description			Set the life lenght property of this Particle Type.
 			static setLife = function(_life)
 			{
 				if (part_type_exists(ID))
 				{
 					life = _life;
-				
+					
 					var _life_minimum, _life_maximum;
-				
+					
 					if (instanceof(life) == "Range")
 					{
 						_life_minimum = life.minimum;
@@ -491,11 +491,11 @@ function ParticleType() constructor
 						_life_minimum = life;
 						_life_maximum = life;
 					}
-				
+					
 					part_type_life(ID, _life_minimum, _life_maximum);
 				}
 			}
-		
+			
 			// @argument			{ParticleType} step_type
 			// @argument			{int} step_number
 			// @description			Set the step stream properties of this Particle Type.
@@ -506,11 +506,11 @@ function ParticleType() constructor
 				{
 					step_type = _step_type;
 					step_number = _step_number;
-				
+					
 					part_type_step(ID, step_number, step_type.ID);
 				}
 			}
-		
+			
 			// @argument			{ParticleType} death_type
 			// @argument			{int} death_number
 			// @description			Set the death stream properties of this Particle Type.
@@ -521,27 +521,26 @@ function ParticleType() constructor
 				{
 					death_type = _death_type;
 					death_number = _death_number;
-				
+					
 					part_type_death(ID, death_number, death_type.ID);
 				}
 			}
-		
+			
 		#endregion
 		#region <Execution>
-		
+			
 			// @argument			{ParticleSystem} particleSystem
 			// @argument			{Vector2} location
 			// @argument			{int} number?
 			// @argument			{color} color?
 			// @description			Directly create the particle(s) of this type in a space.
-			static create = function(_particleSystem, _location)
+			static create = function(_particleSystem, _location, _number, _color)
 			{
 				if (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (part_system_exists(_particleSystem.ID))
 				{
-					var _number = (argument_count >= 3 ? argument[2] : 1);
-					var _color = (argument_count >= 4 ? argument[3] : undefined);
-				
+					if (_number == undefined) {_number = 1;}
+					
 					if (_color != undefined)
 					{
 						part_particles_create_color(_particleSystem.ID, _location.x, _location.y,
@@ -556,18 +555,17 @@ function ParticleType() constructor
 			}
 			
 			// @argument			{ParticleSystem} particleSystem
-			// @argument			{Rectangle | Triangle | Line | Circle | Ellipse} shape
+			// @argument			{Rectangle|Triangle|Line|Circle|Ellipse} shape
 			// @argument			{int} number?
 			// @argument			{color} color?
 			// @description			Directly create the particle(s) of this within random
 			//						spots of a Shape.
-			static createShape = function(_particleSystem, _shape)
+			static createShape = function(_particleSystem, _shape, _number, _color)
 			{
 				if (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (part_system_exists(_particleSystem.ID))
 				{
-					var _number = (argument_count >= 3 ? argument[2] : 1);
-					var _color = (argument_count >= 4 ? argument[3] : undefined);
+					if (_number == undefined) {_number = 1;}
 					
 					switch (instanceof(_shape))
 					{	
@@ -648,7 +646,7 @@ function ParticleType() constructor
 								{													
 									var _lenght_particle = irandom_range(0, 
 														   _shape.location.distance());
-														   
+									
 									var _angle = _shape.location.angle_1to2();
 									
 									var _location_x = (_shape.location.x1 
@@ -667,7 +665,7 @@ function ParticleType() constructor
 								{													
 									var _lenght_particle = irandom_range(0, 
 														   _shape.location.distance());
-														   
+									
 									var _angle = _shape.location.angle_1to2();
 									
 									var _location_x = (_shape.location.x1 
@@ -726,16 +724,16 @@ function ParticleType() constructor
 								{									
 									var _width = ((max(_shape.location.x1, _shape.location.x2) 
 											   - min(_shape.location.x1, _shape.location.x2)) / 2);
-											   
+									
 									var _height = ((max(_shape.location.y1, _shape.location.y2)
 												- min(_shape.location.y1, _shape.location.y2)) / 2);
-												
+									
 									var _angle = random(2 * pi);			
 									var _point = random(1);
-												
+									
 									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
 													+ ((sqrt(_point) * cos(_angle)) * (_width));
-													
+									
 									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
 													+ ((sqrt(_point) * sin(_angle)) * (_height));
 									
@@ -752,13 +750,13 @@ function ParticleType() constructor
 											   
 									var _height = ((max(_shape.location.y1, _shape.location.y2)
 												- min(_shape.location.y1, _shape.location.y2)) / 2);
-												
+									
 									var _angle = random(2 * pi);			
 									var _point = random(1);
-												
+									
 									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
 													+ ((sqrt(_point) * cos(_angle)) * (_width));
-													
+									
 									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
 													+ ((sqrt(_point) * sin(_angle)) * (_height));
 									
@@ -774,10 +772,10 @@ function ParticleType() constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-	
+		
 		ID = part_type_create();
 		
 		self.construct();
-	
+		
 	#endregion
 }

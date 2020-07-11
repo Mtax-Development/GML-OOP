@@ -1,7 +1,7 @@
 /// @function				Line()
 /// @argument				{Vector4} location
 /// @argument				{real} alpha?
-/// @argument				{color | color2 | undefined} color?
+/// @argument				{color|color2|undefined} color?
 /// @argument				{real} width?
 ///
 /// @description			Construct a Line connected by two points
@@ -51,11 +51,11 @@ function Line(_location) constructor
 		
 	#endregion
 	#region [Constructor]
-	
+		
 		location = _location;
 		alpha = (argument_count >= 2 ? argument[1] : 1);
 		color = (argument_count >= 3 ? argument[2] : undefined);
 		width = (argument_count >= 4 ? argument[3] : 1);
-	
+		
 	#endregion
 }

@@ -1,7 +1,7 @@
 /// @function				Arrow()
 /// @argument				{Vector4} location
 /// @argument				{real} alpha? 
-/// @argument				{color | undefined} color?
+/// @argument				{color|undefined} color?
 /// @argument				{real} size?
 ///
 /// @description			Constructs an Arrow connected by two points

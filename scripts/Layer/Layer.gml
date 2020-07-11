@@ -35,12 +35,12 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					location = _location;
-			
+					
 					layer_x(ID, location.x);
 					layer_y(ID, location.y);
 				}
 			}
-	
+			
 			// @argument			{Vector2} speed
 			// @description			Set the x/y scrolling speed of the Layer's non-instance elements.
 			static setSpeed = function(_speed)
@@ -48,7 +48,7 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					speed = _speed;
-			
+					
 					layer_hspeed(ID, speed.x);
 					layer_vspeed(ID, speed.y);
 				}
@@ -61,7 +61,7 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					visible = _visible;
-			
+					
 					layer_set_visible(ID, visible);
 				}
 			}
@@ -73,7 +73,7 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					depth = _depth;
-			
+					
 					layer_depth(ID, depth);
 				}
 			}
@@ -85,7 +85,7 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					script_drawBegin = _script;
-			
+					
 					layer_script_begin(ID, script_drawBegin);
 				}
 			}
@@ -97,11 +97,11 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					script_drawEnd = _script;
-			
+					
 					layer_script_end(ID, script_drawEnd);
 				}
 			}
-	
+			
 			// @argument			{shader} shader
 			// @description			Set a shader that will be applied to Layer's every element.
 			static setShader = function(_shader)
@@ -109,7 +109,7 @@ function Layer(_depth) constructor
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
 					shader = _shader;
-			
+					
 					layer_shader(ID, shader);
 				}
 			}
@@ -118,10 +118,11 @@ function Layer(_depth) constructor
 		#region <Getters>
 			
 			// @returns				{int[]}
-			// @description			Return the array of internal IDs of all elements held by this Layer.
+			// @description			Return the array of all internal element IDs held by this Layer.
 			static getElements = function()
 			{
-				return (((ID != undefined) and (layer_exists(ID))) ? layer_get_all_elements(ID) : undefined);
+				return (((ID != undefined) and (layer_exists(ID))) ? layer_get_all_elements(ID) 
+																   : undefined);
 			}
 			
 			// @argument			{instance} instance
@@ -177,7 +178,7 @@ function Layer(_depth) constructor
 					return noone;
 				}
 			}
-				
+			
 			// @argument			{bool} instancesActive
 			// @description			Activate or deactivate all instances bound to this Layer.
 			static activateInstances = function(_instancesActive)
@@ -248,7 +249,7 @@ function Layer(_depth) constructor
 						{
 							spriteList[| i] = {spriteElement: _spriteElement,
 											   sprite: _sprite};
-											   
+							
 							break;
 						}
 						

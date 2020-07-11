@@ -7,7 +7,7 @@ function Surface(_size) constructor
 {
 	#region [Methods]
 		#region <Management>
-		
+			
 			// @description			Create the Surface if it was destroyed.
 			static create = function()
 			{
@@ -37,7 +37,7 @@ function Surface(_size) constructor
 			static setSize = function(_size)
 			{
 				size = _size;
-		
+				
 				if (!surface_exists(ID))
 				{
 					ID = surface_create(size.x, size.y);
@@ -62,14 +62,12 @@ function Surface(_size) constructor
 			// @returns				{color|undefined}
 			// @description			Get the pixel color on a specific spot on a Surface.
 			//						Returns {undefined} if the surface does not exist.
-			static getPixel = function(_location)
+			static getPixel = function(_location, _getFull)
 			{
 				if (surface_exists(ID))
-				{
-					var getFull = (argument_count >= 2 ? argument[1] : false);
-					
-					return (getFull ? surface_getpixel_ext(ID, _location.x, _location.y) :
-									  surface_getpixel(ID, _location.x, _location.y));
+				{	
+					return (_getFull ? surface_getpixel_ext(ID, _location.x, _location.y) :
+									   surface_getpixel(ID, _location.x, _location.y));
 				}
 				else
 				{
@@ -82,10 +80,10 @@ function Surface(_size) constructor
 			static getTexture = function()
 			{
 				self.create();
-		
+				
 				return surface_get_texture(ID);
 			}
-		
+			
 		#endregion
 		#region <Execution>
 			
@@ -111,11 +109,11 @@ function Surface(_size) constructor
 			// @argument			{color} color
 			// @argument			{real} alpha?
 			// @description			Set entire content of the surface to a specified color value.
-			static clear = function(_color)
+			static clear = function(_color, _alpha)
 			{
 				self.create();
 				
-				var _alpha = (argument_count >= 2 ? argument[1] : 1);
+				if (_alpha == undefined) {_alpha = 1;}
 				
 				var _wasTarget = (surface_get_target() == ID)
 				
@@ -145,17 +143,17 @@ function Surface(_size) constructor
 			// @argument			{color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw.
-			static render = function(_location)
+			static render = function(_location, _scale, _angle, _color, _alpha)
 			{
 				if (surface_exists(ID))
 				{
 					if (argument_count > 1)
 					{
-						var _scale = (argument_count >= 2 ? argument[1] : new Scale());
-						var _angle = (argument_count >= 3 ? argument[2] : new Angle());
-						var _color = (argument_count >= 4 ? argument[3] : c_white);
-						var _alpha = (argument_count >= 5 ? argument[4] : 1);
-				
+						if (_scale == undefined) {_scale = new Scale();}
+						if (_angle == undefined) {_angle = new Angle();}
+						if (_color == undefined) {_color = c_white;}
+						if (_alpha == undefined) {_alpha = 1;}
+						
 						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
 										 _angle.value, _color, _alpha);
 					}
@@ -173,11 +171,11 @@ function Surface(_size) constructor
 			// @argument			{color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw to a specified target, ignoring the target stack.
-			static render_target = function(_location)
+			static render_target = function(_location, _target)
 			{
 				if (surface_exists(ID))
 				{
-					var _target = (argument_count >= 2 ? argument[1] : application_surface);
+					if (_target == undefined) {_target = application_surface;}
 					
 					var _renderTarget = (instanceof(_target) == "Surface" ? _target.ID : _target);
 					
@@ -258,20 +256,21 @@ function Surface(_size) constructor
 			// @argument			{real} alpha?
 			// @argument			{Angle} angle?
 			// @description			Execute the draw with specified alternations.
-			static render_general = function(_location)
+			static render_general = function(_location, _part_location, _scale, 
+											 _color, _alpha, _angle)
 			{
 				if (surface_exists(ID))
-				{	
-					var _part_location = (argument_count >= 2 ? argument[1] : 
-										 new Vector4(0, size.x, 0, size.y));
+				{					 
+					if (_part_location == undefined) {_part_location = new Vector4(0, size.x,
+																				   0, size.y);}
 					
-					var _scale = (argument_count >= 3 ? argument[2] : new Scale());
-					var _color = (argument_count >= 4 ? argument[3] : c_white);
-					var _alpha = (argument_count >= 5 ? argument[4] : 1);
-					var _angle = (argument_count >= 6 ? argument[5] : new Angle());
+					if (_scale == undefined) {_scale = new Scale();}
+					if (_color == undefined) {_color = c_white;}
+					if (_alpha == undefined) {_alpha = 1;}
+					if (_angle == undefined) {_angle = new Angle();}
 					
 					var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
-			
+					
 					switch (instanceof(_color))
 					{
 						case "Color4":
@@ -280,7 +279,7 @@ function Surface(_size) constructor
 							_color_x2y1 = _color.x2y1;
 							_color_x2y2 = _color.x2y2;
 						break;
-				
+						
 						default:
 							_color_x1y1 = _color;
 							_color_x1y2 = _color;
@@ -297,7 +296,7 @@ function Surface(_size) constructor
 										 _alpha);
 				}
 			}
-	
+			
 			// @argument			{Vector2} location
 			// @argument			{Vector2} size
 			// @argument			{color} color?
@@ -321,7 +320,7 @@ function Surface(_size) constructor
 					}
 				}
 			}
-	
+			
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
 			// @argument			{color} color?
@@ -348,7 +347,7 @@ function Surface(_size) constructor
 					}
 				}
 			}
-	
+			
 			// @argument			{Vector2} location
 			// @argument			{Surface|surface} other
 			// @argument			{Vector4} other_part?
@@ -386,7 +385,7 @@ function Surface(_size) constructor
 					if (argument_count > 1)
 					{
 						var _part = argument[1];
-			
+						
 						surface_save_part(ID, _filename, _part.x1, _part.y1, _part.x2, _part.y2);
 					}
 					else
@@ -398,8 +397,11 @@ function Surface(_size) constructor
 			
 		#endregion
 	#endregion
-	
-	size = _size;
-
-	ID = surface_create(size.x, size.y);
+	#region [Constructor]
+		
+		size = _size;
+		
+		ID = surface_create(size.x, size.y);
+		
+	#endregion
 }

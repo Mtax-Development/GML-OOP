@@ -1,8 +1,8 @@
 /// @function				Rectangle()
 /// @argument				{Vector4} location
 /// @argument				{real} alpha?
-/// @argument				{color | Color4 | undefined} fill?
-/// @argument				{color | Outline | undefined} outline?
+/// @argument				{color|Color4|undefined} fill?
+/// @argument				{color|Outline|undefined} outline?
 ///
 /// @description			Constructs a Rectangle connected by two points
 ///							in a space, which can be rendered with its full
@@ -30,7 +30,7 @@ function Rectangle(_location) constructor
 					draw_rectangle(location.x1, location.y1, location.x2, location.y2, false);
 				}
 			}
-		
+			
 			if (outline != undefined)
 			{
 				if (instanceof(outline) == "Outline")
@@ -87,11 +87,11 @@ function Rectangle(_location) constructor
 		
 	#endregion
 	#region [Constructor]
-	
+		
 		location = _location;
 		alpha	 = (argument_count >= 2 ? argument[1] : 1);
 		fill	 = (argument_count >= 3 ? argument[2] : undefined);
 		outline	 = (argument_count >= 4 ? argument[3] : undefined);
-	
+		
 	#endregion
 }

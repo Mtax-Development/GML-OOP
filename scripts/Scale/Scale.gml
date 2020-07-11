@@ -42,11 +42,11 @@ function Scale() constructor
 			{
 				return (string(x) + "/" + string(y));
 			}
-	
+			
 		#endregion
 	#endregion
 	#region [Constructor]
-
+		
 		switch(argument_count)
 		{
 			case 0:
@@ -64,6 +64,6 @@ function Scale() constructor
 				y = argument[1];
 			break;
 		}
-	
+		
 	#endregion
 }
