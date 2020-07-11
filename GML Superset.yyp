@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"Shader","path":"scripts/Shader/Shader.yy",},"order":9,},
     {"id":{"name":"Triangle","path":"scripts/Triangle/Triangle.yy",},"order":9,},
     {"id":{"name":"Color2","path":"scripts/Color2/Color2.yy",},"order":5,},
     {"id":{"name":"ParticleSystem","path":"scripts/ParticleSystem/ParticleSystem.yy",},"order":3,},
