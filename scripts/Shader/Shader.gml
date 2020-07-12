@@ -7,7 +7,7 @@ function Shader(_shader) constructor
 		#region <Setters>
 			
 			// @argument			{string} uniform
-			// @argument			{real|real[]} value1
+			// @argument			{real|real[]|Vector2} value1
 			// @argument			{real} value2?
 			// @argument			{real} value3?
 			// @argument			{real} value4?
@@ -33,6 +33,11 @@ function Shader(_shader) constructor
 							{
 								_value = _value1;
 							}
+						}
+						else if (is_struct(_value1))
+						{
+							shader_set_uniform_f(_handle, _value1.x, _value1.y);
+							_value = [_value1.x, _value1.y];
 						}
 						else
 						{
@@ -78,7 +83,7 @@ function Shader(_shader) constructor
 			}
 			
 			// @argument			{string} uniform
-			// @argument			{int|int[]} value1
+			// @argument			{int|int[]|Vector2} value1
 			// @argument			{int} value2?
 			// @argument			{int} value3?
 			// @argument			{int} value4?
@@ -104,6 +109,11 @@ function Shader(_shader) constructor
 							{
 								_value = _value1;
 							}
+						}
+						else if (is_struct(_value1))
+						{
+							shader_set_uniform_f(_handle, _value1.x, _value1.y);
+							_value = [_value1.x, _value1.y];
 						}
 						else
 						{
