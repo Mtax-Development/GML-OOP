@@ -11,22 +11,34 @@
 function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 {
 	#region [Methods]
-		
-		// @description			Execute the draw.
-		static render = function()
-		{
-			if (alpha > 0)
+		#region <Management>
+			
+			// @description			Execute the draw.
+			static render = function()
 			{
-				draw_set_font(font);
-				draw_set_halign(align.x);
-				draw_set_valign(align.y);
-				draw_set_color(color);
-				draw_set_alpha(alpha);
+				if (alpha > 0)
+				{
+					draw_set_font(font);
+					draw_set_halign(align.x);
+					draw_set_valign(align.y);
+					draw_set_color(color);
+					draw_set_alpha(alpha);
 				
-				draw_text(location.x, location.y, text);
+					draw_text(location.x, location.y, text);
+				}
 			}
-		}
-		
+			
+		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a simple text output.
+			static toString = function()
+			{
+				return _text;
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

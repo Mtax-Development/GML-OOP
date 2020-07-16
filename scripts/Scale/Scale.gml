@@ -35,9 +35,9 @@ function Scale() constructor
 			}
 			
 		#endregion
-		#region <Typing>
+		#region <Conversion>
 			
-			// @description			Override the string conversion with a simple value output.
+			// @description			Overrides the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(x) + "/" + string(y));

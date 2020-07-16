@@ -97,10 +97,10 @@ function Vector4() constructor
 			}
 			
 		#endregion
-		#region <Typing>
+		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Override the string conversion with a simple value output.
+			// @description			Overrides the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(x1) + "-" + string(x2) + "/" + string(y1) + "-" + string(y2));

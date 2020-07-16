@@ -396,6 +396,17 @@ function Surface(_size) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a ID and size output.
+			static toString = function()
+			{
+				return ((surface_exists(ID)) ? 
+					   (string(ID) + "(" + string(size) + ")") : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

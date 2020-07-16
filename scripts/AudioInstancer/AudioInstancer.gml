@@ -96,6 +96,16 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a name output.
+			static toString = function()
+			{
+				return ((audio_exists(file)) ? audio_get_name(file) : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

@@ -13,55 +13,67 @@
 function Sprite(_sprite, _location, _frame, _speed, _scale, _angle, _color, _alpha) constructor
 {
 	#region [Methods]
+		#region <Execution>
 		
-		// @description			Advance the animation and wrap its numbers.
-		static advanceFrames = function()
-		{
-			if (sprite_exists(ID))
+			// @description			Advance the animation and wrap its numbers.
+			static advanceFrames = function()
 			{
-				frame += speed;
-		
-				var frame_max = sprite_get_number(sprite);
-		
-				if (frame >= frame_max)
+				if (sprite_exists(ID))
 				{
-					frame -= frame_max;
-				}
-				else if (frame < 0)
-				{
-					frame += frame_max;
+					frame += speed;
+		
+					var frame_max = sprite_get_number(sprite);
+		
+					if (frame >= frame_max)
+					{
+						frame -= frame_max;
+					}
+					else if (frame < 0)
+					{
+						frame += frame_max;
+					}
 				}
 			}
-		}
 		
-		// @description			Execute the draw and advance the animation.
-		static render = function()
-		{
-			if (sprite_exists(ID))
+			// @description			Execute the draw and advance the animation.
+			static render = function()
 			{
-				var location_x, location_y;
-				
-				if (location == undefined)
+				if (sprite_exists(ID))
 				{
-					location_x = other.x;
-					location_y = other.y;
-				}
-				else
-				{
-					location_x = location.x;
-					location_y = location.y;
-				}
+					var location_x, location_y;
 				
-				draw_sprite_ext(ID, frame, location_x, location_y, scale.x, 
-								scale.y, angle.value, color, alpha);
+					if (location == undefined)
+					{
+						location_x = other.x;
+						location_y = other.y;
+					}
+					else
+					{
+						location_x = location.x;
+						location_y = location.y;
+					}
+				
+					draw_sprite_ext(ID, frame, location_x, location_y, scale.x, 
+									scale.y, angle.value, color, alpha);
 		
-				if (speed != 0)
-				{
-					self.advanceFrames(speed);
+					if (speed != 0)
+					{
+						self.advanceFrames(speed);
+					}
 				}
 			}
-		}
 		
+		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a Sprite name output.
+			static toString = function()
+			{
+				return ((sprite_exists(ID)) ? sprite_get_name(ID) : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

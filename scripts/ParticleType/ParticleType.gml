@@ -770,6 +770,16 @@ function ParticleType() constructor
 			}
 		
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with an ID output.
+			static toString = function()
+			{
+				return ((part_type_exists(ID)) ? string(ID) : string(undefined));
+			}
+		
+		#endregion
 	#endregion
 	#region [Constructor]
 		

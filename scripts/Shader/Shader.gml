@@ -232,6 +232,16 @@ function Shader(_shader) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a Shader name output.
+			static toString = function()
+			{
+				return name;
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

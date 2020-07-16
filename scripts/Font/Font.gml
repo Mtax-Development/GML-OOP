@@ -58,6 +58,7 @@ function Font() constructor
 						
 						type = "file";
 						
+						assetName = argument[1];
 						fontName = argument[0];
 						size = argument[1];
 						bold = (((argument_count > 2) and (argument[2] != undefined)) ? 
@@ -111,6 +112,8 @@ function Font() constructor
 								
 								if (font_exists(ID))
 								{
+									assetName = font_get_name(ID);
+									fontName = font_get_fontname(ID);
 									size = font_get_size(ID);
 								}
 							}
@@ -133,6 +136,8 @@ function Font() constructor
 								
 								if (font_exists(ID))
 								{
+									assetName = font_get_name(ID);
+									fontName = font_get_fontname(ID);
 									size = font_get_size(ID);
 								}
 							}
@@ -183,6 +188,16 @@ function Font() constructor
 				{
 					return undefined;
 				}
+			}
+			
+		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a name output.
+			static toString = function()
+			{
+				return ((font_exists(ID)) ? fontName : string(undefined));
 			}
 			
 		#endregion

@@ -209,6 +209,9 @@ function Layer(_depth) constructor
 				}
 			}
 			
+			// @argument			{Sprite} sprite
+			// @returns				{int|noone}
+			// @description			Create a Sprite on this layer and return its internal ID.
 			static spriteCreate = function(_sprite)
 			{
 				if ((ID != undefined) and (layer_exists(ID)) and (_sprite.location != undefined))
@@ -236,6 +239,10 @@ function Layer(_depth) constructor
 				}
 			}
 			
+			// @argument			{layerSpriteID} spriteElement
+			// @argument			{Sprite} sprite
+			// @description			Set the properties of an existing Sprite element
+			//						to the ones of provided Sprite.
 			static spriteUpdate = function(_spriteElement, _sprite)
 			{
 				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_spriteElement)) 
@@ -282,6 +289,17 @@ function Layer(_depth) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a name and depth output.
+			static toString = function()
+			{
+				return (((ID != undefined) and (layer_exists(ID))) ? 
+					   (name + string(depth)) : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		
@@ -302,6 +320,8 @@ function Layer(_depth) constructor
 		spriteList = ds_list_create();
 		
 		ID = layer_create(depth);
+		
+		name = layer_get_name(ID);
 		
 	#endregion
 }

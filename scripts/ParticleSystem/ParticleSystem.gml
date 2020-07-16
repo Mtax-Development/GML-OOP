@@ -190,6 +190,16 @@ function ParticleSystem(_layer, _persistent) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with an ID output.
+			static toString = function()
+			{
+				return ((part_system_exists(ID)) ? string(ID) : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

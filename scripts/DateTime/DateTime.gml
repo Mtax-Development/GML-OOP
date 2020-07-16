@@ -356,10 +356,10 @@ function DateTime(_value) constructor
 			}
 		
 		#endregion
-		#region <Typing>
+		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Override the string conversion with full datetime output.
+			// @description			Overrides the string conversion with full datetime output.
 			static toString = function()
 			{
 				return (ID != undefined ? date_datetime_string(ID) : string(undefined));

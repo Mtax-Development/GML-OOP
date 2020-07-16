@@ -27,15 +27,16 @@ function Range(_minimum, _maximum) constructor
 			
 			// @argument			{real} number
 			// @description			Check whether a number is between or equal to the range.
-			static is_between = function(_number)
+			static isBetween = function(_number)
 			{
 				return (_number == clamp(_number, minimum, maximum));
 			}
 			
 		#endregion
-		#region <Typing>
+		#region <Conversion>
 			
-			// @description			Override the string conversion with a simple value output.
+			// @returns				{string}
+			// @description			Overrides the string conversion with a simple value output.
 			static toString = function()
 			{
 				return (string(minimum) + "-" + string(maximum));

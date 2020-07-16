@@ -154,6 +154,17 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with an ID output.
+			static toString = function()
+			{
+				return ((part_emitter_exists(particleSystem.ID, ID)) ? 
+					   string(ID) : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

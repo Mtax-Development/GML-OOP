@@ -117,6 +117,16 @@ function Room(_size, _persistent) constructor
 			}
 			
 		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a Room name and size output.
+			static toString = function()
+			{
+				return ((room_exists(ID)) ? (name + " (" + string(size) + ")") : string(undefined));
+			}
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		
