@@ -20,6 +20,7 @@ function Layer(_depth) constructor
 					
 					ds_list_destroy(instanceList);
 					ds_list_destroy(spriteList);
+					ds_list_destroy(backgroundList);
 				}
 		
 				return undefined;
@@ -211,25 +212,26 @@ function Layer(_depth) constructor
 			
 			// @argument			{Sprite} sprite
 			// @returns				{int|noone}
-			// @description			Create a Sprite on this layer and return its internal ID.
+			// @description			Create a Sprite Element on this Layer and return its ID.
+			//						Returns {noone} if this Layer does not exist.
 			static spriteCreate = function(_sprite)
 			{
 				if ((ID != undefined) and (layer_exists(ID)) and (_sprite.location != undefined))
 				{	
-					var _spriteElement = layer_sprite_create(ID, _sprite.location.x, 
+					var _element = layer_sprite_create(ID, _sprite.location.x, 
 															 _sprite.location.y,
 															 _sprite.ID);
 					
-					ds_list_add(spriteList, {spriteElement: _spriteElement, 
-											 sprite: _sprite});
+					layer_sprite_xscale(_element, _sprite.scale.x);
+					layer_sprite_yscale(_element, _sprite.scale.y);
+					layer_sprite_angle(_element, _sprite.angle);
+					layer_sprite_blend(_element, _sprite.color);
+					layer_sprite_alpha(_element, _sprite.alpha);
+					layer_sprite_index(_element, _sprite.frame);
+					layer_sprite_speed(_element, _sprite.speed);
 					
-					layer_sprite_xscale(_spriteElement, _sprite.scale.x);
-					layer_sprite_yscale(_spriteElement, _sprite.scale.y);
-					layer_sprite_angle(_spriteElement, _sprite.angle);
-					layer_sprite_blend(_spriteElement, _sprite.color);
-					layer_sprite_alpha(_spriteElement, _sprite.alpha);
-					layer_sprite_index(_spriteElement, _sprite.frame);
-					layer_sprite_speed(_spriteElement, _sprite.speed);
+					ds_list_add(spriteList, {element: _element, 
+											 sprite: _sprite});
 					
 					return _spriteElement;
 				}
@@ -241,28 +243,13 @@ function Layer(_depth) constructor
 			
 			// @argument			{layerSpriteID} spriteElement
 			// @argument			{Sprite} sprite
-			// @description			Set the properties of an existing Sprite element
-			//						to the ones of provided Sprite.
+			// @description			Set the properties of an existing Sprite Element to the
+			//						ones of a provided Sprite.
 			static spriteUpdate = function(_spriteElement, _sprite)
 			{
 				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_spriteElement)) 
 				and (layer_sprite_exists(ID, _spriteElement)))
-				{
-					var i = 0;
-					
-					repeat(ds_list_size(spriteList))
-					{
-						if (spriteList[| i].spriteElement == _spriteElement)
-						{
-							spriteList[| i] = {spriteElement: _spriteElement,
-											   sprite: _sprite};
-							
-							break;
-						}
-						
-						i++;
-					}
-					
+				{					
 					if (_sprite == -1)
 					{
 						layer_sprite_change(_spriteElement, _sprite);
@@ -284,6 +271,173 @@ function Layer(_depth) constructor
 						layer_sprite_alpha(_spriteElement, _sprite.alpha);
 						layer_sprite_index(_spriteElement, _sprite.frame);
 						layer_sprite_speed(_spriteElement, _sprite.speed);
+					}
+					
+					var _i = 0;
+					
+					repeat(ds_list_size(spriteList))
+					{
+						if (spriteList[| _i].element == _spriteElement)
+						{
+							spriteList[| _i].sprite = _sprite;
+							
+							break;
+						}
+						
+						_i++;
+					}
+				}
+			}
+			
+			// @argument			{Sprite} sprite
+			// @returns				{int|noone}
+			// @description			Create a Background Element on this Layer and return its ID.
+			//						Returns {noone} if this Layer does not exist.
+			static backgroundCreate = function(_sprite)
+			{
+				if ((ID != undefined) and (layer_exists(ID)))
+				{
+					var _element = layer_background_create(ID, _sprite.ID);
+					
+					ds_list_add(backgroundList, {element: _element,
+												 sprite: _sprite,
+												 visible: true,
+												 stretched: false,
+												 tiled_x: false,
+												 tiled_y: false});
+					
+					layer_background_xscale(_element, _sprite.scale.x);
+					layer_background_yscale(_element, _sprite.scale.y);
+					layer_background_blend(_element, _sprite.color);
+					layer_background_alpha(_element, _sprite.alpha);
+					layer_background_index(_element, _sprite.frame);
+					layer_background_speed(_element, _sprite.speed);
+					
+					return _element;
+				}
+				else
+				{
+					return noone;
+				}
+			}
+			
+			// @argument			{layerBackgroundElement} element
+			// @argument			{Sprite} sprite
+			// @description			Set the properties of an existing Background Element to the
+			//						ones of a provided Sprite.
+			static backgroundSpriteUpdate = function(_element, _sprite)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_element))
+				and (layer_background_exists(ID, _element)))
+				{
+					if (_sprite == -1)
+					{
+						layer_background_sprite(_element, _sprite);
+					}
+					else
+					{
+						layer_background_sprite(_element, _sprite.ID);
+						layer_background_xscale(_element, _sprite.scale.x);
+						layer_background_yscale(_element, _sprite.scale.y);
+						layer_background_blend(_element, _sprite.color);
+						layer_background_alpha(_element, _sprite.alpha);
+						layer_background_index(_element, _sprite.frame);
+						layer_background_speed(_element, _sprite.speed);
+					}
+					
+					var _i = 0;
+					
+					repeat (ds_list_size(backgroundList))
+					{
+						if (backgroundList[| _i].element == _element)
+						{
+							backgroundList[| _i].sprite = _sprite;
+							
+							break;
+						}
+						
+						_i++;
+					}
+				}
+			}
+			
+			// @argument			{layerBackgroundElement} element
+			// @argument			{bool} stretched
+			// @description			Set the stretch property of an existing Background Element.
+			static backgroundSetStretched = function(_element, _stretched)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_element))
+				and (layer_background_exists(ID, _element)))
+				{
+					layer_background_stretch(_element, _stretched);
+					
+					var _i = 0;
+					
+					repeat (ds_list_size(backgroundList))
+					{
+						if (backgroundList[| _i].element == _element)
+						{
+							backgroundList[| _i].stretched = _stretched;
+							
+							break;
+						}
+						
+						_i++;
+					}
+				}
+			}
+			
+			// @argument			{layerBackgroundElement} element
+			// @argument			{bool} tiled_x
+			// @argument			{bool} tiled_y
+			// @description			Set the tiling properties of an existing Background Element.
+			static backgroundSetTiled = function(_element, _tiled_x, _tiled_y)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_element))
+				and (layer_background_exists(ID, _element)))
+				{
+					layer_background_htiled(_element, _tiled_x);
+					layer_background_vtiled(_element, _tiled_y);
+					
+					var _i = 0;
+					
+					repeat (ds_list_size(backgroundList))
+					{
+						if (backgroundList[| _i].element == _element)
+						{
+							backgroundList[| _i].tiled_x = _tiled_x;
+							backgroundList[| _i].tiled_y = _tiled_y;
+							
+							break;
+						}
+						
+						_i++;
+					}
+				}
+			}
+			
+			// @argument			{layerBackgroundElement} element
+			// @argument			{bool} visible
+			// @description			Set the visibility property of an existing Background Element.
+			static backgroundSetVisible = function(_element, _visible)
+			{
+				if ((ID != undefined) and (layer_exists(ID)) and (is_real(_element))
+				and (layer_background_exists(ID, _element)))
+				{
+					layer_background_visible(_element, _visible);
+					
+					var _i = 0;
+					
+					repeat (ds_list_size(backgroundList))
+					{
+						if (backgroundList[| _i].element == _element)
+						{
+							backgroundList[| _i].visible = _visible;
+							
+							break;
+						}
+						
+						_i++;
 					}
 				}
 			}
@@ -318,6 +472,7 @@ function Layer(_depth) constructor
 		
 		instanceList = ds_list_create();
 		spriteList = ds_list_create();
+		backgroundList = ds_list_create();
 		
 		ID = layer_create(depth);
 		
