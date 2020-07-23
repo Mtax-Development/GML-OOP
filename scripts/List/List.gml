@@ -1,7 +1,7 @@
 /// @function				List()
 ///
 /// @description			Constructs a List Data Structure, which offers a flexible way of
-///							storing data inside of a linnear model. It can be easily resized,
+///							storing data using a linear model. It can be easily resized,
 ///							sorted and manipulated in other ways.
 function List() constructor
 {
@@ -224,22 +224,67 @@ function List() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @description			Overrides the string conversion with the content output.
+			// @returns				{string}
+			// @description			Overrides the string conversion with the content preview.
 			static toString = function()
 			{
-				var _string = "List(";
+				var _string = (instanceof(self) + "(");
+				
+				var _separator = ", ";
+				var _separator_length = string_length(_separator);
+				
+				var _contentLenght = 30;
+				var _maximumLenght = (_contentLenght + string_length(_string));
+				
+				var _size = ds_list_size(ID);
+				
+				var _i = 0;
+				
+				repeat (_size)
+				{
+					_string += (string(ID[| _i++]));
+					
+					if ((string_length(_string) + _separator_length) < _maximumLenght)
+					{
+						if (_i < _size)
+						{
+							_string += _separator;
+						}
+					}
+					else
+					{
+						return (string_copy(_string, 1, _maximumLenght) + "...)");
+					}
+				}
+				
+				if (_size > 1)
+				{
+					_string += string(ID[| (_size - 1)]);
+				}
+				
+				_string += ")";
+				
+				return _string;
+			}
+			
+			// @returns				{string}
+			// @description			Create a string with constructor name and all of its content.
+			static toString_full = function()
+			{
+				var _string = (instanceof(self) + "(");
+				var _separator = ", ";
 			
 				var _size = ds_list_size(ID);
 				var _i = 0;
 			
 				repeat (_size - 1)
 				{
-					_string += (string(ID[| _i++]) + ", ");
+					_string += (string(ID[| _i++]) + _separator);
 				}
 			
 				if (_size > 0)
 				{
-					_string += string(ID[| _size - 1]);
+					_string += string(ID[| (_size - 1)]);
 				}
 			
 				_string += ")";
