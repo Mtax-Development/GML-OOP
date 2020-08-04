@@ -27,7 +27,7 @@ function Stack() constructor
 				return undefined;
 			}
 			
-			// @description			Remove all data from this Stack.
+			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
 				if (ds_exists(ID, ds_type_stack))
@@ -36,7 +36,7 @@ function Stack() constructor
 				}
 			}
 			
-			// @description			Replace all data of this Stack with data from another one.
+			// @description			Replace data of this Stack with data from another one.
 			static copy = function(_other)
 			{
 				if (ds_exists(_other.ID, ds_type_stack))
@@ -54,7 +54,7 @@ function Stack() constructor
 		#region <Getters>
 			
 			// @returns				{int}
-			// @description			Return the number of values in this Stack.
+			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
 				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_size(ID) : 0);
@@ -64,9 +64,9 @@ function Stack() constructor
 			// @description			Return the top value of this Stack, which is the one that
 			//						would be removed first.
 			//						Returns {undefined} if this Stack does not exists or is empty.
-			static getTop = function()
+			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_top(ID) : 0);
+				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_top(ID) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -79,21 +79,22 @@ function Stack() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Add a one or more values at the top of this Stack.
+			// @argument			{any} ...
+			// @description			Add one or more values at the top of this Stack.
 			static add = function()
 			{
 				if (ds_exists(ID, ds_type_stack))
 				{
 					var _i = 0;
 		
-					repeat(argument_count)
+					repeat (argument_count)
 					{
 						ds_stack_push(ID, argument[_i++]);
 					}
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} number?
 			// @returns				{any|any[]|undefined}
 			// @description			Remove any number of values from the Stack and
 			//						return them. If more than one value are to be 
@@ -142,99 +143,135 @@ function Stack() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the content preview.
+			// @description			Overrides the string conversion with the constructor 
+			//						name and preview of the content.
 			static toString = function()
 			{
-				var _string = (instanceof(self) + "(");
-				
-				var _separator = ", ";
-				var _separator_length = string_length(_separator);
-				
-				var _contentLenght = 30;
-				var _maximumLenght = (_contentLenght + string_length(_string));
-				
-				var _stackCopy = ds_stack_create();
-				ds_stack_copy(_stackCopy, ID);
-				
-				var _size = ds_stack_size(_stackCopy);
-				var _i = 0;
-				
-				repeat (_size - 1)
+				if (ds_exists(ID, ds_type_stack))
 				{
-					_string += string(ds_stack_pop(_stackCopy));
+					var _string = (instanceof(self) + "(");
+				
+					var _separator = ", ";
+					var _cutMark = "...";
 					
-					if ((string_length(_string) + _separator_length) < _maximumLenght)
+					var _separator_length = string_length(_separator);
+					var _cutMark_length = string_length(_cutMark);
+				
+					var _contentLenght = 30;
+					var _maximumLenght = (_contentLenght + string_length(_string));
+				
+					var _dataCopy = ds_stack_create();
+					ds_stack_copy(_dataCopy, ID);
+				
+					var _size = ds_stack_size(_dataCopy);
+					var _i = 1;
+				
+					repeat (_size)
 					{
-						if (_i < _size)
+						_string += string(ds_stack_pop(_dataCopy));
+					
+						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						{
+							if (_i < _size)
+							{
+								_string += _separator;
+							}
+						}
+						else
+						{
+							ds_stack_destroy(_dataCopy);
+						
+							return (((_i == _size) and
+									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+								   (_string + ")"):
+								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+						}
+						
+						_i++;
+					}
+				
+					ds_stack_destroy(_dataCopy);
+				
+					return (_string + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @returns				{string}
+			// @description			Return a string with constructor name and all of its content.
+			static toString_full = function()
+			{
+				if (ds_exists(ID, ds_type_stack))
+				{
+					var _string = (instanceof(self) + "(");
+				
+					var _separator = ", ";
+				
+					var _dataCopy = ds_stack_create();
+					ds_stack_copy(_dataCopy, ID);
+				
+					var _size = ds_stack_size(_dataCopy);
+					
+					var _i = 1;
+					
+					repeat (_size)
+					{
+						_string += string(ds_stack_pop(_dataCopy));
+						
+						if (_i++ < _size)
 						{
 							_string += _separator;
 						}
 					}
-					else
-					{
-						ds_stack_destroy(_stackCopy);
-						
-						return (string_copy(_string, 1, _maximumLenght) + "...)");
-					}
-				}
+					
+					ds_stack_destroy(_dataCopy);
 				
-				if (_size > 0)
+					return (_string + ")");
+				}
+				else
 				{
-					_string += string(ds_stack_pop(_stackCopy));
+					return (instanceof(self) + "<>");
 				}
-				
-				ds_stack_destroy(_stackCopy);
-				
-				return (_string + ")");
-			}
-			
-			// @returns				{string}
-			// @description			Create a string with constructor name and all of its content.
-			static toString_full = function()
-			{
-				var _string = (instanceof(self) + "(");
-				
-				var _separator = ", ";
-				
-				var _stackCopy = ds_stack_create();
-				ds_stack_copy(_stackCopy, ID);
-				
-				var _size = ds_stack_size(_stackCopy);
-				var _i = 0;
-				
-				repeat (_size - 1)
-				{
-					_string += (string(ds_stack_pop(_stackCopy)) + _separator);
-				}
-				
-				if (_size > 0)
-				{
-					_string += string(ds_stack_pop(_stackCopy));
-				}
-				
-				ds_stack_destroy(_stackCopy);
-				
-				return (_string + ")");
 			}
 			
 			// @argument			{bool} full?
 			// @returns				{string}
-			// @description			Create a line-broken string with all values of the Stack.
+			// @description			Return a line-broken string with the content of 
+			//						this Data Structure.
 			static toString_multiline = function(_full)
 			{
-				var _string = ((_full) ? self.toString_full() : self.toString());
-				_string = string_replace_all(_string, (instanceof(self) + "("), "");
-				_string = string_replace_all(_string, ", ", "\n");
-				_string = string_copy(_string, 1, (string_length(_string) - 1));
+				if (ds_exists(ID, ds_type_stack))
+				{
+					var _string = ((_full) ? self.toString_full() : self.toString());
+					_string = string_replace_all(_string, (instanceof(self) + "("), "");
+					_string = string_replace_all(_string, ", ", "\n");
+					_string = string_copy(_string, 1, (string_length(_string) - 1));
 				
-				return _string;
+					return _string;
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @returns				{string}
+			// @description			Return an encoded string of this Data Structure,
+			//						which can later be decoded to recreate it.
+			static toEncodedString = function()
+			{
+				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Add Stack values from an encoded string into this Stack.
-			//						Set the "legacy" argument to true if that string was
-			//						created in old versions of Game Maker.
+			// @description			Decode the previously encoded string of the same Data 
+			//						Structure and recreate it into this one.
+			//						Use the "legacy" argument if that string was created
+			//						in old versions of Game Maker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
@@ -245,14 +282,6 @@ function Stack() constructor
 				}
 				
 				ds_stack_read(ID, _string, _legacy);
-			}
-			
-			// @returns				{string}
-			// @description			Encode all values of this Stack into a string, so it
-			//						can be later decoded back into that Stack.
-			static toEncodedString = function()
-			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_write(ID) : string(undefined));
 			}
 			
 		#endregion

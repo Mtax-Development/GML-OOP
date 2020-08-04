@@ -1,6 +1,6 @@
 /// @function				Queue()
 ///
-/// @description			Constructs a Queue Data Structure, which stores data in a linnear,
+/// @description			Constructs a Queue Data Structure, which stores data in a linear,
 ///							first-in-first-out (FIFO) model that disallows order manipulation.
 function Queue() constructor
 {
@@ -27,7 +27,7 @@ function Queue() constructor
 				return undefined;
 			}
 			
-			// @description			Remove all data from this Queue.
+			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
 				if (ds_exists(ID, ds_type_queue))
@@ -36,7 +36,7 @@ function Queue() constructor
 				}
 			}
 			
-			// @description			Replace all data of this Queue with data from another one.
+			// @description			Replace data of this Queue with data from another one.
 			static copy = function(_other)
 			{
 				if (ds_exists(_other.ID, ds_type_queue))
@@ -54,7 +54,7 @@ function Queue() constructor
 		#region <Getters>
 			
 			// @returns				{int}
-			// @description			Return the number of values in this Queue.
+			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
 				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_size(ID) : 0);
@@ -66,7 +66,7 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_head(ID) : 0);
+				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_head(ID) : undefined);
 			}
 			
 			// @returns				{any|undefined}
@@ -75,7 +75,7 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getLast = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_tail(ID) : 0);
+				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_tail(ID) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -88,14 +88,15 @@ function Queue() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Add a one or more values at the tail of this Queue.
+			// @argument			{any} ...
+			// @description			Add one or more values at the tail of this Queue.
 			static add = function()
 			{
 				if (ds_exists(ID, ds_type_queue))
 				{
 					var _i = 0;
 		
-					repeat(argument_count)
+					repeat (argument_count)
 					{
 						ds_queue_enqueue(ID, argument[_i++]);
 					}
@@ -151,98 +152,135 @@ function Queue() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the content preview.
+			// @description			Overrides the string conversion with the constructor 
+			//						name and preview of the content.
 			static toString = function()
 			{
-				var _string = (instanceof(self) + "(");
-				
-				var _separator = ", ";
-				var _separator_length = string_length(_separator);
-				
-				var _contentLenght = 30;
-				var _maximumLenght = (_contentLenght + string_length(_string));
-				
-				var _queueCopy = ds_queue_create();
-				ds_queue_copy(_queueCopy, ID);
-				
-				var _size = ds_queue_size(_queueCopy);
-				var _i = 0;
-				
-				repeat (_size - 1)
+				if (ds_exists(ID, ds_type_queue))
 				{
-					_string += string(ds_queue_dequeue(_queueCopy));
+					var _string = (instanceof(self) + "(");
+				
+					var _separator = ", ";
+					var _cutMark = "...";
 					
-					if ((string_length(_string) + _separator_length) < _maximumLenght)
+					var _separator_length = string_length(_separator);
+					var _cutMark_length = string_length(_cutMark);
+				
+					var _contentLenght = 30;
+					var _maximumLenght = (_contentLenght + string_length(_string));
+				
+					var _dataCopy = ds_queue_create();
+					ds_queue_copy(_dataCopy, ID);
+				
+					var _size = ds_queue_size(_dataCopy);
+					var _i = 1;
+				
+					repeat (_size)
 					{
-						if (_i < _size)
+						_string += string(ds_queue_dequeue(_dataCopy));
+					
+						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						{
+							if (_i < _size)
+							{
+								_string += _separator;
+							}
+						}
+						else
+						{
+							ds_queue_destroy(_dataCopy);
+						
+							return (((_i == _size) and
+									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+								   (_string + ")"):
+								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+						}
+						
+						_i++;
+					}
+				
+					ds_queue_destroy(_dataCopy);
+				
+					return (_string + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @returns				{string}
+			// @description			Return a string with constructor name and all of its content.
+			static toString_full = function()
+			{
+				if (ds_exists(ID, ds_type_queue))
+				{
+					var _string = (instanceof(self) + "(");
+				
+					var _separator = ", ";
+				
+					var _dataCopy = ds_queue_create();
+					ds_queue_copy(_dataCopy, ID);
+				
+					var _size = ds_queue_size(_dataCopy);
+					
+					var _i = 1;
+				
+					repeat (_size)
+					{
+						_string += (string(ds_queue_dequeue(_dataCopy)));
+						
+						if (_i++ < _size)
 						{
 							_string += _separator;
 						}
 					}
-					else
-					{
-						ds_queue_destroy(_queueCopy);
-						
-						return (string_copy(_string, 1, _maximumLenght) + "...)");
-					}
-				}
 				
-				if (_size > 0)
+					ds_queue_destroy(_dataCopy);
+				
+					return (_string + ")");
+				}
+				else
 				{
-					_string += string(ds_queue_dequeue(_queueCopy));
+					return (instanceof(self) + "<>");
 				}
-				
-				ds_queue_destroy(_queueCopy);
-				
-				return (_string + ")");
-			}
-			
-			// @returns				{string}
-			// @description			Create a string with constructor name and all of its content.
-			static toString_full = function()
-			{
-				var _string = (instanceof(self) + "(");
-				
-				var _separator = ", ";
-				
-				var _queueCopy = ds_queue_create();
-				ds_queue_copy(_queueCopy, ID);
-				
-				var _size = ds_queue_size(_queueCopy);
-				
-				repeat (_size - 1)
-				{
-					_string += (string(ds_queue_dequeue(_queueCopy)) + _separator);
-				}
-				
-				if (_size > 0)
-				{
-					_string += string(ds_queue_dequeue(_queueCopy));
-				}
-				
-				ds_queue_destroy(_queueCopy);
-				
-				return (_string + ")");
 			}
 			
 			// @argument			{bool} full?
 			// @returns				{string}
-			// @description			Create a line-broken string with all values of the Queue.
+			// @description			Return a line-broken string with the content of 
+			//						this Data Structure.
 			static toString_multiline = function(_full)
 			{
-				var _string = ((_full) ? self.toString_full() : self.toString());
-				_string = string_replace_all(_string, (instanceof(self) + "("), "");
-				_string = string_replace_all(_string, ", ", "\n");
-				_string = string_copy(_string, 1, (string_length(_string) - 1));
+				if (ds_exists(ID, ds_type_queue))
+				{
+					var _string = ((_full) ? self.toString_full() : self.toString());
+					_string = string_replace_all(_string, (instanceof(self) + "("), "");
+					_string = string_replace_all(_string, ", ", "\n");
+					_string = string_copy(_string, 1, (string_length(_string) - 1));
 				
-				return _string;
+					return _string;
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @returns				{string}
+			// @description			Return an encoded string of this Data Structure,
+			//						which can later be decoded to recreate it.
+			static toEncodedString = function()
+			{
+				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Add Queue values from an encoded string into this Queue.
-			//						Set the "legacy" argument to true if that string was
-			//						created in old versions of Game Maker.
+			// @description			Decode the previously encoded string of the same Data 
+			//						Structure and recreate it into this one.
+			//						Use the "legacy" argument if that string was created
+			//						in old versions of Game Maker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
@@ -253,14 +291,6 @@ function Queue() constructor
 				}
 				
 				ds_queue_read(ID, _string, _legacy);
-			}
-			
-			// @returns				{string}
-			// @description			Encode all values of this Queue into a string, so it
-			//						can be later decoded back into that Queue.
-			static toEncodedString = function()
-			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_write(ID) : string(undefined));
 			}
 			
 		#endregion

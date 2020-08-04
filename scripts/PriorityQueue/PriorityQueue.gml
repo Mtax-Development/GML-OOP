@@ -1,7 +1,7 @@
 /// @function				PriorityQueue()
 ///
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
-///							a linnear model that orders the values based on their priority.
+///							a linear model that orders the values based on their priority.
 function PriorityQueue() constructor
 {
 	#region [Methods]
@@ -25,7 +25,7 @@ function PriorityQueue() constructor
 				return undefined;
 			}
 			
-			// @description			Remove all data from this Data Structure.
+			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
 				if (ds_exists(ID, ds_type_priority))
@@ -34,8 +34,7 @@ function PriorityQueue() constructor
 				}
 			}
 			
-			// @description			Replace all data of this Priority Queue
-			//						with data from another one.
+			// @description			Replace data of this Priority Queue with data from another one.
 			static copy = function(_other)
 			{
 				if (ds_exists(_other.ID, ds_type_priority))
@@ -53,28 +52,28 @@ function PriorityQueue() constructor
 		#region <Getters>
 			
 			// @returns				{int}
-			// @description			Return the number of values in this Priority Queue.
+			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
 				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Return any value with the lowest priority in this Priority Queue.
-			//						Returns {undefined} if this Priority Queue does not exists or is
-			//						empty.
-			static getMin = function()
-			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_min(ID) : undefined);
-			}
-			
-			// @returns				{any|undefined}
 			// @description			Return any value with the highest priority in this Priority Queue.
 			//						Returns {undefined} if this Priority Queue does not exists or is
 			//						empty.
-			static getMax = function()
+			static getFirst = function()
 			{
 				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_max(ID) : undefined);
+			}
+			
+			// @returns				{any|undefined}
+			// @description			Return any value with the lowest priority in this Priority Queue.
+			//						Returns {undefined} if this Priority Queue does not exists or is
+			//						empty.
+			static getLast = function()
+			{
+				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_min(ID) : undefined);
 			}
 			
 			// @argument			{any} value
@@ -99,7 +98,7 @@ function PriorityQueue() constructor
 			// @argument			{any} value
 			// @argument			{any} priority
 			// @argument			{any} ...
-			// @description			Add one or more value and priority pair to this Priority Queue.
+			// @description			Add one or more value and priority pairs to this Priority Queue.
 			static add = function(_value, _priority)
 			{
 				if (ds_exists(ID, ds_type_priority))
@@ -116,23 +115,23 @@ function PriorityQueue() constructor
 			}
 			
 			// @argument			{any} value
+			// @argument			{any} priority
+			// @description			Set the priority of already existing value.
+			static changePriority = function(_value, _priority)
+			{
+				if (ds_exists(ID, ds_type_priority))
+				{
+					ds_priority_change_priority(ID, _value, _priority);
+				}
+			}
+			
+			// @argument			{any} value
 			// @description			Remove the specified value from this Priority Queue.
 			static remove = function(_value)
 			{
 				if (ds_exists(ID, ds_type_priority))
 				{
 					ds_priority_delete_value(ID, _value);
-				}
-			}
-			
-			// @argument			{any} value
-			// @argument			{any} priority
-			// @description			Set the priority of already existing value.
-			static setPriority = function(_value, _priority)
-			{
-				if (ds_exists(ID, ds_type_priority))
-				{
-					ds_priority_change_priority(ID, _value, _priority);
 				}
 			}
 			
@@ -175,7 +174,7 @@ function PriorityQueue() constructor
 			
 			// @returns				{string}
 			// @description			Overrides the string conversion with the constructor 
-			//						name and content preview.
+			//						name and preview of the content.
 			static toString = function()
 			{
 				if (ds_exists(ID, ds_type_priority))
@@ -238,7 +237,7 @@ function PriorityQueue() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Create a string with constructor name and all of its content.
+			// @description			Return a string with constructor name and all of its content.
 			static toString_full = function()
 			{
 				if (ds_exists(ID, ds_type_priority))
@@ -281,7 +280,8 @@ function PriorityQueue() constructor
 			
 			// @argument			{bool} full?
 			// @returns				{string}
-			// @description			Create a line-broken string with all values of the Data Structure.
+			// @description			Return a line-broken string with the content of 
+			//						this Data Structure.
 			static toString_multiline = function(_full)
 			{
 				if (ds_exists(ID, ds_type_priority))
@@ -300,8 +300,8 @@ function PriorityQueue() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Encode all values of this Data Structure into a string,
-			//						so it can be later decoded back into that Queue.
+			// @description			Return an encoded string of this Data Structure,
+			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
 				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_write(ID) : 
@@ -310,10 +310,10 @@ function PriorityQueue() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Add Priority Queue values from an encoded string into
-			//						this Priority Queue.
-			//						Set the "legacy" argument to true if that string was
-			//						created in old versions of Game Maker.
+			// @description			Decode the previously encoded string of the same Data 
+			//						Structure and recreate it into this one.
+			//						Use the "legacy" argument if that string was created
+			//						in old versions of Game Maker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
@@ -323,7 +323,7 @@ function PriorityQueue() constructor
 					self.construct();
 				}
 				
-				ds_priority_clear(ID); //|Filler call to prevent the silent application crash.
+				ds_priority_clear(ID); //|Filler call that prevents a silent application crash.
 				
 				ds_priority_read(ID, _string);
 			}
