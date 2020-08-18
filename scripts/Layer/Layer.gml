@@ -453,7 +453,7 @@ function Layer(_depth) constructor
 			// @argument			{Sprite} sprite
 			// @returns				{int|noone}
 			// @description			Create a Background Element on this Layer and return its ID.
-			//						Returns {noone} if this Layer does not exist.
+			//						Returns {noone} if this Layer does not exists.
 			static backgroundCreate = function(_sprite)
 			{
 				if ((ID != undefined) and (layer_exists(ID)))

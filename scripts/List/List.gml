@@ -75,7 +75,7 @@ function List() constructor
 			
 			// @returns				{any|undefined}
 			// @description			Return the last value in this List.
-			//						Returns {undefined} if this List does not exist or is empty.
+			//						Returns {undefined} if this List does not exists or is empty.
 			static getLast = function()
 			{
 				if (ds_exists(ID, ds_type_list))
@@ -100,7 +100,8 @@ function List() constructor
 			
 			// @argument			{any} value
 			// @returns				{int[]}
-			// @description			Return an array populated with all positions of a specified value.
+			// @description			Return an array populated with all positions of 
+			//						the specified value.
 			static getAllIndexes = function(_value)
 			{
 				if (ds_exists(ID, ds_type_list))
@@ -129,11 +130,19 @@ function List() constructor
 			
 			// @argument			{int} position
 			// @returns				{any|undefined}
-			// @description			Return the value at specified position.
+			// @description			Return the value at the specified position.
 			static getValue = function(_position)
 			{
 				return ((ds_exists(ID, ds_type_list)) ? 
 					   ds_list_find_value(ID, _position) : undefined);
+			}
+			
+			// @returns				{bool|undefined}
+			// @description			Check if this Data Structure has any values in it.
+			//						Returns {undefined} if this Data Structure does not exists.
+			static isEmpty = function()
+			{
+				return ((ds_exists(ID, ds_type_list)) ? ds_list_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -167,17 +176,6 @@ function List() constructor
 			}
 			
 			// @argument			{int} position
-			// @description			Remove a value at a specified position from the List and 
-			//						push the position of all values after it back by one.
-			static remove = function(_position)
-			{
-				if (ds_exists(ID, ds_type_list))
-				{
-					ds_list_delete(ID, _position);
-				}
-			}
-			
-			// @argument			{int} position
 			// @argument			{any} value
 			// @description			Set a specified position of the List to provided value,
 			//						but only if it already exists.
@@ -186,6 +184,17 @@ function List() constructor
 				if (ds_exists(ID, ds_type_list))
 				{
 					ds_list_replace(ID, _position, _value);
+				}
+			}
+			
+			// @argument			{int} position
+			// @description			Remove a value at a specified position from the List and 
+			//						push the position of all values after it back by one.
+			static remove = function(_position)
+			{
+				if (ds_exists(ID, ds_type_list))
+				{
+					ds_list_delete(ID, _position);
 				}
 			}
 			
@@ -239,30 +248,30 @@ function List() constructor
 					var _separator_length = string_length(_separator);
 					var _cutMark_length = string_length(_cutMark);
 					
-					var _contentLenght = 30;
-					var _maximumLenght = (_contentLenght + string_length(_string));
+					var _contentLength = 30;
+					var _maximumLength = (_contentLength + string_length(_string));
 					
 					var _size = ds_list_size(ID);
 					
-					var _i = 1;
+					var _i = 0;
 					
 					repeat (_size)
 					{
-						_string += (string(ID[| _i++]));
+						_string += (string(ID[| _i]));
 						
-						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						if ((string_length(_string) + _separator_length) < _maximumLength)
 						{
-							if (_i < _size)
+							if (_i < (_size - 1))
 							{
 								_string += _separator;
 							}
 						}
 						else
 						{
-							return (((_i == _size) and
-									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+							return (((_i == (_size - 1)) and
+									string_length(_string) <= _maximumLength + _cutMark_length)) ?
 								   (_string + ")"):
-								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
 						_i++;
@@ -306,15 +315,15 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{bool} full?
+			// @argument			{bool} cut?
 			// @returns				{string}
 			// @description			Return a line-broken string with the content of 
 			//						this Data Structure.
-			static toString_multiline = function(_full)
+			static toString_multiline = function(_cut)
 			{
 				if (ds_exists(ID, ds_type_priority))
 				{
-					var _string = ((_full) ? self.toString_full() : self.toString());
+					var _string = ((_cut) ? self.toString() : self.toString_full());
 					_string = string_replace_all(_string, (instanceof(self) + "("), "");
 					_string = string_replace_all(_string, ", ", "\n");
 					_string = string_copy(_string, 1, (string_length(_string) - 1));

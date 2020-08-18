@@ -16,7 +16,7 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Refresh the instance list by checking which still exist.
+			// @description			Refresh the instance list by checking which still exists.
 			static list_instances = function()
 			{
 				var instances_new = [];

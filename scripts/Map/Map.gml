@@ -38,6 +38,7 @@ function Map() constructor
 				}
 			}
 			
+			// @argument			{Map} other
 			// @description			Replace data of this Map with data from another one.
 			static copy = function(_other)
 			{
@@ -422,8 +423,8 @@ function Map() constructor
 					var _separator_length = string_length(_separator);
 					var _cutMark_length = string_length(_cutMark);
 					
-					var _contentLenght = 30;
-					var _maximumLenght = (_contentLenght + string_length(_string));
+					var _contentLength = 30;
+					var _maximumLength = (_contentLength + string_length(_string));
 					
 					var _keys = self.getAllKeys(); //+TODO: Replace with ds_map_find_all when possible
 					
@@ -437,7 +438,7 @@ function Map() constructor
 						
 						_string += (_key + _keyMark + _value);
 						
-						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						if ((string_length(_string) + _separator_length) < _maximumLength)
 						{
 							if (_i < (_size - 1))
 							{
@@ -447,9 +448,9 @@ function Map() constructor
 						else
 						{
 							return (((_i == _size) and
-									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+									string_length(_string) <= _maximumLength + _cutMark_length)) ?
 								   (_string + ")"):
-								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
 						_i++;
@@ -502,15 +503,15 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{bool} full?
+			// @argument			{bool} cut?
 			// @returns				{string}
 			// @description			Return a line-broken string with the content of 
 			//						this Data Structure.
-			static toString_multiline = function(_full)
+			static toString_multiline = function(_cut)
 			{
 				if (ds_exists(ID, ds_type_map))
 				{
-					var _string = ((_full) ? self.toString_full() : self.toString());
+					var _string = ((_cut) ? self.toString() : self.toString_full());
 					_string = string_replace_all(_string, (instanceof(self) + "("), "");
 					_string = string_replace_all(_string, ", ", "\n");
 					_string = string_copy(_string, 1, (string_length(_string) - 1));

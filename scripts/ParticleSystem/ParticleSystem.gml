@@ -153,7 +153,7 @@ function ParticleSystem(_layer, _persistent) constructor
 			
 			// @returns				{layerID|undefined}
 			// @description			Return the ID of the layer the system is internally operated in.
-			//						Returns undefined if the Particle System does not exist.
+			//						Returns undefined if the Particle System does not exists.
 			static getLayer = function()
 			{
 				return (part_system_exists(ID) ? part_system_get_layer(ID) : undefined);

@@ -472,7 +472,7 @@ function ParticleType() constructor
 			}
 			
 			// @argument			{int|Range} life
-			// @description			Set the life lenght property of this Particle Type.
+			// @description			Set the life length property of this Particle Type.
 			static setLife = function(_life)
 			{
 				if (part_type_exists(ID))
@@ -644,16 +644,16 @@ function ParticleType() constructor
 							{
 								repeat (_number)
 								{													
-									var _lenght_particle = irandom_range(0, 
+									var _length_particle = irandom_range(0, 
 														   _shape.location.distance());
 									
 									var _angle = _shape.location.angle_1to2();
 									
 									var _location_x = (_shape.location.x1 
-													+ lengthdir_x(_lenght_particle, _angle));
+													+ lengthdir_x(_length_particle, _angle));
 									
 									var _location_y = (_shape.location.y1 
-													+ lengthdir_y(_lenght_particle, _angle));
+													+ lengthdir_y(_length_particle, _angle));
 	 								
 									part_particles_create_color(_particleSystem.ID, _location_x,
 																_location_y, ID, _color, 1);
@@ -663,16 +663,16 @@ function ParticleType() constructor
 							{
 								repeat (_number)
 								{													
-									var _lenght_particle = irandom_range(0, 
+									var _length_particle = irandom_range(0, 
 														   _shape.location.distance());
 									
 									var _angle = _shape.location.angle_1to2();
 									
 									var _location_x = (_shape.location.x1 
-													+ lengthdir_x(_lenght_particle, _angle));
+													+ lengthdir_x(_length_particle, _angle));
 									
 									var _location_y = (_shape.location.y1 
-													+ lengthdir_y(_lenght_particle, _angle));
+													+ lengthdir_y(_length_particle, _angle));
 	 								
 									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);

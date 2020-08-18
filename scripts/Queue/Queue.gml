@@ -36,6 +36,7 @@ function Queue() constructor
 				}
 			}
 			
+			// @argument			{Queue} other
 			// @description			Replace data of this Queue with data from another one.
 			static copy = function(_other)
 			{
@@ -79,7 +80,8 @@ function Queue() constructor
 			}
 			
 			// @returns				{bool|undefined}
-			// @description			Check if this Queue has any values in it.
+			// @description			Check if this Data Structure has any values in it.
+			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
 				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_empty(ID) : undefined);
@@ -166,8 +168,8 @@ function Queue() constructor
 					var _separator_length = string_length(_separator);
 					var _cutMark_length = string_length(_cutMark);
 				
-					var _contentLenght = 30;
-					var _maximumLenght = (_contentLenght + string_length(_string));
+					var _contentLength = 30;
+					var _maximumLength = (_contentLength + string_length(_string));
 				
 					var _dataCopy = ds_queue_create();
 					ds_queue_copy(_dataCopy, ID);
@@ -179,7 +181,7 @@ function Queue() constructor
 					{
 						_string += string(ds_queue_dequeue(_dataCopy));
 					
-						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						if ((string_length(_string) + _separator_length) < _maximumLength)
 						{
 							if (_i < _size)
 							{
@@ -191,9 +193,9 @@ function Queue() constructor
 							ds_queue_destroy(_dataCopy);
 						
 							return (((_i == _size) and
-									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+									string_length(_string) <= _maximumLength + _cutMark_length)) ?
 								   (_string + ")"):
-								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
 						_i++;
@@ -246,15 +248,15 @@ function Queue() constructor
 				}
 			}
 			
-			// @argument			{bool} full?
+			// @argument			{bool} cut?
 			// @returns				{string}
 			// @description			Return a line-broken string with the content of 
 			//						this Data Structure.
-			static toString_multiline = function(_full)
+			static toString_multiline = function(_cut)
 			{
 				if (ds_exists(ID, ds_type_queue))
 				{
-					var _string = ((_full) ? self.toString_full() : self.toString());
+					var _string = ((_full) ? self.toString() : self.toString_full());
 					_string = string_replace_all(_string, (instanceof(self) + "("), "");
 					_string = string_replace_all(_string, ", ", "\n");
 					_string = string_copy(_string, 1, (string_length(_string) - 1));

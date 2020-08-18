@@ -175,7 +175,7 @@ function Font() constructor
 			// @returns				{Vector4|undefined}
 			// @description			Get the UV coordinates for this Font's location 
 			//						on its texture page.
-			//						Returns {undefined} if this Font does not exist.
+			//						Returns {undefined} if this Font does not exists.
 			static getUVs = function()
 			{
 				if (font_exists(ID))

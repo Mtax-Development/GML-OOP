@@ -61,7 +61,7 @@ function Surface(_size) constructor
 			// @argument			{bool} getFull?
 			// @returns				{color|undefined}
 			// @description			Get the pixel color on a specific spot on a Surface.
-			//						Returns {undefined} if the surface does not exist.
+			//						Returns {undefined} if the surface does not exists.
 			static getPixel = function(_location, _getFull)
 			{
 				if (surface_exists(ID))

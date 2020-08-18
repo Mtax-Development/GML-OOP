@@ -34,6 +34,7 @@ function PriorityQueue() constructor
 				}
 			}
 			
+			// @argument			{PriorityQueue} other
 			// @description			Replace data of this Priority Queue with data from another one.
 			static copy = function(_other)
 			{
@@ -87,6 +88,7 @@ function PriorityQueue() constructor
 			
 			// @returns				{bool|undefined}
 			// @description			Check if this Data Structure has any values in it.
+			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
 				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_empty(ID) : undefined);
@@ -97,7 +99,7 @@ function PriorityQueue() constructor
 			
 			// @argument			{any} value
 			// @argument			{any} priority
-			// @argument			{any} ...
+			// @argument			...
 			// @description			Add one or more value and priority pairs to this Priority Queue.
 			static add = function(_value, _priority)
 			{
@@ -188,8 +190,8 @@ function PriorityQueue() constructor
 					var _separator_length = string_length(_separator);
 					var _cutMark_length = string_length(_cutMark);
 					
-					var _contentLenght = 30;
-					var _maximumLenght = (_contentLenght + string_length(_string));
+					var _contentLength = 30;
+					var _maximumLength = (_contentLength + string_length(_string));
 					
 					var _dataCopy = ds_priority_create();
 					ds_priority_copy(_dataCopy, ID);
@@ -206,7 +208,7 @@ function PriorityQueue() constructor
 						
 						_string += (_priority + _priorityMark + _value);
 						
-						if ((string_length(_string) + _separator_length) < _maximumLenght)
+						if ((string_length(_string) + _separator_length) < _maximumLength)
 						{
 							if (_i < _size)
 							{
@@ -218,9 +220,9 @@ function PriorityQueue() constructor
 							ds_priority_destroy(_dataCopy);
 							
 							return (((_i == _size) and
-									string_length(_string) <= _maximumLenght + _cutMark_length)) ?
+									string_length(_string) <= _maximumLength + _cutMark_length)) ?
 								   (_string + ")"):
-								   (string_copy(_string, 1, _maximumLenght) + _cutMark + ")");
+								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
 						_i++;
@@ -278,15 +280,15 @@ function PriorityQueue() constructor
 				}
 			}
 			
-			// @argument			{bool} full?
+			// @argument			{bool} cut?
 			// @returns				{string}
 			// @description			Return a line-broken string with the content of 
 			//						this Data Structure.
-			static toString_multiline = function(_full)
+			static toString_multiline = function(_cut)
 			{
 				if (ds_exists(ID, ds_type_priority))
 				{
-					var _string = ((_full) ? self.toString_full() : self.toString());
+					var _string = ((_cut) ? self.toString() : self.toString_full());
 					_string = string_replace_all(_string, (instanceof(self) + "("), "");
 					_string = string_replace_all(_string, ", ", "\n");
 					_string = string_copy(_string, 1, (string_length(_string) - 1));
@@ -323,7 +325,7 @@ function PriorityQueue() constructor
 					self.construct();
 				}
 				
-				ds_priority_clear(ID); //|Filler call that prevents a silent application crash.
+				ds_priority_clear(ID); //|Filler call to prevent a silent application crash.
 				
 				ds_priority_read(ID, _string);
 			}
