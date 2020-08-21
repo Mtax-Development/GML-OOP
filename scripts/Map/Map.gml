@@ -408,8 +408,8 @@ function Map() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the constructor 
-			//						name and preview of the content.
+			// @description			Overrides the string conversion with the constructor name and
+			//						main content preview.
 			static toString = function()
 			{
 				if (ds_exists(ID, ds_type_map))
@@ -448,8 +448,8 @@ function Map() constructor
 						else
 						{
 							return (((_i == _size) and
-									string_length(_string) <= _maximumLength + _cutMark_length)) ?
-								   (_string + ")"):
+									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
+								   (_string + ")") :
 								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
@@ -465,7 +465,7 @@ function Map() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a string with constructor name and its content.
+			// @description			Return a string with constructor name and its main content.
 			static toString_full = function()
 			{
 				if (ds_exists(ID, ds_type_map))

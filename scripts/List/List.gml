@@ -235,7 +235,8 @@ function List() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the content preview.
+			// @description			Overrides the string conversion with the constructor name and
+			//						main content preview.
 			static toString = function()
 			{
 				if (ds_exists(ID, ds_type_list))
@@ -269,8 +270,8 @@ function List() constructor
 						else
 						{
 							return (((_i == (_size - 1)) and
-									string_length(_string) <= _maximumLength + _cutMark_length)) ?
-								   (_string + ")"):
+									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
+								   (_string + ")") :
 								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 						}
 						
@@ -286,7 +287,7 @@ function List() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a string with constructor name and its content.
+			// @description			Return a string with constructor name and its main content.
 			static toString_full = function()
 			{
 				if (ds_exists(ID, ds_type_list))

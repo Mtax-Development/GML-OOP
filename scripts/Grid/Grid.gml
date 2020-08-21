@@ -699,7 +699,8 @@ function Grid(_width, _height) constructor
 			}
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the content preview.
+			// @description			Overrides the string conversion with the constructor name and
+			//						main content preview.
 			static toString = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -730,7 +731,7 @@ function Grid(_width, _height) constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a string with constructor name and its content.
+			// @description			Return a string with constructor name and its main content.
 			static toString_full = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))

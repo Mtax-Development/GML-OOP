@@ -64,6 +64,13 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 					   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
 			}
 			
+			// @returns				{string}
+			// @description			Return a string with constructor name and its main content.
+			static toString_full = function()
+			{
+				return (instanceof(self) + "(" + string(text) + ")");
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]

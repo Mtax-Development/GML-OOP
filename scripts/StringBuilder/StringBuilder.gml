@@ -386,7 +386,7 @@ function StringBuilder() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a string with constructor name and its content.
+			// @description			Return a string with constructor name and its main content.
 			static toString_full = function()
 			{
 				return (instanceof(self) + "(" + string(ID) + ")");
