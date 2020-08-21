@@ -1,5 +1,5 @@
 /// @function				TextDraw()
-/// @argument				{string} text
+/// @argument				{any} text
 /// @argument				{font} font
 /// @argument				{Vector2} location
 /// @argument				{TextAlign} align?
@@ -23,7 +23,7 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 					draw_set_valign(align.y);
 					draw_set_color(color);
 					draw_set_alpha(alpha);
-				
+
 					draw_text(location.x, location.y, text);
 				}
 			}
@@ -42,7 +42,9 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 	#endregion
 	#region [Constructor]
 		
-		text	  = _text;
+		//+TODO: Font constructor support
+		
+		text	  = string(_text);
 		font	  = _font;
 		location  = _location;
 		align	  = ((_align != undefined) ? _align : new TextAlign());

@@ -212,7 +212,7 @@ function Queue() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a string with constructor name and all of its content.
+			// @description			Return a string with constructor name and its content.
 			static toString_full = function()
 			{
 				if (ds_exists(ID, ds_type_queue))
