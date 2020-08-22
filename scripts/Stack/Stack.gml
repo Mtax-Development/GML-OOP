@@ -158,7 +158,7 @@ function Stack() constructor
 					
 					var _separator_length = string_length(_separator);
 					var _cutMark_length = string_length(_cutMark);
-				
+					
 					var _contentLength = 30;
 					var _maximumLength = (_contentLength + string_length(_string));
 				
@@ -182,6 +182,9 @@ function Stack() constructor
 						else
 						{
 							ds_stack_destroy(_dataCopy);
+							
+							_string = string_replace_all(_string, "\n", " ");
+							_string = string_replace_all(_string, "\r", " ");
 						
 							return (((_i == _size) and
 									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
@@ -191,9 +194,12 @@ function Stack() constructor
 						
 						_i++;
 					}
-				
+					
 					ds_stack_destroy(_dataCopy);
-				
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
+					
 					return (_string + ")");
 				}
 				else
@@ -230,7 +236,10 @@ function Stack() constructor
 					}
 					
 					ds_stack_destroy(_dataCopy);
-				
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
+					
 					return (_string + ")");
 				}
 				else

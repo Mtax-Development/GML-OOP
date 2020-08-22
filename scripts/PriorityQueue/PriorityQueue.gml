@@ -219,6 +219,9 @@ function PriorityQueue() constructor
 						{
 							ds_priority_destroy(_dataCopy);
 							
+							_string = string_replace_all(_string, "\n", " ");
+							_string = string_replace_all(_string, "\r", " ");
+							
 							return (((_i == _size) and
 									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
 								   (_string + ")") :
@@ -229,6 +232,9 @@ function PriorityQueue() constructor
 					}
 					
 					ds_priority_destroy(_dataCopy);
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}
@@ -271,6 +277,9 @@ function PriorityQueue() constructor
 					}
 					
 					ds_priority_destroy(_dataCopy);
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}

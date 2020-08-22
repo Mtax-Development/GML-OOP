@@ -269,6 +269,9 @@ function List() constructor
 						}
 						else
 						{
+							_string = string_replace_all(_string, "\n", " ");
+							_string = string_replace_all(_string, "\r", " ");
+							
 							return (((_i == (_size - 1)) and
 									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
 								   (_string + ")") :
@@ -277,6 +280,9 @@ function List() constructor
 						
 						_i++;
 					}
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}
@@ -296,7 +302,7 @@ function List() constructor
 					var _separator = ", ";
 					
 					var _size = ds_list_size(ID);
-					var _i = 1;
+					var _i = 0;
 					
 					repeat (_size)
 					{
@@ -307,6 +313,9 @@ function List() constructor
 							_string += _separator;
 						}
 					}
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}

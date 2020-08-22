@@ -716,6 +716,9 @@ function Grid(_width, _height) constructor
 					
 					_string += string(self.toArray());
 					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
+					
 					if (string_length(_string) > (_maximumLength + _cutMark_length))
 					{
 						_string = string_copy(_string, 1, _maximumLength);
@@ -736,7 +739,11 @@ function Grid(_width, _height) constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ((instanceof(self)) + "(" + string(self.toArray()) + ")");
+					var _string = string(self.toArray());
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
+					
+					return ((instanceof(self)) + "(" + _string + ")");
 				}
 				else
 				{

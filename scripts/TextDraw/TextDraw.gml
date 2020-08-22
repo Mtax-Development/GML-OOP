@@ -53,11 +53,13 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 				var _cutMark = "...";
 				
 				var _cutMark_length = string_length(_cutMark);
-					
+				
 				var _contentLength = 30;
 				var _maximumLength = (_contentLength + string_length(_string));
 				
 				_string += string(text);
+				_string = string_replace_all(_string, "\n", " ");
+				_string = string_replace_all(_string, "\r", " ");
 				
 				return ((string_length(_string) <= (_maximumLength + _cutMark_length))) ?
 					   (_string + ")") :
@@ -68,7 +70,11 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 			// @description			Return a string with constructor name and its main content.
 			static toString_full = function()
 			{
-				return (instanceof(self) + "(" + string(text) + ")");
+				var _string = string(text);
+				_string = string_replace_all(_string, "\n", " ");
+				_string = string_replace_all(_string, "\r", " ");
+				
+				return (instanceof(self) + "(" + _string + ")");
 			}
 			
 		#endregion

@@ -447,6 +447,9 @@ function Map() constructor
 						}
 						else
 						{
+							_string = string_replace_all(_string, "\n", " ");
+							_string = string_replace_all(_string, "\r", " ");
+							
 							return (((_i == _size) and
 									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
 								   (_string + ")") :
@@ -455,6 +458,9 @@ function Map() constructor
 						
 						_i++;
 					}
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}
@@ -494,6 +500,9 @@ function Map() constructor
 
 						_i++;
 					}
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 					
 					return (_string + ")");
 				}

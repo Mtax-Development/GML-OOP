@@ -191,6 +191,9 @@ function Queue() constructor
 						else
 						{
 							ds_queue_destroy(_dataCopy);
+							
+							_string = string_replace_all(_string, "\n", " ");
+							_string = string_replace_all(_string, "\r", " ");
 						
 							return (((_i == _size) and
 									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
@@ -202,6 +205,9 @@ function Queue() constructor
 					}
 				
 					ds_queue_destroy(_dataCopy);
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 				
 					return (_string + ")");
 				}
@@ -239,6 +245,9 @@ function Queue() constructor
 					}
 				
 					ds_queue_destroy(_dataCopy);
+					
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
 				
 					return (_string + ")");
 				}
