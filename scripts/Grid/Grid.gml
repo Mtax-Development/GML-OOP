@@ -586,6 +586,164 @@ function Grid(_width, _height) constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline
+			// @argument			{int|all} elementNumber
+			// @argument			{int|all} elementLength
+			// @argument			{string|undefined} mark_separator
+			// @argument			{string|undefined} mark_cut
+			// @argument			{string|undefined} mark_elementStart
+			// @argument			{string|undefined} mark_elementEnd
+			// @returns				{string}
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
+									   _mark_cut, _mark_elementStart, _mark_elementEnd)
+			{
+				if (ds_exists(ID, ds_type_grid))
+				{
+					//|General initialization.
+					var _size_x = ds_grid_width(ID);
+					var _size_y = ds_grid_height(ID);
+					
+					switch (_elementNumber)
+					{
+						case undefined: _elementNumber = 10; break;
+						case all: _elementNumber = _size_y; break;
+					}
+					
+					if (_elementLength == undefined) {_elementLength = ((_multiline) ? 15 : 30);}
+					if (_mark_separator == undefined) {_mark_separator = ", ";}
+					if (_mark_cut == undefined) {_mark_cut = "...";}
+					if (_mark_elementStart == undefined) {_mark_elementStart = "[";}
+					if (_mark_elementEnd == undefined) {_mark_elementEnd = "]";}
+					
+					var _mark_separator_length = string_length(_mark_separator);
+					var _mark_cut_length = string_length(_mark_cut);
+					var _mark_linebreak = (_multiline ? "\n" : "");
+					
+					var _string = ((_multiline) ? "" : (instanceof(self) + "("));
+					
+					var _string_lengthLimit = (string_length(_string) + _elementLength);
+					var _string_lengthLimit_cut = (_string_lengthLimit + _mark_cut_length);
+					
+					//|Content loop.
+					var _y = 0;
+					
+					repeat (min(_size_y, _elementNumber))
+					{
+						var _x = 0;
+						
+						repeat (_size_x)
+						{
+							//|Get Data Structure Element.
+							var _newElement = string(ds_grid_get(ID, _x, _y));
+							
+							//|Remove line-breaks.
+							_newElement = string_replace_all(_newElement, "\n", " ");
+							_newElement = string_replace_all(_newElement, "\r", " ");
+							
+							//|Limit element length for multiline listing.
+							if (_elementLength != all)
+							{
+								if ((string_length(_newElement)) > _elementLength)
+								{
+									_newElement = string_copy(_newElement, 1, _elementLength);
+									_newElement += _mark_cut;
+								}
+							}
+							
+							//|Add the element string with its parts.
+							_string += (_mark_elementStart + _newElement + _mark_elementEnd);
+							
+							_x++;
+						}
+						
+						_string += ((_multiline) ? _mark_linebreak : ""); //+TODO
+						
+						//|Cut strings and add cut or separation marks if appriopate.
+						if (!_multiline)
+						{
+							if (_elementLength != all)
+							{
+								var _string_length = string_length(_string);
+								
+								//|If the current element is not the last, add a separator or cut it
+								// if it would be too long.
+								if (_y < (_size_y - 1))
+								{
+									if ((_string_length + _mark_separator_length) >= 
+										 _string_lengthLimit)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+									else
+									{
+										if (_y < (_elementNumber - 1))
+										{
+											_string += _mark_separator;
+										}
+										else
+										{
+											_string += _mark_cut;
+											break;
+										}
+									}
+								}
+								else
+								{
+									//|If the current element is last, cut it if it would be too long,
+									// but expand the length check by the length of the cut mark.
+									if (_string_length >= _string_lengthLimit_cut)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+								}
+							}
+							else
+							{
+								//|If the elements are to be shown fully, add separators after the
+								// ones that are not last. Add a cut mark after the last one if
+								// not all elements are shown.
+								if (_y < (_elementNumber - 1))
+								{
+									_string += _mark_separator;
+								}
+								else if (_elementNumber != _size_y)
+								{
+									_string += _mark_cut;
+								}
+							}
+						}
+						
+						_y++;
+					}
+					
+					//|String finish.
+					if (_multiline)
+					{
+						//|Add a cut mark at the end of multiline listing if not all are shown.
+						if (_y < _size_y)
+						{
+							_string += _mark_cut;
+						}
+					}
+					else
+					{
+						_string += ")";
+					}
+					
+					return _string;
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
 			// @returns				{any[]}
 			// @description			Return an array with values of all cells in this Grid.
 			static toArray = function()
@@ -695,116 +853,6 @@ function Grid(_width, _height) constructor
 							_x++;
 						}
 					}
-				}
-			}
-			
-			// @returns				{string}
-			// @description			Overrides the string conversion with the constructor name and
-			//						main content preview.
-			static toString = function()
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _string = (instanceof(self) + "(");
-					
-					var _cutMark = "...";
-					
-					var _cutMark_length = string_length(_cutMark);
-					
-					var _contentLength = 30;
-					var _maximumLength = (_contentLength + string_length(_string));
-					
-					_string += string(self.toArray());
-					
-					_string = string_replace_all(_string, "\n", " ");
-					_string = string_replace_all(_string, "\r", " ");
-					
-					if (string_length(_string) > (_maximumLength + _cutMark_length))
-					{
-						_string = string_copy(_string, 1, _maximumLength);
-						_string += _cutMark;
-					}
-					
-					return (_string + ")");
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
-				}
-			}
-			
-			// @returns				{string}
-			// @description			Return a string with constructor name and its main content.
-			static toString_full = function()
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _string = string(self.toArray());
-					_string = string_replace_all(_string, "\n", " ");
-					_string = string_replace_all(_string, "\r", " ");
-					
-					return ((instanceof(self)) + "(" + _string + ")");
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
-				}
-			}
-			
-			// @argument			{bool} cut?
-			// @returns				{string}
-			// @description			Return a line-broken string with the content of 
-			//						this Data Structure.
-			static toString_multiline = function(_cut)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _mark_valueStart = "[";
-					var _mark_valueEnd = "]";
-					
-					var _size_x = ds_grid_width(ID);
-					var _size_y = ds_grid_height(ID);
-					
-					var _string = "";
-					
-					var _cut_mark = "...";
-					var _cut_maximumLength = 30;
-					
-					var _y = 0;
-					
-					repeat (_size_y)
-					{
-						var _x = 0;
-						
-						repeat (_size_x)
-						{
-							_string += (_mark_valueStart + string(ds_grid_get(ID, _x, _y))
-									   + _mark_valueEnd);
-							
-							_x++;
-						}
-						
-						if (_cut)
-						{
-							if (string_length(_string) > _cut_maximumLength)
-							{
-								_string = string_copy(_string, 1, _cut_maximumLength);
-								_string += _cut_mark;
-								
-								break;
-							}
-						}
-						
-						_string += "\n";
-						
-						_y++;
-					}
-					
-					return _string;
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
 				}
 			}
 			

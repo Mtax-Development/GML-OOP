@@ -407,123 +407,154 @@ function Map() constructor
 			#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline
+			// @argument			{int|all} elementNumber
+			// @argument			{int|all} elementLength
+			// @argument			{string|undefined} mark_separator
+			// @argument			{string|undefined} mark_cut
+			// @argument			{string|undefined} mark_elementStart
+			// @argument			{string|undefined} mark_elementEnd
+			// @argument			{string|undefined} mark_section
 			// @returns				{string}
-			// @description			Overrides the string conversion with the constructor name and
-			//						main content preview.
-			static toString = function()
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
+									   _mark_cut, _mark_elementStart, _mark_elementEnd, _mark_section)
 			{
 				if (ds_exists(ID, ds_type_map))
 				{
-					var _string = (instanceof(self) + "(");
-					
-					var _separator = ", ";
-					var _cutMark = "...";
-					var _keyMark = ": ";
-					
-					var _separator_length = string_length(_separator);
-					var _cutMark_length = string_length(_cutMark);
-					
-					var _contentLength = 30;
-					var _maximumLength = (_contentLength + string_length(_string));
-					
-					var _keys = self.getAllKeys(); //+TODO: Replace with ds_map_find_all when possible
-					
+					//|General initialization.
 					var _size = ds_map_size(ID);
+					
+					switch (_elementNumber)
+					{
+						case undefined: _elementNumber = 10; break;
+						case all: _elementNumber = _size; break;
+					}
+					
+					if (_elementLength == undefined) {_elementLength = 30;}
+					if (_mark_separator == undefined) {_mark_separator = ", ";}
+					if (_mark_cut == undefined) {_mark_cut = "...";}
+					if (_mark_elementStart == undefined) {_mark_elementStart = "";}
+					if (_mark_elementEnd == undefined) {_mark_elementEnd = "";}
+					if (_mark_section == undefined) {_mark_section = ": ";}
+					
+					var _mark_separator_length = string_length(_mark_separator);
+					var _mark_cut_length = string_length(_mark_cut);
+					var _mark_linebreak = (_multiline ? "\n" : "");
+					
+					var _string = ((_multiline) ? "" : (instanceof(self) + "("));
+					
+					var _string_lengthLimit = (string_length(_string) + _elementLength);
+					var _string_lengthLimit_cut = (_string_lengthLimit + _mark_cut_length);
+					
+					//|Data Structure preparation.
+					var _keys = self.getAllKeys();
+					
+					//|Content loop.
 					var _i = 0;
 					
-					repeat (_size)
+					repeat (min(_size, _elementNumber))
 					{
+						//|Get Data Structure Element.
 						var _key = string(_keys[_i]);
 						var _value = string(ds_map_find_value(ID, _keys[_i]));
 						
-						_string += (_key + _keyMark + _value);
+						var _newElement = (_key + _mark_section + _value);
 						
-						if ((string_length(_string) + _separator_length) < _maximumLength)
+						//|Remove line-breaks.
+						_newElement = string_replace_all(_newElement, "\n", " ");
+						_newElement = string_replace_all(_newElement, "\r", " ");
+						
+						//|Limit element length for multiline listing.
+						if ((_multiline) and (_elementLength != all))
 						{
-							if (_i < (_size - 1))
+							if ((string_length(_newElement)) > _elementLength)
 							{
-								_string += _separator;
+								_newElement = string_copy(_newElement, 1, _elementLength);
+								_newElement += _mark_cut;
 							}
 						}
-						else
+						
+						//|Add the element string with all its parts.
+						_string += (_mark_elementStart + _newElement + _mark_elementEnd +
+									_mark_linebreak);
+						
+						//|Cut strings and add cut or separation marks if appriopate.
+						if (!_multiline)
 						{
-							_string = string_replace_all(_string, "\n", " ");
-							_string = string_replace_all(_string, "\r", " ");
-							
-							return (((_i == _size) and
-									string_length(_string) <= (_maximumLength + _cutMark_length))) ?
-								   (_string + ")") :
-								   (string_copy(_string, 1, _maximumLength) + _cutMark + ")");
+							if (_elementLength != all)
+							{
+								var _string_length = string_length(_string);
+								
+								//|If the current element is not the last, add a separator or cut it
+								// if it would be too long.
+								if (_i < (_size - 1))
+								{
+									if ((_string_length + _mark_separator_length) >= 
+										 _string_lengthLimit)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+									else
+									{
+										if (_i < (_elementNumber - 1))
+										{
+											_string += _mark_separator;
+										}
+										else
+										{
+											_string += _mark_cut;
+											break;
+										}
+									}
+								}
+								else
+								{
+									//|If the current element is last, cut it if it would be too long,
+									// but expand the length check by the length of the cut mark.
+									if (_string_length >= _string_lengthLimit_cut)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+								}
+							}
+							else
+							{
+								//|If the elements are to be shown fully, add separators after the
+								// ones that are not last. Add a cut mark after the last one if
+								// not all elements are shown.
+								if (_i < (_elementNumber - 1))
+								{
+									_string += _mark_separator;
+								}
+								else if (_elementNumber != _size)
+								{
+									_string += _mark_cut;
+								}
+							}
 						}
 						
 						_i++;
 					}
 					
-					_string = string_replace_all(_string, "\n", " ");
-					_string = string_replace_all(_string, "\r", " ");
-					
-					return (_string + ")");
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
-				}
-			}
-			
-			// @returns				{string}
-			// @description			Return a string with constructor name and its main content.
-			static toString_full = function()
-			{
-				if (ds_exists(ID, ds_type_map))
-				{
-					var _string = (instanceof(self) + "(");
-					
-					var _separator = ", ";
-					var _keyMark = ": ";
-					
-					var _keys = self.getAllKeys(); //+TODO: Replace with ds_map_find_all when possible
-					
-					var _size = ds_map_size(ID);
-					var _i = 0;
-					
-					repeat (_size)
+					//|String finish.
+					if (_multiline)
 					{
-						var _key = string(_keys[_i]);
-						var _value = string(ds_map_find_value(ID, _keys[_i]));
-						
-						_string += (_key + _keyMark + _value);
-						
-						if (_i < (_size - 1))
+						//|Add a cut mark at the end of multiline listing if not all are shown.
+						if (_i < _size)
 						{
-							_string += _separator;
+							_string += _mark_cut;
 						}
-
-						_i++;
 					}
-					
-					_string = string_replace_all(_string, "\n", " ");
-					_string = string_replace_all(_string, "\r", " ");
-					
-					return (_string + ")");
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
-				}
-			}
-			
-			// @argument			{bool} cut?
-			// @returns				{string}
-			// @description			Return a line-broken string with the content of 
-			//						this Data Structure.
-			static toString_multiline = function(_cut)
-			{
-				if (ds_exists(ID, ds_type_map))
-				{
-					var _string = ((_cut) ? self.toString() : self.toString_full());
-					_string = string_replace_all(_string, (instanceof(self) + "("), "");
-					_string = string_replace_all(_string, ", ", "\n");
-					_string = string_copy(_string, 1, (string_length(_string) - 1));
+					else
+					{
+						_string += ")";
+					}
 					
 					return _string;
 				}
