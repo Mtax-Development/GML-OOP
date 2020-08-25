@@ -56,8 +56,6 @@ function Map() constructor
 		#endregion
 		#region <Getters>
 			
-			//+TODO: Superset the unreleased functions when they will be available.
-			
 			// @returns				{int}
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
@@ -112,7 +110,7 @@ function Map() constructor
 			}
 			
 			// @return				{any[]}
-			// @description			Return all keys in this Map (without values) as an array.
+			// @description			Return all keys in this Map as an array.
 			static getAllKeys = function()
 			{
 				if (ds_exists(ID, ds_type_map))
@@ -121,20 +119,51 @@ function Map() constructor
 					
 					if (_size > 0)
 					{
-						var _results = array_create(_size, undefined);
+						var _result = array_create(_size, undefined);
 						
-						_results[0] = ds_map_find_first(ID);
+						_result[0] = ds_map_find_first(ID);
 						
 						var _i = 1;
 						
 						repeat (_size - 1)
 						{
-							_results[_i] = ds_map_find_next(ID, _results[_i - 1]);
+							_result[_i] = ds_map_find_next(ID, _result[_i - 1]);
 							
 							_i++;
 						}
 						
-						return _results;
+						return _result;
+					}
+				}
+				
+				return [];
+			}
+			
+			// @return				{any[]}
+			// @description			Return all values in this Map as an array.
+			static getAllValues = function()
+			{
+				if (ds_exists(ID, ds_type_map))
+				{
+					var _size = ds_map_size(ID);
+					
+					if (_size > 0)
+					{
+						var _result = array_create(_size, undefined);
+						
+						var _key = ds_map_find_first(ID);
+						
+						var _i = 0;
+						
+						repeat (_size)
+						{
+							_result[_i] = ds_map_find_value(ID, _key);
+							_key = ds_map_find_next(ID, _key);
+							
+							_i++;
+						}
+						
+						return _result;
 					}
 				}
 				
@@ -561,6 +590,73 @@ function Map() constructor
 				else
 				{
 					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @returns				{any[]}
+			// @description			Create an array with all keys and values of this Map.
+			//						The array will contain two other arrays. First will contain
+			//						the keys and second will contain the values.
+			static toArray = function()
+			{
+				if (ds_exists(ID, ds_type_map))
+				{
+					var _size = ds_map_size(ID);
+					
+					if (_size > 0)
+					{
+						var _keys = array_create(_size, undefined);
+						var _values = array_create(_size, undefined);
+						
+						_keys[0] = ds_map_find_first(ID);
+						_values[0] = ds_map_find_value(ID, _keys[0]);
+						
+						var _i = 1;
+						
+						repeat (_size - 1)
+						{
+							_keys[_i] = ds_map_find_next(ID, _keys[_i - 1]);
+							_values[_i] = ds_map_find_value(ID, _keys[_i]);
+							
+							_i++;
+						}
+						
+						return [_keys, _values];
+					}
+				}
+				
+				return [];
+			}
+			
+			// @argument			{any[]} array
+			// @description			Add key and value pairs from the specified array to this Map.
+			//						The first dimension of the array must contain keys and the second
+			//						their value pairs.
+			//						Values that are not provided for a key will be set to {undefined}.
+			static fromArray = function(_array)
+			{
+				if (ds_exists(ID, ds_type_map))
+				{
+					if ((is_array(_array)) and (array_length(_array) >= 2)
+					and (is_array(_array[0])) and (is_array(_array[1])))
+					{
+						var _keys = _array[0];
+						var _values = _array[1];
+						
+						var _keys_length = array_length(_keys);
+						var _values_length = array_length(_values);
+						
+						var _i = 0;
+						
+						repeat (_keys_length)
+						{
+							var _value = ((_i < _values_length) ? _values[_i] : undefined);
+							
+							ds_map_add(ID, _keys[_i], _value);
+							
+							_i++;
+						}
+					}
 				}
 			}
 			

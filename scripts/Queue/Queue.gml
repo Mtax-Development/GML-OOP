@@ -309,6 +309,70 @@ function Queue() constructor
 				}
 			}
 			
+			// @returns				{any[]}
+			// @description			Create an array with all values of this Queue.
+			static toArray = function()
+			{
+				if (ds_exists(ID, ds_type_queue))
+				{
+					var _size = ds_queue_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_queue_create();
+						ds_queue_copy(_dataCopy, ID);
+						
+						var _array = array_create(_size, undefined);
+						
+						var _i = 0;
+						
+						repeat (_size)
+						{
+							_array[_i] = ds_queue_dequeue(_dataCopy);
+							
+							_i++;
+						}
+						
+						ds_queue_destroy(_dataCopy);
+						
+						return _array;
+					}
+				}
+				
+				return [];
+			}
+			
+			// @argument			{any[]} array
+			// @argument			{bool} startFromEnd?
+			// @description			Add values from the specified array to this Queue, starting
+			//						from either the start of the array or its end.
+			static fromArray = function(_array, _startFromEnd)
+			{
+				if (ds_exists(ID, ds_type_queue))
+				{
+					if (is_array(_array))
+					{
+						var _size = array_length(_array);
+						
+						var _i = ((_startFromEnd) ? (_size - 1) : 0);
+						
+						repeat (_size)
+						{
+							ds_queue_enqueue(ID, _array[_i]);
+							
+							if (_startFromEnd)
+							{
+								_i--;
+							}
+							else
+							{
+								_i++;
+							}
+						}
+					}
+				}
+			}
+			
 			// @returns				{string}
 			// @description			Return an encoded string of this Data Structure,
 			//						which can later be decoded to recreate it.

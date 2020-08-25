@@ -300,6 +300,70 @@ function Stack() constructor
 				}
 			}
 			
+			// @returns				{any[]}
+			// @description			Create an array with all values of this Stack.
+			static toArray = function()
+			{
+				if (ds_exists(ID, ds_type_stack))
+				{
+					var _size = ds_stack_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_stack_create();
+						ds_stack_copy(_dataCopy, ID);
+						
+						var _array = array_create(_size, undefined);
+						
+						var _i = 0;
+						
+						repeat (_size)
+						{
+							_array[_i] = ds_stack_pop(_dataCopy);
+							
+							_i++;
+						}
+						
+						ds_stack_destroy(_dataCopy);
+						
+						return _array;
+					}
+				}
+				
+				return [];
+			}
+			
+			// @argument			{any[]} array
+			// @argument			{bool} startFromEnd?
+			// @description			Add values from the specified array to this Stack, starting
+			//						from either the start of the array or its end.
+			static fromArray = function(_array, _startFromEnd)
+			{
+				if (ds_exists(ID, ds_type_stack))
+				{
+					if (is_array(_array))
+					{
+						var _size = array_length(_array);
+						
+						var _i = ((_startFromEnd) ? (_size - 1) : 0);
+						
+						repeat (_size)
+						{
+							ds_stack_push(ID, _array[_i]);
+							
+							if (_startFromEnd)
+							{
+								_i--;
+							}
+							else
+							{
+								_i++;
+							}
+						}
+					}
+				}
+			}
+			
 			// @returns				{string}
 			// @description			Return an encoded string of this Data Structure,
 			//						which can later be decoded to recreate it.

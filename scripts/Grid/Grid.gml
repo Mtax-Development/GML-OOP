@@ -745,7 +745,7 @@ function Grid(_width, _height) constructor
 			}
 			
 			// @returns				{any[]}
-			// @description			Return an array with values of all cells in this Grid.
+			// @description			Create an array with values of all cells in this Grid.
 			static toArray = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))

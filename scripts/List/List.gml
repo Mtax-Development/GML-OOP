@@ -383,6 +383,53 @@ function List() constructor
 				}
 			}
 			
+			// @returns				{any[]}
+			// @description			Create an array with all values of this List.
+			static toArray = function()
+			{
+				if (ds_exists(ID, ds_type_list))
+				{
+					var _size = ds_list_size(ID);
+					
+					var _array = array_create(_size, undefined);
+					
+					var _i = 0;
+					
+					repeat (_size)
+					{
+						_array[_i] = ds_list_find_value(ID, _i);
+						
+						_i++;
+					}
+					
+					return _array;
+				}
+				else
+				{
+					return [];
+				}
+			}
+			
+			// @argument			{any[]} array
+			// @description			Add all values from the specified array dimension to this List.
+			static fromArray = function(_array)
+			{
+				if (is_array(_array))
+				{
+					if (ds_exists(ID, ds_type_list))
+					{
+						var _i = 0;
+						
+						repeat (array_length(_array))
+						{
+							ds_list_add(ID, _array[_i]);
+							
+							_i++;
+						}
+					}
+				}
+			}
+			
 			// @returns				{string}
 			// @description			Return an encoded string of this Data Structure,
 			//						which can later be decoded to recreate it.

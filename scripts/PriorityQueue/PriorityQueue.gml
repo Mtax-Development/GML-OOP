@@ -337,6 +337,75 @@ function PriorityQueue() constructor
 				}
 			}
 			
+			// @returns				{any[]}
+			// @description			Create an array with all values of this PriorityQueue.
+			static toArray = function()
+			{
+				if (ds_exists(ID, ds_type_priority))
+				{
+					var _size = ds_priority_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_priority_create();
+						ds_priority_copy(_dataCopy, ID);
+						
+						var _priorities = array_create(_size, undefined);
+						var _values = array_create(_size, undefined);
+						
+						var _i = 0;
+						
+						repeat (_size)
+						{
+							_priorities[_i] = ds_priority_find_priority(_dataCopy, 
+											  ds_priority_find_max(_dataCopy));
+							
+							_values[_i] = ds_priority_delete_max(_dataCopy);
+							
+							_i++;
+						}
+						
+						ds_priority_destroy(_dataCopy);
+						
+						return [_priorities, _values];
+					}
+				}
+			}
+			
+			// @argument			{any[]} array
+			// @description			Add priority and value pairs from the specified array to 
+			//						this PriorityQueue.
+			//						The first dimension of the array must contain priorities
+			//						and the second their value pairs.
+			//						Values that are not provided for a priority will be set to
+			//						{undefined}.
+			static fromArray = function(_array)
+			{
+				if (ds_exists(ID, ds_type_priority))
+				{
+					if ((is_array(_array)) and (array_length(_array) >= 2)
+					and (is_array(_array[0])) and (is_array(_array[1])))
+					{
+						var _priorities = _array[0];
+						var _values = _array[1];
+						
+						var _priorities_length = array_length(_priorities);
+						var _values_length = array_length(_values);
+						
+						var _i = 0;
+						
+						repeat (_priorities_length)
+						{
+							var _value = ((_i < _values_length) ? _values[_i] : undefined);
+							
+							ds_priority_add(ID, _value, _priorities[_i]);
+							
+							_i++;
+						}
+					}
+				}
+			}
+			
 			// @returns				{string}
 			// @description			Return an encoded string of this Data Structure,
 			//						which can later be decoded to recreate it.
