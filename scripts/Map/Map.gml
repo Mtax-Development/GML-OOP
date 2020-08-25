@@ -15,14 +15,47 @@ function Map() constructor
 				ID = ds_map_create();
 			}
 			
+			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
-			static destroy = function()
+			//						A deep scan can be performed before the removal, which will 
+			//						iterate through this and all other Data Structures contained
+			//						in it to destroy them as well.
+			static destroy = function(_deepScan)
 			{
-				//+TODO: Deep data structure scan.
-				
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
+					if (_deepScan)
+					{
+						var _size = ds_map_size(ID);
+						
+						if (_size > 0)
+						{
+							var _key = ds_map_find_first(ID);
+							
+							repeat (_size)
+							{
+								var _value = ds_map_find_value(ID, _key);
+								_key = ds_map_find_next(ID, _key);
+							
+								if (is_struct(_value))
+								{
+									switch (instanceof(_value))
+									{
+										case "Grid":
+										case "List":
+										case "Map":
+										case "PriorityQueue":
+										case "Queue":
+										case "Stack":
+											_value.destroy(true);
+										break;
+									}
+								}
+							}
+						}
+					}
+					
 					ds_map_destroy(ID);
 				}
 				

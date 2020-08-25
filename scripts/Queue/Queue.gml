@@ -13,14 +13,39 @@ function Queue() constructor
 				ID = ds_queue_create();
 			}
 			
+			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
-			static destroy = function()
+			//						A deep scan can be performed before the removal, which will 
+			//						iterate through this and all other Data Structures contained
+			//						in it to destroy them as well.
+			static destroy = function(_deepScan)
 			{
-				//+TODO: Deep data structure scan.
-				
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
+					if (_deepScan)
+					{
+						repeat (ds_queue_size(ID))
+						{
+							var _value = ds_queue_dequeue(ID);
+							
+							if (is_struct(_value))
+							{
+								switch (instanceof(_value))
+								{
+									case "Grid":
+									case "List":
+									case "Map":
+									case "PriorityQueue":
+									case "Queue":
+									case "Stack":
+										_value.destroy(true);
+									break;
+								}
+							}
+						}
+					}
+					
 					ds_queue_destroy(ID);
 				}
 				

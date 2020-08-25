@@ -2,7 +2,7 @@
 ///
 /// @argument				{int} width
 /// @argument				{int} height
-/// @description			Constructs a Grid Mapa Structure, which stores data in a model similar to
+/// @description			Constructs a Grid Data Structure, which stores data in a model similar to
 ///							the one used by 2D array. Each value is stored in its own cell and they
 ///							can be read or modified invidually or by handling multiple cells at once
 ///							in a region or disk of the Grid.
@@ -24,14 +24,56 @@ function Grid(_width, _height) constructor
 				}
 			}
 			
+			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
-			static destroy = function()
+			//						A deep scan can be performed before the removal, which will 
+			//						iterate through this and all other Data Structures contained
+			//						in it to destroy them as well.
+			static destroy = function(_deepScan)
 			{
-				//+TODO: Deep data structure scan.
-				
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_deepScan)
+					{
+						var _size_x = ds_grid_width(ID);
+						var _size_y = ds_grid_height(ID);
+						
+						if ((_size_x > 0) and (_size_y > 0))
+						{
+							var _y = 0;
+							
+							repeat (_size_y)
+							{
+								var _x = 0;
+								
+								repeat (_size_x)
+								{
+									var _value = ds_grid_get(ID, _x, _y);
+							
+									if (is_struct(_value))
+									{
+										switch (instanceof(_value))
+										{
+											case "Grid":
+											case "List":
+											case "Map":
+											case "PriorityQueue":
+											case "Queue":
+											case "Stack":
+												_value.destroy(true);
+											break;
+										}
+									}
+									
+									_x++;
+								}
+							
+								_y++;
+							}
+						}
+					}
+					
 					ds_grid_destroy(ID);
 				}
 				

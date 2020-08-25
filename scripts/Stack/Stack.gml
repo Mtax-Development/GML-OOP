@@ -13,14 +13,39 @@ function Stack() constructor
 				ID = ds_stack_create();
 			}
 			
+			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
-			static destroy = function()
+			//						A deep scan can be performed before the removal, which will 
+			//						iterate through this and all other Data Structures contained
+			//						in it to destroy them as well.
+			static destroy = function(_deepScan)
 			{
-				//+TODO: Deep data structure scan.
-		
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
+					if (_deepScan)
+					{
+						repeat (ds_stack_size(ID))
+						{
+							var _value = ds_stack_pop(ID);
+							
+							if (is_struct(_value))
+							{
+								switch (instanceof(_value))
+								{
+									case "Grid":
+									case "List":
+									case "Map":
+									case "PriorityQueue":
+									case "Queue":
+									case "Stack":
+										_value.destroy(true);
+									break;
+								}
+							}
+						}
+					}
+					
 					ds_stack_destroy(ID);
 				}
 		

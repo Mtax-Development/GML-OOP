@@ -13,12 +13,39 @@ function PriorityQueue() constructor
 				ID = ds_priority_create();
 			}
 			
+			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
-			static destroy = function()
+			//						A deep scan can be performed before the removal, which will 
+			//						iterate through this and all other Data Structures contained
+			//						in it to destroy them as well.
+			static destroy = function(_deepScan)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
+					if (_deepScan)
+					{
+						repeat (ds_priority_size(ID))
+						{
+							var _value = ds_priority_delete_max(ID);
+							
+							if (is_struct(_value))
+							{
+								switch (instanceof(_value))
+								{
+									case "Grid":
+									case "List":
+									case "Map":
+									case "PriorityQueue":
+									case "Queue":
+									case "Stack":
+										_value.destroy(true);
+									break;
+								}
+							}
+						}
+					}
+					
 					ds_priority_destroy(ID);
 				}
 				
