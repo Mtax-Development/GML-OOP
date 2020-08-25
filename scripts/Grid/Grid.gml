@@ -53,7 +53,8 @@ function Grid(_width, _height) constructor
 			//						after resizing this Grid to match its size.
 			static copy = function(_other)
 			{
-				if (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))
+				if ((instanceof(_other) == "Grid") and (is_real(_other.ID)) 
+				and (ds_exists(_other.ID, ds_type_grid)))
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
 					{
@@ -425,7 +426,8 @@ function Grid(_width, _height) constructor
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (ds_exists(_other.ID, ds_type_grid)))
+					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
+					and (ds_exists(_other.ID, ds_type_grid)))
 					{
 						ds_grid_add_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
@@ -484,7 +486,8 @@ function Grid(_width, _height) constructor
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (ds_exists(_other.ID, ds_type_grid)))
+					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
+					and (ds_exists(_other.ID, ds_type_grid)))
 					{
 						ds_grid_set_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
@@ -543,7 +546,8 @@ function Grid(_width, _height) constructor
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (ds_exists(_other.ID, ds_type_grid)))
+					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
+					and (ds_exists(_other.ID, ds_type_grid)))
 					{
 						ds_grid_multiply_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 													 _source.x2, _source.y2, _target.x, _target.y);
@@ -599,7 +603,7 @@ function Grid(_width, _height) constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
-				if (ds_exists(ID, ds_type_grid))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					//|General initialization.
 					var _size_x = ds_grid_width(ID);

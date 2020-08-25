@@ -17,7 +17,7 @@ function PriorityQueue() constructor
 			// @description			Remove the internal information from the memory.
 			static destroy = function()
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					ds_priority_destroy(ID);
 				}
@@ -28,7 +28,7 @@ function PriorityQueue() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					ds_priority_clear(ID);
 				}
@@ -38,9 +38,10 @@ function PriorityQueue() constructor
 			// @description			Replace data of this Priority Queue with data from another one.
 			static copy = function(_other)
 			{
-				if (ds_exists(_other.ID, ds_type_priority))
+				if ((instanceof(_other) == "PriorityQueue") and (is_real(_other.ID)) 
+				and (ds_exists(_other.ID, ds_type_priority)))
 				{
-					if (!ds_exists(ID, ds_type_priority))
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 					{
 						self.construct();
 					}
@@ -56,7 +57,8 @@ function PriorityQueue() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_size(ID) : 0);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
@@ -65,7 +67,8 @@ function PriorityQueue() constructor
 			//						empty.
 			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_max(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_find_max(ID) : undefined);
 			}
 			
 			// @returns				{any|undefined}
@@ -74,7 +77,8 @@ function PriorityQueue() constructor
 			//						empty.
 			static getLast = function()
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_min(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_find_min(ID) : undefined);
 			}
 			
 			// @argument			{any} value
@@ -82,8 +86,8 @@ function PriorityQueue() constructor
 			// @description			Return the priority of a specified value.
 			static getPriority = function(_value)
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_find_priority(ID, _value) : 
-															undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_find_priority(ID, _value) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -91,7 +95,8 @@ function PriorityQueue() constructor
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_empty(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -103,7 +108,7 @@ function PriorityQueue() constructor
 			// @description			Add one or more value and priority pairs to this Priority Queue.
 			static add = function(_value, _priority)
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _i = 0;
 					
@@ -121,7 +126,7 @@ function PriorityQueue() constructor
 			// @description			Set the priority of already existing value.
 			static changePriority = function(_value, _priority)
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					ds_priority_change_priority(ID, _value, _priority);
 				}
@@ -131,9 +136,12 @@ function PriorityQueue() constructor
 			// @description			Remove the specified value from this Priority Queue.
 			static remove = function(_value)
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
-					ds_priority_delete_value(ID, _value);
+					if (ds_priority_size(ID) > 0)
+					{
+						ds_priority_delete_value(ID, _value);
+					}
 				}
 			}
 			
@@ -144,14 +152,15 @@ function PriorityQueue() constructor
 			//						empty.
 			static removeMin = function()
 			{
-				if (ds_exists(ID, ds_type_priority) and (ds_priority_size(ID) > 0))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
-					return ds_priority_delete_min(ID);
+					if (ds_priority_size(ID) > 0)
+					{
+						return ds_priority_delete_min(ID);
+					}
 				}
-				else
-				{
-					return undefined;
-				}
+
+				return undefined;
 			}
 			
 			// @returns				{any|undefined}
@@ -161,7 +170,8 @@ function PriorityQueue() constructor
 			//						empty.
 			static removeMax = function()
 			{
-				if (ds_exists(ID, ds_type_priority) and (ds_priority_size(ID) > 0))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)) 
+				and (ds_priority_size(ID) > 0))
 				{
 					return ds_priority_delete_max(ID);
 				}
@@ -188,7 +198,7 @@ function PriorityQueue() constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd, _mark_section)
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					//|General initialization.
 					var _size = ds_priority_size(ID);
@@ -341,7 +351,7 @@ function PriorityQueue() constructor
 			// @description			Create an array with all values of this PriorityQueue.
 			static toArray = function()
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
 					
@@ -381,7 +391,7 @@ function PriorityQueue() constructor
 			//						{undefined}.
 			static fromArray = function(_array)
 			{
-				if (ds_exists(ID, ds_type_priority))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					if ((is_array(_array)) and (array_length(_array) >= 2)
 					and (is_array(_array[0])) and (is_array(_array[1])))
@@ -411,8 +421,8 @@ function PriorityQueue() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return ((ds_exists(ID, ds_type_priority)) ? ds_priority_write(ID) : 
-															string(undefined));
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
+					   ds_priority_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
@@ -425,7 +435,7 @@ function PriorityQueue() constructor
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
-				if (!ds_exists(ID, ds_type_priority))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 				{
 					self.construct();
 				}

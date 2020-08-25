@@ -21,7 +21,7 @@ function Map() constructor
 			{
 				//+TODO: Deep data structure scan.
 				
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					ds_map_destroy(ID);
 				}
@@ -32,7 +32,7 @@ function Map() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					ds_map_clear(ID);
 				}
@@ -42,9 +42,10 @@ function Map() constructor
 			// @description			Replace data of this Map with data from another one.
 			static copy = function(_other)
 			{
-				if (ds_exists(_other.ID, ds_type_map))
+				if ((instanceof(_other) == "Map") and (is_real(_other.ID)) 
+				and (ds_exists(_other.ID, ds_type_map)))
 				{
-					if (!ds_exists(ID, ds_type_map))
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
 					{
 						self.construct();
 					}
@@ -60,7 +61,7 @@ function Map() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_size(ID) : 0);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? ds_map_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
@@ -68,7 +69,8 @@ function Map() constructor
 			//						Returns {undefined} if this Map does not exists or is empty.
 			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_find_first(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_find_first(ID) : undefined);
 			}
 			
 			// @returns				{any|undefined}
@@ -76,7 +78,8 @@ function Map() constructor
 			//						Returns {undefined} if this Map does not exists or is empty.
 			static getLast = function()
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_find_last(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_find_last(ID) : undefined);
 			}
 			
 			// @argument			{any} key
@@ -86,7 +89,8 @@ function Map() constructor
 			//						the value was first.
 			static getPrevious = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_find_previous(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_find_previous(ID, _key) : undefined);
 			}
 			
 			// @argumnet			{any} key
@@ -96,7 +100,8 @@ function Map() constructor
 			//						the value was last.
 			static getNext = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_find_next(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_find_next(ID, _key) : undefined);
 			}
 			
 			// @argument			{any} key
@@ -106,14 +111,15 @@ function Map() constructor
 			//						the key does not exist.
 			static getValue = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_find_value(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_find_value(ID, _key) : undefined);
 			}
 			
 			// @return				{any[]}
 			// @description			Return all keys in this Map as an array.
 			static getAllKeys = function()
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _size = ds_map_size(ID);
 					
@@ -143,7 +149,7 @@ function Map() constructor
 			// @description			Return all values in this Map as an array.
 			static getAllValues = function()
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _size = ds_map_size(ID);
 					
@@ -176,7 +182,8 @@ function Map() constructor
 			//						Returns {undefined} if this Data Structure does not exists
 			static keyExists = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_exists(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_exists(ID, _key) : undefined);
 			}
 			
 			// @argument			{any} key
@@ -186,7 +193,8 @@ function Map() constructor
 			//						also if the checked key does not hold a Data Structure.
 			static valueIsBoundList = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_is_list(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_is_list(ID, _key) : undefined);
 			}
 			
 			// @argument			{any} key
@@ -196,7 +204,8 @@ function Map() constructor
 			//						also if the checked key does not hold a Data Structure.
 			static valueIsBoundMap = function(_key)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_is_map(ID, _key) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_is_map(ID, _key) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -204,7 +213,8 @@ function Map() constructor
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_empty(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -220,7 +230,7 @@ function Map() constructor
 			//						was not or an array of such in case of multiple additions.
 			static add = function(_key, _value)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					if (argument_count <= 2)
 					{
@@ -261,7 +271,7 @@ function Map() constructor
 			//						reference ID.
 			static addBoundMap = function(_key, _value)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
 					
@@ -295,7 +305,7 @@ function Map() constructor
 			//						reference ID.
 			static addBoundList = function(_key, _value)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
 					
@@ -325,7 +335,7 @@ function Map() constructor
 			//						the value of the specified key if it already exists.
 			static set = function(_key, _value)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
 					
@@ -345,7 +355,7 @@ function Map() constructor
 			//						bound and the replaced value will be unbound.
 			static replace = function(_key, _value)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					if (ds_map_find_value(ID, _key) != undefined)
 					{
@@ -370,7 +380,7 @@ function Map() constructor
 			// @description			Removes one or more keys and their values from the Map.
 			static remove = function(_key)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
 					
@@ -387,7 +397,8 @@ function Map() constructor
 			//						Arrays will be converted to a DS list.
 			static secureSave = function(_filename)
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_secure_save(ID, _filename) : false);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_secure_save(ID, _filename) : false);
 			}
 			
 			// @argument			{string} filename
@@ -395,7 +406,7 @@ function Map() constructor
 			//						Arrays will be converted to a DS list.
 			static secureLoad = function(_filename)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					ds_map_destroy(ID);
 				}
@@ -408,7 +419,7 @@ function Map() constructor
 			//						as a file and then loaded later.
 			static secureSave_buffer = function(_buffer)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					if (buffer_exists(_buffer))
 					{
@@ -422,9 +433,9 @@ function Map() constructor
 			//						replace this Map with it.
 			static secureLoad_buffer = function(_buffer)
 			{
-				if (buffer_exists(_buffer))
+				if ((is_real(_buffer)) and (buffer_exists(_buffer)))
 				{
-					if (ds_exists(ID, ds_type_map))
+					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 					{
 						ds_map_destroy(ID);
 					}
@@ -450,7 +461,7 @@ function Map() constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd, _mark_section)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					//|General initialization.
 					var _size = ds_map_size(ID);
@@ -599,7 +610,7 @@ function Map() constructor
 			//						the keys and second will contain the values.
 			static toArray = function()
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _size = ds_map_size(ID);
 					
@@ -635,7 +646,7 @@ function Map() constructor
 			//						Values that are not provided for a key will be set to {undefined}.
 			static fromArray = function(_array)
 			{
-				if (ds_exists(ID, ds_type_map))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					if ((is_array(_array)) and (array_length(_array) >= 2)
 					and (is_array(_array[0])) and (is_array(_array[1])))
@@ -665,7 +676,8 @@ function Map() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return ((ds_exists(ID, ds_type_map)) ? ds_map_write(ID) : string(undefined));
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_map))) ? 
+					   ds_map_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
@@ -678,7 +690,7 @@ function Map() constructor
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
-				if (!ds_exists(ID, ds_type_map))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
 				{
 					self.construct();
 				}

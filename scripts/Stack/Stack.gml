@@ -19,7 +19,7 @@ function Stack() constructor
 			{
 				//+TODO: Deep data structure scan.
 		
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					ds_stack_destroy(ID);
 				}
@@ -30,7 +30,7 @@ function Stack() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					ds_stack_clear(ID);
 				}
@@ -40,9 +40,10 @@ function Stack() constructor
 			// @description			Replace data of this Stack with data from another one.
 			static copy = function(_other)
 			{
-				if (ds_exists(_other.ID, ds_type_stack))
+				if ((instanceof(_other) == "Stack") and (is_real(_other.ID)) 
+				and (ds_exists(_other.ID, ds_type_stack)))
 				{
-					if (!ds_exists(ID, ds_type_stack))
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
 					{
 						self.construct();
 					}
@@ -58,7 +59,7 @@ function Stack() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_size(ID) : 0);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_stack))) ? ds_stack_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
@@ -67,7 +68,8 @@ function Stack() constructor
 			//						Returns {undefined} if this Stack does not exists or is empty.
 			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_top(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_stack))) ? 
+					   ds_stack_top(ID) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -75,7 +77,8 @@ function Stack() constructor
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_empty(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_stack))) ? 
+					   ds_stack_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -85,7 +88,7 @@ function Stack() constructor
 			// @description			Add one or more values at the top of this Stack.
 			static add = function()
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _i = 0;
 		
@@ -103,7 +106,7 @@ function Stack() constructor
 			//						removed, they will be returned as an array.
 			static remove = function(_number)
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _size = ds_stack_size(ID);
 					
@@ -157,7 +160,7 @@ function Stack() constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					//|General initialization.
 					var _size = ds_stack_size(ID);
@@ -304,7 +307,7 @@ function Stack() constructor
 			// @description			Create an array with all values of this Stack.
 			static toArray = function()
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _size = ds_stack_size(ID);
 					
@@ -339,7 +342,7 @@ function Stack() constructor
 			//						from either the start of the array or its end.
 			static fromArray = function(_array, _startFromEnd)
 			{
-				if (ds_exists(ID, ds_type_stack))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					if (is_array(_array))
 					{
@@ -369,7 +372,8 @@ function Stack() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return ((ds_exists(ID, ds_type_stack)) ? ds_stack_write(ID) : string(undefined));
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_stack))) ? 
+					   ds_stack_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
@@ -382,7 +386,7 @@ function Stack() constructor
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
-				if (!ds_exists(ID, ds_type_stack))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
 				{
 					self.construct();
 				}

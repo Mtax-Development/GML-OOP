@@ -21,7 +21,7 @@ function List() constructor
 			{
 				//+TODO: Deep data structure scan.
 				
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_destroy(ID);
 				}
@@ -32,7 +32,7 @@ function List() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_clear(ID);
 				}
@@ -42,8 +42,14 @@ function List() constructor
 			// @description			Replace data of this List with data from another one.
 			static copy = function(_other)
 			{
-				if ((ds_exists(ID, ds_type_list)) and (ds_exists(_other.ID, ds_type_list)))
+				if ((instanceof(_other) == "List") and (is_real(_other.ID)) 
+				and (ds_exists(_other.ID, ds_type_list)))
 				{
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+					{
+						self.construct();
+					}
+					
 					ds_list_copy(ID, _other.ID);
 				}
 			}
@@ -55,7 +61,7 @@ function List() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return ((ds_exists(ID, ds_type_list)) ? ds_list_size(ID) : 0);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_list))) ? ds_list_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
@@ -63,7 +69,7 @@ function List() constructor
 			//						Returns {undefined} if this List does not exists or is empty.
 			static getFirst = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					return ((ds_list_size(ID) > 0) ? ID[| 0] : undefined);
 				}
@@ -78,7 +84,7 @@ function List() constructor
 			//						Returns {undefined} if this List does not exists or is empty.
 			static getLast = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _size = ds_list_size(ID);
 				
@@ -95,7 +101,8 @@ function List() constructor
 			// @description			Return the position of a specified value or -1 if not present.
 			static getFirstIndex = function(_value)
 			{
-				return ((ds_exists(ID, ds_type_list)) ? ds_list_find_index(ID, _value) : -1);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_list))) ? 
+					   ds_list_find_index(ID, _value) : -1);
 			}
 			
 			// @argument			{any} value
@@ -104,7 +111,7 @@ function List() constructor
 			//						the specified value.
 			static getAllIndexes = function(_value)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _indexes = [];
 					
@@ -133,7 +140,7 @@ function List() constructor
 			// @description			Return the value at the specified position.
 			static getValue = function(_position)
 			{
-				return ((ds_exists(ID, ds_type_list)) ? 
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_list))) ? 
 					   ds_list_find_value(ID, _position) : undefined);
 			}
 			
@@ -142,7 +149,8 @@ function List() constructor
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return ((ds_exists(ID, ds_type_list)) ? ds_list_empty(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_list))) ? 
+					   ds_list_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -152,7 +160,7 @@ function List() constructor
 			// @description			Add one or more values to this List.
 			static add = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _i = 0;
 				
@@ -169,7 +177,7 @@ function List() constructor
 			//						and any empty places before it to 0.
 			static set = function(_position, _value)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_set(ID, _position, _value);
 				}
@@ -181,7 +189,7 @@ function List() constructor
 			//						but only if it already exists.
 			static replace = function(_position, _value)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_replace(ID, _position, _value);
 				}
@@ -192,7 +200,7 @@ function List() constructor
 			//						push the position of all values after it back by one.
 			static remove = function(_position)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_delete(ID, _position);
 				}
@@ -204,7 +212,7 @@ function List() constructor
 			//						the position of all values after it forward by one.
 			static insert = function(_position, _value)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_insert(ID, _position, _value);
 				}
@@ -213,7 +221,7 @@ function List() constructor
 			// @description			Randomize the position of all values in the List.
 			static shuffle = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_shuffle(ID);
 				}
@@ -225,7 +233,7 @@ function List() constructor
 			//						In descnding order, numbers will be placed after strings.
 			static sort = function(order_ascending)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_sort(ID, order_ascending);
 				}
@@ -247,7 +255,7 @@ function List() constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					//|General initialization.
 					var _size = ds_list_size(ID);
@@ -387,7 +395,7 @@ function List() constructor
 			// @description			Create an array with all values of this List.
 			static toArray = function()
 			{
-				if (ds_exists(ID, ds_type_list))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _size = ds_list_size(ID);
 					
@@ -416,7 +424,7 @@ function List() constructor
 			{
 				if (is_array(_array))
 				{
-					if (ds_exists(ID, ds_type_list))
+					if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 					{
 						var _i = 0;
 						
@@ -435,7 +443,8 @@ function List() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return ((ds_exists(ID, ds_type_list)) ? ds_list_write(ID) : string(undefined));
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_list))) ? 
+					   ds_list_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
@@ -448,7 +457,7 @@ function List() constructor
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
-				if (!ds_exists(ID, ds_type_list))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
 				{
 					self.construct();
 				}

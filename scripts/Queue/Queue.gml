@@ -19,7 +19,7 @@ function Queue() constructor
 			{
 				//+TODO: Deep data structure scan.
 				
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					ds_queue_destroy(ID);
 				}
@@ -30,7 +30,7 @@ function Queue() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					ds_queue_clear(ID);
 				}
@@ -40,9 +40,10 @@ function Queue() constructor
 			// @description			Replace data of this Queue with data from another one.
 			static copy = function(_other)
 			{
-				if (ds_exists(_other.ID, ds_type_queue))
+				if ((instanceof(_other) == "Queue") and (is_real(_other.ID)) and 
+				(ds_exists(_other.ID, ds_type_queue)))
 				{
-					if (!ds_exists(ID, ds_type_queue))
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 					{
 						self.construct();
 					}
@@ -58,7 +59,7 @@ function Queue() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_size(ID) : 0);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? ds_queue_size(ID) : 0);
 			}
 			
 			// @returns				{any|undefined}
@@ -67,7 +68,8 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getFirst = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_head(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
+					   ds_queue_head(ID) : undefined);
 			}
 			
 			// @returns				{any|undefined}
@@ -76,7 +78,8 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getLast = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_tail(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
+					   ds_queue_tail(ID) : undefined);
 			}
 			
 			// @returns				{bool|undefined}
@@ -84,7 +87,8 @@ function Queue() constructor
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_empty(ID) : undefined);
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
+					   ds_queue_empty(ID) : undefined);
 			}
 			
 		#endregion
@@ -94,7 +98,7 @@ function Queue() constructor
 			// @description			Add one or more values at the tail of this Queue.
 			static add = function()
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _i = 0;
 		
@@ -112,7 +116,7 @@ function Queue() constructor
 			//						removed, they will be returned as an array.
 			static remove = function(_number)
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _size = ds_queue_size(ID);
 					
@@ -166,7 +170,7 @@ function Queue() constructor
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					//|General initialization.
 					var _size = ds_queue_size(ID);
@@ -313,7 +317,7 @@ function Queue() constructor
 			// @description			Create an array with all values of this Queue.
 			static toArray = function()
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _size = ds_queue_size(ID);
 					
@@ -348,7 +352,7 @@ function Queue() constructor
 			//						from either the start of the array or its end.
 			static fromArray = function(_array, _startFromEnd)
 			{
-				if (ds_exists(ID, ds_type_queue))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					if (is_array(_array))
 					{
@@ -378,7 +382,8 @@ function Queue() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return ((ds_exists(ID, ds_type_queue)) ? ds_queue_write(ID) : string(undefined));
+				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
+					   ds_queue_write(ID) : string(undefined));
 			}
 			
 			// @argument			{string} string
@@ -391,7 +396,7 @@ function Queue() constructor
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
-				if (!ds_exists(ID, ds_type_queue))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
 					self.construct();
 				}
