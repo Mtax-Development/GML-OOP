@@ -253,6 +253,40 @@ function Map() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{function} function
+			// @description			Execute a provided function once for each Data Structure element.
+			//						The provided function can read variables provided by it, either
+			//						by requiring the same named arguments or via the argument array.
+			//						The provided variables are:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _key
+			//						- argument[2]: {any} _value
+			static forEach = function(__function, _readOnly)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				{
+					var _size = ds_map_size(ID)
+					
+					if (_size > 0)
+					{
+						var _key = ds_map_find_first(ID);
+					
+						var _i = 0;
+					
+						repeat (_size)
+						{
+							var _value = ds_map_find_value(ID, _key);
+						
+							__function(_i, _key, _value);
+						
+							_key = ds_map_find_next(ID, _key);
+						
+							_i++;
+						}
+					}
+				}
+			}
+			
 			// @argument			{any} key
 			// @argument			{any} value
 			// @argument			...

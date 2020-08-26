@@ -632,6 +632,44 @@ function Grid(_width, _height) constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{function} function
+			// @description			Execute a provided function once for each Data Structure element.
+			//						The provided function can read variables provided by it, either
+			//						by requiring the same named arguments or via the argument array.
+			//						The provided variables are:
+			//						- argument[0]: {int} _x
+			//						- argument[1]: {int} _y
+			//						- argument[2]: {any} _value
+			static forEach = function(__function)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _size_x = ds_grid_width(ID);
+					var _size_y = ds_grid_height(ID);
+					
+					if ((_size_x > 0) and (_size_y > 0))
+					{
+						var _y = 0;
+						
+						repeat (_size_y)
+						{
+							var _x = 0;
+							
+							repeat (_size_x)
+							{
+								var _value = ds_grid_get(ID, _x, _y);
+								
+								__function(_x, _y, _value);
+								
+								_x++;
+							}
+							
+							_y++;
+						}
+					}
+				}
+			}
+			
 			// @argument			{bool} multiline
 			// @argument			{int|all} elementNumber
 			// @argument			{int|all} elementLength

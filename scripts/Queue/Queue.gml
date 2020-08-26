@@ -119,6 +119,53 @@ function Queue() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{function} function
+			// @argument			{bool} readOnly
+			// @description			Execute a provided function once for each Data Structure element.
+			//						The Data Structure can be treated as read-only for this operation,
+			//						in which case it will not be modified in order to read its values.
+			//						The provided function can read variables provided by it, either
+			//						by requiring the same named arguments or via the argument array.
+			//						The provided variables are:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _value
+			static forEach = function(__function, _readOnly)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					var _size = ds_queue_size(ID);
+					
+					if (_size > 0)
+					{
+						var _queue = ID;
+					
+						if (_readOnly)
+						{
+							var _dataCopy = ds_queue_create();
+							ds_queue_copy(_dataCopy, ID);
+						
+							_queue = _dataCopy;
+						}
+					
+						var _i = 0;
+					
+						repeat (_size)
+						{
+							var _value = ds_queue_dequeue(_queue);
+						
+							__function(_i, _value);
+						
+							_i++;
+						}
+					
+						if (_readOnly)
+						{
+							ds_queue_destroy(_dataCopy);
+						}
+					}
+				}
+			}
+			
 			// @argument			{any} ...
 			// @description			Add one or more values at the tail of this Queue.
 			static add = function()

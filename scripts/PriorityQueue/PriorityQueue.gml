@@ -129,6 +129,53 @@ function PriorityQueue() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{function} function
+			// @argument			{bool} readOnly
+			// @description			Execute a provided function once for each Data Structure element.
+			//						The Data Structure can be treated as read-only for this operation,
+			//						in which case it will not be modified in order to read its values.
+			//						The provided function can read variables provided by it, either
+			//						by requiring the same named arguments or via the argument array.
+			//						The provided variables are:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _value
+			static forEach = function(__function, _readOnly)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					var _size = ds_priority_size(ID);
+					
+					if (_size > 0)
+					{
+						var _priorityQueue = ID;
+					
+						if (_readOnly)
+						{
+							var _dataCopy = ds_priority_create();
+							ds_priority_copy(_dataCopy, ID);
+						
+							_priorityQueue = _dataCopy;
+						}
+					
+						var _i = 0;
+					
+						repeat (_size)
+						{
+							var _value = ds_priority_delete_max(_priorityQueue);
+						
+							__function(_i, _value);
+						
+							_i++;
+						}
+					
+						if (_readOnly)
+						{
+							ds_priority_destroy(_dataCopy);
+						}
+					}
+				}
+			}
+			
 			// @argument			{any} value
 			// @argument			{any} priority
 			// @argument			...

@@ -185,6 +185,35 @@ function List() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{function} function
+			// @description			Execute a provided function once for each Data Structure element.
+			//						The provided function can read variables provided by it, either
+			//						by requiring the same named arguments or via the argument array.
+			//						The provided variables are:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _value
+			static forEach = function(__function)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				{
+					var _size = ds_list_size(ID);
+					
+					if (_size > 0)
+					{
+						var _i = 0;
+					
+						repeat (_size)
+						{
+							var _value = ds_list_find_value(ID, _i);
+						
+							__function(_i, _value);
+						
+							_i++;
+						}
+					}
+				}
+			}
+			
 			// @argument			{any} ...
 			// @description			Add one or more values to this List.
 			static add = function()
