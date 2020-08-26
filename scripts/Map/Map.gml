@@ -148,7 +148,7 @@ function Map() constructor
 					   ds_map_find_value(ID, _key) : undefined);
 			}
 			
-			// @return				{any[]}
+			// @returns				{any[]}
 			// @description			Return all keys in this Map as an array.
 			static getAllKeys = function()
 			{
@@ -178,7 +178,7 @@ function Map() constructor
 				return [];
 			}
 			
-			// @return				{any[]}
+			// @returns				{any[]}
 			// @description			Return all values in this Map as an array.
 			static getAllValues = function()
 			{

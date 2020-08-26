@@ -109,8 +109,6 @@ function Grid(_width, _height) constructor
 			
 		#endregion
 		#region <Getters>
-		
-			//+TODO: getSize? getDimensions?
 			
 			// @argument			{Vector2} location
 			// @returns				{any|undefined}
@@ -151,13 +149,27 @@ function Grid(_width, _height) constructor
 				}
 			}
 			
-			// @return				{int}
+			// @returns				{int}
 			// @description			Return the height of this Grid.
 			static getSize_y = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					return ds_grid_height(ID);
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			
+			// @returns				{int}
+			// @description			Return the number of all cells in this Grid.
+			static getCellNumber = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					return (ds_grid_width(ID) * ds_grid_height(ID));
 				}
 				else
 				{
