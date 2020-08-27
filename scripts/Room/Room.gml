@@ -1,61 +1,116 @@
 /// @function				Room()
-/// @argument				{Vector2} size?
-/// @argument				{bool} persistent?
 ///
-/// @description			Constructs and creates a Room resource with its information.
-function Room(_size, _persistent) constructor
+/// @description			Constructs a Room resource with its basic properties.
+///
+///							Construction methods:
+///							New Room: {Vector2} size, {bool} persistent?
+///							Duplicate Room: {room|Room} other
+function Room() constructor
 {
+	#region [Elements]
+		
+		// @description			A container constructor for properties of instances added to this Room
+		//						before its activation.
+		function AddedInstance(_object, _location) constructor
+		{
+			#region [[Methods]]
+				#region <<Management>>
+					
+					// @description			Initialize the constructor.
+					static construct = function(_object, _location)
+					{
+						parent = other;
+						object = _object;
+						location = _location;
+						
+						ID = room_instance_add(parent.ID, location.x, location.y, object);
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					// @returns				{string}
+					// @description			Create a string representing the constructor.
+					//						Automatically overrides the string() conversion.
+					static toString = function()
+					{
+						return ("Room.AddedInstance" + "(" + object_get_name(object) + 
+								", " + string(location) + ")");
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				argument_original = [argument[0], argument[1]];
+				
+				self.construct(argument_original[0], argument_original[1]);
+				
+			#endregion
+		}
+		
+	#endregion
 	#region [Methods]
 		#region <Management>
 			
-			// @argument			{object} object
-			// @argument			{Vector2} location
-			// @description			Add an instance to this room when it's inactive.
-			static addInstance = function(_object, _location)
+			// @description			Initialize the constructor.
+			static construct = function()
 			{
-				if ((room_exists(ID)) and (room != ID))
-				{
-					room_instance_add(ID, _location.x, _location.y, _object);
-					
-					instances[array_length(instances)] = 
-					{
-						object: _object,
-						location: _location
-					}
-				}
-			}
-			
-			// @argument			{room|Room} room
-			// @description			Make this room a duplicate of any existing one.
-			static duplicate = function(_room)
-			{
-				if (instanceof(_room) == "Room")
-				{
-					if (room_exists(_room.ID))
-					{
-						ID = room_add();
-						name = room_get_name(ID);
-						persistent = _room.persistent;
-						size = _room.size;
-
-						room_set_width(ID, size.x);
-						room_set_height(ID, size.y);
-						room_set_persistent(ID, persistent);
+				ID = room_add();
+				name = room_get_name(ID);
+				persistent = undefined;
+				size = undefined;
+				addedInstanceList = new List();
 				
-						for (var i = 0; i < array_length(_room.instances); i++)
-						{
-							instance_add(_room.instances[i].object, _room.instances[i].location);
-						}
-					}
+				if ((argument_count <= 0) or (instanceof(argument[0]) == "Vector2"))
+				{
+					//|Construction method: New Room.
+					
+					var _size = ((argument_count > 0) ? argument[0] : undefined);
+					var _persistent = ((argument_count > 1) ? argument[1] : undefined);
+					
+					size = ((_size != undefined) ? _size : new Vector2(0, 0));
+					persistent = ((_persistent != undefined) ? _persistent : false);
+		
+					room_set_width(ID, size.x);
+					room_set_height(ID, size.y);
+					room_set_persistent(ID, persistent);
 				}
 				else
 				{
-					if (room_exists(_room))
+					//|Construction method: Duplicate Room.
+					
+					var _other = argument[0];
+					
+					if (instanceof(_other) == "Room")
 					{
-						ID = room_duplicate(_room);
-						name = room_get_name(ID);
-						persistent = _room.persistent;
-						size = undefined; //+TODO
+						if ((is_real(_other.ID)) and (room_exists(_other.ID)))
+						{
+							persistent = _other.persistent;
+							size = _other.size;
+							
+							addedInstanceList.copy(_other.addedInstanceList);
+						
+							if (size != undefined)
+							{
+								room_set_width(ID, size.x);
+								room_set_height(ID, size.y);
+							}
+						
+							if (persistent != undefined)
+							{
+								room_set_persistent(ID, persistent);
+							}
+						
+							room_assign(ID, _other.ID);
+						}
+					}
+					else
+					{
+						if (is_real(_other)) and (room_exists(_other))
+						{
+							room_assign(ID, _other);
+						}
 					}
 				}
 			}
@@ -64,43 +119,30 @@ function Room(_size, _persistent) constructor
 		#region <Setters>
 			
 			// @argument			{Vector2} size
-			// @description			Resize the room to set location limitations of added instances.
+			// @description			Resize this Room to set location boundary for added instances.
 			static setSize = function(_size)
 			{
-				if (room_exists(ID))
+				if ((is_real(ID)) and (room_exists(ID)))
 				{
-					if (size.x != _size.x)
+					if (room != ID)
 					{
-						size.x = _size.x;
+						size = _size;
+						
 						room_set_width(ID, size.x);
-					}
-					
-					if (size.y != _size.y)
-					{
-						size.y = _size.y;
 						room_set_height(ID, size.y);
 					}
 				}
 			}
 			
 			// @argument			{bool} value
-			// @description			Change the persistence flag for this room.
+			// @description			Change the persistence property for this Room.
 			static setPersistent = function(_persistent)
 			{		
-				if (room_exists(ID))
+				if ((is_real(ID)) and (room_exists(ID)))
 				{
 					persistent = _persistent;
 					
 					room_set_persistent(ID, persistent);
-				}
-			}
-			
-			// @description			Set all further Layer-related functions to this room.
-			static setLayerTarget = function()
-			{
-				if (room_exists(ID))
-				{
-					layer_set_target_room(ID);
 				}
 			}
 			
@@ -116,30 +158,73 @@ function Room(_size, _persistent) constructor
 				}
 			}
 			
+			// @argument			{object} object
+			// @argument			{Vector2} location
+			// @returns				{Room.AddedInstance|noone}
+			// @description			Add an instance of an object to this inactive room.
+			static instance_add = function(_object, _location)
+			{
+				if ((is_real(ID)) and (room_exists(ID)) and (room != ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					
+					var _addedInstance = new AddedInstance(_object, _location);
+					
+					addedInstanceList.add(_addedInstance);
+					
+					return _addedInstance;
+				}
+				else
+				{
+					return noone;
+				}
+			}
+			
 		#endregion
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with a Room name and size output.
+			// @description			Create a string representing the constructor.
+			//						Automatically overrides the string() conversion.
 			static toString = function()
 			{
-				return ((room_exists(ID)) ? (name + " (" + string(size) + ")") : string(undefined));
+				if ((is_real(ID)) and (room_exists(ID)))
+				{
+					return (instanceof(self) + "(" + name + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 		#endregion
 	#endregion
 	#region [Constructor]
 		
-		size = ((_size != undefined) ? _size : new Vector2(0, 0));
-		persistent = ((_persistent != undefined) ? _persistent : false);
+		argument_original = array_create(argument_count, undefined);
 		
-		ID = room_add();
-		name = room_get_name(ID);
-		instances = [];
+		var _i = 0;
 		
-		room_set_width(ID, size.x);
-		room_set_height(ID, size.y);
-		room_set_persistent(ID, persistent);
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			_i++;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else if (argument_count == 1)
+		{
+			self.construct(argument_original[0]);
+		}
+		else if (argument_count >= 2)
+		{
+			self.construct(argument_original[0], argument_original[1]);
+		}
 		
 	#endregion
 }
