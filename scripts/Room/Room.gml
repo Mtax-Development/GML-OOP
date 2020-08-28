@@ -34,7 +34,9 @@ function Room() constructor
 					//						Automatically overrides the string() conversion.
 					static toString = function()
 					{
-						return ("Room.AddedInstance" + "(" + object_get_name(object) + 
+						var _constructorName = "Room.AddedInstance";
+						
+						return (_constructorName + "(" + object_get_name(object) + 
 								", " + string(location) + ")");
 					}
 					

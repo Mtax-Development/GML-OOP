@@ -90,7 +90,7 @@ function StringBuilder() constructor
 			// @returns				{int}
 			// @description			Return the number of characters in the string after parsing
 			//						escape characters.
-			static getLength = function()
+			static getSize = function()
 			{
 				return string_length(string(ID));	
 			}

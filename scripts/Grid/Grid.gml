@@ -115,7 +115,7 @@ function Grid(_width, _height) constructor
 			// @description			Return the value of cell at the specified position in this Grid.
 			static getValue = function(_location)
 			{
-				//+TODO: Width/height checks. Description what it returns if the value does not exist.
+				//+TODO: Notify if accessing x/y that is not within the size.
 				
 				return (((is_real(ID)) and (ds_exists(ID, ds_type_grid))) ? 
 					   ds_grid_get(ID, _location.x, _location.y) : undefined);
@@ -754,11 +754,14 @@ function Grid(_width, _height) constructor
 							_x++;
 						}
 						
-						_string += ((_multiline) ? _mark_linebreak : ""); //+TODO
-						
-						//|Cut strings and add cut or separation marks if appriopate.
-						if (!_multiline)
+						if (_multiline)
 						{
+							_string += _mark_linebreak;
+						}
+						else
+						{
+							//|Cut strings and add cut or separation marks if appriopate.
+							
 							if (_elementLength != all)
 							{
 								var _string_length = string_length(_string);
