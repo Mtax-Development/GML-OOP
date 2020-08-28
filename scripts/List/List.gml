@@ -256,11 +256,34 @@ function List() constructor
 			// @argument			{int} position
 			// @description			Remove a value at a specified position from the List and 
 			//						push the position of all values after it back by one.
-			static remove = function(_position)
+			static remove_position = function(_position)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					ds_list_delete(ID, _position);
+				}
+			}
+			
+			// @argument			{any} value
+			// @desccription		Remove the specified value from all positions in the List
+			//						and push the position of all values after them back by one.
+			static remove_value = function(_value)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				{
+					var _i = 0;
+					
+					repeat (ds_list_size(ID))
+					{
+						if (ds_list_find_value(ID, _i) == _value)
+						{
+							ds_list_delete(ID, _i);
+						}
+						else
+						{
+							_i++;
+						}
+					}
 				}
 			}
 			
