@@ -14,8 +14,8 @@ function Layer(_depth) constructor
 					
 					destroy = function()
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_sprite_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
 						{
 							parent.spriteList.remove_value(self);
 							
@@ -30,7 +30,8 @@ function Layer(_depth) constructor
 					
 					update = function(_sprite)
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) 
 						and (layer_sprite_exists(parent.ID, ID)))
 						{
 							sprite = _sprite;
@@ -87,10 +88,11 @@ function Layer(_depth) constructor
 					{
 						var _constructorName = "Layer.SpriteElement";
 						
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_sprite_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
 						{
-							return (_constructorName + "(" + string(ID) + ": " + string(sprite) + ")");
+							return (_constructorName + "(" + string(ID) + ": " + 
+								   string(sprite) + ")");
 						}
 						else
 						{
@@ -105,7 +107,7 @@ function Layer(_depth) constructor
 				parent = other;
 				sprite = _sprite;
 				ID = layer_sprite_create(parent.ID, sprite.location.x, sprite.location.y, sprite.ID);
-			
+				
 				location = new Vector2(sprite.location.x, sprite.location.y);
 				scale = new Scale(sprite.scale.x, sprite.scale.y);
 				angle = new Angle(sprite.angle.value);
@@ -132,8 +134,8 @@ function Layer(_depth) constructor
 					
 					destroy = function()
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{
 							parent.backgroundList.remove_value(self);
 							
@@ -148,8 +150,8 @@ function Layer(_depth) constructor
 					
 					update = function(_sprite)
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{
 							sprite = _sprite;
 							
@@ -187,8 +189,8 @@ function Layer(_depth) constructor
 					
 					setStretched = function(_stretched)
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{
 							stretched = _stretched;
 							
@@ -198,8 +200,8 @@ function Layer(_depth) constructor
 					
 					setTiled = function(_tiled_x, _tiled_y)
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{	
 							tiled_x = ((_tiled_x != undefined) ? _tiled_x : false);
 							tiled_y = ((_tiled_y != undefined) ? _tiled_y : false);
@@ -211,8 +213,8 @@ function Layer(_depth) constructor
 					
 					setVisible = function(_visible)
 					{
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{
 							visible = _visible;
 							
@@ -227,10 +229,11 @@ function Layer(_depth) constructor
 					{
 						var _constructorName = "Layer.BackgroundElement";
 						
-						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
-						and (layer_background_exists(parent.ID, ID)))
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
 						{
-							return (_constructorName + "(" + string(ID) + ": " + string(sprite) + ")");
+							return (_constructorName + "(" + string(ID) + ": " + 
+								   string(sprite) + ")");
 						}
 						else
 						{
@@ -521,11 +524,18 @@ function Layer(_depth) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with a name and depth output.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
 			static toString = function()
 			{
-				return (((ID != undefined) and (layer_exists(ID))) ? 
-					   (name + string(depth)) : string(undefined));
+				if (is_real(ID) and (layer_exists(ID)))
+				{
+					return (instanceof(self) + string(depth) + ": " + name);
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 		#endregion
