@@ -12,7 +12,39 @@ function Layer(_depth) constructor
 			#region [[Methods]]
 				#region <<Management>>
 					
-					destroy = function()
+					static changeParent = function(_layer)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) 
+						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
+						{
+							if (instanceof(_layer) == "Layer")
+							{
+								if (layer_exists(_layer.ID))
+								{
+									parent.spriteList.remove_value(self);
+									
+									parent = _layer;
+									
+									parent.spriteList.add(self);
+									
+									layer_element_move(ID, parent.ID);
+								}
+							}
+							else
+							{
+								if (layer_exists(_layer))
+								{
+									parent.spriteList.remove_value(self);
+									
+									parent = undefined;
+									
+									layer_element_move(ID, _layer);
+								}
+							}
+						}
+					}
+					
+					static destroy = function()
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
@@ -28,7 +60,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Execution>>
 					
-					update = function(_sprite)
+					static update = function(_sprite)
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) 
@@ -84,7 +116,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Conversion>>
 					
-					toString = function()
+					static toString = function()
 					{
 						var _constructorName = "Layer.SpriteElement";
 						
@@ -132,7 +164,7 @@ function Layer(_depth) constructor
 			#region [[Methods]]
 				#region <<Management>>
 					
-					destroy = function()
+					static destroy = function()
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
@@ -148,7 +180,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Execution>>
 					
-					update = function(_sprite)
+					static update = function(_sprite)
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
@@ -187,7 +219,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Setters>>
 					
-					setStretched = function(_stretched)
+					static setStretched = function(_stretched)
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
@@ -198,7 +230,7 @@ function Layer(_depth) constructor
 						}
 					}
 					
-					setTiled = function(_tiled_x, _tiled_y)
+					static setTiled = function(_tiled_x, _tiled_y)
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
@@ -211,7 +243,7 @@ function Layer(_depth) constructor
 						}
 					}
 					
-					setVisible = function(_visible)
+					static setVisible = function(_visible)
 					{
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
@@ -225,7 +257,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Conversion>>
 					
-					toString = function()
+					static toString = function()
 					{
 						var _constructorName = "Layer.BackgroundElement";
 						
@@ -273,6 +305,38 @@ function Layer(_depth) constructor
 	#endregion
 	#region [Methods]
 		#region <Management>
+		
+			static changeParent = function(_layer)
+			{
+				if ((parent != undefined) and (is_real(parent.ID)) 
+				and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+				{
+					if (instanceof(_layer) == "Layer")
+					{
+						if (layer_exists(_layer.ID))
+						{
+							parent.backgroundList.remove_value(self);
+									
+							parent = _layer;
+									
+							parent.backgroundList.add(self);
+									
+							layer_element_move(ID, parent.ID);
+						}
+					}
+					else
+					{
+						if (layer_exists(_layer))
+						{
+							parent.backgroundList.remove_value(self);
+									
+							parent = undefined;
+									
+							layer_element_move(ID, _layer);
+						}
+					}
+				}
+			}
 			
 			// @returns				{undefined}
 			// @description			Remove the internal Layer information from the memory.
@@ -403,32 +467,6 @@ function Layer(_depth) constructor
 			
 		#endregion
 		#region <Execution>
-		
-			// @argument			{layerElementID} element
-			// @argument			{Layer|layer} other
-			// @description			Move a specified Layer element from this Layer to other one.
-			static moveElement = function(_element, _other)
-			{
-				if ((ID != undefined) and (layer_exists(ID)) and (_other != undefined))
-				{			
-					if (instanceof(_other) == "Layer")
-					{
-						if (layer_exists(_other.ID))
-						{
-							layer_element_move(_element, _other.ID);
-						}
-					}
-					else
-					{
-						if (layer_exists(_other))
-						{
-							layer_element_move(_element, _other);
-						}
-					}
-					
-					//+TODO: Data Structure handling.
-				}
-			}
 			
 			// @argument			{Vector2} location
 			// @argument			{object} object
