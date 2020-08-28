@@ -7,215 +7,264 @@ function Layer(_depth) constructor
 {
 	#region [Elements]
 		
-		function SpriteElement(_layer, _sprite) constructor
+		function SpriteElement(_sprite) constructor
 		{
-			destroy = function()
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_sprite_exists(layer.ID, ID)))
-				{
-					layer_sprite_destroy(ID);
+			#region [[Methods]]
+				#region <<Management>>
 					
-					//+TODO: Remove the Element from the Data Structure.
-				}
-				
-				return undefined;
-			}
-			
-			update = function(_sprite)
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_sprite_exists(layer.ID, ID)))
-				{
-					sprite = _sprite;
-					
-					if (sprite == -1)
+					destroy = function()
 					{
-						layer_sprite_change(ID, sprite);
-						
-						scale = undefined;
-						angle = undefined;
-						color = undefined;
-						alpha = undefined;
-						frame = undefined;
-						speed = undefined;
-					}
-					else
-					{
-						layer_sprite_change(ID, sprite.ID);
-						
-						if (sprite.location != undefined)
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_sprite_exists(parent.ID, ID)))
 						{
-							location = new Vector2(sprite.location.x, sprite.location.y);
+							parent.spriteList.remove_value(self);
 							
-							layer_sprite_x(ID, location.x);
-							layer_sprite_y(ID, location.y);
+							layer_sprite_destroy(ID);
+						}
+						
+						return undefined;
+					}
+					
+				#endregion
+				#region <<Execution>>
+					
+					update = function(_sprite)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_sprite_exists(parent.ID, ID)))
+						{
+							sprite = _sprite;
+							
+							if (sprite == -1)
+							{
+								layer_sprite_change(ID, sprite);
+						
+								scale = undefined;
+								angle = undefined;
+								color = undefined;
+								alpha = undefined;
+								frame = undefined;
+								speed = undefined;
+							}
+							else
+							{
+								layer_sprite_change(ID, sprite.ID);
+								
+								if (sprite.location != undefined)
+								{
+									location = new Vector2(sprite.location.x, sprite.location.y);
+							
+									layer_sprite_x(ID, location.x);
+									layer_sprite_y(ID, location.y);
+								}
+								else
+								{
+									location = undefined;
+								}
+								
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								angle = new Angle(sprite.angle.value);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
+								
+								layer_sprite_xscale(ID, sprite.scale.x);
+								layer_sprite_yscale(ID, sprite.scale.y);
+								layer_sprite_angle(ID, sprite.angle.value);
+								layer_sprite_blend(ID, sprite.color);
+								layer_sprite_alpha(ID, sprite.alpha);
+								layer_sprite_index(ID, sprite.frame);
+								layer_sprite_speed(ID, sprite.speed);
+							}
+						}
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					toString = function()
+					{
+						var _constructorName = "Layer.SpriteElement";
+						
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_sprite_exists(parent.ID, ID)))
+						{
+							return (_constructorName + "(" + string(ID) + ": " + string(sprite) + ")");
 						}
 						else
 						{
-							location = undefined;
+							return (_constructorName + "<>");
 						}
-						
-						scale = new Scale(sprite.scale.x, sprite.scale.y);
-						angle = new Angle(sprite.angle.value);
-						color = sprite.color;
-						alpha = sprite.alpha;
-						frame = sprite.frame;
-						speed = sprite.speed;
-			
-						layer_sprite_xscale(ID, sprite.scale.x);
-						layer_sprite_yscale(ID, sprite.scale.y);
-						layer_sprite_angle(ID, sprite.angle.value);
-						layer_sprite_blend(ID, sprite.color);
-						layer_sprite_alpha(ID, sprite.alpha);
-						layer_sprite_index(ID, sprite.frame);
-						layer_sprite_speed(ID, sprite.speed);
 					}
-				}
-			}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				parent = other;
+				sprite = _sprite;
+				ID = layer_sprite_create(parent.ID, sprite.location.x, sprite.location.y, sprite.ID);
 			
-			toString = function()
-			{
-				return (((layer != undefined) and (layer_exists(layer.ID)) 
-					   and (layer_sprite_exists(layer.ID, ID))) ?
-					   string(ID) : string(undefined));
-			}
-			
-			layer = other;
-			sprite = _sprite;
-			ID = layer_sprite_create(layer.ID, sprite.location.x, sprite.location.y, sprite.ID);
-			
-			location = new Vector2(sprite.location.x, sprite.location.y);
-			scale = new Scale(sprite.scale.x, sprite.scale.y);
-			angle = new Angle(sprite.angle.value);
-			color = sprite.color;
-			alpha = sprite.alpha;
-			frame = sprite.frame;
-			speed = sprite.speed;
-			
-			layer_sprite_xscale(ID, sprite.scale.x);
-			layer_sprite_yscale(ID, sprite.scale.y);
-			layer_sprite_angle(ID, sprite.angle.value);
-			layer_sprite_blend(ID, sprite.color);
-			layer_sprite_alpha(ID, sprite.alpha);
-			layer_sprite_index(ID, sprite.frame);
-			layer_sprite_speed(ID, sprite.speed);
+				location = new Vector2(sprite.location.x, sprite.location.y);
+				scale = new Scale(sprite.scale.x, sprite.scale.y);
+				angle = new Angle(sprite.angle.value);
+				color = sprite.color;
+				alpha = sprite.alpha;
+				frame = sprite.frame;
+				speed = sprite.speed;
+				
+				layer_sprite_xscale(ID, sprite.scale.x);
+				layer_sprite_yscale(ID, sprite.scale.y);
+				layer_sprite_angle(ID, sprite.angle.value);
+				layer_sprite_blend(ID, sprite.color);
+				layer_sprite_alpha(ID, sprite.alpha);
+				layer_sprite_index(ID, sprite.frame);
+				layer_sprite_speed(ID, sprite.speed);
+				
+			#endregion
 		}
 		
-		function BackgroundElement(_layer, _sprite) constructor
+		function BackgroundElement(_sprite) constructor
 		{
-			destroy = function()
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_background_exists(layer.ID, ID)))
-				{
-					layer_background_destroy(ID);
+			#region [[Methods]]
+				#region <<Management>>
 					
-					//+TODO: Remove the Element from the Data Structure.
-				}
+					destroy = function()
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{
+							parent.backgroundList.remove_value(self);
+							
+							layer_background_destroy(ID);
+						}
+						
+						return undefined;
+					}
+					
+				#endregion
+				#region <<Execution>>
+					
+					update = function(_sprite)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{
+							sprite = _sprite;
+							
+							if (sprite == -1)
+							{
+								layer_background_sprite(ID, sprite);
+								
+								scale = undefined;
+								color = undefined;
+								alpha = undefined;
+								frame = undefined;
+								speed = undefined;
+							}
+							else
+							{
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
+								
+								layer_background_sprite(ID, sprite.ID);
+								layer_background_xscale(ID, scale.x);
+								layer_background_yscale(ID, scale.y);
+								layer_background_blend(ID, color);
+								layer_background_alpha(ID, alpha);
+								layer_background_index(ID, frame);
+								layer_background_speed(ID, speed);
+							}
+						}
+					}
+					
+				#endregion
+				#region <<Setters>>
+					
+					setStretched = function(_stretched)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{
+							stretched = _stretched;
+							
+							layer_background_stretch(ID, _stretched);
+						}
+					}
+					
+					setTiled = function(_tiled_x, _tiled_y)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{	
+							tiled_x = ((_tiled_x != undefined) ? _tiled_x : false);
+							tiled_y = ((_tiled_y != undefined) ? _tiled_y : false);
+							
+							layer_background_htiled(ID, tiled_x);
+							layer_background_vtiled(ID, tiled_y);
+						}
+					}
+					
+					setVisible = function(_visible)
+					{
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{
+							visible = _visible;
+							
+							layer_background_visible(ID, visible);
+						}
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					toString = function()
+					{
+						var _constructorName = "Layer.BackgroundElement";
+						
+						if ((parent != undefined) and (is_real(parent.ID)) and (layer_exists(parent.ID))
+						and (layer_background_exists(parent.ID, ID)))
+						{
+							return (_constructorName + "(" + string(ID) + ": " + string(sprite) + ")");
+						}
+						else
+						{
+							return (_constructorName + "<>");
+						}
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
 				
-				return undefined;
-			}
-			
-			update = function(_sprite)
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_background_exists(layer.ID, ID)))
-				{
-					sprite = _sprite;
-					
-					if (sprite == -1)
-					{
-						layer_background_sprite(ID, sprite);
-						
-						scale = undefined;
-						color = undefined;
-						alpha = undefined;
-						frame = undefined;
-						speed = undefined;
-					}
-					else
-					{
-						scale = new Scale(sprite.scale.x, sprite.scale.y);
-						color = sprite.color;
-						alpha = sprite.alpha;
-						frame = sprite.frame;
-						speed = sprite.speed;
-						
-						layer_background_sprite(ID, sprite.ID);
-						layer_background_xscale(ID, scale.x);
-						layer_background_yscale(ID, scale.y);
-						layer_background_blend(ID, color);
-						layer_background_alpha(ID, alpha);
-						layer_background_index(ID, frame);
-						layer_background_speed(ID, speed);
-					}
-				}
-			}
-			
-			toString = function()
-			{
-				return (((layer != undefined) and (layer_exists(layer.ID)) 
-					   and (layer_background_exists(layer.ID, ID))) ?
-					   string(ID) : string(undefined));
-			}
-			
-			setStretched = function(_stretched)
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_background_exists(layer.ID, ID)))
-				{
-					stretched = _stretched;
-					
-					layer_background_stretch(ID, _stretched);
-				}
-			}
-			
-			setTiled = function(_tiled_x, _tiled_y)
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_background_exists(layer.ID, ID)))
-				{	
-					tiled_x = ((_tiled_x != undefined) ? _tiled_x : false);
-					tiled_y = ((_tiled_y != undefined) ? _tiled_y : false);
-					
-					layer_background_htiled(ID, tiled_x);
-					layer_background_vtiled(ID, tiled_y);
-				}
-			}
-			
-			setVisible = function(_visible)
-			{
-				if ((layer != undefined) and (layer_exists(layer.ID)) 
-				and (layer_background_exists(layer.ID, ID)))
-				{
-					visible = _visible;
-					
-					layer_background_visible(ID, visible);
-				}
-			}
-			
-			layer = _layer;
-			sprite = _sprite;
-			ID = layer_background_create(layer.ID, sprite.ID);
-			
-			visible = true;
-			stretched = false;
-			tiled_x = false;
-			tiled_y = false;
-			
-			scale = new Scale(sprite.scale.x, sprite.scale.y);
-			color = sprite.color;
-			alpha = sprite.alpha;
-			frame = sprite.frame;
-			speed = sprite.speed;
-			
-			layer_background_xscale(ID, scale.x);
-			layer_background_yscale(ID, scale.y);
-			layer_background_blend(ID, color);
-			layer_background_alpha(ID, alpha);
-			layer_background_index(ID, frame);
-			layer_background_speed(ID, speed);
+				parent = other;
+				sprite = _sprite;
+				ID = layer_background_create(layer.ID, sprite.ID);
+				
+				visible = true;
+				stretched = false;
+				tiled_x = false;
+				tiled_y = false;
+				
+				scale = new Scale(sprite.scale.x, sprite.scale.y);
+				color = sprite.color;
+				alpha = sprite.alpha;
+				frame = sprite.frame;
+				speed = sprite.speed;
+				
+				layer_background_xscale(ID, scale.x);
+				layer_background_yscale(ID, scale.y);
+				layer_background_blend(ID, color);
+				layer_background_alpha(ID, alpha);
+				layer_background_index(ID, frame);
+				layer_background_speed(ID, speed);
+				
+			#endregion
 		}
 		
 	#endregion
@@ -232,11 +281,9 @@ function Layer(_depth) constructor
 			
 					ID = undefined;
 					
-					ds_list_destroy(instanceList);
-					ds_list_destroy(spriteList);
-					ds_list_destroy(backgroundList);
-					
-					//+TODO: Destroy all Elements structs
+					instanceList = instanceList.destroy();
+					spriteList = spriteList.destroy();
+					backgroundList = backgroundList.destroy();
 				}
 		
 				return undefined;
@@ -388,7 +435,7 @@ function Layer(_depth) constructor
 			{
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
-					ds_list_add(instanceList, _object);
+					instanceList.add(_object);
 					
 					return instance_create_layer(_location.x, _location.y, ID, _object);
 				}
@@ -422,7 +469,7 @@ function Layer(_depth) constructor
 			{
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
-					ds_list_clear(instanceList);
+					instanceList.clear();
 					
 					layer_destroy_instances(ID);
 				}
@@ -438,9 +485,9 @@ function Layer(_depth) constructor
 			{
 				if ((ID != undefined) and (layer_exists(ID)) and (_sprite.location != undefined))
 				{
-					var _element = new SpriteElement(self, _sprite);
+					var _element = new SpriteElement(_sprite);
 					
-					ds_list_add(spriteList, _element);
+					spriteList.add(_element);
 					
 					return _element;
 				}
@@ -458,9 +505,9 @@ function Layer(_depth) constructor
 			{
 				if ((ID != undefined) and (layer_exists(ID)))
 				{
-					var _element = new BackgroundElement(self, _sprite);
+					var _element = new BackgroundElement(_sprite);
 					
-					ds_list_add(backgroundList, _element);
+					backgroundList.add(_element);
 					
 					return _element;
 				}
@@ -498,9 +545,9 @@ function Layer(_depth) constructor
 		
 		shader = undefined;
 		
-		instanceList = ds_list_create();
-		spriteList = ds_list_create();
-		backgroundList = ds_list_create();
+		instanceList = new List();
+		spriteList = new List();
+		backgroundList = new List();
 		
 		ID = layer_create(depth);
 		

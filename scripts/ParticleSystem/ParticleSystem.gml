@@ -26,7 +26,7 @@ function ParticleSystem(_layer, _persistent) constructor
 				
 				drawOrder_oldToNew = true;
 				
-				emitterList = ds_list_create();
+				emitterList = new List();
 				
 				if (layer != undefined)
 				{
@@ -47,7 +47,7 @@ function ParticleSystem(_layer, _persistent) constructor
 					part_system_destroy(ID);
 				}
 				
-				ds_list_destroy(emitterList);
+				emitterList = emitterList.destroy();
 				
 				return undefined; 
 			}

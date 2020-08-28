@@ -181,13 +181,13 @@ function Surface(_size) constructor
 					
 					if (surface_exists(_renderTarget))
 					{
-						var _targetStack = ds_stack_create();
+						var _targetStack = new Stack();
 						var _currentTarget = surface_get_target();
 						
 						while ((_currentTarget != _renderTarget) 
 						and (_currentTarget != application_surface))
 						{
-							ds_stack_push(_targetStack, _currentTarget);
+							_targetStack.add(_currentTarget);
 					
 							surface_reset_target();
 					
@@ -209,12 +209,12 @@ function Surface(_size) constructor
 							draw_surface(ID, _location.x, _location.y);
 						}
 						
-						repeat(ds_stack_size(_targetStack))
+						repeat(_targetStack.getSize())
 						{
-							surface_set_target(ds_stack_pop(_targetStack)); //+TODO: MRT support
+							surface_set_target(_targetStack.remove()); //+TODO: MRT support
 						}
 						
-						ds_stack_destroy(_targetStack);
+						_targetStack = _targetStack.destroy();
 					}
 				}
 			}
