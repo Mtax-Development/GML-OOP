@@ -60,19 +60,19 @@ function RoundRectangle(_location) constructor
 						
 						if (radius != undefined)
 						{
-							for (var i = 0; i < outline.size; i += outline.spacing)
+							for (var _i = 0; _i < outline.size; _i += outline.spacing)
 							{
-								draw_roundrect_ext((location.x1 - i), (location.y1 - i), 
-												   (location.x2 + i), (location.y2 + i), 
+								draw_roundrect_ext((location.x1 - _i), (location.y1 - _i), 
+												   (location.x2 + _i), (location.y2 + _i), 
 												   radius.x, radius.y, true);
 							}
 						}
 						else
 						{
-							for (var i = 0; i < outline.size; i += outline.spacing)
+							for (var _i = 0; _i < outline.size; _i += outline.spacing)
 							{
-								draw_roundrect((location.x1 - i), (location.y1 - i),
-											   (location.x2 + i), (location.y2 + i), 
+								draw_roundrect((location.x1 - _i), (location.y1 - _i),
+											   (location.x2 + _i), (location.y2 + _i), 
 											   true);
 							}
 						}

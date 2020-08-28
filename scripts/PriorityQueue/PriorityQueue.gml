@@ -165,7 +165,7 @@ function PriorityQueue() constructor
 						
 							__function(_i, _value);
 						
-							_i++;
+							++_i;
 						}
 					
 						if (_readOnly)
@@ -393,7 +393,7 @@ function PriorityQueue() constructor
 							}
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					//|String finish.
@@ -446,7 +446,7 @@ function PriorityQueue() constructor
 							
 							_values[_i] = ds_priority_delete_max(_dataCopy);
 							
-							_i++;
+							++_i;
 						}
 						
 						ds_priority_destroy(_dataCopy);
@@ -484,7 +484,7 @@ function PriorityQueue() constructor
 							
 							ds_priority_add(ID, _value, _priorities[_i]);
 							
-							_i++;
+							++_i;
 						}
 					}
 				}

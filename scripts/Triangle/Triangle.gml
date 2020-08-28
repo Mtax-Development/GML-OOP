@@ -46,7 +46,7 @@ function Triangle(_location1, _location2, _location3) constructor
 						
 						if (instanceof(outline.color) == "Color3")
 						{
-							for (var i = 0; i < outline.size; i++)
+							for (var _i = 0; _i < outline.size; _i++)
 							{
 								draw_triangle_color((location1.x), (location1.y), (location2.x), 
 													(location2.y), (location3.x), (location3.y), 
@@ -57,7 +57,7 @@ function Triangle(_location1, _location2, _location3) constructor
 						{
 							draw_set_color(outline.color);
 							
-							for (var i = 0; i < outline.size; i++)
+							for (var _i = 0; _i < outline.size; _i++)
 							{
 								draw_triangle((location1.x), (location1.y), (location2.x), 
 											  (location2.y), (location3.x), (location3.y), 

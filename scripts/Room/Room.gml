@@ -212,7 +212,7 @@ function Room() constructor
 		{
 			argument_original[_i] = argument[_i];
 			
-			_i++;
+			++_i;
 		}
 		
 		if (argument_count <= 0)

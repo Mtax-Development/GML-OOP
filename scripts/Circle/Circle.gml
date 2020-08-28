@@ -41,9 +41,9 @@ function Circle(_location, _radius) constructor
 						draw_set_alpha(outline.alpha);
 						draw_set_color(outline.color);
 						
-						for (var i = 0; i < outline.size; i += outline.spacing)
+						for (var _i = 0; _i < outline.size; _i += outline.spacing)
 						{
-							draw_circle(location.x, location.y, (radius + i), true);
+							draw_circle(location.x, location.y, (radius + _i), true);
 						}
 					}
 				}

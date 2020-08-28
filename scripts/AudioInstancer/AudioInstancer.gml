@@ -22,13 +22,17 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 				var instances_new = [];
 				
 				var instances_length = array_length(instances);
-		
-				for (var i = 0; i < instances_length; i++)
+				
+				var _i = 0;
+				
+				repeat (instances_length)
 				{
-					if (audio_exists(instances[i]))
+					if (audio_exists(instances[_i]))
 					{
-						instances_new[array_length(instances_new)] = instances[i];
+						instances_new[array_length(instances_new)] = instances[_i];
 					}
+					
+					++_i;
 				}
 				
 				instances = instances_new;
@@ -64,12 +68,16 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 			// @description			Stop all instances of the sound and clear their list.
 			static stop = function()
 			{
-				for (var i = 0; i < array_length(instances); i++)
+				var _i = 0;
+				
+				repeat (array_length(instances))
 				{
-					if (audio_exists(instances[i]))
+					if (audio_exists(instances[_i]))
 					{
-						audio_stop_sound(instances[i]);
+						audio_stop_sound(instances[_i]);
 					}
+					
+					++_i;
 				}
 				
 				instances = [];
@@ -79,19 +87,23 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 			// @description			Pause all instances or resume all of the paused ones at once.
 			static pause = function(_pause)
 			{
-				for (var i = 0; i < array_length(instances); i++)
+				var _i = 0;
+				
+				repeat (array_length(instances))
 				{
-					if (audio_exists(instances[i]))
+					if (audio_exists(instances[_i]))
 					{
 						if (_pause)
 						{
-							audio_pause_sound(instances[i]);
+							audio_pause_sound(instances[_i]);
 						}
 						else
 						{
-							audio_resume_sound(instances[i]);
+							audio_resume_sound(instances[_i]);
 						}
 					}
+					
+					++_i;
 				}
 			}
 			

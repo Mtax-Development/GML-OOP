@@ -168,7 +168,7 @@ function Map() constructor
 						{
 							_result[_i] = ds_map_find_next(ID, _result[_i - 1]);
 							
-							_i++;
+							++_i;
 						}
 						
 						return _result;
@@ -199,7 +199,7 @@ function Map() constructor
 							_result[_i] = ds_map_find_value(ID, _key);
 							_key = ds_map_find_next(ID, _key);
 							
-							_i++;
+							++_i;
 						}
 						
 						return _result;
@@ -281,7 +281,7 @@ function Map() constructor
 						
 							_key = ds_map_find_next(ID, _key);
 						
-							_i++;
+							++_i;
 						}
 					}
 				}
@@ -453,7 +453,9 @@ function Map() constructor
 					
 					repeat (argument_count)
 					{
-						ds_map_delete(ID, argument[_i++]);
+						ds_map_delete(ID, argument[_i]);
+						
+						++_i;
 					}
 				}
 			}
@@ -646,7 +648,7 @@ function Map() constructor
 							}
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					//|String finish.
@@ -696,7 +698,7 @@ function Map() constructor
 							_keys[_i] = ds_map_find_next(ID, _keys[_i - 1]);
 							_values[_i] = ds_map_find_value(ID, _keys[_i]);
 							
-							_i++;
+							++_i;
 						}
 						
 						return [_keys, _values];
@@ -732,7 +734,7 @@ function Map() constructor
 							
 							ds_map_add(ID, _keys[_i], _value);
 							
-							_i++;
+							++_i;
 						}
 					}
 				}

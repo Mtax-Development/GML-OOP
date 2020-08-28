@@ -48,7 +48,7 @@ function List() constructor
 								}
 							}
 							
-							_i++;
+							++_i;
 						}
 					}
 					
@@ -153,7 +153,7 @@ function List() constructor
 							_indexes[array_length(_indexes)] = _i;
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					return _indexes;
@@ -208,7 +208,7 @@ function List() constructor
 						
 							__function(_i, _value);
 						
-							_i++;
+							++_i;
 						}
 					}
 				}
@@ -224,7 +224,9 @@ function List() constructor
 				
 					repeat (argument_count)
 					{
-						ds_list_add(ID, argument[_i++]);
+						ds_list_add(ID, argument[_i]);
+						
+						++_i;
 					}
 				}
 			}
@@ -281,7 +283,7 @@ function List() constructor
 						}
 						else
 						{
-							_i++;
+							++_i;
 						}
 					}
 				}
@@ -447,7 +449,7 @@ function List() constructor
 							}
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					//|String finish.
@@ -488,7 +490,7 @@ function List() constructor
 					{
 						_array[_i] = ds_list_find_value(ID, _i);
 						
-						_i++;
+						++_i;
 					}
 					
 					return _array;
@@ -513,7 +515,7 @@ function List() constructor
 						{
 							ds_list_add(ID, _array[_i]);
 							
-							_i++;
+							++_i;
 						}
 					}
 				}

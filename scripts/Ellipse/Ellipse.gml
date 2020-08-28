@@ -39,10 +39,10 @@ function Ellipse(_location) constructor
 						draw_set_alpha(outline.alpha);
 						draw_set_color(outline.color);
 						
-						for (var i = 0; i < outline.size; i += outline.spacing)
+						for (var _i = 0; _i < outline.size; _i += outline.spacing)
 						{
-							draw_ellipse((location.x1 - i), (location.y1 - i), (location.x2 + i), 
-										 (location.y2 + i), true);
+							draw_ellipse((location.x1 - _i), (location.y1 - _i), (location.x2 + _i), 
+										 (location.y2 + _i), true);
 						}
 					}
 				}

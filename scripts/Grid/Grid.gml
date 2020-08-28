@@ -916,7 +916,7 @@ function Grid(_width, _height) constructor
 							
 							_array_y_list[_i] = _array_y_current;
 							
-							_i++;
+							++_i;
 						}
 						
 						//|Replace the Grid.
@@ -1000,7 +1000,7 @@ function Grid(_width, _height) constructor
 		{
 			originalArguments[_i] = argument[_i];
 			
-			_i++;
+			++_i;
 		}
 		
 		self.construct(_width, _height);

@@ -145,7 +145,7 @@ function Stack() constructor
 						
 							__function(_i, _value);
 						
-							_i++;
+							++_i;
 						}
 					
 						if (_readOnly)
@@ -166,7 +166,9 @@ function Stack() constructor
 		
 					repeat (argument_count)
 					{
-						ds_stack_push(ID, argument[_i++]);
+						ds_stack_push(ID, argument[_i]);
+						
+						++_i;
 					}
 				}
 			}
@@ -203,7 +205,9 @@ function Stack() constructor
 						
 							repeat (array_length(_values))
 							{
-								_values[_i++] = ds_stack_pop(ID);
+								_values[_i] = ds_stack_pop(ID);
+								
+								++_i;
 							}
 						
 							return _values;
@@ -347,7 +351,7 @@ function Stack() constructor
 							}
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					//|String finish.
@@ -396,7 +400,7 @@ function Stack() constructor
 						{
 							_array[_i] = ds_stack_pop(_dataCopy);
 							
-							_i++;
+							++_i;
 						}
 						
 						ds_stack_destroy(_dataCopy);
@@ -428,11 +432,11 @@ function Stack() constructor
 							
 							if (_startFromEnd)
 							{
-								_i--;
+								--_i;
 							}
 							else
 							{
-								_i++;
+								++_i;
 							}
 						}
 					}

@@ -155,7 +155,7 @@ function Queue() constructor
 						
 							__function(_i, _value);
 						
-							_i++;
+							++_i;
 						}
 					
 						if (_readOnly)
@@ -176,7 +176,9 @@ function Queue() constructor
 		
 					repeat (argument_count)
 					{
-						ds_queue_enqueue(ID, argument[_i++]);
+						ds_queue_enqueue(ID, argument[_i]);
+						
+						++_i;
 					}
 				}
 			}
@@ -213,7 +215,9 @@ function Queue() constructor
 						
 							repeat (array_length(_values))
 							{
-								_values[_i++] = ds_queue_dequeue(ID);
+								_values[_i] = ds_queue_dequeue(ID);
+								
+								++_i;
 							}
 						
 							return _values;
@@ -357,7 +361,7 @@ function Queue() constructor
 							}
 						}
 						
-						_i++;
+						++_i;
 					}
 					
 					//|String finish.
@@ -406,7 +410,7 @@ function Queue() constructor
 						{
 							_array[_i] = ds_queue_dequeue(_dataCopy);
 							
-							_i++;
+							++_i;
 						}
 						
 						ds_queue_destroy(_dataCopy);
@@ -438,11 +442,11 @@ function Queue() constructor
 							
 							if (_startFromEnd)
 							{
-								_i--;
+								--_i;
 							}
 							else
 							{
-								_i++;
+								++_i;
 							}
 						}
 					}
