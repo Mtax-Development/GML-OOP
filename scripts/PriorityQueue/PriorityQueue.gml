@@ -186,7 +186,7 @@ function PriorityQueue() constructor
 				{
 					var _i = 0;
 					
-					repeat (argument_count / 2)
+					repeat (argument_count div 2)
 					{
 						ds_priority_add(ID, argument[_i], argument[_i + 1]);
 						

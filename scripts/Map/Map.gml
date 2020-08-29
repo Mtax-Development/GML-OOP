@@ -295,30 +295,28 @@ function Map() constructor
 			//						Fails if a key already existed for that specific addition.
 			//						Returns true if the addition was successful, false if it
 			//						was not or an array of such in case of multiple additions.
-			static add = function(_key, _value)
+			static add = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
-					if (argument_count <= 2)
+					var _pairCount = (argument_count div 2);
+						
+					var _results = array_create(_pairCount, false);
+						
+					var _i = 0;
+						
+					repeat (_pairCount)
 					{
-						return ds_map_add(ID, _key, _value);
+						_results[_i div 2] = ds_map_add(ID, argument[_i], argument[_i + 1]);
+						
+						_i += 2;
 					}
-					else
+					
+					switch (_pairCount)
 					{
-						var _pairNumber = (argument_count / 2);
-						var _results = array_create(_pairNumber, false);
-						
-						var _pairID = 0;
-						var _i = 0;
-						
-						repeat (_pairNumber)
-						{
-							_results[_pairID++] = ds_map_add(ID, argument[_i], argument[_i + 1]);
-						
-							_i += 2;
-						}
-						
-						return _results;
+						case 0: return false; break;
+						case 1: return _results[0]; break;
+						default: return _results; break;
 					}
 				}
 				else
@@ -342,7 +340,7 @@ function Map() constructor
 				{
 					var _i = 0;
 					
-					repeat (argument_count / 2)
+					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
 						_value = argument[_i + 1];
@@ -376,7 +374,7 @@ function Map() constructor
 				{
 					var _i = 0;
 					
-					repeat (argument_count / 2)
+					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
 						_value = argument[_i + 1];
@@ -406,7 +404,7 @@ function Map() constructor
 				{
 					var _i = 0;
 					
-					repeat (argument_count / 2)
+					repeat (argument_count div 2)
 					{
 						ds_map_set(ID, argument[_i], argument[_i + 1]);
 						
