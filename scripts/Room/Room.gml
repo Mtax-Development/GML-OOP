@@ -223,7 +223,7 @@ function Room() constructor
 		{
 			self.construct(argument_original[0]);
 		}
-		else if (argument_count >= 2)
+		else
 		{
 			self.construct(argument_original[0], argument_original[1]);
 		}

@@ -196,10 +196,13 @@ function Surface(_size) constructor
 						
 						if (argument_count > 2)
 						{
-							var _scale = (argument_count >= 3 ? argument[2] : new Scale());
-							var _angle = (argument_count >= 4 ? argument[3] : new Angle());
-							var _color = (argument_count >= 5 ? argument[4] : c_white);
-							var _alpha = (argument_count >= 6 ? argument[5] : 1);
+							var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
+							var _angle = (((argument_count > 3) and (argument[3] != undefined)) ? 
+										 argument[3] : new Angle());
+							var _color = (((argument_count > 4) and (argument[4] != undefined)) ? 
+										 argument[4] : c_white);
+							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
+										 argument[5] : 1);
 				
 							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
 											 _angle.value, _color, _alpha);
@@ -231,9 +234,11 @@ function Surface(_size) constructor
 				{
 					if (argument_count > 2)
 					{
-						var _scale = (argument_count >= 3 ? argument[2] : new Scale());
-						var _color = (argument_count >= 4 ? argument[3] : c_white);
-						var _alpha = (argument_count >= 5 ? argument[4] : 1);
+						var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
+						var _color = (((argument_count > 3) and (argument[3] != undefined)) ? 
+									 argument[3] : c_white);
+						var _alpha = (((argument_count > 4) and (argument[4] != undefined)) ? 
+									 argument[4] : 1);
 						
 						draw_surface_part_ext(ID, _part_location.x1, _part_location.y1, 
 											  _part_location.x2, _part_location.y2, 
@@ -308,8 +313,9 @@ function Surface(_size) constructor
 				{
 					if (argument_count > 2)
 					{
-						var _color = (argument_count >= 3 ? argument[2] : c_white);
-						var _alpha = (argument_count >= 4 ? argument[3] : 1);
+						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
+						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
+									 argument[3] : 1);
 			
 						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
 												   _size.y, _color, _alpha);
@@ -330,13 +336,17 @@ function Surface(_size) constructor
 			{
 				if (surface_exists(ID))
 				{
-					var _location = (argument_count >= 1 ? argument[0] : new Vector2(0, 0));
+					var _location = (((argument_count > 0) and (argument[0] != undefined)) ? 
+									argument[0] : new Vector2(0, 0));
 					
 					if (argument_count > 1)
 					{
-						var _scale = (argument_count >= 2 ? argument[1] : new Scale());
-						var _color = (argument_count >= 3 ? argument[2] : c_white);
-						var _alpha = (argument_count >= 4 ? argument[3] : 1);
+						var _scale = (((argument_count > 1) and (argument[1] != undefined)) ? 
+									 argument[1] : new Scale());
+						var _color = (((argument_count > 2) and (argument[2] != undefined)) ? 
+									 argument[2] : c_white);
+						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
+									 argument[3] : 1);
 			
 						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
 											   _scale.y, _color, _alpha);

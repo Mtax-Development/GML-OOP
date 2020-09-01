@@ -25,8 +25,8 @@ function Point(_location) constructor
 	#region [Constructor]
 		
 		location = _location;
-		alpha = (argument_count >= 2 ? argument[1] : 1);
-		color = (argument_count >= 3 ? argument[2] : undefined);
+		alpha = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
+		color = ((argument_count > 2) ? argument[2] : undefined);
 		
 	#endregion
 }

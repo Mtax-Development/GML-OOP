@@ -53,9 +53,9 @@ function Line(_location) constructor
 	#region [Constructor]
 		
 		location = _location;
-		alpha = (argument_count >= 2 ? argument[1] : 1);
-		color = (argument_count >= 3 ? argument[2] : undefined);
-		width = (argument_count >= 4 ? argument[3] : 1);
+		alpha = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
+		color = ((argument_count > 2) ? argument[2] : undefined);
+		width = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
 		
 	#endregion
 }

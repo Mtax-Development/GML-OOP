@@ -73,9 +73,9 @@ function Circle(_location, _radius) constructor
 		
 		location = _location;
 		radius	 = _radius;
-		alpha	 = (argument_count >= 3 ? argument[2] : 1);
-		fill	 = (argument_count >= 4 ? argument[3] : undefined);
-		outline	 = (argument_count >= 5 ? argument[4] : undefined);
+		alpha	 = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : 1);
+		fill	 = ((argument_count > 3) ? argument[3] : undefined);
+		outline	 = ((argument_count > 4) ? argument[4] : undefined);
 		
 	#endregion
 }

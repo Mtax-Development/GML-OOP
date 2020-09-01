@@ -95,9 +95,9 @@ function Triangle(_location1, _location2, _location3) constructor
 		location1 = _location1;
 		location2 = _location2;
 		location3 = _location3;
-		alpha	  = (argument_count >= 4 ? argument[3] : 1);
-		fill	  = (argument_count >= 5 ? argument[4] : undefined);
-		outline   = (argument_count >= 6 ? argument[5] : undefined);
+		alpha	  = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
+		fill	  = (argument_count > 4 ? argument[4] : undefined);
+		outline   = (argument_count > 5 ? argument[5] : undefined);
 		
 	#endregion
 }

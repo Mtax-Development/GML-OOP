@@ -89,9 +89,9 @@ function Rectangle(_location) constructor
 	#region [Constructor]
 		
 		location = _location;
-		alpha	 = (argument_count >= 2 ? argument[1] : 1);
-		fill	 = (argument_count >= 3 ? argument[2] : undefined);
-		outline	 = (argument_count >= 4 ? argument[3] : undefined);
+		alpha	 = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
+		fill	 = ((argument_count > 2) ? argument[2] : undefined);
+		outline	 = ((argument_count > 3) ? argument[3] : undefined);
 		
 	#endregion
 }
