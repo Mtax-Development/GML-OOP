@@ -9,6 +9,7 @@
     {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":5,},
     {"id":{"name":"ParticleType","path":"scripts/ParticleType/ParticleType.yy",},"order":2,},
     {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},"order":15,},
+    {"id":{"name":"RangedValue","path":"scripts/RangedValue/RangedValue.yy",},"order":11,},
     {"id":{"name":"Ellipse","path":"scripts/Ellipse/Ellipse.yy",},"order":16,},
     {"id":{"name":"Vector2","path":"scripts/Vector2/Vector2.yy",},"order":0,},
     {"id":{"name":"Layer","path":"scripts/Layer/Layer.yy",},"order":7,},
