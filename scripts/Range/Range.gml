@@ -6,30 +6,57 @@
 function Range(_minimum, _maximum) constructor
 {
 	#region [Methods]
-		#region <Operations>
+		#region <Management>
 			
+			// @description			Initialize the constructor.
+			static construct = function(_minimum, _maximum)
+			{
+				minimum = _minimum;
+				maximum = _maximum;
+			}
+			
+		#endregion
+		#region <Getters>
+			
+			// @argument			{real} number
+			// @returns				{bool}
+			// @description			Check whether a number is in or equal to borders of this Range.
+			static isBetween = function(_value)
+			{
+				return (_value == clamp(_value, minimum, maximum));
+			}
+			
+			// @argument			{real} number
+			// @returns				{bool}
+			// @description			Check whether a number is equal to the boundaries of this Range.
+			static isBoundary = function(_value)
+			{
+				return ((_value == minimum) or (_value == maximum));
+			}
+			
+		#endregion
+		#region <Execution>
+		
 			// @returns				{real}
-			// @description			Return a random real number from the range.
+			// @description			Return a random real number from this Range.
 			static random_real = function()
 			{
 				return random_range(minimum, maximum);
 			}
 			
 			// @returns				{int}
-			// @description			Return a random integer number from the range.
+			// @description			Return a random integer number from this Range.
 			static random_int = function()
 			{
 				return irandom_range(minimum, maximum);
 			}
 			
-		#endregion
-		#region <Asserts>
-			
-			// @argument			{real} number
-			// @description			Check whether a number is between or equal to the range.
-			static isBetween = function(_number)
+			// @argument			{real} value
+			// @returns				{real}
+			// @description			Clamp the specified number to boundaries of this Range.
+			static clampTo = function(_value)
 			{
-				return (_number == clamp(_number, minimum, maximum));
+				return clamp(_value, minimum, maximum);
 			}
 			
 		#endregion
@@ -39,15 +66,16 @@ function Range(_minimum, _maximum) constructor
 			// @description			Overrides the string conversion with a simple value output.
 			static toString = function()
 			{
-				return (string(minimum) + "-" + string(maximum));
+				return (instanceof(self) + "(" + string(minimum) + "-" + string(maximum) + ")");
 			}
 			
 		#endregion
 	#endregion
 	#region [Constructor]
 		
-		minimum = _minimum;
-		maximum = _maximum;
+		argument_original = [argument[0], argument[1]];
+		
+		self.construct(argument_original[0], argument_original[1]);
 		
 	#endregion
 }
