@@ -72,10 +72,72 @@ function Circle(_location, _radius) constructor
 		
 		// @argument			{Vector2} point
 		// @returns				{bool}
-		// @description			Checks whether a point in space is within this Circle.
+		// @description			Check whether a point in space is within this Circle.
 		static pointIn = function(_point)
 		{
 			return point_in_circle(_point.x, _point.y, location.x, location.y, radius);
+		}
+		
+		// @argument			{object} object
+		// @argument			{bool} precise?
+		// @argument			{instance} excludedInstance?
+		// @argument			{bool|List} list?
+		// @argument			{bool} listOrdered?
+		// @returns				{int|List}
+		// @description			Check for a collision within this Shape with instances of the
+		//						specified object.
+		//						Returns the ID of a single colliding instance or noone.
+		//						If List use is specified, a List will be returned instead, either
+		//						empty or containing IDs of the colliding instances.
+		//						If specified, the additions to that List can be ordered by distance
+		//						from the center of the Shape.
+		static collision = function(_object)
+		{
+			var _precise = (((argument_count > 1) and (argument[1] != undefined)) ? 
+						   argument[1] : false);
+			var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
+			var _list = ((argument_count > 3) ? argument[3] : undefined);
+			var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
+							   argument[4] : false);
+			
+			if (_list)
+			{
+				if (instanceof(_list) != "List")
+				{
+					_list = new List();
+				}
+				
+				if (_excludedInstance)
+				{
+					with (_excludedInstance)
+					{
+						collision_circle_list(other.location.x, other.location.y, other.radius, 
+											  _object, _precise, true, _list.ID, _listOrdered);
+					}
+				}
+				else
+				{
+					collision_circle_list(location.x, location.y, radius, _object, _precise, 
+										  false, _list.ID, _listOrdered);
+				}
+				
+				return _list;
+			}
+			else
+			{
+				if (_excludedInstance)
+				{				
+					with (_excludedInstance)
+					{
+						return collision_circle(other.location.x, other.location.y, other.radius, 
+											    _object, _precise, true);
+					}
+				}
+				else
+				{
+					return collision_circle(location.x, location.y, radius, _object, _precise, false);
+				}
+			}
 		}
 		
 	#endregion
