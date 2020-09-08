@@ -34,6 +34,13 @@ function Range(_minimum, _maximum) constructor
 				return ((_value == minimum) or (_value == maximum));
 			}
 			
+			// @returns				{real}
+			// @description			Return the middle point of this Range.
+			static middle = function()
+			{
+				return lerp(minimum, maximum, 0.5);
+			}
+			
 		#endregion
 		#region <Execution>
 		

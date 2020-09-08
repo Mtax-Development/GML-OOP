@@ -1,4 +1,4 @@
-/// @function				Range()
+/// @function				RangedValue()
 /// @argument				{real} value
 /// @argument				{Range} range
 ///
@@ -52,6 +52,13 @@ function RangedValue(_value, _range) constructor
 			static set_original = function()
 			{
 				value = argument_original[0];
+			}
+			
+			// @returns				{real}
+			// @description			Set the value the middle point of the Range.
+			static set_middle = function()
+			{
+				value = lerp(range.minimum, range.maximum, 0.5);
 			}
 			
 			// @argument			{real} value

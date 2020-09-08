@@ -75,6 +75,27 @@ function Vector4() constructor
 		#endregion
 		#region <Getters>
 			
+			// @returns				{Vector2}
+			// @description			Return the middle point of this Vector4.
+			static middle = function()
+			{
+				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
+			}
+			
+			// @returns				{real}
+			// @description			Return the middle point between the x values of this Vector4.
+			static middle_x = function()
+			{
+				return lerp(x1, x2, 0.5);
+			}
+			
+			// @returns				{real}
+			// @description			Return the middle point between the y values of this Vector4.
+			static middle_y = function()
+			{
+				return lerp(y1, y2, 0.5);
+			}
+			
 			// @returns				{real}
 			// @description			Return the shortest distance between two points.
 			static distance = function()
