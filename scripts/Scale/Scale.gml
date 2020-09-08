@@ -2,18 +2,24 @@
 /// @argument				{real} x?
 /// @argument				{real} y?
 ///
-/// @description			Constructs a Vector2-like Scale container, ready
-///							to be used with draw-related code, as well as 
-///							manipulated using its own functions.
+/// @description			Constructs a Scale container that can be used for drawing or
+///							manipulated in other ways.
 ///
 ///							Construction methods:
-///							- {void} (creates default scale with values of 1)
+///							- {void} (creates default scale with values of 1/1)
 ///							- {real} (populates both scales with the same value)
 ///							- {real}, {real}
 function Scale() constructor
 {
 	#region [Methods]
-		#region <Operations>
+		#region <Setters>
+			
+			// @description			Reverse the x/y values of the scale.
+			static mirror = function()
+			{
+				x = -x;
+				y = -y;
+			}
 			
 			// @description			Reverse the x value of the scale.
 			static mirror_x = function()
@@ -25,13 +31,6 @@ function Scale() constructor
 			static mirror_y = function()
 			{
 				y = -y;
-			}
-			
-			// @description			Reverse the x/y values of the scale.
-			static mirror = function()
-			{
-				self.mirror_x();
-				self.mirror_y();
 			}
 			
 		#endregion

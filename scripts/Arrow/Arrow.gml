@@ -10,19 +10,21 @@
 function Arrow(_location) constructor
 {
 	#region [Methods]
-		
-		// @description			Execute the draw.
-		static render = function()
-		{
-			if ((alpha > 0) and (color != undefined))
+		#region <Execution>
+			
+			// @description			Execute the draw.
+			static render = function()
 			{
-				draw_set_alpha(alpha);
-				draw_set_color(color);
-				
-				draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
+				if ((alpha > 0) and (color != undefined))
+				{
+					draw_set_alpha(alpha);
+					draw_set_color(color);
+					
+					draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
+				}
 			}
-		}
-		
+			
+		#endregion
 	#endregion
 	#region [Constructor]
 		

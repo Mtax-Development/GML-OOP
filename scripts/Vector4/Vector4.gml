@@ -16,7 +16,7 @@
 function Vector4() constructor
 {
 	#region [Methods]
-		#region <Operations>
+		#region <Setters>>
 			
 			// @argument			{Vector4} other
 			// @description			Add to values of the current Vector4 from other one's.
@@ -117,6 +117,24 @@ function Vector4() constructor
 				return point_direction(x2, y2, x1, y1);
 			}
 			
+			// @argument			{Vector4} other
+			// @returns				{bool}
+			// @description			Check whether two Vector4 have the same values.
+			static equals = function(_other)
+			{
+				return ((x1 == _other.x1) and (x2 == _other.x2) 
+						and (y1 == _other.y1) and (y2 == _other.y2));
+			}
+			
+			// @argument			{real} x
+			// @argument			{real} y
+			// @returns				{bool}
+			// @description			Check if two x/y values are between the range of this Vector4's.
+			static isBetween = function(_x, _y)
+			{
+				return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
+			}
+			
 		#endregion
 		#region <Conversion>
 			
@@ -143,27 +161,6 @@ function Vector4() constructor
 			static toArray = function()
 			{
 				return [x1, x2, y1, y2];
-			}
-			
-		#endregion
-		#region <Asserts>
-			
-			// @argument			{Vector4} other
-			// @returns				{bool}
-			// @description			Check whether two Vector4 have the same values.
-			static equals = function(_other)
-			{
-				return ((x1 == _other.x1) and (x2 == _other.x2) 
-						and (y1 == _other.y1) and (y2 == _other.y2));
-			}
-			
-			// @argument			{real} x
-			// @argument			{real} y
-			// @returns				{bool}
-			// @description			Check if two x/y values are between the range of this Vector4's.
-			static is_between = function(_x, _y)
-			{
-				return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
 			}
 			
 		#endregion
