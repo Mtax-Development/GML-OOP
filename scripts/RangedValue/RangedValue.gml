@@ -63,6 +63,16 @@ function RangedValue(_value, _range) constructor
 			
 			//+TODO: add_loop()
 			
+			// @argument			{real} value
+			// @returns				{real}
+			// @description			Set the value to a position within the Range of the 
+			//						specified precentage.
+			static interpolate = function(_value)
+			{
+				value = clamp(lerp(range.minimum, range.maximum, _value), 
+							  range.minimum, range.maximum);
+			}
+			
 		#endregion
 		#region <Conversion>
 			

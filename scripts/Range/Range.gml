@@ -59,6 +59,15 @@ function Range(_minimum, _maximum) constructor
 				return clamp(_value, minimum, maximum);
 			}
 			
+			// @argument			{real} value
+			// @returns				{real}
+			// @description			Return the value at the position within this Range of the 
+			//						specified precentage.
+			static interpolate = function(_value)
+			{
+				return lerp(minimum, maximum, _value);
+			}
+			
 		#endregion
 		#region <Conversion>
 			
