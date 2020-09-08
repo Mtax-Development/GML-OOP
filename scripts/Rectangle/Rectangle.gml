@@ -35,30 +35,47 @@ function Rectangle(_location) constructor
 			{
 				if (instanceof(outline) == "Outline")
 				{
-					if (outline.size > 0) and (outline.alpha > 0)
+					if ((outline.size > 0) and (outline.alpha > 0))
 					{
 						draw_set_alpha(outline.alpha);
 						
 						if (instanceof(outline.color) == "Color4")
 						{
-							for (var _i = 0; _i < outline.size; _i += outline.spacing)
+							var _i = 0;
+							
+							repeat (outline.size)
 							{
-								draw_rectangle_color((location.x1 - _i), (location.y1 - _i), 
-													 (location.x2 + _i), (location.y2 + _i), 
+								var _spacing = (_i + (outline.spacing * _i));
+								
+								draw_rectangle_color((location.x1 - _spacing), 
+													 (location.y1 - _spacing),
+													 (location.x2 + _spacing), 
+													 (location.y2 + _spacing),
 													 outline.color.x1y1, outline.color.x2y1, 
 													 outline.color.x2y2, outline.color.x1y2, 
 													 true);
+								
+								++_i;
 							}
 						}
 						else
 						{
-							draw_set_color(outline.color);
-							
-							for (var _i = 0; _i < outline.size; _i += outline.spacing)
+							if (is_real(outline.color))
 							{
-								draw_rectangle((location.x1 - _i), (location.y1 - _i), 
-											   (location.x2 + _i), (location.y2 + _i), 
+								draw_set_color(outline.color);
+							}
+							
+							var _i = 0;
+							
+							repeat (outline.size)
+							{
+								var _spacing = (_i + (outline.spacing * _i));
+								
+								draw_rectangle((location.x1 - _spacing), (location.y1 - _spacing),
+											   (location.x2 + _spacing), (location.y2 + _spacing),
 											   true);
+								
+								++_i;
 							}
 						}
 					}

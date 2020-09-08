@@ -56,24 +56,42 @@ function RoundRectangle(_location) constructor
 					if ((outline.alpha > 0) and (outline.size > 0))
 					{
 						draw_set_alpha(outline.alpha);
-						draw_set_color(outline.color);
+						
+						if (is_real(outline.color))
+						{
+							draw_set_color(outline.color);
+						}
 						
 						if (radius != undefined)
 						{
-							for (var _i = 0; _i < outline.size; _i += outline.spacing)
+							var _i = 0;
+							
+							repeat (outline.size)
 							{
-								draw_roundrect_ext((location.x1 - _i), (location.y1 - _i), 
-												   (location.x2 + _i), (location.y2 + _i), 
+								var _spacing = (_i + (outline.spacing * _i));
+								
+								draw_roundrect_ext((location.x1 - _spacing), 
+												   (location.y1 - _spacing), 
+												   (location.x2 + _spacing), 
+												   (location.y2 + _spacing), 
 												   radius.x, radius.y, true);
+								
+								++_i;
 							}
 						}
 						else
 						{
-							for (var _i = 0; _i < outline.size; _i += outline.spacing)
+							var _i = 0;
+							
+							repeat (outline.size)
 							{
-								draw_roundrect((location.x1 - _i), (location.y1 - _i),
-											   (location.x2 + _i), (location.y2 + _i), 
-											   true);
+								var _spacing = (_i + (outline.spacing * _i));
+								
+								draw_roundrect((location.x1 - _spacing), (location.y1 - _spacing), 
+											   (location.x2 + _spacing), (location.y2 + _spacing), 
+												true);
+								
+								++_i;
 							}
 						}
 					}
