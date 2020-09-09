@@ -117,6 +117,8 @@ function Line(_location) constructor
 				}
 			}
 			
+			//+TODO: Line width support on collision
+			
 		#endregion
 	#endregion
 	#region [Constructor]

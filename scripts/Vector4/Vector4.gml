@@ -126,13 +126,13 @@ function Vector4() constructor
 						and (y1 == _other.y1) and (y2 == _other.y2));
 			}
 			
-			// @argument			{real} x
-			// @argument			{real} y
+			// @argument			{Vector2} location
 			// @returns				{bool}
-			// @description			Check if two x/y values are between the range of this Vector4's.
-			static isBetween = function(_x, _y)
+			// @description			Check if a point in space is within this Vector4.
+			static isBetween = function(_location)
 			{
-				return ((_x == clamp(_x, x1, y2)) and (_y == clamp(_y, y1, y2)));
+				return ((_location.x == clamp(_location.x, x1, x2)) 
+					   and (_location.y == clamp(_location.y, y1, y2)));
 			}
 			
 		#endregion

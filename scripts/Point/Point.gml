@@ -55,8 +55,8 @@ function Point(_location) constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_point_list(other.location.x, other.location.y, _object, _precise, 
-												 true, _list.ID, _listOrdered);
+							collision_point_list(other.location.x, other.location.y, _object, 
+												 _precise, true, _list.ID, _listOrdered);
 						}
 					}
 					else
@@ -84,7 +84,42 @@ function Point(_location) constructor
 				}
 			}
 			
-			//+TODO: Line width support on collision
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape.
+			static mouseOver = function()
+			{
+				return location.equals(new Vector2(mouse_x, mouse_y));
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button is pressed or held.
+			static click_hold = function(_button)
+			{
+				return ((mouse_check_button(_button)) 
+				and (location.equals(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was pressed in this frame.
+			static click_pressed = function(_button)
+			{
+				return ((mouse_check_button_pressed(_button)) 
+				and (location.equals(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was released in this frame.
+			static click_released = function(_button)
+			{
+				return ((mouse_check_button_released(_button)) 
+				and (location.equals(new Vector2(mouse_x, mouse_y))))
+			}
 			
 		#endregion
 	#endregion

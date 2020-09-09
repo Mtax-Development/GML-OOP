@@ -24,9 +24,9 @@ function RoundRectangle(_location) constructor
 					{
 						if (instanceof(fill) == "Color2")
 						{
-							draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
-													 radius.x, radius.y, fill.color1, fill.color2, 
-													 false);
+							draw_roundrect_color_ext(location.x1, location.y1, location.x2, 
+													 location.y2, radius.x, radius.y, fill.color1, 
+													 fill.color2, false);
 						}
 						else
 						{
@@ -127,7 +127,7 @@ function RoundRectangle(_location) constructor
 			// @argument			{bool} listOrdered?
 			// @returns				{int|List}
 			// @description			Check for a collision within this Shape with instances of the
-			//						specified object, treating this Shape as non-round Rectangle.
+			//						specified object, treating this Shape as a non-round Rectangle.
 			//						Returns the ID of a single colliding instance or noone.
 			//						If List use is specified, a List will be returned instead, either
 			//						empty or containing IDs of the colliding instances.
@@ -184,6 +184,47 @@ function RoundRectangle(_location) constructor
 												   _object, _precise, false);
 					}
 				}
+			}
+				
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape, treating this Shape
+			//						as a non-round Rectangle.
+			static mouseOver = function()
+			{
+				return location.isBetween(new Vector2(mouse_x, mouse_y));
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button is pressed or held, treating this Shape as a 
+			//						non-round Rectangle.
+			static click_hold = function(_button)
+			{
+				return ((mouse_check_button(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was pressed in this frame, treating this Shape as a
+			//						non-round Rectangle.
+			static click_pressed = function(_button)
+			{
+				return ((mouse_check_button_pressed(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was released in this frame, treating this Shape as a
+			//						non-round Rectangle.
+			static click_released = function(_button)
+			{
+				return ((mouse_check_button_released(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
 			}
 			
 		#endregion

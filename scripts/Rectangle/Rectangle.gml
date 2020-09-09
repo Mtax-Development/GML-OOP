@@ -169,6 +169,43 @@ function Rectangle(_location) constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape.
+			static mouseOver = function()
+			{
+				return location.isBetween(new Vector2(mouse_x, mouse_y));
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button is pressed or held.
+			static click_hold = function(_button)
+			{
+				return ((mouse_check_button(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was pressed in this frame.
+			static click_pressed = function(_button)
+			{
+				return ((mouse_check_button_pressed(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
+			}
+			
+			// @argument			{mousebutton} button
+			// @returns				{bool}
+			// @description			Check if the system cursor is over this Shape while the specified
+			//						mouse button was released in this frame.
+			static click_released = function(_button)
+			{
+				return ((mouse_check_button_released(_button)) 
+				and (location.isBetween(new Vector2(mouse_x, mouse_y))))
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
