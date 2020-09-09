@@ -1,17 +1,20 @@
 /// @function				RangedValue()
-/// @argument				{real} value
 /// @argument				{Range} range
+/// @argument				{real} value?
 ///
 /// @description			Construct a container for a value closed in the specified Range.
-function RangedValue(_value, _range) constructor
+function RangedValue() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_value, _range)
+			static construct = function(_range)
 			{
 				range = _range;
+				
+				var _value = ((argument_count > 1) and (argument[1] != undefined)) ?
+							 argument[1] : range.minimum;
 				
 				value = clamp(_value, range.minimum, range.maximum);
 			}
@@ -96,7 +99,16 @@ function RangedValue(_value, _range) constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = [argument[0], argument[1]];
+		argument_original = array_create(2, undefined)
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
 		
 		self.construct(argument_original[0], argument_original[1]);
 		
