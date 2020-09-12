@@ -52,9 +52,9 @@ function Vector2() constructor
 			{
 				var x_new = y;
 				var y_new = x;
-			
-				x = y_new;
-				y = x_new;
+				
+				x = x_new;
+				y = y_new;
 			}
 			
 		#endregion
