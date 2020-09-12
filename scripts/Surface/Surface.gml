@@ -416,6 +416,29 @@ function Surface(_size) constructor
 					   (string(ID) + "(" + string(size) + ")") : string(undefined));
 			}
 			
+			// @argument			{Buffer} buffer
+			// @argument			{int} offset?
+			// @argument			{int} modulo?
+			// @description			Copy information from the specified Buffer to this Surface.
+			//						A byte offset can be specified for where the operation will start.
+			//						A modulo value can be specified for number of bytes left after
+			//						every written line for storing additional data.
+			static fromBuffer = function(_buffer, _offset, _modulo)
+			{
+				if (!surface_exists(ID))
+				{
+					ID = surface_create(size.x, size.y);
+				}
+				
+				if ((is_real(_buffer.ID)) and (buffer_exists(_buffer.ID)))
+				{
+					if (_offset == undefined) {_offset = 0;}
+					if (_modulo == undefined) {_modulo = 0;}
+					
+					buffer_set_surface(_buffer.ID, ID, buffer_surface_copy, _offset, _modulo);
+				}
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]

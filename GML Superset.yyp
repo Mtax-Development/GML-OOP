@@ -7,6 +7,7 @@
     {"id":{"name":"ParticleSystem","path":"scripts/ParticleSystem/ParticleSystem.yy",},"order":3,},
     {"id":{"name":"Grid","path":"scripts/Grid/Grid.yy",},"order":5,},
     {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":5,},
+    {"id":{"name":"Buffer","path":"scripts/Buffer/Buffer.yy",},"order":11,},
     {"id":{"name":"ParticleType","path":"scripts/ParticleType/ParticleType.yy",},"order":2,},
     {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},"order":15,},
     {"id":{"name":"RangedValue","path":"scripts/RangedValue/RangedValue.yy",},"order":11,},
