@@ -126,8 +126,8 @@ function Vector2() constructor
 			break;
 			
 			case 0:
-				x = other.x;
-				y = other.y;
+				x = 0;
+				y = 0;
 			break;
 		}
 		

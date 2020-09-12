@@ -210,10 +210,10 @@ function Vector4() constructor
 			break;
 			
 			case 0:
-				x1 = other.x;
-				x2 = other.x;
-				y1 = other.y;
-				y1 = other.y;
+				x1 = 0;
+				x2 = 0;
+				y1 = 0;
+				y1 = 0;
 			break;
 		}
 		
