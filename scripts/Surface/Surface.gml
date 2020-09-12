@@ -8,6 +8,14 @@ function Surface(_size) constructor
 	#region [Methods]
 		#region <Management>
 			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{
+				size = _size;
+				
+				ID = surface_create(size.x, size.y);
+			}
+			
 			// @description			Create the Surface if it was destroyed.
 			static create = function()
 			{
@@ -87,6 +95,237 @@ function Surface(_size) constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{Vector2} location?
+			// @argument			{Scale} scale?
+			// @argument			{Angle} angle?
+			// @argument			{color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw.
+			static render = function(_location)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					
+					if (argument_count > 1)
+					{
+						var _scale = ((argument[1] != undefined) ? argument[1] : new Scale(1, 1));
+						var _angle = ((argument_count > 2) and (argument[2] != undefined) ? 
+									 argument[2] : new Angle(0));
+						var _color = ((argument_count > 3) and (argument[3] != undefined) ? 
+									 argument[3] : c_white);
+						var _alpha = ((argument_count > 4) and (argument[4] != undefined) ? 
+									 argument[4] : 1);
+
+						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
+										 _angle.value, _color, _alpha);
+					}
+					else
+					{
+						draw_surface(ID, _location.x, _location.y);
+					}
+				}
+			}
+			
+			// @argument			{Vector2} location?
+			// @argument			{Surface|surface} target?
+			// @argument			{Scale} scale?
+			// @argument			{Angle} angle?
+			// @argument			{color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw to a specified target, ignoring the target stack.
+			static render_target = function(_location, _target)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					if (_target == undefined) {_target = application_surface;}
+					
+					var _renderTarget = (instanceof(_target) == "Surface" ? _target.ID : _target);
+					
+					if (surface_exists(_renderTarget))
+					{
+						var _targetStack = new Stack();
+						var _currentTarget = surface_get_target();
+						
+						while ((_currentTarget != _renderTarget) 
+						and (_currentTarget != application_surface))
+						{
+							_targetStack.add(_currentTarget);
+					
+							surface_reset_target();
+					
+							_currentTarget = surface_get_target();
+						}
+						
+						if (argument_count > 2)
+						{
+							var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
+							var _angle = (((argument_count > 3) and (argument[3] != undefined)) ? 
+										 argument[3] : new Angle(0));
+							var _color = (((argument_count > 4) and (argument[4] != undefined)) ? 
+										 argument[4] : c_white);
+							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
+										 argument[5] : 1);
+				
+							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
+											 _angle.value, _color, _alpha);
+						}
+						else
+						{
+							draw_surface(ID, _location.x, _location.y);
+						}
+						
+						repeat(_targetStack.getSize())
+						{
+							surface_set_target(_targetStack.remove()); //+TODO: MRT support
+						}
+						
+						_targetStack = _targetStack.destroy();
+					}
+				}
+			}
+			
+			// @argument			{Vector4} part_location
+			// @argument			{Vector2} location?
+			// @argument			{Scale} scale?
+			// @argument			{color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw of a specified part of the Surface.
+			static render_part = function(_part_location, _location)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					
+					if (argument_count > 2)
+					{
+						var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
+						var _color = (((argument_count > 3) and (argument[3] != undefined)) ? 
+									 argument[3] : c_white);
+						var _alpha = (((argument_count > 4) and (argument[4] != undefined)) ? 
+									 argument[4] : 1);
+						
+						draw_surface_part_ext(ID, _part_location.x1, _part_location.y1, 
+											  _part_location.x2, _part_location.y2, 
+											  _location.x, _location.y, _scale.x, 
+											  _scale.y, _color, _alpha);
+					}
+					else
+					{
+						draw_surface_part(ID, _part_location.x1, _part_location.y1, 
+										  _part_location.x2, _part_location.y2, 
+										  _location.x, _location.y);
+					}
+				}
+			}
+			
+			// @argument			{Vector2} location?
+			// @argument			{Vector4} part_location?
+			// @argument			{Scale} scale?
+			// @argument			{Color4|color} color?
+			// @argument			{real} alpha?
+			// @argument			{Angle} angle?
+			// @description			Execute the draw with specified alternations.
+			static render_general = function(_location, _part_location, _scale, 
+											 _color, _alpha, _angle)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					if (_part_location == undefined) {_part_location = new Vector4(0, size.x,
+																				   0, size.y);}
+					
+					if (_scale == undefined) {_scale = new Scale();}
+					if (_color == undefined) {_color = c_white;}
+					if (_alpha == undefined) {_alpha = 1;}
+					if (_angle == undefined) {_angle = new Angle(0);}
+					
+					var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
+					
+					switch (instanceof(_color))
+					{
+						case "Color4":
+							_color_x1y1 = _color.x1y1;
+							_color_x1y2 = _color.x1y2;
+							_color_x2y1 = _color.x2y1;
+							_color_x2y2 = _color.x2y2;
+						break;
+						
+						default:
+							_color_x1y1 = _color;
+							_color_x1y2 = _color;
+							_color_x2y1 = _color;
+							_color_x2y2 = _color;
+						break;
+					}
+					
+					draw_surface_general(ID, _part_location.x1, _part_location.y1, 
+										 _part_location.x2, _part_location.y2, 
+										 _location.x, _location.y, _scale.x, 
+										 _scale.y, _angle.value, _color_x1y1, 
+										 _color_x2y1, _color_x2y2, _color_x1y2, 
+										 _alpha);
+				}
+			}
+			
+			// @argument			{Vector2} size
+			// @argument			{Vector2} location?
+			// @argument			{color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw by forcing the Surface to match a specific size.
+			static render_size = function(_size, _location)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					
+					if (argument_count > 2)
+					{
+						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
+						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
+									 argument[3] : 1);
+			
+						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
+												   _size.y, _color, _alpha);
+					}
+					else
+					{
+						draw_surface_stretched(ID, _location.x, _location.y, _size.x, _size.y);
+					}
+				}
+			}
+			
+			// @argument			{Vector2} location?
+			// @argument			{Scale} scale?
+			// @argument			{color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the tiled draw across the Room from the starting location.
+			static render_tiled = function(_location)
+			{
+				if (surface_exists(ID))
+				{
+					if (_location == undefined) {_location = new Vector2(0, 0);}
+					
+					if (argument_count > 1)
+					{
+						var _scale = (((argument_count > 1) and (argument[1] != undefined)) ? 
+									 argument[1] : new Scale());
+						var _color = (((argument_count > 2) and (argument[2] != undefined)) ? 
+									 argument[2] : c_white);
+						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
+									 argument[3] : 1);
+			
+						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
+											   _scale.y, _color, _alpha);
+					}
+					else
+					{
+						draw_surface_tiled(ID, _location.x, _location.y);
+					}
+				}
+			}
+			
 			// @argument			{bool} setAsTarget
 			// @description			Place this Surface on the top of target stack or remove it.
 			static target = function(_setAsTarget)
@@ -134,227 +373,6 @@ function Surface(_size) constructor
 				if (!_wasTarget)
 				{
 					surface_reset_target();
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw.
-			static render = function(_location, _scale, _angle, _color, _alpha)
-			{
-				if (surface_exists(ID))
-				{
-					if (argument_count > 1)
-					{
-						if (_scale == undefined) {_scale = new Scale();}
-						if (_angle == undefined) {_angle = new Angle();}
-						if (_color == undefined) {_color = c_white;}
-						if (_alpha == undefined) {_alpha = 1;}
-						
-						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
-										 _angle.value, _color, _alpha);
-					}
-					else
-					{
-						draw_surface(ID, _location.x, _location.y);
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Surface|surface} target?
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw to a specified target, ignoring the target stack.
-			static render_target = function(_location, _target)
-			{
-				if (surface_exists(ID))
-				{
-					if (_target == undefined) {_target = application_surface;}
-					
-					var _renderTarget = (instanceof(_target) == "Surface" ? _target.ID : _target);
-					
-					if (surface_exists(_renderTarget))
-					{
-						var _targetStack = new Stack();
-						var _currentTarget = surface_get_target();
-						
-						while ((_currentTarget != _renderTarget) 
-						and (_currentTarget != application_surface))
-						{
-							_targetStack.add(_currentTarget);
-					
-							surface_reset_target();
-					
-							_currentTarget = surface_get_target();
-						}
-						
-						if (argument_count > 2)
-						{
-							var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
-							var _angle = (((argument_count > 3) and (argument[3] != undefined)) ? 
-										 argument[3] : new Angle());
-							var _color = (((argument_count > 4) and (argument[4] != undefined)) ? 
-										 argument[4] : c_white);
-							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
-										 argument[5] : 1);
-				
-							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
-											 _angle.value, _color, _alpha);
-						}
-						else
-						{
-							draw_surface(ID, _location.x, _location.y);
-						}
-						
-						repeat(_targetStack.getSize())
-						{
-							surface_set_target(_targetStack.remove()); //+TODO: MRT support
-						}
-						
-						_targetStack = _targetStack.destroy();
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Vector4} part_location
-			// @argument			{Scale} scale?
-			// @argument			{color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw of a specified part of the Surface.
-			static render_part = function(_location, _part_location)
-			{
-				if (surface_exists(ID))
-				{
-					if (argument_count > 2)
-					{
-						var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
-						var _color = (((argument_count > 3) and (argument[3] != undefined)) ? 
-									 argument[3] : c_white);
-						var _alpha = (((argument_count > 4) and (argument[4] != undefined)) ? 
-									 argument[4] : 1);
-						
-						draw_surface_part_ext(ID, _part_location.x1, _part_location.y1, 
-											  _part_location.x2, _part_location.y2, 
-											  _location.x, _location.y, _scale.x, 
-											  _scale.y, _color, _alpha);
-					}
-					else
-					{
-						draw_surface_part(ID, _part_location.x1, _part_location.y1, 
-										  _part_location.x2, _part_location.y2, 
-										  _location.x, _location.y);
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Vector4} part_location?
-			// @argument			{Scale} scale?
-			// @argument			{Color4|color} color?
-			// @argument			{real} alpha?
-			// @argument			{Angle} angle?
-			// @description			Execute the draw with specified alternations.
-			static render_general = function(_location, _part_location, _scale, 
-											 _color, _alpha, _angle)
-			{
-				if (surface_exists(ID))
-				{					 
-					if (_part_location == undefined) {_part_location = new Vector4(0, size.x,
-																				   0, size.y);}
-					
-					if (_scale == undefined) {_scale = new Scale();}
-					if (_color == undefined) {_color = c_white;}
-					if (_alpha == undefined) {_alpha = 1;}
-					if (_angle == undefined) {_angle = new Angle();}
-					
-					var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
-					
-					switch (instanceof(_color))
-					{
-						case "Color4":
-							_color_x1y1 = _color.x1y1;
-							_color_x1y2 = _color.x1y2;
-							_color_x2y1 = _color.x2y1;
-							_color_x2y2 = _color.x2y2;
-						break;
-						
-						default:
-							_color_x1y1 = _color;
-							_color_x1y2 = _color;
-							_color_x2y1 = _color;
-							_color_x2y2 = _color;
-						break;
-					}
-					
-					draw_surface_general(ID, _part_location.x1, _part_location.y1, 
-										 _part_location.x2, _part_location.y2, 
-										 _location.x, _location.y, _scale.x, 
-										 _scale.y, _angle.value, _color_x1y1, 
-										 _color_x2y1, _color_x2y2, _color_x1y2, 
-										 _alpha);
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Vector2} size
-			// @argument			{color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw by forcing the Surface to match a specific size.
-			static render_size = function(_location, _size)
-			{
-				if (surface_exists(ID))
-				{
-					if (argument_count > 2)
-					{
-						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
-						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
-									 argument[3] : 1);
-			
-						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
-												   _size.y, _color, _alpha);
-					}
-					else
-					{
-						draw_surface_stretched(ID, _location.x, _location.y, _size.x, _size.y);
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location?
-			// @argument			{Scale} scale?
-			// @argument			{color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the tiled draw across the Room from the starting location.
-			static render_tiled = function()
-			{
-				if (surface_exists(ID))
-				{
-					var _location = (((argument_count > 0) and (argument[0] != undefined)) ? 
-									argument[0] : new Vector2(0, 0));
-					
-					if (argument_count > 1)
-					{
-						var _scale = (((argument_count > 1) and (argument[1] != undefined)) ? 
-									 argument[1] : new Scale());
-						var _color = (((argument_count > 2) and (argument[2] != undefined)) ? 
-									 argument[2] : c_white);
-						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
-									 argument[3] : 1);
-			
-						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
-											   _scale.y, _color, _alpha);
-					}
-					else
-					{
-						draw_surface_tiled(ID, _location.x, _location.y);
-					}
 				}
 			}
 			
@@ -425,10 +443,7 @@ function Surface(_size) constructor
 			//						every written line for storing additional data.
 			static fromBuffer = function(_buffer, _offset, _modulo)
 			{
-				if (!surface_exists(ID))
-				{
-					ID = surface_create(size.x, size.y);
-				}
+				self.create();
 				
 				if ((is_real(_buffer.ID)) and (buffer_exists(_buffer.ID)))
 				{
@@ -443,9 +458,7 @@ function Surface(_size) constructor
 	#endregion
 	#region [Constructor]
 		
-		size = _size;
-		
-		ID = surface_create(size.x, size.y);
+		self.construct();
 		
 	#endregion
 }
