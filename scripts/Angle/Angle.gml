@@ -1,25 +1,28 @@
 /// @function				Angle()
 /// @argument				{real} value?
 ///
-/// @description			Construct a container for a 360 degree Angle, wrapped from 0 to 359.
+/// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 function Angle(_value) constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @argument			{real} value
-			// @description			Change the value of the Angle and wrap it.
-			static modify = function(_value)
-            {
-                value += _value;
-                value -= (360 * (floor(value / 360)))
-            }
+			static construct = function(_value)
+			{
+				value = 0;
+				
+				if ((_value != undefined) and (_value != 0))
+				{
+					self.modify(_value);
+				}
+			}
 			
 		#endregion
-		#region <Calculations>
+		#region <Getters>
 			
+			// @argument			{Angle} other
 			// @returns				{real}
-			// @description			Returns the difference between two Angles, considering wrap.
+			// @description			Returns the difference between two Angles, considering wrapping.
 			static difference = function(_other)
 			{
 				result = (max(value, _other.value) - min(value, _other.value));
@@ -31,6 +34,17 @@ function Angle(_value) constructor
 				
 				return result;
 			}
+			
+		#endregion
+		#region <Setters>
+			
+			// @argument			{real} value
+			// @description			Change the value of the Angle and wrap it.
+			static modify = function(_value)
+            {
+                value += _value;
+                value -= (360 * (floor(value / 360)))
+            }
 			
 		#endregion
 		#region <Conversion>
@@ -45,11 +59,26 @@ function Angle(_value) constructor
 	#endregion
 	#region [Constructor]
 		
-		value = 0;
+		argument_original = array_create(argument_count, undefined)
 		
-		if (_value != undefined)
+		var _i = 0;
+		
+		repeat (argument_count)
 		{
-			self.modify(_value);
+			argument_original = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			default:
+				self.construct(argument_original[0]);
+			break;
 		}
 		
 	#endregion
