@@ -9,9 +9,11 @@ function Surface(_size) constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_size)
 			{
 				size = _size;
+				
+				onRecreate = undefined;
 				
 				ID = surface_create(size.x, size.y);
 			}
@@ -22,6 +24,38 @@ function Surface(_size) constructor
 				if (!surface_exists(ID))
 				{
 					ID = surface_create(size.x, size.y);
+					
+					if (onRecreate != undefined)
+					{
+						onRecreate();
+					}
+				}
+			}
+			
+			// @argument			{Vector2} location
+			// @argument			{Surface|surface} other
+			// @argument			{Vector4} other_part?
+			// @description			Copy content of other Surface to a specified location on this one.
+			static copy = function(_location, _other)
+			{
+				self.create();
+				
+				if (surface_exists(ID))
+				{
+					var _sourceSurface = (instanceof(_other) == "Surface" ? _other.ID : _other);
+			
+					if (argument_count > 2)
+					{
+						var _other_part = argument[2];
+						
+						surface_copy_part(ID, _location.x, _location.y, _sourceSurface, 
+										  _other_part.x1, _other_part.y1, _other_part.x2,
+										  _other_part.y2);
+					}
+					else
+					{
+						surface_copy(ID, _location.x, _location.y, _sourceSurface);
+					}
 				}
 			}
 			
@@ -59,6 +93,13 @@ function Surface(_size) constructor
 		#endregion
 		#region <Getters>
 			
+			// @returns				{bool}
+			// @description			Check if this Surface exists and is functional.
+			static exists = function()
+			{
+				return surface_exists(ID);
+			}
+			
 			// @description			Check whether this Surface is the current draw target.
 			static isTarget = function()
 			{
@@ -95,6 +136,25 @@ function Surface(_size) constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{bool} setAsTarget
+			// @description			Place this Surface on the top of target stack or remove it.
+			static target = function(_setAsTarget)
+			{
+				if (_setAsTarget)
+				{
+					self.create();
+					
+					surface_set_target(ID);
+				}
+				else
+				{
+					if ((surface_exists(ID)) and (surface_get_target() == ID))
+					{
+						surface_reset_target();
+					}
+				}
+			}
+			
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
@@ -116,7 +176,7 @@ function Surface(_size) constructor
 									 argument[3] : c_white);
 						var _alpha = ((argument_count > 4) and (argument[4] != undefined) ? 
 									 argument[4] : 1);
-
+						
 						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
 										 _angle.value, _color, _alpha);
 					}
@@ -127,19 +187,19 @@ function Surface(_size) constructor
 				}
 			}
 			
-			// @argument			{Vector2} location?
 			// @argument			{Surface|surface} target?
+			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
 			// @argument			{color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw to a specified target, ignoring the target stack.
-			static render_target = function(_location, _target)
+			static render_target = function(_target, _location)
 			{
 				if (surface_exists(ID))
 				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
 					if (_target == undefined) {_target = application_surface;}
+					if (_location == undefined) {_location = new Vector2(0, 0);}
 					
 					var _renderTarget = (instanceof(_target) == "Surface" ? _target.ID : _target);
 					
@@ -152,9 +212,9 @@ function Surface(_size) constructor
 						and (_currentTarget != application_surface))
 						{
 							_targetStack.add(_currentTarget);
-					
+							
 							surface_reset_target();
-					
+							
 							_currentTarget = surface_get_target();
 						}
 						
@@ -167,7 +227,7 @@ function Surface(_size) constructor
 										 argument[4] : c_white);
 							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
 										 argument[5] : 1);
-				
+							
 							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
 											 _angle.value, _color, _alpha);
 						}
@@ -178,7 +238,7 @@ function Surface(_size) constructor
 						
 						repeat(_targetStack.getSize())
 						{
-							surface_set_target(_targetStack.remove()); //+TODO: MRT support
+							surface_set_target(_targetStack.remove());
 						}
 						
 						_targetStack = _targetStack.destroy();
@@ -227,14 +287,14 @@ function Surface(_size) constructor
 			// @argument			{real} alpha?
 			// @argument			{Angle} angle?
 			// @description			Execute the draw with specified alternations.
-			static render_general = function(_location, _part_location, _scale, 
+			static render_general = function(_part_location, _location, _scale, 
 											 _color, _alpha, _angle)
 			{
 				if (surface_exists(ID))
 				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
 					if (_part_location == undefined) {_part_location = new Vector4(0, size.x,
 																				   0, size.y);}
+					if (_location == undefined) {_location = new Vector2(0, 0);}
 					
 					if (_scale == undefined) {_scale = new Scale();}
 					if (_color == undefined) {_color = c_white;}
@@ -285,7 +345,7 @@ function Surface(_size) constructor
 						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
 						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
 									 argument[3] : 1);
-			
+						
 						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
 												   _size.y, _color, _alpha);
 					}
@@ -315,7 +375,7 @@ function Surface(_size) constructor
 									 argument[2] : c_white);
 						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
 									 argument[3] : 1);
-			
+						
 						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
 											   _scale.y, _color, _alpha);
 					}
@@ -326,28 +386,9 @@ function Surface(_size) constructor
 				}
 			}
 			
-			// @argument			{bool} setAsTarget
-			// @description			Place this Surface on the top of target stack or remove it.
-			static target = function(_setAsTarget)
-			{
-				if (_setAsTarget)
-				{
-					self.create();
-				
-					surface_set_target(ID);
-				}
-				else
-				{
-					if ((surface_exists(ID)) and (surface_get_target() == ID))
-					{
-						surface_reset_target();
-					}
-				}
-			}
-			
 			// @argument			{color} color
 			// @argument			{real} alpha?
-			// @description			Set entire content of the surface to a specified color value.
+			// @description			Set the entire content of this Surface to the specified color.
 			static clear = function(_color, _alpha)
 			{
 				self.create();
@@ -376,37 +417,30 @@ function Surface(_size) constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
-			// @argument			{Surface|surface} other
-			// @argument			{Vector4} other_part?
-			// @description			Copy content of other Surface to a specified location on this one.
-			static copy = function(_location, _other)
+			// @argument			{int} mrt
+			// @description			Set the MRT of this Surface for Shader operations.
+			static setMRT = function(_mrt)
 			{
 				self.create();
 				
-				if (surface_exists(ID))
-				{
-					var _sourceSurface = (instanceof(_other) == "Surface" ? _other.ID : _other);
+				surface_set_target_ext(_mrt, ID);
+			}
 			
-					if (argument_count > 2)
-					{
-						var _other_part = argument[2];
-						
-						surface_copy_part(ID, _location.x, _location.y, _sourceSurface, 
-										  _other_part.x1, _other_part.y1, _other_part.x2,
-										  _other_part.y2);
-					}
-					else
-					{
-						surface_copy(ID, _location.x, _location.y, _sourceSurface);
-					}
-				}
+		#endregion
+		#region <Conversion>
+			
+			// @returns				{string}
+			// @description			Overrides the string conversion with a ID and size output.
+			static toString = function()
+			{
+				return ((surface_exists(ID)) ? 
+					   (string(ID) + "(" + string(size) + ")") : string(undefined));
 			}
 			
 			// @argument			{string} filename
 			// @argument			{Vector4} part?
 			// @description			Save the content of this Surface to disk as a .png file.
-			static save = function(_filename)
+			static toFile = function(_filename)
 			{
 				if (surface_exists(ID))
 				{
@@ -421,17 +455,6 @@ function Surface(_size) constructor
 						surface_save(ID, _filename);
 					}
 				}
-			}
-			
-		#endregion
-		#region <Conversion>
-			
-			// @returns				{string}
-			// @description			Overrides the string conversion with a ID and size output.
-			static toString = function()
-			{
-				return ((surface_exists(ID)) ? 
-					   (string(ID) + "(" + string(size) + ")") : string(undefined));
 			}
 			
 			// @argument			{Buffer} buffer
@@ -458,7 +481,7 @@ function Surface(_size) constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		self.construct(_size);
 		
 	#endregion
 }
