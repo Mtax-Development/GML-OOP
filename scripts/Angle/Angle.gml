@@ -65,7 +65,7 @@ function Angle(_value) constructor
 		
 		repeat (argument_count)
 		{
-			argument_original = argument[_i];
+			argument_original[_i] = argument[_i];
 			
 			++_i;
 		}

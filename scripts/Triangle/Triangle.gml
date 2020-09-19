@@ -6,7 +6,7 @@
 /// @argument				{color|Color3|undefined} fill?
 /// @argument				{color|undefined} outline?
 ///
-/// @description			Constructrs a Triangle connected by three points
+/// @description			Constructs a Triangle connected by three points
 ///							in a space, which can be rendered with its full
 ///							configuration or operated in other ways.
 function Triangle(_location1, _location2, _location3) constructor
