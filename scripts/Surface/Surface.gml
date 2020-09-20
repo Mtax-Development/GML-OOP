@@ -306,10 +306,10 @@ function Surface(_size) constructor
 					switch (instanceof(_color))
 					{
 						case "Color4":
-							_color_x1y1 = _color.x1y1;
-							_color_x1y2 = _color.x1y2;
-							_color_x2y1 = _color.x2y1;
-							_color_x2y2 = _color.x2y2;
+							_color_x1y1 = _color.color1;
+							_color_x1y2 = _color.color2;
+							_color_x2y1 = _color.color3;
+							_color_x2y2 = _color.color4;
 						break;
 						
 						default:

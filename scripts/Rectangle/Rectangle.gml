@@ -22,7 +22,8 @@ function Rectangle(_location) constructor
 					if (instanceof(fill) == "Color4")
 					{
 						draw_rectangle_color(location.x1, location.y1, location.x2, location.y2,
-											 fill.x1y1, fill.x2y1, fill.x2y2, fill.x1y2, false);
+											 fill.color1, fill.color3, fill.color4, fill.color2, 
+											 false);
 					}
 					else
 					{
@@ -52,8 +53,8 @@ function Rectangle(_location) constructor
 														 (location.y1 - _spacing),
 														 (location.x2 + _spacing), 
 														 (location.y2 + _spacing),
-														 outline.color.x1y1, outline.color.x2y1, 
-														 outline.color.x2y2, outline.color.x1y2, 
+														 outline.color.color1, outline.color.color3, 
+														 outline.color.color4, outline.color.color2, 
 														 true);
 									
 									++_i;
