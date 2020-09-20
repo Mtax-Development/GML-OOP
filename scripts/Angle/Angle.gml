@@ -7,6 +7,7 @@ function Angle(_value) constructor
 	#region [Methods]
 		#region <Management>
 			
+			// @description			Initialize the constructor.
 			static construct = function(_value)
 			{
 				value = 0;
@@ -49,10 +50,11 @@ function Angle(_value) constructor
 		#endregion
 		#region <Conversion>
 			
-			// @description			Overrides the string conversion with a simple value output.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
 			static toString = function()
 			{
-				return string(value);
+				return (instanceof(self) + "(" + string(value) + ")");
 			}
 			
 		#endregion
