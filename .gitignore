@@ -1,8 +1,15 @@
+animcurves/
 datafiles/
+extensions/
+fonts/
 objects/
 options/
+paths/
 rooms/
+sequences/
 shaders/
 sprites/
+tilesets/
+timelines/
 sounds/
 README.md
