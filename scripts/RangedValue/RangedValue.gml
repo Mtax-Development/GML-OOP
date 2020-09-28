@@ -3,20 +3,38 @@
 /// @argument				{real} value?
 ///
 /// @description			Construct a container for a value closed in the specified Range.
+///
+///							Construction methods:
+///							- New constructor
+///							   If the value if not specified, it will be set to the minimal value of
+///							   the specified Range.
+///							- Constructor copy: {Range} other
 function RangedValue() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_range)
+			static construct = function()
 			{
-				range = _range;
+				if (instanceof(argument[0]) == "RangedValue")
+				{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					range = _other.range;
+					value = _other.value;
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					range = argument[0];
 				
-				var _value = ((argument_count > 1) and (argument[1] != undefined)) ?
-							 argument[1] : range.minimum;
+					var _value = ((argument_count > 1) and (argument[1] != undefined)) ?
+								 argument[1] : range.minimum;
 				
-				value = clamp(_value, range.minimum, range.maximum);
+					value = clamp(_value, range.minimum, range.maximum);
+				}
 			}
 			
 		#endregion
@@ -89,6 +107,8 @@ function RangedValue() constructor
 			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented with the Range and value information 
+			//						in the following format: value, range.minimum-range.maximum.
 			static toString = function()
 			{
 				return (instanceof(self) + "(" + string(value) + ", " + 
@@ -99,7 +119,7 @@ function RangedValue() constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = array_create(2, undefined)
+		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
 		
@@ -110,7 +130,17 @@ function RangedValue() constructor
 			++_i;
 		}
 		
-		self.construct(argument_original[0], argument_original[1]);
+		switch (argument_count)
+		{
+			case 1:
+				self.construct(argument_original[0]);
+			break;
+			
+			case 2:
+			default:
+				self.construct(argument_original[0], argument_original[1]);
+			break;
+		}
 		
 	#endregion
 }

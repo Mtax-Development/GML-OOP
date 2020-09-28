@@ -24,7 +24,7 @@ function Color2() constructor
 				switch (argument_count)
 				{
 					case 1:
-						if (instanceof(argument[0] == "Color2"))
+						if (instanceof(argument[0]) == "Color2")
 						{
 							//|Construction method: Constructor copy.
 							var _other = argument[0];
@@ -57,6 +57,7 @@ function Color2() constructor
 		#region <Conversion>
 			
 			// @argument			{bool} useHSV?
+			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as a color name or value for each 
@@ -106,8 +107,9 @@ function Color2() constructor
 							{
 								_string_color = 
 								("(" +
-								 "Hue: " + string(color_get_hue(_colors[_i])) + ", " +
-								 "Saturation: " + string(color_get_saturation(_colors[_i])) + ", " +
+								 "Hue: " + string(color_get_hue(_colors[_i])) + _mark_separator +
+								 "Saturation: " + string(color_get_saturation(_colors[_i])) + 
+												_mark_separator +
 								 "Value: " + string(color_get_value(_colors[_i])) +
 								 ")");
 							}
@@ -115,8 +117,8 @@ function Color2() constructor
 							{
 								_string_color = 
 								("(" +
-								 "Red: " + string(color_get_red(_colors[_i])) + ", " +
-								 "Green: " + string(color_get_green(_colors[_i])) + ", " +
+								 "Red: " + string(color_get_red(_colors[_i])) + _mark_separator +
+								 "Green: " + string(color_get_green(_colors[_i])) + _mark_separator +
 								 "Blue: " + string(color_get_blue(_colors[_i])) +
 								 ")");
 							}

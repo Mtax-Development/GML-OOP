@@ -1,33 +1,47 @@
 /// @function				DateTime()
-/// @argument				{datetime} value?
+/// @argument				{datetime} datetime?
 ///
 /// @description			Constructs a container for a DateTime.
+///
+///							Construction methods:
+///							- Wrapper: {datetime} datetime
+///							- No value (unusable): {void|undefined}
+///							- Constructor copy: {DateTime} other
 function DateTime(_value) constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_value)
 			{
-				if (ID != undefined)
+				if (instanceof(_value) == "DateTime")
 				{
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
+					ID = _value.ID;
 				}
 				else
 				{
-					year = undefined;
-					month = undefined;
-					week = undefined;
-					day = undefined;
-					hour = undefined;
-					minute = undefined;
-					second = undefined;
+					ID = _value;
+				
+					if (ID != undefined)
+					{
+						year = date_get_year(ID);
+						month = date_get_month(ID);
+						day = date_get_day(ID);
+						hour = date_get_hour(ID);
+						minute = date_get_minute(ID);
+						second = date_get_second(ID);
+					}
+					else
+					{
+						year = undefined;
+						month = undefined;
+						week = undefined;
+						day = undefined;
+						hour = undefined;
+						minute = undefined;
+						second = undefined;
+					}
 				}
 			}
 			
@@ -37,8 +51,7 @@ function DateTime(_value) constructor
 			// @description			Set this DateTime to the system's current, following set timezone.
 			static setCurrent = function()
 			{
-				ID = date_current_datetime();
-				self.construct();
+				self.construct(date_current_datetime());
 			}
 			
 			// @argument			{int} year
@@ -50,8 +63,7 @@ function DateTime(_value) constructor
 			// @description			Set this DateTime to a newly created one.
 			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
 			{
-				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
-				self.construct();
+				self.construct(date_create_datetime(_year, _month, _day, _hour, _minute, _second));
 			}
 			
 			// @argument			{int} years
@@ -72,7 +84,7 @@ function DateTime(_value) constructor
 					ID = date_inc_minute(ID, _minutes);
 					ID = date_inc_second(ID, _seconds);
 					
-					self.construct();
+					self.construct(ID);
 				}
 			}
 			
@@ -82,9 +94,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_year(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_year(ID, _number));
 				}
 			}
 			
@@ -94,9 +104,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_month(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_month(ID, _number));
 				}
 			}
 			
@@ -106,9 +114,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_week(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_week(ID, _number));
 				}
 			}
 			
@@ -118,9 +124,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_day(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_day(ID, _number));
 				}
 			}
 			
@@ -130,9 +134,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_hour(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_hour(ID, _number));
 				}
 			}
 			
@@ -142,9 +144,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_minute(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_minute(ID, _number));
 				}
 			}
 			
@@ -154,9 +154,7 @@ function DateTime(_value) constructor
 			{
 				if (ID != undefined)
 				{
-					ID = date_inc_second(ID, _number);
-					
-					self.construct();
+					self.construct(date_inc_second(ID, _number));
 				}
 			}
 			
@@ -167,74 +165,87 @@ function DateTime(_value) constructor
 			// @description			Get the date component of this DateTime.
 			static getDate = function()
 			{				
-				return (ID != undefined ? date_date_of(ID) : undefined);
+				return ((ID != undefined) ? date_date_of(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the time component of this DateTime.
 			static getTime = function()
 			{				
-				return (ID != undefined ? date_time_of(ID) : undefined);
+				return ((ID != undefined) ? date_time_of(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of days in the year of the date component.
 			static getDaysInYear = function()
 			{
-				return (ID != undefined ? date_days_in_year(ID) : undefined);
+				return ((ID != undefined) ? date_days_in_year(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of days in the month of the date component.
 			static getDaysInMonth = function()
 			{				
-				return (ID != undefined ? date_days_in_month(ID) : undefined);
+				return ((ID != undefined) ? date_days_in_month(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of which week in the year the date component is.
 			static getWeekOfYear = function()
 			{				
-				return (ID != undefined ? date_get_week(ID) : undefined);
+				return ((ID != undefined) ? date_get_week(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of which day in the year the date component is.
 			static getDayOfYear = function()
 			{				
-				return (ID != undefined ? date_get_day_of_year(ID) : undefined);
+				return ((ID != undefined) ? date_get_day_of_year(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of which hour in the year the date component is.
 			static getHourOfYear = function()
 			{				
-				return (ID != undefined ? date_get_hour_of_year(ID) : undefined);
+				return ((ID != undefined) ? date_get_hour_of_year(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of which minute in the year the date component is.
 			static getMinuteOfYear = function()
 			{				
-				return (ID != undefined ? date_get_minute_of_year(ID) : undefined);
+				return ((ID != undefined) ? date_get_minute_of_year(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the number of which second in the year the date component is.
 			static getSecondOfYear = function()
 			{				
-				return (ID != undefined ? date_get_second_of_year(ID) : undefined);
+				return ((ID != undefined) ? date_get_second_of_year(ID) : undefined);
 			}
 			
 			// @returns				{int|undefined}
 			// @description			Get the day count in the week of the date component.
 			static getWeekday = function()
 			{				
-				return (ID != undefined ? date_get_weekday(ID) : undefined);
+				return ((ID != undefined) ? date_get_weekday(ID) : undefined);
 			}
 			
-		#endregion
-		#region <Calculations>
+			// @returns				{bool|undefined}
+			// @description			Check if the date component is the same as device's local date, 
+			//						following set timezone.
+			static isToday = function()
+			{
+				return ((ID != undefined) ? date_is_today(ID) : undefined);
+			}
+			
+			// @returns				{bool|undefined}
+			// @description			Check if the date component is a leap year - a calendar year 
+			//						that contains an additional day			
+			static isLeapYear = function()
+			{
+				return ((ID != undefined) ? date_leap_year(ID) : undefined);
+			}
 			
 			// @argument			{DateTime} other
 			// @returns				{int|undefined}
@@ -337,46 +348,36 @@ function DateTime(_value) constructor
 			}
 			
 		#endregion
-		#region <Asserts>
-		
-			// @returns				{bool|undefined}
-			// @description			Check if the date component is the same as device's local date, 
-			//						following set timezone.
-			static isToday = function()
-			{
-				return (ID != undefined ? date_is_today(ID) : undefined);
-			}
-			
-			// @returns				{bool|undefined}
-			// @description			Check if the date component is a leap year - a calendar year 
-			//						that contains an additional day			
-			static isLeapYear = function()
-			{
-				return (ID != undefined ? date_leap_year(ID) : undefined);
-			}
-		
-		#endregion
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with full datetime output.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented as the full date and time output.
 			static toString = function()
 			{
-				return (ID != undefined ? date_datetime_string(ID) : string(undefined));
+				if (ID != undefined)
+				{
+					return (instanceof(self) + "(" + date_datetime_string(ID) + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 			// @returns				{string}
 			// @description			Return the date component as string.
 			static toString_date = function()
 			{
-				return (ID != undefined ? date_date_string(ID) : string(undefined));
+				return ((ID != undefined) ? date_date_string(ID) : string(undefined));
 			}
 			
 			// @returns				{string}
 			// @description			Return the time component as string.
 			static toString_time = function()
 			{
-				return (ID != undefined ? date_time_string(ID) : string(undefined));
+				return ((ID != undefined) ? date_time_string(ID) : string(undefined));
 			}
 			
 			// @returns				{string}
@@ -425,9 +426,28 @@ function DateTime(_value) constructor
 	#endregion
 	#region [Constructor]
 		
-		ID = _value;
+		argument_original = array_create(argument_count, undefined);
 		
-		self.construct();
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }

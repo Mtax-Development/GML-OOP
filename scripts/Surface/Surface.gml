@@ -108,15 +108,16 @@ function Surface(_size) constructor
 			
 			// @argument			{Vector2} location
 			// @argument			{bool} getFull?
-			// @returns				{color|undefined}
+			// @returns				{Color|color:abgr32bit} | On error: undefined
 			// @description			Get the pixel color on a specific spot on a Surface.
-			//						Returns {undefined} if the surface does not exists.
+			//						A full abgr 32bit information can be obtainted if specified,
+			//						otherwise {Color} will be returned.
 			static getPixel = function(_location, _getFull)
 			{
 				if (surface_exists(ID))
 				{	
 					return (_getFull ? surface_getpixel_ext(ID, _location.x, _location.y) :
-									   surface_getpixel(ID, _location.x, _location.y));
+									   new Color(surface_getpixel(ID, _location.x, _location.y)));
 				}
 				else
 				{
@@ -158,7 +159,7 @@ function Surface(_size) constructor
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
-			// @argument			{color} color?
+			// @argument			{Color|color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw.
 			static render = function(_location)
@@ -177,6 +178,8 @@ function Surface(_size) constructor
 						var _alpha = ((argument_count > 4) and (argument[4] != undefined) ? 
 									 argument[4] : 1);
 						
+						if (instanceof(_color) == "Color") {_color = _color.color;}
+						
 						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
 										 _angle.value, _color, _alpha);
 					}
@@ -191,7 +194,7 @@ function Surface(_size) constructor
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
-			// @argument			{color} color?
+			// @argument			{Color|color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw to a specified target, ignoring the target stack.
 			static render_target = function(_target, _location)
@@ -228,6 +231,8 @@ function Surface(_size) constructor
 							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
 										 argument[5] : 1);
 							
+							if (instanceof(_color) == "Color") {_color = _color.color;}
+							
 							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
 											 _angle.value, _color, _alpha);
 						}
@@ -249,7 +254,7 @@ function Surface(_size) constructor
 			// @argument			{Vector4} part_location
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
-			// @argument			{color} color?
+			// @argument			{Color|color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw of a specified part of the Surface.
 			static render_part = function(_part_location, _location)
@@ -265,6 +270,8 @@ function Surface(_size) constructor
 									 argument[3] : c_white);
 						var _alpha = (((argument_count > 4) and (argument[4] != undefined)) ? 
 									 argument[4] : 1);
+						
+						if (instanceof(_color) == "Color") {_color = _color.color;}
 						
 						draw_surface_part_ext(ID, _part_location.x1, _part_location.y1, 
 											  _part_location.x2, _part_location.y2, 
@@ -283,7 +290,7 @@ function Surface(_size) constructor
 			// @argument			{Vector2} location?
 			// @argument			{Vector4} part_location?
 			// @argument			{Scale} scale?
-			// @argument			{Color4|color} color?
+			// @argument			{Color4|Color|color} color?
 			// @argument			{real} alpha?
 			// @argument			{Angle} angle?
 			// @description			Execute the draw with specified alternations.
@@ -312,6 +319,13 @@ function Surface(_size) constructor
 							_color_x2y2 = _color.color4;
 						break;
 						
+						case "Color":
+							_color_x1y1 = _color.color;
+							_color_x1y2 = _color.color;
+							_color_x2y1 = _color.color;
+							_color_x2y2 = _color.color;
+						break;
+						
 						default:
 							_color_x1y1 = _color;
 							_color_x1y2 = _color;
@@ -331,7 +345,7 @@ function Surface(_size) constructor
 			
 			// @argument			{Vector2} size
 			// @argument			{Vector2} location?
-			// @argument			{color} color?
+			// @argument			{Color|color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the draw by forcing the Surface to match a specific size.
 			static render_size = function(_size, _location)
@@ -346,6 +360,8 @@ function Surface(_size) constructor
 						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
 									 argument[3] : 1);
 						
+						if (instanceof(_color) == "Color") {_color = _color.color;}
+						
 						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
 												   _size.y, _color, _alpha);
 					}
@@ -358,7 +374,7 @@ function Surface(_size) constructor
 			
 			// @argument			{Vector2} location?
 			// @argument			{Scale} scale?
-			// @argument			{color} color?
+			// @argument			{Color|color} color?
 			// @argument			{real} alpha?
 			// @description			Execute the tiled draw across the Room from the starting location.
 			static render_tiled = function(_location)
@@ -376,6 +392,8 @@ function Surface(_size) constructor
 						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
 									 argument[3] : 1);
 						
+						if (instanceof(_color) == "Color") {_color = _color.color;}
+						
 						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
 											   _scale.y, _color, _alpha);
 					}
@@ -386,13 +404,14 @@ function Surface(_size) constructor
 				}
 			}
 			
-			// @argument			{color} color
+			// @argument			{Color|color} color
 			// @argument			{real} alpha?
 			// @description			Set the entire content of this Surface to the specified color.
 			static clear = function(_color, _alpha)
 			{
 				self.create();
 				
+				if (instanceof(_color) == "Color") {_color = _color.color;}
 				if (_alpha == undefined) {_alpha = 1;}
 				
 				var _wasTarget = (surface_get_target() == ID)

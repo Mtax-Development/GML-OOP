@@ -2,49 +2,150 @@
 /// @argument				x?
 /// @argument				y?
 ///
-/// @description			Constructs a two-value numeric x/y Vector container.
+/// @description			Construct a Vector container for X and Y coordinate pair.
 ///
 ///							Construction methods:
-///							- {real}, {real} (x, y)
-///							- {real} (single for both values)
-///							- {real[]} (with the following structure: [x, y])
-///							- {Vector2}
-///							- {void} (instance's own x/y will be set to both values)
+///							- Two values: {real} x, {real} y
+///							- One number for all values: {real} value
+///							- Default (0) for all values: {void}
+///							- From array: {real[]} array
+///							   First array position will be set to X.
+///							   Second array position will be set to Y.
+///							- Constructor copy: {Vector2} other
 function Vector2() constructor
 {
 	#region [Methods]
-		#region <Operations>
+		#region <Management>
 			
-			// @argument			{Vector2} other
-			// @description			Add to values of the current Vector2 from other one's.
-			static add = function(_other)
+			// @description			Initialize the constructor.
+			static construct = function()
 			{
-				x += _other.x;
-				y += _other.y;
+				switch (argument_count)
+				{
+					case 0:
+						//|Construction method: Default (0) for all values.
+						x = 0;
+						y = 0;
+					break;
+					
+					case 1:
+						if (is_array(argument[0]))
+						{
+							//|Construction method: From array.
+							var _array = argument[0];
+							
+							x = _array[0];
+							y = _array[1];
+						}
+						else if (instanceof(argument[0]) == "Vector2")
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							
+							x = _other.x;
+							y = _other.y;
+						}
+						else
+						{
+							//|Construction method: One number for all values.
+							x = argument[0];
+							y = argument[0];
+						}
+					break;
+					
+					case 2:
+						//|Construction method: Two values.
+						x = argument[0];
+						y = argument[1];
+					break;
+				}
 			}
 			
-			// @argument			{Vector2} other
-			// @description			Substract from values of the current Vector2 by other one's.
-			static substract = function(_other)
+		#endregion
+		#region <Setters>
+			
+			// @argument			{real|Vector2} value
+			// @description			Add to the values of this Vector2 the specified value or the
+			//						values of other specified Vector2.
+			static add = function()
 			{
-				x -= _other.x;
-				y -= _other.y;
+				if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x += _other.x;
+					y += _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x += _value;
+					y += _value;
+				}
 			}
 			
-			// @argument			{Vector2} other
-			// @description			Multiply values of the current Vector2 by other one's.
-			static multiply = function(_other)
+			// @argument			{real|Vector2} value
+			// @description			Substract the values of this Vector2 the specified value or the
+			//						values of other specified Vector2.
+			static substract = function()
 			{
-				x *= _other.x;
-				y *= _other.y;
+				if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x -= _other.x;
+					y -= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x -= _value;
+					y -= _value;
+				}
 			}
 			
-			// @argument			{Vector2} other
-			// @description			Divide values of the current Vector2 by other one's.
-			static divide = function(_other)
+			// @argument			{real|Vector2} value
+			// @description			Multiply the values of this Vector2 by specified value or the
+			//						values of other specified Vector2.
+			static multiply = function()
 			{
-				x /= _other.x;
-				y /= _other.y;
+				if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x *= _other.x;
+					y *= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x *= _value;
+					y *= _value;
+				}
+			}
+			
+			// @argument			{real|Vector2} value
+			// @description			Divide the values of this Vector2 by specified value or the
+			//						values of other specified Vector2.
+			static divide = function()
+			{
+				if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x /= _other.x;
+					y /= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x /= _value;
+					y /= _value;
+				}
 			}
 			
 			// @description			Swap the X and Y values of this Vector2.
@@ -58,76 +159,80 @@ function Vector2() constructor
 			}
 			
 		#endregion
-		#region <Conversion>
-			
-			// @returns				{string}
-			// @description			Overrides the string conversion with a simple value output.
-			static toString = function()
-			{
-				return (string(x) + "/" + string(y));
-			}
-			
-			// @returns				{string}
-			// @description			Create a multi-line string with value output.
-			static toFormattedString = function()
-			{
-				return 
-				"x: " + string(x) + "\n" +
-				"y: " + string(y);
-			}
-			
-			// @returns				{real[]}
-			// @description			Return an array containing all values of the Vector.
-			static toArray = function()
-			{
-				return [x, y];
-			}
-			
-		#endregion
-		#region <Asserts>
+		#region <Getters>
 			
 			// @argument			{Vector2} other
 			// @returns				{bool}
-			// @description			Check whether two Vector2 have the same values.
+			// @description			Check if the values of this Vector2 are equal to the values of
+			//						other specified Vector2.
 			static equals = function(_other)
 			{
 				return ((x == _other.x) and (y == _other.y));
 			}
 			
 		#endregion
-	#endregion
-	#region [Constructor]
-		
-		switch (argument_count)
-		{
-			case 2:	
-				x = argument[0];
-				y = argument[1];
-			break;
+		#region <Conversion>
 			
-			case 1:
-				if (is_array(argument[0]))
+			// @returns				{string}
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the output of X and then Y
+			//						values of this Vector2.
+			static toString = function(_multiline)
+			{
+				if (_multiline)
 				{
-					var array = argument[0];
-					
-					x = array[0];
-					y = array[1];
-				}
-				else if (instanceof(argument[0]) == "Vector2")
-				{
-					x = argument[0].x;
-					y = argument[0].y;
+					return ("x: " + string(x) + "\n" +
+							"y: " + string(y));
 				}
 				else
 				{
-					x = argument[0];
-					y = argument[0];
+					var _mark_separator = ", ";
+					
+					return (instanceof(self) + "(" +
+							"x: " + string(x) + _mark_separator +
+							"y: " + string(y) +
+							")");
 				}
+			}
+			
+			// @returns				{real[]}
+			// @description			Return an array containing all values of this Vector2.
+			//						The X value will be set to the first position of that array,
+			//						the Y value will be set to the second position of that array.
+			static toArray = function()
+			{
+				return [x, y];
+			}
+			
+		#endregion
+	#endregion
+	#region [Constructor]
+		
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
 			break;
 			
-			case 0:
-				x = 0;
-				y = 0;
+			case 1:
+				self.construct(argument_original[0]);
+			break;
+			
+			case 2:
+			default:
+				self.construct(argument_original[0], argument_original[1]);
 			break;
 		}
 		

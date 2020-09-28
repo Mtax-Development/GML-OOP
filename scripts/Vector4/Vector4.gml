@@ -4,58 +4,242 @@
 /// @argument				y1?
 /// @argument				y2?
 ///
-/// @description			Constructs a four-value numeric x1-x2/y1-y2 Vector container.
+/// @description			Construct a Vector container for two X and Y coordinate pairs.
 ///
 ///							Construction methods:
-///							- {real}, {real}, {real}, {real} (x1, x2, y1, y2) 
-///							- {real} (single for all values)
-///							- {real[]} (with the following structure: [x1, x2, y1, y2])
-///							- {Vector2}, {Vector2}
-///							- {Vector4}
-///							- {void} (instance's own x/y will be set to all appriopate values)
+///							- Four values: {real} x1, {real} x2, {real} y1, {real} y2
+///							- One number for all values: {real} value
+///							- One number pair: {real} x, {real} y
+///							   First number will be set to all values of X.
+///							   Second number will be set to all values of Y.
+///							- Default (0) for all values: {void}
+///							- From array: {real[]} array
+///							   First array position will be set to X1.
+///							   Second array position will be set to X2.
+///							   Third array position will be set to Y1.
+///							   Fourth array position will be set to Y2.
+///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
+///							- Constructor copy: {Vector4} other
 function Vector4() constructor
 {
 	#region [Methods]
-		#region <Setters>>
+		#region <Management>
 			
-			// @argument			{Vector4} other
-			// @description			Add to values of the current Vector4 from other one's.
-			static add = function(_other)
+			// @description			Initialize the constructor.
+			static construct = function()
 			{
-				x1 += _other.x1;
-				x2 += _other.x2;
-				y1 += _other.y1;
-				y2 += _other.y2;
+				switch(argument_count)
+				{
+					case 0:
+						//|Construction method: Default (0) for all values.
+						x1 = 0;
+						x2 = 0;
+						y1 = 0;
+						y2 = 0;
+					break;
+					
+					case 1:
+						if (is_array(argument[0]))
+						{
+							//|Construction method: From array.
+							var _array = argument[0];
+							
+							x1 = _array[0];
+							x2 = _array[1];
+							y1 = _array[2];
+							y2 = _array[3];
+						}
+						else if (instanceof(argument[0]) == "Vector4")
+						{
+							//|Construction method: Constructor copy.
+							x1 = argument[0].x1;
+							x2 = argument[0].x2;
+							y1 = argument[0].y1;
+							y2 = argument[0].y2;
+						}
+						else
+						{
+							//|Construction method: One number for all values.
+							x1 = argument[0];
+							x2 = argument[0];
+							y1 = argument[0];
+							y2 = argument[0];
+						}
+					break;
+					
+					case 2:
+						if ((instanceof(argument[0]) == "Vector2") 
+						and (instanceof(argument[1]) == "Vector2"))
+						{
+							//|Construction method: From two Vector2.
+							var _pair_1 = argument[0];
+							var _pair_2 = argument[1];
+							
+							x1 = _pair_1.x;
+							x2 = _pair_2.x;
+							y1 = _pair_1.y;
+							y2 = _pair_2.y;
+						}
+						else
+						{
+							//|Construction method: One number pair.
+							var _x = argument[0];
+							var _y = argument[1];
+							
+							x1 = _x;
+							x2 = _x;
+							y1 = _y;
+							y2 = _y;
+						}
+					break;
+					
+					case 4:
+						//|Construction method: Four values.
+						x1 = argument[0];
+						x2 = argument[1];
+						y1 = argument[2];
+						y2 = argument[3];
+					break;
+				}
 			}
 			
-			// @argument			{Vector4} other
-			// @description			Substract from values of the current Vector4 by other one's.
-			static substract = function(_other)
+		#endregion
+		#region <Setters>
+			
+			// @argument			{real|Vector4|Vector2} value
+			// @description			Add to the values of this Vector4 the specified value or the
+			//						values of other specified Vector4 or Vector2.
+			static add = function()
 			{
-				x1 -= _other.x1;
-				x2 -= _other.x2;
-				y1 -= _other.y1;
-				y2 -= _other.y2;
+				if (instanceof(argument[0]) == "Vector4")
+				{
+					var _other = argument[0];
+					
+					x1 += _other.x1;
+					x2 += _other.x2;
+					y1 += _other.y1;
+					y2 += _other.y2;
+				}
+				else if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x1 += _other.x;
+					x2 += _other.x;
+					y1 += _other.y;
+					y2 += _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x1 += _value;
+					x2 += _value;
+					y1 += _value;
+					y2 += _value;
+				}
 			}
 			
-			// @argument			{Vector4} other
-			// @description			Multiply values of the current Vector4 by other one's.
-			static multiply = function(_other)
+			// @argument			{real|Vector4|Vector2} value
+			// @description			Substract from the values of this Vector4 the specified value or 
+			//						the values of other specified Vector4 or Vector2.
+			static substract = function()
 			{
-				x1 *= _other.x1;
-				x2 *= _other.x2;
-				y1 *= _other.y1;
-				y2 *= _other.y2;
+				if (instanceof(argument[0]) == "Vector4")
+				{
+					var _other = argument[0];
+					
+					x1 -= _other.x1;
+					x2 -= _other.x2;
+					y1 -= _other.y1;
+					y2 -= _other.y2;
+				}
+				else if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x1 -= _other.x;
+					x2 -= _other.x;
+					y1 -= _other.y;
+					y2 -= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x1 -= _value;
+					x2 -= _value;
+					y1 -= _value;
+					y2 -= _value;
+				}
 			}
 			
-			// @argument			{Vector4} other
-			// @description			Divide values of the current Vector4 by other one's.
-			static divide = function(_other)
+			// @argument			{real|Vector4|Vector2} value
+			// @description			Multiply the values of this Vector4 the specified value or the 
+			//						values of other specified Vector4 or Vector2.
+			static multiply = function()
 			{
-				x1 /= _other.x1;
-				x2 /= _other.x2;
-				y1 /= _other.y1;
-				y2 /= _other.y2;
+				if (instanceof(argument[0]) == "Vector4")
+				{
+					var _other = argument[0];
+					
+					x1 *= _other.x1;
+					x2 *= _other.x2;
+					y1 *= _other.y1;
+					y2 *= _other.y2;
+				}
+				else if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x1 *= _other.x;
+					x2 *= _other.x;
+					y1 *= _other.y;
+					y2 *= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x1 *= _value;
+					x2 *= _value;
+					y1 *= _value;
+					y2 *= _value;
+				}
+			}
+			
+			// @argument			{real|Vector4|Vector2} value
+			// @description			Divide the values of this Vector4 the specified value or the 
+			//						values of other specified Vector4 or Vector2.
+			static divide = function()
+			{
+				if (instanceof(argument[0]) == "Vector4")
+				{
+					var _other = argument[0];
+					
+					x1 /= _other.x1;
+					x2 /= _other.x2;
+					y1 /= _other.y1;
+					y2 /= _other.y2;
+				}
+				else if (instanceof(argument[0]) == "Vector2")
+				{
+					var _other = argument[0];
+					
+					x1 /= _other.x;
+					x2 /= _other.x;
+					y1 /= _other.y;
+					y2 /= _other.y;
+				}
+				else
+				{
+					var _value = argument[0];
+					
+					x1 /= _value;
+					x2 /= _value;
+					y1 /= _value;
+					y2 /= _value;
+				}
 			}
 			
 			// @description			Swap the X and Y values of this Vector4.
@@ -77,42 +261,42 @@ function Vector4() constructor
 			
 			// @returns				{Vector2}
 			// @description			Return the middle point of this Vector4.
-			static middle = function()
+			static getMiddle = function()
 			{
 				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
 			}
 			
 			// @returns				{real}
 			// @description			Return the middle point between the x values of this Vector4.
-			static middle_x = function()
+			static getMiddle_x = function()
 			{
 				return lerp(x1, x2, 0.5);
 			}
 			
 			// @returns				{real}
 			// @description			Return the middle point between the y values of this Vector4.
-			static middle_y = function()
+			static getMiddle_y = function()
 			{
 				return lerp(y1, y2, 0.5);
 			}
 			
 			// @returns				{real}
 			// @description			Return the shortest distance between two points.
-			static distance = function()
+			static getDistance = function()
 			{
 				return point_distance(x1, y1, x2, y2);
 			}
 			
 			// @returns				{real}
 			// @description			Return the direction from the first point towards the second.
-			static angle_1to2 = function()
+			static getAngle_1to2 = function()
 			{
 				return point_direction(x1, y1, x2, y2);
 			}
 			
 			// @returns				{real}
 			// @description			Return the direction from the second point towards the first.
-			static angle_2to1 = function()
+			static getAngle_2to1 = function()
 			{
 				return point_direction(x2, y2, x1, y1);
 			}
@@ -139,25 +323,37 @@ function Vector4() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with a simple value output.
-			static toString = function()
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the output of X and then Y
+			//						values of this Vector4.
+			static toString = function(_multiline)
 			{
-				return (string(x1) + "-" + string(x2) + "/" + string(y1) + "-" + string(y2));
-			}
-			
-			// @returns				{string}
-			// @description			Create a multi-line string with value output.
-			static toFormattedString = function()
-			{
-				return 
-				("x1: " + string(x1) + "\n" +
-				 "x2: " + string(x2) + "\n" +
-				 "y1: " + string(y1) + "\n" +
-				 "y2: " + string(y2));
+				if (_multiline)
+				{
+					return ("x1: " + string(x1) + "\n" +
+							"x2: " + string(x2) + "\n" +
+							"y1: " + string(y1) + "\n" +
+							"y2: " + string(y2));
+				}
+				else
+				{
+					var _mark_separator = ", ";
+					
+					return (instanceof(self) + "(" +
+							"x1: " + string(x1) + _mark_separator +
+							"x2: " + string(x2) + _mark_separator +
+							"y1: " + string(y1) + _mark_separator +
+							"y2: " + string(y2) +
+							")");
+				}
 			}
 			
 			// @returns				{real[]}
 			// @description			Return an array containing all values of the Vector.
+			//						The X values will be set to the first and second positions of 
+			//						that array, the Y value will be set to the third and fourth 
+			//						positions of that array.
 			static toArray = function()
 			{
 				return [x1, x2, y1, y2];
@@ -166,54 +362,36 @@ function Vector4() constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-	
-		switch(argument_count)
+		
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
 		{
-			case 4:
-				x1 = argument[0];
-				x2 = argument[1];
-				y1 = argument[2];
-				y2 = argument[3];
-			break;
+			argument_original[_i] = argument[_i];
 			
-			case 2:
-				x1 = argument[0].x;
-				x2 = argument[1].x;
-				y1 = argument[0].y;
-				y2 = argument[1].y;
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
 			break;
 			
 			case 1:
-				if (is_array(argument[0]))
-				{
-					var array = argument[0];
-			
-					x1 = array[0];
-					x2 = array[1];
-					y1 = array[2];
-					y2 = array[3];
-				}
-				else if (instanceof(argument[0]) == "Vector4")
-				{
-					x1 = argument[0].x1;
-					x2 = argument[0].x2;
-					y1 = argument[0].y1;
-					y2 = argument[0].y2;
-				}
-				else
-				{
-					x1 = argument[0];
-					x2 = argument[0];
-					y1 = argument[0];
-					y2 = argument[0];
-				}
+				self.construct(argument_original[0]);
 			break;
 			
-			case 0:
-				x1 = 0;
-				x2 = 0;
-				y1 = 0;
-				y1 = 0;
+			case 2:
+				self.construct(argument_original[0], argument_original[1]);
+			break;
+			
+			case 4:
+			default:
+				self.construct(argument_original[0], argument_original[1], argument_original[2],
+							   argument_original[3]);
 			break;
 		}
 		

@@ -19,10 +19,10 @@
 ///							- One color for all values: {color} color
 ///							- Color2 + Color + Color: {Color2} other, {Color|color} color, 
 ///													  {color} color
-///							  In any order - it will be reflected in the values of this constructor.
+///							   In any order; it will be reflected in the values of this constructor.
 ///							- Color2 + Color2: {Color2} color2_1, {Color2} color2_2
 ///							- Color3 + Color: {Color2} other, {color} color
-///							  In any order - it will be reflected in the values of this constructor.
+///							   In any order; it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color4} other
 function Color4() constructor
 {
@@ -40,7 +40,7 @@ function Color4() constructor
 				switch (argument_count)
 				{
 					case 1:
-						if (instanceof(argument[0] == "Color4"))
+						if (instanceof(argument[0]) == "Color4")
 						{
 							//|Construction method: Constructor copy.
 							var _other = argument[0];
@@ -157,6 +157,7 @@ function Color4() constructor
 		#region <Conversion>
 			
 			// @argument			{bool} useHSV?
+			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as a color name or value for each 
@@ -206,8 +207,9 @@ function Color4() constructor
 							{
 								_string_color = 
 								("(" +
-								 "Hue: " + string(color_get_hue(_colors[_i])) + ", " +
-								 "Saturation: " + string(color_get_saturation(_colors[_i])) + ", " +
+								 "Hue: " + string(color_get_hue(_colors[_i])) + _mark_separator +
+								 "Saturation: " + string(color_get_saturation(_colors[_i])) + 
+												_mark_separator +
 								 "Value: " + string(color_get_value(_colors[_i])) +
 								 ")");
 							}
@@ -215,8 +217,8 @@ function Color4() constructor
 							{
 								_string_color = 
 								("(" +
-								 "Red: " + string(color_get_red(_colors[_i])) + ", " +
-								 "Green: " + string(color_get_green(_colors[_i])) + ", " +
+								 "Red: " + string(color_get_red(_colors[_i])) + _mark_separator +
+								 "Green: " + string(color_get_green(_colors[_i])) + _mark_separator +
 								 "Blue: " + string(color_get_blue(_colors[_i])) +
 								 ")");
 							}
@@ -273,7 +275,7 @@ function Color4() constructor
 			
 			case 4:
 			default:
-				self.construct(argument_original[0], argument_original[1], argument_original[2].
+				self.construct(argument_original[0], argument_original[1], argument_original[2],
 							   argument_original[3]);
 			break;
 		}

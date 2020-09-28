@@ -1,23 +1,78 @@
 /// @function				TextAlign()
-/// @argument				{halign} x?
-/// @argument				{valign} y?
+/// @argument				{constant:fa_[halign]} x?
+/// @argument				{constant:fa_[valign]} y?
 ///
-/// @description			Constructs a two-value Text Align container, ready
-///							to be used with text draw-related code, as well as
-///							manipulated using its own functions.
-function TextAlign(_x, _y) constructor
+/// @description			Constructs a container for two Text Align contants, intended for use along
+///							text drawing functions.
+///
+///							Construction methods:
+///							- New constructor
+///							   The unspecified values will be set to default, which are: 
+///							   Left for horizontal align.
+///							   Top for vertical align.
+///							- Constructor copy: {TextAlign} other
+function TextAlign() constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{
+				if ((argument_count > 0) and (instanceof(argument[0]) == "TextAlign"))
+				{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					x = _other.x;
+					y = _other.y;
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					x = ((argument_count > 0) and (argument[0] != undefined) ? argument[0] : fa_left);
+					y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1] : fa_top);
+				}
+			}
+			
+		#endregion
 		#region <Setters>
 			
-			// @description			Set the properites using x/y-separated functions.
-			static x_setLeft   = function() {x = fa_left;}
-			static x_setCenter = function() {x = fa_center;}
-			static x_setRight  = function() {x = fa_right;}
+			// @description			Set the origin of horizontal align to the left of the text.
+			static setX_left = function()
+			{
+				x = fa_left;
+			}
 			
-			static y_setTop    = function() {y = fa_top;}
-			static y_setMiddle = function() {y = fa_middle;}
-			static y_setBottom = function() {y = fa_bottom;}
+			// @description			Set the origin of horizontal align to the center of the text.
+			static setX_center = function()
+			{
+				x = fa_center;
+			}
+			
+			// @description			Set the origin of horizontal align to the right of the text.
+			static setX_right = function()
+			{
+				x = fa_right;
+			}
+			
+			// @description			Set the origin of vertical align to the top of the text.
+			static setY_top = function()
+			{
+				x = fa_top;
+			}
+			
+			// @description			Set the origin of vertical align to the middle of the text.
+			static setY_middle = function()
+			{
+				x = fa_middle;
+			}
+			
+			// @description			Set the origin of vertical align to the bottom of the text.
+			static setY_bottom = function()
+			{
+				x = fa_bottom;
+			}
 			
 			// @description			Mirror the non-centered x value of the align.
 			static mirror_x = function()
@@ -50,44 +105,68 @@ function TextAlign(_x, _y) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Return the x value as a readable string.
-			static toString_x = function()
-			{
-				switch (x)
-				{
-					case fa_left:	return "left";   break;
-					case fa_center: return "center"; break;
-					case fa_right:	return "right";	 break;
-					default:		return "ERROR!"; break;
-				}
-			}
-			
-			// @returns				{string}
-			// @description			Return the y value as a readable string.
-			static toString_y = function()
-			{
-				switch (y)
-				{
-					case fa_top:	return "top";	 break;
-					case fa_middle: return "middle"; break;
-					case fa_bottom: return "bottom"; break;
-					default:		return "ERROR!"; break;
-				}
-			}
-			
-			// @returns				{string}
-			// @description			Overrides the string conversion with a value output.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the text equivalent of 
+			//						the align constants.
 			static toString = function()
 			{
-				return (self.toString_x() + "/" + self.toString_y());
+				var _string_x, _string_y;
+				var _mark_separator = ", ";
+				
+				switch (x)
+				{
+					case fa_left:	_string_x = "Left";   break;
+					case fa_center: _string_x = "Center"; break;
+					case fa_right:	_string_x = "Right";  break;
+					default:		_string_x = "ERROR!"; break;
+				}
+				
+				switch (y)
+				{
+					case fa_top:	_string_y = "Top";	  break;
+					case fa_middle: _string_y = "Middle"; break;
+					case fa_bottom: _string_y = "Bottom"; break;
+					default:		_string_y = "ERROR!"; break;
+				}
+				
+				return (instanceof(self) + 
+						"(" +
+						"x: " + _string_x + _mark_separator +
+						"y: " + _string_y +
+						")");
 			}
 			
 		#endregion
 	#endregion
 	#region [Constructor]
 		
-		x = ((_x != undefined) ? _x : fa_left);
-		y = ((_y != undefined) ? _y : fa_top);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+				self.construct(argument_original[0]);
+			break;
+			
+			case 2:
+			default:
+				self.construct(argument_original[0], argument_original[1]);
+			break;
+		}
 		
 	#endregion
 }

@@ -3,16 +3,32 @@
 /// @argument				{real} maximum
 ///
 /// @description			Construct a container for two-value numeric Range with different numbers.
-function Range(_minimum, _maximum) constructor
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {Range} other
+function Range() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_minimum, _maximum)
+			static construct = function()
 			{
-				minimum = _minimum;
-				maximum = _maximum;
+				if (instanceof(argument[0]) == "Range")
+				{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					minimum = _other.minimum;
+					maximum = _other.maximum;
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					minimum = argument[0];
+					maximum = argument[1];
+				}
 			}
 			
 		#endregion
@@ -79,7 +95,10 @@ function Range(_minimum, _maximum) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with a simple value output.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the Range information in the
+			//						following format: minimum-maximum.
 			static toString = function()
 			{
 				return (instanceof(self) + "(" + string(minimum) + "-" + string(maximum) + ")");
@@ -89,9 +108,28 @@ function Range(_minimum, _maximum) constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = [argument[0], argument[1]];
+		argument_original = array_create(argument_count, undefined);
 		
-		self.construct(argument_original[0], argument_original[1]);
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 1:
+				self.construct(argument_original[0]);
+			break;
+			
+			case 2:
+			default:
+				self.construct(argument_original[0], argument_original[1]);
+			break;
+		}
 		
 	#endregion
 }

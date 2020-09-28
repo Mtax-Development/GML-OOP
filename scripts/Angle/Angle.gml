@@ -2,19 +2,35 @@
 /// @argument				{real} value?
 ///
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
+///
+///							Construction methods:
+///							- New angle: {int} value
+///							- Default (0) angle value: {void}
+///							- Constructor copy: {Angle} other
 function Angle(_value) constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_value)
+			static construct = function()
 			{
-				value = 0;
-				
-				if ((_value != undefined) and (_value != 0))
+				if (instanceof(argument[0]) == "Angle")
 				{
-					self.modify(_value);
+					var _other = argument[0];
+					
+					value = _other.value;
+				}
+				else
+				{
+					var _value = ((argument_count > 0) ? argument[0] : undefined);
+					
+					value = 0;
+					
+					if ((_value != undefined) and (_value != 0))
+					{
+						self.modify(_value);
+					}
 				}
 			}
 			
@@ -27,7 +43,7 @@ function Angle(_value) constructor
 			static difference = function(_other)
 			{
 				result = (max(value, _other.value) - min(value, _other.value));
-
+				
 				if (180 < result) 
 				{
 					result = (360 - result);
@@ -40,7 +56,7 @@ function Angle(_value) constructor
 		#region <Setters>
 			
 			// @argument			{real} value
-			// @description			Change the value of the Angle and wrap it.
+			// @description			Change the value of this Angle and wrap it.
 			static modify = function(_value)
             {
                 value += _value;
@@ -52,6 +68,7 @@ function Angle(_value) constructor
 			
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented as the value of this Angle.
 			static toString = function()
 			{
 				return (instanceof(self) + "(" + string(value) + ")");
@@ -61,7 +78,7 @@ function Angle(_value) constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = array_create(argument_count, undefined)
+		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
 		
@@ -78,6 +95,7 @@ function Angle(_value) constructor
 				self.construct();
 			break;
 			
+			case 1:
 			default:
 				self.construct(argument_original[0]);
 			break;
