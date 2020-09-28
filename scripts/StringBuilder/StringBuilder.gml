@@ -1,7 +1,12 @@
 /// @function				StringBuilder()
 /// @argument				{any} text?
 ///
-/// @description			Constructs a String Builder Operator, assisting in string processing.
+/// @description			Constructs a Parser for building Strings.
+///
+///							Construction methods:
+///							- New constructor
+///							   If the String is not provided, an empty String will be created.
+///							- Constructor copy: {StringBuilder} other
 function StringBuilder() constructor
 {
 	#region [Methods]
@@ -10,13 +15,25 @@ function StringBuilder() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (argument_count <= 0)
+				switch (argument_count)
 				{
-					ID = "";	
-				}
-				else
-				{
-					ID = string(argument[0]);
+					case 0:
+						ID = "";
+					break;
+					
+					case 1:
+					default:
+						if (instanceof(argument[0]) == "StringBuilder")
+						{
+							var _other = argument[0];
+							
+							ID = _other.ID;
+						}
+						else
+						{
+							ID = string(argument[0]);
+						}
+					break;
 				}
 			}
 			
@@ -123,8 +140,8 @@ function StringBuilder() constructor
 			//						string.
 			static getSubstringPosition = function(_substring, _startFromEnd, _startPosition)
 			{
-				var _result = undefined;
 				var _string = string(ID);
+				var _result = undefined;
 				
 				if (_startFromEnd)
 				{
@@ -145,14 +162,17 @@ function StringBuilder() constructor
 			// @argument			{Font|font} font?
 			// @argument			{int} separation>
 			// @argument			{int} width?
-			// @returns				{int}
-			// @description			Return the width in pixels of how much this string would occupy
-			//						when drawn with the current or defined font, possibly also
-			//						counting the limitations of width before forced line-break 
-			//						and separation upon it.
-			static getSize_x = function(_font, _separation, _width)
+			// @returns				{Vector2}
+			// @description			Return the number of pixels this String would occupy by applying
+			//						either the specified or currently set Font.
+			//						The specified limitations of width before forced line-break and 
+			//						separation between lines of text can be also taken into the
+			//						account.
+			static getPixelSize = function(_font, _separation, _width)
 			{
-				if ((_font != undefined) and (_font != draw_get_font()))
+				var _string = string(ID);
+				
+				if ((_font != undefined))
 				{
 					if (instanceof(_font) == "Font")
 					{
@@ -169,52 +189,15 @@ function StringBuilder() constructor
 						}
 					}
 				}
-
+				
 				if ((_separation != undefined) and (_width != undefined))
 				{
-					return string_width_ext(string(ID), _separation, _width);
+					return new Vector2(string_width_ext(_string, _separation, _width),
+									   string_height_ext(_string, _separation, _width));
 				}
 				else
 				{
-					return string_width(string(ID));
-				}
-			}
-			
-			// @argument			{Font|font} font?
-			// @argument			{int} separation>
-			// @argument			{int} width?
-			// @returns				{int}
-			// @description			Return the height in pixels of how much this string would occupy
-			//						when drawn with the current or defined font, possibly also
-			//						counting the limitations of width before forced line-break 
-			//						and separation upon it.
-			static getSize_y = function(_font, _separation, _width)
-			{
-				if ((_font != undefined) and (_font != draw_get_font()))
-				{
-					if (instanceof(_font) == "Font")
-					{
-						if (font_exists(_font.ID))
-						{
-							draw_set_font(_font.ID);
-						}
-					}
-					else
-					{
-						if (font_exists(_font))
-						{
-							draw_set_font(_font);
-						}
-					}
-				}
-
-				if (_separation != undefined) and (_width != undefined)
-				{
-					return string_height_ext(string(ID), _separation, _width);
-				}
-				else
-				{
-					return string_height(string(ID));
+					return new Vector2(string_width(_string), string_height(_string));
 				}
 			}
 			
@@ -228,6 +211,7 @@ function StringBuilder() constructor
 			static setByte = function(_position, _byte)
 			{
 				var _string = string(ID);
+				
 				_position = clamp(_position, 1, (string_length(_string) + 1));
 				
 				ID = string_set_byte_at(_string, _position, _byte);
@@ -243,6 +227,7 @@ function StringBuilder() constructor
 			static deletePart = function(_position, _number)
 			{
 				var _string = string(ID);
+				
 				_position = clamp(_position, 1, (string_length(_string) + 1));
 				
 				ID = string_delete(_string, _position, _number);
@@ -324,6 +309,7 @@ function StringBuilder() constructor
 			static replace = function(_toReplace, _replaceBy, _number)
 			{
 				ID = string(ID);
+				
 				_toReplace = string(_toReplace);
 				_replaceBy = string(_replaceBy);
 				
@@ -363,13 +349,14 @@ function StringBuilder() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Display this string in the standard output of the program.
+			// @description			Display this String in the output of the application.
 			static display_output = function()
 			{
 				show_debug_message(ID);
 			}
 			
-			// @description			Display this string in the message box handled by the system.
+			// @description			Pause the execution of the application to display this String in 
+			//						the message box handled by the build target if it supports it.
 			static display_messageBox = function()
 			{
 				show_message(ID);
@@ -379,15 +366,11 @@ function StringBuilder() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with the content.
+			// @description			Create a string representing the constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the String held by this 
+			//						constructor.
 			static toString = function()
-			{
-				return string(ID);
-			}
-			
-			// @returns				{string}
-			// @description			Return a string with constructor name and its main content.
-			static toString_full = function()
 			{
 				return (instanceof(self) + "(" + string(ID) + ")");
 			}
@@ -396,15 +379,27 @@ function StringBuilder() constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = [argument[0]];
+		argument_original = array_create(argument_count, undefined);
 		
-		if (argument_count <= 0)
+		var _i = 0;
+		
+		repeat (argument_count)
 		{
-			self.construct();
+			argument_original[_i] = argument[_i];
+			
+			++_i;
 		}
-		else
+		
+		switch (argument_count)
 		{
-			self.construct(argument_original[0]);
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
 		}
 		
 	#endregion
