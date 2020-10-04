@@ -3,6 +3,10 @@
 /// @description			Constructs a List Data Structure, which stores data in a linear
 ///							model, offering flexibility while doing so. It easily resized,
 ///							sorted and manipulated in other ways.
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {List} other
 function List() constructor
 {
 	#region [Methods]
@@ -11,8 +15,20 @@ function List() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: New constructor.
 				ID = ds_list_create();
-				ds_list_clear(ID);
+					 ds_list_clear(ID);
+				
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "List")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ds_list_copy(ID, _other.ID);
+					}
+				}
 			}
 			
 			// @argument			{bool} deepScan?
@@ -552,7 +568,28 @@ function List() constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }

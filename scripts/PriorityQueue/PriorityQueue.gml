@@ -2,6 +2,10 @@
 ///
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
 ///							a linear model that orders the values based on their priority.
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {PriorityQueue} other
 function PriorityQueue() constructor
 {
 	#region [Methods]
@@ -11,6 +15,17 @@ function PriorityQueue() constructor
 			static construct = function()
 			{
 				ID = ds_priority_create();
+				
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "PriorityQueue")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ds_priority_copy(ID, _other.ID);
+					}
+				}
 			}
 			
 			// @argument			{bool} deepScan?
@@ -523,7 +538,28 @@ function PriorityQueue() constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }

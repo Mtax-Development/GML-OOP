@@ -4,6 +4,10 @@
 ///							and value pairs. The data inside of it is not sorted and values
 ///							are accessed either by providing a specific existing key or by
 ///							iterating through the entire Data Structure.
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {Map} other
 function Map() constructor
 {
 	#region [Methods]
@@ -12,7 +16,19 @@ function Map() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: New constructor.
 				ID = ds_map_create();
+				
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "Map")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ds_map_copy(ID, _other.ID);
+					}
+				}
 			}
 			
 			// @argument			{bool} deepScan?
@@ -769,7 +785,28 @@ function Map() constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }

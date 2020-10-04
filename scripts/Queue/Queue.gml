@@ -2,6 +2,10 @@
 ///
 /// @description			Constructs a Queue Data Structure, which stores data in a linear,
 ///							first-in-first-out (FIFO) model that disallows order manipulation.
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {Queue} other
 function Queue() constructor
 {
 	#region [Methods]
@@ -11,6 +15,17 @@ function Queue() constructor
 			static construct = function()
 			{
 				ID = ds_queue_create();
+				
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "Queue")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ds_queue_copy(ID, _other.ID);
+					}
+				}
 			}
 			
 			// @argument			{bool} deepScan?
@@ -484,7 +499,28 @@ function Queue() constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }

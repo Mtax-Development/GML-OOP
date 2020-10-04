@@ -1,26 +1,50 @@
 /// @function				Grid()
-///
 /// @argument				{int} width
 /// @argument				{int} height
+///
 /// @description			Constructs a Grid Data Structure, which stores data in a model similar to
 ///							the one used by 2D array. Each value is stored in its own cell and they
 ///							can be read or modified invidually or by handling multiple cells at once
 ///							in a region or disk of the Grid.
-function Grid(_width, _height) constructor
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {Grid} other
+function Grid() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_width, _height)
+			static construct = function()
 			{
-				if ((_width > 0) and (_height > 0))
+				ID = undefined;
+				
+				switch (argument_count)
 				{
-					ID = ds_grid_create(_width, _height);
-				}
-				else
-				{
-					ID = undefined;
+					case 1:
+						if (instanceof(argument[0]) == "Grid")
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							var _size = _other.getSize();
+							
+							ID = ds_grid_create(_size.x, _size.y);
+							
+							ds_grid_copy(ID, _other.ID);
+						}
+					break;
+					
+					case 2:
+						//|Construction method: New constructor.
+						var _width = argument[0];
+						var _height = argument[1];
+						
+						if ((_width > 0) and (_height > 0))
+						{
+							ID = ds_grid_create(_width, _height);
+						}
+					break;
 				}
 			}
 			
@@ -761,7 +785,6 @@ function Grid(_width, _height) constructor
 						else
 						{
 							//|Cut strings and add cut or separation marks if appriopate.
-							
 							if (_elementLength != all)
 							{
 								var _string_length = string_length(_string);
@@ -792,8 +815,9 @@ function Grid(_width, _height) constructor
 								}
 								else
 								{
-									//|If the current element is last, cut it if it would be too long,
-									// but expand the length check by the length of the cut mark.
+									//|If the current element is last, cut it if it would be too 
+									// long, but expand the length check by the length of the cut 
+									// mark.
 									if (_string_length >= _string_lengthLimit_cut)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -991,19 +1015,29 @@ function Grid(_width, _height) constructor
 		#endregion
 	#endregion
 	#region [Constructor]
-	
-		originalArguments = array_create(argument_count, undefined);
+		
+		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
 		
 		repeat (argument_count)
 		{
-			originalArguments[_i] = argument[_i];
-			
+			argument_original[_i] = argument[_i];
+		
 			++_i;
 		}
 		
-		self.construct(_width, _height);
+		switch (argument_count)
+		{
+			case 1: 
+				self.construct(argument_original[0]); 
+			break;
+			
+			case 2:
+			default:
+				self.construct(argument_original[0], argument_original[1]);
+			break;
+		}
 		
 	#endregion
 }

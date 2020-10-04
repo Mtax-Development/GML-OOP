@@ -2,6 +2,10 @@
 ///
 /// @description			Constructs a Stack Data Structure, which stores data in a linear,
 ///							last-in-first-out (LIFO) model that disallows order manipulation.
+///
+///							Construction methods:
+///							- New constructor
+///							- Constructor copy: {Stack} other
 function Stack() constructor
 {
 	#region [Methods]
@@ -11,6 +15,17 @@ function Stack() constructor
 			static construct = function()
 			{
 				ID = ds_stack_create();
+				
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "Stack")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ds_stack_copy(ID, _other.ID);
+					}
+				}
 			}
 			
 			// @argument			{bool} deepScan?
@@ -474,7 +489,28 @@ function Stack() constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct();
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		switch (argument_count)
+		{
+			case 0:
+				self.construct();
+			break;
+			
+			case 1:
+			default:
+				self.construct(argument_original[0]);
+			break;
+		}
 		
 	#endregion
 }
