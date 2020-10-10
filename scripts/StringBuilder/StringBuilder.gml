@@ -201,11 +201,88 @@ function StringBuilder() constructor
 				}
 			}
 			
+			// @argument			{int} position
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if the character at the specified position has the
+			//						whitespace property.
+			static charIsWhitespace = function(_position)
+			{
+				var _string = string(ID);
+				
+				var _string_length = string_length(_string);
+				
+				if ((_string_length <= 0) or (_position > _string_length))
+				{
+					return undefined;
+				}
+				
+				var _char = string_char_at(_string, _position);
+				
+				var _whitespaceChars = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
+									    "\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
+									    "\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
+									    "\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
+									    "\u3000"];
+				
+				var _i = 0;
+				repeat (array_length(_whitespaceChars))
+				{
+					if ((_whitespaceChars[_i] == _char))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
+			// @argument			{int} position
+			// @argument			{char|char[]} other
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if the characer at the specified position is the same
+			//						as the specified char or is contained in an array of them.
+			static charEquals = function(_position, _other)
+			{
+				var _string = string(ID);
+				
+				var _string_length = string_length(_string);
+				
+				if (_string_length <= 0) or (_position > _string_length)
+				{
+					return undefined;
+				}
+				
+				var _char = string_char_at(_string, _position);
+				
+				if (is_array(_other))
+				{
+					var _i = 0;
+					repeat (array_length(_other))
+					{
+						if (_char == _other[_i])
+						{
+							return true;
+						}
+						
+						++_i;
+					}
+					
+					return false;
+				}
+				else
+				{
+					return (_char == _other);
+				}
+			}
+			
 		#endregion
 		#region <Setters>
 			
 			// @argument			{int} position
 			// @argument			{int} byte
+			// @returns				{string}
 			// @description			Replace the selected character by other one, specified 
 			//						by UTF-8 byte value.
 			static setByte = function(_position, _byte)
@@ -221,6 +298,7 @@ function StringBuilder() constructor
 			
 			// @argument			{int} position
 			// @argument			{int} number
+			// @returns				{string}
 			// @description			Delete a part of the string, starting from the character
 			//						at the specified position and continuing right by the 
 			//						specified number of characters or its end.
@@ -239,6 +317,7 @@ function StringBuilder() constructor
 			// @argument			{int} wholeNumberPlaces
 			// @argument			{int} decimalPlaces
 			// @argument			{bool} replace?
+			// @returns				{string}
 			// @description			Add to this string or replace it with a number that has a 
 			//						specified formatting for number of displayed places of
 			//						whole numbers and decimal places.
@@ -262,6 +341,7 @@ function StringBuilder() constructor
 			
 			// @argument			{any} substring
 			// @argument			{int} position
+			// @returns				{string}
 			// @description			Insert a specified substring to the left of the specified 
 			//						character.
 			static insert = function(_substring, _position)
@@ -273,6 +353,7 @@ function StringBuilder() constructor
 			
 			// @argument			{int} number
 			// @argument			{any} separator?
+			// @returns				{string}
 			// @description			Add the specified number of copies of this string to itself,
 			//						either as it is or with added separator before the copy.
 			static duplicate = function(_number)
@@ -303,6 +384,7 @@ function StringBuilder() constructor
 			// @argument			{any} toReplace
 			// @argument			{any} replaceBy
 			// @argument			{int} number
+			// @returns				{string}
 			// @description			Replace the specified parts of this string with another specified
 			//						substring, either in all cases or the specified number of them
 			//						that are searched for from left to right.
@@ -323,6 +405,74 @@ function StringBuilder() constructor
 					{
 						ID = string_replace(ID, _toReplace, _replaceBy);
 					}
+				}
+				
+				return ID;
+			}
+			
+			// @argument			{char|char[]} charsToTrim?
+			// @returns				{string}
+			//						Remove the specified characters from the start and the end of this
+			//						until a different character is detected. If no characters are
+			//						specified, whitespace will be removed instead.
+			static trim = function()
+			{
+				ID = string(ID);
+				
+				var _string_length = string_length(ID);
+				
+				var __charCheck = self.charIsWhitespace;
+				var _charsToTrim = undefined;
+				
+				if ((argument_count > 0) and (argument[0] != undefined))
+				{
+					_charsToTrim = argument[0];
+					__charCheck = self.charEquals;
+				}
+
+				var _string_new_start = 0;
+				var _string_new_end = _string_length;
+					
+				var _start_set = false;
+				var _end_set = false;
+					
+				var _i = 1;
+				repeat (_string_length)
+				{
+					var _i_backwards = ((_string_length + 1) - _i);
+						
+					if (_i == _i_backwards)
+					{
+						var _char = string_char_at(ID, _i);
+						
+						ID = ((__charCheck(_i, _charsToTrim)) ? "" : _char);
+						
+						return ID;
+					}
+					else
+					{
+						if (!_start_set) and (!__charCheck(_i, _charsToTrim))
+						{
+							_string_new_start = _i;
+							_start_set = true;
+						}
+						
+						if (!_end_set) and (!__charCheck(_i_backwards, _charsToTrim))
+						{
+							_string_new_end = (_i_backwards + 1);
+							_end_set = true;
+						}
+						
+						if ((_start_set) and (_end_set))
+						{
+							ID = string_copy(ID, _string_new_start, 
+												(_string_new_end - _string_new_start));
+							
+							return ID;
+						}
+					}
+					
+					++_i;
 				}
 				
 				return ID;
