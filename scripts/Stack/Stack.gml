@@ -14,17 +14,15 @@ function Stack() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: New constructor.
 				ID = ds_stack_create();
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Stack"))
 				{
-					if (instanceof(argument[0]) == "Stack")
-					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-						
-						ds_stack_copy(ID, _other.ID);
-					}
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ds_stack_copy(ID, _other.ID);
 				}
 			}
 			

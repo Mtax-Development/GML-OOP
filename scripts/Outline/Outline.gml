@@ -8,7 +8,7 @@
 ///
 ///							Construction methods:
 ///							- New constructor
-///							- Construction copy: {Outline} other
+///							- Constructor copy: {Outline} other
 function Outline() constructor
 {
 	#region [Methods]
@@ -16,8 +16,9 @@ function Outline() constructor
 			
 			static construct = function()
 			{
-				if (instanceof(argument[0]) == "Outline")
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Outline"))
 				{
+					//|Construction method: Constructor copy.
 					var _other = argument[0];
 				
 					size = _other.size;
@@ -27,14 +28,15 @@ function Outline() constructor
 				}
 				else
 				{
-					size = (((argument_count > 0) and (argument[0] != undefined)) ?
-							argument[0] : 1);
-					color = (((argument_count > 1) and (argument[1] != undefined)) ?
-							argument[1] : c_white);
-					alpha = (((argument_count > 2) and (argument[2] != undefined)) ?
-							argument[2] : 1);
-					spacing = (((argument_count > 3) and (argument[3] != undefined)) ?
-							argument[3] : 0);
+					//|Construction method: New constructor.
+					size = (((argument_count > 0) and (argument[0] != undefined)) ? argument[0]
+																				  : 1);
+					color = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
+																				   : c_white);
+					alpha = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
+																				   : 1);
+					spacing = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3]
+																					 : 0);
 				}
 			}
 			

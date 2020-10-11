@@ -5,7 +5,8 @@
 ///
 ///							Construction methods:
 ///							- Wrapper: {datetime} datetime
-///							- No value (unusable): {void|undefined}
+///							- Empty: {void|undefined}
+///							   The constructor will be unusable in this state.
 ///							- Constructor copy: {DateTime} other
 function DateTime(_value) constructor
 {
@@ -17,14 +18,16 @@ function DateTime(_value) constructor
 			{
 				if (instanceof(_value) == "DateTime")
 				{
+					//|Construction method: Constructor copy.
 					ID = _value.ID;
 				}
 				else
 				{
 					ID = _value;
-				
+					
 					if (ID != undefined)
 					{
+						//|Construction method: Wrapper.
 						year = date_get_year(ID);
 						month = date_get_month(ID);
 						day = date_get_day(ID);
@@ -34,6 +37,7 @@ function DateTime(_value) constructor
 					}
 					else
 					{
+						//|Construction method: Empty.
 						year = undefined;
 						month = undefined;
 						week = undefined;

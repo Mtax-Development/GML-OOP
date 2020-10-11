@@ -15,25 +15,17 @@ function StringBuilder() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				switch (argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "StringBuilder"))
 				{
-					case 0:
-						ID = "";
-					break;
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
 					
-					case 1:
-					default:
-						if (instanceof(argument[0]) == "StringBuilder")
-						{
-							var _other = argument[0];
-							
-							ID = _other.ID;
-						}
-						else
-						{
-							ID = string(argument[0]);
-						}
-					break;
+					ID = _other.ID;
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					ID = ((argument_count > 0) ? string(argument[0]) : "");
 				}
 			}
 			

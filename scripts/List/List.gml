@@ -17,17 +17,15 @@ function List() constructor
 			{
 				//|Construction method: New constructor.
 				ID = ds_list_create();
-					 ds_list_clear(ID);
 				
-				if (argument_count > 0)
+				ds_list_clear(ID);
+				
+				if ((argument_count > 0) and (instanceof(argument[0]) == "List"))
 				{
-					if (instanceof(argument[0]) == "List")
-					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-						
-						ds_list_copy(ID, _other.ID);
-					}
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ds_list_copy(ID, _other.ID);
 				}
 			}
 			

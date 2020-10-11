@@ -15,7 +15,7 @@ function Range() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (instanceof(argument[0]) == "Range")
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Range"))
 				{
 					//|Construction method: Constructor copy.
 					var _other = argument[0];

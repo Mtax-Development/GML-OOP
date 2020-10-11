@@ -14,17 +14,15 @@ function Queue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: New constructor.
 				ID = ds_queue_create();
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Queue"))
 				{
-					if (instanceof(argument[0]) == "Queue")
-					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-						
-						ds_queue_copy(ID, _other.ID);
-					}
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ds_queue_copy(ID, _other.ID);
 				}
 			}
 			

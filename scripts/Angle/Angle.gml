@@ -5,7 +5,7 @@
 ///
 ///							Construction methods:
 ///							- New angle: {int} value
-///							- Default (0) angle value: {void}
+///							- Default (0) Angle value: {void}
 ///							- Constructor copy: {Angle} other
 function Angle(_value) constructor
 {
@@ -15,8 +15,9 @@ function Angle(_value) constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (instanceof(argument[0]) == "Angle")
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Angle"))
 				{
+					//|Construction method: Constructor copy.
 					var _other = argument[0];
 					
 					value = _other.value;
@@ -25,6 +26,7 @@ function Angle(_value) constructor
 				{
 					var _value = ((argument_count > 0) ? argument[0] : undefined);
 					
+					//|Construction method: Default (0) Angle value
 					value = 0;
 					
 					if ((_value != undefined) and (_value != 0))
@@ -97,7 +99,7 @@ function Angle(_value) constructor
 			
 			case 1:
 			default:
-				self.construct(argument_original[0]);
+				self.construct(argument_original[0]); 
 			break;
 		}
 		

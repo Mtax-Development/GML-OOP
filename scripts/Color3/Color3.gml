@@ -10,7 +10,7 @@
 ///							- Default (white) for all values: {void}
 ///							- One color for all values: {color} color
 ///							- Color2 + Color: {Color2} other, {color} color 
-///							   In any order; it will be reflected in the values of this constructor.
+///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color3} other
 
 function Color3() constructor
@@ -20,61 +20,61 @@ function Color3() constructor
 			
 			static construct = function()
 			{
-				//|Construction method: Default (white) for all values.
-				color1 = c_white;
-				color2 = c_white;
-				color3 = c_white;
-				
-				switch (argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Color3"))
 				{
-					case 1:
-						if (instanceof(argument[0]) == "Color3")
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							
-							color1 = _other.color1;
-							color2 = _other.color2;
-							color3 = _other.color3;
-						}
-						else
-						{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					color1 = _other.color1;
+					color2 = _other.color2;
+					color3 = _other.color3;
+				}
+				else
+				{
+					//|Construction method: Default (white) for all values.
+					color1 = c_white;
+					color2 = c_white;
+					color3 = c_white;
+					
+					switch (argument_count)
+					{
+						case 1:
 							//|Construction method: One color for all values.
 							var _color = argument[0];
 							
 							color1 = _color;
 							color2 = _color;
 							color3 = _color;
-						}
-					break;
+						break;
 					
-					case 2:
-						//|Construction method: Color2 + Color.
-						if (instanceof(argument[0]) == "Color2")
-						{
-							var _other = argument[0];
-							var _color = argument[1];
-							
-							color1 = _other.color1;
-							color2 = _other.color2;
-							color3 = _color;
-						}
-						else if (instanceof(argument[1]) == "Color2")
-						{
-							var _color = argument[0];
-							var _other = argument[1];
-							
-							color1 = _color;
-							color2 = _other.color1;
-							color3 = _other.color2;
-						}
-					break;
+						case 2:
+							//|Construction method: Color2 + Color.
+							if (instanceof(argument[0]) == "Color2")
+							{
+								var _other = argument[0];
+								var _color = argument[1];
+								
+								color1 = _other.color1;
+								color2 = _other.color2;
+								color3 = _color;
+							}
+							else if (instanceof(argument[1]) == "Color2")
+							{
+								var _color = argument[0];
+								var _other = argument[1];
+								
+								color1 = _color;
+								color2 = _other.color1;
+								color3 = _other.color2;
+							}
+						break;
 					
-					case 3:
-						color1 = argument[0];
-						color2 = argument[1];
-						color3 = argument[2];
-					break;
+						case 3:
+							color1 = argument[0];
+							color2 = argument[1];
+							color3 = argument[2];
+						break;
+					}
 				}
 			}
 			
@@ -170,26 +170,26 @@ function Color3() constructor
 	#region [Constructor]
 		
 		argument_original = array_create(argument_count, undefined);
-	
+		
 		var _i = 0;
-	
+		
 		repeat (argument_count)
 		{
 			argument_original[_i] = argument[_i];
 		
 			++_i;
 		}
-	
+		
 		switch (argument_count)
 		{
 			case 0: 
 				self.construct(); 
 			break;
-		
+			
 			case 1: 
 				self.construct(argument_original[0]); 
 			break;
-		
+			
 			case 2: 
 				self.construct(argument_original[0], argument_original[1]);
 			break;

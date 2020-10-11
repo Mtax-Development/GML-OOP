@@ -17,7 +17,7 @@ function RangedValue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (instanceof(argument[0]) == "RangedValue")
+				if ((argument_count > 0) and (instanceof(argument[0]) == "RangedValue"))
 				{
 					//|Construction method: Constructor copy.
 					var _other = argument[0];

@@ -20,44 +20,47 @@ function Vector2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				switch (argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Vector2"))
 				{
-					case 0:
-						//|Construction method: Default (0) for all values.
-						x = 0;
-						y = 0;
-					break;
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
 					
-					case 1:
-						if (is_array(argument[0]))
-						{
-							//|Construction method: From array.
-							var _array = argument[0];
+					x = _other.x;
+					y = _other.y;
+				}
+				else
+				{
+					switch (argument_count)
+					{
+						case 0:
+							//|Construction method: Default (0) for all values.
+							x = 0;
+							y = 0;
+						break;
+					
+						case 1:
+							if (is_array(argument[0]))
+							{
+								//|Construction method: From array.
+								var _array = argument[0];
 							
-							x = _array[0];
-							y = _array[1];
-						}
-						else if (instanceof(argument[0]) == "Vector2")
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							
-							x = _other.x;
-							y = _other.y;
-						}
-						else
-						{
-							//|Construction method: One number for all values.
+								x = _array[0];
+								y = _array[1];
+							}
+							else
+							{
+								//|Construction method: One number for all values.
+								x = argument[0];
+								y = argument[0];
+							}
+						break;
+					
+						case 2:
+							//|Construction method: Two values.
 							x = argument[0];
-							y = argument[0];
-						}
-					break;
-					
-					case 2:
-						//|Construction method: Two values.
-						x = argument[0];
-						y = argument[1];
-					break;
+							y = argument[1];
+						break;
+					}
 				}
 			}
 			

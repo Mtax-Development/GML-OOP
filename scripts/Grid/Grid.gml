@@ -18,33 +18,28 @@ function Grid() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				ID = undefined;
-				
-				switch (argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Grid"))
 				{
-					case 1:
-						if (instanceof(argument[0]) == "Grid")
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							var _size = _other.getSize();
-							
-							ID = ds_grid_create(_size.x, _size.y);
-							
-							ds_grid_copy(ID, _other.ID);
-						}
-					break;
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					var _size = _other.getSize();
 					
-					case 2:
-						//|Construction method: New constructor.
-						var _width = argument[0];
-						var _height = argument[1];
-						
-						if ((_width > 0) and (_height > 0))
-						{
-							ID = ds_grid_create(_width, _height);
-						}
-					break;
+					ID = ds_grid_create(_size.x, _size.y);
+					
+					ds_grid_copy(ID, _other.ID);
+				}
+				else
+				{
+					ID = undefined;
+					
+					//|Construction method: New constructor.
+					var _width = argument[0];
+					var _height = argument[1];
+					
+					if ((_width > 0) and (_height > 0))
+					{
+						ID = ds_grid_create(_width, _height);
+					}
 				}
 			}
 			

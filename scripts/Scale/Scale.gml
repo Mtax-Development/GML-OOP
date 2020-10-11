@@ -18,36 +18,36 @@ function Scale() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				switch(argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Scale"))
 				{
-					case 0:
-						//|Construction method: Default (1) for all values.
-						x = 1;
-						y = 1;
-					break;
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					x = _other.x;
+					y = _other.y;
+				}
+				else
+				{
+					switch(argument_count)
+					{
+						case 0:
+							//|Construction method: Default (1) for all values.
+							x = 1;
+							y = 1;
+						break;
 		
-					case 1:
-						if (instanceof(argument[0]) == "Scale")
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							
-							x = _other.x;
-							y = _other.y;
-						}
-						else
-						{
+						case 1:
 							//|Construction method: One number for all values.
 							x = argument[0];
 							y = argument[0];
-						}
-					break;
+						break;
 		
-					case 2:
-						//|Construction method: Two values.
-						x = argument[0];
-						y = argument[1];
-					break;
+						case 2:
+							//|Construction method: Two values.
+							x = argument[0];
+							y = argument[1];
+						break;
+					}
 				}
 			}
 			

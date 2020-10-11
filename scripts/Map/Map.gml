@@ -19,15 +19,12 @@ function Map() constructor
 				//|Construction method: New constructor.
 				ID = ds_map_create();
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Map"))
 				{
-					if (instanceof(argument[0]) == "Map")
-					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-						
-						ds_map_copy(ID, _other.ID);
-					}
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ds_map_copy(ID, _other.ID);
 				}
 			}
 			

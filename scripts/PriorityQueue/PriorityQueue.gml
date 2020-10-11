@@ -14,17 +14,15 @@ function PriorityQueue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: New constructor.
 				ID = ds_priority_create();
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "PriorityQueue"))
 				{
-					if (instanceof(argument[0]) == "PriorityQueue")
-					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-						
-						ds_priority_copy(ID, _other.ID);
-					}
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ds_priority_copy(ID, _other.ID);
 				}
 			}
 			

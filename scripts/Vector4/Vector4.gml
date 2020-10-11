@@ -28,78 +28,81 @@ function Vector4() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				switch(argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Vector4"))
 				{
-					case 0:
-						//|Construction method: Default (0) for all values.
-						x1 = 0;
-						x2 = 0;
-						y1 = 0;
-						y2 = 0;
-					break;
+					//|Construction method: Constructor copy.
+					x1 = argument[0].x1;
+					x2 = argument[0].x2;
+					y1 = argument[0].y1;
+					y2 = argument[0].y2;
+				}
+				else
+				{
+					switch(argument_count)
+					{
+						case 0:
+							//|Construction method: Default (0) for all values.
+							x1 = 0;
+							x2 = 0;
+							y1 = 0;
+							y2 = 0;
+						break;
+						
+						case 1:
+							if (is_array(argument[0]))
+							{
+								//|Construction method: From array.
+								var _array = argument[0];
+								
+								x1 = _array[0];
+								x2 = _array[1];
+								y1 = _array[2];
+								y2 = _array[3];
+							}
+							else
+							{
+								//|Construction method: One number for all values.
+								x1 = argument[0];
+								x2 = argument[0];
+								y1 = argument[0];
+								y2 = argument[0];
+							}
+						break;
+						
+						case 2:
+							if ((instanceof(argument[0]) == "Vector2") 
+							and (instanceof(argument[1]) == "Vector2"))
+							{
+								//|Construction method: From two Vector2.
+								var _pair_1 = argument[0];
+								var _pair_2 = argument[1];
+								
+								x1 = _pair_1.x;
+								x2 = _pair_2.x;
+								y1 = _pair_1.y;
+								y2 = _pair_2.y;
+							}
+							else
+							{
+								//|Construction method: One number pair.
+								var _x = argument[0];
+								var _y = argument[1];
+								
+								x1 = _x;
+								x2 = _x;
+								y1 = _y;
+								y2 = _y;
+							}
+						break;
 					
-					case 1:
-						if (is_array(argument[0]))
-						{
-							//|Construction method: From array.
-							var _array = argument[0];
-							
-							x1 = _array[0];
-							x2 = _array[1];
-							y1 = _array[2];
-							y2 = _array[3];
-						}
-						else if (instanceof(argument[0]) == "Vector4")
-						{
-							//|Construction method: Constructor copy.
-							x1 = argument[0].x1;
-							x2 = argument[0].x2;
-							y1 = argument[0].y1;
-							y2 = argument[0].y2;
-						}
-						else
-						{
-							//|Construction method: One number for all values.
+						case 4:
+							//|Construction method: Four values.
 							x1 = argument[0];
-							x2 = argument[0];
-							y1 = argument[0];
-							y2 = argument[0];
-						}
-					break;
-					
-					case 2:
-						if ((instanceof(argument[0]) == "Vector2") 
-						and (instanceof(argument[1]) == "Vector2"))
-						{
-							//|Construction method: From two Vector2.
-							var _pair_1 = argument[0];
-							var _pair_2 = argument[1];
-							
-							x1 = _pair_1.x;
-							x2 = _pair_2.x;
-							y1 = _pair_1.y;
-							y2 = _pair_2.y;
-						}
-						else
-						{
-							//|Construction method: One number pair.
-							var _x = argument[0];
-							var _y = argument[1];
-							
-							x1 = _x;
-							x2 = _x;
-							y1 = _y;
-							y2 = _y;
-						}
-					break;
-					
-					case 4:
-						//|Construction method: Four values.
-						x1 = argument[0];
-						x2 = argument[1];
-						y1 = argument[2];
-						y2 = argument[3];
-					break;
+							x2 = argument[1];
+							y1 = argument[2];
+							y2 = argument[3];
+						break;
+					}
 				}
 			}
 			
