@@ -4,18 +4,19 @@
 ///
 /// @description			Constructs a Particle System resource, required to
 ///							create Particles in a space.
-function ParticleSystem(_layer, _persistent) constructor
+function ParticleSystem() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @argument			{layer} layer?
-			// @argument			{bool} persistent?
 			// @description			Initialize the constructor.
-			static construct = function(_layer, _persistent)
+			static construct = function()
 			{
-				layer = _layer;
-				persistent = ((_persistent != undefined) ? _persistent : false);
+				//+TODO: Constructor copy
+				
+				layer = ((argument_count > 0) ? argument[0] : undefined);
+				persistent = ((argument_count > 1) and (argument[1] != undefined) ? argument[1]
+																				  : false);
 				
 				depth = undefined;
 				
@@ -203,13 +204,24 @@ function ParticleSystem(_layer, _persistent) constructor
 	#endregion
 	#region [Constructor]
 		
-		originalArguments =
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
 		{
-			layer: _layer,
-			persistent: (_persistent != undefined ? _persistent : false)
+			argument_original[_i] = argument[_i];
+			
+			++_i;
 		}
-	
-		self.construct(originalArguments.layer, originalArguments.persistent);
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

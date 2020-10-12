@@ -13,6 +13,23 @@
 function Sprite(_sprite, _location, _frame, _speed, _scale, _angle, _color, _alpha) constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function(_sprite, _location, _frame, _speed, _scale, _angle, _color, 
+										_alpha)
+			{
+				ID				= _sprite;
+				location		= ((_location != undefined) ? _location : undefined);
+				frame			= ((_frame != undefined) ? _frame : 0);
+				speed			= ((_speed != undefined) ? _speed : 0);
+				scale			= ((_scale != undefined) ? _scale : new Scale());
+				angle			= ((_angle != undefined) ? _angle : new Angle());
+				color			= ((_color != undefined) ? _color : c_white);
+				alpha			= ((_alpha != undefined) ? _alpha : 1);
+			}
+			
+		#endregion
 		#region <Execution>
 		
 			// @description			Advance the animation and wrap its numbers.
@@ -77,14 +94,24 @@ function Sprite(_sprite, _location, _frame, _speed, _scale, _angle, _color, _alp
 	#endregion
 	#region [Constructor]
 		
-		ID				= _sprite;
-		location		= ((_location != undefined) ? _location : undefined);
-		frame			= ((_frame != undefined) ? _frame : 0);
-		speed			= ((_speed != undefined) ? _speed : 0);
-		scale			= ((_scale != undefined) ? _scale : new Scale());
-		angle			= ((_angle != undefined) ? _angle : new Angle());
-		color			= ((_color != undefined) ? _color : c_white);
-		alpha			= ((_alpha != undefined) ? _alpha : 1);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

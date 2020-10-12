@@ -4,18 +4,16 @@
 ///
 /// @description			Constructs a Particle Emitter resource, actively bound to a 
 ///							Particle System, used to create a Particles Type in a region.
-function ParticleEmitter(_particleSystem, _particleType) constructor
+function ParticleEmitter() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @argument			{ParticleSystem} particleSystem
-			// @argument			{ParticleType} particleType
 			// @description			Initialize the constructor.
-			static construct = function(_particleSystem, _particleType)
+			static construct = function()
 			{
-				particleSystem = _particleSystem;
-				particleType = _particleType;
+				particleSystem = argument[0];
+				particleType = argument[1];
 				
 				ID = part_emitter_create(particleSystem.ID);
 				
@@ -41,21 +39,16 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 					
 					part_emitter_destroy(particleSystem.ID, ID);
 				}
-		
+				
 				return undefined;
 			}
 			
-			// @description			Recreate the Particle Emitter with its initial arguments.
+			// @description			Recreate the constructor.
 			static clear = function()
 			{
-				if  (particleSystem != undefined)
-				and (part_system_exists(particleSystem.ID)) 
-				and (part_emitter_exists(particleSystem.ID, ID))
-				{
-					part_emitter_destroy(particleSystem.ID, ID);
-				}
+				self.destroy();
 				
-				self.construct(originalArguments.particleSystem);
+				self.construct(particleSystem, particleType);
 			}
 			
 		#endregion
@@ -157,13 +150,24 @@ function ParticleEmitter(_particleSystem, _particleType) constructor
 	#endregion
 	#region [Constructor]
 		
-		originalArguments =
-		{
-			particleSystem: _particleSystem,
-			particleType: _particleType
-		};
+		argument_original = array_create(argument_count, undefined);
 		
-		self.construct(originalArguments.particleSystem, originalArguments.particleType);
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

@@ -1,4 +1,5 @@
 /// @function				TextAlign()
+/// @function				TextAlign()
 /// @argument				{constant:fa_[halign]} x?
 /// @argument				{constant:fa_[valign]} y?
 ///
@@ -144,7 +145,6 @@ function TextAlign() constructor
 		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
-		
 		repeat (argument_count)
 		{
 			argument_original[_i] = argument[_i];
@@ -152,20 +152,13 @@ function TextAlign() constructor
 			++_i;
 		}
 		
-		switch (argument_count)
+		if (argument_count <= 0)
 		{
-			case 0:
-				self.construct();
-			break;
-			
-			case 1:
-				self.construct(argument_original[0]);
-			break;
-			
-			case 2:
-			default:
-				self.construct(argument_original[0], argument_original[1]);
-			break;
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
 		}
 		
 	#endregion

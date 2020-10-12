@@ -172,32 +172,20 @@ function Color3() constructor
 		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
-		
 		repeat (argument_count)
 		{
 			argument_original[_i] = argument[_i];
-		
+			
 			++_i;
 		}
 		
-		switch (argument_count)
+		if (argument_count <= 0)
 		{
-			case 0: 
-				self.construct(); 
-			break;
-			
-			case 1: 
-				self.construct(argument_original[0]); 
-			break;
-			
-			case 2: 
-				self.construct(argument_original[0], argument_original[1]);
-			break;
-			
-			case 3:
-			default:
-				self.construct(argument_original[0], argument_original[1], argument_original[2]);
-			break;
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
 		}
 		
 	#endregion

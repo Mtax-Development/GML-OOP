@@ -490,9 +490,8 @@ function Surface(_size) constructor
 				if ((is_real(_buffer.ID)) and (buffer_exists(_buffer.ID)))
 				{
 					if (_offset == undefined) {_offset = 0;}
-					if (_modulo == undefined) {_modulo = 0;}
 					
-					buffer_set_surface(_buffer.ID, ID, buffer_surface_copy, _offset, _modulo);
+					buffer_set_surface(_buffer.ID, ID, _offset);
 				}
 			}
 			
@@ -500,7 +499,24 @@ function Surface(_size) constructor
 	#endregion
 	#region [Constructor]
 		
-		self.construct(_size);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

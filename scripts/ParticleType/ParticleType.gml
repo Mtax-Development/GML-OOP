@@ -9,7 +9,9 @@ function ParticleType() constructor
 			
 			// @description			Initialize the constructor.
 			static construct = function()
-			{				
+			{
+				ID = part_type_create();
+				
 				sprite = undefined;
 				sprite_animate = false;
 				sprite_stretch = false;
@@ -19,7 +21,7 @@ function ParticleType() constructor
 				size_increase = 0;
 				size_wiggle = 0;
 				
-				scale = new Scale();
+				scale = new Scale(1, 1);
 				
 				speed = 1;
 				speed_increase = 0;
@@ -75,7 +77,49 @@ function ParticleType() constructor
 					part_type_clear(ID);
 				}
 				
-				self.construct();
+				sprite = undefined;
+				sprite_animate = false;
+				sprite_stretch = false;
+				sprite_random = false;
+				
+				size = 1;
+				size_increase = 0;
+				size_wiggle = 0;
+				
+				scale = new Scale(1, 1);
+				
+				speed = 1;
+				speed_increase = 0;
+				speed_wiggle = 0;
+				
+				direction = 0;
+				direction_increase = 0;
+				direction_wiggle = 0;
+				
+				gravity_amount = 0;
+				gravity_direction = undefined;
+				
+				orientation = 0;
+				orientation_increase = 0;
+				orientation_wiggle = 0;
+				orientation_relative = false;
+				
+				color = c_white;
+				color_type = "color";
+				
+				alpha = [1, undefined, undefined];
+				
+				blend_additive = false;
+				
+				life = 100;
+				
+				shape = pt_shape_pixel;
+				
+				step_type = undefined;
+				step_number = 0;
+				
+				death_type = undefined;
+				death_number = 0;	
 			}
 			
 		#endregion
@@ -783,9 +827,24 @@ function ParticleType() constructor
 	#endregion
 	#region [Constructor]
 		
-		ID = part_type_create();
+		argument_original = array_create(argument_count, undefined);
 		
-		self.construct();
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

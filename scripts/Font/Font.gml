@@ -37,7 +37,8 @@ function Font() constructor
 				{
 					if (font_exists(argument[0]))
 					{
-						//|Construction method: Existing resource.
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 						
 						type = "asset";
 						
@@ -204,127 +205,23 @@ function Font() constructor
 	#endregion
 	#region [Constructor]
 		
-		originalArgumentCount = argument_count;
+		argument_original = array_create(argument_count, undefined);
 		
-		if (originalArgumentCount == 1)
+		var _i = 0;
+		repeat (argument_count)
 		{
-			//|Construction method: Existing resource.
+			argument_original[_i] = argument[_i];
 			
-			originalArguments = 
-			{
-				font: argument[0]
-			}
-			
-			with (originalArguments)
-			{
-				other.construct(font);
-			}
+			++_i;
 		}
-		else if (is_string(argument[0]))
+		
+		if (argument_count <= 0)
 		{
-			//|Construction method: New resource.
-			
-			originalArguments =
-			{
-				path: argument[0],
-				size: argument[1],
-				bold: argument[2],
-				italic: argument[3]
-			}
-			
-			switch (originalArgumentCount)
-			{				
-				case 4:
-					with (originalArguments)
-					{
-						other.construct(path, size, bold, italic);
-					}
-				break;
-				
-				case 5:
-					originalArguments.glyphs = argument[4];
-					
-					with (originalArguments)
-					{
-						other.construct(path, size, bold, italic, glyphs);
-					}
-				break;
-				
-				case 6:
-					originalArguments.glyphs = argument[4];
-					originalArguments.antialiasing = argument[5];
-					
-					with (originalArguments)
-					{
-						other.construct(path, size, bold, italic, glyphs, antialiasing);
-					}
-				break;
-			}
+			self.construct();
 		}
-		else if (instanceof(argument[0]) == "Sprite")
+		else
 		{
-			if (is_real(argument[1]))
-			{
-				//|Construction method: Sprite (utf8).
-				
-				originalArguments =
-				{
-					sprite: argument[0],
-					first: argument[1],
-					proportional: argument[2],
-					separation: argument[3],
-				}
-				
-				switch (originalArgumentCount)
-				{
-					case 4:
-						with (originalArguments)
-						{
-							other.construct(sprite, first, proportional, separation);
-						}
-					break;
-					
-					case 5:
-						originalArguments.antialiasing = argument[4];
-						
-						with (originalArguments)
-						{
-							other.construct(sprite, first, proportional, separation, antialiasing);
-						}
-					break;
-				}
-			}
-			else if (is_string(argument[1]))
-			{
-				//|Construction method: Sprite (glyph map).
-				
-				originalArguments =
-				{
-					sprite: argument[0],
-					glyphs: argument[1],
-					proportional: argument[2],
-					separation: argument[3]
-				}
-				
-				switch (originalArgumentCount)
-				{
-					case 4:
-						with (originalArguments)
-						{
-							other.construct(sprite, glyphs, proportional, separation);
-						}
-					break;
-					
-					case 5:
-						originalArguments.antialiasing = argument[4];
-						
-						with (originalArguments)
-						{
-							other.construct(sprite, glyphs, proportional, separation, antialiasing);
-						}
-					break;
-				}
-			}
+			script_execute_ext(method_get_index(self.construct), argument_original);
 		}
 		
 	#endregion

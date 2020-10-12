@@ -11,6 +11,18 @@
 function Circle(_location, _radius) constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			static construct = function(_location, _radius)
+			{
+				location = _location;
+				radius	 = _radius;
+				alpha	 = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : 1);
+				fill	 = ((argument_count > 3) ? argument[3] : undefined);
+				outline	 = ((argument_count > 4) ? argument[4] : undefined);
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			// @description			Execute the draw.
@@ -146,11 +158,24 @@ function Circle(_location, _radius) constructor
 	#endregion
 	#region [Constructor]
 		
-		location = _location;
-		radius	 = _radius;
-		alpha	 = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : 1);
-		fill	 = ((argument_count > 3) ? argument[3] : undefined);
-		outline	 = ((argument_count > 4) ? argument[4] : undefined);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

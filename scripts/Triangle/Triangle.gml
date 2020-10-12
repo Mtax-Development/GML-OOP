@@ -12,6 +12,19 @@
 function Triangle(_location1, _location2, _location3) constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			static construct = function(_location1, _location2, _location3)
+			{
+				location1 = _location1;
+				location2 = _location2;
+				location3 = _location3;
+				alpha	  = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
+				fill	  = (argument_count > 4 ? argument[4] : undefined);
+				outline   = (argument_count > 5 ? argument[5] : undefined);
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			// @description			Execute the draw.
@@ -94,12 +107,24 @@ function Triangle(_location1, _location2, _location3) constructor
 	#endregion
 	#region [Constructor]
 		
-		location1 = _location1;
-		location2 = _location2;
-		location3 = _location3;
-		alpha	  = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
-		fill	  = (argument_count > 4 ? argument[4] : undefined);
-		outline   = (argument_count > 5 ? argument[5] : undefined);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

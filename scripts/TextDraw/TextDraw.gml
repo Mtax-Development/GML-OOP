@@ -81,10 +81,24 @@ function TextDraw(_text, _font, _location, _align, _color, _alpha) constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = [_text, _font, _location, _align, _color, _alpha];
+		argument_original = array_create(argument_count, undefined);
 		
-		self.construct(argument_original[0], argument_original[1], argument_original[2], 
-					   argument_original[3], argument_original[4], argument_original[5]);
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

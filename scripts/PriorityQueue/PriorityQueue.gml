@@ -539,7 +539,6 @@ function PriorityQueue() constructor
 		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
-		
 		repeat (argument_count)
 		{
 			argument_original[_i] = argument[_i];
@@ -547,16 +546,13 @@ function PriorityQueue() constructor
 			++_i;
 		}
 		
-		switch (argument_count)
+		if (argument_count <= 0)
 		{
-			case 0:
-				self.construct();
-			break;
-			
-			case 1:
-			default:
-				self.construct(argument_original[0]);
-			break;
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
 		}
 		
 	#endregion

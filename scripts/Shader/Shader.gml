@@ -1,9 +1,22 @@
-// @function				Shader()
-// @argument				{shader} shader
-// @description				Constructs a Shader resource, which can be used to alter drawing.
+/// @function				Shader()
+/// @argument				{shader} shader
+///
+/// @description			Constructs a Shader resource, which can be used to alter drawing.
 function Shader(_shader) constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function(_shader)
+			{
+				ID = _shader;
+				name = shader_get_name(ID);
+				compiled = shader_is_compiled(ID);
+				uniform = {};
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			// @argument			{string} uniform
@@ -245,10 +258,24 @@ function Shader(_shader) constructor
 	#endregion
 	#region [Constructor]
 		
-		ID = _shader;
-		name = shader_get_name(ID);
-		compiled = shader_is_compiled(ID);
-		uniform = {};
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

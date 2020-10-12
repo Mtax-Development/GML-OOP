@@ -577,16 +577,13 @@ function List() constructor
 			++_i;
 		}
 		
-		switch (argument_count)
+		if (argument_count <= 0)
 		{
-			case 0:
-				self.construct();
-			break;
-			
-			case 1:
-			default:
-				self.construct(argument_original[0]);
-			break;
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
 		}
 		
 	#endregion

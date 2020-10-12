@@ -10,6 +10,17 @@
 function Line(_location) constructor
 {
 	#region [Methods]
+		#region <Management>
+			
+			static construct = function(_location)
+			{
+				location = _location;
+				alpha = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
+				color = ((argument_count > 2) ? argument[2] : undefined);
+				width = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			// @description			Execute the draw.
@@ -123,10 +134,24 @@ function Line(_location) constructor
 	#endregion
 	#region [Constructor]
 		
-		location = _location;
-		alpha = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
-		color = ((argument_count > 2) ? argument[2] : undefined);
-		width = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }

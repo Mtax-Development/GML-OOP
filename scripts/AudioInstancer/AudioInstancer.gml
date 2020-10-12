@@ -16,6 +16,31 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 	#region [Methods]
 		#region <Management>
 			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{
+				switch (argument_count)
+				{
+					case 1:
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						file = _other.file;
+						pitch = _other.pitch;
+						priority = _other.priority;
+						instances = _other.instances;
+					break;
+					
+					case 3:
+						//|Construction method: New constructor.
+						file = argument[0];
+						pitch = argument[1];
+						priority = argument[2];
+						instances = [];
+					break;
+				}
+			}
+			
 			// @description			Refresh the instance list by checking which still exists.
 			static list_instances = function()
 			{
@@ -121,10 +146,24 @@ function AudioInstancer(_file, _pitch, _priority) constructor
 	#endregion
 	#region [Constructor]
 		
-		file = _file;
-		pitch = _pitch;
-		priority = _priority;
-		instances = [];
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		if (argument_count <= 0)
+		{
+			self.construct();
+		}
+		else
+		{
+			script_execute_ext(method_get_index(self.construct), argument_original);
+		}
 		
 	#endregion
 }
