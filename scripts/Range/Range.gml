@@ -95,7 +95,7 @@ function Range() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the Range information in the
 			//						following format: minimum-maximum.

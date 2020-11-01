@@ -68,7 +68,7 @@ function Angle() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the value of this Angle.
 			static toString = function()

@@ -83,7 +83,7 @@ function Color3() constructor
 			
 			// @argument			{bool} useHSV?
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as a color name or value for each 
 			//						color.

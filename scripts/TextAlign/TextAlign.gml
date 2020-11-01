@@ -106,7 +106,7 @@ function TextAlign() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the text equivalent of 
 			//						the align constants.

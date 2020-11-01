@@ -177,7 +177,7 @@ function Vector2() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the output of X and then Y
 			//						values of this Vector2.

@@ -22,7 +22,10 @@ function Queue() constructor
 					//|Construction method: Constructor copy.
 					var _other = argument[0];
 					
-					ds_queue_copy(ID, _other.ID);
+					if ((is_real(_other.ID)) and (ds_exists(ds_type_queue, _other.ID)))
+					{
+						ds_queue_copy(ID, _other.ID);
+					}
 				}
 			}
 			
@@ -60,6 +63,8 @@ function Queue() constructor
 					}
 					
 					ds_queue_destroy(ID);
+					
+					ID = undefined;
 				}
 				
 				return undefined;
@@ -256,6 +261,7 @@ function Queue() constructor
 			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{

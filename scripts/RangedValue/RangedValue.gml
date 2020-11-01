@@ -69,7 +69,7 @@ function RangedValue() constructor
 				value = range.maximum;
 			}
 			
-			// @description			Set the value to its initial value.
+			// @description			Set the value to the state it had upon constructor creation.
 			static set_original = function()
 			{
 				value = argument_original[0];
@@ -83,13 +83,20 @@ function RangedValue() constructor
 			}
 			
 			// @argument			{real} value
-			// @description			Add the specified value to the value.
+			// @description			Add the specified number to the value.
 			static add = function(_value)
 			{
 				value = clamp((value + _value), range.minimum, range.maximum);
 			}
 			
-			//+TODO: add_loop()
+			// @argument			{real} value
+			// @description			Add the specified number to the value, then wrap it to the
+			//						furthest boundary if it is outside of the Range.
+			static add_wrap = function(_value)
+			{
+				value += _value;
+				value -= (range.maximum * (floor(value / range.maximum)));
+			}
 			
 			// @argument			{real} value
 			// @returns				{real}
@@ -105,7 +112,7 @@ function RangedValue() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the Range and value information 
 			//						in the following format: value, range.minimum-range.maximum.

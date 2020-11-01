@@ -44,7 +44,7 @@ function Outline() constructor
 		#region <Conversion>
 			
 			// @argument			{bool} useHSV?
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the Outline information.
 			//						For the color output, if it is equal to one of built-in color

@@ -18,6 +18,8 @@ function Grid() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				ID = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Grid"))
 				{
 					//|Construction method: Constructor copy.
@@ -26,12 +28,13 @@ function Grid() constructor
 					
 					ID = ds_grid_create(_size.x, _size.y);
 					
-					ds_grid_copy(ID, _other.ID);
+					if ((is_real(_other.ID)) and (ds_exists(ds_type_grid, _other.ID)))
+					{
+						ds_grid_copy(ID, _other.ID);
+					}
 				}
 				else
 				{
-					ID = undefined;
-					
 					//|Construction method: New constructor.
 					var _width = argument[0];
 					var _height = argument[1];
@@ -94,6 +97,8 @@ function Grid() constructor
 					}
 					
 					ds_grid_destroy(ID);
+					
+					ID = undefined;
 				}
 				
 				return undefined;
@@ -709,8 +714,9 @@ function Grid() constructor
 			// @argument			{string|undefined} mark_elementStart
 			// @argument			{string|undefined} mark_elementEnd
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
