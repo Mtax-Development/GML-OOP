@@ -3,13 +3,13 @@
 /// @argument				{constant:buffer_[type]} type
 /// @argument				{int} aligment?
 ///
-///	@description			Constructs a Buffer, which is a region of memory primarly used while
-///							temporarily moving data between places, including through network or 
-///							for manipulating it in other ways.
+///	@description			Constructs a Buffer, which is a region of memory, primarly used
+///							temporarily while moving data between places, such as through network.
 ///
-///							Alternative ways of construction:
-///							- Wrapper: {buffer}
-///							- Copy: {Buffer}
+///							Construction methods:
+///							- New constructor
+///							- Wrapper: {buffer} other
+///							- Constructor copy: {Buffer} other
 function Buffer() constructor
 {
 	#region [Methods]
@@ -20,44 +20,48 @@ function Buffer() constructor
 			{
 				ID = undefined;
 				
-				switch (argument_count)
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Buffer"))
 				{
-					case 1:
-						var _other = argument[0];
-						
-						if (instanceof(_other) == "Buffer")
-						{
-							if ((is_real(_other.ID)) and (buffer_exists(_other.ID)))
-							{
-								var _size = buffer_get_size(_other.ID);
-								var _type = buffer_get_type(_other.ID);
-								var _aligment = buffer_get_alignment(_other.ID);
-								
-								ID = buffer_create(_size, _type, _aligment);
-								
-								buffer_copy(_other.ID, 0, _size, ID, 0);
-							}
-						}
-						else
-						{
-							if ((is_real(_other)) and (buffer_exists(_other)))
-							{
-								ID = _other;
-							}
-						}
-					break;
+					var _other = argument[0];
 					
-					case 2:
-					case 3:
-						var _size = argument[0];
-						var _type = argument[1];
-						var _aligment = ((argument_count > 2) ? argument[2] : 1);
-						
-						if (_size <= 0) {_size = 1;} //|Size less than 0 is not allowed, but 0 itself
-													 // can freeze the application.
-						
+					if ((is_real(_other.ID)) and (buffer_exists(_other.ID)))
+					{
+						//|Construction method: Constructor copy.
+						var _size = buffer_get_size(_other.ID);
+						var _type = buffer_get_type(_other.ID);
+						var _aligment = buffer_get_alignment(_other.ID);
+								
 						ID = buffer_create(_size, _type, _aligment);
-					break;
+								
+						buffer_copy(_other.ID, 0, _size, ID, 0);
+					}
+				}
+				else
+				{
+					switch (argument_count)
+					{
+						case 1:
+							if ((is_real(argument[0])) and (buffer_exists(argument[0])))
+							{
+								//|Construction method: Wrapper.
+								ID = argument[0];
+							}
+						break;
+					
+						case 2:
+						case 3:
+						default:
+							//|Construction method: New constructor.
+							var _size = argument[0];
+							var _type = argument[1];
+							var _aligment = ((argument_count > 2) ? argument[2] : 1);
+							
+							if (!(_size > 0)) {_size = 1;} //|Size of less than 0 is not allowed.
+														   // Size of 0 can crash the application.
+							
+							ID = buffer_create(_size, _type, _aligment);
+						break;
+					}
 				}
 			}
 			
@@ -68,6 +72,8 @@ function Buffer() constructor
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
 					buffer_delete(ID);
+					
+					ID = undefined;
 				}
 				
 				return undefined;
@@ -137,7 +143,7 @@ function Buffer() constructor
 				}
 			}
 			
-			// @returns				{int} | On error: 0
+			// @returns				{int} | On error: {int:0}
 			// @description			Return the size of this Buffer in bytes.
 			static getSize = function()
 			{
@@ -239,7 +245,7 @@ function Buffer() constructor
 			// @argument			{constant:buffer_[dataType]} type
 			// @argument			{bool|real|string} value
 			// @argument			...
-			// @returns				{int|int[]} | On Error: -1|[...-1]
+			// @returns				{int|int[]} | On error: {int:-1|int[]:[...-1]}
 			// @description			Add the specified data of the specified data type to this Buffer,
 			//						then advance the seek position by number of bytes written.
 			//						Returns 0 if write was successful, -1 if it was not or an array
@@ -295,7 +301,7 @@ function Buffer() constructor
 			
 			// @argument			{constant:buffer_[dataType]} type
 			// @argument			{int} offset?
-			// @returns				{bool|real|string} | On Error: {undefined}
+			// @returns				{bool|real|string} | On error: {undefined}
 			// @description			Get the value of the specified data type at the current seek 
 			//						position without changing that position.
 			static peek = function(_type, _offset)
@@ -315,7 +321,7 @@ function Buffer() constructor
 			// @argument			{bool} replace?
 			// @argument			{int} size?
 			// @argument			{int} offset?
-			// @returns				{Buffer} | On Error: {undefined}
+			// @returns				{Buffer} | On error: {undefined}
 			// @description			Use the zlib compression to create a copy of this Buffer with 
 			//						entirety or part of its data compressed.
 			//						A byte offset can be specified for where the operation will start
@@ -359,7 +365,7 @@ function Buffer() constructor
 			}
 			
 			// @argument			{bool} replace?
-			// @returns				{Buffer} | On Error: {undefined}
+			// @returns				{Buffer} | On error: {undefined}
 			// @description			Use the zlib compression to create a copy of this Buffer with
 			//						entirety of its data decompressed.
 			//						A decompressed Buffer will be returned. If this Buffer was
@@ -400,8 +406,9 @@ function Buffer() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented with the properties of this Buffer.
 			static toString = function()
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
@@ -420,8 +427,13 @@ function Buffer() constructor
 						default: _type = string(undefined); break;
 					}
 					
-					return (instanceof(self) + "(" + "Size: " + string(_size) + ", Type: " + _type +
-						   ", Aligment: " + string(_aligment) + ")");
+					return (instanceof(self) + 
+						   "(" + 
+						   "ID: " + string(ID) + ", " +
+						   "Size: " + string(_size) + ", " + 
+						   "Type: " + string(_type) + ", " +
+						   "Aligment: " + string(_aligment) + 
+						   ")");
 						   
 				}
 				else

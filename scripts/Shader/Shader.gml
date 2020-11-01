@@ -1,19 +1,37 @@
 /// @function				Shader()
 /// @argument				{shader} shader
 ///
-/// @description			Constructs a Shader resource, which can be used to alter drawing.
-function Shader(_shader) constructor
+/// @description			Construct a Shader resource, used to alter drawing.
+///
+///							Construction methods:
+///							- New constructor.
+///							- Constructor copy: {Shader} other
+function Shader() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_shader)
+			static construct = function()
 			{
-				ID = _shader;
-				name = shader_get_name(ID);
-				compiled = shader_is_compiled(ID);
-				uniform = {};
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Shader"))
+				{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ID = _other.ID;
+					name = _other.name;
+					compiled = _other.compiled;
+					uniform = _other.uniform;
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					ID = argument[0];
+					name = shader_get_name(ID);
+					compiled = shader_is_compiled(ID);
+					uniform = {};
+				}
 			}
 			
 		#endregion
@@ -24,63 +42,61 @@ function Shader(_shader) constructor
 			// @argument			{real} value2?
 			// @argument			{real} value3?
 			// @argument			{real} value4?
-			// @description			Pass float value(s) to this Shader's uniform.
-			static setUniform_float = function(_uniform, _value1)
+			// @description			Pass one or more float values as a uniform to this Shader.
+			//						If only one value argument is passed, it can be an array or
+			//						Vector2. Otherwise all value arguments have to be numbers.
+			static setUniform_float = function()
 			{
 				if (compiled)
 				{
-					if (_uniform != undefined)
+					if (argument_count > 1)
 					{
-						var _value;
+						var _uniform = argument[0];
+						
+						var _value = undefined;
 						var _handle = shader_get_uniform(ID, _uniform);
 						
-						if (is_array(_value1))
+						switch (argument_count)
 						{
-							shader_set_uniform_i_array(_handle, _value1);
-							
-							if (array_length(_value1) == 1)
-							{
-								_value = _value1[0];
-							}
-							else
-							{
-								_value = _value1;
-							}
-						}
-						else if (is_struct(_value1))
-						{
-							shader_set_uniform_f(_handle, _value1.x, _value1.y);
-							_value = [_value1.x, _value1.y];
-						}
-						else
-						{
-							switch (argument_count)
-							{
-								case 2:
-									shader_set_uniform_f(_handle, _value1);
-									_value = _value1;
-								break;
-							
-								case 3:
-									shader_set_uniform_f(_handle, _value1, argument[2]);
-									_value = [_value1, argument[2]];
-								break;
-							
-								case 4:
-									shader_set_uniform_f(_handle, _value1, argument[2], argument[3]);
-									_value = [_value1, argument[2], argument[3]];
-								break;
-							
-								case 5:
-									shader_set_uniform_f(_handle, _value1, argument[2], argument[3], 
-														 argument[4]);
-									_value = [_value1, argument[2], argument[3], argument[4]];
-								break;
+							case 2:
+								var _value = argument[1];
 								
-								default:
+								if (is_real(_value))
+								{
+									shader_set_uniform_f(_handle, _value);	
+								}
+								else if (is_array(_value))
+								{
+									shader_set_uniform_f_array(_handle, _value);
+								}
+								else if (instanceof(_value) == "Vector2")
+								{
+									shader_set_uniform_f(_handle, _value.x, _value.y);
+								}
+								else
+								{
 									exit;
-								break;
-							}
+								}
+							break;
+							
+							case 3:
+								shader_set_uniform_f(_handle, argument[1], argument[2]);
+								
+								_value = [argument[1], argument[2]];
+							break;
+							
+							case 4:
+								shader_set_uniform_f(_handle, argument[1], argument[2], argument[3]);
+								
+								_value = [argument[1], argument[2], argument[3]];
+							break;
+							
+							case 5:
+								shader_set_uniform_f(_handle, argument[1], argument[2], argument[3], 
+													 argument[4]);
+								
+								_value = [argument[1], argument[2], argument[3], argument[4]];
+							break;
 						}
 						
 						var _struct = 
@@ -91,6 +107,7 @@ function Shader(_shader) constructor
 						};
 						
 						variable_struct_set(uniform, _uniform, _struct);
+						
 					}
 				}
 			}
@@ -100,63 +117,61 @@ function Shader(_shader) constructor
 			// @argument			{int} value2?
 			// @argument			{int} value3?
 			// @argument			{int} value4?
-			// @description			Pass integer value(s) to this Shader's uniform.
-			static setUniform_int = function(_uniform, _value1)
+			// @description			Pass one or more integer values as a uniform to this Shader.
+			//						If only one value argument is passed, it can be an array or
+			//						Vector2. Otherwise all value arguments have to be numbers.
+			static setUniform_int = function()
 			{
 				if (compiled)
 				{
-					if (_uniform != undefined)
+					if (argument_count > 1)
 					{
-						var _value;
+						var _uniform = argument[0];
+						
+						var _value = undefined;
 						var _handle = shader_get_uniform(ID, _uniform);
 						
-						if (is_array(_value1))
+						switch (argument_count)
 						{
-							shader_set_uniform_i_array(_handle, _value1);
-							
-							if (array_length(_value1) == 1)
-							{
-								_value = _value1[0];
-							}
-							else
-							{
-								_value = _value1;
-							}
-						}
-						else if (is_struct(_value1))
-						{
-							shader_set_uniform_f(_handle, _value1.x, _value1.y);
-							_value = [_value1.x, _value1.y];
-						}
-						else
-						{
-							switch (argument_count)
-							{
-								case 2:
-									shader_set_uniform_i(_handle, _value1);
-									_value = _value1;
-								break;
-							
-								case 3:
-									shader_set_uniform_i(_handle, _value1, argument[2]);
-									_value = [_value1, argument[2]];
-								break;
-							
-								case 4:
-									shader_set_uniform_i(_handle, _value1, argument[2], argument[3]);
-									_value = [_value1, argument[2], argument[3]];
-								break;
-							
-								case 5:
-									shader_set_uniform_i(_handle, _value1, argument[2], argument[3], 
-														 argument[4]);
-									_value = [_value1, argument[2], argument[3], argument[4]];
-								break;
+							case 2:
+								var _value = argument[1];
 								
-								default:
+								if (is_real(_value))
+								{
+									shader_set_uniform_i(_handle, _value);	
+								}
+								else if (is_array(_value))
+								{
+									shader_set_uniform_i_array(_handle, _value);
+								}
+								else if (instanceof(_value) == "Vector2")
+								{
+									shader_set_uniform_i(_handle, _value.x, _value.y);
+								}
+								else
+								{
 									exit;
-								break;
-							}
+								}
+							break;
+							
+							case 3:
+								shader_set_uniform_i(_handle, argument[1], argument[2]);
+								
+								_value = [argument[1], argument[2]];
+							break;
+							
+							case 4:
+								shader_set_uniform_i(_handle, argument[1], argument[2], argument[3]);
+								
+								_value = [argument[1], argument[2], argument[3]];
+							break;
+							
+							case 5:
+								shader_set_uniform_i(_handle, argument[1], argument[2], argument[3], 
+													 argument[4]);
+								
+								_value = [argument[1], argument[2], argument[3], argument[4]];
+							break;
 						}
 						
 						var _struct = 
@@ -173,20 +188,22 @@ function Shader(_shader) constructor
 			
 			// @argument			{string} uniform
 			// @argument			{real[]} array?
-			// @description			Pass the currently set matrix or an array of its values
-			//						to this Shader's uniform.
+			// @description			Pass the currently set matrix or an array of its values as a
+			//						uniform to this Shader.
 			static setUniform_matrix = function(_uniform, _array)
 			{
 				if (compiled)
 				{
 					if (_uniform != undefined)
 					{
-						var _value;
+						var _value = undefined;
 						var _handle = shader_get_uniform(ID, _uniform);
+						var _struct = {};
 						
 						if (_array != undefined)
 						{
 							shader_set_uniform_matrix_array(_uniform, _array);
+							_value = _array;
 						}
 						else
 						{
@@ -209,26 +226,25 @@ function Shader(_shader) constructor
 		#region <Getters>
 			
 			// @argument			{string} uniform
-			// @returns				{sampler|undefined}
-			// @description			Get a sampler of this Shader's uniform.
-			//						Returns {undefined} if this Shader is not compiled.
+			// @returns				{int} | On error: {int:-1}
+			// @description			Get a sampler index of a uniform from this Shader
 			static getSampler = function(_uniform)
 			{
-				return ((compiled) ? shader_get_sampler_index(ID, _uniform) : undefined);
+				return ((compiled) ? shader_get_sampler_index(ID, _uniform) : -1);
 			}
 			
-			// @returns				{bool}
+			// @returns				{bool} | On error: {bool:false}
 			// @description			Check whether this Shader is the currently set one.
 			static isCurrent = function()
 			{
-				return ((compiled) ? shader_current() == ID : false);
+				return ((compiled) ? (shader_current() == ID) : false);
 			}
 			
 		#endregion
 		#region <Execution>
 			
 			// @argument			{bool} active
-			// @description			Set this Shader as the currently used one or inactive.
+			// @description			Set whether this Shader is active.
 			static set = function(_active)
 			{
 				if (compiled)
@@ -248,10 +264,22 @@ function Shader(_shader) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with a Shader name output.
+			// @description			Create a string representing this constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the name of this Shader.
+			//						If this Shader is not compiled, it will be marked as such.
 			static toString = function()
 			{
-				return name;
+				if (is_real(ID))
+				{
+					var _text_uncompiled = ((shader_is_compiled(ID)) ? "" : "; uncompiled");
+					
+					return (instanceof(self) + "(" + shader_get_name(ID) + _text_uncompiled + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 		#endregion

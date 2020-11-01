@@ -1,43 +1,71 @@
 /// @function				Room()
 ///
-/// @description			Constructs a Room resource with its basic properties.
+/// @description			Constructs a Room resource, used to group all other resources.
 ///
 ///							Construction methods:
 ///							New Room: {Vector2} size, {bool} persistent?
-///							Duplicate Room: {room|Room} other
+///							Duplicate Room: {room} other
+///							Constructor copy: {Room} other
 function Room() constructor
 {
 	#region [Elements]
 		
+		// @function			Room.AddedInstance()
+		// @argument			{object} object
+		// @argument			{Vector2} location
 		// @description			A container constructor for properties of instances added to this Room
 		//						before its activation.
+		//
+		//						Construction methods:
+		//						- New constructor.
+		//						- Constructor copy: {Room.AddedInstance} other
 		function AddedInstance(_object, _location) constructor
 		{
 			#region [[Methods]]
 				#region <<Management>>
 					
 					// @description			Initialize the constructor.
-					static construct = function(_object, _location)
+					static construct = function()
 					{
 						parent = other;
-						object = _object;
-						location = _location;
 						
-						ID = room_instance_add(parent.ID, location.x, location.y, object);
+						if ((argument_count > 0) and (instanceof(argument[0]) == "AddedInstance"))
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							
+							object = _other.object;
+							location = _other.location;
+							
+							ID = room_instance_add(parent.ID, location.x, location.y, object);
+						}
+						else
+						{
+							//|Construction method: New constructor.
+							object = argument[0];
+							location = argument[1];
+							
+							ID = room_instance_add(parent.ID, location.x, location.y, object);
+						}
 					}
 					
 				#endregion
 				#region <<Conversion>>
 					
 					// @returns				{string}
-					// @description			Create a string representing the constructor.
-					//						Automatically overrides the string() conversion.
+					// @description			Create a string representing this constructor.
+					//						Overrides the string() conversion.
+					//						Content will be represented with the properties of the
+					//						instance.
 					static toString = function()
 					{
 						var _constructorName = "Room.AddedInstance";
 						
-						return (_constructorName + "(" + object_get_name(object) + 
-								", " + string(location) + ")");
+						return (_constructorName + 
+								"(" + 
+								"Object: " + object_get_name(object) + ", " + 
+								"Location: " + string(location) + 
+								")");
 					}
 					
 				#endregion
@@ -79,55 +107,63 @@ function Room() constructor
 				size = undefined;
 				addedInstanceList = new List();
 				
-				if ((argument_count <= 0) or (instanceof(argument[0]) == "Vector2"))
+				if ((argument_count > 0) and (instanceof(argument[0]) == "Room"))
 				{
-					//|Construction method: New Room.
-					
-					var _size = ((argument_count > 0) ? argument[0] : undefined);
-					var _persistent = ((argument_count > 1) ? argument[1] : undefined);
-					
-					size = ((_size != undefined) ? _size : new Vector2(0, 0));
-					persistent = ((_persistent != undefined) ? _persistent : false);
-		
-					room_set_width(ID, size.x);
-					room_set_height(ID, size.y);
-					room_set_persistent(ID, persistent);
+					if ((is_real(_other.ID)) and (room_exists(_other.ID)))
+					{
+						//|Construction method: Constructor copy.
+						persistent = _other.persistent;
+						size = _other.size;
+						
+						var _i = 0;
+						repeat (_other.addedInstanceList.getSize())
+						{
+							addedInstanceList.add
+							(
+								new AddedInstance(_other.addedInstanceList.getValue[_i])
+							);
+							
+							++_i;
+						}
+						
+						if (size != undefined)
+						{
+							room_set_width(ID, size.x);
+							room_set_height(ID, size.y);
+						}
+						
+						if (persistent != undefined)
+						{
+							room_set_persistent(ID, persistent);
+						}
+						
+						room_assign(ID, _other.ID);
+					}
 				}
 				else
 				{
-					//|Construction method: Duplicate Room.
-					
-					var _other = argument[0];
-					
-					if (instanceof(_other) == "Room")
+					if (is_real(argument[0]))
 					{
-						if ((is_real(_other.ID)) and (room_exists(_other.ID)))
+						var _other = argument[0];
+						
+						if (room_exists(_other))
 						{
-							persistent = _other.persistent;
-							size = _other.size;
-							
-							addedInstanceList.copy(_other.addedInstanceList);
-						
-							if (size != undefined)
-							{
-								room_set_width(ID, size.x);
-								room_set_height(ID, size.y);
-							}
-						
-							if (persistent != undefined)
-							{
-								room_set_persistent(ID, persistent);
-							}
-						
-							room_assign(ID, _other.ID);
+							//|Construction method: Room Duplicate.
+							room_assign(ID, _other);
 						}
 					}
 					else
 					{
-						if (is_real(_other)) and (room_exists(_other))
-						{
-							room_assign(ID, _other);
-						}
+						//|Construction method: New Room.
+						var _size = ((argument_count > 0) ? argument[0] : undefined);
+						var _persistent = ((argument_count > 1) ? argument[1] : undefined);
+						
+						size = ((_size != undefined) ? _size : new Vector2(0, 0));
+						persistent = ((_persistent != undefined) ? _persistent : false);
+						
+						room_set_width(ID, size.x);
+						room_set_height(ID, size.y);
+						room_set_persistent(ID, persistent);
 					}
 				}
 			}
@@ -177,7 +213,7 @@ function Room() constructor
 			
 			// @argument			{object} object
 			// @argument			{Vector2} location
-			// @returns				{Room.AddedInstance|noone}
+			// @returns				{Room.AddedInstance} | On error: {noone}
 			// @description			Add an instance of an object to this inactive room.
 			static instance_add = function(_object, _location)
 			{
@@ -201,13 +237,14 @@ function Room() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
-			//						Automatically overrides the string() conversion.
+			// @description			Create a string representing this constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the ID and name of this Room.
 			static toString = function()
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
 				{
-					return (instanceof(self) + "(" + name + ")");
+					return (instanceof(self) + "(" + string(ID) + ": " + string(name) + ")");
 				}
 				else
 				{

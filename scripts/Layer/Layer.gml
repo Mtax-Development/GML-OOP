@@ -1,24 +1,27 @@
 /// @function				Layer()
 /// @argument				{int} depth
 ///
-/// @description			Construct a Layer resource, which is used to hold
-///							and sort rendering depth of different types of elements.
+/// @description			Construct a Layer resource, used to group graphical elements and sort 
+///							their rendering depth.
 ///
 ///							Construction methods:
 ///							- New Layer: {int} depth
 ///							- Exisiting Layer: {string} name
+///							- Constructor copy: {Layer} other
+///							   Information about object instances will not be copied.
 function Layer(_depth) constructor
 {
 	#region [Elements]
 		
 		// @function				Layer.SpriteElement()
 		// @argument				{Sprite} sprite
-		// @description				Constructs a Sprite Element, which is used to draw a Sprite on
+		// @description				Construct a Sprite Element, which is used to draw a Sprite on
 		//							this Layer.
 		//
 		//							Construction methods:
-		//							- New Sprite Element: {Sprite} sprite
-		//							- Existing Sprite Element: {int} spriteElement
+		//							- New element: {Sprite} sprite
+		//							- Wrapper: {spriteElement} spriteElement
+		//							- Constructor copy: {Layer.SpriteElement} other
 		function SpriteElement() constructor
 		{
 			#region [[Methods]]
@@ -27,52 +30,95 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						ID = undefined;
+						sprite = undefined;
+						location = undefined;
+						scale = undefined;
+						angle = undefined;
+						color = undefined;
+						alpha = undefined;
+						frame = undefined;
+						speed = undefined;
+						
 						parent = other;
 						
-						if (instanceof(argument[0]) == "Sprite")
+						if (argument_count > 0)
 						{
-							sprite = _sprite;
-							ID = layer_sprite_create(parent.ID, sprite.location.x, 
-													 sprite.location.y, sprite.ID);
+							switch (instanceof(argument[0]))
+							{
+								case "SpriteElement":
+									//|Construction method: Constructor copy.
+									var _other = argument[0];
+									
+									sprite = _other.sprite;
+									ID = layer_sprite_create(parent.ID, _other.location.x,
+															 _other.location.y, sprite.ID);
+									
+									location = new Vector2(_other.location);
+									scale = new Scale(_other.scale);
+									angle = new Angle(_other.angle);
+									color = _other.color;
+									alpha = _other.alpha;
+									frame = _other.frame;
+									speed = _other.speed;
+									
+									layer_sprite_xscale(ID, scale.x);
+									layer_sprite_yscale(ID, scale.y);
+									layer_sprite_angle(ID, angle.value);
+									layer_sprite_blend(ID, color);
+									layer_sprite_alpha(ID, alpha);
+									layer_sprite_index(ID, frame);
+									layer_sprite_speed(ID, speed);
+								break;
 							
-							location = new Vector2(sprite.location.x, sprite.location.y);
-							scale = new Scale(sprite.scale.x, sprite.scale.y);
-							angle = new Angle(sprite.angle.value);
-							color = sprite.color;
-							alpha = sprite.alpha;
-							frame = sprite.frame;
-							speed = sprite.speed;
+								case "Sprite":
+									//|Construction method: New element.
+									sprite = argument[0];
+									ID = layer_sprite_create(parent.ID, sprite.location.x, 
+															 sprite.location.y, sprite.ID);
 							
-							layer_sprite_xscale(ID, sprite.scale.x);
-							layer_sprite_yscale(ID, sprite.scale.y);
-							layer_sprite_angle(ID, sprite.angle.value);
-							layer_sprite_blend(ID, sprite.color);
-							layer_sprite_alpha(ID, sprite.alpha);
-							layer_sprite_index(ID, sprite.frame);
-							layer_sprite_speed(ID, sprite.speed);
-						}
-						else
-						{
-							ID = argument[0];
-							sprite = new Sprite
-							(
-								layer_sprite_get_sprite(ID),
-								new Vector2(layer_sprite_get_x(ID), layer_sprite_get_y(ID)),
-								layer_sprite_get_index(ID),
-								layer_sprite_get_speed(ID),
-								new Scale(layer_sprite_get_xscale(ID), layer_sprite_get_yscale(ID)),
-								new Angle(layer_sprite_get_angle(ID)),
-								layer_sprite_get_blend(ID),
-								layer_sprite_get_alpha(ID)
-							);
+									location = new Vector2(sprite.location.x, sprite.location.y);
+									scale = new Scale(sprite.scale.x, sprite.scale.y);
+									angle = new Angle(sprite.angle.value);
+									color = sprite.color;
+									alpha = sprite.alpha;
+									frame = sprite.frame;
+									speed = sprite.speed;
+									
+									layer_sprite_xscale(ID, scale.x);
+									layer_sprite_yscale(ID, scale.y);
+									layer_sprite_angle(ID, angle.value);
+									layer_sprite_blend(ID, color);
+									layer_sprite_alpha(ID, alpha);
+									layer_sprite_index(ID, frame);
+									layer_sprite_speed(ID, speed);
+								break;
 							
-							location = new Vector2(sprite.location.x, sprite.location.y);
-							scale = new Scale(sprite.scale.x, sprite.scale.y);
-							angle = new Angle(sprite.angle.value);
-							color = sprite.color;
-							alpha = sprite.alpha;
-							frame = sprite.frame;
-							speed = sprite.speed;
+								default:
+									//|Construction method: Wrapper.
+									ID = argument[0];
+									sprite = new Sprite
+									(
+										layer_sprite_get_sprite(ID),
+										new Vector2(layer_sprite_get_x(ID), layer_sprite_get_y(ID)),
+										layer_sprite_get_index(ID),
+										layer_sprite_get_speed(ID),
+										new Scale(layer_sprite_get_xscale(ID), 
+												  layer_sprite_get_yscale(ID)),
+										new Angle(layer_sprite_get_angle(ID)),
+										layer_sprite_get_blend(ID),
+										layer_sprite_get_alpha(ID)
+									);
+									
+									location = new Vector2(sprite.location.x, sprite.location.y);
+									scale = new Scale(sprite.scale.x, sprite.scale.y);
+									angle = new Angle(sprite.angle.value);
+									color = sprite.color;
+									alpha = sprite.alpha;
+									frame = sprite.frame;
+									speed = sprite.speed;
+								break;
+							}
 						}
 					}
 					
@@ -190,8 +236,10 @@ function Layer(_depth) constructor
 				#region <<Conversion>>
 					
 					// @returns				{string}
-					// @description			Create a string representing the constructor.
+					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
+					//						Content will be represented with the ID and the Sprite of
+					//						this SpriteElement.
 					static toString = function()
 					{
 						var _constructorName = "Layer.SpriteElement";
@@ -218,7 +266,7 @@ function Layer(_depth) constructor
 				repeat (argument_count)
 				{
 					argument_original[_i] = argument[_i];
-			
+					
 					++_i;
 				}
 				
@@ -236,12 +284,13 @@ function Layer(_depth) constructor
 		
 		// @function				Layer.BackgroundElement()
 		// @argument				{Sprite} sprite
-		// @description				Constructs a Background Element, which is used to draw a 
+		// @description				Construct a Background Element, which is used to draw a 
 		//							Background on this Layer.
 		//
 		//							Construction methods:
-		//							- New Background Element: {Sprite} sprite
-		//							- Existing Background Element: {int} backgroundElement
+		//							- New element: {Sprite} sprite
+		//							- Wrapper: {backgroundElement} backgroundElement
+		//							- Constructor copy: {Layer.BackgroundElement} other
 		function BackgroundElement() constructor
 		{
 			#region [[Methods]]
@@ -250,58 +299,110 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						ID = undefined;
+						sprite = undefined;
+							
+						visible = undefined;
+						stretched = undefined;
+						tiled_x = undefined;
+						tiled_y = undefined;
+							
+						scale = undefined;
+						color = undefined;
+						alpha = undefined;
+						frame = undefined;
+						speed = undefined;
+						
 						parent = other;
 						
-						if (instanceof(argument[0]) == "Sprite")
+						if (argument_count > 0)
 						{
-							sprite = _sprite;
-							ID = layer_background_create(layer.ID, sprite.ID);
-							
-							visible = true;
-							stretched = false;
-							tiled_x = false;
-							tiled_y = false;
-							
-							scale = new Scale(sprite.scale.x, sprite.scale.y);
-							color = sprite.color;
-							alpha = sprite.alpha;
-							frame = sprite.frame;
-							speed = sprite.speed;
-							
-							layer_background_xscale(ID, scale.x);
-							layer_background_yscale(ID, scale.y);
-							layer_background_blend(ID, color);
-							layer_background_alpha(ID, alpha);
-							layer_background_index(ID, frame);
-							layer_background_speed(ID, speed);
-						}
-						else
-						{
-							ID = argument[0];
-							
-							visible = layer_background_get_visible(ID);
-							stretched = layer_background_get_stretch(ID);
-							tiled_x = layer_background_get_htiled(ID);
-							tiled_y = layer_background_get_vtiled(ID);
-							
-							sprite = new Sprite
-							(
-								layer_background_get_sprite(ID),
-								undefined,
-								layer_background_get_index(ID),
-								layer_background_get_speed(ID),
-								new Scale(layer_background_get_xscale(ID), 
-										  layer_background_get_yscale(ID)),
-								undefined,
-								layer_background_get_blend(ID),
-								layer_background_get_alpha(ID)
-							);
-							
-							scale = new Scale(sprite.scale.x, sprite.scale.y);
-							color = sprite.color;
-							alpha = sprite.alpha;
-							frame = sprite.frame;
-							speed = sprite.speed;
+							switch (instanceof(argument[0]))
+							{
+								case "BackgroundElement":
+									//|Construction method: Constructor copy.
+									var _other = argument[0];
+									
+									sprite = _other.sprite;
+									ID = layer_background_create(layer.ID, sprite.ID);
+									
+									visible = _other.visible;
+									stretched = _other.stretched;
+									tiled_x = _other.tiled_x;
+									tiled_y = _other.tiled_y;
+									
+									scale = new Scale(_other.scale);
+									color = _other.color;
+									alpha = _other.alpha;
+									frame = _other.frame;
+									speed = _other.speed;
+									
+									layer_background_visible(ID, visible);
+									layer_background_stretch(ID, stretched);
+									layer_background_htiled(ID, tiled_x);
+									layer_background_vtiled(ID, tiled_y);
+									
+									layer_background_xscale(ID, scale.x);
+									layer_background_yscale(ID, scale.y);
+									layer_background_blend(ID, color);
+									layer_background_alpha(ID, alpha);
+									layer_background_index(ID, frame);
+									layer_background_speed(ID, speed);
+								break;
+								
+								case "Sprite":
+									//|Construction method: New element.
+									sprite = argument[0];
+									ID = layer_background_create(layer.ID, sprite.ID);
+									
+									visible = true;
+									stretched = false;
+									tiled_x = false;
+									tiled_y = false;
+									
+									scale = new Scale(sprite.scale.x, sprite.scale.y);
+									color = sprite.color;
+									alpha = sprite.alpha;
+									frame = sprite.frame;
+									speed = sprite.speed;
+									
+									layer_background_xscale(ID, scale.x);
+									layer_background_yscale(ID, scale.y);
+									layer_background_blend(ID, color);
+									layer_background_alpha(ID, alpha);
+									layer_background_index(ID, frame);
+									layer_background_speed(ID, speed);
+								break;
+								
+								default:
+									//|Construction method: Wrapper.
+									ID = argument[0];
+									
+									visible = layer_background_get_visible(ID);
+									stretched = layer_background_get_stretch(ID);
+									tiled_x = layer_background_get_htiled(ID);
+									tiled_y = layer_background_get_vtiled(ID);
+									
+									sprite = new Sprite
+									(
+										layer_background_get_sprite(ID),
+										undefined,
+										layer_background_get_index(ID),
+										layer_background_get_speed(ID),
+										new Scale(layer_background_get_xscale(ID), 
+												  layer_background_get_yscale(ID)),
+										undefined,
+										layer_background_get_blend(ID),
+										layer_background_get_alpha(ID)
+									);
+									
+									scale = new Scale(sprite.scale.x, sprite.scale.y);
+									color = sprite.color;
+									alpha = sprite.alpha;
+									frame = sprite.frame;
+									speed = sprite.speed;
+								break;
+							}
 						}
 					}
 					
@@ -450,8 +551,10 @@ function Layer(_depth) constructor
 				#region <<Conversion>>
 					
 					// @returns				{string}
-					// @description			Create a string representing the constructor.
+					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
+					//						Content will be represented with the ID and the sprite of
+					//						this BackgroundElement.
 					static toString = function()
 					{
 						var _constructorName = "Layer.BackgroundElement";
@@ -478,7 +581,7 @@ function Layer(_depth) constructor
 				repeat (argument_count)
 				{
 					argument_original[_i] = argument[_i];
-			
+					
 					++_i;
 				}
 				
@@ -496,39 +599,56 @@ function Layer(_depth) constructor
 		
 		// @function				Layer.TilemapElement()
 		// @argument				{Sprite} sprite
-		// @description				Constructs a Tilemap Element, which is used to draw Tiles from
+		// @description				Construct a Tilemap Element, which is used to draw Tiles from
 		//							a Tileset on this Layer.
 		//
 		//							Construction methods:
-		//							- New Tilemap Element: {tileset} tileset, {Vector2} location
-		//												   {Vector2} size
-		//							- Existing Tilemap Element: {int} tilemapElement
+		//							- New element: {tileset} tileset, {Vector2} location,
+		//										   {Vector2} size
+		//							- Wrapper: {int} tilemapElement
+		//							- Constructor copy: {Layer.TilemapElement} other
 		function TilemapElement() constructor
 		{
 			#region [[Elements]]
 				
 				// @function				Layer.TilemapElement.TileData()
 				// @argument				{int|hex} id
-				// @description				Constructs a TileData Element, which refers to Tile
+				// @description				Constructs a TileData Element, which refers to a Tile
 				//							in this Tilemap.
+				//
+				//							Construction methods:
+				//							- New constructor
+				//							- Constructor copy: {Layer.TilemapElement.TileData} other
 				function TileData(_id) constructor
 				{
 					#region [[[Methods]]]
 						#region <<<Management>>>
 							
-							// @argument			{int} id
 							// @description			Initialize the constructor.
-							static construct = function(_id)
+							static construct = function()
 							{
+								ID = -1;
+								
 								parent = other;
 								
-								ID = _id;
+								if (instanceof(argument[0]) == "TileData")
+								{
+									//|Construction method: Constructor copy.
+									var _other = argument[0];
+									
+									ID = _other.ID;
+								}
+								else
+								{
+									//|Construction method: New constructor.
+									ID = argument[0];
+								}
 							}
 							
 						#endregion
 						#region <<<Getters>>>
 							
-							// @returns				{int} | On error: -1
+							// @returns				{int} | On error: {int:-1}
 							// @description			Return the index of the Tile this Tile Data 
 							//						refers to on its tileset.
 							static getTilesetIndex = function()
@@ -681,8 +801,10 @@ function Layer(_depth) constructor
 						#region <<<Conversion>>>
 							
 							// @returns				{string}
-							// @description			Create a string representing the constructor.
+							// @description			Create a string representing this constructor.
 							//						Overrides the string() conversion.
+							//						Content will be represented with the ID of this
+							//						TileData.
 							static toString = function()
 							{
 								var _constructorName = "Layer.TilemapElement.TileData";
@@ -717,25 +839,48 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						ID = undefined;
+						tileset = undefined;
+						location = undefined;
+						size = undefined;
+						
 						parent = other;
 						
-						if (argument_count > 1)
+						if ((argument_count > 0) and (instanceof(argument[0]) == "TilemapElement"))
 						{
-							tileset = argument[0];
-							location = argument[1];
-							size = argument[2];
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
 							
-							ID = layer_tilemap_create(parent.ID, location.x, location.y, tileset, 
-													  size.x, size.y);
+							tileset = _other.tileset;
+							location = _other.location;
+							size = _other.size;
+							
+							ID = layer_tilemap_create(parent.ID, location.x, location.y, 
+														tileset, size.x, size.y);
 						}
 						else
 						{
-							ID = argument[0];
-							
-							tileset = tilemap_get_tileset(ID);
-							location = new Vector2(tilemap_get_x(ID), tilemap_get_y(ID));
-							size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
+							if (argument_count > 2)
+							{
+								//|Construction method: New element.
+								tileset = argument[0];
+								location = argument[1];
+								size = argument[2];
+								
+								ID = layer_tilemap_create(parent.ID, location.x, location.y, 
+														  tileset, size.x, size.y);
+							}
+							else
+							{
+								//|Construction method: Wrapper.
+								ID = argument[0];
+								
+								tileset = tilemap_get_tileset(ID);
+								location = new Vector2(tilemap_get_x(ID), tilemap_get_y(ID));
+								size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
+							}
 						}
+
 					}
 					
 					// @returns				{undefined}
@@ -812,7 +957,7 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Getters>>
 					
-					// @returns				{int} | On error: -1
+					// @returns				{int} | On error: {int:-1}
 					// @description			Return the bit mask value for this Tilemap.
 					//						Returns 0 if there is no mask.
 					static getMask = function()
@@ -1031,19 +1176,27 @@ function Layer(_depth) constructor
 				#region <<Conversion>>
 					
 					// @returns				{string}
-					// @description			Create a string representing the constructor.
+					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					static toString = function()
+					//						Content will be represented with the ID and properties of
+					//						this TilemapElement.
+					static toString = function(_multiline)
 					{
 						var _constructorName = "Layer.TilemapElement";
 						
 						if ((parent != undefined) and (is_real(parent.ID)) 
 						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
 						{
-							return (_constructorName + "(" + 
-									"Tileset: " + tileset_get_name(tileset) + ", " +
-									"Location: " + string(location) + ", " +
-									"Size: " + string(size) + ")");
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
+							
+							var _string = ("ID: " + string(ID) + _mark_separator +
+										   "Tileset: " + tileset_get_name(tileset) + 
+													   _mark_separator +
+										   "Location: " + string(location) + _mark_separator +
+										   "Size: " + string(size));
+							
+							return ((_multiline) ? _string 
+												 : (_constructorName + "(" + _string + ")"));
 						}
 						else
 						{
@@ -1061,7 +1214,7 @@ function Layer(_depth) constructor
 				repeat (argument_count)
 				{
 					argument_original[_i] = argument[_i];
-			
+					
 					++_i;
 				}
 				
@@ -1084,57 +1237,69 @@ function Layer(_depth) constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (is_string(argument[0]))
+				ID = undefined;
+				name = undefined;
+				
+				depth = undefined;
+				
+				location = undefined;
+				speed = undefined;
+				
+				visible = undefined;
+				instancesPaused = undefined;
+				
+				script_drawBegin = undefined;
+				script_drawEnd = undefined;
+				
+				shader = undefined;
+				
+				instanceList = undefined;
+				spriteList = undefined;
+				backgroundList = undefined;
+				tilemapList = undefined;
+				
+				if (instanceof(argument[0]) == "Layer")
 				{
-					//|Construction method: Existing Layer.
-					var _name = argument[0];
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
 					
-					name = _name;
-					ID = layer_get_id(name);
+					depth = _other.depth;
 					
-					depth = layer_get_depth(ID);
+					location = new Vector2(_other.location);
+					speed = new Vector2(_other.speed);
 					
-					location = new Vector2(layer_get_x(ID), layer_get_y(ID));
-					speed = new Vector2(layer_get_hspeed(ID), layer_get_vspeed(ID));
+					visible = _other.visible;
+					instancesPaused = false;
 					
-					visible = layer_get_visible(ID);
-					instancesPaused = undefined;
+					script_drawBegin = _other.script_drawBegin;
+					script_drawEnd = _other.script_drawEnd;
 					
-					script_drawBegin = layer_get_script_begin(ID);
-					script_drawEnd = layer_get_script_end(ID);
-					
-					shader = layer_get_shader(ID);
+					shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
+																	  : _other.shader);
 					
 					instanceList = new List();
 					spriteList = new List();
 					backgroundList = new List();
 					tilemapList = new List();
 					
-					var _elements = layer_get_all_elements(ID);
+					var _elementLists = [spriteList, backgroundList, tilemapList];
+					var _elementLists_other = [_other.spriteList, _other.backgroundList, 
+											   _other.tilemapList];
+					var _elementTypes = [SpriteElement, BackgroundElement, TilemapElement];
 					
 					var _i = 0;
-					
-					repeat (array_length(_elements))
+					repeat (array_length(_elementLists))
 					{
-						var _type = layer_get_element_type(_elements[_i]);
+						var _j = 0;
 						
-						switch(_type)
+						repeat (_elementLists_other[_i].getSize())
 						{
-							case layerelementtype_instance:
-								instanceList.add(layer_instance_get_instance(_elements[_i]));
-							break;
+							_elementLists[_i].add
+							(
+								new _elementTypes[_i](_elementLists_other.getValue(_j))
+							);
 							
-							case layerelementtype_sprite:
-								spriteList.add(new SpriteElement(_elements[_i]));
-							break;
-							
-							case layerelementtype_background:
-								backgroundList.add(new BackgroundElement(_elements[_i]));
-							break;
-							
-							case layerelementtype_tilemap:
-								tilemapList.add(new TilemapElement(_elements[_i]));
-							break;
+							++_j;
 						}
 						
 						++_i;
@@ -1142,28 +1307,89 @@ function Layer(_depth) constructor
 				}
 				else
 				{
-					//Construction method: New layer.
-					depth = argument[0];
 					
-					location = new Vector2(0, 0);
-					speed = new Vector2(0, 0);
-					
-					visible = true;
-					instancesPaused = false;
-					
-					script_drawBegin = undefined;
-					script_drawEnd = undefined;
-					
-					shader = undefined;
-					
-					instanceList = new List();
-					spriteList = new List();
-					backgroundList = new List();
-					tilemapList = new List();
-					
-					ID = layer_create(depth);
-					
-					name = layer_get_name(ID);
+					if (is_string(argument[0]))
+					{
+						//|Construction method: Existing Layer.
+						var _name = argument[0];
+						
+						name = _name;
+						ID = layer_get_id(name);
+						
+						depth = layer_get_depth(ID);
+						
+						location = new Vector2(layer_get_x(ID), layer_get_y(ID));
+						speed = new Vector2(layer_get_hspeed(ID), layer_get_vspeed(ID));
+						
+						visible = layer_get_visible(ID);
+						instancesPaused = undefined;
+						
+						script_drawBegin = layer_get_script_begin(ID);
+						script_drawEnd = layer_get_script_end(ID);
+						
+						shader = layer_get_shader(ID);
+						
+						instanceList = new List();
+						spriteList = new List();
+						backgroundList = new List();
+						tilemapList = new List();
+						
+						var _elements = layer_get_all_elements(ID);
+						
+						var _i = 0;
+						
+						repeat (array_length(_elements))
+						{
+							var _type = layer_get_element_type(_elements[_i]);
+							
+							switch (_type)
+							{
+								case layerelementtype_instance:
+									instanceList.add(layer_instance_get_instance(_elements[_i]));
+								break;
+								
+								case layerelementtype_sprite:
+									spriteList.add(new SpriteElement(_elements[_i]));
+								break;
+								
+								case layerelementtype_background:
+									backgroundList.add(new BackgroundElement(_elements[_i]));
+								break;
+								
+								case layerelementtype_tilemap:
+									tilemapList.add(new TilemapElement(_elements[_i]));
+								break;
+							}
+							
+							++_i;
+						}
+					}
+					else
+					{
+						
+						//Construction method: New layer.
+						depth = argument[0];
+						
+						location = new Vector2(0, 0);
+						speed = new Vector2(0, 0);
+						
+						visible = true;
+						instancesPaused = false;
+						
+						script_drawBegin = undefined;
+						script_drawEnd = undefined;
+						
+						shader = undefined;
+						
+						instanceList = new List();
+						spriteList = new List();
+						backgroundList = new List();
+						tilemapList = new List();
+						
+						ID = layer_create(depth);
+						
+						name = layer_get_name(ID);
+					}
 				}
 			}
 			
@@ -1268,7 +1494,7 @@ function Layer(_depth) constructor
 				}
 			}
 			
-			// @argument			{shader} Shader
+			// @argument			{Shader} Shader
 			// @description			Set a Shader that will be applied to Layer's every element.
 			static setShader = function(_shader)
 			{
@@ -1283,7 +1509,7 @@ function Layer(_depth) constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{int[]}
+			// @returns				{int[]} | On error: {undefined}
 			// @description			Return the array of all internal element IDs held by this Layer.
 			static getElements = function()
 			{
@@ -1292,7 +1518,7 @@ function Layer(_depth) constructor
 			}
 			
 			// @argument			{instance} instance
-			// @returns				{bool|undefined}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check whether the specified instance is bound to this Layer.
 			static hasInstance = function(_instance)
 			{
@@ -1364,7 +1590,7 @@ function Layer(_depth) constructor
 			
 			// @argument			{Vector2} location
 			// @argument			{object} object
-			// @returns				{int|noone}
+			// @returns				{int} | On error: {noone}
 			// @description			Create an instance on this Layer and return its internal ID.
 			static create_instance = function(_location, _object)
 			{
@@ -1418,11 +1644,13 @@ function Layer(_depth) constructor
 			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented with the name and depth of this
+			//						Layer.
 			static toString = function()
 			{
 				if (is_real(ID) and (layer_exists(ID)))
 				{
-					return (instanceof(self) + "(" + string(depth) + ": " + name + ")");
+					return (instanceof(self) + "(" + string(name) + ": " + string(depth) + ")");
 				}
 				else
 				{

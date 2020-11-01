@@ -25,7 +25,10 @@ function List() constructor
 					//|Construction method: Constructor copy.
 					var _other = argument[0];
 					
-					ds_list_copy(ID, _other.ID);
+					if ((is_real(_other.ID)) and (ds_exists(ds_type_list, _other.ID)))
+					{
+						ds_list_copy(ID, _other.ID);
+					}
 				}
 			}
 			
@@ -67,6 +70,8 @@ function List() constructor
 					}
 					
 					ds_list_destroy(ID);
+					
+					ID = undefined;
 				}
 				
 				return undefined;
@@ -347,8 +352,9 @@ function List() constructor
 			// @argument			{string|undefined} mark_elementStart
 			// @argument			{string|undefined} mark_elementEnd
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
+			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
 									   _mark_cut, _mark_elementStart, _mark_elementEnd)
 			{
@@ -560,7 +566,7 @@ function List() constructor
 				}
 				
 				ds_list_read(ID, _string, _legacy);
-			}
+				}
 			
 		#endregion
 	#endregion
@@ -569,7 +575,6 @@ function List() constructor
 		argument_original = array_create(argument_count, undefined);
 		
 		var _i = 0;
-		
 		repeat (argument_count)
 		{
 			argument_original[_i] = argument[_i];

@@ -355,7 +355,7 @@ function DateTime(_value) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the full date and time output.
 			static toString = function()

@@ -1,7 +1,11 @@
 /// @function				ParticleType()
 ///
-/// @description			Constructs a Particle Type resource, which can 
-///							have its properties changed and then be executed.
+/// @description			Construct a Particle Type resource, a particle configuration for creation
+///							within Particle System.
+///
+///							Construction methods:
+///							- New constructor.
+///							- Constructor copy: {ParticleType} other
 function ParticleType() constructor
 {
 	#region [Methods]
@@ -10,60 +14,143 @@ function ParticleType() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				ID = part_type_create();
-				
-				sprite = undefined;
-				sprite_animate = false;
-				sprite_stretch = false;
-				sprite_random = false;
-				
-				size = 1;
-				size_increase = 0;
-				size_wiggle = 0;
-				
-				scale = new Scale(1, 1);
-				
-				speed = 1;
-				speed_increase = 0;
-				speed_wiggle = 0;
-				
-				direction = 0;
-				direction_increase = 0;
-				direction_wiggle = 0;
-				
-				gravity_amount = 0;
-				gravity_direction = undefined;
-				
-				orientation = 0;
-				orientation_increase = 0;
-				orientation_wiggle = 0;
-				orientation_relative = false;
-				
-				color = c_white;
-				color_type = "color";
-				
-				alpha = [1, undefined, undefined];
-				
-				blend_additive = false;
-				
-				life = 100;
-				
-				shape = pt_shape_pixel;
-				
-				step_type = undefined;
-				step_number = 0;
-				
-				death_type = undefined;
-				death_number = 0;	
+				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleType"))
+				{
+					//|Construction method: Constructor copy.
+					var _other = argument[0];
+					
+					ID = part_type_create();
+					
+					shape = pt_shape_pixel;
+					
+					if (_other.sprite != undefined)
+					{
+						self.setSprite(_other.sprite, _other.sprite_animate, _other.sprite_stretch,
+									   _other.sprite_random);
+					}
+					else if (_other.shape != undefined)
+					{
+						self.setShape(_other.shape);
+					}
+					
+					self.setSize(_other.size, _other.size_increase, _other.size_wiggle);
+					self.setScale(_other.scale);
+					self.setSpeed(_other.speed, _other.speed_increase, _other.speed_wiggle);
+					self.setDirection(_other.direction, _other.direction_increase, 
+									  _other.direction_wiggle);
+					self.setOrientation(_other.orientation, _other.orientation_increase, 
+										_other.orientation_wiggle, _other.orientation_relative);
+					self.setGravity(_other.gravity_amount, _other.gravity_direction);
+					self.setLife(_other.life);
+					self.setBlend(_other.blend_additive);
+					
+					switch (_other.color_type)
+					{
+						case "color":
+						case "Color2":
+						case "Color3":
+							self.setColor(_other.color);
+						break;
+						
+						case "mix":
+							self.setColor_mix(_other.color);
+						break;
+						
+						case "rgb":
+							self.setColor_rgb(_other.color[0], _other.color[1], _other.color[2]);
+						break;
+						
+						case "hsv":
+							self.setColor_hsv(_other.color[0], _other.color[1], _other.color[2]);
+						break;
+					}
+					
+					if (is_array(_other.alpha))
+					{
+						if (_other.alpha[2] != undefined)
+						{
+							self.setAlpha(_other.alpha[0], _other.alpha[1], _other.alpha[2]);
+						}
+						else if (_other.alpha[1] != undefined)
+						{
+							self.setAlpha(_other.alpha[0], _other.alpha[1]);
+						}
+						else
+						{
+							self.setAlpha(_other.alpha[0]);
+						}
+					}
+					
+					if (_other.step_type != undefined)
+					{
+						self.setStep(_other.step_type, _other.step_number);
+					}
+					
+					if (_other.death_type != undefined)
+					{
+						self.setDeath(_other.death_type, _other.death_number);
+					}
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					ID = part_type_create();
+					
+					shape = pt_shape_pixel;
+					
+					sprite = undefined;
+					sprite_animate = false;
+					sprite_stretch = false;
+					sprite_random = false;
+					
+					size = 1;
+					size_increase = 0;
+					size_wiggle = 0;
+					
+					scale = new Scale(1, 1);
+					
+					speed = 1;
+					speed_increase = 0;
+					speed_wiggle = 0;
+					
+					direction = 0;
+					direction_increase = 0;
+					direction_wiggle = 0;
+					
+					orientation = 0;
+					orientation_increase = 0;
+					orientation_wiggle = 0;
+					orientation_relative = false;
+					
+					gravity_amount = 0;
+					gravity_direction = undefined;
+					
+					life = 100;
+					
+					blend_additive = false;
+					
+					color = c_white;
+					color_type = "color";
+					
+					alpha = [1, undefined, undefined];	
+					
+					step_type = undefined;
+					step_number = 0;
+					
+					death_type = undefined;
+					death_number = 0;
+				}
 			}
 			
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
 			static destroy = function()
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					part_type_destroy(ID);
+					
+					ID = undefined;
 				}
 				
 				return undefined;
@@ -72,10 +159,12 @@ function ParticleType() constructor
 			// @description			Reset all properties to default.
 			static clear = function()
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					part_type_clear(ID);
 				}
+				
+				shape = pt_shape_pixel;
 				
 				sprite = undefined;
 				sprite_animate = false;
@@ -96,30 +185,28 @@ function ParticleType() constructor
 				direction_increase = 0;
 				direction_wiggle = 0;
 				
-				gravity_amount = 0;
-				gravity_direction = undefined;
-				
 				orientation = 0;
 				orientation_increase = 0;
 				orientation_wiggle = 0;
 				orientation_relative = false;
 				
-				color = c_white;
-				color_type = "color";
-				
-				alpha = [1, undefined, undefined];
-				
-				blend_additive = false;
+				gravity_amount = 0;
+				gravity_direction = undefined;
 				
 				life = 100;
 				
-				shape = pt_shape_pixel;
+				blend_additive = false;
+				
+				color = c_white;
+				color_type = "color";
+				
+				alpha = [1, undefined, undefined];	
 				
 				step_type = undefined;
 				step_number = 0;
 				
 				death_type = undefined;
-				death_number = 0;	
+				death_number = 0;
 			}
 			
 		#endregion
@@ -129,29 +216,36 @@ function ParticleType() constructor
 			// @description			Set the shape property of this Particle Type.
 			static setShape = function(_shape)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					shape = _shape;
+					
+					sprite = undefined;
+					sprite_animate = false;
+					sprite_stretch = false;
+					sprite_random = false;
 					
 					part_type_shape(ID, shape);
 				}
 			}
 			
-			// @argument			{sprite} sprite
+			// @argument			{Sprite} sprite
 			// @argument			{bool} sprite_animate
 			// @argument			{bool} sprite_stretch
 			// @argument			{bool} sprite_random
 			// @description			Set the sprite properties of this Particle Type.
 			static setSprite = function(_sprite, _animate, _stretch, _random)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					sprite = _sprite;
 					sprite_animate = ((_animate != undefined) ? _animate : false);
 					sprite_stretch = ((_stretch != undefined) ? _stretch : false);
 					sprite_random = ((_random != undefined) ? _random : false);
 					
-					part_type_sprite(ID, sprite, sprite_animate, sprite_stretch,
+					shape = undefined;
+					
+					part_type_sprite(ID, sprite.ID, sprite_animate, sprite_stretch,
 									 sprite_random);
 				}
 			}
@@ -162,7 +256,7 @@ function ParticleType() constructor
 			// @description			Set the size properties of this Particle Type.
 			static setSize = function(_size, _increase, _wiggle)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					size = _size;
 					size_increase = ((_increase != undefined) ? _increase : 0);
@@ -190,7 +284,7 @@ function ParticleType() constructor
 			// @description			Set the scale property of this Particle Type.
 			static setScale = function(_scale)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					scale = _scale;
 					
@@ -204,7 +298,7 @@ function ParticleType() constructor
 			// @description			Set the speed properties of this Particle Type.
 			static setSpeed = function(_speed, _increase, _wiggle)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					speed = _speed;
 					speed_increase = ((_increase != undefined) ? _increase : 0);
@@ -228,27 +322,13 @@ function ParticleType() constructor
 				}
 			}
 			
-			// @argument			{real} amount
-			// @argument			{Angle} direction
-			// @description			Set the gravity properties of this Particle Type.
-			static setGravity = function(_amount, _direction)
-			{
-				if (part_type_exists(ID))
-				{
-					gravity_amount = _amount;
-					gravity_direction = _direction;
-					
-					part_type_gravity(ID, gravity_amount, gravity_direction.value);
-				}
-			}
-		
 			// @argument			{real|Angle|Range} direction
 			// @argument			{real} increase?
 			// @argument			{real} wiggle?
 			// @description			Set the direction properties of this Particle Type.
 			static setDirection = function(_direction, _increase, _wiggle)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{					
 					direction = _direction
 					direction_increase = ((_increase != undefined) ? _increase : 0);
@@ -286,7 +366,7 @@ function ParticleType() constructor
 			// @description			Set the orientation propierties of this Particle Type.
 			static setOrientation = function(_orientation, _increase, _wiggle, _relative)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					orientation = _orientation;
 					orientation_increase = ((_increase != undefined) ? _increase : 0);
@@ -319,11 +399,63 @@ function ParticleType() constructor
 				}
 			}
 			
+			// @argument			{real} amount
+			// @argument			{Angle} direction
+			// @description			Set the gravity properties of this Particle Type.
+			static setGravity = function(_amount, _direction)
+			{
+				if ((is_real(ID)) and (part_type_exists(ID)))
+				{
+					gravity_amount = _amount;
+					gravity_direction = _direction;
+					
+					part_type_gravity(ID, gravity_amount, gravity_direction.value);
+				}
+			}
+			
+			// @argument			{int|Range} life
+			// @description			Set the life length property of this Particle Type.
+			static setLife = function(_life)
+			{
+				if ((is_real(ID)) and (part_type_exists(ID)))
+				{
+					life = _life;
+					
+					var _life_minimum, _life_maximum;
+					
+					if (instanceof(life) == "Range")
+					{
+						_life_minimum = life.minimum;
+						_life_maximum = life.maximum;
+					}
+					else
+					{
+						_life_minimum = life;
+						_life_maximum = life;
+					}
+					
+					part_type_life(ID, _life_minimum, _life_maximum);
+				}
+			}
+			
+			// @argument			{bool} blend_additive
+			// @description			Set the blending property of this Particle Type.
+			static setBlend = function(_blend_additive)
+			{
+				if ((is_real(ID)) and (part_type_exists(ID)))
+				{
+					blend_additive = _blend_additive;
+					
+					part_type_blend(ID, blend_additive);
+				}
+			}
+			
 			// @argument			{color|Color2|Color3} color
-			// @description			Set the color property of this Particle Type to gradient change.
+			// @description			Set the color property of this Particle Type to dynamic gradient
+			//						change that has effect over the life time of this Particle Type.
 			static setColor = function(_color)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					color = _color;
 					
@@ -352,10 +484,11 @@ function ParticleType() constructor
 			}
 			
 			// @argument			{Color2} colors
-			// @description			Set the color property of this Particle Type to static random mix.
+			// @description			Set the color property of this Particle Type to static
+			//						random value between the two specified colors.
 			static setColor_mix = function(_colors)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					color = _colors;
 					color_type = "mix";
@@ -367,10 +500,11 @@ function ParticleType() constructor
 			// @argument			{real|Range} red
 			// @argument			{real|Range} green
 			// @argument			{real|Range} blue
-			// @description			Set the color property of this Particle Type to static random rgb.
+			// @description			Set the color property of this Particle Type to static 
+			//						random value within the Ranges of specified RGB values.
 			static setColor_rgb = function(_red, _green, _blue)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					color = [_red, _green, _blue];
 					color_type = "rgb";
@@ -421,10 +555,11 @@ function ParticleType() constructor
 			// @argument			{real|Range} hue
 			// @argument			{real|Range} saturation
 			// @argument			{real|Range} value
-			// @description			Set the color property of this Particle Type to static random hsv.
+			// @description			Set the color property of this Particle Type to static 
+			//						random value within the Ranges of specified HSV values.
 			static setColor_hsv = function(_hue, _saturation, _value)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					color = [_hue, _saturation, _value];
 					color_type = "hsv";
@@ -478,7 +613,7 @@ function ParticleType() constructor
 			// @description			Set the alpha property of this Particle Type.
 			static setAlpha = function(_alpha1)
 			{
-				if (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)))
 				{				
 					switch(argument_count)
 					{
@@ -503,49 +638,13 @@ function ParticleType() constructor
 				}
 			}
 			
-			// @argument			{bool} blend_additive
-			// @description			Set the blending property of this Particle Type.
-			static setBlend = function(_blend_additive)
-			{
-				if (part_type_exists(ID))
-				{
-					blend_additive = _blend_additive;
-					
-					part_type_blend(ID, blend_additive);
-				}
-			}
-			
-			// @argument			{int|Range} life
-			// @description			Set the life length property of this Particle Type.
-			static setLife = function(_life)
-			{
-				if (part_type_exists(ID))
-				{
-					life = _life;
-					
-					var _life_minimum, _life_maximum;
-					
-					if (instanceof(life) == "Range")
-					{
-						_life_minimum = life.minimum;
-						_life_maximum = life.maximum;
-					}
-					else
-					{
-						_life_minimum = life;
-						_life_maximum = life;
-					}
-					
-					part_type_life(ID, _life_minimum, _life_maximum);
-				}
-			}
-			
 			// @argument			{ParticleType} step_type
 			// @argument			{int} step_number
 			// @description			Set the step stream properties of this Particle Type.
 			static setStep = function(_step_type, _step_number)
 			{
-				if ((ID != _step_type.ID) and (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)) and (_step_type != undefined)
+				and (is_real(_step_type.ID)) and (ID != _step_type.ID) 
 				and (part_type_exists(_step_type.ID)))
 				{
 					step_type = _step_type;
@@ -560,7 +659,8 @@ function ParticleType() constructor
 			// @description			Set the death stream properties of this Particle Type.
 			static setDeath = function(_death_type, _death_number)
 			{
-				if ((ID != _death_type.ID) and (part_type_exists(ID))
+				if ((is_real(ID)) and (part_type_exists(ID)) and (_death_type != undefined)
+				and (is_real(_death_type.ID)) and (ID != _death_type.ID) 
 				and (part_type_exists(_death_type.ID)))
 				{
 					death_type = _death_type;
@@ -580,8 +680,8 @@ function ParticleType() constructor
 			// @description			Directly create the particle(s) of this type in a space.
 			static create = function(_particleSystem, _location, _number, _color)
 			{
-				if (part_type_exists(ID)) and (_particleSystem != undefined)
-				and (part_system_exists(_particleSystem.ID))
+				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
+				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
 					if (_number == undefined) {_number = 1;}
 					
@@ -606,8 +706,8 @@ function ParticleType() constructor
 			//						spots of a Shape.
 			static createShape = function(_particleSystem, _shape, _number, _color)
 			{
-				if (part_type_exists(ID)) and (_particleSystem != undefined)
-				and (part_system_exists(_particleSystem.ID))
+				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
+				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
 					if (_number == undefined) {_number = 1;}
 					
@@ -817,10 +917,133 @@ function ParticleType() constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Overrides the string conversion with an ID output.
-			static toString = function()
+			// @description			Create a string representing this constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the ID by default and can be
+			//						configured to show the properties of this Particle Type.
+			static toString = function(_full, _multiline)
 			{
-				return ((part_type_exists(ID)) ? string(ID) : string(undefined));
+				if ((is_real(ID)) and (part_type_exists(ID)))
+				{
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
+					var _text_shape;
+					switch (shape)
+					{
+						case pt_shape_pixel: _text_shape = "Pixel"; break;
+						case pt_shape_disk: _text_shape = "Disk"; break;
+						case pt_shape_square: _text_shape = "Square"; break;
+						case pt_shape_line: _text_shape = "Line"; break;
+						case pt_shape_star: _text_shape = "Star"; break;
+						case pt_shape_circle: _text_shape = "Circle"; break;
+						case pt_shape_ring: _text_shape = "Ring"; break;
+						case pt_shape_sphere: _text_shape = "Sphere"; break;
+						case pt_shape_flare: _text_shape = "Flare"; break;
+						case pt_shape_spark: _text_shape = "Spark"; break;
+						case pt_shape_explosion: _text_shape = "Explosion"; break;
+						case pt_shape_cloud: _text_shape = "Cloud"; break;
+						case pt_shape_smoke: _text_shape = "Smoke"; break;
+						case pt_shape_snow: _text_shape = "Snow"; break;
+						default: _text_shape = string(undefined); break;
+					}
+					
+					if (_full)
+					{
+						var _string = "";
+						
+						var _text_color;
+						
+						if (is_real(color))
+						{
+							switch (color)
+							{
+								case c_aqua: _text_color = "Aqua"; break;
+								case c_black: _text_color = "Black"; break;
+								case c_blue: _text_color = "Blue"; break;
+								case c_dkgray: _text_color = "Dark Gray"; break;
+								case c_fuchsia: _text_color = "Fuchsia"; break;
+								case c_gray: _text_color = "Gray"; break;
+								case c_green: _text_color = "Green"; break;
+								case c_lime: _text_color = "Lime"; break;
+								case c_ltgray: _text_color = "Light Gray"; break;
+								case c_maroon: _text_color = "Maroon"; break;
+								case c_navy: _text_color = "Navy"; break;
+								case c_olive: _text_color = "Olive"; break;
+								case c_orange: _text_color = "Orange"; break;
+								case c_purple: _text_color = "Purple"; break;
+								case c_red: _text_color = "Red"; break;
+								case c_teal: _text_color = "Teal"; break;
+								case c_white: _text_color = "White"; break;
+								case c_yellow: _text_color = "Yellow"; break;
+							}
+						}
+						else
+						{
+							_text_color = string(color);
+						}
+						
+						_string += ("ID: " + string(ID) + _mark_separator +
+									"Shape: " + _text_shape + _mark_separator +
+									"Sprite: " + string(sprite) + _mark_separator +
+									"Sprite Animate: " + string(sprite_animate) + _mark_separator +
+									"Sprite Stretch: " + string(sprite_stretch) + _mark_separator +
+									"Sprite Random: " + string(sprite_random) + _mark_separator +
+									"Size: " + string(size) + _mark_separator +
+									"Size Increase: " + string(size_increase) + _mark_separator +
+									"Size Wiggle: " + string(size_wiggle) + _mark_separator +
+									"Scale: " + string(scale) + _mark_separator +
+									"Speed: " + string(speed) + _mark_separator +
+									"Speed Increase: " + string(speed_increase) + _mark_separator +
+									"Speed Wiggle: " + string(speed_wiggle) + _mark_separator +
+									"Direction: " + string(direction) + _mark_separator +
+									"Direction Increase: " + string(direction_increase) 
+														   + _mark_separator +
+									"Direction Wiggle: " + string(direction_wiggle) 
+														 + _mark_separator +
+									"Orientation: " + string(orientation) + _mark_separator +
+									"Orientation Increase: " + string(orientation_increase) 
+															 + _mark_separator +
+									"Orientation Wiggle: " + string(orientation_wiggle) 
+														   + _mark_separator +
+									"Orientation Relative: " + string(orientation_relative) 
+															 + _mark_separator +
+									"Gravity Amount: " + string(gravity_amount) + _mark_separator +
+									"Gravity Direction: " + string(gravity_direction) 
+														  + _mark_separator +
+									"Life: " + string(life) + _mark_separator +
+									"Additive Blending: " + string(blend_additive) 
+														  + _mark_separator +
+									"Color Type: " + string(color_type) + _mark_separator +
+									"Color: " + _text_color + _mark_separator +
+									"Alpha: " + string(alpha) + _mark_separator +
+									"Step Type: " + string(step_type) + _mark_separator +
+									"Step Number: " + string(step_number) + _mark_separator +
+									"Death Type: " + string(death_type) + _mark_separator +
+									"Death Number: " + string(death_number));
+						
+						return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+					}
+					else
+					{
+						var _text_visualType = ((sprite != undefined) ? "Sprite: " + string(sprite)
+																	  : "Shape: " +
+																	    _text_shape);				
+						
+						if (_multiline)
+						{
+							return ("ID: " + string(ID) + _mark_separator + _text_visualType);
+						}
+						else
+						{
+							return (instanceof(self) + "(" + "ID: " + string(ID) + 
+									_mark_separator + _text_visualType + ")");
+						}
+					}
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 		
 		#endregion
