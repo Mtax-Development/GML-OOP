@@ -1,59 +1,94 @@
 /// @function				DateTime()
-/// @argument				{datetime} datetime?
+/// @argument				{int} year?
+/// @argument				{int} month?
+/// @argument				{int} week?
+/// @argument				{int} day?
+/// @argument				{int} hour?
+/// @argument				{int} minute?
+/// @argument				{int} second?
 ///
 /// @description			Constructs a container for a DateTime.
 ///
 ///							Construction methods:
+///							- New constructor.
 ///							- Wrapper: {datetime} datetime
-///							- Empty: {void|undefined}
+///							- Empty: {void}
 ///							   The constructor will be unusable in this state.
 ///							- Constructor copy: {DateTime} other
-function DateTime(_value) constructor
+function DateTime() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function(_value)
+			static construct = function()
 			{
-				if (instanceof(_value) == "DateTime")
+				//|Construction method: Empty.
+				ID = undefined;
+				
+				year = undefined;
+				month = undefined;
+				week = undefined;
+				day = undefined;
+				hour = undefined;
+				minute = undefined;
+				second = undefined;
+				
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					ID = _other.ID;
-					
-					year = _other.year;
-					month = _other.month;
-					day = _other.day;
-					hour = _other.hour;
-					minute = _other.minute;
-					second = _other.second;
-				}
-				else
-				{
-					ID = _value;
-					
-					if (ID != undefined)
+					if (instanceof(argument[0]) == "DateTime")
 					{
-						//|Construction method: Wrapper.
-						year = date_get_year(ID);
-						month = date_get_month(ID);
-						day = date_get_day(ID);
-						hour = date_get_hour(ID);
-						minute = date_get_minute(ID);
-						second = date_get_second(ID);
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+					
+						ID = _other.ID;
+					
+						year = _other.year;
+						month = _other.month;
+						day = _other.day;
+						hour = _other.hour;
+						minute = _other.minute;
+						second = _other.second;
 					}
 					else
 					{
-						//|Construction method: Empty.
-						year = undefined;
-						month = undefined;
-						week = undefined;
-						day = undefined;
-						hour = undefined;
-						minute = undefined;
-						second = undefined;
+						if (argument_count == 1)
+						{
+							//|Construction method: Wrapper.
+							ID = argument[0];
+						
+							year = date_get_year(ID);
+							month = date_get_month(ID);
+							day = date_get_day(ID);
+							hour = date_get_hour(ID);
+							minute = date_get_minute(ID);
+							second = date_get_second(ID);
+						}
+						else
+						{
+							//|Construction method: New datetime.
+							var _year = (((argument_count > 0) and (argument[0] != undefined)) ? 
+										argument[0] : 1970);
+							var _month = (((argument_count > 1) and (argument[1] != undefined)) ? 
+										argument[1] : 1);
+							var _day = (((argument_count > 2) and (argument[2] != undefined)) ? 
+										argument[2] : 1);
+							var _hour = (((argument_count > 3) and (argument[3] != undefined)) ? 
+										argument[3] : 0);
+							var _minute = (((argument_count > 4) and (argument[4] != undefined)) ? 
+										argument[4] : 0);
+							var _second = (((argument_count > 5) and (argument[5] != undefined)) ? 
+										argument[5] : 0);
+						
+							ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
+						
+							year = date_get_year(ID);
+							month = date_get_month(ID);
+							day = date_get_day(ID);
+							hour = date_get_hour(ID);
+							minute = date_get_minute(ID);
+							second = date_get_second(ID);
+						}
 					}
 				}
 			}
