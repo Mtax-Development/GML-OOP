@@ -19,7 +19,16 @@ function DateTime(_value) constructor
 				if (instanceof(_value) == "DateTime")
 				{
 					//|Construction method: Constructor copy.
-					ID = _value.ID;
+					var _other = argument[0];
+					
+					ID = _other.ID;
+					
+					year = _other.year;
+					month = _other.month;
+					day = _other.day;
+					hour = _other.hour;
+					minute = _other.minute;
+					second = _other.second;
 				}
 				else
 				{
