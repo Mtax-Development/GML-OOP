@@ -138,7 +138,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the years in this DateTime by a specified number.
-			static modifyYears = function(_number)
+			static modify_years = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -148,7 +148,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the months in this DateTime by a specified number.
-			static modifyMonths = function(_number)
+			static modify_months = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -158,7 +158,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the weeks in this DateTime by a specified number.
-			static modifyeWeeks = function(_number)
+			static modify_weeks = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -168,7 +168,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the days in this DateTime by a specified number.
-			static modifyDays = function(_number)
+			static modify_days = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -178,7 +178,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the hours in this DateTime by a specified number.
-			static modifyHours = function(_number)
+			static modify_hours = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -188,7 +188,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the minutes in this DateTime by a specified number.
-			static modifyMinutes = function(_number)
+			static modify_minutes = function(_number)
 			{
 				if (ID != undefined)
 				{
@@ -198,7 +198,7 @@ function DateTime() constructor
 			
 			// @argument			{int} number
 			// @description			Modify the seconds in this DateTime by a specified number.
-			static modifySeconds = function(_number)
+			static modify_seconds = function(_number)
 			{
 				if (ID != undefined)
 				{
