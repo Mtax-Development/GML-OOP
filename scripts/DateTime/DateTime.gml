@@ -45,6 +45,7 @@ function DateTime() constructor
 					
 						year = _other.year;
 						month = _other.month;
+						week = _other.week;
 						day = _other.day;
 						hour = _other.hour;
 						minute = _other.minute;
@@ -59,6 +60,7 @@ function DateTime() constructor
 						
 							year = date_get_year(ID);
 							month = date_get_month(ID);
+							week = date_get_week(ID);
 							day = date_get_day(ID);
 							hour = date_get_hour(ID);
 							minute = date_get_minute(ID);
@@ -84,6 +86,7 @@ function DateTime() constructor
 						
 							year = date_get_year(ID);
 							month = date_get_month(ID);
+							week = date_get_week(ID);
 							day = date_get_day(ID);
 							hour = date_get_hour(ID);
 							minute = date_get_minute(ID);
