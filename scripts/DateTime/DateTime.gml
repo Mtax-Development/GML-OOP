@@ -1,7 +1,6 @@
 /// @function				DateTime()
 /// @argument				{int} year?
 /// @argument				{int} month?
-/// @argument				{int} week?
 /// @argument				{int} day?
 /// @argument				{int} hour?
 /// @argument				{int} minute?
@@ -40,9 +39,9 @@ function DateTime() constructor
 					{
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
-					
+						
 						ID = _other.ID;
-					
+						
 						year = _other.year;
 						month = _other.month;
 						week = _other.week;
@@ -57,7 +56,7 @@ function DateTime() constructor
 						{
 							//|Construction method: Wrapper.
 							ID = argument[0];
-						
+							
 							year = date_get_year(ID);
 							month = date_get_month(ID);
 							week = date_get_week(ID);
@@ -81,9 +80,9 @@ function DateTime() constructor
 										argument[4] : 0);
 							var _second = (((argument_count > 5) and (argument[5] != undefined)) ? 
 										argument[5] : 0);
-						
+							
 							ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
-						
+							
 							year = date_get_year(ID);
 							month = date_get_month(ID);
 							week = date_get_week(ID);
