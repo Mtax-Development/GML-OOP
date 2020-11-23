@@ -1,23 +1,21 @@
 /// @function				Vector4()
 /// @argument				x1?
-/// @argument				x2?
 /// @argument				y1?
+/// @argument				x2?
 /// @argument				y2?
 ///
 /// @description			Construct a Vector container for two X and Y coordinate pairs.
 ///
 ///							Construction methods:
-///							- Four values: {real} x1, {real} x2, {real} y1, {real} y2
+///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
 ///							- One number pair: {real} x, {real} y
-///							   First number will be set to all values of X.
-///							   Second number will be set to all values of Y.
+///							   The first number will be set to all x values.
+///							   The second number will be set to all y values.
 ///							- Default (0) for all values: {void}
 ///							- From array: {real[]} array
-///							   First array position will be set to X1.
-///							   Second array position will be set to X2.
-///							   Third array position will be set to Y1.
-///							   Fourth array position will be set to Y2.
+///							   First four array values will be used to set the constructor values
+///							   respectively: x1, y1, x2, y2.
 ///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
@@ -31,10 +29,12 @@ function Vector4() constructor
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Vector4"))
 				{
 					//|Construction method: Constructor copy.
-					x1 = argument[0].x1;
-					x2 = argument[0].x2;
-					y1 = argument[0].y1;
-					y2 = argument[0].y2;
+					var _other = argument[0];
+					
+					x1 = _other.x1;
+					y1 = _other.y1;
+					x2 = _other.x2;
+					y2 = _other.y2;
 				}
 				else
 				{
@@ -43,8 +43,8 @@ function Vector4() constructor
 						case 0:
 							//|Construction method: Default (0) for all values.
 							x1 = 0;
-							x2 = 0;
 							y1 = 0;
+							x2 = 0;
 							y2 = 0;
 						break;
 						
@@ -55,16 +55,16 @@ function Vector4() constructor
 								var _array = argument[0];
 								
 								x1 = _array[0];
-								x2 = _array[1];
-								y1 = _array[2];
+								y1 = _array[1];
+								x2 = _array[2];
 								y2 = _array[3];
 							}
 							else
 							{
 								//|Construction method: One number for all values.
 								x1 = argument[0];
-								x2 = argument[0];
 								y1 = argument[0];
+								x2 = argument[0];
 								y2 = argument[0];
 							}
 						break;
@@ -78,8 +78,8 @@ function Vector4() constructor
 								var _pair_2 = argument[1];
 								
 								x1 = _pair_1.x;
-								x2 = _pair_2.x;
 								y1 = _pair_1.y;
+								x2 = _pair_2.x;
 								y2 = _pair_2.y;
 							}
 							else
@@ -89,8 +89,8 @@ function Vector4() constructor
 								var _y = argument[1];
 								
 								x1 = _x;
-								x2 = _x;
 								y1 = _y;
+								x2 = _x;
 								y2 = _y;
 							}
 						break;
@@ -98,9 +98,9 @@ function Vector4() constructor
 						case 4:
 							//|Construction method: Four values.
 							x1 = argument[0];
-							x2 = argument[1];
-							y1 = argument[2];
-							y2 = argument[3];
+							y1 = argument[1];
+							x2 = argument[2];
+							y2 = argument[2];
 						break;
 					}
 				}
@@ -119,26 +119,26 @@ function Vector4() constructor
 					var _other = argument[0];
 					
 					x1 += _other.x1;
-					x2 += _other.x2;
 					y1 += _other.y1;
+					x2 += _other.x2;
 					y2 += _other.y2;
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 += _other.x;
-					x2 += _other.x;
-					y1 += _other.y;
-					y2 += _other.y;
+					x1 += _other.x1;
+					y1 += _other.y1;
+					x2 += _other.x2;
+					y2 += _other.y2;
 				}
 				else
 				{
 					var _value = argument[0];
 					
 					x1 += _value;
-					x2 += _value;
 					y1 += _value;
+					x2 += _value;
 					y2 += _value;
 				}
 			}
@@ -153,26 +153,26 @@ function Vector4() constructor
 					var _other = argument[0];
 					
 					x1 -= _other.x1;
-					x2 -= _other.x2;
 					y1 -= _other.y1;
+					x2 -= _other.x2;
 					y2 -= _other.y2;
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 -= _other.x;
-					x2 -= _other.x;
-					y1 -= _other.y;
-					y2 -= _other.y;
+					x1 -= _other.x1;
+					y1 -= _other.y1;
+					x2 -= _other.x2;
+					y2 -= _other.y2;
 				}
 				else
 				{
 					var _value = argument[0];
 					
 					x1 -= _value;
-					x2 -= _value;
 					y1 -= _value;
+					x2 -= _value;
 					y2 -= _value;
 				}
 			}
@@ -187,26 +187,26 @@ function Vector4() constructor
 					var _other = argument[0];
 					
 					x1 *= _other.x1;
-					x2 *= _other.x2;
 					y1 *= _other.y1;
+					x2 *= _other.x2;
 					y2 *= _other.y2;
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 *= _other.x;
-					x2 *= _other.x;
-					y1 *= _other.y;
-					y2 *= _other.y;
+					x1 *= _other.x1;
+					y1 *= _other.y1;
+					x2 *= _other.x2;
+					y2 *= _other.y2;
 				}
 				else
 				{
 					var _value = argument[0];
 					
 					x1 *= _value;
-					x2 *= _value;
 					y1 *= _value;
+					x2 *= _value;
 					y2 *= _value;
 				}
 			}
@@ -221,26 +221,26 @@ function Vector4() constructor
 					var _other = argument[0];
 					
 					x1 /= _other.x1;
-					x2 /= _other.x2;
 					y1 /= _other.y1;
+					x2 /= _other.x2;
 					y2 /= _other.y2;
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 /= _other.x;
-					x2 /= _other.x;
-					y1 /= _other.y;
-					y2 /= _other.y;
+					x1 /= _other.x1;
+					y1 /= _other.y1;
+					x2 /= _other.x2;
+					y2 /= _other.y2;
 				}
 				else
 				{
 					var _value = argument[0];
 					
 					x1 /= _value;
-					x2 /= _value;
 					y1 /= _value;
+					x2 /= _value;
 					y2 /= _value;
 				}
 			}
@@ -248,15 +248,15 @@ function Vector4() constructor
 			// @description			Swap the X and Y values of this Vector4.
 			static flip = function()
 			{
-				var x1_new = y1;
-				var x2_new = y2;
-				var y1_new = x1;
-				var y2_new = x2;
+				var _x1_new = y1;
+				var _y1_new = x1;
+				var _x2_new = y2;
+				var _y2_new = x2;
 				
-				x1 = x1_new;
-				x2 = x2_new;
-				y1 = y1_new;
-				y2 = y2_new;
+				x1 = _x1_new;
+				y1 = _y1_new;
+				x2 = _x2_new;
+				y2 = _y2_new;
 			}
 			
 		#endregion
@@ -306,11 +306,37 @@ function Vector4() constructor
 			
 			// @argument			{Vector4} other
 			// @returns				{bool}
-			// @description			Check whether two Vector4 have the same values.
+			// @description			Check whether this and other Vector4 have the same values.
 			static equals = function(_other)
 			{
-				return ((x1 == _other.x1) and (x2 == _other.x2) 
-						and (y1 == _other.y1) and (y2 == _other.y2));
+				return ((x1 == _other.x1) and (y1 == _other.y1)
+						and (x2 == _other.x2)  and (y2 == _other.y2));
+			}
+			
+			// @argument			{real} x
+			// @argument			{real} y
+			// @returns				{Vector2}
+			// @description			Return the point at specified respective precentages within the
+			//						x and y values.
+			static interpolate = function(_x, _y)
+			{
+				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the x values.
+			static interpolate_x = function(_value)
+			{
+				return lerp(x1, x2, _value);
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the y values.
+			static interpolate_y = function(_value)
+			{
+				return lerp(y1, y2, _value);
 			}
 			
 			// @argument			{Vector2} location
@@ -335,8 +361,8 @@ function Vector4() constructor
 				if (_multiline)
 				{
 					return ("x1: " + string(x1) + "\n" +
-							"x2: " + string(x2) + "\n" +
 							"y1: " + string(y1) + "\n" +
+							"x2: " + string(x2) + "\n" +
 							"y2: " + string(y2));
 				}
 				else
@@ -345,8 +371,8 @@ function Vector4() constructor
 					
 					return (instanceof(self) + "(" +
 							"x1: " + string(x1) + _mark_separator +
-							"x2: " + string(x2) + _mark_separator +
 							"y1: " + string(y1) + _mark_separator +
+							"x2: " + string(x2) + _mark_separator +
 							"y2: " + string(y2) +
 							")");
 				}
@@ -359,7 +385,7 @@ function Vector4() constructor
 			//						positions of that array.
 			static toArray = function()
 			{
-				return [x1, x2, y1, y2];
+				return [x1, y1, x2, y2];
 			}
 			
 		#endregion

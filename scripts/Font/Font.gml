@@ -196,7 +196,7 @@ function Font() constructor
 				{
 					var _array = font_get_uvs(ID);
 					
-					return new Vector4(_array[0], _array[2], _array[1], _array[3]);
+					return new Vector4(_array[0], _array[1], _array[2], _array[3]);
 				}
 				else
 				{

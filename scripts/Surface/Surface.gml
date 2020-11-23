@@ -319,8 +319,8 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if (_part_location == undefined) {_part_location = new Vector4(0, size.x,
-																				   0, size.y);}
+					if (_part_location == undefined) {_part_location = new Vector4(0, 0, 
+																				   size.x, size.y);}
 					if (_location == undefined) {_location = new Vector2(0, 0);}
 					
 					if (_scale == undefined) {_scale = new Scale();}
