@@ -24,6 +24,7 @@ function RangedValue() constructor
 					
 					range = _other.range;
 					value = _other.value;
+					value_original = _other.value_original;
 				}
 				else
 				{
@@ -34,6 +35,7 @@ function RangedValue() constructor
 								 argument[1] : range.minimum;
 				
 					value = clamp(_value, range.minimum, range.maximum);
+					value_original = value;
 				}
 			}
 			
@@ -72,7 +74,7 @@ function RangedValue() constructor
 			// @description			Set the value to the state it had upon constructor creation.
 			static set_original = function()
 			{
-				value = argument_original[0];
+				value = value_original;
 			}
 			
 			// @returns				{real}
