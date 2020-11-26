@@ -1,16 +1,15 @@
 /// @function				TextAlign()
-/// @function				TextAlign()
 /// @argument				{constant:fa_[halign]} x?
 /// @argument				{constant:fa_[valign]} y?
 ///
-/// @description			Constructs a container for two Text Align contants, intended for use along
-///							text drawing functions.
+/// @description			Constructs a container for two Text Align contants, intended for use in
+///							text drawing.
 ///
 ///							Construction methods:
 ///							- New constructor
-///							   The unspecified values will be set to default, which are: 
-///							   Left for horizontal align.
-///							   Top for vertical align.
+///							   Unspecified values will be set to the following:
+///							    x: fa_left
+///							    y: fa_top
 ///							- Constructor copy: {TextAlign} other
 function TextAlign() constructor
 {
@@ -60,19 +59,19 @@ function TextAlign() constructor
 			// @description			Set the origin of vertical align to the top of the text.
 			static setY_top = function()
 			{
-				x = fa_top;
+				y = fa_top;
 			}
 			
 			// @description			Set the origin of vertical align to the middle of the text.
 			static setY_middle = function()
 			{
-				x = fa_middle;
+				y = fa_middle;
 			}
 			
 			// @description			Set the origin of vertical align to the bottom of the text.
 			static setY_bottom = function()
 			{
-				x = fa_bottom;
+				y = fa_bottom;
 			}
 			
 			// @description			Mirror the non-centered x value of the align.
@@ -80,8 +79,8 @@ function TextAlign() constructor
 			{
 				switch (x)
 				{
-					case fa_left:  self.x_setRight(); break;
-					case fa_right: self.x_setLeft();  break;
+					case fa_left: x = fa_right; break;
+					case fa_right: x = fa_left; break;
 				}
 			}
 			
@@ -90,52 +89,60 @@ function TextAlign() constructor
 			{
 				switch (y)
 				{
-					case fa_top:	self.y_setBottom(); break;
-					case fa_bottom: self.y_setTop();	break;
+					case fa_top: y = fa_bottom; break;
+					case fa_bottom: y = fa_top; break;
 				}
 			}
 			
 			// @description			Mirror the non-centered x/y values of the align.
 			static mirror = function()
 			{
-				self.mirror_x();
-				self.mirror_y();
+				switch (x)
+				{
+					case fa_left: x = fa_right; break;
+					case fa_right: x = fa_left; break;
+				}
+				
+				switch (y)
+				{
+					case fa_top: y = fa_bottom; break;
+					case fa_bottom: y = fa_top; break;
+				}
 			}
 			
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the text equivalent of 
 			//						the align constants.
-			static toString = function()
+			static toString = function(_multiline)
 			{
 				var _string_x, _string_y;
-				var _mark_separator = ", ";
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				
 				switch (x)
 				{
-					case fa_left:	_string_x = "Left";   break;
+					case fa_left: _string_x = "Left"; break;
 					case fa_center: _string_x = "Center"; break;
-					case fa_right:	_string_x = "Right";  break;
-					default:		_string_x = "ERROR!"; break;
+					case fa_right: _string_x = "Right"; break;
+					default: _string_x = string(undefined); break;
 				}
 				
 				switch (y)
 				{
-					case fa_top:	_string_y = "Top";	  break;
+					case fa_top: _string_y = "Top"; break;
 					case fa_middle: _string_y = "Middle"; break;
 					case fa_bottom: _string_y = "Bottom"; break;
-					default:		_string_y = "ERROR!"; break;
+					default: _string_y = string(undefined) break;
 				}
 				
-				return (instanceof(self) + 
-						"(" +
-						"x: " + _string_x + _mark_separator +
-						"y: " + _string_y +
-						")");
+				var _string = ("x: " + _string_x + _mark_separator + "y: " + _string_y);
+				
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
 		#endregion
