@@ -269,6 +269,55 @@ function StringBuilder() constructor
 				}
 			}
 			
+			// @argument			{string} separator
+			// @returns				{string[]|string}
+			// @description			Create multiple strings divided by the specified separator and
+			//						return them in an array.
+			//						Returns this String is no operation was performed.
+			static split = function(_separator)
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				var _separator_lenght = string_length(_separator);
+				var _separator_count = string_count(_separator, _string);
+				
+				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1) 
+				and (_string_length > (_separator_lenght + 1)))
+				{
+					var _position_copy = 1;
+					var _result = [];
+					
+					var _i = 2;
+					var _loopCount = (_string_length + 1);
+					repeat (_loopCount)
+					{
+						if ((string_copy(_string, _i, _separator_lenght) == _separator) 
+						or (_i == _loopCount))
+						{
+							var _segment = string_copy(_string, _position_copy, 
+													   (_i - _position_copy));
+							
+							if ((string_length(_segment) > 0) and (_segment != _separator))
+							{
+								_result[array_length(_result)] = string_replace_all(_segment, 
+																					_separator, "");
+							}
+							
+							_i += _separator_lenght;
+							_position_copy = _i;
+						}
+						
+						++_i;
+					}
+					
+					return _result;
+				}
+				else
+				{
+					return _string;
+				}
+			}
+			
 		#endregion
 		#region <Setters>
 			
