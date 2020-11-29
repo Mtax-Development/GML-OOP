@@ -93,11 +93,37 @@ function RangedValue() constructor
 			
 			// @argument			{real} value
 			// @description			Add the specified number to the value, then wrap it to the
-			//						furthest boundary if it is outside of the Range.
-			static add_wrap = function(_value)
+			//						furthest boundary if it is outside or equal to the Range.
+			//						If the Range is specified as inclusive for this operation,
+			//						the value will not be wrapped if it would equal the Range.
+			static add_wrap = function(_value, _inclusive)
 			{
 				value += _value;
-				value -= (range.maximum * (floor(value / range.maximum)));
+				
+				var _rangeDifference = (range.maximum - range.minimum);
+				
+				value = ((((value - range.minimum) mod _rangeDifference) + _rangeDifference) 
+						 mod _rangeDifference + range.minimum);
+				
+				if (_inclusive)
+				{
+					var _value_sign = sign(_value);
+					
+					if (_value_sign > 0)
+					{
+						if (value == range.minimum)
+						{
+							value = range.maximum;
+						}
+					}
+					else if (_value_sign < 0)
+					{
+						if (value == range.maximum)
+						{
+							value = range.minimum;
+						}
+					}
+				}
 			}
 			
 			// @argument			{real} value
