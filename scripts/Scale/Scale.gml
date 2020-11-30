@@ -9,6 +9,11 @@
 ///							- Two values: {real} x, {real} y
 ///							- One number for all values: {real} value
 ///							- Default (1) for all values: {void}
+///							- From array: {real[]} array
+///							   Array positions will be applied depending on its size:
+///								1: array[0] will be set to x and y.
+///								2 or more: array[0] will be set to x, array[1] will be set to y.
+///							- From Vector2: {Vector2} vector
 ///							- Constructor copy: {Scale} other
 function Scale() constructor
 {
@@ -37,9 +42,40 @@ function Scale() constructor
 						break;
 		
 						case 1:
-							//|Construction method: One number for all values.
-							x = argument[0];
-							y = argument[0];
+							if (is_array(argument[0]))
+							{
+								//|Construction method: From array.
+								var _array = argument[0];
+								
+								var _array_length = array_length(_array);
+								
+								switch (_array_length)
+								{
+									case 1:
+										x = _array[0];
+										y = _array[0];
+									break;
+									
+									case 2:
+										x = _array[0];
+										y = _array[1];
+									break;
+								}
+							}
+							else if (instanceof(argument[0]) == "Vector2")
+							{
+								//|Construction method: From Vector2.
+								var _vector = argument[0];
+								
+								x = _vector.x;
+								y = _vector.y;
+							}
+							else
+							{
+								//|Construction method: One number for all values.
+								x = argument[0];
+								y = argument[0];
+							}
 						break;
 		
 						case 2:

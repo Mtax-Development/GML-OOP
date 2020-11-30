@@ -9,8 +9,9 @@
 ///							- One number for all values: {real} value
 ///							- Default (0) for all values: {void}
 ///							- From array: {real[]} array
-///							   First array position will be set to X.
-///							   Second array position will be set to Y.
+///							   Array positions will be applied depending on its size:
+///								1: array[0] will be set to x and y.
+///								2 or more: array[0] will be set to x, array[1] will be set to y.
 ///							- Constructor copy: {Vector2} other
 function Vector2() constructor
 {
@@ -43,9 +44,21 @@ function Vector2() constructor
 							{
 								//|Construction method: From array.
 								var _array = argument[0];
-							
-								x = _array[0];
-								y = _array[1];
+								
+								var _array_length = array_length(_array);
+								
+								switch (_array_length)
+								{
+									case 1:
+										x = _array[0];
+										y = _array[0];
+									break;
+									
+									case 2:
+										x = _array[0];
+										y = _array[1];
+									break;
+								}
 							}
 							else
 							{

@@ -14,8 +14,11 @@
 ///							   The second number will be set to all y values.
 ///							- Default (0) for all values: {void}
 ///							- From array: {real[]} array
-///							   First four array values will be used to set the constructor values
-///							   respectively: x1, y1, x2, y2.
+///							   Array positions will be applied depending on its size:
+///								1: array[0] will be set to all values.
+///								2: array[0] will be set to x1 and x2, array[1] will be set to y1 and y2.
+///								4 or more: array[0] will be set to x1, array[1] will be set to y1,
+///										   array[2] will be set to x2, array[3] will be set to y2.
 ///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
@@ -54,10 +57,31 @@ function Vector4() constructor
 								//|Construction method: From array.
 								var _array = argument[0];
 								
-								x1 = _array[0];
-								y1 = _array[1];
-								x2 = _array[2];
-								y2 = _array[3];
+								var _array_length = array_length(_array);
+								
+								switch (_array_length)
+								{
+									case 1:
+										x1 = _array[0];
+										y1 = _array[0];
+										x2 = _array[0];
+										y2 = _array[0];
+									break;
+									
+									case 2:
+										x1 = _array[0];
+										y1 = _array[1];
+										x2 = _array[0];
+										y2 = _array[1];
+									break;
+									
+									default:
+										x1 = _array[0];
+										y1 = _array[1];
+										x2 = _array[2];
+										y2 = _array[3];
+									break;
+								}
 							}
 							else
 							{
