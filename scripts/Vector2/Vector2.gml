@@ -7,11 +7,12 @@
 ///							Construction methods:
 ///							- Two values: {real} x, {real} y
 ///							- One number for all values: {real} value
-///							- Default (0) for all values: {void}
+///							- Default for all values: {void}
+///							   The values will be set to 0.
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
-///								1: array[0] will be set to x and y.
-///								2 or more: array[0] will be set to x, array[1] will be set to y.
+///							   1: array[0] will be set to x and y.
+///							   2 or more: array[0] will be set to x, array[1] will be set to y.
 ///							- Constructor copy: {Vector2} other
 function Vector2() constructor
 {
@@ -34,9 +35,11 @@ function Vector2() constructor
 					switch (argument_count)
 					{
 						case 0:
-							//|Construction method: Default (0) for all values.
-							x = 0;
-							y = 0;
+							//|Construction method: Default for all values.
+							var _default = 0;
+							
+							x = _default;
+							y = _default;
 						break;
 					
 						case 1:

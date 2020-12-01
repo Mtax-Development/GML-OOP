@@ -12,13 +12,15 @@
 ///							- One number pair: {real} x, {real} y
 ///							   The first number will be set to all x values.
 ///							   The second number will be set to all y values.
-///							- Default (0) for all values: {void}
+///							- Default for all values: {void}
+///							   The values will be set to 0.
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
-///								1: array[0] will be set to all values.
-///								2: array[0] will be set to x1 and x2, array[1] will be set to y1 and y2.
-///								4 or more: array[0] will be set to x1, array[1] will be set to y1,
-///										   array[2] will be set to x2, array[3] will be set to y2.
+///							   1: array[0] will be set to all values.
+///							   2: array[0] will be set to x1 and x2, array[1] will be set to 
+///								  y1 and y2.
+///							   4 or more: array[0] will be set to x1, array[1] will be set to y1,
+///										  array[2] will be set to x2, array[3] will be set to y2.
 ///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
@@ -44,11 +46,13 @@ function Vector4() constructor
 					switch(argument_count)
 					{
 						case 0:
-							//|Construction method: Default (0) for all values.
-							x1 = 0;
-							y1 = 0;
-							x2 = 0;
-							y2 = 0;
+							//|Construction method: Default for all values.
+							var _default = 0;
+							
+							x1 = _default;
+							y1 = _default;
+							x2 = _default;
+							y2 = _default;
 						break;
 						
 						case 1:
@@ -151,10 +155,10 @@ function Vector4() constructor
 				{
 					var _other = argument[0];
 					
-					x1 += _other.x1;
-					y1 += _other.y1;
-					x2 += _other.x2;
-					y2 += _other.y2;
+					x1 += _other.x;
+					y1 += _other.y;
+					x2 += _other.x;
+					y2 += _other.y;
 				}
 				else
 				{
@@ -185,10 +189,10 @@ function Vector4() constructor
 				{
 					var _other = argument[0];
 					
-					x1 -= _other.x1;
-					y1 -= _other.y1;
-					x2 -= _other.x2;
-					y2 -= _other.y2;
+					x1 -= _other.x;
+					y1 -= _other.y;
+					x2 -= _other.x;
+					y2 -= _other.y;
 				}
 				else
 				{
@@ -219,10 +223,10 @@ function Vector4() constructor
 				{
 					var _other = argument[0];
 					
-					x1 *= _other.x1;
-					y1 *= _other.y1;
-					x2 *= _other.x2;
-					y2 *= _other.y2;
+					x1 *= _other.x;
+					y1 *= _other.y;
+					x2 *= _other.x;
+					y2 *= _other.y;
 				}
 				else
 				{
@@ -253,10 +257,10 @@ function Vector4() constructor
 				{
 					var _other = argument[0];
 					
-					x1 /= _other.x1;
-					y1 /= _other.y1;
-					x2 /= _other.x2;
-					y2 /= _other.y2;
+					x1 /= _other.x;
+					y1 /= _other.y;
+					x2 /= _other.x;
+					y2 /= _other.y;
 				}
 				else
 				{
