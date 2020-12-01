@@ -44,14 +44,9 @@ function Angle() constructor
 			// @description			Returns the difference between two Angles, considering wrapping.
 			static difference = function(_other)
 			{
-				result = (max(value, _other.value) - min(value, _other.value));
+				var _result = (max(value, _other.value) - min(value, _other.value));
 				
-				if (180 < result) 
-				{
-					result = (360 - result);
-				}
-				
-				return result;
+				return ((180 < _result) ? (360 - _result) : _result);
 			}
 			
 		#endregion

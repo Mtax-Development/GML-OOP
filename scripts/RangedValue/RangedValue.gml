@@ -92,6 +92,7 @@ function RangedValue() constructor
 			}
 			
 			// @argument			{real} value
+			// @argument			{bool} inclusive?
 			// @description			Add the specified number to the value, then wrap it to the
 			//						furthest boundary if it is outside or equal to the Range.
 			//						If the Range is specified as inclusive for this operation,

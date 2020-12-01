@@ -17,11 +17,11 @@
 ///										   {color} color4
 ///							- Default (white) for all values: {void}
 ///							- One color for all values: {color} color
-///							- Color2 + Color + Color: {Color2} other, {Color|color} color, 
+///							- Color2 + color + color: {Color2} other, {Color|color} color, 
 ///													  {color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Color2 + Color2: {Color2} color2_1, {Color2} color2_2
-///							- Color3 + Color: {Color2} other, {color} color
+///							- Color3 + color: {Color2} other, {color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color4} other
 function Color4() constructor
@@ -76,7 +76,7 @@ function Color4() constructor
 							}
 							else
 							{
-								//|Construction method: Color3 + Color
+								//|Construction method: Color3 + color
 								if (instanceof(argument[0]) == "Color3")
 								{
 									var _color3 = argument[0];
@@ -101,7 +101,7 @@ function Color4() constructor
 						break;
 					
 						case 3:
-							//| Construction method: Color2 + Color + Color
+							//| Construction method: Color2 + color + color
 							if (instanceof(argument[0]) == "Color2")
 							{
 								var _color2 = argument[0];

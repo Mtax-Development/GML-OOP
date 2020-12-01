@@ -9,7 +9,7 @@
 ///							- Three colors: {color} color1, {color} color2, {color} color3
 ///							- Default (white) for all values: {void}
 ///							- One color for all values: {color} color
-///							- Color2 + Color: {Color2} other, {color} color 
+///							- Color2 + color: {Color2} other, {color} color 
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color3} other
 
@@ -48,7 +48,7 @@ function Color3() constructor
 						break;
 					
 						case 2:
-							//|Construction method: Color2 + Color.
+							//|Construction method: Color2 + color.
 							if (instanceof(argument[0]) == "Color2")
 							{
 								var _other = argument[0];
