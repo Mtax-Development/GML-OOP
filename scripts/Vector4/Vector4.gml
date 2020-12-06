@@ -128,7 +128,7 @@ function Vector4() constructor
 							x1 = argument[0];
 							y1 = argument[1];
 							x2 = argument[2];
-							y2 = argument[2];
+							y2 = argument[3];
 						break;
 					}
 				}
@@ -242,34 +242,68 @@ function Vector4() constructor
 			// @argument			{real|Vector4|Vector2} value
 			// @description			Divide the values of this Vector4 the specified value or the 
 			//						values of other specified Vector4 or Vector2.
+			//						Attempts of division by 0 are ignored.
 			static divide = function()
 			{
 				if (instanceof(argument[0]) == "Vector4")
 				{
 					var _other = argument[0];
 					
-					x1 /= _other.x1;
-					y1 /= _other.y1;
-					x2 /= _other.x2;
-					y2 /= _other.y2;
+					if (_other.x1 != 0)
+					{
+						x1 /= _other.x1;
+					}
+					
+					if (_other.y1 != 0)
+					{
+						y1 /= _other.y1;
+					}
+					
+					if (_other.x2 != 0)
+					{
+						x2 /= _other.x2;
+					}
+					
+					if (_other.y2 != 0)
+					{
+						y2 /= _other.y2;
+					}
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 /= _other.x;
-					y1 /= _other.y;
-					x2 /= _other.x;
-					y2 /= _other.y;
+					if (_other.x1 != 0)
+					{
+						x1 /= _other.x1;
+					}
+					
+					if (_other.y1 != 0)
+					{
+						y1 /= _other.y1;
+					}
+					
+					if (_other.x2 != 0)
+					{
+						x2 /= _other.x2;
+					}
+					
+					if (_other.y2 != 0)
+					{
+						y2 /= _other.y2;
+					}
 				}
 				else
 				{
 					var _value = argument[0];
 					
-					x1 /= _value;
-					y1 /= _value;
-					x2 /= _value;
-					y2 /= _value;
+					if (_value != 0)
+					{
+						x1 /= _value;
+						y1 /= _value;
+						x2 /= _value;
+						y2 /= _value;
+					}
 				}
 			}
 			
