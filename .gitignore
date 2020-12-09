@@ -1,0 +1,15 @@
+animcurves/
+datafiles/
+extensions/
+fonts/
+options/
+paths/
+rooms/
+sequences/
+shaders/
+sprites/
+tilesets/
+timelines/
+sounds/
+README.md
+.gitattributes
