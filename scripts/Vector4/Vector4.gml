@@ -273,24 +273,24 @@ function Vector4() constructor
 				{
 					var _other = argument[0];
 					
-					if (_other.x1 != 0)
+					if (_other.x != 0)
 					{
-						x1 /= _other.x1;
+						x1 /= _other.x;
 					}
 					
-					if (_other.y1 != 0)
+					if (_other.y != 0)
 					{
-						y1 /= _other.y1;
+						y1 /= _other.y;
 					}
 					
-					if (_other.x2 != 0)
+					if (_other.x != 0)
 					{
-						x2 /= _other.x2;
+						x2 /= _other.x;
 					}
 					
-					if (_other.y2 != 0)
+					if (_other.y != 0)
 					{
-						y2 /= _other.y2;
+						y2 /= _other.y;
 					}
 				}
 				else
