@@ -223,6 +223,20 @@ function ParticleSystem() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				layer = undefined;
+				persistent = undefined;
+					
+				depth = undefined;
+					
+				location = undefined;
+					
+				automaticUpdate = undefined;
+				automaticRender = undefined;
+					
+				drawOrder_oldToNew = undefined;
+					
+				emitterList = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleSystem"))
 				{
 					//|Construction method: Constructor copy.
@@ -276,11 +290,8 @@ function ParticleSystem() constructor
 				else
 				{
 					//|Construction method: New constructor.
-					layer = ((argument_count > 0) ? argument[0] : undefined);
-					persistent = ((argument_count > 1) and (argument[1] != undefined) ? argument[1]
-																					  : false);
-					
-					depth = undefined;
+					if (argument_count > 0) {layer = argument[0];}
+					if (argument_count > 1) {persistent = argument[1];}
 					
 					location = new Vector2(0, 0);
 					
@@ -330,7 +341,7 @@ function ParticleSystem() constructor
 				return undefined; 
 			}
 			
-			// @description			Recreate the Particle System with its initial arguments.
+			// @description			Recreate the Particle System with its initial properties.
 			static clear = function()
 			{
 				if ((is_real(ID)) and (part_system_exists(ID)))
@@ -338,7 +349,7 @@ function ParticleSystem() constructor
 					part_system_destroy(ID);
 				}
 				
-				self.construct(originalArguments.layer, originalArguments.persistent);
+				script_execute_ext(method_get_index(self.construct), argument_original);
 			}
 			
 		#endregion

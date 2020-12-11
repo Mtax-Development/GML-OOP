@@ -1,6 +1,5 @@
 /// @function				Grid()
-/// @argument				{int} width
-/// @argument				{int} height
+/// @argument				{Vector2} size
 ///
 /// @description			Constructs a Grid Data Structure, which stores data in a model similar to
 ///							the one used by 2D array. Each value is stored in its own cell and they
@@ -36,12 +35,11 @@ function Grid() constructor
 				else
 				{
 					//|Construction method: New constructor.
-					var _width = argument[0];
-					var _height = argument[1];
+					var _size = argument[0];
 					
-					if ((_width > 0) and (_height > 0))
+					if ((_size.x > 0) and (_size.y > 0))
 					{
-						ID = ds_grid_create(_width, _height);
+						ID = ds_grid_create(_size.x, _size.y);
 					}
 				}
 			}
@@ -124,7 +122,7 @@ function Grid() constructor
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
 					{
-						self.construct(originalArguments[0], originalArguments[1]);
+						script_execute_ext(method_get_index(self.construct), argument_original);
 					}
 					
 					ds_grid_copy(ID, _other.ID);
@@ -139,8 +137,6 @@ function Grid() constructor
 			// @description			Return the value of cell at the specified position in this Grid.
 			static getValue = function(_location)
 			{
-				//+TODO: Notify if accessing x/y that is not within the size.
-				
 				return (((is_real(ID)) and (ds_exists(ID, ds_type_grid))) ? 
 					   ds_grid_get(ID, _location.x, _location.y) : undefined);
 			}
