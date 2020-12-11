@@ -318,11 +318,10 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _pairCount = (argument_count div 2);
-						
+					
 					var _results = array_create(_pairCount, false);
-						
+					
 					var _i = 0;
-						
 					repeat (_pairCount)
 					{
 						_results[_i div 2] = ds_map_add(ID, argument[_i], argument[_i + 1]);
@@ -357,7 +356,6 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
-					
 					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
@@ -391,7 +389,6 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
-					
 					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
@@ -421,7 +418,6 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
-					
 					repeat (argument_count div 2)
 					{
 						ds_map_set(ID, argument[_i], argument[_i + 1]);
@@ -466,7 +462,6 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _i = 0;
-					
 					repeat (argument_count)
 					{
 						ds_map_delete(ID, argument[_i]);

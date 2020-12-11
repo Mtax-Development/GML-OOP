@@ -156,7 +156,6 @@ function Stack() constructor
 						}
 					
 						var _i = 0;
-					
 						repeat (_size)
 						{
 							var _value = ds_stack_pop(_stack);
@@ -174,17 +173,19 @@ function Stack() constructor
 				}
 			}
 			
-			// @argument			{any} ...
+			// @argument			{any} value
+			// @argument			...
 			// @description			Add one or more values at the top of this Stack.
 			static add = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _i = 0;
-		
 					repeat (argument_count)
 					{
-						ds_stack_push(ID, argument[_i]);
+						var _value = argument[_i];
+						
+						ds_stack_push(ID, _value);
 						
 						++_i;
 					}
@@ -220,7 +221,6 @@ function Stack() constructor
 													   undefined);
 						
 							var _i = 0;
-						
 							repeat (array_length(_values))
 							{
 								_values[_i] = ds_stack_pop(ID);

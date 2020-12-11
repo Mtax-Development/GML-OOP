@@ -455,11 +455,9 @@ function Grid() constructor
 					if ((_size_x > 0) and (_size_y > 0))
 					{
 						var _y = 0;
-						
 						repeat (_size_y)
 						{
 							var _x = 0;
-							
 							repeat (_size_x)
 							{
 								var _value = ds_grid_get(ID, _x, _y);
@@ -476,86 +474,24 @@ function Grid() constructor
 			}
 			
 			// @argument			{Vector2} location
-			// @argument			{real|string} value
-			// @description			Add the specified value to already existing value
-			//						in the specified cell in this Grid.
-			//						The already existing value must be a number or a string
-			//						and it will be replaced if the specified value is of a
-			//						different type.
-			static add = function(_location, _value)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					ds_grid_add(ID, _location.x, _location.y, _value);
-				}
-			}
-			
-			// @argument			{Vector4} location
-			// @argument			{real|string} value
-			// @description			Add the specified value to already existing values 
-			//						in cells of the specified region in this Grid.
-			//						The already existing value must be a number or a string
-			//						and it will be replaced if the specified value is of a
-			//						different type.
-			static add_region = function(_location, _value)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, 
-									   _location.y2, _value);
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{int} radius
-			// @argument			{real|string} value
-			// @description			Adds the specified value to already existing values 
-			//						in cells of the specified disk in this Grid.
-			//						The already existing value must be a number or a string
-			//						and it will be replaced if the specified value is of a
-			//						different type.
-			static add_disk = function(_location, _radius, _value)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					ds_grid_add_disk(ID, _location.x, _location.y, _radius, _value);
-				}
-			}
-			
-			// @argument			{Vector4} source
-			// @argument			{Vector2} target
-			// @argument			{Grid} other?
-			// @description			Copy values of cells from the specified region of this or 
-			//						other Grid and add them to values of cells in the region of 
-			//						the same size in this Grid, starting from the specified 
-			//						target location.
-			//						The already existing value must be a number or a string
-			//						and it will be replaced if the specified value is of a
-			//						different type.
-			static add_region_copied = function(_source, _target, _other)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					if (_other == undefined) {_other = self;}
-					
-					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
-					and (ds_exists(_other.ID, ds_type_grid)))
-					{
-						ds_grid_add_grid_region(ID, _other.ID, _source.x1, _source.y1, 
-												_source.x2, _source.y2, _target.x, _target.y);
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location
 			// @argument			{any} value
-			// @description			Replace the specified value of cell in the specified location
-			//						in this Grid.
+			// @argument			...
+			// @description			Perform a replacement of any number of pairs of specified
+			//						numbers and values of cells in the specified locations.
 			static set = function(_location, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					ds_grid_set(ID, _location.x, _location.y, _value);
+					var _i = 0;
+					repeat (argument_count div 2)
+					{
+						_location = argument[_i];
+						_value = argument[_i + 1];
+						
+						ds_grid_set(ID, _location.x, _location.y, _value);
+						
+						_i += 2;
+					}
 				}
 			}
 			
@@ -608,14 +544,103 @@ function Grid() constructor
 			}
 			
 			// @argument			{Vector2} location
+			// @argument			{real|string} value
+			// @argument			...
+			// @description			Perform an addition of any number of pairs of specified numbers
+			//						and values of cells in the specified locations.
+			//						The value will be replaced if it is not the same type as the 
+			//						one already existing in the cell.
+			static add = function(_location, _value)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _i = 0;
+					repeat (argument_count div 2)
+					{
+						_location = argument[_i];
+						_value = argument[_i + 1];
+						
+						ds_grid_add(ID, _location.x, _location.y, _value);
+						
+						_i += 2;
+					}
+				}
+			}
+			
+			// @argument			{Vector4} location
+			// @argument			{real|string} value
+			// @description			Add the specified value to already existing values in cells
+			//						of the specified region in this Grid.
+			//						The value will be replaced if it is not the same type as the 
+			//						one already existing in the cell.
+			static add_region = function(_location, _value)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, 
+									   _location.y2, _value);
+				}
+			}
+			
+			// @argument			{Vector2} location
+			// @argument			{int} radius
+			// @argument			{real|string} value
+			// @description			Adds the specified value to already existing values in cells
+			//						of the specified disk in this Grid.
+			//						The value will be replaced if it is not the same type as the 
+			//						one already existing in the cell.
+			static add_disk = function(_location, _radius, _value)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					ds_grid_add_disk(ID, _location.x, _location.y, _radius, _value);
+				}
+			}
+			
+			// @argument			{Vector4} source
+			// @argument			{Vector2} target
+			// @argument			{Grid} other?
+			// @description			Copy values of cells from the specified region of this or 
+			//						other Grid and add them to values of cells in the region of 
+			//						the same size in this Grid, starting from the specified 
+			//						target location.
+			//						The value will be replaced if it is not the same type as the 
+			//						one already existing in the cell.
+			static add_region_copied = function(_source, _target, _other)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					if (_other == undefined) {_other = self;}
+					
+					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
+					and (ds_exists(_other.ID, ds_type_grid)))
+					{
+						ds_grid_add_grid_region(ID, _other.ID, _source.x1, _source.y1, 
+												_source.x2, _source.y2, _target.x, _target.y);
+					}
+				}
+			}
+			
+			// @argument			{Vector2} location
 			// @argument			{real} value
-			// @description			Multiply a number value in the specified cell in this 
+			// @argument			...
+			// @description			Perform a multiplication of any number of pairs of specified
+			//						numbers and values of cells in the specified locations.
 			//						Grid by a specified amount.
 			static multiply = function(_location, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					ds_grid_multiply(ID, _location.x, _location.y, _value);
+					var _i = 0;
+					repeat (argument_count div 2)
+					{
+						_location = argument[_i];
+						_value = argument[_i + 1];
+						
+						ds_grid_multiply(ID, _location.x, _location.y, _value);
+						
+						_i += 2;
+					}
 				}
 			}
 			

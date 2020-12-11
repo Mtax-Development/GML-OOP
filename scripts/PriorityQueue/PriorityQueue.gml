@@ -174,9 +174,8 @@ function PriorityQueue() constructor
 						
 							_priorityQueue = _dataCopy;
 						}
-					
+						
 						var _i = 0;
-					
 						repeat (_size)
 						{
 							var _value = ds_priority_delete_max(_priorityQueue);
@@ -185,7 +184,7 @@ function PriorityQueue() constructor
 						
 							++_i;
 						}
-					
+						
 						if (_readOnly)
 						{
 							ds_priority_destroy(_dataCopy);
@@ -203,10 +202,12 @@ function PriorityQueue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _i = 0;
-					
 					repeat (argument_count div 2)
 					{
-						ds_priority_add(ID, argument[_i], argument[_i + 1]);
+						_value = argument[_i];
+						_priority = argument[_i + 1];
+						
+						ds_priority_add(ID, _value, _priority);
 						
 						_i += 2;
 					}

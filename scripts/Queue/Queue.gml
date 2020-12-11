@@ -166,7 +166,6 @@ function Queue() constructor
 						}
 					
 						var _i = 0;
-					
 						repeat (_size)
 						{
 							var _value = ds_queue_dequeue(_queue);
@@ -184,14 +183,14 @@ function Queue() constructor
 				}
 			}
 			
-			// @argument			{any} ...
+			// @argument			{any} value
+			// @argument			...
 			// @description			Add one or more values at the tail of this Queue.
 			static add = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _i = 0;
-		
 					repeat (argument_count)
 					{
 						ds_queue_enqueue(ID, argument[_i]);
@@ -228,16 +227,15 @@ function Queue() constructor
 						{
 							var _values = array_create(clamp(_number, 0, _size), 
 														undefined);
-						
+							
 							var _i = 0;
-						
 							repeat (array_length(_values))
 							{
 								_values[_i] = ds_queue_dequeue(ID);
 								
 								++_i;
 							}
-						
+							
 							return _values;
 						}
 					}

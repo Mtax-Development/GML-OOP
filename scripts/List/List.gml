@@ -220,7 +220,6 @@ function List() constructor
 					if (_size > 0)
 					{
 						var _i = 0;
-					
 						repeat (_size)
 						{
 							var _value = ds_list_find_value(ID, _i);
@@ -233,17 +232,19 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{any} ...
+			// @argument			{any} value
+			// @argument			...
 			// @description			Add one or more values to this List.
 			static add = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _i = 0;
-				
 					repeat (argument_count)
 					{
-						ds_list_add(ID, argument[_i]);
+						var _value = argument[_i];
+						
+						ds_list_add(ID, _value);
 						
 						++_i;
 					}
@@ -293,7 +294,6 @@ function List() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _i = 0;
-					
 					repeat (ds_list_size(ID))
 					{
 						if (ds_list_find_value(ID, _i) == _value)
