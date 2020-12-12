@@ -9,7 +9,7 @@
 /// @description			Constructs a container for a DateTime.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Wrapper: {datetime} datetime
 ///							- Empty: {void}
 ///							   The constructor will be unusable in this state.

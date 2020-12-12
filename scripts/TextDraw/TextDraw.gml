@@ -10,7 +10,7 @@
 ///							drawing configuration.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {TextDraw} other
 function TextDraw() constructor
 {

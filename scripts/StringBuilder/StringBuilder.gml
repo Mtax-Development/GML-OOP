@@ -1,11 +1,11 @@
 /// @function				StringBuilder()
-/// @argument				{any} text?
+/// @argument				{any} string?
 ///
 /// @description			Constructs a Parser for building Strings.
 ///
 ///							Construction methods:
 ///							- New constructor
-///							   If the String is not provided, an empty String will be created.
+///							   If the string is not specified, empty one will be created.
 ///							- Constructor copy: {StringBuilder} other
 function StringBuilder() constructor
 {
@@ -41,7 +41,7 @@ function StringBuilder() constructor
 			}
 			
 			// @returns				{int}
-			// @description			Return the number of how many bytes this string occupies.
+			// @description			Return the number of how many bytes the string occupies.
 			static getByteLength = function()
 			{
 				return string_byte_length(string(ID));
@@ -83,14 +83,14 @@ function StringBuilder() constructor
 			// @argument			{any} substring
 			// @returns				{int}
 			// @description			Return a number of instances of the specified substring appearing
-			//						in this string.
+			//						in the string.
 			static getSubstringCount = function(_substring)
 			{
 				return string_count(string(_substring), string(ID));
 			}
 			
 			// @returns				{string}
-			// @description			Return a version of this string that contains only its digits.
+			// @description			Return a version of the string containing only its digits.
 			static getDigits = function()
 			{
 				return string_digits(string(ID));
@@ -105,16 +105,16 @@ function StringBuilder() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return a version of this string that only contains its letters
-			//						from the English alphabet.
+			// @description			Return a version of the string containing only its letters from
+			//						the English alphabet.
 			static getLetters = function()
 			{
 				return string_letters(string(ID));
 			}
 			
 			// @returns				{string}
-			// @description			Return a version of this string that only contains its letters
-			//						from the English alphabet and digits.
+			// @description			Return a version of the string containing only its digits and 
+			//						letters from the English alphabet.
 			static getLettersAndDigits = function()
 			{
 				return string_lettersdigits(string(ID));
@@ -125,10 +125,10 @@ function StringBuilder() constructor
 			// @argument			{int} startPosition?
 			// @returns				{int|undefined}
 			// @description			Return the position of the first instance of a substring in
-			//						this string, starting from its start, end or with offset of
+			//						the string, starting from its start, end or with offset of
 			//						either. The position will equal the position of the first 
-			//						character of the substring, counting always from the start.
-			//						Returns {undefined} if the substring does not exist in this
+			//						character of the substring, always counting from the start.
+			//						Returns {undefined} if the substring does not exist in te
 			//						string.
 			static getSubstringPosition = function(_substring, _startFromEnd, _startPosition)
 			{
@@ -152,13 +152,13 @@ function StringBuilder() constructor
 			}
 			
 			// @argument			{Font|font} font?
-			// @argument			{int} separation>
+			// @argument			{int} separation?
 			// @argument			{int} width?
 			// @returns				{Vector2}
-			// @description			Return the number of pixels this String would occupy by applying
+			// @description			Return the number of pixels the string would occupy by applying
 			//						either the specified or currently set Font.
-			//						The specified limitations of width before forced line-break and 
-			//						separation between lines of text can be also taken into the
+			//						Limitations of width before forced line-break and separation 
+			//						between lines of text can be specified to be taken into the
 			//						account.
 			static getPixelSize = function(_font, _separation, _width)
 			{
@@ -195,8 +195,8 @@ function StringBuilder() constructor
 			
 			// @argument			{int} position
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the character at the specified position has the
-			//						whitespace property.
+			// @description			Check if the character at the specified position in the string
+			//						has the whitespace property.
 			static charIsWhitespace = function(_position)
 			{
 				var _string = string(ID);
@@ -273,7 +273,8 @@ function StringBuilder() constructor
 			// @returns				{string[]|string}
 			// @description			Create multiple strings divided by the specified separator and
 			//						return them in an array.
-			//						Returns this String is no operation was performed.
+			//						Returns the string in its original state is no operation was
+			//						performed.
 			static split = function(_separator)
 			{
 				var _string = string(ID);
@@ -324,8 +325,8 @@ function StringBuilder() constructor
 			// @argument			{int} position
 			// @argument			{int} byte
 			// @returns				{string}
-			// @description			Replace the selected character by other one, specified 
-			//						by UTF-8 byte value.
+			// @description			Replace the character at the specified position by other one,
+			//						specified with UTF-8 byte value.
 			static setByte = function(_position, _byte)
 			{
 				var _string = string(ID);
@@ -338,16 +339,18 @@ function StringBuilder() constructor
 			}
 			
 			// @argument			{int} position
-			// @argument			{int} number
+			// @argument			{int} number?
 			// @returns				{string}
 			// @description			Delete a part of the string, starting from the character
-			//						at the specified position and continuing right by the 
+			//						at the specified position and continuing to the right for the 
 			//						specified number of characters or its end.
 			static deletePart = function(_position, _number)
 			{
 				var _string = string(ID);
 				
-				_position = clamp(_position, 1, (string_length(_string) + 1));
+				_position = ((_position == undefined) ? (string_length(_string) + 1)
+													  : clamp(_position, 1, 
+															  (string_length(_string) + 1)));
 				
 				ID = string_delete(_string, _position, _number);
 				
@@ -359,7 +362,7 @@ function StringBuilder() constructor
 			// @argument			{int} decimalPlaces
 			// @argument			{bool} replace?
 			// @returns				{string}
-			// @description			Add to this string or replace it with a number that has a 
+			// @description			Add to the string or replace it with a number that has a 
 			//						specified formatting for number of displayed places of
 			//						whole numbers and decimal places.
 			//						If there is less whole numbers than specified, the remaining
@@ -395,7 +398,7 @@ function StringBuilder() constructor
 			// @argument			{int} number
 			// @argument			{any} separator?
 			// @returns				{string}
-			// @description			Add the specified number of copies of this string to itself,
+			// @description			Add the specified number of copies of the string to itself,
 			//						either as it is or with added separator before the copy.
 			static duplicate = function(_number)
 			{
@@ -424,7 +427,7 @@ function StringBuilder() constructor
 			
 			// @argument			{any} toReplace
 			// @argument			{any} replaceBy
-			// @argument			{int} number
+			// @argument			{int} number?
 			// @returns				{string}
 			// @description			Replace the specified parts of this string with another specified
 			//						substring, either in all cases or the specified number of them
@@ -453,17 +456,16 @@ function StringBuilder() constructor
 			
 			// @argument			{char|char[]} charsToTrim?
 			// @returns				{string}
-			//						Remove the specified characters from the start and the end of this
-			//						until a different character is detected. If no characters are
-			//						specified, whitespace will be removed instead.
-			static trim = function()
+			//						Remove the specified characters from the start and the end of the
+			//						string until a different character is detected. If no characters
+			//						are specified, whitespace will be removed instead.
+			static trim = function(_charsToTrim)
 			{
 				ID = string(ID);
 				
 				var _string_length = string_length(ID);
 				
 				var __charCheck = self.charIsWhitespace;
-				var _charsToTrim = undefined;
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
@@ -520,7 +522,7 @@ function StringBuilder() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Set all letters from English alphabet in this string to lowercase.
+			// @description			Set all letters from English alphabet in the string to lowercase.
 			static setLowercase = function()
 			{
 				ID = string_lower(string(ID));
@@ -529,7 +531,7 @@ function StringBuilder() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Set all letters from English alphabet in this string to uppercase.
+			// @description			Set all letters from English alphabet in the string to uppercase.
 			static setUppercase = function()
 			{
 				ID = string_upper(string(ID));
@@ -540,17 +542,23 @@ function StringBuilder() constructor
 		#endregion
 		#region <Execution>
 			
+			// @returns				{string}
 			// @description			Display this String in the output of the application.
 			static display_output = function()
 			{
 				show_debug_message(ID);
+				
+				return string(ID);
 			}
 			
-			// @description			Pause the execution of the application to display this String in 
+			// @returns				{string}
+			// @description			Pause the execution of the application to display the string in 
 			//						the message box handled by the build target if it supports it.
 			static display_messageBox = function()
 			{
 				show_message(ID);
+				
+				return string(ID);
 			}
 			
 		#endregion
@@ -559,7 +567,7 @@ function StringBuilder() constructor
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the String held by this 
+			//						Content will be represented with the string held by this 
 			//						constructor.
 			static toString = function()
 			{

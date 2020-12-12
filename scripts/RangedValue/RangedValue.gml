@@ -8,6 +8,7 @@
 ///							- New constructor
 ///							   If the value if not specified, it will be set to the minimal value of
 ///							   the specified Range.
+///							   The value will be clamped to the range.
 ///							- Constructor copy: {Range} other
 function RangedValue() constructor
 {

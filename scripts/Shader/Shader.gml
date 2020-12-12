@@ -1,10 +1,10 @@
 /// @function				Shader()
 /// @argument				{shader} shader
 ///
-/// @description			Construct a Shader resource, used to alter drawing.
+/// @description			Construct a Shader resource used to alter drawing.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {Shader} other
 function Shader() constructor
 {

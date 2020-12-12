@@ -8,8 +8,8 @@
 ///							Construction methods:
 ///							- New constructor
 ///							   Unspecified values will be set to the following:
-///							    x: fa_left
-///							    y: fa_top
+///							   x: fa_left
+///							   y: fa_top
 ///							- Constructor copy: {TextAlign} other
 function TextAlign() constructor
 {

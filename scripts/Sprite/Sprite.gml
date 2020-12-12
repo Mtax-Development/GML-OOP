@@ -12,7 +12,7 @@
 ///							configuration.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {Sprite} other
 function Sprite() constructor
 {

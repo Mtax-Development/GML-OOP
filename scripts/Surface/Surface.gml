@@ -4,7 +4,7 @@
 ///	@description			Constructs a Surface resource, a separate canvas for graphics drawing.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {Surface} other
 function Surface() constructor	
 {

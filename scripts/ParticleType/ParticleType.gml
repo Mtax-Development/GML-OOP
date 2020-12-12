@@ -4,7 +4,7 @@
 ///							within Particle System.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {ParticleType} other
 function ParticleType() constructor
 {

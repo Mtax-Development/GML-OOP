@@ -6,7 +6,7 @@
 ///							each Particle Type.
 ///
 ///							Construction methods:
-///							- New constructor.
+///							- New constructor
 ///							- Constructor copy: {ParticleSystem} other
 function ParticleSystem() constructor
 {

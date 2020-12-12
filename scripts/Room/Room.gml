@@ -1,9 +1,11 @@
 /// @function				Room()
+/// @argument				{Vector2} size
+/// @argument				{bool} persistent?
 ///
 /// @description			Constructs a Room resource, used to group all other resources.
 ///
 ///							Construction methods:
-///							- New Room: {Vector2} size, {bool} persistent?
+///							- New constructor
 ///							- Duplicate Room: {room} other
 ///							- Constructor copy: {Room} other
 function Room() constructor
