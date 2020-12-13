@@ -399,7 +399,7 @@ function Stack() constructor
 			}
 			
 			// @returns				{any[]}
-			// @description			Create an array with all values of this Stack.
+			// @description			Create an array with all values of this Data Structure.
 			static toArray = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))

@@ -240,6 +240,13 @@ function Color4() constructor
 				return _result;
 			}
 			
+			// @returns				{int[]}
+			// @description			Return an array containing all values of this Container.
+			static toArray = function()
+			{
+				return [color1, color2, color3, color4];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]

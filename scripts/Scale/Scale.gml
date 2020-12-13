@@ -127,6 +127,13 @@ function Scale() constructor
 						")");
 			}
 			
+			// @returns				{real[]}
+			// @description			Return an array containing all values of this Container.
+			static toArray = function()
+			{
+				return [x, y];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]

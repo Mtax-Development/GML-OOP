@@ -140,6 +140,13 @@ function Color2() constructor
 				return _result;
 			}
 			
+			// @returns				{real[]}
+			// @description			Return an array containing all values of this Container.
+			static toArray = function()
+			{
+				return [color1, color2];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]

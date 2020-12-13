@@ -226,10 +226,8 @@ function Vector2() constructor
 				}
 			}
 			
-			// @returns				{real[]}
-			// @description			Return an array containing all values of this Vector2.
-			//						The X value will be set to the first position of that array,
-			//						the Y value will be set to the second position of that array.
+			// @returns				{int[]}
+			// @description			Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [x, y];

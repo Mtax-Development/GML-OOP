@@ -441,10 +441,7 @@ function Vector4() constructor
 			}
 			
 			// @returns				{real[]}
-			// @description			Return an array containing all values of the Vector.
-			//						The X values will be set to the first and second positions of 
-			//						that array, the Y value will be set to the third and fourth 
-			//						positions of that array.
+			// @description			Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [x1, y1, x2, y2];

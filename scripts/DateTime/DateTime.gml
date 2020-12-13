@@ -468,8 +468,8 @@ function DateTime() constructor
 			}
 			
 			// @returns				{int[]|undefined[]}
-			// @description			Return all elements of the DateTime as an array, ordered from
-			//						the longest elements to the shortest.
+			// @description			Return all elements of this DateTime as an array, ordered from
+			//						the longest units of time to the shortest.
 			static toArray = function()
 			{
 				return [year, month, day, hour, minute, second];
@@ -477,7 +477,7 @@ function DateTime() constructor
 			
 			// @returns				{int[]|undefined[]}
 			// @description			Return all elements of the date component as an array, ordered
-			//						from the longest elements to the shortest.
+			//						from the longest units of time to the shortest.
 			static toArray_date = function()
 			{
 				return [year, month, day];
@@ -485,7 +485,7 @@ function DateTime() constructor
 			
 			// @returns				{int[]|undefined[]}
 			// @description			Return all elements of the time component as an array, ordered
-			//						from the longest elements to the shortest.
+			//						from the longest units of time to the shortest.
 			static toArray_time = function()
 			{
 				return [hour, minute, second];
