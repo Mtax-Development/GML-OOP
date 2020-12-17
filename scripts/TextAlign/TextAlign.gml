@@ -111,6 +111,16 @@ function TextAlign() constructor
 			}
 			
 		#endregion
+		#region <Execution>
+			
+			// @description			Change the draw properties to the values of this constructor.
+			static apply = function()
+			{
+				draw_set_halign(x);
+				draw_set_valign(y);
+			}
+			
+		#endregion
 		#region <Conversion>
 			
 			// @argument			{bool} multiline?
