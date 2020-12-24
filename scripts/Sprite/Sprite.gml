@@ -58,7 +58,39 @@ function Sprite() constructor
 			
 		#endregion
 		#region <Execution>
-		
+			
+			// @argument			{bool} copyCallerLocation?
+			// @description			Execute the draw and advance the animation.
+			static render = function(_copyCallerLocation)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					var _location_x = undefined;
+					var _location_y = undefined;
+					
+					if (_copyCallerLocation)
+					{
+						_location_x = other.x;
+						_location_y = other.y;
+					}
+					else if (location != undefined)
+					{
+						_location_x = location.x;
+						_location_y = location.y;
+					}
+					
+					if ((is_real(_location_x)) and (is_real(_location_y)))
+					{
+						draw_sprite_ext(ID, frame, _location_x, _location_y, scale.x, scale.y,
+										angle.value, color, alpha);
+					}
+					if (speed != 0)
+					{
+						self.advanceFrames(speed);
+					}
+				}
+			}
+			
 			// @description			Advance the animation and wrap its numbers.
 			static advanceFrames = function()
 			{
@@ -79,42 +111,6 @@ function Sprite() constructor
 				}
 			}
 			
-			// @argument			{bool} copyCallerLocation?
-			// @description			Execute the draw and advance the animation.
-			static render = function(_copyCallerLocation)
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					var _location_x, _location_y;
-					
-					if (_copyCallerLocation)
-					{
-						_location_x = other.x;
-						_location_y = other.y;
-					}
-					else
-					{
-						if (location != undefined)
-						{
-							_location_x = location.x;
-							_location_y = location.y;
-						}
-						else
-						{
-							exit;
-						}
-					}
-					
-					draw_sprite_ext(ID, frame, location_x, location_y, scale.x, scale.y, angle.value, 
-									color, alpha);
-					
-					if (speed != 0)
-					{
-						self.advanceFrames(speed);
-					}
-				}
-			}
-		
 		#endregion
 		#region <Conversion>
 			
