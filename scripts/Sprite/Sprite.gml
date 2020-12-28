@@ -8,11 +8,12 @@
 /// @argument				{color} color?
 /// @argument				{real} alpha?
 ///
-/// @description			Constructs a Sprite resource. It can be drawn and animated with its
-///							configuration.
+/// @description			Constructs a Sprite resource, intended as a single instance for rendering.
+///							It can be rendered if its location is specified.
 ///
 ///							Construction methods:
 ///							- New constructor
+///							- Wrapper: {sprite} sprite
 ///							- Constructor copy: {Sprite} other
 function Sprite() constructor
 {
@@ -56,6 +57,156 @@ function Sprite() constructor
 				}
 			}
 			
+			// @returns				0 | On error: -1
+			// @description			Load the texture page this Sprite is on into the memory.
+			static prefetch = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_prefetch(ID);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			
+			// @returns				0 | On error: -1
+			// @description			Unload the texture page this Sprite is on from the memory.
+			static flush = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_flush(ID);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			
+		#endregion
+		#region <Getters>
+			
+			// @returns				{string}
+			// @description			Return the name of this Sprite.
+			static getName = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_get_name(ID);
+				}
+				else
+				{
+					return string(undefined);
+				}
+			}
+			
+			// @returns				{Vector2} | On error: {undefined}
+			// @description			Return the width and height of this Sprite.
+			static getSize = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of frames of this Sprite counted from 1.
+			static getFrameNumber = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_get_number(ID);
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
+			// @returns				{Vector2} | On error: {undefined}
+			// @description			Return the origin point offset of this Sprite.
+			//						This value is relative to top-left corner of this Sprite.
+			static getOrigin = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
+			// @returns				{Vector4} | On error: {undefined}
+			// @description			Return the bounding box offsets of this Sprite.
+			//						This value is relative to top-left corner of this Sprite.
+			static getBoundingBox = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
+									   sprite_get_bbox_right(ID), sprite_get_bbox_bottom(ID));
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
+			// @argument			{int} frame?
+			// @returns				{ptr} | On error: {undefined}
+			// @description			Return a pointer for the texture page of the specified frame
+			//						of this Sprite.
+			static getTexture = function(_frame)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					if (_frame == undefined) {_frame = 0;}
+					
+					return sprite_get_texture(ID, _frame);
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
+			// @argument			{int} frame?
+			// @argument			{bool} full?
+			// @returns				{Vector4|real[]}
+			// @description			Return the UV coordinates for the location of the specified frame
+			//						of this Sprite on its texture page.
+			//						It will be returned as an Vector4 or if the full information is
+			//						specified, an array with 8 elements will be returned with the
+			//						following data at respective positions:
+			//						[UV left, UV top, UV right, UV bottom, pixels trimmed from left,
+			//						 pixels trimmed from top, pixel data width precentage saved to 
+			//						 the texture page, pixel data height precentage saved to the
+			//						 texture page]
+			static getUVs = function(_frame, _full)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					if (_frame == undefined) {_frame = 0;}
+					
+					var _uv = sprite_get_uvs(ID, _frame);
+					
+					return ((_full) ? _uv : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
+				}
+				else
+				{
+					return undefined;
+				}
+			}
+			
 		#endregion
 		#region <Execution>
 			
@@ -91,22 +242,23 @@ function Sprite() constructor
 				}
 			}
 			
-			// @description			Advance the animation and wrap its numbers.
+			// @description			Advance the animation frame value by the speed of this Sprite and
+			//						wrap it.
 			static advanceFrames = function()
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
 					frame += speed;
 		
-					var frame_max = sprite_get_number(sprite);
+					var _frame_max = sprite_get_number(ID);
 		
-					if (frame >= frame_max)
+					if (frame >= _frame_max)
 					{
-						frame -= frame_max;
+						frame -= _frame_max;
 					}
 					else if (frame < 0)
 					{
-						frame += frame_max;
+						frame += _frame_max;
 					}
 				}
 			}
@@ -114,19 +266,117 @@ function Sprite() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} full?
+			// @argument			{bool} multiline?
+			// @argument			{bool} color_HSV
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the name of this Sprite.
-			static toString = function()
+			//						The value for maximum frame will represented as starting from 0.
+			static toString = function(_full, _multiline, _color_HSV)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					return (instanceof(self) + "(" + sprite_get_name(ID) + ")");
+					var _string = "";
+					
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
+					if (_full)
+					{
+						var _text_color = "";
+						
+						if (is_real(color))
+						{
+							switch (color)
+							{
+								case c_aqua: _text_color = "Aqua"; break;
+								case c_black: _text_color = "Black"; break;
+								case c_blue: _text_color = "Blue"; break;
+								case c_dkgray: _text_color = "Dark Gray"; break;
+								case c_fuchsia: _text_color = "Fuchsia"; break;
+								case c_gray: _text_color = "Gray"; break;
+								case c_green: _text_color = "Green"; break;
+								case c_lime: _text_color = "Lime"; break;
+								case c_ltgray: _text_color = "Light Gray"; break;
+								case c_maroon: _text_color = "Maroon"; break;
+								case c_navy: _text_color = "Navy"; break;
+								case c_olive: _text_color = "Olive"; break;
+								case c_orange: _text_color = "Orange"; break;
+								case c_purple: _text_color = "Purple"; break;
+								case c_red: _text_color = "Red"; break;
+								case c_teal: _text_color = "Teal"; break;
+								case c_white: _text_color = "White"; break;
+								case c_yellow: _text_color = "Yellow"; break;
+								default:
+									if (_color_HSV)
+									{
+										_text_color = 
+										("(" +
+										 "Hue: " + string(color_get_hue(color)) + _mark_separator +
+										 "Saturation: " + string(color_get_saturation(color)) + 
+														_mark_separator +
+										 "Value: " + string(color_get_value(color)) +
+										 ")");
+									}
+									else
+									{
+										_text_color = 
+										("(" +
+										 "Red: " + string(color_get_red(color)) + _mark_separator +
+										 "Green: " + string(color_get_green(color)) +
+												   _mark_separator +
+										 "Blue: " + string(color_get_blue(color)) +
+										 ")");
+									}
+								break;
+							}
+						}
+						else
+						{
+							_text_color = string(color);
+						}
+						
+						_string = ("Name: " + sprite_get_name(ID) + _mark_separator +
+								   "Size: " + string(self.getSize()) + _mark_separator +
+								   "Location: " + string(location) + _mark_separator +
+								   "Frame: " + string(frame) + "/" + 
+											   (string(sprite_get_number(ID) - 1)) + _mark_separator +
+								   "Speed: " + string(speed) + _mark_separator +
+								   "Scale: " + string(scale) + _mark_separator +
+								   "Color: " + _text_color + _mark_separator +
+								   "Alpha: " + string(alpha));
+					}
+					else
+					{
+						_string = sprite_get_name(ID);
+					}
+					
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else
 				{
 					return (instanceof(self) + "<>");
+				}
+			}
+			
+			// @argument			{string} path
+			// @argument			{int} frame?
+			// @description			Save this Sprite to the specified .png file.
+			//						If the frame to be saved is not specified, all frames will be
+			//						saved in one file as a horizontal strip of images.
+			static toFile = function(_path, _frame)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					if (_frame == undefined)
+					{
+						sprite_save_strip(ID, _path);
+					}
+					else
+					{
+						sprite_save(ID, _frame, _path);
+					}
 				}
 			}
 			
