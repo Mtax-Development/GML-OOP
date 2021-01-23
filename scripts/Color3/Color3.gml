@@ -92,7 +92,7 @@ function Color3() constructor
 			//						be specified to be used instead. The constant for Silver is the
 			//						same as for Light Gray and cannot be differentiated; Light Gray
 			//						will be used in its place.
-			static toString = function(_useHSV)
+			static toString = function(_color_HSV)
 			{
 				var _colors = [color1, color2, color3];
 				
@@ -128,7 +128,7 @@ function Color3() constructor
 						case c_white: _string_color = "White"; break;
 						case c_yellow: _string_color = "Yellow"; break;
 						default:
-							if (_useHSV)
+							if (_color_HSV)
 							{
 								_string_color = 
 								("(" +
