@@ -154,6 +154,16 @@ function Color4() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			// @returns				{Color4}
+			// @description			Create a copy of this constructor, but with inverted color order.
+			static invertedOrder = function()
+			{
+				return new Color4(color4, color3, color2, color1);
+			}
+			
+		#endregion
 		#region <Conversion>
 			
 			// @argument			{bool} useHSV?
