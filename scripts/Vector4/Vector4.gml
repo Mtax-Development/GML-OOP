@@ -9,9 +9,9 @@
 ///							Construction methods:
 ///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
-///							- One number pair: {real} x, {real} y
-///							   The first number will be set to all x values.
-///							   The second number will be set to all y values.
+///							- Number pair: {real} x, {real} y
+///							   First number will be set to all x values.
+///							   Second number will be set to all y values.
 ///							- Default for all values: {void}
 ///							   The values will be set to 0.
 ///							- From array: {real[]} array
@@ -112,7 +112,7 @@ function Vector4() constructor
 							}
 							else
 							{
-								//|Construction method: One number pair.
+								//|Construction method: Number pair.
 								var _x = argument[0];
 								var _y = argument[1];
 								
