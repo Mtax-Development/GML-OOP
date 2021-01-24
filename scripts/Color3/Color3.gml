@@ -91,88 +91,93 @@ function Color3() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} useHSV?
+			// @argument			{bool} multiline?
+			// @argument			{bool} color_HSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented as a color name or value for each 
-			//						color.
-			//						If it is equal to one of built-in color constants, its name will
-			//						be used. Otherwise exact RGB values will be displayed. HSV can 
-			//						be specified to be used instead. The constant for Silver is the
-			//						same as for Light Gray and cannot be differentiated; Light Gray
-			//						will be used in its place.
-			static toString = function(_color_HSV)
+			//						Content will be represented as color names for built-in constants
+			//						or RGB value, unless use of HSV is specified.
+			//						Note: The constant for Silver is the same as for Light Gray, so it
+			//							  cannot be differentiated and will not be represented.
+			static toString = function(_multiline, _color_HSV)
 			{
-				var _colors = [color1, color2, color3];
+				var _color = [color1, color2, color3];
+				var _color_count = array_length(_color);
+				var _text_color = array_create(_color_count, "");
 				
-				var _colors_count = array_length(_colors);
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				var _mark_separator_inline = ", ";
 				
-				var _result = (instanceof(self) + "(");
-				var _mark_separator = ", ";
+				var _string = "";
 				
 				var _i = 0;
-				
-				repeat (_colors_count)
+				repeat (_color_count)
 				{
-					var _string_color = "";
-					
-					switch (_colors[_i])
+					if (is_real(_color[_i]))
 					{
-						case c_aqua: _string_color = "Aqua"; break;
-						case c_black: _string_color = "Black"; break;
-						case c_blue: _string_color = "Blue"; break;
-						case c_dkgray: _string_color = "Dark Gray"; break;
-						case c_fuchsia: _string_color = "Fuchsia"; break;
-						case c_gray: _string_color = "Gray"; break;
-						case c_green: _string_color = "Green"; break;
-						case c_lime: _string_color = "Lime"; break;
-						case c_ltgray: _string_color = "Light Gray"; break;
-						case c_maroon: _string_color = "Maroon"; break;
-						case c_navy: _string_color = "Navy"; break;
-						case c_olive: _string_color = "Olive"; break;
-						case c_orange: _string_color = "Orange"; break;
-						case c_purple: _string_color = "Purple"; break;
-						case c_red: _string_color = "Red"; break;
-						case c_teal: _string_color = "Teal"; break;
-						case c_white: _string_color = "White"; break;
-						case c_yellow: _string_color = "Yellow"; break;
-						default:
-							if (_color_HSV)
-							{
-								_string_color = 
-								("(" +
-								 "Hue: " + string(color_get_hue(_colors[_i])) + _mark_separator +
-								 "Saturation: " + string(color_get_saturation(_colors[_i])) +
-												_mark_separator +
-								 "Value: " + string(color_get_value(_colors[_i])) +
-								 ")");
-							}
-							else
-							{
-								_string_color = 
-								("(" +
-								 "Red: " + string(color_get_red(_colors[_i])) + _mark_separator +
-								 "Green: " + string(color_get_green(_colors[_i])) + _mark_separator +
-								 "Blue: " + string(color_get_blue(_colors[_i])) +
-								 ")");
-							}
-						break;
+						switch (_color[_i])
+						{
+							case c_aqua: _text_color[_i] = "Aqua"; break;
+							case c_black: _text_color[_i] = "Black"; break;
+							case c_blue: _text_color[_i] = "Blue"; break;
+							case c_dkgray: _text_color[_i] = "Dark Gray"; break;
+							case c_fuchsia: _text_color[_i] = "Fuchsia"; break;
+							case c_gray: _text_color[_i] = "Gray"; break;
+							case c_green: _text_color[_i] = "Green"; break;
+							case c_lime: _text_color[_i] = "Lime"; break;
+							case c_ltgray: _text_color[_i] = "Light Gray"; break;
+							case c_maroon: _text_color[_i] = "Maroon"; break;
+							case c_navy: _text_color[_i] = "Navy"; break;
+							case c_olive: _text_color[_i] = "Olive"; break;
+							case c_orange: _text_color[_i] = "Orange"; break;
+							case c_purple: _text_color[_i] = "Purple"; break;
+							case c_red: _text_color[_i] = "Red"; break;
+							case c_teal: _text_color[_i] = "Teal"; break;
+							case c_white: _text_color[_i] = "White"; break;
+							case c_yellow: _text_color[_i] = "Yellow"; break;
+							default:
+								if (_color_HSV)
+								{
+									_text_color[_i] = 
+									("(" +
+									 "Hue: " + string(color_get_hue(_color[_i])) 
+											 + _mark_separator_inline +
+									 "Saturation: " + string(color_get_saturation(_color[_i]))
+													+ _mark_separator_inline +
+									 "Value: " + string(color_get_value(_color[_i])) +
+									 ")");
+								}
+								else
+								{
+									_text_color[_i] = 
+									("(" +
+									 "Red: " + string(color_get_red(_color[_i]))
+											 + _mark_separator_inline +
+									 "Green: " + string(color_get_green(_color[_i]))
+											   + _mark_separator_inline +
+									 "Blue: " + string(color_get_blue(_color[_i])) +
+									 ")");
+								}
+							break;
+						}
+					}
+					else
+					{
+						_text_color[_i] = string(_color[_i]);
 					}
 					
-					_result += _string_color;
+					_string += _text_color[_i];
 					
-					if (_i < (_colors_count - 1))
+					if (_i < (_color_count - 1))
 					{
-						_result += _mark_separator;
+						_string += _mark_separator;
 					}
 					
 					++_i;
 				}
 				
-				_result += ")";
-				
-				return _result;
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
 			// @returns				{int[]}
