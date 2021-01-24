@@ -265,14 +265,7 @@ function Point() constructor
 			++_i;
 		}
 		
-		if (argument_count <= 0)
-		{
-			self.construct();
-		}
-		else
-		{
-			script_execute_ext(method_get_index(self.construct), argument_original);
-		}
+		script_execute_ext(method_get_index(self.construct), argument_original);
 		
 	#endregion
 }
