@@ -5,6 +5,7 @@
 ///
 ///							Construction methods:
 ///							- New constructor
+///							- Wrapper: {int:priorityQueue} priorityQueue
 ///							- Constructor copy: {PriorityQueue} other
 function PriorityQueue() constructor
 {
@@ -14,18 +15,25 @@ function PriorityQueue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: New constructor.
-				ID = ds_priority_create();
+				ID = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "PriorityQueue"))
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					if ((is_real(_other.ID)) and (ds_exists(ds_type_priority, _other.ID)))
+					if (instanceof(argument[0]) == "PriorityQueue")
 					{
-						ds_priority_copy(ID, _other.ID);
+						//|Construction method: Constructor copy.
+						self.copy(argument[0]);
 					}
+					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_priority)))
+					{
+						//|Construction method: Wrapper.
+						ID = argument[0];
+					}
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					ID = ds_priority_create();
 				}
 			}
 			
@@ -73,10 +81,12 @@ function PriorityQueue() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 				{
-					ds_priority_clear(ID);
+					ID = ds_priority_create();
 				}
+				
+				ds_priority_clear(ID);
 			}
 			
 			// @argument			{PriorityQueue} other
@@ -88,10 +98,19 @@ function PriorityQueue() constructor
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 					{
-						self.construct();
+						ID = ds_priority_create();
 					}
 					
 					ds_priority_copy(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "copy";
+					var _errorText = ("Attempted to copy from an invalid data structure: " + 
+									  "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -102,8 +121,21 @@ function PriorityQueue() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_size(ID) : 0);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_size(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
+				}
 			}
 			
 			// @returns				{any|undefined}
@@ -112,8 +144,21 @@ function PriorityQueue() constructor
 			//						empty.
 			static getFirst = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_find_max(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_find_max(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getFirst";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @returns				{any|undefined}
@@ -122,26 +167,67 @@ function PriorityQueue() constructor
 			//						empty.
 			static getLast = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_find_min(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_find_min(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getLast";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @argument			{any} value
 			// @returns				{any|undefined}
 			// @description			Return the priority of a specified value.
+			//						Returns {undefined} if this Priority Queue or the value does not
+			//						exist.
 			static getPriority = function(_value)
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_find_priority(ID, _value) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_find_priority(ID, _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getPriority";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
-			// @returns				{bool|undefined}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this Data Structure has any values in it.
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_empty(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_empty(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "isEmpty";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 		#endregion
@@ -191,6 +277,15 @@ function PriorityQueue() constructor
 						}
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "forEach";
+					var _errorText = ("Attempted to iterate through an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{any} value
@@ -212,6 +307,17 @@ function PriorityQueue() constructor
 						_i += 2;
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return false;
+				}
 			}
 			
 			// @argument			{any} value
@@ -222,6 +328,17 @@ function PriorityQueue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					ds_priority_change_priority(ID, _value, _priority);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "changePriority";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return false;
 				}
 			}
 			
@@ -236,40 +353,61 @@ function PriorityQueue() constructor
 						ds_priority_delete_value(ID, _value);
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "remove";
+					var _errorText = ("Attempted to remove data from an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Remove and return any value with the lowest priority in this 
-			//						Priority Queue.
+			// @description			Remove any of the values with the lowest priority in this Priority
+			//						Queue and return it.
 			//						Returns {undefined} if this Priority Queue does not exists or is
 			//						empty.
 			static removeMin = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
-					if (ds_priority_size(ID) > 0)
-					{
-						return ds_priority_delete_min(ID);
-					}
+					return ((ds_priority_size(ID) > 0) ? ds_priority_delete_min(ID) : undefined);
 				}
-
-				return undefined;
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "removeMin";
+					var _errorText = ("Attempted to remove data from an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Remove and return any value with the highest priority in this 
-			//						Priority Queue.
+			// @description			Remove any of the values with the highest priority in this
+			//						Priority Queue and return it.
 			//						Returns {undefined} if this Priority Queue does not exists or is
 			//						empty.
 			static removeMax = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)) 
-				and (ds_priority_size(ID) > 0))
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
-					return ds_priority_delete_max(ID);
+					return ((ds_priority_size(ID) > 0) ? ds_priority_delete_min(ID) : undefined);
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "removeMax";
+					var _errorText = ("Attempted to remove data from an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -449,16 +587,15 @@ function PriorityQueue() constructor
 				{
 					var _size = ds_priority_size(ID);
 					
+					var _priorities = array_create(_size, undefined);
+					var _values = array_create(_size, undefined);
+					
 					if (_size > 0)
 					{
 						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
 						
-						var _priorities = array_create(_size, undefined);
-						var _values = array_create(_size, undefined);
-						
 						var _i = 0;
-						
 						repeat (_size)
 						{
 							_priorities[_i] = ds_priority_find_priority(_dataCopy, 
@@ -470,9 +607,20 @@ function PriorityQueue() constructor
 						}
 						
 						ds_priority_destroy(_dataCopy);
-						
-						return [_priorities, _values];
 					}
+					
+					return [_priorities, _values];
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toArray";
+					var _errorText = ("Attempted to convert an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [[], []];
 				}
 			}
 			
@@ -485,28 +633,39 @@ function PriorityQueue() constructor
 			//						{undefined}.
 			static fromArray = function(_array)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 				{
-					if ((is_array(_array)) and (array_length(_array) >= 2)
-					and (is_array(_array[0])) and (is_array(_array[1])))
+					ID = ds_priority_create();
+				}
+				
+				if ((is_array(_array)) and (array_length(_array) >= 2)
+				and (is_array(_array[0])) and (is_array(_array[1])))
+				{
+					var _priorities = _array[0];
+					var _values = _array[1];
+						
+					var _priorities_length = array_length(_priorities);
+					var _values_length = array_length(_values);
+						
+					var _i = 0;
+					repeat (_priorities_length)
 					{
-						var _priorities = _array[0];
-						var _values = _array[1];
-						
-						var _priorities_length = array_length(_priorities);
-						var _values_length = array_length(_values);
-						
-						var _i = 0;
-						
-						repeat (_priorities_length)
-						{
-							var _value = ((_i < _values_length) ? _values[_i] : undefined);
+						var _value = ((_i < _values_length) ? _values[_i] : undefined);
 							
-							ds_priority_add(ID, _value, _priorities[_i]);
+						ds_priority_add(ID, _value, _priorities[_i]);
 							
-							++_i;
-						}
+						++_i;
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "fromArray";
+					var _errorText = ("Attempted to convert an invalid or incorrectly formatted " +
+									  "array to a Data Structure: " +
+									  "{" + string(_array) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -515,8 +674,21 @@ function PriorityQueue() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_priority))) ? 
-					   ds_priority_write(ID) : string(undefined));
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_write(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toEncodedString";
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return string(undefined);
+				}
 			}
 			
 			// @argument			{string} string
@@ -524,14 +696,14 @@ function PriorityQueue() constructor
 			// @description			Decode the previously encoded string of the same Data 
 			//						Structure and recreate it into this one.
 			//						Use the "legacy" argument if that string was created
-			//						in old versions of Game Maker with different encoding.
+			//						in old versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 				{
-					self.construct();
+					ID = ds_priority_create();
 				}
 				
 				ds_priority_clear(ID); //|Filler call to prevent a silent application crash.

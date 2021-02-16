@@ -5,6 +5,7 @@
 ///
 ///							Construction methods:
 ///							- New constructor
+///							- Wrapper {int:queue} Queue
 ///							- Constructor copy: {Queue} other
 function Queue() constructor
 {
@@ -14,18 +15,25 @@ function Queue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: New constructor.
-				ID = ds_queue_create();
+				ID = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Queue"))
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					if ((is_real(_other.ID)) and (ds_exists(ds_type_queue, _other.ID)))
+					if (instanceof(argument[0]) == "Queue")
 					{
-						ds_queue_copy(ID, _other.ID);
+						//|Construction method: Constructor copy.
+						self.copy(argument[0]);
 					}
+					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_queue)))
+					{
+						//|Construction method: Wrapper.
+						ID = argument[0];
+					}
+				}
+				else
+				{
+					//|Construction method: New constructor.
+					ID = ds_queue_create();
 				}
 			}
 			
@@ -73,10 +81,12 @@ function Queue() constructor
 			// @description			Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
-					ds_queue_clear(ID);
+					ID = ds_queue_create();
 				}
+				
+				ds_queue_clear(ID);
 			}
 			
 			// @argument			{Queue} other
@@ -88,10 +98,19 @@ function Queue() constructor
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 					{
-						self.construct();
+						ID = ds_queue_create();
 					}
 		
 					ds_queue_copy(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "copy";
+					var _errorText = ("Attempted to copy from an invalid data structure: " + 
+									  "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -102,7 +121,21 @@ function Queue() constructor
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? ds_queue_size(ID) : 0);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					return ds_queue_size(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
+				}
 			}
 			
 			// @returns				{any|undefined}
@@ -111,8 +144,21 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getFirst = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
-					   ds_queue_head(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					return ds_queue_head(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getFirst";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @returns				{any|undefined}
@@ -121,17 +167,42 @@ function Queue() constructor
 			//						Returns {undefined} if this Queue does not exists or is empty.
 			static getLast = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
-					   ds_queue_tail(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					return ds_queue_tail(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getLast";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
-			// @returns				{bool|undefined}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this Data Structure has any values in it.
-			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
-					   ds_queue_empty(ID) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					return ds_queue_empty(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "isEmpty";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 		#endregion
@@ -181,6 +252,15 @@ function Queue() constructor
 						}
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "forEach";
+					var _errorText = ("Attempted to iterate through an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{any} value
@@ -198,13 +278,25 @@ function Queue() constructor
 						++_i;
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return false;
+				}
 			}
 			
 			// @argument			{int} number?
 			// @returns				{any|any[]|undefined}
-			// @description			Remove any number of values from the Queue and
-			//						return them. If more than one value are to be 
-			//						removed, they will be returned as an array.
+			// @description			Remove any number of values from the Queue and return them. If
+			//						more than one value were removed, they will be returned in an
+			//						array.
+			//						Returns {undefined} if this Queue does not exists or is empty.
 			static remove = function(_number)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
@@ -225,8 +317,7 @@ function Queue() constructor
 						}
 						else
 						{
-							var _values = array_create(clamp(_number, 0, _size), 
-														undefined);
+							var _values = array_create(clamp(_number, 0, _size), undefined);
 							
 							var _i = 0;
 							repeat (array_length(_values))
@@ -242,6 +333,13 @@ function Queue() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "remove";
+					var _errorText = ("Attempted to remove data from an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -413,16 +511,14 @@ function Queue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _size = ds_queue_size(ID);
+					var _array = array_create(_size, undefined);
 					
 					if (_size > 0)
 					{
 						var _dataCopy = ds_queue_create();
 						ds_queue_copy(_dataCopy, ID);
 						
-						var _array = array_create(_size, undefined);
-						
 						var _i = 0;
-						
 						repeat (_size)
 						{
 							_array[_i] = ds_queue_dequeue(_dataCopy);
@@ -431,42 +527,67 @@ function Queue() constructor
 						}
 						
 						ds_queue_destroy(_dataCopy);
-						
-						return _array;
 					}
+					
+					return _array;
 				}
-				
-				return [];
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toArray";
+					var _errorText = ("Attempted to convert an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
 			}
 			
 			// @argument			{any[]} array
 			// @argument			{bool} startFromEnd?
-			// @description			Add values from the specified array to this Queue, starting
-			//						from either the start of the array or its end.
+			// @description			Add values from the specified array to this Queue, starting from
+			//						either its beginning or end.
 			static fromArray = function(_array, _startFromEnd)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
-					if (is_array(_array))
+					ID = ds_queue_create();
+				}
+				
+				if (is_array(_array))
+				{
+					var _size = array_length(_array);
+						
+					var _i = ((_startFromEnd) ? (_size - 1) : 0);
+					
+					if (_startFromEnd)
 					{
-						var _size = array_length(_array);
-						
-						var _i = ((_startFromEnd) ? (_size - 1) : 0);
-						
+						var _i = (_size - 1);
 						repeat (_size)
 						{
 							ds_queue_enqueue(ID, _array[_i]);
-							
-							if (_startFromEnd)
-							{
-								--_i;
-							}
-							else
-							{
-								++_i;
-							}
+							--_i;
 						}
 					}
+					else
+					{
+						var _i = 0;
+						repeat (_size)
+						{
+							ds_queue_enqueue(ID, _array[_i]);
+							++_i;
+						}
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "fromArray";
+					var _errorText = ("Attempted to convert an invalid array to a Data Structure: " +
+									  "{" + string(_array) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -475,8 +596,21 @@ function Queue() constructor
 			//						which can later be decoded to recreate it.
 			static toEncodedString = function()
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_queue))) ? 
-					   ds_queue_write(ID) : string(undefined));
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				{
+					return ds_queue_write(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toEncodedString";
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return string(undefined);
+				}
 			}
 			
 			// @argument			{string} string
@@ -484,14 +618,14 @@ function Queue() constructor
 			// @description			Decode the previously encoded string of the same Data 
 			//						Structure and recreate it into this one.
 			//						Use the "legacy" argument if that string was created
-			//						in old versions of Game Maker with different encoding.
+			//						in old versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
-					self.construct();
+					ID = ds_queue_create();
 				}
 				
 				ds_queue_read(ID, _string, _legacy);

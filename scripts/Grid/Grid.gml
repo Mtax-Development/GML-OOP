@@ -8,6 +8,7 @@
 ///
 ///							Construction methods:
 ///							- New constructor
+///							- Wrapper: {int:grid} grid
 ///							- Constructor copy: {Grid} other
 function Grid() constructor
 {
@@ -19,27 +20,26 @@ function Grid() constructor
 			{
 				ID = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Grid"))
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					var _size = _other.getSize();
+					var _instanceof = instanceof(argument[0]);
 					
-					ID = ds_grid_create(_size.x, _size.y);
-					
-					if ((is_real(_other.ID)) and (ds_exists(ds_type_grid, _other.ID)))
+					if (_instanceof == "Vector2")
 					{
-						ds_grid_copy(ID, _other.ID);
-					}
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					var _size = argument[0];
-					
-					if ((_size.x > 0) and (_size.y > 0))
-					{
+						//|Construction method: New constructor.
+						var _size = argument[0];
+						
 						ID = ds_grid_create(_size.x, _size.y);
+					}
+					else if (_instanceof == "Grid")
+					{
+						//|Construction method: Constructor copy.
+						self.copy(argument[0]);
+					}
+					else if (is_real(argument[0]) and (ds_exists(argument[0], ds_type_grid)))
+					{
+						//|Construction method: Wrapper.
+						ID = argument[0];
 					}
 				}
 			}
@@ -110,6 +110,15 @@ function Grid() constructor
 				{
 					ds_grid_clear(ID, _value);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "clear";
+					var _errorText = ("Attempted to clear an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Grid} other
@@ -122,10 +131,21 @@ function Grid() constructor
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
 					{
-						script_execute_ext(method_get_index(self.construct), argument_original);
+						ID = ds_grid_create(0, 0);
 					}
 					
 					ds_grid_copy(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "copy";
+					var _errorText = ("Attempted to perform a copy operation on invalid " +
+									  "data structures:\n" + 
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -135,10 +155,25 @@ function Grid() constructor
 			// @argument			{Vector2} location
 			// @returns				{any|undefined}
 			// @description			Return the value of cell at the specified position in this Grid.
+			//						Returns {undefined} if this Grid does not exist or the specified
+			//						location is out of its bounds.
 			static getValue = function(_location)
 			{
-				return (((is_real(ID)) and (ds_exists(ID, ds_type_grid))) ? 
-					   ds_grid_get(ID, _location.x, _location.y) : undefined);
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					return ds_grid_get(ID, _location.x, _location.y);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getValue";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @returns				{Vector2}
@@ -151,6 +186,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return new Vector2(0, 0);
 				}
 			}
@@ -165,6 +207,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize_x";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return 0;
 				}
 			}
@@ -179,6 +228,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize_y";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return 0;
 				}
 			}
@@ -193,12 +249,19 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getCellNumber";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return 0;
 				}
 			}
 			
 			// @argument			{Vector4} location
-			// @returns				{any}
+			// @returns				{any} | On error: {undefined}
 			// @description			Return the highest value in cells within the specified 
 			//						region of this Grid.
 			static getMax = function(_location)
@@ -210,13 +273,20 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMax";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{any}
+			// @returns				{any} | On error: {undefined}
 			// @description			Return the highest value in cells within the specified 
 			//						disk of this Grid.
 			static getMax_disk = function(_location, _radius)
@@ -227,12 +297,19 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMax_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector4} location
-			// @returns				{any}
+			// @returns				{any} | On error: {undefined}
 			// @description			Return the lowest value in cells within the specified 
 			//						region of this Grid.
 			static getMin = function(_location)
@@ -244,13 +321,20 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMin";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{any}
+			// @returns				{any} | On error: {undefined}
 			// @description			Return the lowest value in cells within the specified 
 			//						disk of this Grid.
 			static getMin_disk = function(_location, _radius)
@@ -261,12 +345,19 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMin_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector4} location
-			// @returns				{real}
+			// @returns				{real} | On error: {undefined}
 			// @description			Return the mean number of values in cells within the 
 			//						specified region of this Grid.
 			static getMean = function(_location)
@@ -278,13 +369,20 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMean";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{real}
+			// @returns				{real} | On error: {undefined}
 			// @description			Return the mean number of values in cells within the 
 			//						specified disk in this Grid.
 			static getMean_disk = function(_location, _radius)
@@ -295,12 +393,19 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMean_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector4} location
-			// @returns				{real}
+			// @returns				{real} | On error: {undefined}
 			// @description			Return the sum of values in cells within the specified 
 			//						region of this Grid. Possible only if all values in the
 			//						region are numbers.
@@ -313,13 +418,20 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSum";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{real}
+			// @returns				{real} | On error: {undefined}
 			// @description			Return the sum of values in cells within the specified 
 			//						disk in this Grid. Possible only if all values in the
 			//						disk are numbers.
@@ -331,6 +443,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSum_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -349,6 +468,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "valueExists";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return false;
 				}
 			}
@@ -367,6 +493,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "valueExists_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return false;
 				}
 			}
@@ -376,8 +509,8 @@ function Grid() constructor
 			// @returns				{Vector2|undefined}
 			// @description			Get the location of a cell containing the specified value
 			//						in the specified region of this Grid.
-			//						Returns {undefined} if this Grid or the specified value 
-			//						does not exist.
+			//						Returns {undefined} if this Grid or the specified value does not
+			//						exist.
 			static getValueLocation = function(_location, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -398,6 +531,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getValueLocation";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -408,8 +548,8 @@ function Grid() constructor
 			// @returns				{Vector2|undefined}
 			// @description			Get the location of a cell containing the specified value 
 			//						in the specified disk in a Grid.
-			//						Returns {undefined} if this Grid or the specified value 
-			//						does not exist.
+			//						Returns {undefined} if this Grid or the specified value does not
+			//						exist.
 			static getValueLocation_disk = function(_location, _radius, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -430,6 +570,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getValueLocation_disk";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -471,6 +618,15 @@ function Grid() constructor
 						}
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "forEach";
+					var _errorText = ("Attempted to iterate through an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector2} location
@@ -493,6 +649,15 @@ function Grid() constructor
 						_i += 2;
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector4} location
@@ -506,6 +671,15 @@ function Grid() constructor
 					ds_grid_set_region(ID, _location.x1, _location.y1, _location.x2, 
 									   _location.y2, _value);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set_region";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector2} location
@@ -518,6 +692,15 @@ function Grid() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					ds_grid_set_disk(ID, _location.x, _location.y, _radius, _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set_disk";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -540,6 +723,25 @@ function Grid() constructor
 						ds_grid_set_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
 					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "set_region_copied";
+						var _errorText = ("Attempted to copy from an invalid data structure: " + 
+										  "{" + string(_other) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set_region_copied";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -565,6 +767,15 @@ function Grid() constructor
 						_i += 2;
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector4} location
@@ -577,8 +788,17 @@ function Grid() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, 
-									   _location.y2, _value);
+					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, _location.y2,
+									   _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add_region";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -594,6 +814,15 @@ function Grid() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					ds_grid_add_disk(ID, _location.x, _location.y, _radius, _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add_disk";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -618,6 +847,25 @@ function Grid() constructor
 						ds_grid_add_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
 					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "add_region_copied";
+						var _errorText = ("Attempted to copy from an invalid data structure: " + 
+										  "{" + string(_other) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add_region_copied";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -642,6 +890,15 @@ function Grid() constructor
 						_i += 2;
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "multiply";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector4} location
@@ -655,6 +912,15 @@ function Grid() constructor
 					ds_grid_multiply_region(ID, _location.x1, _location.y1, 
 											_location.x2, _location.y2, _value);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "multiply_region";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector2} location
@@ -667,6 +933,15 @@ function Grid() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					ds_grid_multiply_disk(ID, _location.x, _location.y, _radius, _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "multiply_disk";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -689,6 +964,25 @@ function Grid() constructor
 						ds_grid_multiply_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 													 _source.x2, _source.y2, _target.x, _target.y);
 					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "multiply_region_copied";
+						var _errorText = ("Attempted to copy from an invalid data structure: " + 
+										  "{" + string(_other) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "multiply_region_copied";
+					var _errorText = ("Attempted to write to an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -700,6 +994,15 @@ function Grid() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					ds_grid_resize(ID, _size.x, _size.y);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "resize";
+					var _errorText = ("Attempted to resize an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -713,6 +1016,15 @@ function Grid() constructor
 				{
 					ds_grid_sort(ID, _column, _order_ascending);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "sort";
+					var _errorText = ("Attempted to sort an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @description			Randomize positions of all cells in this Grid.
@@ -721,6 +1033,15 @@ function Grid() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					ds_grid_shuffle(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "shuffle";
+					var _errorText = ("Attempted to shuffle an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -922,10 +1243,21 @@ function Grid() constructor
 						
 						return _array;
 					}
+					else
+					{
+						return [[], []];
+					}
 				}
 				else
 				{
-					return [];
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toArray";
+					var _errorText = ("Attempted to convert an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [[], []];
 				}
 			}
 			
@@ -999,6 +1331,15 @@ function Grid() constructor
 						}
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "fromArray";
+					var _errorText = ("Attempted to read an invalid array: " + 
+									  "{" + string(_array) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @returns				{string}
@@ -1012,6 +1353,13 @@ function Grid() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toEncodedString";
+					var _errorText = ("Attempted to read an invalid data structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return string(undefined);
 				}
 			}
@@ -1021,14 +1369,14 @@ function Grid() constructor
 			// @description			Decode the previously encoded string of the same Data 
 			//						Structure and recreate it into this one.
 			//						Use the "legacy" argument if that string was created
-			//						in old versions of Game Maker with different encoding.
+			//						in old versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
 				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
 				{
-					self.construct(originalArguments[0], originalArguments[1]);
+					ID = ds_grid_create(0, 0);
 				}
 				
 				ds_grid_read(ID, _string, _legacy);
