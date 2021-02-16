@@ -509,7 +509,8 @@ function Surface() constructor
 				
 				if (surface_exists(ID))
 				{
-					if ((is_real(_buffer.ID)) and (buffer_exists(_buffer.ID)))
+					if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
+					and (buffer_exists(_buffer.ID)))
 					{
 						if (_offset == undefined) {_offset = 0;}
 					

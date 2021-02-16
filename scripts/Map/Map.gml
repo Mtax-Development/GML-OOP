@@ -1023,18 +1023,17 @@ function Map() constructor
 				return ID;
 			}
 			
-			// @argument			{Buffer|buffer} buffer
+			// @argument			{Buffer} buffer
 			// @description			Save this Map into a Buffer. This Buffer is intended to be saved
 			//						as a file and then loaded later.
 			static secureSave_buffer = function(_buffer)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
-					var _other = ((instanceof(_buffer) == "Buffer") ? _buffer.ID : _buffer);
-					
-					if (is_real(_other)) and (buffer_exists(_other))
+					if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
+					and (buffer_exists(_buffer.ID)))
 					{
-						ds_map_secure_save_buffer(ID, _other);
+						ds_map_secure_save_buffer(ID, _buffer.ID);
 					}
 					else
 					{
@@ -1059,21 +1058,20 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{Buffer|buffer} buffer
+			// @argument			{Buffer} buffer
 			// @description			Load a Map that is in a Buffer that was loaded from a file and
 			//						replace this Map with it.
 			static secureLoad_buffer = function(_buffer)
 			{
-				var _other = ((instanceof(_buffer) == "Buffer") ? _buffer.ID : _buffer);
-				
-				if ((is_real(_other)) and (buffer_exists(_other)))
+				if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
+				and (buffer_exists(_buffer.ID)))
 				{
 					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 					{
 						ds_map_destroy(ID);
 					}
 				
-					ID = ds_map_secure_load_buffer(_buffer);
+					ID = ds_map_secure_load_buffer(_buffer.ID);
 				}
 				else
 				{

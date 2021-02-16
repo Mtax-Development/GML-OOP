@@ -79,7 +79,7 @@ function Buffer() constructor
 				return undefined;
 			}
 			
-			// @argument			{Buffer|buffer} other
+			// @argument			{Buffer} other
 			// @argument			{int} size?
 			// @argument			{int} offset?
 			// @argument			{int} other_offset?
@@ -91,12 +91,8 @@ function Buffer() constructor
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if (instanceof(_other) == "Buffer")
-					{
-						_other = _other.ID;
-					}
-					
-					if (is_real(_other) and (buffer_exists(_other)))
+					if (instanceof(_other) == "Buffer") and (is_real(_other.ID)
+					and (buffer_exists(_other.ID)))
 					{
 						if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(_other);}
 						if (_offset == undefined) {_offset = 0;}
