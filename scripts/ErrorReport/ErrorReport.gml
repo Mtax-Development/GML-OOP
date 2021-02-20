@@ -5,10 +5,10 @@ function ErrorReport() constructor
 {
 	#region [Static variables]
 		
-		//|Configurable variables
+		//|Configurable variables.
 		static reportFunction = show_debug_message;
-		static errorData = [];
 		static maxReports = undefined;
+		static errorData = [];
 		
 	#endregion
 	#region [Methods]
@@ -18,7 +18,29 @@ function ErrorReport() constructor
 													  _errorText)
 			{
 				var _string_reportType = "Constructor Method Error";
-				var _string_constructorName = instanceof(_constructor);
+				var _string_constructorName = "";
+				
+				if (is_array(_constructor))
+				{
+					var _constructor_length = array_length(_constructor);
+					
+					var _i = 0;
+					repeat (_constructor_length)
+					{
+						_string_constructorName += instanceof(_constructor[_i]);
+						
+						++_i;
+						
+						if (_i < _constructor_length)
+						{
+							_string_constructorName += ".";
+						}
+					}
+				}
+				else
+				{
+					_string_constructorName = instanceof(_constructor);
+				}
 				
 				if (is_array(errorData))
 				{
@@ -44,7 +66,8 @@ function ErrorReport() constructor
 				
 				var _string = (_string_separator + "\n" +
 							   _string_reportType + " @ " + _string_constructorName + "." +
-							  string(_methodName) + ": " + string(_errorText) + "\n" +
+							  string(_methodName) + ": " + "\n" +
+							  string(_errorText) + "\n\n" +
 							  "Callstack: " + "\n" +
 							  _string_callstack +
 							  _string_separator);
