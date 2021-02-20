@@ -156,6 +156,13 @@ function Font() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (font_exists(ID)));
+			}
+			
 			// @argument			{bool} forceAssetDeletion
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory if this Font is

@@ -26,7 +26,7 @@ function Surface() constructor
 					size = _other.size;
 					onRecreate = _other.onRecreate;
 					ID = surface_create(size.x, size.y);
-					surface_copy();
+					surface_copy(ID, 0, 0, _other.ID);
 				}
 				else
 				{
@@ -35,6 +35,13 @@ function Surface() constructor
 					onRecreate = undefined;
 					ID = surface_create(size.x, size.y);
 				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (surface_exists(ID)));
 			}
 			
 			// @description			Create this Surface if it was destroyed.
@@ -144,13 +151,6 @@ function Surface() constructor
 			
 		#endregion
 		#region <Getters>
-			
-			// @returns				{bool}
-			// @description			Check if this Surface exists and is functional.
-			static isFunctional = function()
-			{
-				return ((is_real(ID)) and (surface_exists(ID)));
-			}
 			
 			// @description			Check whether this Surface is the current draw target.
 			static isTarget = function()

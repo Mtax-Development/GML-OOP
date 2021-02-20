@@ -57,46 +57,11 @@ function Sprite() constructor
 				}
 			}
 			
-			// @returns				{int:0} | On error: {int:-1}
-			// @description			Load the texture page this Sprite is on into the memory.
-			static prefetch = function()
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
 			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					return sprite_prefetch(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "prefetch";
-					var _errorText = ("Attempted to load an invalid Sprite: " +
-									  "{" + string(ID) + "}" + "\n");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return -1;
-				}
-			}
-			
-			// @returns				{int:0} | On error: {int:-1}
-			// @description			Unload the texture page this Sprite is on from the memory.
-			static flush = function()
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					return sprite_flush(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "flush";
-					var _errorText = ("Attempted to unload an invalid Sprite: " +
-									  "{" + string(ID) + "}" + "\n");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return -1;
-				}
+				return ((is_real(ID)) and (sprite_exists(ID)));
 			}
 			
 		#endregion
@@ -341,6 +306,48 @@ function Sprite() constructor
 					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
 									  "{" + string(ID) + "}" + "\n");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @returns				{int:0} | On error: {int:-1}
+			// @description			Load the texture page this Sprite is on into the memory.
+			static prefetch = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_prefetch(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "prefetch";
+					var _errorText = ("Attempted to load an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return -1;
+				}
+			}
+			
+			// @returns				{int:0} | On error: {int:-1}
+			// @description			Unload the texture page this Sprite is on from the memory.
+			static flush = function()
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					return sprite_flush(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "flush";
+					var _errorText = ("Attempted to unload an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return -1;
 				}
 			}
 			

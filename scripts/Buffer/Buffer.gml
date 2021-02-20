@@ -65,6 +65,13 @@ function Buffer() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (buffer_exists(ID)));
+			}
+			
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
 			static destroy = function()

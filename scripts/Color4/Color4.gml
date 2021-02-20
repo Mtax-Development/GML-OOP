@@ -153,6 +153,14 @@ function Color4() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(color1)) and (is_real(color2)) and (is_real(color3))
+						and (is_real(color4)));
+			}
+			
 		#endregion
 		#region <Getters>
 			

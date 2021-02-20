@@ -31,6 +31,13 @@ function Range() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(minimum)) and (is_real(maximum)));
+			}
+			
 		#endregion
 		#region <Getters>
 			

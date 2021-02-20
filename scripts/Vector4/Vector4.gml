@@ -134,6 +134,13 @@ function Vector4() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2)));
+			}
+			
 		#endregion
 		#region <Setters>
 			

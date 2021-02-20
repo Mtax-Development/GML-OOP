@@ -44,6 +44,13 @@ function Grid() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (ds_exists(ID, ds_type_grid)));
+			}
+			
 			// @argument			{bool} deepScan?
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.

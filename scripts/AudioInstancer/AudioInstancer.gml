@@ -43,6 +43,16 @@ function AudioInstancer() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(file)) and (audio_exists(file))
+				and (is_real(priority)) and (is_array(instances))
+				and ((is_real(pitch)) or ((instanceof(pitch) == "Range")
+				and (pitch.isFunctional()))));
+			}
+			
 			// @description			Refresh the instance list by checking which still exists.
 			static refresh = function()
 			{

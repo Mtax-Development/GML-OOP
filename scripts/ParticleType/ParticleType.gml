@@ -14,6 +14,52 @@ function ParticleType() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				ID = undefined;
+					
+				shape = undefined;
+					
+				sprite = undefined;
+				sprite_animate = undefined;
+				sprite_stretch = undefined;
+				sprite_random = undefined;
+					
+				size = undefined;
+				size_increase = undefined;
+				size_wiggle = undefined;
+					
+				scale = undefined;
+					
+				speed = undefined;
+				speed_increase = undefined;
+				speed_wiggle = undefined;
+					
+				direction = undefined;
+				direction_increase = undefined;
+				direction_wiggle = undefined;
+					
+				orientation = undefined;
+				orientation_increase = undefined;
+				orientation_wiggle = undefined;
+				orientation_relative = undefined;
+					
+				gravity_amount = undefined;
+				gravity_direction = undefined;
+					
+				life = undefined;
+					
+				blend_additive = undefined;
+					
+				color = undefined;
+				color_type = undefined;
+					
+				alpha = undefined;
+					
+				step_type = undefined;
+				step_number = undefined;
+					
+				death_type = undefined;
+				death_number = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleType"))
 				{
 					//|Construction method: Constructor copy.
@@ -140,6 +186,13 @@ function ParticleType() constructor
 					death_type = undefined;
 					death_number = 0;
 				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (part_type_exists(ID)));
 			}
 			
 			// @returns				{undefined}

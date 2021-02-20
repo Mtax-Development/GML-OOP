@@ -173,6 +173,13 @@ function Layer(_depth) constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (layer_exists(ID)));
+			}
+			
 			// @returns				{undefined}
 			// @description			Remove the internal Layer information from the memory.
 			static destroy = function()
@@ -692,6 +699,14 @@ function Layer(_depth) constructor
 						}
 					}
 					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
+								(layer_sprite_exists(parent.ID, ID));
+					}
+					
 					// @argument			{Layer|int:layer} other
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
@@ -1020,6 +1035,14 @@ function Layer(_depth) constructor
 								break;
 							}
 						}
+					}
+					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
+								(layer_sprite_exists(parent.ID, ID));
 					}
 					
 					// @argument			{Layer|layer} other
@@ -1355,6 +1378,14 @@ function Layer(_depth) constructor
 							}
 						}
 
+					}
+					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
+								(layer_sprite_exists(parent.ID, ID));
 					}
 					
 					// @returns				{undefined}
@@ -1884,6 +1915,13 @@ function Layer(_depth) constructor
 									//|Construction method: New constructor.
 									ID = argument[0];
 								}
+							}
+							
+							// @returns				{bool}
+							// @description			Check if this constructor is functional.
+							static isFunctional = function()
+							{
+								return ((ID >= 0));
 							}
 							
 						#endregion

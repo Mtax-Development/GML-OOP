@@ -40,6 +40,14 @@ function RangedValue() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(value)) and (is_real(value_original))
+						and (instanceof(range) == "Range") and (range.isFunctional()));
+			}
+			
 		#endregion
 		#region <Getters>
 			

@@ -34,6 +34,13 @@ function StringBuilder() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return (is_string(ID));
+			}
+			
 		#endregion
 		#region <Getters>
 			

@@ -24,6 +24,14 @@ function RoundRectangle() constructor
 				outline_alpha = ((argument_count > 5) ? argument[5] : undefined);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return (((instanceof(location) == "Vector4") and (location.isFunctional()))
+						and ((instanceof(radius) == "Vector2") and (radius.isFunctional())));
+			}
+			
 		#endregion
 		#region <Getters>
 			

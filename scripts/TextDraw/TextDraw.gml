@@ -19,6 +19,13 @@ function TextDraw() constructor
 			
 			static construct = function()
 			{
+				text = "";
+				font = undefined;
+				location = undefined;
+				align = undefined;
+				color = undefined;
+				alpha = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "TextDraw"))
 				{
 					//|Construction method: Constructor copy.
@@ -44,6 +51,16 @@ function TextDraw() constructor
 					alpha = (((argument_count > 5) and (argument[5] != undefined)) ? argument[5]
 																				   : 1);
 				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(alpha)) and (is_string(text)) and ((instanceof(font) == "Font")
+						and (font.isFunctional())) and ((instanceof(location) == "Vector2")
+						and (location.isFunctional())) and ((instanceof(align) == "TextAlign")
+						and (align.isFunctional())));
 			}
 			
 		#endregion

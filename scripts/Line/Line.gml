@@ -20,6 +20,14 @@ function Line() constructor
 				alpha = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((instanceof(location) == "Vector4") and (location.isFunctional())
+						and (is_real(size)));
+			}
+			
 		#endregion
 		#region <Getters>
 			

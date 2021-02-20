@@ -80,6 +80,13 @@ function Vector2() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(x)) and (is_real(y)));
+			}
+			
 		#endregion
 		#region <Setters>
 			

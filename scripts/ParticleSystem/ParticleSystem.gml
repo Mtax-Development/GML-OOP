@@ -107,6 +107,13 @@ function ParticleSystem() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (part_system_exists(ID)));
+			}
+			
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory.
 			static destroy = function()
@@ -484,6 +491,8 @@ function ParticleSystem() constructor
 						streamEnabled = true;
 						streamNumber = 0;
 						
+						particleType = undefined;
+						
 						ID = part_emitter_create(parent.ID);
 						
 						parent.emitterList.add(self);
@@ -508,11 +517,21 @@ function ParticleSystem() constructor
 						}
 					}
 					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID))
+						and (instanceof(particleType) == "ParticleType")
+						and (part_type_exists(particleType.ID)));
+					}
+					
 					// @returns				{undefined}
 					// @description			Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
 						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
 						{
 							parent.emitterList.remove_value(self);
@@ -540,7 +559,7 @@ function ParticleSystem() constructor
 					// @description			Set the region in which the particles will be replaced.
 					static setRegion = function(_location, _shape, _distribution)
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
 						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
 						{
 							location = _location;
@@ -568,7 +587,7 @@ function ParticleSystem() constructor
 					// @description			Set the number of created particles during a stream.
 					static setStreamNumber = function(_number)
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
 						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
 						{
 							streamNumber = _number;
@@ -591,7 +610,7 @@ function ParticleSystem() constructor
 					// @description			Toggle continous particle streaming.
 					static setStreamEnabled = function(_streamEnabled)
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
 						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
 						{
 							streamEnabled = _streamEnabled;
@@ -613,15 +632,14 @@ function ParticleSystem() constructor
 				#endregion
 				#region <<Execution>>
 					
-					// @argument			{ParticleType} particleType
 					// @argument			{int} number
 					// @description			Create a number of Particles within the region.
 					static burst = function(_number)
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (particleType != undefined) 
-						and (part_type_exists(particleType.ID))
-						and (part_emitter_exists(parent.ID, ID)))
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID))
+						and (instanceof(particleType) == "ParticleType")
+						and (part_type_exists(particleType.ID)))
 						{
 							part_emitter_burst(parent.ID, ID, particleType.ID, _number);
 						}
@@ -645,10 +663,10 @@ function ParticleSystem() constructor
 					//						configuration.
 					static stream = function()
 					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (particleType != undefined) 
-						and (part_type_exists(particleType.ID))
-						and (part_emitter_exists(parent.ID, ID)))
+						if ((instanceof(parent) == "ParticleSystem") and (is_real(parent.ID))
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID))
+						and (instanceof(particleType) == "ParticleType")
+						and (part_type_exists(particleType.ID)))
 						{
 							var _number = ((streamEnabled) ? streamNumber : 0);
 							

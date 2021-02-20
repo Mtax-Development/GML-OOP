@@ -18,6 +18,13 @@ function Point() constructor
 				alpha = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : 1);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((instanceof(location) == "Vector2") and (location.isFunctional()));
+			}
+			
 		#endregion
 		#region <Getters>
 			

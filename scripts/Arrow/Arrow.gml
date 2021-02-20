@@ -21,6 +21,14 @@ function Arrow(_location) constructor
 				alpha = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return (is_real(size)) and (is_real(color)) and (is_real(alpha)) and
+						((instanceof(location) == "Vector4") and (location.isFunctional()));
+			}
+			
 		#endregion
 		#region <Execution>
 			

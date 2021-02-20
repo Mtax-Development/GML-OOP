@@ -25,6 +25,14 @@ function Circle() constructor
 																					   : 1);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(radius)) and (instanceof(location) == "Vector2") 
+						and (location.isFunctional()));
+			}
+			
 		#endregion
 		#region <Getters>
 			

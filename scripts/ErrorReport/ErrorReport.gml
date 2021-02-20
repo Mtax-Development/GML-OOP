@@ -12,6 +12,16 @@ function ErrorReport() constructor
 		
 	#endregion
 	#region [Methods]
+		#region <Management>
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_array(errorData)) and ((maxReports == undefined) or (maxReports > 0)));
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			static reportConstructorMethod = function(_constructor, _callstack, _methodName,

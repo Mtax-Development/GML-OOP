@@ -27,6 +27,15 @@ function Triangle() constructor
 																					   : 1);
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return (((instanceof(location1) == "Vector2") and (location1.isFunctional()))
+						and ((instanceof(location2) == "Vector2") and (location2.isFunctional()))
+						and ((instanceof(location3) == "Vector2") and (location3.isFunctional())));
+			}
+			
 		#endregion
 		#region <Getters>
 			

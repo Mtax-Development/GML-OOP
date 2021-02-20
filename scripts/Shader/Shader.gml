@@ -39,6 +39,13 @@ function Shader() constructor
 				}
 			}
 			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (shader_is_compiled(ID)));
+			}
+			
 		#endregion
 		#region <Setters>
 			

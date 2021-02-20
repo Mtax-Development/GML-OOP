@@ -10,93 +10,6 @@
 ///							- Constructor copy: {Room} other
 function Room() constructor
 {
-	#region [Elements]
-		
-		// @function			Room.AddedInstance()
-		// @argument			{object} object
-		// @argument			{Vector2} location
-		// @description			A container constructor for properties of instances added to this Room
-		//						before its activation.
-		//
-		//						Construction methods:
-		//						- New constructor.
-		//						- Constructor copy: {Room.AddedInstance} other
-		function AddedInstance(_object, _location) constructor
-		{
-			#region [[Methods]]
-				#region <<Management>>
-					
-					// @description			Initialize the constructor.
-					static construct = function()
-					{
-						parent = other;
-						
-						if ((argument_count > 0) and (instanceof(argument[0]) == "AddedInstance"))
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							
-							object = _other.object;
-							location = _other.location;
-							
-							ID = room_instance_add(parent.ID, location.x, location.y, object);
-						}
-						else
-						{
-							//|Construction method: New constructor.
-							object = argument[0];
-							location = argument[1];
-							
-							ID = room_instance_add(parent.ID, location.x, location.y, object);
-						}
-					}
-					
-				#endregion
-				#region <<Conversion>>
-					
-					// @returns				{string}
-					// @description			Create a string representing this constructor.
-					//						Overrides the string() conversion.
-					//						Content will be represented with the properties of the
-					//						instance.
-					static toString = function()
-					{
-						var _constructorName = "Room.AddedInstance";
-						
-						return (_constructorName + 
-								"(" + 
-								"Object: " + object_get_name(object) + ", " + 
-								"Location: " + string(location) + 
-								")");
-					}
-					
-				#endregion
-			#endregion
-			#region [[Constructor]]
-				
-				argument_original = array_create(argument_count, undefined);
-				
-				var _i = 0;
-				repeat (argument_count)
-				{
-					argument_original[_i] = argument[_i];
-					
-					++_i;
-				}
-				
-				if (argument_count <= 0)
-				{
-					self.construct();
-				}
-				else
-				{
-					script_execute_ext(method_get_index(self.construct), argument_original);
-				}
-		
-			#endregion
-		}
-		
-	#endregion
 	#region [Methods]
 		#region <Management>
 			
@@ -168,6 +81,13 @@ function Room() constructor
 						room_set_persistent(ID, persistent);
 					}
 				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return ((is_real(ID)) and (room_exists(ID)));
 			}
 			
 		#endregion
@@ -312,6 +232,107 @@ function Room() constructor
 			}
 			
 		#endregion
+	#endregion
+	#region [Elements]
+		
+		// @function			Room.AddedInstance()
+		// @argument			{object} object
+		// @argument			{Vector2} location
+		// @description			A container constructor for properties of instances added to this Room
+		//						before its activation.
+		//
+		//						Construction methods:
+		//						- New constructor.
+		//						- Constructor copy: {Room.AddedInstance} other
+		function AddedInstance(_object, _location) constructor
+		{
+			#region [[Methods]]
+				#region <<Management>>
+					
+					// @description			Initialize the constructor.
+					static construct = function()
+					{
+						parent = other;
+						
+						ID = undefined;
+						
+						object = undefined;
+						location = undefined;
+						
+						if ((argument_count > 0) and (instanceof(argument[0]) == "AddedInstance"))
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							
+							object = _other.object;
+							location = _other.location;
+							
+							ID = room_instance_add(parent.ID, location.x, location.y, object);
+						}
+						else
+						{
+							//|Construction method: New constructor.
+							object = argument[0];
+							location = argument[1];
+							
+							ID = room_instance_add(parent.ID, location.x, location.y, object);
+						}
+					}
+					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((is_real(ID)) and (is_real(object)) 
+								and (instanceof(location) == "Vector2")
+								and (location.isFunctional()));
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					// @returns				{string}
+					// @description			Create a string representing this constructor.
+					//						Overrides the string() conversion.
+					//						Content will be represented with the properties of the
+					//						instance.
+					static toString = function()
+					{
+						var _constructorName = "Room.AddedInstance";
+						
+						return (_constructorName + 
+								"(" + 
+								"Object: " + object_get_name(object) + ", " + 
+								"Location: " + string(location) + 
+								")");
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				argument_original = array_create(argument_count, undefined);
+				
+				var _i = 0;
+				repeat (argument_count)
+				{
+					argument_original[_i] = argument[_i];
+					
+					++_i;
+				}
+				
+				if (argument_count <= 0)
+				{
+					self.construct();
+				}
+				else
+				{
+					script_execute_ext(method_get_index(self.construct), argument_original);
+				}
+		
+			#endregion
+		}
+		
 	#endregion
 	#region [Constructor]
 		
