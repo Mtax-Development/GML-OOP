@@ -160,12 +160,12 @@ function Font() constructor
 			// @returns				{undefined}
 			// @description			Remove the internal information from the memory if this Font is
 			//						not an asset Font or if is and the asset deletion was forced.
-			//						A destroyed asset Font will be not accessible until the
-			//						application is shut down and then restarted.
+			//						A destroyed asset Font will be remain unusable until the
+			//						application is completely shut down and then restarted.
 			static destroy = function(_forceAssetDeletion)
 			{
-				if ((is_real(ID)) and (font_exists(ID)) 
-				and ((_forceAssetDeletion) or (type != "asset")))
+				if ((is_real(ID)) and (font_exists(ID)) and ((_forceAssetDeletion)
+				or (type != "asset")))
 				{
 					font_delete(ID);
 					
@@ -178,16 +178,30 @@ function Font() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{ptr} | On error: {undefined}
-			// @description			Get the pointer to this Font's texture page.
+			// @returns				{ptr}
+			// @description			Get the pointer to texture page of this Font.
 			//						Returns {undefined} if this Font does not exist.
 			static getTexture = function()
 			{
-				return (((is_real(ID)) and (font_exists(ID))) ? font_get_texture(ID) : undefined);
+				if ((is_real(ID)) and (font_exists(ID)))
+				{
+					return font_get_texture(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getTexture";
+					var _errorText = ("Attempted to get a property of an invalid Font: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return pointer_invalid;
+				}
 			}
 			
 			// @returns				{Vector4} | On error: {undefined}
-			// @description			Get the UV coordinates for this Font's location 
+			// @description			Get the UV coordinates for this location of this Font
 			//						on its texture page.
 			//						Returns {undefined} if this Font does not exists.
 			static getUVs = function()
@@ -200,6 +214,13 @@ function Font() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getUVs";
+					var _errorText = ("Attempted to get a property of an invalid Font: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}

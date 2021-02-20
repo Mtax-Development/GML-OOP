@@ -14,24 +14,25 @@ function Surface() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				ID = undefined;
+				size = undefined;
+				onRecreate = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Surface"))
 				{
 					//|Construction method: Constructor copy.
 					var _other = argument[0];
 					
 					size = _other.size;
-					
 					onRecreate = _other.onRecreate;
-					
 					ID = surface_create(size.x, size.y);
+					surface_copy();
 				}
 				else
 				{
 					//|Construction method: New constructor.
 					size = argument[0];
-					
 					onRecreate = undefined;
-					
 					ID = surface_create(size.x, size.y);
 				}
 			}
@@ -56,24 +57,49 @@ function Surface() constructor
 			// @description			Copy content of other Surface to a specified location on this one.
 			static copy = function(_location, _other)
 			{
-				self.create();
-				
-				if (surface_exists(ID))
+				var _surface_source = (instanceof(_other) == "Surface" ? _other.ID : _other);
+					
+				if ((is_real(_surface_source)) and (surface_exists(_surface_source)))
 				{
-					var _sourceSurface = (instanceof(_other) == "Surface" ? _other.ID : _other);
-			
 					if (argument_count > 2)
 					{
+						if (!(is_real(ID)) and (surface_exists(ID)))
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "copy";
+							var _errorText = ("Attempted to copy part of a Surface to an invalid " +
+											  "Surface: " +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Other: " + "{" + string(_other) + "}" + "\n" +
+											  "Writing it to a recreated surface.");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+						
 						var _other_part = argument[2];
 						
-						surface_copy_part(ID, _location.x, _location.y, _sourceSurface, 
-										  _other_part.x1, _other_part.y1, _other_part.x2,
-										  _other_part.y2);
+						surface_copy_part(ID, _location.x, _location.y, _surface_source, 
+											_other_part.x1, _other_part.y1, _other_part.x2,
+											_other_part.y2);
 					}
 					else
 					{
-						surface_copy(ID, _location.x, _location.y, _sourceSurface);
+						self.create();
+						
+						surface_copy(ID, _location.x, _location.y, _surface_source);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "copy";
+					var _errorText = ("Attempted to copy data from an invalid Surface: " +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															_errorText);
 				}
 			}
 			
@@ -100,6 +126,14 @@ function Surface() constructor
 				
 				if (!((is_real(ID)) and (surface_exists(ID))))
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setSize";
+					var _errorText = ("Attempted to change size of an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n" +
+									  "Recreating the Surface with the target size.");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					ID = surface_create(size.x, size.y);
 				}
 				else
@@ -113,7 +147,7 @@ function Surface() constructor
 			
 			// @returns				{bool}
 			// @description			Check if this Surface exists and is functional.
-			static exists = function()
+			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (surface_exists(ID)));
 			}
@@ -133,31 +167,42 @@ function Surface() constructor
 			//						otherwise {Color} will be returned.
 			static getPixel = function(_location, _getFull)
 			{
-				if (surface_exists(ID))
+				if ((is_real(ID)) and (surface_exists(ID)))
 				{	
 					return (_getFull ? surface_getpixel_ext(ID, _location.x, _location.y) :
 									   surface_getpixel(ID, _location.x, _location.y));
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getPixel";
+					var _errorText = ("Attempted to get data from an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
-			// @returns				{ptr} | On error: {undefined}
-			// @description			Get the pointer to Surface's internal texture.
+			// @returns				{ptr}
+			// @description			Get the pointer to texture page of this Surface.
 			static getTexture = function()
 			{
-				self.create();
+				if (!((is_real(ID)) and (surface_exists(ID))))
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getTexture";
+					var _errorText = ("Attempted to get texture of an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n" +
+									  "Recreating the Surface and providing its texture.");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					self.create();
+				}
 				
-				if (surface_exists(ID))
-				{
-					return surface_get_texture(ID);
-				}
-				else
-				{
-					return undefined;
-				}
+				return surface_get_texture(ID);
 			}
 			
 		#endregion
@@ -169,7 +214,19 @@ function Surface() constructor
 			{
 				if (_setAsTarget)
 				{
-					self.create();
+					if (!((is_real(ID)) and (surface_exists(ID))))
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "target";
+						var _errorText = ("Attempted to set an invalid Surface as render target: " +
+										  "{" + string(ID) + "}" + "\n" +
+										  "Recreating the Surface and providing setting it.");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+						
+						self.create();
+					}
 					
 					surface_set_target(ID);
 				}
@@ -211,6 +268,15 @@ function Surface() constructor
 					{
 						draw_surface(ID, _location.x, _location.y);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -271,6 +337,15 @@ function Surface() constructor
 						_targetStack = _targetStack.destroy();
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector4} part_location
@@ -304,6 +379,15 @@ function Surface() constructor
 										  _part_location.x2, _part_location.y2, 
 										  _location.x, _location.y);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -352,6 +436,15 @@ function Surface() constructor
 										 _color_x2y1, _color_x2y2, _color_x1y2, 
 										 _alpha);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Vector2} size
@@ -378,6 +471,15 @@ function Surface() constructor
 					{
 						draw_surface_stretched(ID, _location.x, _location.y, _size.x, _size.y);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -408,6 +510,15 @@ function Surface() constructor
 					{
 						draw_surface_tiled(ID, _location.x, _location.y);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -446,9 +557,20 @@ function Surface() constructor
 			// @description			Set the Multi-Render Target of this Surface for Shader operations.
 			static setMRT = function(_mrt)
 			{
-				self.create();
+				if (!((is_real(ID)) and (surface_exists(ID))))
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setMRT";
+					var _errorText = ("Attempted to set a property of an invalid Surface: " +
+										"{" + string(ID) + "}" + "\n" +
+										"Recreating the Surface and providing setting its property.");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+						
+					self.create();
+				}
 				
-				if (surface_exists(ID))
+				if ((is_real(ID)) and (surface_exists(ID)))
 				{
 					surface_set_target_ext(_mrt, ID);
 				}
@@ -494,6 +616,15 @@ function Surface() constructor
 						surface_save(ID, _filename);
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toFile";
+					var _errorText = ("Attempted to convert an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Buffer} buffer
@@ -507,7 +638,7 @@ function Surface() constructor
 			{
 				self.create();
 				
-				if (surface_exists(ID))
+				if ((is_real(ID)) and (surface_exists(ID)))
 				{
 					if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
 					and (buffer_exists(_buffer.ID)))

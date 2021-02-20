@@ -186,11 +186,30 @@ function Room() constructor
 						room_set_width(ID, size.x);
 						room_set_height(ID, size.y);
 					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "setSize";
+						var _errorText = ("Attempted to set size of a Room in use: " +
+										  "{" + string(ID) + "}" + "\n");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setSize";
+					var _errorText = ("Attempted to change a property of an invalid Room: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
 			// @argument			{bool} value
-			// @description			Change the persistence property for this Room.
+			// @description			Toggle persistence of this Room.
 			static setPersistent = function(_persistent)
 			{		
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -198,6 +217,15 @@ function Room() constructor
 					persistent = _persistent;
 					
 					room_set_persistent(ID, persistent);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setPersistent";
+					var _errorText = ("Attempted to change a property of an invalid Room: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -207,9 +235,18 @@ function Room() constructor
 			// @description			Switch the active room to this one.
 			static goto = function()
 			{
-				if (room_exists(ID))
+				if ((is_real(ID)) and (room_exists(ID)))
 				{
 					room_goto(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "goto";
+					var _errorText = ("Attempted to switch to an invalid Room: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -219,18 +256,38 @@ function Room() constructor
 			// @description			Add an instance of an object to this inactive room.
 			static instance_add = function(_object, _location)
 			{
-				if ((is_real(ID)) and (room_exists(ID)) and (room != ID))
+				if ((is_real(ID)) and (room_exists(ID)))
 				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
+					if (room != ID)
+					{
+						if (_location == undefined) {_location = new Vector2(0, 0);}
 					
-					var _addedInstance = new AddedInstance(_object, _location);
+						var _addedInstance = new AddedInstance(_object, _location);
 					
-					addedInstanceList.add(_addedInstance);
+						addedInstanceList.add(_addedInstance);
 					
-					return _addedInstance;
+						return _addedInstance;
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "instance_add";
+						var _errorText = ("Attempted to inject instance to a Room in use: " +
+										  "{" + string(ID) + "}" + "\n");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "instance_add";
+					var _errorText = ("Attempted to add an Element to an invalid Room: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return noone;
 				}
 			}

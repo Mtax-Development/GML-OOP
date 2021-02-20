@@ -46,22 +46,22 @@ function AudioInstancer() constructor
 			// @description			Refresh the instance list by checking which still exists.
 			static refresh = function()
 			{
-				var instances_new = [];
+				var _instances_new = [];
 				
-				var instances_length = array_length(instances);
+				var _instances_length = array_length(instances);
 				
 				var _i = 0;
-				repeat (instances_length)
+				repeat (_instances_length)
 				{
 					if (audio_exists(instances[_i]))
 					{
-						instances_new[array_length(instances_new)] = instances[_i];
+						_instances_new[array_length(_instances_new)] = _instances[_i];
 					}
 					
 					++_i;
 				}
 				
-				instances = instances_new;
+				instances = _instances_new;
 			}
 			
 		#endregion
@@ -71,27 +71,34 @@ function AudioInstancer() constructor
 			// @description			Execute the sound playback and return its instance.
 			static play = function()
 			{
-				if (audio_exists(file))
+				if ((is_real(file)) and (audio_exists(file)))
 				{	
-					var instance = audio_play_sound(file, 0, false);
+					var _instance = audio_play_sound(file, 0, false);
 					
 					if (instanceof(pitch) == "Range")
 					{
-						audio_sound_pitch(instance, pitch.random_real());
+						audio_sound_pitch(_instance, pitch.random_real());
 					}
 					else
 					{
-						audio_sound_pitch(instance, pitch);
+						audio_sound_pitch(_instance, pitch);
 					}
 					
 					self.refresh();
 					
-					array_push(instances, instance);
+					array_push(instances, _instance);
 					
-					return instance;
+					return _instance;
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "play";
+					var _errorText = ("Attempted to play an invalid audio file: " + 
+									  "{" + string(file) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -150,7 +157,7 @@ function AudioInstancer() constructor
 			//						Content will be represented with the name of the audio file.
 			static toString = function()
 			{
-				if (audio_exists(file))
+				if ((is_real(file)) and (audio_exists(file)))
 				{
 					return (instanceof(self) + "(" + audio_get_name(file) + ")");
 				}

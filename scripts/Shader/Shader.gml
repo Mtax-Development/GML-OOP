@@ -14,6 +14,11 @@ function Shader() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				ID = undefined;
+				name = undefined;
+				compiled = undefined;
+				uniform = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Shader"))
 				{
 					//|Construction method: Constructor copy.
@@ -110,6 +115,15 @@ function Shader() constructor
 						
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setUniform_float";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{string} uniform
@@ -184,6 +198,15 @@ function Shader() constructor
 						variable_struct_set(uniform, _uniform, _struct);
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setUniform_int";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{string} uniform
@@ -220,6 +243,15 @@ function Shader() constructor
 						variable_struct_set(uniform, _uniform, _struct);
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setUniform_matrix";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 		#endregion
@@ -230,10 +262,24 @@ function Shader() constructor
 			// @description			Get a sampler index of a uniform from this Shader
 			static getSampler = function(_uniform)
 			{
-				return ((compiled) ? shader_get_sampler_index(ID, _uniform) : -1);
+				if (compiled)
+				{
+					return shader_get_sampler_index(ID, _uniform);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSampler";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return -1;
+				}
 			}
 			
-			// @returns				{bool} | On error: {bool:false}
+			// @returns				{bool}
 			// @description			Check whether this Shader is the currently set one.
 			static isCurrent = function()
 			{
@@ -257,6 +303,15 @@ function Shader() constructor
 					{
 						shader_reset();
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			

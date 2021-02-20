@@ -10,213 +10,6 @@
 ///							- Constructor copy: {ParticleSystem} other
 function ParticleSystem() constructor
 {
-	#region [Elements]
-		
-		// @function				ParticleSystem.ParticleEmitter()
-		// @argument				{ParticleType} particleType
-		//
-		// @description				Construct a Particle Emitter resource in this Particle System, 
-		//							used to create particles of a Particles Type in a region.
-		//
-		//							Construction methods:
-		//							- New constructor.
-		//							- Constructor copy: {ParticleSystem.ParticleEmitter} other
-		function ParticleEmitter() constructor
-		{
-			#region [[Methods]]
-				#region <<Management>>
-					
-					// @description			Initialize the constructor.
-					static construct = function()
-					{
-						parent = other;
-						
-						location = undefined;
-						shape = undefined;
-						distribution = undefined;
-						
-						streamEnabled = true;
-						streamNumber = 0;
-						
-						ID = part_emitter_create(parent.ID);
-						
-						parent.emitterList.add(self);
-						
-						if (instanceof(argument[0]) == "ParticleEmitter")
-						{
-							//|Construction method: Constructor copy.
-							var _other = argument[0];
-							
-							particleType = _other.particleType;
-							
-							if ((_other.location != undefined) and (_other.shape != undefined)
-							and (_other.distribution != undefined))
-							{
-								self.setRegion(_other.location, _other.shape, _other.distribution);
-							}
-						}
-						else
-						{
-							//|Construction method: New constructor.
-							particleType = argument[0];
-						}
-					}
-					
-					// @returns				{undefined}
-					// @description			Remove the internal information from the memory.
-					static destroy = function()
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
-						{
-							parent.emitterList.remove_value(self);
-							
-							part_emitter_destroy(parent.ID, ID);
-						}
-						
-						return undefined;
-					}
-					
-					// @description			Recreate the constructor.
-					static clear = function()
-					{
-						self.destroy();
-						
-						self.construct(particleType);
-					}
-					
-				#endregion
-				#region <<Setters>>
-					
-					// @argument			{Vector4} location
-					// @argument			{constant:ps_shape_*} shape
-					// @argument			{constant:ps_distr_*} distribution
-					// @description			Set the region in which the particles will be replaced.
-					static setRegion = function(_location, _shape, _distribution)
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
-						{
-							location = _location;
-							shape = _shape;
-							distribution = _distribution;
-							
-							part_emitter_region(parent.ID, ID, location.x1, location.x2,
-												location.y1, location.y2, shape, distribution);
-						}
-					}
-					
-					// @argument			{int} number
-					// @description			Set the number of created particles during a stream.
-					static setStreamNumber = function(_number)
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
-						{
-							streamNumber = _number;
-						}
-					}
-					
-					// @argument			{bool} streamEnabled
-					// @description			Toggle continous particle streaming.
-					static setStreamEnabled = function(_streamEnabled)
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
-						{
-							streamEnabled = _streamEnabled;
-						}
-					}
-					
-				#endregion
-				#region <<Execution>>
-					
-					// @argument			{ParticleType} particleType
-					// @argument			{int} number
-					// @description			Create a number of Particles within the region.
-					static burst = function(_number)
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (particleType != undefined) 
-						and (part_type_exists(particleType.ID))
-						and (part_emitter_exists(parent.ID, ID)))
-						{
-							part_emitter_burst(parent.ID, ID, particleType.ID, _number);
-						}
-					}
-					
-					// @description			Continously create Particles using the stream 
-					//						configuration.
-					static stream = function()
-					{
-						if ((parent != undefined) and (parent.ID != undefined) 
-						and (part_system_exists(parent.ID)) and (particleType != undefined) 
-						and (part_type_exists(particleType.ID))
-						and (part_emitter_exists(parent.ID, ID)))
-						{
-							if (streamEnabled)
-							{
-								part_emitter_stream(parent.ID, ID, particleType.ID, 
-													streamNumber);
-							}
-							else
-							{
-								part_emitter_stream(parent.ID, ID, particleType.ID, 0);
-							}
-						}
-					}
-					
-				#endregion
-				#region <<Conversion>>
-					
-					// @returns				{string}
-					// @description			Overrides the string conversion with an ID output.
-					static toString = function()
-					{
-						var _constructorName = "ParticleSystem.ParticleEmitter";
-						
-						if ((instanceof(parent) == "ParticleSystem")
-						and (part_system_exists(parent.ID))
-						and (instanceof(particleType) == "ParticleType")
-						and (part_type_exists(particleType.ID))
-						and (part_emitter_exists(parent.ID, ID)))
-						{
-							return (_constructorName + "(" + string(ID) + ": "
-									+ string(particleType) + ")");
-						}
-						else
-						{
-							return (_constructorName + "<>");
-						}
-					}
-					
-				#endregion
-			#endregion
-			#region [[Constructor]]
-				
-				argument_original = array_create(argument_count, undefined);
-				
-				var _i = 0;
-				repeat (argument_count)
-				{
-					argument_original[_i] = argument[_i];
-					
-					++_i;
-				}
-				
-				if (argument_count <= 0)
-				{
-					self.construct();
-				}
-				else
-				{
-					script_execute_ext(method_get_index(self.construct), argument_original);
-				}
-				
-			#endregion
-		}
-		
-	#endregion
 	#region [Methods]
 		#region <Management>
 			
@@ -356,7 +149,7 @@ function ParticleSystem() constructor
 		#region <Setters>
 			
 			// @argument			{int} depth
-			// @description			Set a render depth that is independent from any layer depth.
+			// @description			Set a render depth that is independent from a Layer depth.
 			static setDepth = function(_depth)
 			{
 				if ((is_real(ID)) and (part_system_exists(ID)))
@@ -368,20 +161,53 @@ function ParticleSystem() constructor
 					
 					part_system_depth(ID, depth);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setDepth";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{Layer|layer} layer
-			// @description			Set the render depth to layer, ignoring previous depth settings.
+			// @description			Set the render depth to a Layer, independent from invidual depth.
 			static setLayer = function(_layer)
 			{
-				if ((is_real(ID)) and (part_system_exists(ID)) and (layer_exists(_layer)))
+				if ((is_real(ID)) and (part_system_exists(ID)))
 				{
-					layer = _layer;
-					depth = undefined;
+					var _layer_target = ((instanceof(layer) == "Layer") ? layer.ID : layer);
 					
-					var _layer_new = ((instanceof(layer) == "Layer") ? layer.ID : layer);
-					
-					part_system_layer(ID, _layer_new);
+					if ((is_real(_layer_target)) and (layer_exists(_layer_target)))
+					{
+						layer = _layer;
+						depth = undefined;
+						
+						part_system_layer(ID, _layer_new);
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "setLayer";
+						var _errorText = ("Attempted to set a Particle System to an invalid " +
+										  "Layer:\n" +
+										  "Self: " + "{" + string(self) + "}" + "\n" +
+										  "Other: " + "{" + string(_layer) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setLayer";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -395,6 +221,15 @@ function ParticleSystem() constructor
 					
 					part_system_position(ID, location.x, location.y);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setLocation";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{bool} automaticUpdate
@@ -406,6 +241,15 @@ function ParticleSystem() constructor
 					automaticUpdate = _automaticUpdate;
 					
 					part_system_automatic_update(ID, automaticUpdate);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setAutomaticUpdate";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -419,6 +263,15 @@ function ParticleSystem() constructor
 					
 					part_system_automatic_draw(ID, automaticRender);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setAutomaticRender";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @argument			{bool} drawOrder_oldToNew
@@ -431,26 +284,61 @@ function ParticleSystem() constructor
 					
 					part_system_draw_order(ID, _drawOrder_oldToNew);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setDrawOrder_oldToNew";
+					var _errorText = ("Attempted to set a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 		#endregion
 		#region <Getters>
 			
-			// @returns				{int} | On error: {undefined}
+			// @returns				{int}
 			// @description			Return a number of currently existing Particles of this Particle
 			//						System.
 			static getParticlesCount = function()
 			{
-				return (((is_real(ID)) and (part_system_exists(ID))) ? part_particles_count(ID)
-																	 : undefined);
+				if ((is_real(ID)) and (part_system_exists(ID)))
+				{
+					return part_particles_count(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getParticlesCount";
+					var _errorText = ("Attempted to get a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
+				}
 			}
 			
-			// @returns				{layerID} | On error: {undefined}
+			// @returns				{int:layer} | On error: {noone}
 			// @description			Return the ID of the layer the system is internally operated in.
 			static getLayer = function()
 			{
-				return (((is_real(ID)) and (part_system_exists(ID))) ? part_system_get_layer(ID)
-																	 : undefined);
+				if ((is_real(ID)) and (part_system_exists(ID)))
+				{
+					return part_system_get_layer(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getLayer";
+					var _errorText = ("Attempted to get a property of an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 		#endregion
@@ -463,6 +351,15 @@ function ParticleSystem() constructor
 				{
 					part_system_drawit(ID);
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @description			Advance all actions of created Particles.
@@ -471,6 +368,15 @@ function ParticleSystem() constructor
 				if ((is_real(ID)) and (part_system_exists(ID)))
 				{
 					part_system_update(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "update";
+					var _errorText = ("Attempted to update an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -484,12 +390,24 @@ function ParticleSystem() constructor
 			}
 			
 			// @argument			{ParticleType} particleType
+			// @returns				{ParticleEmitter} | On error: {noone}
 			// @description			Create a Particle Emitter in this Particle System.
 			static create_emitter = function()
 			{
 				if ((is_real(ID)) and (part_system_exists(ID)))
 				{
-					var _element = new ParticleEmitter(argument[0]);
+					return new ParticleEmitter(argument[0]);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "create_emitter";
+					var _errorText = ("Attempted to add Element to an invalid Particle System:\n" +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return noone;
 				}
 			}
 			
@@ -537,6 +455,271 @@ function ParticleSystem() constructor
 			}
 			
 		#endregion
+	#endregion
+	#region [Elements]
+		
+		// @function				ParticleSystem.ParticleEmitter()
+		// @argument				{ParticleType} particleType
+		//
+		// @description				Construct a Particle Emitter resource in this Particle System, 
+		//							used to create particles of a Particles Type in a region.
+		//
+		//							Construction methods:
+		//							- New constructor.
+		//							- Constructor copy: {ParticleSystem.ParticleEmitter} other
+		function ParticleEmitter() constructor
+		{
+			#region [[Methods]]
+				#region <<Management>>
+					
+					// @description			Initialize the constructor.
+					static construct = function()
+					{
+						parent = other;
+						
+						location = undefined;
+						shape = undefined;
+						distribution = undefined;
+						
+						streamEnabled = true;
+						streamNumber = 0;
+						
+						ID = part_emitter_create(parent.ID);
+						
+						parent.emitterList.add(self);
+						
+						if (instanceof(argument[0]) == "ParticleEmitter")
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							
+							particleType = _other.particleType;
+							
+							if ((_other.location != undefined) and (_other.shape != undefined)
+							and (_other.distribution != undefined))
+							{
+								self.setRegion(_other.location, _other.shape, _other.distribution);
+							}
+						}
+						else
+						{
+							//|Construction method: New constructor.
+							particleType = argument[0];
+						}
+					}
+					
+					// @returns				{undefined}
+					// @description			Remove the internal information from the memory.
+					static destroy = function()
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
+						{
+							parent.emitterList.remove_value(self);
+							
+							part_emitter_destroy(parent.ID, ID);
+						}
+						
+						return undefined;
+					}
+					
+					// @description			Recreate the constructor.
+					static clear = function()
+					{
+						self.destroy();
+						
+						self.construct(particleType);
+					}
+					
+				#endregion
+				#region <<Setters>>
+					
+					// @argument			{Vector4} location
+					// @argument			{constant:ps_shape_*} shape
+					// @argument			{constant:ps_distr_*} distribution
+					// @description			Set the region in which the particles will be replaced.
+					static setRegion = function(_location, _shape, _distribution)
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
+						{
+							location = _location;
+							shape = _shape;
+							distribution = _distribution;
+							
+							part_emitter_region(parent.ID, ID, location.x1, location.x2,
+												location.y1, location.y2, shape, distribution);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setRegion";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Particle System:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{int} number
+					// @description			Set the number of created particles during a stream.
+					static setStreamNumber = function(_number)
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
+						{
+							streamNumber = _number;
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setStreamNumber";
+							var _errorText = ("Attempted to set a property on invalid Element or " +
+											  "Particle System:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{bool} streamEnabled
+					// @description			Toggle continous particle streaming.
+					static setStreamEnabled = function(_streamEnabled)
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (part_emitter_exists(parent.ID, ID)))
+						{
+							streamEnabled = _streamEnabled;
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setStreamEnabled";
+							var _errorText = ("Attempted to set a property on invalid Element or " +
+											  "Particle System:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+				#endregion
+				#region <<Execution>>
+					
+					// @argument			{ParticleType} particleType
+					// @argument			{int} number
+					// @description			Create a number of Particles within the region.
+					static burst = function(_number)
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (particleType != undefined) 
+						and (part_type_exists(particleType.ID))
+						and (part_emitter_exists(parent.ID, ID)))
+						{
+							part_emitter_burst(parent.ID, ID, particleType.ID, _number);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "burst";
+							var _errorText = ("Attempted to emit Praticles using an invalid " +
+											  "Particle Emitter, Particle System or Particle " +
+											  "Type:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}" + "\n" +
+											  "Target: " + "{" + string(particleType));
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @description			Continously create Particles using the stream 
+					//						configuration.
+					static stream = function()
+					{
+						if ((parent != undefined) and (parent.ID != undefined) 
+						and (part_system_exists(parent.ID)) and (particleType != undefined) 
+						and (part_type_exists(particleType.ID))
+						and (part_emitter_exists(parent.ID, ID)))
+						{
+							var _number = ((streamEnabled) ? streamNumber : 0);
+							
+							part_emitter_stream(parent.ID, ID, particleType.ID, _number);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "stream";
+							var _errorText = ("Attempted to emit Praticles using an invalid " +
+											  "Particle Emitter, Particle System or Particle " +
+											  "Type:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}" + "\n" +
+											  "Target: " + "{" + string(particleType));
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					// @returns				{string}
+					// @description			Overrides the string conversion with an ID output.
+					static toString = function()
+					{
+						var _constructorName = "ParticleSystem.ParticleEmitter";
+						
+						if ((instanceof(parent) == "ParticleSystem")
+						and (part_system_exists(parent.ID))
+						and (instanceof(particleType) == "ParticleType")
+						and (part_type_exists(particleType.ID))
+						and (part_emitter_exists(parent.ID, ID)))
+						{
+							return (_constructorName + "(" + string(ID) + ": "
+									+ string(particleType) + ")");
+						}
+						else
+						{
+							return (_constructorName + "<>");
+						}
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				argument_original = array_create(argument_count, undefined);
+				
+				var _i = 0;
+				repeat (argument_count)
+				{
+					argument_original[_i] = argument[_i];
+					
+					++_i;
+				}
+				
+				if (argument_count <= 0)
+				{
+					self.construct();
+				}
+				else
+				{
+					script_execute_ext(method_get_index(self.construct), argument_original);
+				}
+				
+			#endregion
+		}
+		
 	#endregion
 	#region [Constructor]
 		

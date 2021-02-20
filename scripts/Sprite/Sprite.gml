@@ -57,7 +57,7 @@ function Sprite() constructor
 				}
 			}
 			
-			// @returns				0 | On error: -1
+			// @returns				{int:0} | On error: {int:-1}
 			// @description			Load the texture page this Sprite is on into the memory.
 			static prefetch = function()
 			{
@@ -67,11 +67,18 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "prefetch";
+					var _errorText = ("Attempted to load an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return -1;
 				}
 			}
 			
-			// @returns				0 | On error: -1
+			// @returns				{int:0} | On error: {int:-1}
 			// @description			Unload the texture page this Sprite is on from the memory.
 			static flush = function()
 			{
@@ -81,6 +88,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "flush";
+					var _errorText = ("Attempted to unload an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return -1;
 				}
 			}
@@ -98,6 +112,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getName";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return string(undefined);
 				}
 			}
@@ -112,6 +133,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -126,6 +154,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getFrameNumber";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -141,6 +176,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getOrigin";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -157,12 +199,19 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getBoundingBox";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
 			
 			// @argument			{int} frame?
-			// @returns				{ptr} | On error: {undefined}
+			// @returns				{ptr}
 			// @description			Return a pointer for the texture page of the specified frame
 			//						of this Sprite.
 			static getTexture = function(_frame)
@@ -175,7 +224,14 @@ function Sprite() constructor
 				}
 				else
 				{
-					return undefined;
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getTexture";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return pointer_invalid;
 				}
 			}
 			
@@ -190,7 +246,7 @@ function Sprite() constructor
 			//						[UV left, UV top, UV right, UV bottom, pixels trimmed from left,
 			//						 pixels trimmed from top, pixel data width precentage saved to 
 			//						 the texture page, pixel data height precentage saved to the
-			//						 texture page]
+			//						 texture page].
 			static getUVs = function(_frame, _full)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
@@ -203,6 +259,13 @@ function Sprite() constructor
 				}
 				else
 				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getUVs";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
 					return undefined;
 				}
 			}
@@ -240,6 +303,15 @@ function Sprite() constructor
 						self.advanceFrames(speed);
 					}
 				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
 			}
 			
 			// @description			Advance the animation frame value by the speed of this Sprite and
@@ -260,6 +332,15 @@ function Sprite() constructor
 					{
 						frame += _frame_max;
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "advanceFrames";
+					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -360,7 +441,7 @@ function Sprite() constructor
 				}
 			}
 			
-			// @argument			{string} path
+			// @argument			{string:path} path
 			// @argument			{int} frame?
 			// @description			Save this Sprite to the specified .png file.
 			//						If the frame to be saved is not specified, all frames will be
@@ -377,6 +458,15 @@ function Sprite() constructor
 					{
 						sprite_save(ID, _frame, _path);
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toFile";
+					var _errorText = ("Attempted to convert an invalid Sprite: " +
+									  "{" + string(ID) + "}" + "\n");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
