@@ -16,7 +16,7 @@ function Line() constructor
 				location = argument[0];
 				size = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
 				color = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] 
-																: c_white);
+																			   : c_white);
 				alpha = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3] : 1);
 			}
 			

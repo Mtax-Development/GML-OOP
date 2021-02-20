@@ -14,7 +14,7 @@ function Point() constructor
 			{
 				location = argument[0];
 				color = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] 
-																: c_white);
+																			   : c_white);
 				alpha = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : 1);
 			}
 			

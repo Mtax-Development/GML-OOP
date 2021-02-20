@@ -15,17 +15,22 @@ function StringBuilder() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "StringBuilder"))
+				ID = "";
+				
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					ID = _other.ID;
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					ID = ((argument_count > 0) ? string(argument[0]) : "");
+					if (instanceof(argument[0]) == "StringBuilder")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ID = _other.ID;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						ID = string(argument[0]);
+					}
 				}
 			}
 			
@@ -128,7 +133,7 @@ function StringBuilder() constructor
 			//						the string, starting from its start, end or with offset of
 			//						either. The position will equal the position of the first 
 			//						character of the substring, always counting from the start.
-			//						Returns {undefined} if the substring does not exist in te
+			//						Returns {undefined} if the substring does not exist in the
 			//						string.
 			static getSubstringPosition = function(_substring, _startFromEnd, _startPosition)
 			{
@@ -241,7 +246,7 @@ function StringBuilder() constructor
 				
 				var _string_length = string_length(_string);
 				
-				if (_string_length <= 0) or (_position > _string_length)
+				if ((_string_length <= 0) or (_position > _string_length))
 				{
 					return undefined;
 				}
@@ -349,8 +354,8 @@ function StringBuilder() constructor
 				var _string = string(ID);
 				
 				_position = ((_position == undefined) ? (string_length(_string) + 1)
-													  : clamp(_position, 1, 
-															  (string_length(_string) + 1)));
+													  : clamp(_position, 1, (string_length(_string)
+																			+ 1)));
 				
 				ID = string_delete(_string, _position, _number);
 				

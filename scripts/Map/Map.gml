@@ -118,7 +118,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid data structure: " + 
+					var _errorText = ("Attempted to copy from an invalid Data Structure: " + 
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -140,7 +140,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -162,7 +162,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -184,7 +184,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -208,7 +208,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getPrevious";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -232,7 +232,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getNext";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -256,7 +256,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getValue";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -293,7 +293,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getAllKeys";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -331,7 +331,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getAllValues";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -353,7 +353,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "keyExists";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -377,7 +377,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "valueIsBoundList";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -401,7 +401,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "valueIsBoundMap";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -422,7 +422,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid data structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -470,7 +470,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid data structure: " + 
+					var _errorText = ("Attempted to iterate through an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -512,7 +512,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid data structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -556,7 +556,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "addBoundMap";
-					var _errorText = ("Attempted to write to an invalid data structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -598,7 +598,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "addBoundList";
-					var _errorText = ("Attempted to write to an invalid data structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -626,7 +626,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "set";
-					var _errorText = ("Attempted to write to an invalid data structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -662,7 +662,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "replace";
-					var _errorText = ("Attempted to write to an invalid data structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -688,7 +688,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid data structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -892,7 +892,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid data structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -999,7 +999,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "secureSave";
-					var _errorText = ("Attempted to convert an invalid data structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -1052,7 +1052,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "secureSave_buffer";
-					var _errorText = ("Attempted to convert an invalid data structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}

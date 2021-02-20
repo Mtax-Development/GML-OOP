@@ -95,7 +95,8 @@ function DateTime() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Set this DateTime to the system's current, following set timezone.
+			// @description			Set this DateTime to the current of the system using the
+			//						set timezone.
 			static setCurrent = function()
 			{
 				self.construct(date_current_datetime());
@@ -476,8 +477,8 @@ function DateTime() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the date component is the same as device's local date, 
-			//						following set timezone.
+			// @description			Check if the date component is the same as local date of this
+			//						device using the set timezone.
 			static isToday = function()
 			{
 				if (is_real(ID))

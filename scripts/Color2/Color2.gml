@@ -57,7 +57,7 @@ function Color2() constructor
 		#region <Getters>
 			
 			// @returns				{Color2}
-			// @description			Create a copy of this constructor, but with inverted color order.
+			// @description			Create a copy of this constructor with inverted color order.
 			static invertedOrder = function()
 			{
 				return new Color2(color2, color1);
