@@ -13,9 +13,9 @@ function RoundRectangle() constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_location)
 			{
-				location = argument[0];
+				location = _location;
 				radius = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																				: new Vector2(1, 1));
 				fill_color = ((argument_count > 2) ? argument[2] : undefined);

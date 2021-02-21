@@ -20,27 +20,24 @@ function Grid() constructor
 			{
 				ID = undefined;
 				
-				if (argument_count > 0)
-				{
-					var _instanceof = instanceof(argument[0]);
+				var _instanceof = instanceof(argument[0]);
 					
-					if (_instanceof == "Vector2")
-					{
-						//|Construction method: New constructor.
-						var _size = argument[0];
+				if (_instanceof == "Vector2")
+				{
+					//|Construction method: New constructor.
+					var _size = argument[0];
 						
-						ID = ds_grid_create(_size.x, _size.y);
-					}
-					else if (_instanceof == "Grid")
-					{
-						//|Construction method: Constructor copy.
-						self.copy(argument[0]);
-					}
-					else if (is_real(argument[0]) and (ds_exists(argument[0], ds_type_grid)))
-					{
-						//|Construction method: Wrapper.
-						ID = argument[0];
-					}
+					ID = ds_grid_create(_size.x, _size.y);
+				}
+				else if (_instanceof == "Grid")
+				{
+					//|Construction method: Constructor copy.
+					self.copy(argument[0]);
+				}
+				else if (is_real(argument[0]) and (ds_exists(argument[0], ds_type_grid)))
+				{
+					//|Construction method: Wrapper.
+					ID = argument[0];
 				}
 			}
 			

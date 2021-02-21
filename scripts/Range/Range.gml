@@ -15,6 +15,9 @@ function Range() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				minimum = undefined;
+				maximum = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Range"))
 				{
 					//|Construction method: Constructor copy.

@@ -15,7 +15,8 @@
 ///							Construction methods:
 ///							- Four colors: {color} color1, {color} color2, {color} color3, 
 ///										   {color} color4
-///							- Default (white) for all values: {void}
+///							- Default for all values: {void}
+///							   The values will be set to white.
 ///							- One color for all values: {color} color
 ///							- Color2 + color + color: {Color2} other, {Color|color} color, 
 ///													  {color} color
@@ -31,124 +32,111 @@ function Color4() constructor
 			
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Color4"))
+				//|Construction method: Default for all values.
+				color1 = c_white;
+				color2 = c_white;
+				color3 = c_white;
+				color4 = c_white;
+				
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					color1 = _other.color1;
-					color2 = _other.color2;
-					color3 = _other.color3;
-					color4 = _other.color4;
-				}
-				else
-				{
-					//|Construction method: Default (white) for all values.
-					color1 = c_white;
-					color2 = c_white;
-					color3 = c_white;
-					color4 = c_white;
-					
-					switch (argument_count)
+					if (instanceof(argument[0]) == "Color4")
 					{
-						case 1:
-							//|Construction method: One color for all values.
-							var _color = argument[0];
-							
-							color1 = _color;
-							color2 = _color;
-							color3 = _color;
-							color4 = _color;
-						break;
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 					
-						case 2:
-							if ((instanceof(argument[0]) == "Color2") 
-							and (instanceof(argument[1]) == "Color2"))
-							{
-								//|Construction method: Color2 + Color2
-								var _color2_1 = argument[0];
-								var _color2_2 = argument[1];
-								
-								color1 = _color2_1.color1;
-								color2 = _color2_1.color2;
-								color3 = _color2_2.color1;
-								color4 = _color2_2.color2;
-							}
-							else
-							{
-								//|Construction method: Color3 + color
-								if (instanceof(argument[0]) == "Color3")
+						color1 = _other.color1;
+						color2 = _other.color2;
+						color3 = _other.color3;
+						color4 = _other.color4;
+					}
+					else
+					{
+						switch (argument_count)
+						{
+							case 1:
+								//|Construction method: One color for all values.
+								color1 = argument[0];
+								color2 = argument[0];
+								color3 = argument[0];
+								color4 = argument[0];
+							break;
+					
+							case 2:
+								if ((instanceof(argument[0]) == "Color2") 
+								and (instanceof(argument[1]) == "Color2"))
 								{
-									var _color3 = argument[0];
-									var _color = argument[1];
-									
-									color1 = _color3.color1;
-									color2 = _color3.color2;
-									color3 = _color3.color3;
-									color4 = _color;
+									//|Construction method: Color2 + Color2.
+									var _color2 = [argument[0], argument[1]];
+								
+									color1 = _color2[0].color1;
+									color2 = _color2[0].color2;
+									color3 = _color2[1].color1;
+									color4 = _color2[1].color2;
 								}
-								else if (instanceof(argument[1]) == "Color3")
+								else
 								{
-									var _color = argument[0];
-									var _color3 = argument[1];
+									//|Construction method: Color3 + color.
+									if (instanceof(argument[0]) == "Color3")
+									{
+										var _color3 = argument[0];
 									
-									color1 = _color;
-									color2 = _color3.color1;
-									color3 = _color3.color2;
-									color4 = _color3.color3;
+										color1 = _color3.color1;
+										color2 = _color3.color2;
+										color3 = _color3.color3;
+										color4 = argument[1];
+									}
+									else if (instanceof(argument[1]) == "Color3")
+									{
+										var _color3 = argument[1];
+									
+										color1 = argument[0];
+										color2 = _color3.color1;
+										color3 = _color3.color2;
+										color4 = _color3.color3;
+									}
 								}
-							}
-						break;
+							break;
 					
-						case 3:
-							//| Construction method: Color2 + color + color
-							if (instanceof(argument[0]) == "Color2")
-							{
-								var _color2 = argument[0];
-								var _color_1 = argument[1];
-								var _color_2 = argument[2];
+							case 3:
+								//|Construction method: Color2 + color + color.
+								if (instanceof(argument[0]) == "Color2")
+								{
+									var _color2 = argument[0];
 								
-								color1 = _color2.color1;
-								color2 = _color2.color2;
-								color3 = _color_1;
-								color4 = _color_2;
-							}
-							else if (instanceof(argument[1]) == "Color2")
-							{
-								var _color_1 = argument[0];
-								var _color2 = argument[1];
-								var _color_2 = argument[2];
+									color1 = _color2.color1;
+									color2 = _color2.color2;
+									color3 = argument[1];
+									color4 = argument[2];
+								}
+								else if (instanceof(argument[1]) == "Color2")
+								{
+									var _color2 = argument[1];
 								
-								color1 = _color_1;
-								color2 = _color2.color1;
-								color3 = _color2.color2;
-								color4 = _color_2;
-							}
-							else if (instanceof(argument[2]) == "Color2")
-							{
-								var _color_1 = argument[0];
-								var _color_2 = argument[1];
-								var _color2 = argument[2];
+									color1 = argument[0];
+									color2 = _color2.color1;
+									color3 = _color2.color2;
+									color4 = argument[2];
+								}
+								else if (instanceof(argument[2]) == "Color2")
+								{
+									var _color2 = argument[2];
 								
-								color1 = _color_1;
-								color2 = _color_2;
-								color3 = _color2.color1;
-								color4 = _color2.color2;
-							}
-						break;
+									color1 = argument[0];
+									color2 = argument[1];
+									color3 = _color2.color1;
+									color4 = _color2.color2;
+								}
+							break;
 					
-						case 4:
-							//| Construction method: Four colors.
-							var _color_1 = argument[0];
-							var _color_2 = argument[1];
-							var _color_3 = argument[2];
-							var _color_4 = argument[3];
-							
-							color1 = _color_1;
-							color2 = _color_2;
-							color3 = _color_3;
-							color4 = _color_4;
-						break;
+							case 4:
+								//|Construction method: Four colors.
+								color1 = argument[0];
+								color2 = argument[1];
+								color3 = argument[2];
+								color4 = argument[3];
+							break;
+						}
 					}
 				}
 			}

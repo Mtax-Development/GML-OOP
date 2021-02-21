@@ -5,8 +5,9 @@
 /// @description			Constructs a container for two Colors.
 ///
 ///							Construction methods:
-///							- Two colors: {color} color1, {color} color2
-///							- Default (white) for all values: {void}
+///							- New constructor.
+///							- Default for all values: {void}
+///							   The values will be set to white.
 ///							- One color for all values: {color} color
 ///							- Constructor copy: {Color2} other
 function Color2() constructor
@@ -17,38 +18,30 @@ function Color2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Color2"))
-				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					color1 = _other.color1;
-					color2 = _other.color2;
-				}
-				else
-				{
-					//|Construction method: Default (white) for all values.
-					color1 = c_white;
-					color2 = c_white;
+				//|Construction method: Default for all values.
+				color1 = c_white;
+				color2 = c_white;
 				
-					switch (argument_count)
+				if (argument_count > 0)
+				{
+					if (argument_count > 1)
 					{
-						case 1:
-							//|Construction method: One color for all values.
-							var _color = argument[0];
-							
-							color1 = _color;
-							color2 = _color;
-						break;
-					
-						case 2:
-							//|Construction method: Two colors.
-							var _color1 = argument[0];
-							var _color2 = argument[1];
-							
-							color1 = _color1;
-							color2 = _color2;
-						break;
+						color1 = argument[0];
+						color2 = argument[1];
+					}
+					else if (is_real(argument[0]))
+					{
+						//|Construction method: One color for all values.
+						color1 = argument[0];
+						color2 = argument[0];
+					}
+					else if (instanceof(argument[0]) == "Color2")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						color1 = _other.color1;
+						color2 = _other.color2;
 					}
 				}
 			}

@@ -14,11 +14,11 @@ function Triangle() constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_location1, _location2, _location3)
 			{
-				location1 = argument[0];
-				location2 = argument[1];
-				location3 = argument[2];
+				location1 = _location1;
+				location2 = _location2;
+				location3 = _location3;
 				fill_color = ((argument_count > 3) ? argument[3] : undefined);
 				fill_alpha = (((argument_count > 4) and (argument[4] != undefined)) ? argument[4]
 																					: 1);

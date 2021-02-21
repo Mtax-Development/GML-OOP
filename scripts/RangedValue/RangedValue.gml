@@ -18,6 +18,10 @@ function RangedValue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				range = undefined;
+				value = undefined;
+				value_original = undefined;
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "RangedValue"))
 				{
 					//|Construction method: Constructor copy.

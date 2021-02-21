@@ -619,83 +619,80 @@ function Layer(_depth) constructor
 						
 						parent = other;
 						
-						if (argument_count > 0)
+						switch (instanceof(argument[0]))
 						{
-							switch (instanceof(argument[0]))
-							{
-								case "SpriteElement":
-									//|Construction method: Constructor copy.
-									var _other = argument[0];
+							case "SpriteElement":
+								//|Construction method: Constructor copy.
+								var _other = argument[0];
 									
-									sprite = _other.sprite;
-									ID = layer_sprite_create(parent.ID, _other.location.x,
-															 _other.location.y, sprite.ID);
+								sprite = _other.sprite;
+								ID = layer_sprite_create(parent.ID, _other.location.x,
+															_other.location.y, sprite.ID);
 									
-									location = new Vector2(_other.location);
-									scale = new Scale(_other.scale);
-									angle = new Angle(_other.angle);
-									color = _other.color;
-									alpha = _other.alpha;
-									frame = _other.frame;
-									speed = _other.speed;
+								location = new Vector2(_other.location);
+								scale = new Scale(_other.scale);
+								angle = new Angle(_other.angle);
+								color = _other.color;
+								alpha = _other.alpha;
+								frame = _other.frame;
+								speed = _other.speed;
 									
-									layer_sprite_xscale(ID, scale.x);
-									layer_sprite_yscale(ID, scale.y);
-									layer_sprite_angle(ID, angle.value);
-									layer_sprite_blend(ID, color);
-									layer_sprite_alpha(ID, alpha);
-									layer_sprite_index(ID, frame);
-									layer_sprite_speed(ID, speed);
-								break;
+								layer_sprite_xscale(ID, scale.x);
+								layer_sprite_yscale(ID, scale.y);
+								layer_sprite_angle(ID, angle.value);
+								layer_sprite_blend(ID, color);
+								layer_sprite_alpha(ID, alpha);
+								layer_sprite_index(ID, frame);
+								layer_sprite_speed(ID, speed);
+							break;
 							
-								case "Sprite":
-									//|Construction method: New element.
-									sprite = argument[0];
-									location = argument[1];
-									ID = layer_sprite_create(parent.ID, location.x, location.y,
-															 sprite.ID);
+							case "Sprite":
+								//|Construction method: New element.
+								sprite = argument[0];
+								location = argument[1];
+								ID = layer_sprite_create(parent.ID, location.x, location.y,
+															sprite.ID);
 							
-									scale = new Scale(sprite.scale.x, sprite.scale.y);
-									angle = new Angle(sprite.angle.value);
-									color = sprite.color;
-									alpha = sprite.alpha;
-									frame = sprite.frame;
-									speed = sprite.speed;
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								angle = new Angle(sprite.angle.value);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
 									
-									layer_sprite_xscale(ID, scale.x);
-									layer_sprite_yscale(ID, scale.y);
-									layer_sprite_angle(ID, angle.value);
-									layer_sprite_blend(ID, color);
-									layer_sprite_alpha(ID, alpha);
-									layer_sprite_index(ID, frame);
-									layer_sprite_speed(ID, speed);
-								break;
+								layer_sprite_xscale(ID, scale.x);
+								layer_sprite_yscale(ID, scale.y);
+								layer_sprite_angle(ID, angle.value);
+								layer_sprite_blend(ID, color);
+								layer_sprite_alpha(ID, alpha);
+								layer_sprite_index(ID, frame);
+								layer_sprite_speed(ID, speed);
+							break;
 							
-								default:
-									//|Construction method: Wrapper.
-									ID = argument[0];
-									sprite = new Sprite
-									(
-										layer_sprite_get_sprite(ID),
-										new Vector2(layer_sprite_get_x(ID), layer_sprite_get_y(ID)),
-										layer_sprite_get_index(ID),
-										layer_sprite_get_speed(ID),
-										new Scale(layer_sprite_get_xscale(ID), 
-												  layer_sprite_get_yscale(ID)),
-										new Angle(layer_sprite_get_angle(ID)),
-										layer_sprite_get_blend(ID),
-										layer_sprite_get_alpha(ID)
-									);
+							default:
+								//|Construction method: Wrapper.
+								ID = argument[0];
+								sprite = new Sprite
+								(
+									layer_sprite_get_sprite(ID),
+									new Vector2(layer_sprite_get_x(ID), layer_sprite_get_y(ID)),
+									layer_sprite_get_index(ID),
+									layer_sprite_get_speed(ID),
+									new Scale(layer_sprite_get_xscale(ID), 
+												layer_sprite_get_yscale(ID)),
+									new Angle(layer_sprite_get_angle(ID)),
+									layer_sprite_get_blend(ID),
+									layer_sprite_get_alpha(ID)
+								);
 									
-									location = new Vector2(sprite.location.x, sprite.location.y);
-									scale = new Scale(sprite.scale.x, sprite.scale.y);
-									angle = new Angle(sprite.angle.value);
-									color = sprite.color;
-									alpha = sprite.alpha;
-									frame = sprite.frame;
-									speed = sprite.speed;
-								break;
-							}
+								location = new Vector2(sprite.location.x, sprite.location.y);
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								angle = new Angle(sprite.angle.value);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
+							break;
 						}
 					}
 					
@@ -946,94 +943,91 @@ function Layer(_depth) constructor
 						
 						parent = other;
 						
-						if (argument_count > 0)
+						switch (instanceof(argument[0]))
 						{
-							switch (instanceof(argument[0]))
-							{
-								case "BackgroundElement":
-									//|Construction method: Constructor copy.
-									var _other = argument[0];
+							case "BackgroundElement":
+								//|Construction method: Constructor copy.
+								var _other = argument[0];
 									
-									sprite = _other.sprite;
-									ID = layer_background_create(layer.ID, sprite.ID);
+								sprite = _other.sprite;
+								ID = layer_background_create(layer.ID, sprite.ID);
 									
-									visible = _other.visible;
-									stretched = _other.stretched;
-									tiled_x = _other.tiled_x;
-									tiled_y = _other.tiled_y;
+								visible = _other.visible;
+								stretched = _other.stretched;
+								tiled_x = _other.tiled_x;
+								tiled_y = _other.tiled_y;
 									
-									scale = new Scale(_other.scale);
-									color = _other.color;
-									alpha = _other.alpha;
-									frame = _other.frame;
-									speed = _other.speed;
+								scale = new Scale(_other.scale);
+								color = _other.color;
+								alpha = _other.alpha;
+								frame = _other.frame;
+								speed = _other.speed;
 									
-									layer_background_visible(ID, visible);
-									layer_background_stretch(ID, stretched);
-									layer_background_htiled(ID, tiled_x);
-									layer_background_vtiled(ID, tiled_y);
+								layer_background_visible(ID, visible);
+								layer_background_stretch(ID, stretched);
+								layer_background_htiled(ID, tiled_x);
+								layer_background_vtiled(ID, tiled_y);
 									
-									layer_background_xscale(ID, scale.x);
-									layer_background_yscale(ID, scale.y);
-									layer_background_blend(ID, color);
-									layer_background_alpha(ID, alpha);
-									layer_background_index(ID, frame);
-									layer_background_speed(ID, speed);
-								break;
+								layer_background_xscale(ID, scale.x);
+								layer_background_yscale(ID, scale.y);
+								layer_background_blend(ID, color);
+								layer_background_alpha(ID, alpha);
+								layer_background_index(ID, frame);
+								layer_background_speed(ID, speed);
+							break;
 								
-								case "Sprite":
-									//|Construction method: New element.
-									sprite = argument[0];
-									ID = layer_background_create(layer.ID, sprite.ID);
+							case "Sprite":
+								//|Construction method: New element.
+								sprite = argument[0];
+								ID = layer_background_create(layer.ID, sprite.ID);
 									
-									visible = true;
-									stretched = false;
-									tiled_x = false;
-									tiled_y = false;
+								visible = true;
+								stretched = false;
+								tiled_x = false;
+								tiled_y = false;
 									
-									scale = new Scale(sprite.scale.x, sprite.scale.y);
-									color = sprite.color;
-									alpha = sprite.alpha;
-									frame = sprite.frame;
-									speed = sprite.speed;
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
 									
-									layer_background_xscale(ID, scale.x);
-									layer_background_yscale(ID, scale.y);
-									layer_background_blend(ID, color);
-									layer_background_alpha(ID, alpha);
-									layer_background_index(ID, frame);
-									layer_background_speed(ID, speed);
-								break;
+								layer_background_xscale(ID, scale.x);
+								layer_background_yscale(ID, scale.y);
+								layer_background_blend(ID, color);
+								layer_background_alpha(ID, alpha);
+								layer_background_index(ID, frame);
+								layer_background_speed(ID, speed);
+							break;
 								
-								default:
-									//|Construction method: Wrapper.
-									ID = argument[0];
+							default:
+								//|Construction method: Wrapper.
+								ID = argument[0];
 									
-									visible = layer_background_get_visible(ID);
-									stretched = layer_background_get_stretch(ID);
-									tiled_x = layer_background_get_htiled(ID);
-									tiled_y = layer_background_get_vtiled(ID);
+								visible = layer_background_get_visible(ID);
+								stretched = layer_background_get_stretch(ID);
+								tiled_x = layer_background_get_htiled(ID);
+								tiled_y = layer_background_get_vtiled(ID);
 									
-									sprite = new Sprite
-									(
-										layer_background_get_sprite(ID),
-										undefined,
-										layer_background_get_index(ID),
-										layer_background_get_speed(ID),
-										new Scale(layer_background_get_xscale(ID), 
-												  layer_background_get_yscale(ID)),
-										undefined,
-										layer_background_get_blend(ID),
-										layer_background_get_alpha(ID)
-									);
+								sprite = new Sprite
+								(
+									layer_background_get_sprite(ID),
+									undefined,
+									layer_background_get_index(ID),
+									layer_background_get_speed(ID),
+									new Scale(layer_background_get_xscale(ID), 
+												layer_background_get_yscale(ID)),
+									undefined,
+									layer_background_get_blend(ID),
+									layer_background_get_alpha(ID)
+								);
 									
-									scale = new Scale(sprite.scale.x, sprite.scale.y);
-									color = sprite.color;
-									alpha = sprite.alpha;
-									frame = sprite.frame;
-									speed = sprite.speed;
-								break;
-							}
+								scale = new Scale(sprite.scale.x, sprite.scale.y);
+								color = sprite.color;
+								alpha = sprite.alpha;
+								frame = sprite.frame;
+								speed = sprite.speed;
+							break;
 						}
 					}
 					

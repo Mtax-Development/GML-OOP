@@ -10,6 +10,9 @@
 ///
 ///							Construction methods:
 ///							- New constructor
+///							   Providing only the first argument as a number will be treated as the
+///							   "Wrapper" construction method.
+///							- Empty: {void}
 ///							- Wrapper: {real:datetime} datetime
 ///							- Constructor copy: {DateTime} other
 function DateTime() constructor
@@ -49,7 +52,7 @@ function DateTime() constructor
 					}
 					else
 					{
-						if (argument_count == 1)
+						if ((argument_count == 1) and (is_real(argument[0])))
 						{
 							//|Construction method: Wrapper.
 							ID = argument[0];

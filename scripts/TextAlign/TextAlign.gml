@@ -19,19 +19,25 @@ function TextAlign() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "TextAlign"))
+				x = fa_left;
+				y = fa_top;
+				
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
+					if (instanceof(argument[0]) == "TextAlign")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 					
-					x = _other.x;
-					y = _other.y;
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					x = ((argument_count > 0) and (argument[0] != undefined) ? argument[0] : fa_left);
-					y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1] : fa_top);
+						x = _other.x;
+						y = _other.y;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						x = ((argument[0] != undefined) ? argument[0] : fa_left);
+						y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1] : fa_top);
+					}
 				}
 			}
 			

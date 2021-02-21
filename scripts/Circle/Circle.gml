@@ -13,10 +13,10 @@ function Circle() constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_location, _radius)
 			{
-				location = argument[0];
-				radius = argument[1];
+				location = _location;
+				radius = _radius;
 				fill_color = ((argument_count > 2) ? argument[2] : undefined);
 				fill_alpha = (((argument_count > 3) and (argument[3] != undefined)) ? argument[3]
 																					: 1);

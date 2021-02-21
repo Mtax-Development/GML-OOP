@@ -11,9 +11,9 @@ function Line() constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_location)
 			{
-				location = argument[0];
+				location = _location;
 				size = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] : 1);
 				color = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] 
 																			   : c_white);

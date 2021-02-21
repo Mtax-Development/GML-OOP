@@ -12,9 +12,9 @@ function Ellipse() constructor
 		#region <Management>
 			
 			// @description			Initialize the constructor.
-			static construct = function()
+			static construct = function(_location)
 			{
-				location = argument[0];
+				location = _location;
 				fill_color = ((argument_count > 1) ? argument[1] : undefined);
 				fill_alpha = ((argument_count > 2) ? argument[2] : 1);
 				outline_color = ((argument_count > 3) ? argument[3] : undefined);

@@ -12,7 +12,7 @@
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///							   1: array[0] will be set to x and y.
-///							   2 or more: array[0] will be set to x, array[1] will be set to y.
+///							   2+: array[0] will be set to x, array[1] will be set to y.
 ///							- Constructor copy: {Vector2} other
 function Vector2() constructor
 {
@@ -22,60 +22,59 @@ function Vector2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Vector2"))
+				//|Construction method: Default for all values.
+				x = 0;
+				y = 0;
+				
+				if (argument_count > 0)
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					x = _other.x;
-					y = _other.y;
-				}
-				else
-				{
-					switch (argument_count)
+					if (instanceof(argument[0]) == "Vector2")
 					{
-						case 0:
-							//|Construction method: Default for all values.
-							var _default = 0;
-							
-							x = _default;
-							y = _default;
-						break;
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 					
-						case 1:
-							if (is_array(argument[0]))
-							{
-								//|Construction method: From array.
-								var _array = argument[0];
-								
-								var _array_length = array_length(_array);
-								
-								switch (_array_length)
+						x = _other.x;
+						y = _other.y;
+					}
+					else
+					{
+						switch (argument_count)
+						{
+							case 1:
+								if (is_array(argument[0]))
 								{
-									case 1:
-										x = _array[0];
-										y = _array[0];
-									break;
+									//|Construction method: From array.
+									var _array = argument[0];
+								
+									var _array_length = array_length(_array);
+								
+									switch (_array_length)
+									{
+										case 1:
+											x = _array[0];
+											y = _array[0];
+										break;
 									
-									case 2:
-										x = _array[0];
-										y = _array[1];
-									break;
+										case 2:
+											x = _array[0];
+											y = _array[1];
+										break;
+									}
 								}
-							}
-							else
-							{
-								//|Construction method: One number for all values.
-								x = argument[0];
-								y = argument[0];
-							}
-						break;
+								else
+								{
+									//|Construction method: One number for all values.
+									x = argument[0];
+									y = argument[0];
+								}
+							break;
 					
-						case 2:
-							//|Construction method: Two values.
-							x = argument[0];
-							y = argument[1];
-						break;
+							case 2:
+								//|Construction method: Two values.
+								x = argument[0];
+								y = argument[1];
+							break;
+						}
 					}
 				}
 			}
