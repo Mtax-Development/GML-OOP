@@ -4,7 +4,7 @@
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 ///
 ///							Construction methods:
-///							- New constructor: {int} value
+///							- New constructor.
 ///							   Unspecified value will be set to 0.
 ///							- Constructor copy: {Angle} other
 function Angle() constructor
@@ -68,12 +68,20 @@ function Angle() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the value of this Angle.
 			static toString = function()
 			{
-				return (instanceof(self) + "(" + string(value) + ")");
+				if (is_real(value))
+				{
+					return (instanceof(self) + "(" + string(value) + ")");
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 		#endregion
