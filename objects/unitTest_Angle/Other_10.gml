@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: Default value]
 	
 	constructor = new Angle();
@@ -65,6 +64,19 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: isFunctional()]
+	
+	constructor = [new Angle(), new Angle()];
+	constructor[1].value = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: modify()]
 	
 	var _value = 105;
@@ -101,7 +113,7 @@
 	
 	var _result = [constructor[0].difference(constructor[1]),
 				   constructor[1].difference(constructor[0])];
-	var _expectedValue = max(_base[0], _base[1]) - min(_base[0], _base[1]);
+	var _expectedValue = (max(_base[0], _base[1]) - min(_base[0], _base[1]));
 	
 	unitTest.assert_equal("Method: difference(negative value)", 
 						  _result[0], _expectedValue,

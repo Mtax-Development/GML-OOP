@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: Four values]
 	
 	var _base = [25, 26, 115.5, 535];
@@ -109,6 +108,19 @@
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Method: isFunctional()]
+	
+	constructor = [new Vector4(), new Vector4()];
+	constructor[1].y1 = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: add(real)]
@@ -494,7 +506,7 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: interpolate_x()]
+#region [Test: Method: interpolate_y()]
 	
 	var _base = [902, 1002, 1102, 1202];
 	var _value = 0.968;

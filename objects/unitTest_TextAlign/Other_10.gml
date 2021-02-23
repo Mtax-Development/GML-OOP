@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: Two values]
 	
 	var _base = [fa_right, fa_bottom];
@@ -22,6 +21,19 @@
 	var _expectedValue = [fa_left, fa_top];
 	
 	unitTest.assert_equal("Construction: Default values",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: isFunctional()]
+	
+	constructor = [new TextAlign(), new TextAlign()];
+	constructor[1].y = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	

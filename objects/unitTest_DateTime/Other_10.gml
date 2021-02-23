@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: New constructor]
 	
 	var _base = [1998, 10, 30, 0, 0, 0];
@@ -75,6 +74,20 @@
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
+	
+#endregion
+#region [Test: Method: isFunctional()]
+	
+	var _base = [1999, 11];
+	
+	constructor = [new DateTime(_base[0], _base[1]), new DateTime()];
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: setCurrent()]

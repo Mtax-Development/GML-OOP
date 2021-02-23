@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: Specified value]
 	
 	var _base = [5, 10];
@@ -45,6 +44,26 @@
 						   _result[0], _expectedValue[0],
 						   _result[1], _expectedValue[1],
 						   _result[2], _expectedValue[2]);
+	
+#endregion
+#region [Test: Method: isFunctional()]
+	
+	var _base = [24.25, 35];
+	
+	constructor = [new RangedValue(new Range(_base[0], _base[1])),
+				   new RangedValue(new Range(_base[0], _base[1])),
+				   new RangedValue(new Range(_base[0], _base[1]))];
+	constructor[1].value = undefined;
+	constructor[2].range.minimum = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional(),
+				   constructor[2].isFunctional()];
+	var _expectedValue = [true, false, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Method: isBoundary()]

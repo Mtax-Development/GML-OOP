@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: Two values]
 	
 	var _base = [0.7, 0.9];
@@ -51,6 +50,21 @@
 	var _expectedValue = _base;
 	
 	unitTest.assert_equal("Construction: Constructor copy",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: isFunctional()]
+	
+	var _base = [0.444, 1];
+	
+	constructor = [new Scale(_base[0], _base[1]), new Scale(_base[0], _base[1])];
+	constructor[1].y = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	

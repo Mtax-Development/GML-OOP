@@ -1,5 +1,4 @@
-/// @description Unit Test
-
+/// @description Unit Testing
 #region [Test: Construction: One color for all values]
 	
 	var _base = c_navy;
@@ -149,6 +148,37 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
+#region [Test: Method: isFunctional()]
+	
+	constructor = [new Color4(), new Color4()];
+	constructor[1].color1 = undefined;
+	
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isFunctional()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: invertedOrder()]
+	
+	var _base = [c_red, c_green, c_blue, c_yellow];
+	
+	constructor = [new Color4(_base[0], _base[1], _base[2], _base[3])];
+	constructor[1] = constructor[0].invertedOrder();
+	
+	var _result = [constructor[1].color1, constructor[1].color2, constructor[1].color3,
+				   constructor[1].color4];
+	var _expectedValue = [_base[3], _base[2], _base[1], _base[0]];
+	
+	unitTest.assert_equal("Method: invertedOrder()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
 #region [Test: String Conversion: Built-in colors]
 	
 	var _base = [c_blue, c_green, c_red, c_black];
@@ -172,7 +202,7 @@
 							 make_color_rgb(_base[2][0], _base[2][1], _base[2][2]),
 							 make_color_rgb(_base[3][0], _base[3][1], _base[3][2]));
 	
-	var _result = constructor.toString(false);
+	var _result = constructor.toString(false, false);
 	var _expectedValue = (constructorName + "(" +
 						  "(" + 
 						  "Red: " + string(_base[0][0]) + ", " +
@@ -212,7 +242,7 @@
 	
 	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.toString(true);
+	var _result = constructor.toString(false, true);
 	var _expectedValue = (constructorName + "(" +
 						  "(" + 
 						  "Hue: " + string(_element[0][0]) + ", " +
@@ -236,6 +266,80 @@
 						  ")" + ")");
 	
 	unitTest.assert_equal("Method: toString(Custom HSV colors)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: toString(Multiline, custom RGB colors)]
+	
+	var _base = [[0, 79, 255], [33, 21, 125], [68, 1, 0], [11, 12, 14]];
+	
+	constructor = new Color4(make_color_rgb(_base[0][0], _base[0][1], _base[0][2]),
+							 make_color_rgb(_base[1][0], _base[1][1], _base[1][2]),
+							 make_color_rgb(_base[2][0], _base[2][1], _base[2][2]),
+							 make_color_rgb(_base[3][0], _base[3][1], _base[3][2]));
+	
+	var _result = constructor.toString(true, false);
+	var _expectedValue = ("(" +
+						  "Red: " + string(_base[0][0]) + ", " +
+						  "Green: " + string(_base[0][1]) + ", " +
+						  "Blue: " + string(_base[0][2]) +
+						  ")" + "\n" +
+						  "(" + 
+						  "Red: " + string(_base[1][0]) + ", " +
+						  "Green: " + string(_base[1][1]) + ", " +
+						  "Blue: " + string(_base[1][2]) +
+						  ")" + "\n" +
+						  "(" +
+						  "Red: " + string(_base[2][0]) + ", " +
+						  "Green: " + string(_base[2][1]) + ", " +
+						  "Blue: " + string(_base[2][2]) +
+						  ")" + "\n" +
+						  "(" +
+						  "Red: " + string(_base[3][0]) + ", " +
+						  "Green: " + string(_base[3][1]) + ", " +
+						  "Blue: " + string(_base[3][2]) +
+						  ")");
+	
+	unitTest.assert_equal("Method: toString(Multiline, custom RGB colors)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: toString(Mutliline, custom HSV colors)]
+	
+	var _base = [make_color_hsv(19, 67, 255), make_color_hsv(255, 172, 14), 
+				 make_color_hsv(25, 255, 2), make_color_hsv(32, 23, 233)];
+	var _element = [[color_get_hue(_base[0]), color_get_saturation(_base[0]), 
+				  color_get_value(_base[0])], [color_get_hue(_base[1]), 
+				  color_get_saturation(_base[1]), color_get_value(_base[1])],
+				  [color_get_hue(_base[2]), color_get_saturation(_base[2]), 
+				  color_get_value(_base[2])], [color_get_hue(_base[3]), 
+				  color_get_saturation(_base[3]), color_get_value(_base[3])]];
+	
+	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = constructor.toString(true, true);
+	var _expectedValue = ("(" +
+						  "Hue: " + string(_element[0][0]) + ", " +
+						  "Saturation: " + string(_element[0][1]) + ", " +
+						  "Value: " + string(_element[0][2]) +
+						  ")" + "\n" +
+						  "(" + 
+						  "Hue: " + string(_element[1][0]) + ", " +
+						  "Saturation: " + string(_element[1][1]) + ", " +
+						  "Value: " + string(_element[1][2]) +
+						  ")" + "\n" +
+						  "(" +
+						  "Hue: " + string(_element[2][0]) + ", " +
+						  "Saturation: " + string(_element[2][1]) + ", " +
+						  "Value: " + string(_element[2][2]) +
+						  ")" + "\n" +
+						  "(" +
+						  "Hue: " + string(_element[3][0]) + ", " +
+						  "Saturation: " + string(_element[3][1]) + ", " +
+						  "Value: " + string(_element[3][2]) +
+						  ")");
+	
+	unitTest.assert_equal("Method: toString(Multiline, custom HSV colors)",
 						  _result, _expectedValue);
 	
 #endregion
