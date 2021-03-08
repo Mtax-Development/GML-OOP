@@ -38,7 +38,7 @@
 	constructor = new Vector4(_base[0], _base[1]);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
-	var _expectedValue = [_base[0], _base[1], _base[0], _base[1]];
+	var _expectedValue = [_base[0], _base[0], _base[1], _base[1]];
 	
 	unitTest.assert_equal("Construction: One number pair",
 						  _result[0], _expectedValue[0],
