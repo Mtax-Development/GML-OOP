@@ -29,7 +29,7 @@ function Angle() constructor
 					else if (is_real(argument[0]))
 					{
 						//|Construction method: New constructor.
-						value = argument[0];
+						self.modify(argument[0]);
 					}
 				}
 			}
