@@ -244,7 +244,7 @@ function Grid() constructor
 			}
 			
 			// @returns				{int}
-			// @description			Return the number of all cells in this Grid.
+			// @description			Return the number of cells in this Grid.
 			static getCellNumber = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -264,16 +264,25 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
-			// @returns				{any} | On error: {undefined}
-			// @description			Return the highest value in cells within the specified 
-			//						region of this Grid.
+			// @argument			{Vector4} location?
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the highest numerical value found in cells within the
+			//						specified region of this Grid.
+			//						If the region contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
 			static getMax = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_max(ID, _location.x1, _location.y1, 
-										   _location.x2, _location.y2);
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
+					var _result = ds_grid_get_max(ID, _location.x1, _location.y1, _location.x2,
+												  _location.y2);
+					
+					return ((is_real(_result) ? _result : undefined));
 				}
 				else
 				{
@@ -290,14 +299,18 @@ function Grid() constructor
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{any} | On error: {undefined}
-			// @description			Return the highest value in cells within the specified 
-			//						disk of this Grid.
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the highest numerical value found in cells within the
+			//						specified disk of this Grid.
+			//						If the disk contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
 			static getMax_disk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_disk_max(ID, _location.x, _location.y, _radius);
+					var _result = ds_grid_get_disk_max(ID, _location.x, _location.y, _radius);
+					
+					return ((is_real(_result) ? _result : undefined));
 				}
 				else
 				{
@@ -312,16 +325,25 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
-			// @returns				{any} | On error: {undefined}
-			// @description			Return the lowest value in cells within the specified 
-			//						region of this Grid.
+			// @argument			{Vector4} location?
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the lowest numerical value found in cells within the
+			//						specified region of this Grid.
+			//						If the region contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
 			static getMin = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_min(ID, _location.x1, _location.y1, 
-										   _location.x2, _location.y2);
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
+					var _result = ds_grid_get_min(ID, _location.x1, _location.y1, _location.x2,
+												  _location.y2);
+					
+					return ((is_real(_result) ? _result : undefined));
 				}
 				else
 				{
@@ -338,14 +360,18 @@ function Grid() constructor
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{any} | On error: {undefined}
-			// @description			Return the lowest value in cells within the specified 
-			//						disk of this Grid.
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the lowest numerical value found in cells within the
+			//						specified disk of this Grid.
+			//						If the disk contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
 			static getMin_disk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_disk_min(ID, _location.x, _location.y, _radius);
+					var _result = ds_grid_get_disk_min(ID, _location.x, _location.y, _radius);
+					
+					return ((is_real(_result) ? _result : undefined));
 				}
 				else
 				{
@@ -360,16 +386,22 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
+			// @argument			{Vector4} location?
 			// @returns				{real} | On error: {undefined}
-			// @description			Return the mean number of values in cells within the 
-			//						specified region of this Grid.
+			// @description			Return the mean number of numerical values found in cells within
+			//						the specified region of this Grid.
+			//						If the region contains no numerical values, 0 will be returned.
 			static getMean = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_mean(ID, _location.x1, _location.y1, 
-											_location.x2, _location.y2);
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
+					return ds_grid_get_mean(ID, _location.x1, _location.y1, _location.x2,
+											_location.y2);
 				}
 				else
 				{
@@ -387,8 +419,9 @@ function Grid() constructor
 			// @argument			{Vector2} location
 			// @argument			{int} radius
 			// @returns				{real} | On error: {undefined}
-			// @description			Return the mean number of values in cells within the 
-			//						specified disk in this Grid.
+			// @description			Return the mean number of numerical values found in cells within
+			//						the specified disk of this Grid.
+			//						If the disk contains no numerical values, 0 will be returned.
 			static getMean_disk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -408,17 +441,26 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
+			// @argument			{Vector4} location?
 			// @returns				{real} | On error: {undefined}
-			// @description			Return the sum of values in cells within the specified 
-			//						region of this Grid. Possible only if all values in the
-			//						region are numbers.
+			// @description			Return the sum of numerical values found in cells within
+			//						the specified region of this Grid.
+			//						Strings containing only numbers will also be included. Other 
+			//						values will be ignored. If the region contains no values that can
+			//						be summed, {undefined} will be returned.
 			static getSum = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_sum(ID, _location.x1, _location.y1, 
-										   _location.x2, _location.y2);
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
+					var _result = ds_grid_get_sum(ID, _location.x1, _location.y1, _location.x2,
+												  _location.y2);
+					
+					return (((!is_nan(_result)) and (is_real(_result))) ? _result : undefined);
 				}
 				else
 				{
@@ -436,14 +478,18 @@ function Grid() constructor
 			// @argument			{Vector2} location
 			// @argument			{int} radius
 			// @returns				{real} | On error: {undefined}
-			// @description			Return the sum of values in cells within the specified 
-			//						disk in this Grid. Possible only if all values in the
-			//						disk are numbers.
+			// @description			Return the sum of numerical values found in cells within
+			//						the specified disk of this Grid.
+			//						Strings containing only numbers will also be included. Other 
+			//						values will be ignored. If the disk contains no values that can
+			//						be summed, {undefined} will be returned.
 			static getSum_disk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					return ds_grid_get_disk_sum(ID, _location.x, _location.y, _radius);
+					var _result = ds_grid_get_disk_sum(ID, _location.x, _location.y, _radius);
+					
+					return (((!is_nan(_result)) and (is_real(_result))) ? _result : undefined);
 				}
 				else
 				{
@@ -458,15 +504,20 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
 			// @argument			{any} value
+			// @argument			{Vector4} location?
 			// @returns				{bool}
-			// @description			Check if the specified value exists in the specified 
-			//						region of the Grid.
-			static valueExists = function(_location, _value)
+			// @description			Check if the specified value exists in the specified region of 
+			//						this Grid.
+			static valueExists = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
 					return ds_grid_value_exists(ID, _location.x1, _location.y1, _location.x2, 
 												_location.y2, _value);
 				}
@@ -483,13 +534,13 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{any} value
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @argument			{any} value
 			// @returns				{bool}
-			// @description			Check if the specified value exists in the specified
-			//						disk in this Grid.
-			static valueExists_disk = function(_location, _radius, _value)
+			// @description			Check if the specified value exists in the specified disk of 
+			//						this Grid.
+			static valueExists_disk = function(_value, _location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -508,30 +559,30 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
 			// @argument			{any} value
+			// @argument			{Vector4} location?
 			// @returns				{Vector2|undefined}
 			// @description			Get the location of a cell containing the specified value
 			//						in the specified region of this Grid.
 			//						Returns {undefined} if this Grid or the specified value does not
 			//						exist.
-			static getValueLocation = function(_location, _value)
+			static getValueLocation = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
 					var _location_x = ds_grid_value_x(ID, _location.x1, _location.y1, 
 													  _location.x2, _location.y2, _value);
 					var _location_y = ds_grid_value_y(ID, _location.x1, _location.y1, 
 													  _location.x2, _location.y2, _value);
 					
-					if ((_location_x >= 0) and (_location_y >= 0))
-					{
-						return new Vector2(_location_x, _location_y);
-					}
-					else
-					{
-						return undefined;
-					}
+					return ((_location_x >= 0) and (_location_y >= 0)) ? new Vector2(_location_x,
+																					 _location_y)
+																	   : undefined;
 				}
 				else
 				{
@@ -546,15 +597,15 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{any} value
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @argument			{any} value
 			// @returns				{Vector2|undefined}
 			// @description			Get the location of a cell containing the specified value 
-			//						in the specified disk in a Grid.
+			//						in the specified disk of this Grid.
 			//						Returns {undefined} if this Grid or the specified value does not
 			//						exist.
-			static getValueLocation_disk = function(_location, _radius, _value)
+			static getValueLocation_disk = function(_value, _location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -563,14 +614,9 @@ function Grid() constructor
 					var _location_y = ds_grid_value_disk_y(ID, _location.x, _location.y, 
 														   _radius, _value);
 					
-					if ((_location_x >= 0) and (_location_y >= 0))
-					{
-						return new Vector2(_location_x, _location_y);
-					}
-					else
-					{
-						return undefined;
-					}
+					return ((_location_x >= 0) and (_location_y >= 0)) ? new Vector2(_location_x,
+																					 _location_y)
+																	   : undefined;
 				}
 				else
 				{
@@ -635,20 +681,20 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
 			// @argument			{any} value
+			// @argument			{Vector2} location
 			// @argument			...
-			// @description			Perform a replacement of any number of pairs of specified
-			//						numbers and values of cells in the specified locations.
-			static set = function(_location, _value)
+			// @description			Replace any number of values in the specified cells in this Grid
+			//						by the specified values.
+			static set = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					var _i = 0;
 					repeat (argument_count div 2)
 					{
-						_location = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[_i];
+						_location = argument[_i + 1];
 						
 						ds_grid_set(ID, _location.x, _location.y, _value);
 						
@@ -666,14 +712,19 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
 			// @argument			{any} value
-			// @description			Replace the specified value of cells of the specified region 
-			//						in this Grid.
-			static set_region = function(_location, _value)
+			// @argument			{Vector4} location?
+			// @description			Replace the values of cells of the specified region in this Grid
+			//						by the specified value.
+			static set_region = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
 					ds_grid_set_region(ID, _location.x1, _location.y1, _location.x2, 
 									   _location.y2, _value);
 				}
@@ -688,12 +739,12 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{any} value
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @argument			{any} value
-			// @description			Replace the specified value of cells of the specified disk 
-			//						in this Grid.
-			static set_disk = function(_location, _radius, _value)
+			// @description			Replace the values of cells of the specified disk in this Grid by
+			//						the specified value.
+			static set_disk = function(_value, _location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -710,21 +761,21 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} source
 			// @argument			{Vector2} target
+			// @argument			{Vector4} source
 			// @argument			{Grid} other?
-			// @description			Copy values of cells from the specified region of this or 
-			//						other Grid and replace the values of cells in the region of 
-			//						the same size in this Grid, starting from the specified target
-			//						location.
-			static set_region_copied = function(_source, _target, _other)
+			// @description			Copy values of cells from the specified region in this or
+			//						specified other Grid and replace the values of cells in the 
+			//						region of the same size in this Grid, starting from the specified
+			//						target location.
+			static set_region_copied = function(_target, _source, _other)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
-					and (ds_exists(_other.ID, ds_type_grid)))
+					if ((_other == self) or (((instanceof(_other) == "Grid")) 
+					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
 						ds_grid_set_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
@@ -751,22 +802,22 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
 			// @argument			{real|string} value
+			// @argument			{Vector2} location
 			// @argument			...
-			// @description			Perform an addition of any number of pairs of specified numbers
-			//						and values of cells in the specified locations.
-			//						The value will be replaced if it is not the same type as the 
+			// @description			Add the specified values to any number of values in the specified
+			//						cells of this Grid.
+			//						The values will be replaced if they are not the same type as the 
 			//						one already existing in the cell.
-			static add = function(_location, _value)
+			static add = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					var _i = 0;
 					repeat (argument_count div 2)
 					{
-						_location = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[_i];
+						_location = argument[_i + 1];
 						
 						ds_grid_add(ID, _location.x, _location.y, _value);
 						
@@ -784,16 +835,21 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
 			// @argument			{real|string} value
-			// @description			Add the specified value to already existing values in cells
-			//						of the specified region in this Grid.
-			//						The value will be replaced if it is not the same type as the 
+			// @argument			{Vector4} location?
+			// @description			Add the specified value to values in cells in the specified
+			//						region of this Grid.
+			//						The values will be replaced if they are not the same type as the 
 			//						one already existing in the cell.
-			static add_region = function(_location, _value)
+			static add_region = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
 					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, _location.y2,
 									   _value);
 				}
@@ -808,14 +864,14 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{real|string} value
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @argument			{real|string} value
-			// @description			Adds the specified value to already existing values in cells
-			//						of the specified disk in this Grid.
-			//						The value will be replaced if it is not the same type as the 
+			// @description			Add the specified value to values in cells in the specified disk
+			//						of this Grid.
+			//						The values will be replaced if they are not the same type as the 
 			//						one already existing in the cell.
-			static add_disk = function(_location, _radius, _value)
+			static add_disk = function(_value, _location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -832,23 +888,23 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} source
 			// @argument			{Vector2} target
+			// @argument			{Vector4} source
 			// @argument			{Grid} other?
 			// @description			Copy values of cells from the specified region of this or 
-			//						other Grid and add them to values of cells in the region of 
-			//						the same size in this Grid, starting from the specified 
+			//						specified other Grid and add them to values of cells in the
+			//						region of the same size in this Grid, starting from the specified
 			//						target location.
 			//						The value will be replaced if it is not the same type as the 
 			//						one already existing in the cell.
-			static add_region_copied = function(_source, _target, _other)
+			static add_region_copied = function(_target, _source, _other)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
-					and (ds_exists(_other.ID, ds_type_grid)))
+					if ((_other == self) or (((instanceof(_other) == "Grid")) 
+					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
 						ds_grid_add_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 												_source.x2, _source.y2, _target.x, _target.y);
@@ -875,21 +931,20 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector2} location
 			// @argument			{real} value
+			// @argument			{Vector2} location
 			// @argument			...
-			// @description			Perform a multiplication of any number of pairs of specified
-			//						numbers and values of cells in the specified locations.
-			//						Grid by a specified amount.
-			static multiply = function(_location, _value)
+			// @description			Multiply by the specified values any number of numerical values
+			//						in the specified cells of this Grid.
+			static multiply = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					var _i = 0;
 					repeat (argument_count div 2)
 					{
-						_location = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[_i];
+						_location = argument[_i + 1];
 						
 						ds_grid_multiply(ID, _location.x, _location.y, _value);
 						
@@ -907,14 +962,19 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} location
 			// @argument			{real} value
-			// @description			Multiply a number value in the specified region in this 
-			//						Grid by a specified amount.
-			static multiply_region = function(_location, _value)
+			// @argument			{Vector4} location?
+			// @description			Multiply by the specified value the numerical values in cells in
+			//						the specified region of this Grid.
+			static multiply_region = function(_value, _location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					if (_location == undefined)
+					{
+						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+					}
+					
 					ds_grid_multiply_region(ID, _location.x1, _location.y1, 
 											_location.x2, _location.y2, _value);
 				}
@@ -929,12 +989,12 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{real} value
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @argument			{real} value
-			// @description			Multiply a number value in the specified disk in this 
-			//						Grid by a specified amount.
-			static multiply_disk = function(_location, _radius, _value)
+			// @description			Multiply by the specified value the numerical values in cells in
+			//						the specified disk of this Grid.
+			static multiply_disk = function(_value, _location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -951,21 +1011,21 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{Vector4} source
 			// @argument			{Vector2} target
+			// @argument			{Vector4} source
 			// @argument			{Grid} other?
 			// @description			Copy values of cells from the specified region of this or 
-			//						other Grid and multiply by them the number values of cells
-			//						in the region of the same size in this Grid, starting from 
+			//						specified other Grid and multiply by them the number values of
+			//						cells in the region of the same size in this Grid, starting from 
 			//						the specified target location.
-			static multiply_region_copied = function(_source, _target, _other)
+			static multiply_region_copied = function(_target, _source, _other)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
 					if (_other == undefined) {_other = self;}
 					
-					if (((instanceof(_other) == "Grid")) and (is_real(_other.ID)) 
-					and (ds_exists(_other.ID, ds_type_grid)))
+					if ((_other == self) or (((instanceof(_other) == "Grid")) 
+					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
 						ds_grid_multiply_grid_region(ID, _other.ID, _source.x1, _source.y1, 
 													 _source.x2, _source.y2, _target.x, _target.y);
@@ -993,8 +1053,8 @@ function Grid() constructor
 			}
 			
 			// @argument			{Vector2} size
-			// @description			Change the size of this Grid. New cells will have their
-			//						values set to 0.
+			// @description			Change the size of this Grid.
+			//						New cells will have their values set to 0.
 			static resize = function(_size)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -1014,8 +1074,9 @@ function Grid() constructor
 			
 			// @argument			{int} column
 			// @argument			{bool} ascending
-			// @description			Sort all cells in the specified cell column by their values
-			//						if all of the values are of the same type.
+			// @description			Sort all cells in this Grid by individually sorting the specified
+			//						vertical cell column and then applying its sort order to other
+			//						columns.
 			static sort = function(_column, _order_ascending)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -1306,15 +1367,17 @@ function Grid() constructor
 							++_i;
 						}
 						
-						//|Replace the Grid.
-						if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-						{
-							ds_grid_destroy(ID);
-						}
-						
 						var _size_y = max(_array_y_max, 1);
 						
-						ID = ds_grid_create(_size_x, _size_y);
+						if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+						{
+							ds_grid_resize(ID, _size_x, _size_y);
+						}
+						else
+						{
+							ID = ds_grid_create(_size_x, _size_y);
+						}
+						
 						ds_grid_clear(ID, _default);
 						
 						var _x = 0;
