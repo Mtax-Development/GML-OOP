@@ -505,8 +505,7 @@ function List() constructor
 			
 			// @argument			{bool} order_ascending
 			// @description			Sort all values in the List in ascending or descending order.
-			//						In ascending order, numbers will be placed before strings.
-			//						In descnding order, numbers will be placed after strings.
+			//						Numbers will be placed before the strings.
 			static sort = function(order_ascending)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))

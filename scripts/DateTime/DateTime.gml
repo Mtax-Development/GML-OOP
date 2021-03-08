@@ -10,6 +10,8 @@
 ///
 ///							Construction methods:
 ///							- New constructor
+///							   Providing no arguments will be treated as the "Empty" construcion
+///							   method.
 ///							   Providing only the first argument as a number will be treated as the
 ///							   "Wrapper" construction method.
 ///							- Empty: {void}
