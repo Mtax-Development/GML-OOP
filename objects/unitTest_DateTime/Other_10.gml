@@ -698,7 +698,7 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
-#region [Test: String Conversion]
+#region [Test: String conversion]
 	
 	var _element = date_current_datetime();
 	
@@ -707,7 +707,7 @@
 	var _result = string(constructor);
 	var _expectedValue = (constructorName + "(" + date_datetime_string(_element) + ")");
 	
-	unitTest.assert_equal("String Conversion",
+	unitTest.assert_equal("String conversion",
 						  _result, _expectedValue);
 	
 #endregion

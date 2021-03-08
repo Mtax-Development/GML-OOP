@@ -179,7 +179,7 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: String Conversion: Built-in colors]
+#region [Test: String conversion: Built-in colors]
 	
 	var _base = [c_blue, c_green, c_red, c_black];
 	
@@ -189,7 +189,7 @@
 	var _expectedValue = (constructorName + "(" + "Blue" + ", " + "Green" + ", " + "Red" + ", " + 
 						  "Black" + ")");
 	
-	unitTest.assert_equal("String Conversion: Built-in colors",
+	unitTest.assert_equal("String conversion: Built-in colors",
 						  _result, _expectedValue);
 	
 #endregion

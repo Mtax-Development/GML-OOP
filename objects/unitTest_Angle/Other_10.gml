@@ -120,7 +120,7 @@
 						  _result[1], _expectedValue);
 	
 #endregion
-#region [Test: String Conversion]
+#region [Test: String conversion]
 	
 	var _base = 99;
 	
@@ -129,7 +129,7 @@
 	var _result = string(constructor);
 	var _expectedValue = (constructorName + "(" + string(_base) + ")");
 	
-	unitTest.assert_equal("String Conversion", 
+	unitTest.assert_equal("String conversion", 
 						  _result, _expectedValue);
 	
 #endregion
