@@ -9,16 +9,16 @@
 ///							Construction methods:
 ///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
-///							- Number pair: {real} x, {real} y
-///							   First number will be set to all x values.
-///							   Second number will be set to all y values.
+///							- Number pair: {real} first, {real} second
+///							   First number will be set to x1 and y1.
+///							   Second number will be set to x2 and y2.
 ///							- Default for all values: {void}
 ///							   The values will be set to 0.
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///							   1: array[0] will be set to all values.
-///							   2: array[0] will be set to x1 and x2, array[1] will be set to 
-///								  y1 and y2.
+///							   2: array[0] will be set to x1 and y1, array[1] will be set to 
+///								  x2 and y2.
 ///							   4+: array[0] will be set to x1, array[1] will be set to y1,
 ///										  array[2] will be set to x2, array[3] will be set to y2.
 ///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
@@ -71,8 +71,8 @@ function Vector4() constructor
 									
 										case 2:
 											x1 = _array[0];
-											y1 = _array[1];
-											x2 = _array[0];
+											y1 = _array[9];
+											x2 = _array[1];
 											y2 = _array[1];
 										break;
 									
@@ -110,13 +110,13 @@ function Vector4() constructor
 								else
 								{
 									//|Construction method: Number pair.
-									var _x = argument[0];
-									var _y = argument[1];
+									var _first = argument[0];
+									var _second = argument[1];
 								
-									x1 = _x;
-									y1 = _y;
-									x2 = _x;
-									y2 = _y;
+									x1 = _first;
+									y1 = _first;
+									x2 = _second;
+									y2 = _second;
 								}
 							break;
 					
