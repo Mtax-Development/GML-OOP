@@ -589,14 +589,16 @@ function Grid() constructor
 		#region <Execution>
 			
 			// @argument			{function} function
-			// @description			Execute a provided function once for each Data Structure element.
-			//						The provided function can read variables provided by it, either
-			//						by requiring the same named arguments or via the argument array.
-			//						The provided variables are:
+			// @argument			{any} argument?
+			// @description			Execute the specified function once for each element in this Data
+			//						Structure.
+			//						The arguments below will be provided to the function and can be
+			//						accessed by using their name or the argument array:
 			//						- argument[0]: {int} _x
 			//						- argument[1]: {int} _y
 			//						- argument[2]: {any} _value
-			static forEach = function(__function)
+			//						- argument[3]: {any} _argument
+			static forEach = function(__function, _argument)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -613,7 +615,7 @@ function Grid() constructor
 							{
 								var _value = ds_grid_get(ID, _x, _y);
 								
-								__function(_x, _y, _value);
+								__function(_x, _y, _value, _argument);
 								
 								_x++;
 							}

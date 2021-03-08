@@ -216,16 +216,19 @@ function Queue() constructor
 		#region <Execution>
 			
 			// @argument			{function} function
-			// @argument			{bool} readOnly
-			// @description			Execute a provided function once for each Data Structure element.
-			//						The Data Structure can be treated as read-only for this operation,
-			//						in which case it will not be modified in order to read its values.
-			//						The provided function can read variables provided by it, either
-			//						by requiring the same named arguments or via the argument array.
-			//						The provided variables are:
+			// @argument			{any} argument?
+			// @argument			{bool} readOnly?
+			// @description			Execute the specified function once for each element in this Data
+			//						Structure.
+			//						It can be treated as read-only for this operation, in which case
+			//						it will be performed on its copy and the original will not be
+			//						modified in order to read the values.
+			//						The arguments below will be provided to the function and can be
+			//						accessed by using their name or the argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
-			static forEach = function(__function, _readOnly)
+			//						- argument[2]: {any} _argument
+			static forEach = function(__function, _argument, _readOnly)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
@@ -234,7 +237,7 @@ function Queue() constructor
 					if (_size > 0)
 					{
 						var _queue = ID;
-					
+						
 						if (_readOnly)
 						{
 							var _dataCopy = ds_queue_create();
@@ -242,17 +245,17 @@ function Queue() constructor
 						
 							_queue = _dataCopy;
 						}
-					
+						
 						var _i = 0;
 						repeat (_size)
 						{
 							var _value = ds_queue_dequeue(_queue);
-						
-							__function(_i, _value);
-						
+							
+							__function(_i, _value, _argument);
+							
 							++_i;
 						}
-					
+						
 						if (_readOnly)
 						{
 							ds_queue_destroy(_dataCopy);
