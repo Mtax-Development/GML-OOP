@@ -527,13 +527,13 @@ function List() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline
-			// @argument			{int|all} elementNumber
-			// @argument			{int|all} elementLength
-			// @argument			{string|undefined} mark_separator
-			// @argument			{string|undefined} mark_cut
-			// @argument			{string|undefined} mark_elementStart
-			// @argument			{string|undefined} mark_elementEnd
+			// @argument			{bool} multiline?
+			// @argument			{int|all} elementNumber?
+			// @argument			{int|all} elementLength?
+			// @argument			{string} mark_separator?
+			// @argument			{string} mark_cut?
+			// @argument			{string} mark_elementStart?
+			// @argument			{string} mark_elementEnd?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
@@ -560,11 +560,14 @@ function List() constructor
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
+					var _mark_elementStart_length = string_length(_mark_elementStart);
+					var _mark_elementEnd_length = string_length(_mark_elementEnd);
 					var _mark_linebreak = (_multiline ? "\n" : "");
 					
 					var _string = ((_multiline) ? "" : (instanceof(self) + "("));
 					
-					var _string_lengthLimit = (string_length(_string) + _elementLength);
+					var _string_lengthLimit = (string_length(_string) + _elementLength +
+											   _mark_elementStart_length + _mark_elementEnd_length);
 					var _string_lengthLimit_cut = (_string_lengthLimit + _mark_cut_length);
 					
 					//|Content loop.
