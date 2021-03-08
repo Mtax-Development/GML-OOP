@@ -497,12 +497,12 @@ function Map() constructor
 				{
 					var _pairCount = (argument_count div 2);
 					
-					var _results = array_create(_pairCount, false);
+					var _result = array_create(_pairCount, false);
 					
 					var _i = 0;
 					repeat (_pairCount)
 					{
-						_results[_i div 2] = ds_map_add(ID, argument[_i], argument[_i + 1]);
+						_result[_i div 2] = ds_map_add(ID, argument[_i], argument[_i + 1]);
 						
 						_i += 2;
 					}
@@ -510,8 +510,8 @@ function Map() constructor
 					switch (_pairCount)
 					{
 						case 0: return false; break;
-						case 1: return _results[0]; break;
-						default: return _results; break;
+						case 1: return _result[0]; break;
+						default: return _result; break;
 					}
 				}
 				else
@@ -641,27 +641,52 @@ function Map() constructor
 			
 			// @argument			{any} key
 			// @argument			{any} value
-			// @description			Set the value of a specified key, but only if it is defined.
-			//						If replacing a bound Map or List, the new value will also be
-			//						bound and the replaced value will be unbound.
+			// @argument			...
+			// @description			Set one or more values of the specified keys, but only if each
+			//						already exists in this Map.
+			//						If replacing a bound Map or List, the new value will become bound
+			//						and the value that was replaced by it will become unbound.
 			static replace = function(_key, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
-					if (ds_map_find_value(ID, _key) != undefined)
+					var _i = 0;
+					repeat (argument_count div 2)
 					{
-						if (ds_map_is_map(ID, _key))
+						_key = argument[_i];
+						_value = argument[_i + 1];
+						
+						if (ds_map_find_value(ID, _key) != undefined)
 						{
-							ds_map_replace_map(ID, _key, _value);
+							if (ds_map_is_map(ID, _key))
+							{
+								if (instanceof(_value) == "Map")
+								{
+									ds_map_replace_map(ID, _key, _value.ID);
+								}
+								else
+								{
+									ds_map_replace_map(ID, _key, _value);
+								}
+							}
+							else if (ds_map_is_list(ID, _key))
+							{
+								if (instanceof(_value) == "List")
+								{
+									ds_map_replace_list(ID, _key, _value.ID);
+								}
+								else
+								{
+									ds_map_replace_list(ID, _key, _value);
+								}
+							}
+							else
+							{
+								ds_map_replace(ID, _key, _value);
+							}
 						}
-						else if (ds_map_is_list(ID, _key))
-						{
-							ds_map_replace_list(ID, _key, _value);
-						}
-						else
-						{
-							ds_map_replace(ID, _key, _value);
-						}
+					
+						_i += 2;
 					}
 				}
 				else

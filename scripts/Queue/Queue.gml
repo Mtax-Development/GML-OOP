@@ -301,13 +301,13 @@ function Queue() constructor
 				}
 			}
 			
-			// @argument			{int} number?
+			// @argument			{int} count?
 			// @returns				{any|any[]|undefined}
 			// @description			Remove any number of values from the Queue and return them. If
 			//						more than one value were removed, they will be returned in an
 			//						array.
 			//						Returns {undefined} if this Queue does not exists or is empty.
-			static remove = function(_number)
+			static remove = function(_count)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
@@ -319,15 +319,13 @@ function Queue() constructor
 					}
 					else
 					{
-						if (_number == undefined) {_number = 1;}
-						
-						if (_number == 1)
+						if ((_count == undefined) or (_count == 1))
 						{
 							return ds_queue_dequeue(ID);
 						}
 						else
 						{
-							var _values = array_create(clamp(_number, 0, _size), undefined);
+							var _values = array_create(clamp(_count, 0, _size), undefined);
 							
 							var _i = 0;
 							repeat (array_length(_values))
