@@ -528,49 +528,7 @@ function Map() constructor
 			}
 			
 			// @argument			{any} key
-			// @argument			{map|Map} value
-			// @argument			...
-			// @description			Adds one or more key and value pairs to this Map, where the
-			//						value is other Map. The added value will become bound to this
-			//						Map and will be destroyed upon the destruction of this Map.
-			//						While encoding this Map to JSON, binding Data Structures will
-			//						allow their values be encoded as well, as opposed to just the
-			//						reference ID.
-			static addBoundMap = function(_key, _value)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
-				{
-					var _i = 0;
-					repeat (argument_count div 2)
-					{
-						_key = argument[_i];
-						_value = argument[_i + 1];
-						
-						if (instanceof(_value) == "Map")
-						{
-							ds_map_add_map(ID, _key, _value.ID);
-						} 
-						else if (ds_exists(_value, ds_type_map))
-						{
-							ds_map_add_map(ID, _key, _value);
-						}
-						
-						_i += 2;
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "addBoundMap";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{any} key
-			// @argument			{list|List} value
+			// @argument			{List|int:list} value
 			// @argument			...
 			// @description			Adds one or more key and value pairs to this Map, where the
 			//						value is a List. The added value will become bound to this
@@ -592,7 +550,7 @@ function Map() constructor
 						{
 							ds_map_add_list(ID, _key, _value.ID);
 						}
-						else if (ds_exists(_value, ds_type_list))
+						else if ((is_real(_value)) and (ds_exists(_value, ds_type_list)))
 						{
 							ds_map_add_list(ID, _key, _value);
 						}
@@ -605,6 +563,48 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "addBoundList";
+					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{any} key
+			// @argument			{Map|int:map} value
+			// @argument			...
+			// @description			Adds one or more key and value pairs to this Map, where the
+			//						value is other Map. The added value will become bound to this
+			//						Map and will be destroyed upon the destruction of this Map.
+			//						While encoding this Map to JSON, binding Data Structures will
+			//						allow their values be encoded as well, as opposed to just the
+			//						reference ID.
+			static addBoundMap = function(_key, _value)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				{
+					var _i = 0;
+					repeat (argument_count div 2)
+					{
+						_key = argument[_i];
+						_value = argument[_i + 1];
+						
+						if (instanceof(_value) == "Map")
+						{
+							ds_map_add_map(ID, _key, _value.ID);
+						} 
+						else if ((is_real(_value)) and (ds_exists(_value, ds_type_map)))
+						{
+							ds_map_add_map(ID, _key, _value);
+						}
+						
+						_i += 2;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "addBoundMap";
 					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -1058,7 +1058,7 @@ function Map() constructor
 				return ID;
 			}
 			
-			// @argument			{Buffer} buffer
+			// @argument			{Buffer|int:buffer} buffer
 			// @description			Save this Map into a Buffer. This Buffer is intended to be saved
 			//						as a file and then loaded later.
 			static secureSave_buffer = function(_buffer)
@@ -1069,6 +1069,10 @@ function Map() constructor
 					and (buffer_exists(_buffer.ID)))
 					{
 						ds_map_secure_save_buffer(ID, _buffer.ID);
+					}
+					else if ((is_real(_buffer)) and (buffer_exists(_buffer)))
+					{
+						ds_map_secure_save_buffer(ID, _buffer);
 					}
 					else
 					{
@@ -1093,20 +1097,31 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{Buffer} buffer
+			// @argument			{Buffer|int:buffer} buffer
 			// @description			Load a Map that is in a Buffer that was loaded from a file and
 			//						replace this Map with it.
 			static secureLoad_buffer = function(_buffer)
 			{
+				var _source = undefined;
+				
 				if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
 				and (buffer_exists(_buffer.ID)))
+				{
+					_source = _buffer.ID;
+				}
+				else if (is_real(_buffer)) and (buffer_exists(_buffer))
+				{
+					_source = _buffer;
+				}
+				
+				if (_source != undefined)
 				{
 					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 					{
 						ds_map_destroy(ID);
 					}
-				
-					ID = ds_map_secure_load_buffer(_buffer.ID);
+					
+					ID = ds_map_secure_load_buffer(_source);
 				}
 				else
 				{
