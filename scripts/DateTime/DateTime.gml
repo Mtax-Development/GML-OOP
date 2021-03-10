@@ -15,6 +15,12 @@
 ///							   Providing only the first argument as a number will be treated as the
 ///							   "Wrapper" construction method.
 ///							- Empty: {void}
+///							- From one array: {int[]} array
+///							   Array elements will be applied in the following order:
+///							   [year, month, day, hour, minute, second].
+///							- From two arrays: {int[]} date, {int[]} time
+///								Array elements will be applied in the following order:
+///								[year, month, day], [hour, minute, second]
 ///							- Wrapper: {real:datetime} datetime
 ///							- Constructor copy: {DateTime} other
 function DateTime() constructor
@@ -66,6 +72,42 @@ function DateTime() constructor
 							hour = date_get_hour(ID);
 							minute = date_get_minute(ID);
 							second = date_get_second(ID);
+						}
+						else if (is_array(argument[0]))
+						{
+							if ((argument_count > 1) and (is_array(argument[1])))
+							{
+								var _array_date = argument[0];
+								var _array_time = argument[1];
+								
+								ID = date_create_datetime(_array_date[0], _array_date[1],
+														  _array_date[2], _array_time[0],
+														  _array_time[1], _array_time[2]);
+								
+								year = date_get_year(ID);
+								month = date_get_month(ID);
+								week = date_get_week(ID);
+								day = date_get_day(ID);
+								hour = date_get_hour(ID);
+								minute = date_get_minute(ID);
+								second = date_get_second(ID);
+							}
+							else
+							{
+								var _array_dateTime = argument[0];
+								
+								ID = date_create_datetime(_array_dateTime[0], _array_dateTime[1],
+														  _array_dateTime[2], _array_dateTime[3],
+														  _array_dateTime[4], _array_dateTime[5]);
+								
+								year = date_get_year(ID);
+								month = date_get_month(ID);
+								week = date_get_week(ID);
+								day = date_get_day(ID);
+								hour = date_get_hour(ID);
+								minute = date_get_minute(ID);
+								second = date_get_second(ID);
+							}
 						}
 						else
 						{
