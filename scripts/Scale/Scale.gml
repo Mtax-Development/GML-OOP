@@ -12,7 +12,7 @@
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///								1: array[0] will be set to x and y.
-///								2 or more: array[0] will be set to x, array[1] will be set to y.
+///								2+: array[0] will be set to x, array[1] will be set to y.
 ///							- From Vector2: {Vector2} vector
 ///							- Constructor copy: {Scale} other
 function Scale() constructor
