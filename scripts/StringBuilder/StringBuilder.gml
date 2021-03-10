@@ -282,12 +282,14 @@ function StringBuilder() constructor
 			}
 			
 			// @argument			{string} separator
-			// @returns				{string[]|string}
+			// @returns				{string[]|string|StringBuilder[]|StringBuilder}
 			// @description			Create multiple strings divided by the specified separator and
 			//						return them in an array.
+			//						The results can be returned as {StringBuilder} if return was
+			//						specified as parser.
 			//						Returns the string in its original state is no operation was
-			//						performed.
-			static split = function(_separator)
+			//						performed or returns self if return was specified as parser.
+			static split = function(_separator, _returnAsParser)
 			{
 				var _string = string(ID);
 				var _string_length = string_length(_string);
@@ -323,11 +325,22 @@ function StringBuilder() constructor
 						++_i;
 					}
 					
+					if (_returnAsParser)
+					{
+						var _i = 0;
+						repeat (array_length(_result))
+						{
+							_result[_i] = new StringBuilder(_result[_i]);
+							
+							++_i;
+						}
+					}
+					
 					return _result;
 				}
 				else
 				{
-					return _string;
+					return ((_returnAsParser) ? self : _string);
 				}
 			}
 			
