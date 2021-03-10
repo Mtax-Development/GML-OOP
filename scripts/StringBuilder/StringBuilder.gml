@@ -599,6 +599,33 @@ function StringBuilder() constructor
 				return (instanceof(self) + "(" + string(ID) + ")");
 			}
 			
+			// @returns				{real}
+			// @description			Return this string as a number if it does not contain characters
+			//						that would prevent it from being treated as such.
+			static toNumber = function()
+			{
+				return real(string(ID));
+			}
+			
+			// @returns				{string}
+			// @description			Connect all values of an array into one string.
+			static fromArray = function(_array)
+			{
+				var _string = "";
+				
+				var _i = 0;
+				repeat (array_length(_array))
+				{
+					_string += string(_array[_i]);
+					
+					++_i;
+				}
+				
+				ID = _string;
+				
+				return ID;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
