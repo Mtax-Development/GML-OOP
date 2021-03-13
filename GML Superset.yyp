@@ -21,7 +21,7 @@
     {"id":{"name":"Scale","path":"scripts/Scale/Scale.yy",},"order":4,},
     {"id":{"name":"AudioInstancer","path":"scripts/AudioInstancer/AudioInstancer.yy",},"order":1,},
     {"id":{"name":"Range","path":"scripts/Range/Range.yy",},"order":2,},
-    {"id":{"name":"StringBuilder","path":"scripts/StringBuilder/StringBuilder.yy",},"order":0,},
+    {"id":{"name":"StringParser","path":"scripts/StringParser/StringParser.yy",},"order":0,},
     {"id":{"name":"Line","path":"scripts/Line/Line.yy",},"order":14,},
     {"id":{"name":"Room","path":"scripts/Room/Room.yy",},"order":0,},
     {"id":{"name":"RoundRectangle","path":"scripts/RoundRectangle/RoundRectangle.yy",},"order":17,},

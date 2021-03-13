@@ -1,4 +1,4 @@
-/// @function				StringBuilder()
+/// @function				StringParser()
 /// @argument				{any} string?
 ///
 /// @description			Constructs a Parser for building Strings.
@@ -6,8 +6,8 @@
 ///							Construction methods:
 ///							- New constructor
 ///							   If the string is not specified, empty one will be created.
-///							- Constructor copy: {StringBuilder} other
-function StringBuilder() constructor
+///							- Constructor copy: {StringParser} other
+function StringParser() constructor
 {
 	#region [Methods]
 		#region <Management>
@@ -19,7 +19,7 @@ function StringBuilder() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "StringBuilder")
+					if (instanceof(argument[0]) == "StringParser")
 					{
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
@@ -282,10 +282,10 @@ function StringBuilder() constructor
 			}
 			
 			// @argument			{string} separator
-			// @returns				{string[]|string|StringBuilder[]|StringBuilder}
+			// @returns				{string[]|string|StringParser[]|StringParser}
 			// @description			Create multiple strings divided by the specified separator and
 			//						return them in an array.
-			//						The results can be returned as {StringBuilder} if return was
+			//						The results can be returned as {StringParser} if return was
 			//						specified as parser.
 			//						Returns the string in its original state is no operation was
 			//						performed or returns self if return was specified as parser.
@@ -330,7 +330,7 @@ function StringBuilder() constructor
 						var _i = 0;
 						repeat (array_length(_result))
 						{
-							_result[_i] = new StringBuilder(_result[_i]);
+							_result[_i] = new StringParser(_result[_i]);
 							
 							++_i;
 						}
