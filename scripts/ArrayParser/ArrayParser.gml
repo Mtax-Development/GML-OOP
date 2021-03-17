@@ -1,0 +1,571 @@
+/// @function				ArrayParser()
+/// @argument				{any[]} array?
+///
+/// @description			Constructs a Parser for operating arrays.
+///
+///							Construction methods:
+///							- New constructor
+///							   If the array is not specified, an empty one will be created.
+///							- Constructor copy: {ArrayParser} other
+function ArrayParser() constructor
+{
+	#region [Methods]
+		#region <Management>
+			
+			// @description			Initialize the constructor.
+			static construct = function()
+			{
+				if (argument_count > 0)
+				{
+					if (instanceof(argument[0]) == "ArrayParser")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						ID = _other.ID;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						ID = argument[0];
+					}
+				}
+				else
+				{
+					ID = [];
+				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check if this constructor is functional.
+			static isFunctional = function()
+			{
+				return (is_array(ID));
+			}
+			
+			// @argument			{int} size
+			// @argument			{any} value
+			// @returns				{any[]}
+			// @description			Replace the array with a newly created array of the specified size
+			//						filled with the specified value.
+			static create = function(_size, _value)
+			{
+				if (_size == undefined) {_size = 0;}
+				
+				ID = array_create(_size, _value);
+				
+				return ID;
+			}
+			
+			// @returns				{void[]}
+			// @description			Remove data from the array.
+			static clear = function()
+			{
+				ID = [];
+				
+				return ID;
+			}
+			
+			// @argument			{any[]|ArrayParser} other
+			// @argument			{int} position?
+			// @argument			{int} other_position?
+			// @argument			{int} count?
+			// @returns				{any[]}
+			// @description			Copy specfied number of elements from other array to this one from
+			//						specified position in other one to specified position in this one.
+			static copy = function(_other, _position, _other_position, _count)
+			{
+				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
+				
+				if (is_array(_other))
+				{
+					if (!is_array(ID))
+					{
+						ID = [];
+					}
+					
+					if (_position == undefined) {_position = 0;}
+					if (_other_position == undefined) {_other_position = 0;}
+					if (_count == undefined) {_count = (array_length(_other) - _other_position);}
+				
+					array_copy(ID, _position, _other, _other_position, _count);
+				
+					return ID;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "copy";
+					var _errorText = ("Attempted to copy from an invalid array: " + 
+									  "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return ID;
+				}
+			}
+			
+		#endregion
+		#region <Getters>
+			
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of elements in the array.
+			static getSize = function()
+			{
+				if (is_array(ID))
+				{
+					return array_length(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read a property of an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{any[]|ArrayParser} other
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if this and other array have the same content.
+			static equals = function(_other)
+			{
+				if (instanceof(_other) == "ArrayParser") {_other = _other.ID};
+				
+				if ((is_array(ID)) and (is_array(_other)))
+				{
+					return array_equals(ID, _other);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "equals";
+					var _errorText = ("Attempted to compare invalid arrays:\n" +
+									  "Self: " + "{" + string(ID) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{int} position
+			// @returns				{any} | On error: {undefined}
+			// @description			Return the value at the specified position.
+			static getValue = function(_position)
+			{
+				if (is_array(ID))
+				{
+					if (_position < (array_length(ID) - 1))
+					{
+						return array_get(ID, _position);
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "getValue";
+						var _errorText = ("Attempted to read an array value outside its bounds:\n" +
+										  "Self: " + "{" + string(ID) + "}" + "\n" +
+										  "Position: " + "{" + string(_position) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					
+						return undefined;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getValue";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+		#endregion
+		#region <Setters>
+			
+			// @argument			{int} size
+			// @returns				{any[]} | On error: {undefined}
+			// @description			Set the number of elements in this array to the specified one.
+			//						If the specified size is lower than current, values from the end
+			//						will be removed.
+			//						If the specified size is higher than current, empty positions will
+			//						be set to 0.
+			static setSize = function(_size)
+			{
+				if (is_array(ID))
+				{
+					array_resize(ID, _size);
+					
+					return ID;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setSize";
+					var _errorText = ("Attempted to set a property an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+		#endregion
+		#region <Execution>
+			
+			// @argument			{any} value
+			// @argument			...
+			// @description			Add one or more values to the array.
+			static add = function()
+			{
+				if (is_array(ID))
+				{
+					var _i = 0;
+					
+					repeat (argument_count)
+					{
+						array_push(ID, argument[_i]);
+						
+						++_i;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "add";
+					var _errorText = ("Attempted to write to an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{any} value
+			// @argument			{int} position
+			// @description			Set a specified position of the array to specified value and any
+			//						empty places before it to 0.
+			static set = function(_value, _position)
+			{
+				if (is_array(ID))
+				{
+					array_set(ID, _position, _value);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "set";
+					var _errorText = ("Attempted to write to an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} position
+			// @argument			{any} value
+			// @argument			...
+			// @description			Add one or more values to the specified position of the array and
+			//						push values on positions after it forward by the number of added
+			//						values. Empty positions before the specified position will be set
+			//						to 0.
+			static insert = function(_position)
+			{
+				if (is_array(ID))
+				{
+					var _i = 0;
+					repeat (argument_count - 1)
+					{
+						array_insert(ID, (_position + _i), argument[1 + _i]);
+						
+						++_i;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "insert";
+					var _errorText = ("Attempted to write to an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} position?
+			// @argument			{int} count?
+			// @returns				{any|any[]|undefined} | On error: {undefined}
+			// @description			Return one or more values starting from the specified position and
+			//						return them.
+			//						If multiple values were removed, they will be returned in an
+			//						array. If no values were removed, {undefined} will be returned.
+			static remove = function(_position, _count)
+			{
+				if (is_array(ID))
+				{
+					if (_position == undefined) {_position = 0}
+					if (_count == undefined) {_count = 1;}
+					
+					var _size = array_length(ID);
+					
+					_count = min(_count, _size);
+					
+					if ((!(_count >= 1)) or (_size < 1))
+					{
+						return undefined;
+					}
+					else if (_count == 1)
+					{
+						var _result = array_get(ID, _position);
+						
+						array_delete(ID, _position, _count);
+						
+						return _result;
+					}
+					else
+					{
+						var _result = array_create(_count, undefined);
+						
+						var _i = 0;
+						repeat (_count)
+						{
+							_result[_i] = array_get(ID, _position);
+							
+							array_delete(ID, _position, 1);
+							
+							++_i;
+						}
+						
+						return _result;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "remove";
+					var _errorText = ("Attempted to remove data from an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{bool|function} order
+			// @returns				{any[]}
+			// @description			Sort the values in the array in the specified order.
+			//						The order can be specified as {bool} for ascending order or as a
+			//						sorting {function}. 
+			//						If ordering is specified as {bool}, the sorting will work properly
+			//						only when all array values are either numbers or strings.
+			//						If ordering is specified as a {function}, it has to accept two
+			//						arguments, which are to be used to comapre every element of the
+			//						array with each other in pairs, then return a number, which is
+			//						0 for equality and negative or positive value for such respective
+			//						comparison result.
+			static sort = function(_order)
+			{
+				if (is_array(ID))
+				{
+					array_sort(ID, _order);
+					
+					return ID;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "sort";
+					var _errorText = ("Attempted to sort an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+		#endregion
+		#region <Conversion>
+			
+			// @argument			{bool} multiline?
+			// @argument			{int|all} elementNumber?
+			// @argument			{int|all} elementLength?
+			// @argument			{string} mark_separator?
+			// @argument			{string} mark_cut?
+			// @argument			{string} mark_elementStart?
+			// @argument			{string} mark_elementEnd?
+			// @returns				{string}
+			// @description			Create a string representing this constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented by the data of the array.
+			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
+									   _mark_cut, _mark_elementStart, _mark_elementEnd)
+			{
+				if (is_array(ID))
+				{
+					//|General initialization.
+					var _size = array_length(ID);
+					
+					switch (_elementNumber)
+					{
+						case undefined: _elementNumber = 10; break;
+						case all: _elementNumber = _size; break;
+					}
+					
+					if (_elementLength == undefined) {_elementLength = 30;}
+					if (_mark_separator == undefined) {_mark_separator = ", ";}
+					if (_mark_cut == undefined) {_mark_cut = "...";}
+					if (_mark_elementStart == undefined) {_mark_elementStart = "";}
+					if (_mark_elementEnd == undefined) {_mark_elementEnd = "";}
+					
+					var _mark_separator_length = string_length(_mark_separator);
+					var _mark_cut_length = string_length(_mark_cut);
+					var _mark_elementStart_length = string_length(_mark_elementStart);
+					var _mark_elementEnd_length = string_length(_mark_elementEnd);
+					var _mark_linebreak = (_multiline ? "\n" : "");
+					
+					var _string = ((_multiline) ? "" : (instanceof(self) + "("));
+					
+					var _string_lengthLimit = (string_length(_string) + _elementLength +
+											   _mark_elementStart_length + _mark_elementEnd_length);
+					var _string_lengthLimit_cut = (_string_lengthLimit + _mark_cut_length);
+					
+					//|Content loop.
+					var _i = 0;
+					
+					repeat (min(_size, _elementNumber))
+					{
+						//|Get Data Structure Element.
+						var _newElement = string(array_get(ID, _i));
+						
+						//|Remove line-breaks.
+						_newElement = string_replace_all(_newElement, "\n", " ");
+						_newElement = string_replace_all(_newElement, "\r", " ");
+						
+						//|Limit element length for multiline listing.
+						if ((_multiline) and (_elementLength != all))
+						{
+							if ((string_length(_newElement)) > _elementLength)
+							{
+								_newElement = string_copy(_newElement, 1, _elementLength);
+								_newElement += _mark_cut;
+							}
+						}
+						
+						//|Add the element string with all its parts.
+						_string += (_mark_elementStart + _newElement + _mark_elementEnd +
+									_mark_linebreak);
+						
+						//|Cut strings and add cut or separation marks if appriopate.
+						if (!_multiline)
+						{
+							if (_elementLength != all)
+							{
+								var _string_length = string_length(_string);
+								
+								//|If the current element is not the last, add a separator or cut it
+								// if it would be too long.
+								if (_i < (_size - 1))
+								{
+									if ((_string_length + _mark_separator_length) >= 
+										 _string_lengthLimit)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+									else
+									{
+										if (_i < (_elementNumber - 1))
+										{
+											_string += _mark_separator;
+										}
+										else
+										{
+											_string += _mark_cut;
+											break;
+										}
+									}
+								}
+								else
+								{
+									//|If the current element is last, cut it if it would be too long,
+									// but expand the length check by the length of the cut mark.
+									if (_string_length >= _string_lengthLimit_cut)
+									{
+										_string = string_copy(_string, 1, _string_lengthLimit);
+										_string += _mark_cut;
+										break;
+									}
+								}
+							}
+							else
+							{
+								//|If the elements are to be shown fully, add separators after the
+								// ones that are not last. Add a cut mark after the last one if
+								// not all elements are shown.
+								if (_i < (_elementNumber - 1))
+								{
+									_string += _mark_separator;
+								}
+								else if (_elementNumber != _size)
+								{
+									_string += _mark_cut;
+								}
+							}
+						}
+						
+						++_i;
+					}
+					
+					//|String finish.
+					if (_multiline)
+					{
+						//|Add a cut mark at the end of multiline listing if not all are shown.
+						if (_i < _size)
+						{
+							_string += _mark_cut;
+						}
+					}
+					else
+					{
+						_string += ")";
+					}
+					
+					return _string;
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
+			}
+			
+		#endregion
+	#endregion
+	#region [Constructor]
+		
+		argument_original = array_create(argument_count, undefined);
+		
+		var _i = 0;
+		repeat (argument_count)
+		{
+			argument_original[_i] = argument[_i];
+			
+			++_i;
+		}
+		
+		script_execute_ext(method_get_index(self.construct), argument_original);
+		
+	#endregion
+}
