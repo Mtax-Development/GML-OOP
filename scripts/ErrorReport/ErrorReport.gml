@@ -4,12 +4,25 @@
 function ErrorReport() constructor
 {
 	#region [Static variables]
-		
-		//|Configurable variables.
-		static reportFunction = show_debug_message;
-		static maxReports = undefined;
-		static errorData = [];
-		
+		#region [[Configurable Variables - General]]
+			
+			// @type		{function}
+			static reportFunction = show_debug_message;
+			
+			// @type		{int}
+			static maxReports = undefined;
+			
+			// @type		{void[]}
+			static errorData = [];
+			
+		#endregion
+		#region [[Configurable Variables - Specific]]
+			
+			// @type		{string[]}
+			// @example		{["Constructor.method()"]}
+			static ignoredError_constructorMethod = undefined;
+			
+		#endregion
 	#endregion
 	#region [Methods]
 		#region <Management>
@@ -52,10 +65,26 @@ function ErrorReport() constructor
 					_string_constructorName = instanceof(_constructor);
 				}
 				
+				_methodName += "()";
+				
+				if (is_array(ignoredError_constructorMethod))
+				{
+					var _methodPath = (_string_constructorName + "." + _methodName);
+					
+					var _i = 0;
+					repeat (array_length(ignoredError_constructorMethod))
+					{
+						if (_methodPath == ignoredError_constructorMethod[_i])
+						{
+							exit;
+						}
+						
+						++_i;
+					}
+				}
+				
 				if (is_array(errorData))
 				{
-					_methodName = (_methodName + "()");
-					
 					var _reportData = [_string_reportType, _string_constructorName, _methodName, 
 									   _errorText, _callstack];
 					
