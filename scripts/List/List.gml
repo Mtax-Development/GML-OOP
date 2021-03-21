@@ -159,7 +159,7 @@ function List() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					return ((ds_list_size(ID) > 0) ? ID[| 0] : undefined);
+					return ((ds_list_size(ID) > 0) ? ds_list_find_value(ID, 0) : undefined);
 				}
 				else
 				{
@@ -183,7 +183,7 @@ function List() constructor
 				{
 					var _size = ds_list_size(ID);
 				
-					return ((_size > 0) ? ID[| (_size - 1)] : undefined);
+					return ((_size > 0) ? ds_list_find_value(ID, (_size - 1)) : undefined);
 				}
 				else
 				{
@@ -234,7 +234,7 @@ function List() constructor
 					var _i = 0;
 					repeat (ds_list_size(ID))
 					{
-						if (ID[| _i] == _value)
+						if (ds_list_find_value(ID, _i) == _value)
 						{
 							_indexes[array_length(_indexes)] = _i;
 						}
@@ -373,8 +373,8 @@ function List() constructor
 			
 			// @argument			{any} value
 			// @argument			{int} position
-			// @description			Set a specified position of the List to provided value
-			//						and any empty places before it to 0.
+			// @description			Set a specified position of this List to provided value and any
+			//						empty places before it to 0.
 			static set = function(_value, _position)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
@@ -575,7 +575,7 @@ function List() constructor
 					repeat (min(_size, _elementNumber))
 					{
 						//|Get Data Structure Element.
-						var _newElement = string(ID[|_i]);
+						var _newElement = string(ds_list_find_value(ID, _i));
 						
 						//|Remove line-breaks.
 						_newElement = string_replace_all(_newElement, "\n", " ");
