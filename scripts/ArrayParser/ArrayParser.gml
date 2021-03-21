@@ -22,7 +22,9 @@ function ArrayParser() constructor
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
 						
-						ID = _other.ID;
+						ID = [];
+						
+						array_copy(ID, 0, _other.ID, 0, array_length(_other.ID));
 					}
 					else
 					{
@@ -43,8 +45,8 @@ function ArrayParser() constructor
 				return (is_array(ID));
 			}
 			
-			// @argument			{int} size
-			// @argument			{any} value
+			// @argument			{int} size?
+			// @argument			{any} value?
 			// @returns				{any[]}
 			// @description			Replace the array with a newly created array of the specified size
 			//						filled with the specified value.
@@ -73,23 +75,25 @@ function ArrayParser() constructor
 			// @returns				{any[]}
 			// @description			Copy specfied number of elements from other array to this one from
 			//						specified position in other one to specified position in this one.
+			//						If the specified positions are already occupied, their values will
+			//						be overwritten.
 			static copy = function(_other, _position, _other_position, _count)
 			{
 				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
 				
-				if (is_array(_other))
+				if ((is_array(_other)) and (array_length(_other) > 0))
 				{
 					if (!is_array(ID))
 					{
-						ID = [];
+						ID = array_create((_position - 1), undefined);
 					}
 					
 					if (_position == undefined) {_position = 0;}
 					if (_other_position == undefined) {_other_position = 0;}
 					if (_count == undefined) {_count = (array_length(_other) - _other_position);}
-				
+					
 					array_copy(ID, _position, _other, _other_position, _count);
-				
+					
 					return ID;
 				}
 				else
@@ -161,7 +165,7 @@ function ArrayParser() constructor
 			{
 				if (is_array(ID))
 				{
-					if (_position < (array_length(ID) - 1))
+					if (_position < (array_length(ID)))
 					{
 						return array_get(ID, _position);
 					}
@@ -278,9 +282,9 @@ function ArrayParser() constructor
 			// @argument			{any} value
 			// @argument			...
 			// @description			Add one or more values to the specified position of the array and
-			//						push values on positions after it forward by the number of added
-			//						values. Empty positions before the specified position will be set
-			//						to 0.
+			//						push values on that position and after it forward by the number of
+			//						added values. Empty positions before the specified position will
+			//						be set to 0.
 			static insert = function(_position)
 			{
 				if (is_array(ID))
