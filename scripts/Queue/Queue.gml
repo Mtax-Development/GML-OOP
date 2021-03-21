@@ -218,13 +218,12 @@ function Queue() constructor
 			// @argument			{function} function
 			// @argument			{any} argument?
 			// @argument			{bool} readOnly?
-			// @description			Execute the specified function once for each element in this Data
-			//						Structure.
+			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
 			//						it will be performed on its copy and the original will not be
 			//						modified in order to read the values.
-			//						The arguments below will be provided to the function and can be
-			//						accessed by using their name or the argument array:
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or an argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument

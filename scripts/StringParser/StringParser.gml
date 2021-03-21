@@ -593,6 +593,29 @@ function StringParser() constructor
 		#endregion
 		#region <Execution>
 			
+			// @returns				{function} function
+			// @argument			{any} argument?
+			// @description			Execute a function once for each character of the string.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or an argument array:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {char} _value
+			//						- argument[2]: {any} _argument
+			static forEach = function(__function, _argument)
+			{
+				var _string = string(ID);
+				
+				var _i = 1;
+				repeat (string_length(_string))
+				{
+					var _value = string_char_at(_string, _i);
+					
+					__function(_i, _value, _argument);
+					
+					++_i;
+				}
+			}
+			
 			// @returns				{string}
 			// @description			Display the string in the output of the application.
 			static display_output = function()

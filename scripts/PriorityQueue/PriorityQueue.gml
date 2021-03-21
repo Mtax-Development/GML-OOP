@@ -244,15 +244,14 @@ function PriorityQueue() constructor
 			// @argument			{any} argument?
 			// @argument			{bool} readOnly?
 			// @argument			{bool} orderAscending?
-			// @description			Execute the specified function once for each element in this Data
-			//						Structure.
+			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
 			//						it will be performed on its copy and the original will not be
 			//						modified in order to read the values.
 			//						The values will be iterated through starting from the ones with
 			//						the highest priority, unless ascending order is specified.
-			//						The arguments below will be provided to the function and can be
-			//						accessed by using their name or the argument array:
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or an argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument

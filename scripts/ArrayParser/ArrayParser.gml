@@ -230,6 +230,30 @@ function ArrayParser() constructor
 		#endregion
 		#region <Execution>
 			
+			// @returns				{function} function
+			// @argument			{any} argument?
+			// @description			Execute a function once for each value in the array.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or an argument array:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {char} _value
+			//						- argument[2]: {any} _argument					
+			static forEach = function(__function, _argument)
+			{
+				if (is_array(ID))
+				{
+					var _i = 0;
+					repeat (array_length(ID))
+					{
+						var _value = array_get(ID, _i);
+						
+						__function(_i, _value, _argument);
+						
+						++_i;
+					}
+				}
+			}
+			
 			// @argument			{any} value
 			// @argument			...
 			// @description			Add one or more values to the array.
@@ -238,7 +262,6 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					var _i = 0;
-					
 					repeat (argument_count)
 					{
 						array_push(ID, argument[_i]);

@@ -636,10 +636,9 @@ function Grid() constructor
 			
 			// @argument			{function} function
 			// @argument			{any} argument?
-			// @description			Execute the specified function once for each element in this Data
-			//						Structure.
-			//						The arguments below will be provided to the function and can be
-			//						accessed by using their name or the argument array:
+			// @description			Execute a function once for each element in this Data Structure.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or an argument array:
 			//						- argument[0]: {int} _x
 			//						- argument[1]: {int} _y
 			//						- argument[2]: {any} _value
