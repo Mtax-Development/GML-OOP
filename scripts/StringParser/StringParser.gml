@@ -1,11 +1,11 @@
 /// @function				StringParser()
-/// @argument				{any} string?
+/// @argument				{any:string} string?
 ///
-/// @description			Constructs a Parser for building Strings.
+/// @description			Constructs a Parser for building strings.
 ///
 ///							Construction methods:
 ///							- New constructor
-///							   If the string is not specified, empty one will be created.
+///							   If the string is not specified, an empty one will be created.
 ///							- Constructor copy: {StringParser} other
 function StringParser() constructor
 {
@@ -15,8 +15,6 @@ function StringParser() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				ID = "";
-				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "StringParser")
@@ -31,6 +29,10 @@ function StringParser() constructor
 						//|Construction method: New constructor.
 						ID = string(argument[0]);
 					}
+				}
+				else
+				{
+					ID = "";
 				}
 			}
 			
@@ -78,21 +80,21 @@ function StringParser() constructor
 			}
 			
 			// @argument			{int} position
-			// @argument			{int} position
+			// @argument			{int} count
 			// @returns				{string}
-			// @description			Return a part of the string, starting from the character
-			//						at the specified position and continuing right by the 
-			//						specified number of characters or its end.
-			static getPart = function(_position, _number)
+			// @description			Return a part of the string, starting from the character at the
+			//						specified position and continuing forward by the specified count
+			//						of characters or its end.
+			static getPart = function(_position, _count)
 			{
 				var _string = string(ID);
 				
-				if (_number == undefined) {_number = string_length(_string);}
+				if (_count == undefined) {_count = string_length(_string);}
 				
-				return string_copy(_string, _position, _number);
+				return string_copy(_string, _position, _count);
 			}
 			
-			// @argument			{any} substring
+			// @argument			{any:string} substring
 			// @returns				{int}
 			// @description			Return a number of instances of the specified substring appearing
 			//						in the string.
@@ -132,7 +134,7 @@ function StringParser() constructor
 				return string_lettersdigits(string(ID));
 			}
 			
-			// @argument			{any} substring
+			// @argument			{any:string} substring
 			// @argument			{bool} startFromEnd?
 			// @argument			{int} startPosition?
 			// @returns				{int|undefined}
@@ -250,34 +252,43 @@ function StringParser() constructor
 			static charEquals = function(_position, _other)
 			{
 				var _string = string(ID);
-				
 				var _string_length = string_length(_string);
 				
 				if ((_string_length <= 0) or (_position > _string_length))
 				{
-					return undefined;
-				}
-				
-				var _char = string_char_at(_string, _position);
-				
-				if (is_array(_other))
-				{
-					var _i = 0;
-					repeat (array_length(_other))
-					{
-						if (_char == _other[_i])
-						{
-							return true;
-						}
-						
-						++_i;
-					}
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "charEquals";
+					var _errorText = ("Attempted to compare a character outside string bounds:\n" + 
+									  "Self: " + "{" + string(_other) + "}" + "\n" +
+									  "Position: " + "{" + string(_position) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return false;
+					return undefined;
 				}
 				else
 				{
-					return (_char == _other);
+					var _char = string_char_at(_string, _position);
+				
+					if (is_array(_other))
+					{
+						var _i = 0;
+						repeat (array_length(_other))
+						{
+							if (_char == _other[_i])
+							{
+								return true;
+							}
+						
+							++_i;
+						}
+					
+						return false;
+					}
+					else
+					{
+						return (_char == _other);
+					}
 				}
 			}
 			
@@ -356,7 +367,7 @@ function StringParser() constructor
 			{
 				var _string = string(ID);
 				
-				_position = clamp(_position, 1, (string_length(_string) + 1));
+				_position = clamp(_position, 1, (string_length(_string)));
 				
 				ID = string_set_byte_at(_string, _position, _byte);
 				
@@ -369,7 +380,7 @@ function StringParser() constructor
 			// @description			Delete a part of the string, starting from the character
 			//						at the specified position and continuing to the right for the 
 			//						specified number of characters or its end.
-			static deletePart = function(_position, _number)
+			static remove = function(_position, _number)
 			{
 				var _string = string(ID);
 				
@@ -382,7 +393,7 @@ function StringParser() constructor
 				return ID;
 			}
 			
-			// @argument			{real} value
+			// @argument			{real} number
 			// @argument			{int} wholeNumberPlaces
 			// @argument			{int} decimalPlaces
 			// @argument			{bool} replace?
@@ -394,24 +405,24 @@ function StringParser() constructor
 			//						places will be occupied by spaces added to the left.
 			//						If there is less decimal numbers than specified, the remaining
 			//						places will be occupied with zeros to the right.
-			static formatNumber = function(_value, _wholeNumberPlaces, _decimalPlaces, _replace)
+			static formatNumber = function(_number, _wholeNumberPlaces, _decimalPlaces, _replace)
 			{
 				if (_replace)
 				{
-					ID = string_format(_value, _wholeNumberPlaces, _decimalPlaces);
+					ID = string_format(_number, _wholeNumberPlaces, _decimalPlaces);
 				}
 				else
 				{
-					ID += string_format(_value, _wholeNumberPlaces, _decimalPlaces);
+					ID += string_format(_number, _wholeNumberPlaces, _decimalPlaces);
 				}
 				
 				return ID;
 			}
 			
-			// @argument			{any} substring
+			// @argument			{any:string} substring
 			// @argument			{int} position
 			// @returns				{string}
-			// @description			Insert a specified substring to the left of the specified 
+			// @description			Insert a specified substring to the left of the specified
 			//						character.
 			static insert = function(_substring, _position)
 			{
@@ -421,23 +432,23 @@ function StringParser() constructor
 			}
 			
 			// @argument			{int} number
-			// @argument			{any} separator?
+			// @argument			{any:string} separator?
 			// @returns				{string}
-			// @description			Add the specified number of copies of the string to itself,
-			//						either as it is or with added separator before the copy.
-			static duplicate = function(_number)
+			// @description			Add the specified number of copies of the string to itself, either
+			//						as it is or with added separator before the copy.
+			static duplicate = function(_number, _separator)
 			{
 				var _string = string(ID);
 				
-				if (argument_count > 1)
+				if (_separator != undefined)
 				{
-					var _separator = string(argument[1]);
+					_separator = string(_separator);
 					
-					var _originalString = _string;
+					var _original = _string;
 					
 					repeat (_number)
 					{
-						_string += (_separator + _originalString);
+						_string += (_separator + _original);
 					}
 					
 					ID = _string;
@@ -450,29 +461,29 @@ function StringParser() constructor
 				return ID;
 			}
 			
-			// @argument			{any} toReplace
-			// @argument			{any} replaceBy
-			// @argument			{int} number?
+			// @argument			{any:string} target
+			// @argument			{any:string} substitute
+			// @argument			{int} count?
 			// @returns				{string}
-			// @description			Replace the specified parts of this string with another specified
-			//						substring, either in all cases or the specified number of them
-			//						that are searched for from left to right.
-			static replace = function(_toReplace, _replaceBy, _number)
+			// @description			Replace the specified target parts of the string with specified
+			//						substitute string, either in its all instances or the specified
+			//						count of times, as they are found from left to right.
+			static replace = function(_target, _substitute, _count)
 			{
 				ID = string(ID);
 				
-				_toReplace = string(_toReplace);
-				_replaceBy = string(_replaceBy);
+				_target = string(_target);
+				_substitute = string(_substitute);
 				
-				if (_number == undefined)
+				if (_count == undefined)
 				{
-					ID = string_replace_all(ID, _toReplace, _replaceBy);
+					ID = string_replace_all(ID, _target, _substitute);
 				}
 				else
 				{
-					repeat (_number)
+					repeat (_count)
 					{
-						ID = string_replace(ID, _toReplace, _replaceBy);
+						ID = string_replace(ID, _target, _substitute);
 					}
 				}
 				
@@ -490,14 +501,9 @@ function StringParser() constructor
 				
 				var _string_length = string_length(ID);
 				
-				var __charCheck = self.charIsWhitespace;
+				var __charCheck = ((_charsToTrim != undefined) ? self.charEquals
+															   : self.charIsWhitespace);
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
-				{
-					_charsToTrim = argument[0];
-					__charCheck = self.charEquals;
-				}
-
 				var _string_new_start = 0;
 				var _string_new_end = _string_length;
 					
@@ -507,37 +513,35 @@ function StringParser() constructor
 				var _i = 1;
 				repeat (_string_length)
 				{
-					var _i_backwards = ((_string_length + 1) - _i);
-						
-					if (_i == _i_backwards)
+					var _i_backwards = (_string_length + 1 - _i);
+					
+					if ((!_start_set) and (!__charCheck(_i, _charsToTrim)))
+					{
+						_string_new_start = _i;
+						_start_set = true;
+					}
+					
+					if ((!_end_set) and (!__charCheck(_i_backwards, _charsToTrim)))
+					{
+						_string_new_end = (_i_backwards + 1);
+						_end_set = true;
+							
+					}
+					
+					if ((_start_set) and (_end_set))
+					{
+						ID = string_copy(ID, _string_new_start,
+											(_string_new_end - _string_new_start));
+							
+						return ID;
+					}
+					else if (_i == _i_backwards)
 					{
 						var _char = string_char_at(ID, _i);
 						
 						ID = ((__charCheck(_i, _charsToTrim)) ? "" : _char);
 						
 						return ID;
-					}
-					else
-					{
-						if (!_start_set) and (!__charCheck(_i, _charsToTrim))
-						{
-							_string_new_start = _i;
-							_start_set = true;
-						}
-						
-						if (!_end_set) and (!__charCheck(_i_backwards, _charsToTrim))
-						{
-							_string_new_end = (_i_backwards + 1);
-							_end_set = true;
-						}
-						
-						if ((_start_set) and (_end_set))
-						{
-							ID = string_copy(ID, _string_new_start, 
-												(_string_new_end - _string_new_start));
-							
-							return ID;
-						}
 					}
 					
 					++_i;
@@ -568,7 +572,7 @@ function StringParser() constructor
 		#region <Execution>
 			
 			// @returns				{string}
-			// @description			Display this String in the output of the application.
+			// @description			Display the string in the output of the application.
 			static display_output = function()
 			{
 				show_debug_message(ID);
@@ -589,22 +593,60 @@ function StringParser() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{int|all} elementLength?
+			// @argument			{string} mark_cut?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the string held by this 
-			//						constructor.
-			static toString = function()
+			//						Content will be represented with the string of this constructor.
+			static toString = function(_elementLength, _mark_cut)
 			{
-				return (instanceof(self) + "(" + string(ID) + ")");
+				var _string = string(ID);
+				
+				if (_elementLength == undefined) {_elementLength = 30;}
+				if (_mark_cut == undefined) {_mark_cut = "...";}
+				
+				var _string_lengthLimit = _elementLength;
+				var _string_lengthLimit_cut = (_string_lengthLimit + string_length(_mark_cut));
+				
+				if (_elementLength != all)
+				{
+					if (string_length(_string) >= _string_lengthLimit_cut)
+					{
+						_string = string_copy(_string, 1, _string_lengthLimit);
+						_string += _mark_cut;
+					}
+				}
+				
+				return (instanceof(self) + "(" + _string + ")");
 			}
 			
 			// @returns				{real}
-			// @description			Return this string as a number if it does not contain characters
+			// @description			Return the string as a number if it does not contain characters
 			//						that would prevent it from being treated as such.
 			static toNumber = function()
 			{
 				return real(string(ID));
+			}
+			
+			// @return				{char[]}
+			// @description			Return all characters of the string in an array.
+			static toArray = function()
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				
+				var _array = array_create(_string_length, "");
+				
+				var _i = 1;
+				repeat (_string_length)
+				{
+					_array[_i] = string_char_at(_string, _i);
+					
+					++_i;
+				}
+				
+				return _array;
 			}
 			
 			// @returns				{string}
