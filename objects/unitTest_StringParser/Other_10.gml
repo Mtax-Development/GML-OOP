@@ -160,7 +160,7 @@
 	var _result = constructor.getSize();
 	var _expectedValue = array_length(_value);
 	
-	unitTest.assert_equal("Method: getSubstringCount",
+	unitTest.assert_equal("Method: getSize",
 						  _result, _expectedValue);
 	
 #endregion
@@ -217,7 +217,7 @@
 	var _result = constructor.getPixelSize();
 	var _expectedValue = new Vector2(string_width(_value), string_height(_value));
 	
-	unitTest.assert_equal("Method: getPIxelSize()",
+	unitTest.assert_equal("Method: getPixelSize()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -342,12 +342,25 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: reverse()]
+	
+	var _value = ["A", "B", "C", "D", "E"];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3] + _value[4]));
+	var _result = constructor.reverse();
+	var _expectedValue = (_value[4] + _value[3] + _value[2] + _value[1] + _value[0]);
+	
+	unitTest.assert_equal("Method: reverse()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: trim()]
 	
 	var _value = [["  ", "$", "AB", "$$ "], [" ", "~!", "  "], ["  ", "XX", " "], [" "], ["A"]];
 	var _element = _value[0][1];
 	
-	constructor = [new StringParser((_value[0][0] + _value[0][1] + _value[0][2] + _value[0][3])),
+	constructor = [new StringParser((_value[0][0] + _value[0][1] + _value[0][2] +
+									_value[0][3])),
 				   new StringParser((_value[1][0] + _value[1][1] + _value[1][2])),
 				   new StringParser((_value[2][0] + _value[2][1] + _value[2][2])),
 				   new StringParser(_value[3][0]),
@@ -395,6 +408,29 @@
 	var _expectedValue = _value[1];
 	
 	unitTest.assert_equal("Method: setUppercase()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: forEach()]
+	
+	var _value = ["A", "b", "c"];
+	var _element = [];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
+	constructor.forEach
+	(
+		function(_i, _value, _element)
+		{
+			_element[@ _i] = string_byte_at(_value, 1);
+		},
+		_element
+	);
+	
+	var _result = _element;
+	var _expectedValue = [string_byte_at(_value[0], 1), string_byte_at(_value[1], 1),
+						  string_byte_at(_value[2], 1)];
+	
+	unitTest.assert_equal("Method: forEach()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -451,7 +487,7 @@
 	var _result = constructor.toString(true, all);
 	var _expectedValue = _value;
 	
-	unitTest.assert_equal("Method: toSTring(multiline)",
+	unitTest.assert_equal("Method: toString(multiline)",
 						  _result, _expectedValue);
 	
 #endregion

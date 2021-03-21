@@ -188,6 +188,28 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: forEach()]
+	
+	var _value = [1, 5, 7];
+	var _element = [];
+	
+	constructor = new ArrayParser(_value);
+	constructor.forEach
+	(
+		function(_i, _value, _element)
+		{
+			_element[@ _i] = -_value;
+		},
+		_element
+	)
+	
+	var _result = _element;
+	var _expectedValue = [-_value[0], -_value[1], -_value[2]];
+	
+	unitTest.assert_equal("Method: forEach()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: add()]
 	
 	var _value = [5, 3, 1];
