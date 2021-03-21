@@ -490,6 +490,28 @@ function StringParser() constructor
 				return ID;
 			}
 			
+			// @returns				{string}
+			// @description			Reverse the order of characters in the string.
+			static reverse = function()
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				
+				var _result = "";
+				
+				var _i = _string_length;
+				repeat (_string_length)
+				{
+					_result += string_char_at(ID, _i);
+					
+					--_i;
+				}
+				
+				ID = _result;
+				
+				return ID;
+			}
+			
 			// @argument			{char|char[]} charsToTrim?
 			// @returns				{string}
 			//						Remove the specified characters from the start and the end of the
