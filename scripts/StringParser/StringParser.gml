@@ -593,13 +593,14 @@ function StringParser() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline
 			// @argument			{int|all} elementLength?
 			// @argument			{string} mark_cut?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the string of this constructor.
-			static toString = function(_elementLength, _mark_cut)
+			static toString = function(_multiline, _elementLength, _mark_cut)
 			{
 				var _string = string(ID);
 				
@@ -608,6 +609,12 @@ function StringParser() constructor
 				
 				var _string_lengthLimit = _elementLength;
 				var _string_lengthLimit_cut = (_string_lengthLimit + string_length(_mark_cut));
+				
+				if (!_multiline)
+				{
+					_string = string_replace_all(_string, "\n", " ");
+					_string = string_replace_all(_string, "\r", " ");
+				}
 				
 				if (_elementLength != all)
 				{
@@ -618,7 +625,14 @@ function StringParser() constructor
 					}
 				}
 				
-				return (instanceof(self) + "(" + _string + ")");
+				if (_multiline)
+				{
+					return _string;
+				}
+				else
+				{
+					return (instanceof(self) + "(" + _string + ")");
+				}
 			}
 			
 			// @returns				{real}
