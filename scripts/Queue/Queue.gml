@@ -303,7 +303,7 @@ function Queue() constructor
 			
 			// @argument			{int} count?
 			// @returns				{any|any[]|undefined}
-			// @description			Remove any number of values from the Queue and return them. If
+			// @description			Remove any number of values from this Queue and return them. If
 			//						more than one value were removed, they will be returned in an
 			//						array.
 			//						Returns {undefined} if this Queue does not exists or is empty.
@@ -311,31 +311,35 @@ function Queue() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
+					if (_count == undefined) {_count = 1;}
+					
 					var _size = ds_queue_size(ID);
 					
-					if (_size <= 0)
+					if ((!(_count >= 1)) or (_size < 1))
 					{
 						return undefined;
 					}
 					else
 					{
-						if ((_count == undefined) or (_count == 1))
+						if (_count == 1)
 						{
 							return ds_queue_dequeue(ID);
 						}
 						else
 						{
-							var _values = array_create(clamp(_count, 0, _size), undefined);
+							_count = min(_count, _size);
+							
+							var _result = array_create(_count, undefined);
 							
 							var _i = 0;
-							repeat (array_length(_values))
+							repeat (_count)
 							{
-								_values[_i] = ds_queue_dequeue(ID);
+								_result[_i] = ds_queue_dequeue(ID);
 								
 								++_i;
 							}
 							
-							return _values;
+							return _result;
 						}
 					}
 				}

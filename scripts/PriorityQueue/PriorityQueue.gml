@@ -400,30 +400,33 @@ function PriorityQueue() constructor
 			// @returns				{any|any[]|undefined}
 			// @description			Remove one or more values with the lowest priority in this
 			//						Priority Queue and return it.
-			//						If a number of values other than 1 is specified to be removed, the
-			//						values will be returned in an array.
-			//						Returns {undefined} if this Priority Queue does not exists or is
-			//						empty.
-			static removeMin = function(_count)
+			//						If multiple values were removed, they will be returned in an
+			//						array. If no values were removed, {undefined} will be returned.
+			static removeLast = function(_count)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
+					if (_count == undefined) {_count = 1;}
 					
-					if (_size > 0)
+					_count = min(_count, _size);
+					
+					if ((!(_count >= 1)) or (_size < 1))
 					{
-						if ((_count == undefined) or (_count == 1))
+						return undefined;
+					}
+					else
+					{
+						if (_count == 1)
 						{
 							return ds_priority_delete_min(ID);
 						}
 						else
 						{
-							var _boundary = min(_size, _count);
-							
-							var _result = array_create(_boundary, undefined);
+							var _result = array_create(_count, undefined);
 							
 							var _i = 0;
-							repeat (_boundary)
+							repeat (_count)
 							{
 								_result[_i] = ds_priority_delete_min(ID);
 								
@@ -432,10 +435,6 @@ function PriorityQueue() constructor
 							
 							return _result;
 						}
-					}
-					else
-					{
-						return undefined;
 					}
 				}
 				else
@@ -455,30 +454,33 @@ function PriorityQueue() constructor
 			// @returns				{any|any[]|undefined}
 			// @description			Remove one or more values with the highest priority in this
 			//						Priority Queue and return it.
-			//						If a number of values other than 1 is specified to be removed, the
-			//						values will be returned in an array.
-			//						Returns {undefined} if this Priority Queue does not exists or is
-			//						empty.
-			static removeMax = function(_count)
+			//						If multiple values were removed, they will be returned in an
+			//						array. If no values were removed, {undefined} will be returned.
+			static removeFirst = function(_count)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
+					if (_count == undefined) {_count = 1;}
 					
-					if (_size > 0)
+					_count = min(_count, _size);
+					
+					if ((!(_count >= 1)) or (_size < 1))
 					{
-						if ((_count == undefined) or (_count == 1))
+						return undefined;
+					}
+					else
+					{
+						if (_count == 1)
 						{
 							return ds_priority_delete_min(ID);
 						}
 						else
 						{
-							var _boundary = min(_size, _count);
-							
-							var _result = array_create(_boundary, undefined);
+							var _result = array_create(_count, undefined);
 							
 							var _i = 0;
-							repeat (_boundary)
+							repeat (_count)
 							{
 								_result[_i] = ds_priority_delete_max(ID);
 								
@@ -487,10 +489,6 @@ function PriorityQueue() constructor
 							
 							return _result;
 						}
-					}
-					else
-					{
-						return undefined;
 					}
 				}
 				else
