@@ -73,6 +73,7 @@ function Map() constructor
 								{
 									switch (instanceof(_value))
 									{
+										case "Buffer":
 										case "Grid":
 										case "List":
 										case "Map":
