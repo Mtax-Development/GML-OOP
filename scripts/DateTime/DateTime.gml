@@ -814,13 +814,13 @@ function DateTime() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} full
-			// @argument			{bool} multiline
+			// @argument			{bool} multiline?
+			// @argument			{bool} full?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the full date and time output.
-			static toString = function(_full, _multiline)
+			static toString = function(_multiline, _full)
 			{
 				if (ID != undefined)
 				{
@@ -830,8 +830,8 @@ function DateTime() constructor
 						
 						var _string = ("Date: " + self.toString_date() + _mark_separator +
 									   "Time: " + self.toString_time() + _mark_separator +
-									   "Is Today: " + string(self.isToday()) + _mark_separator +
-									   "Is Leap Year: " + string(self.isLeapYear()) 
+									   "Is today: " + string(self.isToday()) + _mark_separator +
+									   "Is leap year: " + string(self.isLeapYear()) 
 														+ _mark_separator +
 									   "Weekday: " + string(self.getWeekday()) + _mark_separator +
 									   "Days in year: " + string(self.getDaysInYear()) 
