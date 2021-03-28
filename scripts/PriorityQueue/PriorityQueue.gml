@@ -124,6 +124,56 @@ function PriorityQueue() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if this Data Structure contains at least one of the
+			//						specified values.
+			static contains = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					var _size = ds_priority_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_priority_create();
+						ds_priority_copy(_dataCopy, ID);
+						
+						repeat (_size)
+						{
+							var _value = ds_priority_delete_max(ID);
+							
+							var _i = 0;
+							repeat (argument_count)
+							{
+								if (_value == argument[_i])
+								{
+									ds_priority_destroy(_dataCopy);
+									return true;
+								}
+								
+								++_i;
+							}
+						}
+						
+						ds_priority_destroy(_dataCopy);
+					}
+					
+					return false;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "contains";
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{int}
 			// @description			Return the number of values in this Data Structure.
 			static getSize = function()
@@ -557,7 +607,6 @@ function PriorityQueue() constructor
 					
 					//|Content loop.
 					var _i = 0;
-					
 					repeat (min(_size, _elementNumber))
 					{
 						//|Get Data Structure Element.

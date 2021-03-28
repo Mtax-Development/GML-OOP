@@ -156,6 +156,43 @@ function Grid() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if this Data Structure contains at least one of the
+			//						specified values.
+			static contains = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _size_x = ds_grid_width(ID);
+					var _size_y = ds_grid_height(ID);
+					
+					var _i = 0;
+					repeat (argument_count)
+					{
+						if (ds_grid_value_exists(ID, 0, 0, _size_x, _size_y, argument[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
+					
+					return false;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "contains";
+					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{Vector2} location
 			// @returns				{any|undefined}
 			// @description			Return the value of cell at the specified position in this Grid.

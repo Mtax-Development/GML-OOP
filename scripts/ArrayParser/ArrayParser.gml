@@ -112,6 +112,45 @@ function ArrayParser() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if the array contains at least one of the specified values.
+			static contains = function()
+			{
+				if (is_array(ID))
+				{
+					var _i = [0, 0];
+					repeat (array_length(ID))
+					{
+						var _value = array_get(ID, _i);
+						
+						_i[1] = 0;
+						repeat (argument_count)
+						{
+							if (_value == argument[_i[1]])
+							{
+								return true;
+							}
+						}
+						
+						++_i[0];
+					}
+					
+					return false;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "contains";
+					var _errorText = ("Attempted to read an invalid array: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the number of elements in the array.
 			static getSize = function()
