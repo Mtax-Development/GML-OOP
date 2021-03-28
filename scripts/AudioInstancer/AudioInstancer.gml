@@ -158,15 +158,32 @@ function AudioInstancer() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
+			// @argument			{bool} full?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the name of the audio file.
-			static toString = function()
+			static toString = function(_multiline, _full)
 			{
 				if ((is_real(file)) and (audio_exists(file)))
 				{
-					return (instanceof(self) + "(" + audio_get_name(file) + ")");
+					if (_full)
+					{
+						var _mark_separator = ((_multiline) ? "\n" : ", ");
+						
+						var _string = ("Audio file: " + audio_get_name(file) + _mark_separator +
+									   "Pitch: " + string(pitch) + _mark_separator +
+									   "Priority: " + string(priority));
+						
+						return ((_multiline) ? _string
+											 : (instanceof(self) + "(" + _string + ")"));
+					}
+					else
+					{
+						return ((_multiline) ? audio_get_name(file)
+											 : (instanceof(self) + "(" + audio_get_name(file) + ")"));
+					}
 				}
 				else
 				{
