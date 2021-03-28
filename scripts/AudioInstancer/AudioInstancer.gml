@@ -31,7 +31,7 @@ function AudioInstancer() constructor
 					file = _other.file;
 					pitch = _other.pitch;
 					priority = _other.priority;
-					instances = _other.instances;
+					instances = [];
 				}
 				else
 				{
@@ -47,31 +47,26 @@ function AudioInstancer() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(file)) and (audio_exists(file))
-				and (is_real(priority)) and (is_array(instances))
-				and ((is_real(pitch)) or ((instanceof(pitch) == "Range")
+				return ((is_real(file)) and (audio_exists(file)) and (is_real(priority))
+				and (is_array(instances)) and ((is_real(pitch)) or ((instanceof(pitch) == "Range")
 				and (pitch.isFunctional()))));
 			}
 			
 			// @description			Refresh the instance list by checking which still exists.
 			static refresh = function()
 			{
-				var _instances_new = [];
-				
-				var _instances_length = array_length(instances);
-				
 				var _i = 0;
-				repeat (_instances_length)
+				repeat (array_length(instances))
 				{
-					if (audio_exists(instances[_i]))
+					if (!audio_exists(instances[_i]))
 					{
-						_instances_new[array_length(_instances_new)] = _instances[_i];
+						array_delete(instances, _i, 1);
 					}
-					
-					++_i;
+					else
+					{
+						++_i;
+					}
 				}
-				
-				instances = _instances_new;
 			}
 			
 		#endregion
@@ -134,27 +129,29 @@ function AudioInstancer() constructor
 			// @description			Pause or resume all existing instances of the sound playback.
 			static pause = function(_pause)
 			{
-				if (_pause == undefined) {_pause = true;}
+				self.refresh();
 				
-				var _i = 0;
+				var _instances_length = array_length(instances);
 				
 				if (_pause)
 				{
-					repeat (array_length(instances))
+					var _i = 0;
+					repeat (_instances_length)
 					{
 						audio_pause_sound(instances[_i]);
+						
+						++_i;
 					}
-					
-					++_i;
 				}
 				else
 				{
-					repeat (array_length(instances))
+					var _i = 0;
+					repeat (_instances_length)
 					{
 						audio_resume_sound(instances[_i]);
+						
+						++_i;
 					}
-					
-					++_i;
 				}
 			}
 			
