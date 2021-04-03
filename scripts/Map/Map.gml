@@ -156,7 +156,7 @@ function Map() constructor
 							_i[1] = 0;
 							repeat (argument_count)
 							{
-								if (_value == argument[_i])
+								if (_value == argument[_i[1]])
 								{
 									return true;
 								}
