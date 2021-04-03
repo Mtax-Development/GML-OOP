@@ -141,7 +141,7 @@ function Stack() constructor
 						
 						repeat (_size)
 						{
-							var _value = ds_stack_pop(ID);
+							var _value = ds_stack_pop(_dataCopy);
 							
 							var _i = 0;
 							repeat (argument_count)

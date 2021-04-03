@@ -142,7 +142,7 @@ function Queue() constructor
 						
 						repeat (_size)
 						{
-							var _value = ds_queue_dequeue(ID);
+							var _value = ds_queue_dequeue(_dataCopy);
 							
 							var _i = 0;
 							repeat (argument_count)
