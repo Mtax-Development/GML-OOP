@@ -277,7 +277,7 @@ function ArrayParser() constructor
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or an argument array:
 			//						- argument[0]: {int} _i
-			//						- argument[1]: {char} _value
+			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument					
 			static forEach = function(__function, _argument)
 			{
