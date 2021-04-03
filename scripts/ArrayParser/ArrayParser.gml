@@ -122,7 +122,7 @@ function ArrayParser() constructor
 					var _i = [0, 0];
 					repeat (array_length(ID))
 					{
-						var _value = array_get(ID, _i);
+						var _value = array_get(ID, _i[0]);
 						
 						_i[1] = 0;
 						repeat (argument_count)
@@ -131,6 +131,8 @@ function ArrayParser() constructor
 							{
 								return true;
 							}
+							
+							++_i[1];
 						}
 						
 						++_i[0];
