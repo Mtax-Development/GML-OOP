@@ -438,37 +438,53 @@ function Stack() constructor
 			// @argument			{string} mark_cut?
 			// @argument			{string} mark_elementStart?
 			// @argument			{string} mark_elementEnd?
+			// @argument			{string} mark_sizeSeparator?
 			// @returns				{string}
 			// @description			Create a string representing the constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd)
+									   _mark_cut, _mark_elementStart, _mark_elementEnd,
+									   _mark_sizeSeparator)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					//|General initialization.
 					var _size = ds_stack_size(ID);
 					
-					switch (_elementNumber)
+					if (_elementNumber == all)
 					{
-						case undefined: _elementNumber = 10; break;
-						case all: _elementNumber = _size; break;
+						_elementNumber = _size;
+					}
+					else if (!is_real(_elementNumber))
+					{
+						_elementNumber = 10;
 					}
 					
-					if (_elementLength == undefined) {_elementLength = 30;}
-					if (_mark_separator == undefined) {_mark_separator = ", ";}
-					if (_mark_cut == undefined) {_mark_cut = "...";}
-					if (_mark_elementStart == undefined) {_mark_elementStart = "";}
-					if (_mark_elementEnd == undefined) {_mark_elementEnd = "";}
+					if (!is_real(_elementLength)) {_elementLength = 30;}
+					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
+					if (!is_string(_mark_cut)) {_mark_cut = "...";}
+					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
+					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
+					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					var _mark_linebreak = (_multiline ? "\n" : "");
 					
-					var _string = ((_multiline) ? "" : (instanceof(self) + "("));
+					var _string = "";
+					var _string_size = (string(_size));
+					
+					if (!_multiline)
+					{
+						_string += (instanceof(self) + "(" + _string_size);
+						
+						if (_size > 0)
+						{
+							_string += _mark_sizeSeparator;
+						}
+					}
 					
 					var _string_lengthLimit = (string_length(_string) + _elementLength +
 											   _mark_elementStart_length + _mark_elementEnd_length);
@@ -500,8 +516,7 @@ function Stack() constructor
 						}
 						
 						//|Add the element string with all its parts.
-						_string += (_mark_elementStart + _newElement + _mark_elementEnd +
-									_mark_linebreak);
+						_string += (_mark_elementStart + _newElement + _mark_elementEnd);
 						
 						//|Cut strings and add cut or separation marks if appriopate.
 						if (!_multiline)
@@ -560,6 +575,10 @@ function Stack() constructor
 									_string += _mark_cut;
 								}
 							}
+						}
+						else
+						{
+							_string += "\n";
 						}
 						
 						++_i;
