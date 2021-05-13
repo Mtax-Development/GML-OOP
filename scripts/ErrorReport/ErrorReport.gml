@@ -1,10 +1,10 @@
 /// @function				ErrorReport()
-///
+///							
 /// @description			Contains static variables and methods of the error reporting system.
 function ErrorReport() constructor
 {
 	#region [Static variables]
-		#region [[Configurable Variables - General]]
+		#region [[Configurable variables - General]]
 			
 			// @type		{function}
 			static reportFunction = show_debug_message;
@@ -16,7 +16,7 @@ function ErrorReport() constructor
 			static errorData = [];
 			
 		#endregion
-		#region [[Configurable Variables - Specific]]
+		#region [[Configurable variables - Specific]]
 			
 			// @type		{string[]}
 			// @example		{["Constructor.method()"]}
@@ -37,6 +37,13 @@ function ErrorReport() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{struct|struct[]} constructor
+			// @argument			{any[]:callstack} callstack
+			// @argument			{string} methodName
+			// @argument			{string} errorText
+			// @description			Create a report of a constructor method error, collect its data
+			//						and log it with the function that is set in the apprioate
+			//						constructor variable.
 			static reportConstructorMethod = function(_constructor, _callstack, _methodName,
 													  _errorText)
 			{
@@ -121,15 +128,21 @@ function ErrorReport() constructor
 		#endregion
 		#region <Conversion>
 			
-			static toString = function(_full, _multiline)
+			// @argument			{bool} multiline?
+			// @argument			{bool} full?
+			// @returns				{string}
+			// @description			Create a string representing this constructor.
+			//						Overrides the string() conversion.
+			//						Content will be represented with the error and configuration data.
+			static toString = function(_multiline, _full)
 			{
 				if (_full)
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					
 					var _string_reportFunction = ((reportFunction != undefined)
-												   ? (script_get_name(reportFunction) + "()")
-												   : string(reportFunction));
+												  ? (script_get_name(reportFunction) + "()")
+												  : string(reportFunction));
 					
 					var _string_errorData_length = ((is_array(errorData))
 													? string(array_length(errorData))
@@ -151,8 +164,8 @@ function ErrorReport() constructor
 														: "Empty");
 						
 						return  ((_multiline) ? _string_errorData_length 
-											  : instanceof(self) + "(" + _string_errorData_length
-												+ ")");
+											  : (instanceof(self) + "(" + _string_errorData_length +
+												 ")"));
 					}
 					else
 					{
