@@ -1,14 +1,13 @@
 /// @function				RangedValue()
 /// @argument				{Range} range
 /// @argument				{real} value?
-///
+///							
 /// @description			Construct a container for a value closed in the specified Range.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
-///							   If the value if not specified, it will be set to the minimal value of
-///							   the specified Range.
-///							   The value will be clamped to the range.
+///							   Unspecified value will be set to the minimum value of the Range.
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Range} other
 function RangedValue() constructor
 {
@@ -18,29 +17,33 @@ function RangedValue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				range = undefined;
 				value = undefined;
 				value_original = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "RangedValue"))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					range = _other.range;
-					value = _other.value;
-					value_original = _other.value_original;
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					range = argument[0];
-				
-					var _value = ((argument_count > 1) and (argument[1] != undefined)) ?
-								 argument[1] : range.minimum;
-				
-					value = clamp(_value, range.minimum, range.maximum);
-					value_original = value;
+					if (instanceof(argument[0]) == "RangedValue")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						range = new Range(_other.range);
+						value = _other.value;
+						value_original = _other.value_original;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						range = argument[0];
+						
+						var _value = (((argument_count > 1) and (argument[1] != undefined))
+									  ? argument[1] : range.minimum);
+						
+						value = clamp(_value, range.minimum, range.maximum);
+						value_original = value;
+					}
 				}
 			}
 			
@@ -48,18 +51,25 @@ function RangedValue() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(value)) and (is_real(value_original))
-						and (instanceof(range) == "Range") and (range.isFunctional()));
+				return ((is_real(value)) and (instanceof(range) == "Range")
+						and (range.isFunctional()));
 			}
 			
 		#endregion
 		#region <Getters>
 			
 			// @returns				{bool}
-			// @description			Check whether the value is equal to the boundaries of the Range.
+			// @description			Check if the value is equal to the boundaries of the Range.
 			static isBoundary = function()
 			{
 				return ((value == range.minimum) or (value == range.maximum));
+			}
+			
+			// @returns				{bool}
+			// @description			Check if the value is equal to the value of another Ranged Value.
+			static equals = function(_other)
+			{
+				return (value == _other.value);
 			}
 			
 		#endregion
@@ -73,26 +83,26 @@ function RangedValue() constructor
 			}
 			
 			// @description			Set the value to the minimum boundary of the Range.
-			static set_minimum = function()
+			static setMinimum = function()
 			{
 				value = range.minimum;
 			}
 			
 			// @description			Set the value to the maximum boundary of the Range.
-			static set_maximum = function()
+			static setMaximum = function()
 			{
 				value = range.maximum;
 			}
 			
 			// @description			Set the value to the state it had upon constructor creation.
-			static set_original = function()
+			static setOriginal = function()
 			{
 				value = value_original;
 			}
 			
 			// @returns				{real}
 			// @description			Set the value the middle point of the Range.
-			static set_middle = function()
+			static setMiddle = function()
 			{
 				value = lerp(range.minimum, range.maximum, 0.5);
 			}
@@ -107,10 +117,10 @@ function RangedValue() constructor
 			// @argument			{real} value
 			// @argument			{bool} inclusive?
 			// @description			Add the specified number to the value, then wrap it to the
-			//						furthest boundary if it is outside or equal to the Range.
-			//						If the Range is specified as inclusive for this operation,
-			//						the value will not be wrapped if it would equal the Range.
-			static add_wrap = function(_value, _inclusive)
+			//						furthest boundary if it is outside of the Range. The value will
+			//						also be wrapped if inclusive wrapping is specified and the value
+			//						equals the Range.
+			static addWrap = function(_value, _inclusive)
 			{
 				value += _value;
 				
@@ -153,15 +163,27 @@ function RangedValue() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the Range and value information 
-			//						in the following format: value, range.minimum-range.maximum.
-			static toString = function()
+			//						Content will be represented with the values of this Container.
+			static toString = function(_multiline)
 			{
-				return (instanceof(self) + "(" + string(value) + ", " + 
-						string(range.minimum) + "-" + string(range.maximum) + ")");
+				if (self.isFunctional())
+				{
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					var _mark_separator_inline = "-";
+				
+					var _string = (string(value) + _mark_separator + string(range.minimum) +
+								   _mark_separator_inline + string(range.maximum));
+				
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+				}
+				else
+				{
+					return (instanceof(self) + "<>");
+				}
 			}
 			
 		#endregion
