@@ -1,10 +1,10 @@
 /// @function				TextAlign()
 /// @argument				{constant:fa_[halign]} x?
 /// @argument				{constant:fa_[valign]} y?
-///
+///							
 /// @description			Constructs a container for two Text Align contants, intended for use in
 ///							text drawing.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							   Unspecified values will be set to the following:
@@ -45,69 +45,50 @@ function TextAlign() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x)) and (is_real(y)));
+				return (((x == fa_left) or (x == fa_center) or (x == fa_right)) and ((y == fa_top)
+						or (y == fa_middle) or (y == fa_bottom)));
 			}
 			
 		#endregion
 		#region <Setters>
 			
 			// @description			Set the origin of horizontal align to the left of the text.
-			static setX_left = function()
+			static setXLeft = function()
 			{
 				x = fa_left;
 			}
 			
 			// @description			Set the origin of horizontal align to the center of the text.
-			static setX_center = function()
+			static setXCenter = function()
 			{
 				x = fa_center;
 			}
 			
 			// @description			Set the origin of horizontal align to the right of the text.
-			static setX_right = function()
+			static setXRight = function()
 			{
 				x = fa_right;
 			}
 			
 			// @description			Set the origin of vertical align to the top of the text.
-			static setY_top = function()
+			static setYTop = function()
 			{
 				y = fa_top;
 			}
 			
 			// @description			Set the origin of vertical align to the middle of the text.
-			static setY_middle = function()
+			static setYMiddle = function()
 			{
 				y = fa_middle;
 			}
 			
 			// @description			Set the origin of vertical align to the bottom of the text.
-			static setY_bottom = function()
+			static setYBottom = function()
 			{
 				y = fa_bottom;
 			}
 			
-			// @description			Mirror the non-centered x value of the align.
-			static mirror_x = function()
-			{
-				switch (x)
-				{
-					case fa_left: x = fa_right; break;
-					case fa_right: x = fa_left; break;
-				}
-			}
-			
-			// @description			Mirror the non-centered y value of the align.
-			static mirror_y = function()
-			{
-				switch (y)
-				{
-					case fa_top: y = fa_bottom; break;
-					case fa_bottom: y = fa_top; break;
-				}
-			}
-			
-			// @description			Mirror the non-centered x/y values of the align.
+			// @description			Mirror the non-centered x and y values of the align.
 			static mirror = function()
 			{
 				switch (x)
@@ -123,11 +104,31 @@ function TextAlign() constructor
 				}
 			}
 			
+			// @description			Mirror the non-centered x value of the align.
+			static mirrorX = function()
+			{
+				switch (x)
+				{
+					case fa_left: x = fa_right; break;
+					case fa_right: x = fa_left; break;
+				}
+			}
+			
+			// @description			Mirror the non-centered y value of the align.
+			static mirrorY = function()
+			{
+				switch (y)
+				{
+					case fa_top: y = fa_bottom; break;
+					case fa_bottom: y = fa_top; break;
+				}
+			}
+			
 		#endregion
 		#region <Execution>
 			
-			// @description			Change the draw properties to the values of this constructor.
-			static apply = function()
+			// @description			Use this Text Align for further text rendering.
+			static setActive = function()
 			{
 				draw_set_halign(x);
 				draw_set_valign(y);
@@ -152,7 +153,7 @@ function TextAlign() constructor
 					case fa_left: _string_x = "Left"; break;
 					case fa_center: _string_x = "Center"; break;
 					case fa_right: _string_x = "Right"; break;
-					default: _string_x = string(undefined); break;
+					default: _string_x = string(x); break;
 				}
 				
 				switch (y)
@@ -160,7 +161,7 @@ function TextAlign() constructor
 					case fa_top: _string_y = "Top"; break;
 					case fa_middle: _string_y = "Middle"; break;
 					case fa_bottom: _string_y = "Bottom"; break;
-					default: _string_y = string(undefined) break;
+					default: _string_y = string(y) break;
 				}
 				
 				var _string = ("x: " + _string_x + _mark_separator + "y: " + _string_y);
