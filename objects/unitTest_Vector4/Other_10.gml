@@ -22,13 +22,13 @@
 	constructor = new Vector4(_base);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
-	var _expectedValue = _base;
+	var _expectedValue = [_base, _base, _base, _base];
 	
 	unitTest.assert_equal("Construction: One number for all values",
-						  _result[0], _expectedValue,
-						  _result[1], _expectedValue,
-						  _result[2], _expectedValue,
-						  _result[3], _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 #endregion
 #region [Test: Construction: One number pair]
@@ -47,18 +47,18 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: Construction: Default for all values]
+#region [Test: Construction: Empty]
 	
 	constructor = new Vector4();
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
-	var _expectedValue = 0;
+	var _expectedValue = [undefined, undefined, undefined, undefined];
 	
-	unitTest.assert_equal("Construction: Default for all values",
-						  _result[0], _expectedValue,
-						  _result[1], _expectedValue,
-						  _result[2], _expectedValue,
-						  _result[3], _expectedValue);
+	unitTest.assert_equal("Construction: Empty",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 #endregion
 #region [Test: Construction: From array]
@@ -68,7 +68,7 @@
 	constructor = new Vector4(_base);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
-	var _expectedValue = _base;
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3]];
 	
 	unitTest.assert_equal("Construction: From array",
 						  _result[0], _expectedValue[0],
@@ -101,7 +101,7 @@
 	constructor[1] = new Vector4(constructor[0]);
 	
 	var _result = [constructor[1].x1, constructor[1].y1, constructor[1].x2, constructor[1].y2];
-	var _expectedValue = _base;
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
@@ -112,15 +112,21 @@
 #endregion
 #region [Test: Method: isFunctional()]
 	
-	constructor = [new Vector4(), new Vector4()];
+	var _base = [2, 4, 6, 8];
+	
+	constructor = [new Vector4(_base[0], _base[1], _base[2], _base[3]),
+				   new Vector4(_base[0], _base[1], _base[2], _base[3]),
+				   new Vector4()];
 	constructor[1].y1 = undefined;
 	
-	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
-	var _expectedValue = [true, false];
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional(),
+				   constructor[2].isFunctional()];
+	var _expectedValue = [true, false, false];
 	
 	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Test: Method: add(real)]
@@ -149,7 +155,6 @@
 	var _value = new Vector2(5, 7);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.add(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -169,7 +174,6 @@
 	var _value = new Vector4(56, 36.50, 520, 63);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.add(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -189,7 +193,6 @@
 	var _value = 24;
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.substract(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -209,7 +212,6 @@
 	var _value = new Vector2(15, 75);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.substract(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -229,7 +231,6 @@
 	var _value = new Vector4(5625, 336.50, 14, 155);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.substract(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -249,7 +250,6 @@
 	var _value = 100;
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.multiply(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -269,7 +269,6 @@
 	var _value = new Vector2(12, 5);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.multiply(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -289,7 +288,6 @@
 	var _value = new Vector4(55, 6, 4, 5);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.multiply(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -309,7 +307,6 @@
 	var _value = 10;
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.divide(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -329,7 +326,6 @@
 	var _value = new Vector2(120, 4);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.divide(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -349,7 +345,6 @@
 	var _value = new Vector4(25, 1.5, 2, 4);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.divide(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -368,7 +363,6 @@
 	var _base = [120, 240, 360, 480];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	
 	constructor.flip();
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
@@ -395,29 +389,29 @@
 						  _result.y, _expectedValue.y);
 	
 #endregion
-#region [Test: Method: getMiddle_x()]
+#region [Test: Method: getMiddleX()]
 	
 	var _base = [52, 1000, 150000, 200000];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.getMiddle_x();
+	var _result = constructor.getMiddleX();
 	var _expectedValue = ((_base[0] + _base[2]) / 2);
 	
-	unitTest.assert_equal("Method: getMiddle_x()",
+	unitTest.assert_equal("Method: getMiddleX()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getMiddle_x()]
+#region [Test: Method: getMiddleX()]
 	
 	var _base = [53, 1010, 150100, 200100];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.getMiddle_y();
+	var _result = constructor.getMiddleY();
 	var _expectedValue = ((_base[1] + _base[3]) / 2);
 	
-	unitTest.assert_equal("Method: getMiddle_y()",
+	unitTest.assert_equal("Method: getMiddleY()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -430,33 +424,33 @@
 	var _result = constructor.getDistance();
 	var _expectedValue = point_distance(_base[0], _base[1], _base[2], _base[3]);
 	
-	unitTest.assert_equal("Method: getMiddle_y()",
+	unitTest.assert_equal("Method: getMiddleY()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getAngle_1to2()]
+#region [Test: Method: getAngle1to2()]
 	
 	var _base = [53, 111, 1100, 2105];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.getAngle_1to2();
+	var _result = constructor.getAngle1to2();
 	var _expectedValue = point_direction(_base[0], _base[1], _base[2], _base[3]);
 	
-	unitTest.assert_equal("Method: getAngle_1to2()",
+	unitTest.assert_equal("Method: getAngle1to2()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getAngle_2to1()]
+#region [Test: Method: getAngle2to1()]
 	
 	var _base = [3, 11, 110, 105];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.getAngle_2to1();
+	var _result = constructor.getAngle2to1();
 	var _expectedValue = point_direction(_base[2], _base[3], _base[0], _base[1]);
 	
-	unitTest.assert_equal("Method: getAngle_2to1()",
+	unitTest.assert_equal("Method: getAngle2to1()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -492,31 +486,31 @@
 						  _result.y, _expectedValue.y);
 	
 #endregion
-#region [Test: Method: interpolate_x()]
+#region [Test: Method: interpolateX()]
 	
 	var _base = [52, 62, 72, 82];
 	var _value = 0.111;
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.interpolate_x(_value);
+	var _result = constructor.interpolateX(_value);
 	var _expectedValue = lerp(_base[0], _base[2], _value);
 	
-	unitTest.assert_equal("Method: interpolate_x()",
+	unitTest.assert_equal("Method: interpolateX()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: interpolate_y()]
+#region [Test: Method: interpolateY()]
 	
 	var _base = [902, 1002, 1102, 1202];
 	var _value = 0.968;
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.interpolate_y(_value);
+	var _result = constructor.interpolateY(_value);
 	var _expectedValue = lerp(_base[1], _base[3], _value);
 	
-	unitTest.assert_equal("Method: interpolate_y()",
+	unitTest.assert_equal("Method: interpolateY()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -536,13 +530,13 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = [5, 6, 7, 8];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName +
 						  "(" +
 						  "x1: " + string(_base[0]) + ", " +
@@ -551,7 +545,7 @@
 						  "y2: " + string(_base[3]) +
 						  ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion

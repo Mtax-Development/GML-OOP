@@ -94,29 +94,29 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: random_real()]
+#region [Method: randomReal()]
 	
 	var _base = [25.25526, 25.76336];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
-	var _result = constructor.random_real();
+	var _result = constructor.randomReal();
 	var _expectedValue = clamp(_result, _base[0], _base[1]);
 	
-	unitTest.assert_equal("Method: random_real()",
+	unitTest.assert_equal("Method: randomReal()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: random_int()]
+#region [Method: randomInt()]
 	
 	var _base = [24, 26];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
-	var _result = constructor.random_int();
+	var _result = constructor.randomInt();
 	var _expectedValue = [clamp(_result, _base[0], _base[1]), floor(_result)];
 	
-	unitTest.assert_equal("Method: random_int()",
+	unitTest.assert_equal("Method: randomInt()",
 						  _result, _expectedValue[0],
 						  _result, _expectedValue[1]);
 	
@@ -154,16 +154,29 @@
 						  _result, _expectedValue); 
 	
 #endregion
-#region [String conversion]
+#region [Method: toString()]
 	
 	var _base = [35, 2590];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + "(" + string(_base[0]) + "-" + string(_base[1]) + ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue); 
+	
+#endregion
+#region [Method: toArray()]
+	
+	var _base = [24, 42];
+	
+	constructor = new Range(_base[0], _base[1]);
+	
+	var _result = constructor.toArray();
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Method: toArray()",
+						  _result, _expectedValue);
 	
 #endregion

@@ -349,17 +349,18 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _value = [0.33, 2, 1, 49];
 	
 	constructor = new ArrayParser([_value[0], _value[1], _value[2], _value[3]]);
 	
-	var _result = string(constructor);
-	var _expectedValue = (constructorName + "(" + string(_value[0]) + ", " + string(_value[1]) +
-						  ", " + string(_value[2]) + ", " + + string(_value[3]) + ")");
+	var _result = constructor.toString();
+	var _expectedValue = (constructorName + "(" + string(array_length(_value)) + " - " +
+						  string(_value[0]) + ", " + string(_value[1]) + ", " +
+						  string(_value[2]) + ", " + string(_value[3]) + ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -374,8 +375,8 @@
 	
 	var _result = [constructor[0].toString(false, undefined, _element[0], undefined, _element[1]),
 				   constructor[1].toString(false, undefined, _element[0], undefined, _element[1])];
-	var _expectedValue = [(constructorName + "(" + _value[1][0] + _element[1] + ")"),
-						  (constructorName + "(" + _value[0][1] + ")")];
+	var _expectedValue = [(constructorName + "(" + "1" + " - " + _value[1][0] + _element[1] + ")"),
+						  (constructorName + "(" + "1" + " - " + _value[0][1] + ")")];
 	
 	unitTest.assert_equal("Method: toString(lenght cut)",
 						  _result[0], _expectedValue[0],

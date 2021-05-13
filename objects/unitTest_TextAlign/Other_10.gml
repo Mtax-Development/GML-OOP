@@ -38,136 +38,129 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setX_left()]
+#region [Test: Method: setXLeft()]
 	
 	var _base = [fa_center, fa_middle];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setX_left();
+	constructor.setXLeft();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [fa_left, _base[1]];
 	
-	unitTest.assert_equal("Method: setX_left()",
+	unitTest.assert_equal("Method: setXLeft()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setX_center()]
+#region [Test: Method: setXCenter()]
 	
 	var _base = [fa_right, fa_bottom];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setX_center();
+	constructor.setXCenter();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [fa_center, _base[1]];
 	
-	unitTest.assert_equal("Method: setX_center()",
+	unitTest.assert_equal("Method: setXCenter()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setX_right()]
+#region [Test: Method: setXRight()]
 	
 	var _base = [fa_left, fa_top];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setX_right();
+	constructor.setXRight();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [fa_right, _base[1]];
 	
-	unitTest.assert_equal("Method: setX_right()",
+	unitTest.assert_equal("Method: setXRight()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setY_top()]
+#region [Test: Method: setYTop()]
 	
 	var _base = [fa_center, fa_middle];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setY_top();
+	constructor.setYTop();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [_base[0], fa_top];
 	
-	unitTest.assert_equal("Method: setY_top()",
+	unitTest.assert_equal("Method: setYTop()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setY_middle()]
+#region [Test: Method: setYMiddle()]
 	
 	var _base = [fa_right, fa_bottom];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setY_middle();
+	constructor.setYMiddle();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [_base[0], fa_middle];
 	
-	unitTest.assert_equal("Method: setY_middle()",
+	unitTest.assert_equal("Method: setYMiddle()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: setY_bottom()]
+#region [Test: Method: setYBottom()]
 	
 	var _base = [fa_left, fa_top];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
-	
-	constructor.setY_bottom();
+	constructor.setYBottom();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [_base[0], fa_bottom];
 	
-	unitTest.assert_equal("Method: setY_bottom()",
+	unitTest.assert_equal("Method: setYBottom()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: mirror_x()]
+#region [Test: Method: mirrorX()]
 	
 	var _base = [[fa_right, fa_bottom], [fa_left, fa_top]];
 	
 	constructor = [new TextAlign(_base[0][0], _base[0][1]),
 				   new TextAlign(_base[1][0], _base[1][1])];
 	
-	constructor[0].mirror_x();
-	constructor[1].mirror_x();
+	constructor[0].mirrorX();
+	constructor[1].mirrorX();
 	
 	var _result = [constructor[0].x, constructor[0].y, constructor[1].x, constructor[1].y];
 	var _expectedValue = [fa_left, _base[0][1], fa_right, _base[1][1]];
 	
-	unitTest.assert_equal("Method: mirror_x()",
+	unitTest.assert_equal("Method: mirrorX()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: Method: mirror_y()]
+#region [Test: Method: mirrorY()]
 	
 	var _base = [[fa_left, fa_top], [fa_right, fa_bottom]];
 	
 	constructor = [new TextAlign(_base[0][0], _base[0][1]),
 				   new TextAlign(_base[1][0], _base[1][1])];
-	
-	constructor[0].mirror_y();
-	constructor[1].mirror_y();
+	constructor[0].mirrorY();
+	constructor[1].mirrorY();
 	
 	var _result = [constructor[0].x, constructor[0].y, constructor[1].x, constructor[1].y];
 	var _expectedValue = [_base[0][0], fa_bottom, _base[1][1], fa_top];
 	
-	unitTest.assert_equal("Method: mirror_y()",
+	unitTest.assert_equal("Method: mirrorY()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -180,7 +173,6 @@
 	
 	constructor = [new TextAlign(_base[0][0], _base[0][1]),
 				   new TextAlign(_base[1][0], _base[1][1])];
-	
 	constructor[0].mirror();
 	constructor[1].mirror();
 	
@@ -194,20 +186,20 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = [fa_left, fa_top];
 	
 	constructor = new TextAlign(_base[0], _base[1]);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + 
 						  "(" +
 						  "x: " + "Left" + ", " +
 						  "y: " + "Top" +
 						  ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion

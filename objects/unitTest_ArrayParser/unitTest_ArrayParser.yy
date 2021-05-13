@@ -21,13 +21,13 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"isDnD":false,"eventNum":10,"eventType":7,"collisionObjectId":null,"parent":{"name":"unitTest_ArrayParser","path":"objects/unitTest_ArrayParser/unitTest_ArrayParser.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":10,"eventType":7,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Parsers",
-    "path": "folders/Objects/Unit Tests/Parsers.yy",
+    "name": "Handlers",
+    "path": "folders/Objects/Unit Tests/Handlers.yy",
   },
   "resourceVersion": "1.0",
   "name": "unitTest_ArrayParser",

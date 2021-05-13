@@ -15,7 +15,7 @@
 						  _result[3], _expectedValue);
 	
 #endregion
-#region [Test: Construction: Default values]
+#region [Test: Construction: Default for all values]
 	
 	constructor = new Color4();
 	
@@ -161,39 +161,38 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: invertedOrder()]
+#region [Test: Method: reverse()]
 	
 	var _base = [c_red, c_green, c_blue, c_yellow];
 	
-	constructor = [new Color4(_base[0], _base[1], _base[2], _base[3])];
-	constructor[1] = constructor[0].invertedOrder();
+	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
+	constructor.reverse();
 	
-	var _result = [constructor[1].color1, constructor[1].color2, constructor[1].color3,
-				   constructor[1].color4];
+	var _result = [constructor.color1, constructor.color2, constructor.color3, constructor.color4];
 	var _expectedValue = [_base[3], _base[2], _base[1], _base[0]];
 	
-	unitTest.assert_equal("Method: invertedOrder()",
+	unitTest.assert_equal("Method: reverse()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Test: String conversion: Built-in colors]
+#region [Test: Method: toString(color constants)]
 	
 	var _base = [c_blue, c_green, c_red, c_black];
 	
 	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + "(" + "Blue" + ", " + "Green" + ", " + "Red" + ", " + 
 						  "Black" + ")");
 	
-	unitTest.assert_equal("String conversion: Built-in colors",
+	unitTest.assert_equal("Method: toString(color constants)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toString(Custom RGB colors)]
+#region [Test: Method: toString(custom RGB colors)]
 	
 	var _base = [[0, 79, 255], [33, 21, 125], [68, 1, 0], [11, 12, 14]];
 	
@@ -225,11 +224,11 @@
 						  "Blue: " + string(_base[3][2]) +
 						  ")" + ")");
 	
-	unitTest.assert_equal("Method: toString(Custom RGB colors)",
+	unitTest.assert_equal("Method: toString(custom RGB colors)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toString(Custom HSV colors)]
+#region [Test: Method: toString(custom HSV colors)]
 	
 	var _base = [make_color_hsv(19, 67, 255), make_color_hsv(255, 172, 14), 
 				 make_color_hsv(25, 255, 2), make_color_hsv(32, 23, 233)];
@@ -265,11 +264,11 @@
 						  "Value: " + string(_element[3][2]) +
 						  ")" + ")");
 	
-	unitTest.assert_equal("Method: toString(Custom HSV colors)",
+	unitTest.assert_equal("Method: toString(custom HSV colors)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toString(Multiline, custom RGB colors)]
+#region [Test: Method: toString(multiline, custom RGB colors)]
 	
 	var _base = [[0, 79, 255], [33, 21, 125], [68, 1, 0], [11, 12, 14]];
 	
@@ -300,11 +299,11 @@
 						  "Blue: " + string(_base[3][2]) +
 						  ")");
 	
-	unitTest.assert_equal("Method: toString(Multiline, custom RGB colors)",
+	unitTest.assert_equal("Method: toString(multiline, custom RGB colors)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toString(Mutliline, custom HSV colors)]
+#region [Test: Method: toString(mutliline, custom HSV colors)]
 	
 	var _base = [make_color_hsv(19, 67, 255), make_color_hsv(255, 172, 14), 
 				 make_color_hsv(25, 255, 2), make_color_hsv(32, 23, 233)];
@@ -339,7 +338,21 @@
 						  "Value: " + string(_element[3][2]) +
 						  ")");
 	
-	unitTest.assert_equal("Method: toString(Multiline, custom HSV colors)",
+	unitTest.assert_equal("Method: toString(multiline, custom HSV colors)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: toArray()]
+	
+	var _base = [c_aqua, make_color_rgb(2, 2, 2), make_color_hsv(2, 2, 2),
+				 make_color_rgb(255, 255, 254)];
+	
+	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = constructor.toArray();
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Method: toArray()",
 						  _result, _expectedValue);
 	
 #endregion

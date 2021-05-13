@@ -1,5 +1,5 @@
 /// @description Unit Testing
-#region [Test: Construction: New constructor / Method: destroy()]
+#region [Test: Construction: New constructor / Destruction]
 	
 	constructor = new Map();
 	
@@ -11,7 +11,7 @@
 	array_push(_result, constructor.ID);
 	array_push(_expectedValue, undefined);
 	
-	unitTest.assert_equal("Construction: New constructor / Method: destroy()",
+	unitTest.assert_equal("Construction: New constructor / Destruction",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -30,14 +30,14 @@
 	array_push(_result, [constructor.getValue(_value[0][0]), constructor.getValue(_value[1][0])]);
 	array_push(_expectedValue, [_value[0][1], _value[1][1]]);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Value write/read",
 						  _result[0][0], _expectedValue[0][0],
 						  _result[0][1], _expectedValue[0][1],
 						  _result[0][2], _expectedValue[0][2],
 						  _result[1][0], _expectedValue[1][0],
 						  _result[1][1], _expectedValue[1][1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Wrapper]
@@ -53,10 +53,10 @@
 	var _result = [constructor.getValue(_value[0][0]), constructor.getValue(_value[1][0])];
 	var _expectedValue = [_value[0][1], _value[1][1]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Construction: Wrapper",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Constructor copy]
@@ -71,12 +71,12 @@
 	var _result = [constructor[1].getValue(_value[0][0]), constructor[1].getValue(_value[1][0])];
 	var _expectedValue = [_value[0][1], _value[1][1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: isFunctional()]
@@ -87,11 +87,11 @@
 	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
 	var _expectedValue = [true, false];
 	
-	constructor[0].destroy();
-	
 	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
 	
 #endregion
 #region [Test: Method: destroy(Deep scan)]
@@ -108,10 +108,10 @@
 	var _result = _element.isFunctional();
 	var _expectedValue = false;
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: destroy(Deep scan)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: clear() / getSize()]
@@ -129,11 +129,28 @@
 	array_push(_result, constructor.getSize());
 	array_push(_expectedValue, 0);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: clear() / getSize()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: contains()]
+	
+	var _value = [["Key", 1], [2]];
+	
+	constructor = new Map();
+	constructor.add(_value[0][0], _value[0][1]);
+	
+	var _result = [constructor.contains(_value[0][1]), constructor.contains(_value[1][0])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: getFirst() / getLast()]
@@ -149,11 +166,11 @@
 	
 	array_sort(_result, true);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: getPrevious() / getNext()]
@@ -181,8 +198,6 @@
 	
 	var _expectedValue = [[_value[0], _value[1], _value[2]], [_value[2], _value[1], _value[0]]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getPrevious / getLast()",
 						  _result[0][0], _expectedValue[0][0],
 						  _result[0][1], _expectedValue[0][1],
@@ -190,6 +205,8 @@
 						  _result[1][0], _expectedValue[1][0],
 						  _result[1][1], _expectedValue[1][1],
 						  _result[1][2], _expectedValue[1][2]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: getAllKeys()]
@@ -207,10 +224,10 @@
 	
 	var _expectedValue = [_value[0][0], _value[1][0], _value[2][0]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getAllKeys()",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: getAllValues()]
@@ -228,10 +245,10 @@
 	
 	var _expectedValue = [_value[0][1], _value[1][1], _value[2][1]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getAllValues()",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: keyExists()]
@@ -245,11 +262,11 @@
 	var _result = [constructor.keyExists(_value[0][0]), constructor.keyExists(_value[2][0])];
 	var _expectedValue = [true, false];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: keyExists()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: addBoundList() / valueIsBoundList()]
@@ -310,12 +327,12 @@
 	var _result = [constructor[0].isEmpty(), constructor[1].isEmpty()];
 	var _expectedValue = [false, true];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: isEmpty()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: forEach() / Method: set()]
@@ -343,10 +360,10 @@
 	
 	var _expectedValue = [-_value[0][1], _value[1][1]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: forEach()",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: replace()]
@@ -374,9 +391,6 @@
 	array_push(_result, _element[1][0].isFunctional(), _element[1][1].isFunctional());
 	array_push(_expectedValue, false, false);
 	
-	_element[0][0].destroy();
-	_element[0][1].destroy();
-	
 	unitTest.assert_equal("Method: replace()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
@@ -384,6 +398,9 @@
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
+	
+	_element[0][0].destroy();
+	_element[0][1].destroy();
 	
 #endregion
 #region [Test: Method: remove()]
@@ -404,8 +421,6 @@
 			   constructor.keyExists(_value[2][0]));
 	array_push(_expectedValue, true, false, false);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: remove()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
@@ -413,21 +428,24 @@
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _value = 1;
 	
 	constructor = new Map();
 	constructor.add(_value, _value);
 	
-	var _result = string(constructor);
-	var _expectedValue = (constructorName + "(" + string(_value) + ": " + string(_value) + ")");
+	var _result = constructor.toString();
+	var _expectedValue = (constructorName + "(" + string(1) + " - " + string(_value) + ": " +
+						  string(_value) + ")");
+	
+	unitTest.assert_equal("Method: toString()",
+						  _result, _expectedValue);
 	
 	constructor.destroy();
-	
-	unitTest.assert_equal("Method: String conversion",
-						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: toString(lenght cut)]
@@ -442,15 +460,15 @@
 	
 	var _result = constructor.toString(false, undefined, _element[0][0], undefined, _element[0][1],
 									   undefined, undefined, _element[0][2]);
-	var _expectedValue = (constructorName + "(" + string(_value[0]) + ": " +
+	var _expectedValue = (constructorName + "(" + string(1) + " - " + string(_value[0]) + ": " +
 						  string_copy(_value[1], 1, _element[0][0] -
 						  string_length(_element[1][0]) - string_length(_element[0][2])) +
 						  _element[0][1] + ")");
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: toString(lenght cut)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: toString(multiline)]
@@ -465,10 +483,10 @@
 									   _element);
 	var _expectedValue = (string(_value[0]) + _element + string(_value[1]) + "\n");
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: toString(multiline)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: fromArray() / toArray()]
@@ -486,13 +504,13 @@
 				   constructor[1].getValue(_value[2][0])];
 	var _expectedValue = [_value[0][1], _value[1][1], _value[2][1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: toArray() / fromArray()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Methods: fromEncodedString() / toEncodedString()]
@@ -510,30 +528,40 @@
 				   constructor[1].getValue(_value[2][0])];
 	var _expectedValue = [_value[0][1], _value[1][1], _value[2][1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: toEncodedString() / fromEncodedString()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
-#endregion
-#region [Test: Methods: secureSave() / secureLoad()]
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
-	var _element = "MapUnitTest_secureSave.dat";
+#endregion
+#region [Test: Methods: secureToFile() / secureFromFile()]
+	
+	var _element = "MapUnitTest_secureToFile.dat";
 	var _value = [["Key1", -0.111111], ["Key2", 0.00002]];
+	
+	if (file_exists(_element))
+	{
+		file_delete(_element);
+	}
 	
 	constructor = [new Map(), new Map()];
 	constructor[0].add(_value[0][0], _value[0][1],
 					   _value[1][0], _value[1][1]);
 	
-	constructor[0].secureSave(_element);
-	constructor[1].secureLoad(_element);
+	constructor[0].secureToFile(_element);
+	constructor[1].secureFromFile(_element);
 	
 	var _result = [constructor[1].getValue(_value[0][0]), constructor[1].getValue(_value[1][0]),
 				   file_exists(_element)];
 	var _expectedValue = [_value[0][1], _value[1][1], true];
+	
+	unitTest.assert_equal("Methods: secureToFile() / secureFromFile()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
@@ -543,34 +571,39 @@
 		file_delete(_element);
 	}
 	
-	unitTest.assert_equal("Methods: secureSave() / secureLoad()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2]);
-	
 #endregion
-#region [Test: Methods: secureSave_buffer() / secureLoad_buffer()]
+#region [Test: Methods: secureToBuffer() / secureFromBuffer()]
 	
 	var _element = [new Buffer(1, buffer_grow, 1), new Buffer(1, buffer_grow, 1),
-					"MapUnitTest_secureSave_buffer.dat"];
+					"MapUnitTest_secureToBuffer.dat"];
 	var _value = ["Key1", "A"];
+	
+	if (file_exists(_element[2]))
+	{
+		file_delete(_element[2]);
+	}
 	
 	constructor = [new Map(), new Map()];
 	constructor[0].add(_value[0], _value[1]);
-	constructor[0].secureSave_buffer(_element[0]);
+	constructor[0].secureToBuffer(_element[0]);
 	_element[0].toFile(_element[2]);
 	_element[1].fromFile(_element[2]);
-	constructor[1].secureLoad_buffer(_element[1]);
+	constructor[1].secureFromBuffer(_element[1]);
 	
 	var _result = constructor[1].getValue(_value[0]);
 	var _expectedValue = _value[1];
+	
+	unitTest.assert_equal("Methods: secureToBuffer() / secureFromBuffer()",
+						  _result, _expectedValue);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
 	_element[0].destroy();
 	_element[1].destroy();
 	
-	unitTest.assert_equal("Methods: secureSave_buffer() / secureLoad_buffer()",
-						  _result, _expectedValue);
+	if (file_exists(_element[2]))
+	{
+		file_delete(_element[2]);
+	}
 	
 #endregion

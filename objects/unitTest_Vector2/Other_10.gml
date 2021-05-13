@@ -20,23 +20,23 @@
 	constructor = new Vector2(_base);
 	
 	var _result = [constructor.x, constructor.y];
-	var _expectedValue = _base;
+	var _expectedValue = [_base, _base]
 	
 	unitTest.assert_equal("Construction: One number for all values",
-						  _result[0], _expectedValue,
-						  _result[1], _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Construction: Default for all values]
+#region [Test: Construction: Empty]
 
 	constructor = new Vector2();
 	
 	var _result = [constructor.x, constructor.y];
-	var _expectedValue = 0;
+	var _expectedValue = [undefined, undefined];
 	
-	unitTest.assert_equal("Construction: Default for all values",
-						  _result[0], _expectedValue,
-						  _result[1], _expectedValue);
+	unitTest.assert_equal("Construction: Empty",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 #endregion
 #region [Test: Construction: From array]
 	
@@ -45,7 +45,7 @@
 	constructor = new Vector2(_base);
 	
 	var _result = [constructor.x, constructor.y];
-	var _expectedValue = _base;
+	var _expectedValue = [_base[0], _base[1]];
 	
 	unitTest.assert_equal("Construction: From array",
 						  _result[0], _expectedValue[0],
@@ -60,7 +60,7 @@
 	constructor[1] = new Vector2(constructor[0]);
 	
 	var _result = [constructor[1].x, constructor[1].y];
-	var _expectedValue = _base;
+	var _expectedValue = [_base[0], _base[1]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
@@ -69,24 +69,27 @@
 #endregion
 #region [Test: Method: isFunctional()]
 	
-	constructor = [new Vector2(), new Vector2()];
+	var _base = [9, 6];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[0], _base[1]), new Vector2()];
 	constructor[1].y = undefined;
 	
-	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
-	var _expectedValue = [true, false];
+	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional(),
+				   constructor[2].isFunctional()];
+	var _expectedValue = [true, false, false];
 	
 	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Test: Method: add(real)]
-
+	
 	var _base = [35, 125.56];
 	var _value = 5.76;
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	
 	constructor.add(_value);
 	
 	var _result = [constructor.x, constructor.y];
@@ -98,12 +101,11 @@
 	
 #endregion
 #region [Test: Method: add(Vector2)]
-
+	
 	var _base = [[35, 125.56], [11, 20.59]];
 	
 	constructor = [new Vector2(_base[0][0], _base[0][1]), 
 				   new Vector2(_base[1][0], _base[1][1])];
-	
 	constructor[0].add(constructor[1]);
 	
 	var _result = [constructor[0].x, constructor[0].y];
@@ -115,12 +117,11 @@
 	
 #endregion
 #region [Test: Method: substract(real)]
-
+	
 	var _base = [145, 36.58];
 	var _value = 5.76;
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	
 	constructor.substract(_value);
 	
 	var _result = [constructor.x, constructor.y];
@@ -132,12 +133,11 @@
 	
 #endregion
 #region [Test: Method: substract(Vector2)]
-
+	
 	var _base = [[325, 164365.56], [13651, 23.46]];
 	
 	constructor = [new Vector2(_base[0][0], _base[0][1]), 
 				   new Vector2(_base[1][0], _base[1][1])];
-	
 	constructor[0].substract(constructor[1]);
 	
 	var _result = [constructor[0].x, constructor[0].y];
@@ -149,12 +149,11 @@
 	
 #endregion
 #region [Test: Method: multiply(real)]
-
+	
 	var _base = [10, 25.5];
 	var _value = 4.2;
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	
 	constructor.multiply(_value);
 	
 	var _result = [constructor.x, constructor.y];
@@ -166,12 +165,11 @@
 	
 #endregion
 #region [Test: Method: multiply(Vector2)]
-
+	
 	var _base = [[35, -365.00955], [135, -9]];
 	
 	constructor = [new Vector2(_base[0][0], _base[0][1]), 
 				   new Vector2(_base[1][0], _base[1][1])];
-	
 	constructor[0].multiply(constructor[1]);
 	
 	var _result = [constructor[0].x, constructor[0].y];
@@ -183,12 +181,11 @@
 	
 #endregion
 #region [Test: Method: divide(real)]
-
+	
 	var _base = [55, 100];
 	var _value = 3.5;
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	
 	constructor.divide(_value);
 	
 	var _result = [constructor.x, constructor.y];
@@ -200,12 +197,11 @@
 	
 #endregion
 #region [Test: Method: divide(Vector2)]
-
+	
 	var _base = [[35, -65.025], [953, 44]];
 	
 	constructor = [new Vector2(_base[0][0], _base[0][1]), 
 				   new Vector2(_base[1][0], _base[1][1])];
-	
 	constructor[0].divide(constructor[1]);
 	
 	var _result = [constructor[0].x, constructor[0].y];
@@ -217,11 +213,10 @@
 	
 #endregion
 #region [Test: Method: flip()]
-
+	
 	var _base = [245, 999.59];
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	
 	constructor.flip();
 	
 	var _result = [constructor.x, constructor.y];
@@ -232,8 +227,20 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: setCursor()]
+	
+	unitTest.assert_executable
+	("Method: setCursor()",
+	 function()
+	 {
+		constructor = new Vector2();
+		constructor.setCursor();
+	 }
+	);
+	
+#endregion
 #region [Test: Method: equals()]
-
+	
 	var _base = [0.567, 1212.1212];
 	
 	constructor = [new Vector2(_base[0], _base[1])];
@@ -248,20 +255,20 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = [5, 10];
 	
 	constructor = new Vector2(_base[0], _base[1]);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + 
 						  "(" +
 						  "x: " + string(_base[0]) + ", " +
 						  "y: " + string(_base[1]) +
 						  ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -279,7 +286,7 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toArray]
+#region [Test: Method: toArray()]
 	
 	var _base = [25.3553, 936];
 	

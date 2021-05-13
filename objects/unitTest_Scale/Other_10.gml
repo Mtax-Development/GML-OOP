@@ -74,7 +74,6 @@
 	var _base = [0.2, 0.545];
 	
 	constructor = new Scale(_base[0], _base[1]);
-	
 	constructor.mirror();
 	
 	var _result = [constructor.x, constructor.y];
@@ -85,52 +84,50 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: mirror_x()]
+#region [Test: Method: mirrorX()]
 	
 	var _base = [0.25, 1];
 	
 	constructor = new Scale(_base[0], _base[1]);
-	
-	constructor.mirror_x();
+	constructor.mirrorX();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [-_base[0], _base[1]];
 	
-	unitTest.assert_equal("Method: mirror_x()",
+	unitTest.assert_equal("Method: mirrorX()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: mirror_y()]
+#region [Test: Method: mirrorY()]
 	
 	var _base = [2, 0.25];
 	
 	constructor = new Scale(_base[0], _base[1]);
-	
-	constructor.mirror_y();
+	constructor.mirrorY();
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [_base[0], -_base[1]];
 	
-	unitTest.assert_equal("Method: mirror_y()",
+	unitTest.assert_equal("Method: mirrorY()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = 2;
 	
 	constructor = new Scale(_base);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName +
 						 "(" +
 						 "x: " + string(_base) + ", " +
 						 "y: " + string(_base) +
 						 ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion

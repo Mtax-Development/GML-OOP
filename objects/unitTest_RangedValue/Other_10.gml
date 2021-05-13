@@ -97,65 +97,61 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: set_minimum()]
+#region [Method: setMinimum()]
 	
 	var _base = [12, 22];
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.set_minimum();
+	constructor.setMinimum();
 	
 	var _result = constructor.value;
 	var _expectedValue = _base[0];
 	
-	unitTest.assert_equal("Method: set_minimum()",
+	unitTest.assert_equal("Method: setMinimum()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: set_maximum()]
+#region [Method: setMaximum()]
 	
 	var _base = [30, 35];
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.set_maximum();
+	constructor.setMaximum();
 	
 	var _result = constructor.value;
 	var _expectedValue = _base[1];
 	
-	unitTest.assert_equal("Method: set_maximum()",
+	unitTest.assert_equal("Method: setMaximum()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: set_original()]
+#region [Method: setOriginal()]
 	
 	var _base = [10, 15];
 	
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
 	constructor.set(lerp(_base[0], _base[1], 0.5));
-	constructor.set_original();
+	constructor.setOriginal();
 	
 	var _result = constructor.value;
 	var _expectedValue = _base[0];
 	
-	unitTest.assert_equal("Method: set_original()",
+	unitTest.assert_equal("Method: setOriginal()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: set_middle()]
+#region [Method: setMiddle()]
 	
 	var _base = [40, 45];
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.set_middle();
+	constructor.setMiddle();
 	
 	var _result = constructor.value;
 	var _expectedValue = lerp(_base[0], _base[1], 0.5);
 	
-	unitTest.assert_equal("Method: set_middle()",
+	unitTest.assert_equal("Method: setMiddle()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -165,7 +161,6 @@
 	var _value = 3.567;
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
 	constructor.add(_value);
 	
 	var _result = constructor.value;
@@ -175,55 +170,52 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: add_wrap(positive value)]
+#region [Method: addWrap(positive value)]
 	
 	var _base = [12, 13];
 	var _value = 2.5;
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.add_wrap(_value);
+	constructor.addWrap(_value);
 	
 	var _result = constructor.value;
 	var _expectedValue = 12.5;
 	
-	unitTest.assert_equal("Method: add_wrap(positive value)",
+	unitTest.assert_equal("Method: addWrap(positive value)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: add_wrap(negative value)]
+#region [Method: addWrap(negative value)]
 	
 	var _base = [12, 15];
 	var _value = -2.19;
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.add_wrap(_value);
+	constructor.addWrap(_value);
 	
 	var _result = constructor.value;
 	var _expectedValue = (_base[1] - abs(_value));
 	
-	unitTest.assert_equal("Method: add_wrap(negative value)",
+	unitTest.assert_equal("Method: addWrap(negative value)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: add_wrap(0)]
+#region [Method: addWrap(0)]
 	
 	var _base = [14.56, 14.57];
 	var _value = 0;
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
-	constructor.add_wrap(_value);
+	constructor.addWrap(_value);
 	
 	var _result = constructor.value;
 	var _expectedValue = _base[0];
 	
-	unitTest.assert_equal("Method: add_wrap(0)",
+	unitTest.assert_equal("Method: addWrap(0)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: add_wrap(inclusive)]
+#region [Method: addWrap(inclusive)]
 	
 	var _base = [[1, 10]];
 	_base[1] = lerp(_base[0][0], _base[0][1], 0.5);
@@ -231,14 +223,13 @@
 	
 	constructor = [new RangedValue(new Range(_base[0][0], _base[0][1]), _base[1])];
 	constructor[1] = new RangedValue(constructor[0]);
-	
-	constructor[0].add_wrap(_value[0], true);
-	constructor[1].add_wrap(_value[1], true);
+	constructor[0].addWrap(_value[0], true);
+	constructor[1].addWrap(_value[1], true);
 	
 	var _result = [constructor[0].value, constructor[1].value];
 	var _expectedValue = _base[0];
 	
-	unitTest.assert_equal("Method: add_wrap(inclusive)",
+	unitTest.assert_equal("Method: addWrap(inclusive)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -249,7 +240,6 @@
 	var _value = 0.2355;
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
-	
 	constructor.interpolate(_value);
 	
 	var _result = constructor.value;
@@ -259,20 +249,20 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [String conversion]
+#region [Method: toString()]
 	
 	var _base = [5, 10];
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + 
 						 "(" + 
 						 string(_base[0]) + ", " +
 						 string(_base[0]) + "-" + string(_base[1]) +
 						 ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion

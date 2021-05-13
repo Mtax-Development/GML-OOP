@@ -1,5 +1,5 @@
 /// @description Unit Testing
-#region [Test: Construction: New constructor / Method: destroy()]
+#region [Test: Construction: New constructor / Destruction]
 	
 	var _base = new Vector2(5);
 	
@@ -13,7 +13,7 @@
 	array_push(_result, constructor.ID);
 	array_push(_expectedValue, undefined);
 	
-	unitTest.assert_equal("Construction: New constructor / Method: destroy()",
+	unitTest.assert_equal("Construction: New constructor / Destruction",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -30,11 +30,11 @@
 	var _result = [constructor.getValue(_element[0]), constructor.getValue(_element[1])];
 	var _expectedValue = [_value, _value];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Value write/read",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Wrapper]
@@ -50,10 +50,10 @@
 	var _result = constructor.getValue(_element[1]);
 	var _expectedValue = _value;
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Construction: Wrapper",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Constructor copy]
@@ -70,12 +70,13 @@
 	var _result = [constructor[1].getValue(_element[0]), constructor[1].getValue(_element[1])];
 	var _expectedValue = [_value, _value];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: isFunctional()]
@@ -88,14 +89,14 @@
 	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
 	var _expectedValue = [true, false];
 	
-	constructor[0].destroy();
-	
 	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
+	constructor[0].destroy();
+	
 #endregion
-#region [Test: Method: destroy(Deep scan)]
+#region [Test: Method: destroy(deep scan)]
 	
 	var _base = new Vector2(3);
 	var _element = [new List(), new Vector2(2)];
@@ -110,7 +111,7 @@
 	var _result = _element[0].isFunctional();
 	var _expectedValue = false;
 	
-	unitTest.assert_equal("Method: destroy(Deep scan)",
+	unitTest.assert_equal("Method: destroy(deep scan)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -121,19 +122,18 @@
 	var _value = 99.9999999999999999999101;
 	
 	constructor = new Grid(_base);
-	
 	constructor.clear(_value);
 	
 	var _result = constructor.getValue(_element);
 	var _expectedValue = _value;
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: clear()",
 						  _result, _expectedValue);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Methods: copy() / getSize()]
+#region [Test: Methods: copy()]
 	
 	var _base = [new Vector2(9), new Vector2(2)];
 	var _element = new Vector2((_base[1].x + 1), (_base[1].y + 1));
@@ -141,63 +141,79 @@
 	
 	constructor = [new Grid(_base[0]), new Grid(_base[1])];
 	constructor[0].set(_value, _element);
-	
 	constructor[1].copy(constructor[0]);
 	
-	var _result = [constructor[1].getSize(), constructor[1].getValue(_element)];
+	var _result = [constructor[1].size, constructor[1].getValue(_element)];
 	var _expectedValue = [_base[0], _value];
+	
+	unitTest.assert_equal("Methods: copy()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
 	
-	unitTest.assert_equal("Methods: copy() / getSize()",
+#endregion
+#region [Test: Method: contains()]
+	
+	var _base = new Vector2(3, 2);
+	var _value = [3, 4];
+	
+	constructor = new Grid(_base);
+	constructor.clear(_value[0]);
+	
+	var _result = [constructor.contains(_value[0]), constructor.contains(_value[1])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: contains()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Methods: getSize_x() / getSize_y() / getCellNumber()]
+#region [Test: Method: getCellNumber()]
 	
 	var _base = new Vector2(59, 95);
 	
 	constructor = new Grid(_base);
 	
-	var _result = [constructor.getSize_x(), constructor.getSize_y(), constructor.getCellNumber()];
-	var _expectedValue = [_base.x, _base.y, (_base.x * _base.y)];
+	var _result = constructor.getCellNumber();
+	var _expectedValue = (_base.x * _base.y);
+	
+	unitTest.assert_equal("Method: getCellNumber()",
+						  _result, _expectedValue);
 	
 	constructor.destroy();
 	
-	unitTest.assert_equal("Methods: getSize_x() / getSize_y() / getCellNumber()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2]);
-	
 #endregion
-#region [Test: Methods: getMax() / getMin()]
+#region [Test: Methods: getMaximum() / getMinimum()]
 	
 	var _base = new Vector2(3);
 	var _element = [new Vector2(0), new Vector2(1), new Vector2(2), new Vector2(2, 1)];
 	var _value = [3, -3, 5, -5];
 	
 	constructor = new Grid(_base);
-	constructor.set(_value[0], _element[0], 
+	constructor.set(_value[0], _element[0],
 					_value[1], _element[1],
 					_value[2], _element[2],
 					_value[3], _element[3]);
 	
-	var _result = [constructor.getMax(new Vector4(0, 1)), constructor.getMin(new Vector4(0, 1)),
-				   constructor.getMax(), constructor.getMin()];
+	var _result = [constructor.getMaximum(new Vector4(0, 1)),
+				   constructor.getMinimum(new Vector4(0, 1)), constructor.getMaximum(),
+				   constructor.getMinimum()];
 	var _expectedValue = [_value[0], _value[1], _value[2], _value[3]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Methods: getMax() / getMin()",
+	unitTest.assert_equal("Methods: getMaximum() / getMinimum()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Methods: getMax_disk() / getMin_disk()]
+#region [Test: Methods: getMaximumDisk() / getMinDisk()]
 	
 	var _base = new Vector2(5);
 	var _element = [[new Vector2(0), new Vector2(4), new Vector2(2), new Vector2(3)],
@@ -205,20 +221,20 @@
 	var _value = [10, -10, 6, -6];
 	
 	constructor = new Grid(_base);
-	constructor.set(_value[0], _element[0][0], 
+	constructor.set(_value[0], _element[0][0],
 					_value[1], _element[0][1],
 					_value[2], _element[0][2],
 					_value[3], _element[0][3]);
 	
-	var _result = [constructor.getMax_disk(_element[1][0], _element[1][1]),
-				   constructor.getMin_disk(_element[1][0], _element[1][1])];
+	var _result = [constructor.getMaximumDisk(_element[1][0], _element[1][1]),
+				   constructor.getMinDisk(_element[1][0], _element[1][1])];
 	var _expectedValue = [_value[2], _value[3]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Methods: getMax_disk() / getMin_disk()",
+	unitTest.assert_equal("Methods: getMaximumDisk() / getMinDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: getMean() / getSum()]
@@ -250,16 +266,16 @@
 						  (_value[0] + _value[1] + _value[2] + _value[3] + _value[4] + _value[5] +
 						  _value[6] + _value[7] + _value[8])];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getMean() / getSum()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Methods: getMean_disk() / getSum_disk()]
+#region [Test: Methods: getMeanDisk() / getSumDisk()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 2), new Vector2(1, 0),
@@ -279,16 +295,16 @@
 					_value[7], _element[0][7],
 					_value[8], _element[0][8]);
 	
-	var _result = [constructor.getMean_disk(_element[1][0], _element[1][1]),
-				   constructor.getSum_disk(_element[1][0], _element[1][1])];
+	var _result = [constructor.getMeanDisk(_element[1][0], _element[1][1]),
+				   constructor.getSumDisk(_element[1][0], _element[1][1])];
 	var _expectedValue = [((_value[1] + _value[3] + _value[4] + _value[5] + _value[7]) / 5),
 						  (_value[1] + _value[3] + _value[4] + _value[5] + _value[7])];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Methods: getMean_disk() / getSum_disk()",
+	unitTest.assert_equal("Methods: getMeanDisk() / getSumDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: valueExists() / getValueLocation()]
@@ -306,8 +322,6 @@
 				   constructor.getValueLocation(_value[0], _element[1])];
 	var _expectedValue = [true, false, false, _element[0], undefined];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: valueExists() / getValueLocation()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
@@ -315,8 +329,10 @@
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Methods: valueExists_disk() / getValueLocation_disk()]
+#region [Test: Methods: valueExistsDisk() / getValueLocationDisk()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector2(1), new Vector2(2)], [1]];
@@ -325,19 +341,82 @@
 	constructor = new Grid(_base);
 	constructor.set(_value[0], _element[0][0]);
 	
-	var _result = [constructor.valueExists_disk(_value[0], _element[0][0], _element[1][0]),
-				   constructor.valueExists_disk(_value[1], _element[0][1], _element[1][0]),
-				   constructor.getValueLocation_disk(_value[0], _element[0][0], _element[1][0]),
-				   constructor.getValueLocation_disk(_value[1], _element[0][1], _element[1][0])];
+	var _result = [constructor.valueExistsDisk(_value[0], _element[0][0], _element[1][0]),
+				   constructor.valueExistsDisk(_value[1], _element[0][1], _element[1][0]),
+				   constructor.getValueLocationDisk(_value[0], _element[0][0], _element[1][0]),
+				   constructor.getValueLocationDisk(_value[1], _element[0][1], _element[1][0])];
 	var _expectedValue = [true, false, _element[0][0], undefined];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Methods: valueExists_disk() / getValueLocation_disk()",
+	unitTest.assert_equal("Methods: valueExistsDisk() / getValueLocationDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: setSize(size reduction)]
+	
+	var _base = new Vector2(30, 25);
+	var _element = [new Vector2(15), new Vector2(14)];
+	var _value = -255.68;
+	
+	constructor = new Grid(_base);
+	constructor.set(_value, _element[1])
+	constructor.setSize(_element[0]);
+	
+	var _result = [constructor.size, constructor.valueExists(_value)];
+	var _expectedValue = [_element[0], true];
+	
+	unitTest.assert_equal("Method: setSize(size reduction)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: setSize(size increase)]
+	
+	var _base = new Vector2(2);
+	var _element = new Vector2(4, 5);
+	var _value = -25.8;
+	
+	constructor = new Grid(_base);
+	constructor.clear(_value);
+	constructor.setSize(_element);
+	
+	var _result = [constructor.size, constructor.valueExists(_value),
+				   constructor.valueExists(0)];
+	
+	var _expectedValue = [_element, true, true];
+	
+	unitTest.assert_equal("Method: setSize(size increase)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: setSize(same size)]
+	
+	var _base = new Vector2(2);
+	var _value = -2.81;
+	
+	constructor = new Grid(_base);
+	constructor.clear(_value);
+	constructor.setSize(_base);
+	
+	var _result = [constructor.size, constructor.valueExists(_value)];
+	
+	var _expectedValue = [_base, true];
+	
+	unitTest.assert_equal("Method: setSize(size increase)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: forEach()]
@@ -363,13 +442,13 @@
 	var _result = [constructor.valueExists(-_value), constructor.valueExists(_value)];
 	var _expectedValue = [true, false];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: forEach()",
 						  _result, _expectedValue);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: set_region()]
+#region [Test: Method: setRegion()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector4(0, 1)], [new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0),
@@ -379,7 +458,7 @@
 	
 	constructor = new Grid(_base);
 	
-	constructor.set_region(_value, _element[0][0]);
+	constructor.setRegion(_value, _element[0][0]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -388,9 +467,7 @@
 				   constructor.getValue(_element[1][8])]
 	var _expectedValue = [_value, _value, 0, _value, _value, 0, 0, 0, 0];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: set_region()",
+	unitTest.assert_equal("Method: setRegion()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -401,8 +478,10 @@
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: set_disk()]
+#region [Test: Method: setDisk()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector2(1), 1], [new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0),
@@ -412,7 +491,7 @@
 	
 	constructor = new Grid(_base);
 	
-	constructor.set_disk(_value, _element[0][0], _element[0][1]);
+	constructor.setDisk(_value, _element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -421,9 +500,7 @@
 				   constructor.getValue(_element[1][8])]
 	var _expectedValue = [0, _value, 0, _value, _value, _value, 0, _value, 0];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: set_disk()",
+	unitTest.assert_equal("Method: setDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -434,8 +511,10 @@
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: set_region_copied(self)]
+#region [Test: Method: setRegionCopied(self)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -447,17 +526,15 @@
 					_value[0], _element[1][1],
 					_value[0], _element[1][2],
 					_value[0], _element[1][3]);
-	constructor.set_region(_value[1], _element[0][1]);
-	constructor.set_region_copied(_element[0][0], _element[0][1]);
+	constructor.setRegion(_value[1], _element[0][1]);
+	constructor.setRegionCopied(_element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
 				   constructor.getValue(_element[1][4]), constructor.getValue(_element[1][5])];
 	var _expectedValue = [_value[0], _value[0], _value[0], _value[0], _value[1], _value[1]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: set_region_copied(self)",
+	unitTest.assert_equal("Method: setRegionCopied(self)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -465,8 +542,10 @@
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: set_region_copied(other)]
+#region [Test: Method: setRegionCopied(other)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -478,23 +557,23 @@
 					   _value[0], _element[1][1],
 					   _value[0], _element[1][2],
 					   _value[0], _element[1][3]);
-	constructor[1].set_region(_value[1], _element[0][1]);
-	constructor[0].set_region_copied(_element[0][0], _element[0][1], constructor[1]);
+	constructor[1].setRegion(_value[1], _element[0][1]);
+	constructor[0].setRegionCopied(_element[0][0], _element[0][1], constructor[1]);
 	
 	var _result = [constructor[0].getValue(_element[1][0]), constructor[0].getValue(_element[1][1]),
 				   constructor[0].getValue(_element[1][2]), constructor[0].getValue(_element[1][3]),
 				   constructor[0].getValue(_element[1][4]), constructor[0].getValue(_element[1][5])];
 	var _expectedValue = [_value[0], _value[0], _value[0], _value[0], _value[1], _value[1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
-	unitTest.assert_equal("Method: set_region_copied(other)",
+	unitTest.assert_equal("Method: setRegionCopied(other)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: add()]
@@ -515,15 +594,15 @@
 	var _expectedValue = [(_value[0][0] + _value[1][0]), (_value[0][1] + _value[1][1]),
 						  _value[1][2]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: add()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: add_region()]
+#region [Test: Method: addRegion()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector4(0, 1)], [new Vector2(0), new Vector2(1), new Vector2(2)]];
@@ -531,21 +610,21 @@
 	
 	constructor = new Grid(_base);
 	constructor.clear(_value[0]);
-	constructor.add_region(_value[1], _element[0][0]);
+	constructor.addRegion(_value[1], _element[0][0]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2])];
 	var _expectedValue = [(_value[0] + _value[1]), (_value[0] + _value[1]), _value[0]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: add_region()",
+	unitTest.assert_equal("Method: addRegion()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: add_disk()]
+#region [Test: Method: addDisk()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector2(1), 1], [new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0),
@@ -555,8 +634,8 @@
 	
 	constructor = new Grid(_base);
 	
-	constructor.set_disk(_value[0], _element[0][0], _element[0][1]);
-	constructor.add_disk(_value[1], _element[0][0], _element[0][1]);
+	constructor.setDisk(_value[0], _element[0][0], _element[0][1]);
+	constructor.addDisk(_value[1], _element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -567,9 +646,7 @@
 						  (_value[0] + _value[1]), (_value[0] + _value[1]), 0,
 						  (_value[0] + _value[1]), 0];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: add_disk()",
+	unitTest.assert_equal("Method: addDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -580,8 +657,10 @@
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: add_region_copied(self)]
+#region [Test: Method: addRegionCopied(self)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -594,8 +673,8 @@
 					_value[1], _element[1][1],
 					_value[1], _element[1][2],
 					_value[1], _element[1][3]);
-	constructor.set_region(_value[2], _element[0][1]);
-	constructor.add_region_copied(_element[0][0], _element[0][1]);
+	constructor.setRegion(_value[2], _element[0][1]);
+	constructor.addRegionCopied(_element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -603,9 +682,7 @@
 	var _expectedValue = [_value[1], _value[1], _value[1], _value[1], (_value[0] + _value[2]),
 						  (_value[0] + _value[2])];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: add_region_copied(self)",
+	unitTest.assert_equal("Method: addRegionCopied(self)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -613,8 +690,10 @@
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: add_region_copied(other)]
+#region [Test: Method: addRegionCopied(other)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -627,8 +706,8 @@
 					   _value[1], _element[1][1],
 					   _value[1], _element[1][2],
 					   _value[1], _element[1][3]);
-	constructor[1].set_region(_value[2], _element[0][1]);
-	constructor[0].add_region_copied(_element[0][0], _element[0][1], constructor[1]);
+	constructor[1].setRegion(_value[2], _element[0][1]);
+	constructor[0].addRegionCopied(_element[0][0], _element[0][1], constructor[1]);
 	
 	var _result = [constructor[0].getValue(_element[1][0]), constructor[0].getValue(_element[1][1]),
 				   constructor[0].getValue(_element[1][2]), constructor[0].getValue(_element[1][3]),
@@ -636,15 +715,15 @@
 	var _expectedValue = [_value[1], _value[1], _value[1], _value[1], (_value[0] + _value[2]),
 						  (_value[0] + _value[2])];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
-	unitTest.assert_equal("Method: add_region_copied(other)",
+	unitTest.assert_equal("Method: addRegionCopied(other)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: add()]
@@ -664,15 +743,15 @@
 				   constructor.getValue(_element[2])];
 	var _expectedValue = [(_value[0][0] * _value[1][0]), (_value[0][1] * _value[1][1]), 0];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: multiply()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: multiply_region()]
+#region [Test: Method: multiplyRegion()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector4(0, 1)], [new Vector2(0), new Vector2(1), new Vector2(2)]];
@@ -680,21 +759,21 @@
 	
 	constructor = new Grid(_base);
 	constructor.clear(_value[0]);
-	constructor.multiply_region(_value[1], _element[0][0]);
+	constructor.multiplyRegion(_value[1], _element[0][0]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2])];
 	var _expectedValue = [(_value[0] * _value[1]), (_value[0] * _value[1]), _value[0]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: multiply_region()",
+	unitTest.assert_equal("Method: multiplyRegion()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: multiply_disk()]
+#region [Test: Method: multiplyDisk()]
 	
 	var _base = new Vector2(3);
 	var _element = [[new Vector2(1), 1], [new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0),
@@ -703,9 +782,8 @@
 	var _value = [3, 45];
 	
 	constructor = new Grid(_base);
-	
-	constructor.set_disk(_value[0], _element[0][0], _element[0][1]);
-	constructor.multiply_disk(_value[1], _element[0][0], _element[0][1]);
+	constructor.setDisk(_value[0], _element[0][0], _element[0][1]);
+	constructor.multiplyDisk(_value[1], _element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -716,9 +794,7 @@
 						  (_value[0] * _value[1]), (_value[0] * _value[1]), 0,
 						  (_value[0] * _value[1]), 0];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: multiply_disk()",
+	unitTest.assert_equal("Method: multiplyDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -729,8 +805,10 @@
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: multiply_region_copied(self)]
+#region [Test: Method: multiplyRegionCopied(self)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -743,8 +821,8 @@
 					_value[1], _element[1][1],
 					_value[1], _element[1][2],
 					_value[1], _element[1][3]);
-	constructor.set_region(_value[2], _element[0][1]);
-	constructor.multiply_region_copied(_element[0][0], _element[0][1]);
+	constructor.setRegion(_value[2], _element[0][1]);
+	constructor.multiplyRegionCopied(_element[0][0], _element[0][1]);
 	
 	var _result = [constructor.getValue(_element[1][0]), constructor.getValue(_element[1][1]),
 				   constructor.getValue(_element[1][2]), constructor.getValue(_element[1][3]),
@@ -752,9 +830,7 @@
 	var _expectedValue = [_value[1], _value[1], _value[1], _value[1], (_value[0] * _value[2]),
 						  (_value[0] * _value[2])];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: multiply_region_copied(self)",
+	unitTest.assert_equal("Method: multiplyRegionCopied(self)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -762,8 +838,10 @@
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: Method: multiply_region_copied(other)]
+#region [Test: Method: multiplyRegionCopied(other)]
 	
 	var _base = new Vector2(9);
 	var _element = [[new Vector2(1), new Vector4(5, 7)], [new Vector2(0, 0), new Vector2(0, 4),
@@ -776,8 +854,8 @@
 					   _value[1], _element[1][1],
 					   _value[1], _element[1][2],
 					   _value[1], _element[1][3]);
-	constructor[1].set_region(_value[2], _element[0][1]);
-	constructor[0].multiply_region_copied(_element[0][0], _element[0][1], constructor[1]);
+	constructor[1].setRegion(_value[2], _element[0][1]);
+	constructor[0].multiplyRegionCopied(_element[0][0], _element[0][1], constructor[1]);
 	
 	var _result = [constructor[0].getValue(_element[1][0]), constructor[0].getValue(_element[1][1]),
 				   constructor[0].getValue(_element[1][2]), constructor[0].getValue(_element[1][3]),
@@ -785,86 +863,145 @@
 	var _expectedValue = [_value[1], _value[1], _value[1], _value[1], (_value[0] * _value[2]),
 						  (_value[0] * _value[2])];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
-	unitTest.assert_equal("Method: multiply_region_copied(other)",
+	unitTest.assert_equal("Method: multiplyRegionCopied(other)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4]);
 	
-#endregion
-#region [Test: Method: resize(size reduction)]
-	
-	var _base = new Vector2(30, 25);
-	var _element = [new Vector2(15), new Vector2(14)];
-	var _value = -255.68;
-	
-	constructor = new Grid(_base);
-	constructor.set(_value, _element[1])
-	constructor.resize(_element[0]);
-	
-	var _result = [constructor.getSize(), constructor.valueExists(_value)];
-	var _expectedValue = [_element[0], true];
-	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: resize(size reduction)",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
-#region [Test: Method: resize(size increase)]
+#region [Test: Method: mirrorX()]
 	
-	var _base = new Vector2(2);
-	var _element = new Vector2(4, 5);
-	var _value = -25.8;
+	var _base = new Vector2(3);
+	var _element = [[new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0)],
+					[new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1)],
+					[new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2)]];
+	var _value = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
 	
 	constructor = new Grid(_base);
-	constructor.clear(_value);
-	constructor.resize(_element);
+	constructor.set(_value[0][0], _element[0][0],
+					_value[0][1], _element[0][1],
+					_value[0][2], _element[0][2],
+					_value[1][0], _element[1][0],
+					_value[1][1], _element[1][1],
+					_value[1][2], _element[1][2],
+					_value[2][0], _element[2][0],
+					_value[2][1], _element[2][1],
+					_value[2][2], _element[2][2]);
+	constructor.mirrorX();
 	
-	var _result = [constructor.getSize(), constructor.valueExists(_value),
-				   constructor.valueExists(0)];
+	var _result = [constructor.getValue(_element[0][0]), constructor.getValue(_element[0][1]),
+				   constructor.getValue(_element[0][2]), constructor.getValue(_element[1][0]),
+				   constructor.getValue(_element[1][1]), constructor.getValue(_element[1][2]),
+				   constructor.getValue(_element[2][0]), constructor.getValue(_element[2][1]),
+				   constructor.getValue(_element[2][2])];
+	var _expectedValue = [_value[0][2], _value[0][1], _value[0][0], _value[1][2], _value[1][1],
+						  _value[1][0], _value[2][2], _value[2][1], _value[2][0]];
 	
-	var _expectedValue = [_element, true, true];
-	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Method: resize(size increase)",
+	unitTest.assert_equal("Method: mirrorX()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2]);
-	
-#endregion
-#region [Test: Method: resize(same size)]
-	
-	var _base = new Vector2(2);
-	var _value = -2.81;
-	
-	constructor = new Grid(_base);
-	constructor.clear(_value);
-	constructor.resize(_base);
-	
-	var _result = [constructor.getSize(), constructor.valueExists(_value)];
-	
-	var _expectedValue = [_base, true];
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7],
+						  _result[8], _expectedValue[8]);
 	
 	constructor.destroy();
 	
-	unitTest.assert_equal("Method: resize(size increase)",
+#endregion
+#region [Test: Method: mirrorY()]
+	
+	var _base = new Vector2(3);
+	var _element = [[new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0)],
+					[new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1)],
+					[new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2)]];
+	var _value = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+	
+	constructor = new Grid(_base);
+	constructor.set(_value[0][0], _element[0][0],
+					_value[0][1], _element[0][1],
+					_value[0][2], _element[0][2],
+					_value[1][0], _element[1][0],
+					_value[1][1], _element[1][1],
+					_value[1][2], _element[1][2],
+					_value[2][0], _element[2][0],
+					_value[2][1], _element[2][1],
+					_value[2][2], _element[2][2]);
+	constructor.mirrorY();
+	
+	var _result = [constructor.getValue(_element[0][0]), constructor.getValue(_element[0][1]),
+				   constructor.getValue(_element[0][2]), constructor.getValue(_element[1][0]),
+				   constructor.getValue(_element[1][1]), constructor.getValue(_element[1][2]),
+				   constructor.getValue(_element[2][0]), constructor.getValue(_element[2][1]),
+				   constructor.getValue(_element[2][2])];
+	var _expectedValue = [_value[2][0], _value[2][1], _value[2][2], _value[1][0], _value[1][1],
+						  _value[1][2], _value[0][0], _value[0][1], _value[0][2]];
+	
+	unitTest.assert_equal("Method: mirrorY()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7],
+						  _result[8], _expectedValue[8]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: transpose()]
+	
+	var _base = new Vector2(3, 2);
+	var _element = [[new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0)],
+					[new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1)],
+					[new Vector2(_base.y, _base.x)]];
+	_element[3] = [new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 2)];
+	_element[4] = [new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2)];
+	var _value = [[1, 2, 3], [4, 5, 6]];
+	
+	constructor = new Grid(_base);
+	constructor.set(_value[0][0], _element[0][0],
+					_value[0][1], _element[0][1],
+					_value[0][2], _element[0][2],
+					_value[1][0], _element[1][0],
+					_value[1][1], _element[1][1],
+					_value[1][2], _element[1][2]);
+	constructor.transpose();
+	
+	var _result = [constructor.size, constructor.getValue(_element[3][0]),
+				   constructor.getValue(_element[3][1]), constructor.getValue(_element[3][2]),
+				   constructor.getValue(_element[4][0]), constructor.getValue(_element[4][1]),
+				   constructor.getValue(_element[4][2])];
+	var _expectedValue = [_element[2][0], _value[0][0], _value[0][1], _value[0][2], _value[1][0],
+						  _value[1][1], _value[1][2]];
+	
+	unitTest.assert_equal("Method: transpose()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: sort()]
 	
 	var _base = new Vector2(3);
-	var _element = [[new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 2)], [new Vector2(1, 0),
-					new Vector2(1, 1), new Vector2(1, 2)], [new Vector2(2, 0), new Vector2(2, 1),
-					new Vector2(2, 2)]];
+	var _element = [[new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 2)],
+					[new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2)],
+					[new Vector2(2, 0), new Vector2(2, 1), new Vector2(2, 2)]];
 	var _value = [[2, 3, 1], [99, 14, -25], [0.25, 0.67, 2.57]];
 	
 	constructor = new Grid(_base);
@@ -878,7 +1015,7 @@
 					_value[2][2], _element[2][1],
 					_value[2][0], _element[2][2]);
 	constructor.sort(0, true);
-
+	
 	var _result = [constructor.getValue(_element[0][0]), constructor.getValue(_element[0][1]),
 				   constructor.getValue(_element[0][2]), constructor.getValue(_element[1][0]),
 				   constructor.getValue(_element[1][1]), constructor.getValue(_element[1][2]),
@@ -886,8 +1023,6 @@
 				   constructor.getValue(_element[2][2])];
 	var _expectedValue = [_value[0][2], _value[0][0], _value[0][1], _value[1][0], _value[1][2],
 						  _value[1][1], _value[2][0], _value[2][1], _value[2][2]];
-	
-	constructor.destroy();
 	
 	unitTest.assert_equal("Method: sort()",
 						  _result[0], _expectedValue[0],
@@ -899,6 +1034,8 @@
 						  _result[6], _expectedValue[6],
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: shuffle()]
@@ -930,9 +1067,6 @@
 	var _expectedValue = [_element[0], _element[1], _element[2], _element[0], _element[1],
 						  _element[2], true];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_notEqual("Method: shuffle()",
 							 _result[0], _expectedValue[0],
 							 _result[1], _expectedValue[1],
@@ -944,8 +1078,11 @@
 							 _result[1], _result[4],
 							 _result[2], _result[5]);
 	
+	constructor[0].destroy();
+	constructor[1].destroy();
+	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = new Vector2(2);
 	var _element = [new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1)];
@@ -956,15 +1093,17 @@
 					_value[1], _element[1],
 					_value[2], _element[2]);
 	
-	var _result = string(constructor);
-	var _expectedValue = (constructorName + "(" + "[" + string(_value[0]) + "]" + 
-						  "[" + string(_value[1]) + "]" + ", " + "[" + string(_value[2]) + "]" +
+	var _result = constructor.toString();
+	var _expectedValue = (constructorName + "(" + string(_base.x) + "x" + string(_base.y) + " - " +
+						  "[" + string(_value[0]) + "]" + 
+						  "[" + string(_value[1]) + "]" + ", " +
+						  "[" + string(_value[2]) + "]" +
 						  "[" + string(0) + "]" + + ")");
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: toString(lenght cut)]
@@ -978,13 +1117,13 @@
 	
 	var _result = constructor.toString(false, undefined, _element[0], undefined, _element[1],
 									   _element[2], _element[3]);
-	var _expectedValue = (constructorName + "(" + _element[2] + _value + _element[3] + _element[1] +
-						  ")");
-	
-	constructor.destroy();
+	var _expectedValue = (constructorName + "(" + string(_base.x) + "x" + string(_base.y) + " - " +
+						  _element[2] + _value + _element[3] + _element[1] + ")");
 	
 	unitTest.assert_equal("Method: toString(lenght cut)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: toString(multiline)]
@@ -1010,10 +1149,10 @@
 						  _element[0][1] + string(0) + _element[0][2] +
 						  _element[0][1] + string(_value[2]) + _element[0][2] + "\n");
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: toString(multiline)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: toArray() / fromArray()]
@@ -1031,12 +1170,12 @@
 	var _result = [constructor[1].getValue(_element[0]), constructor[1].getValue(_element[1])];
 	var _expectedValue = [_value[0], _value[1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: toArray() / fromArray()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Methods: toEncodedString() / fromEncodedString()]
@@ -1054,11 +1193,11 @@
 	var _result = [constructor[1].getValue(_element[0]), constructor[1].getValue(_element[1])];
 	var _expectedValue = [_value[0], _value[1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Method: toEncodedString() / fromEncodedString()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion

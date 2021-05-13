@@ -1,5 +1,5 @@
 /// @description Unit Testing
-#region [Test: Construction: New constructor / Method: destroy()]
+#region [Test: Construction: New constructor / Destruction]
 	
 	constructor = new Queue();
 	
@@ -11,7 +11,7 @@
 	array_push(_result, constructor.ID);
 	array_push(_expectedValue, undefined);
 	
-	unitTest.assert_equal("Construction: New constructor / Method: destroy()",
+	unitTest.assert_equal("Construction: New constructor / Destruction",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -26,12 +26,12 @@
 	var _result = constructor.remove(3);
 	var _expectedValue = [_value[0], _value[1], _value[2]];
 	
-	constructor.destroy();
-	
-	unitTest.assert_equal("Construction: Value write/read",
+	unitTest.assert_equal("Value write/read",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Wrapper]
@@ -46,12 +46,12 @@
 	var _result = constructor.remove(array_length(_value));
 	var _expectedValue = [_value[0], _value[1], _value[2]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Construction: Wrapper",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Construction: Constructor copy]
@@ -65,13 +65,13 @@
 	var _result = constructor[1].remove(array_length(_value));
 	var _expectedValue = [_value[0], _value[1], _value[2]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: isFunctional()]
@@ -82,11 +82,11 @@
 	var _result = [constructor[0].isFunctional(), constructor[1].isFunctional()];
 	var _expectedValue = [true, false];
 	
-	constructor[0].destroy();
-	
 	unitTest.assert_equal("Method: isFunctional()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
 	
 #endregion
 #region [Test: Methods: clear() / getSize()]
@@ -104,11 +104,28 @@
 	array_push(_result, constructor.getSize());
 	array_push(_expectedValue, 0);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: clear() / getSize()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: contains()]
+	
+	var _value = [4, 10];
+	
+	constructor = new Queue();
+	constructor.add(_value[0]);
+	
+	var _result = [constructor.contains(_value[0]), constructor.contains(_value[1])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: copy()]
@@ -123,12 +140,12 @@
 	var _result = constructor[1].remove(2);
 	var _expectedValue = [_value[0][0], _value[0][1]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Method: copy()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Methods: getFirst() / getLast()]
@@ -141,11 +158,11 @@
 	var _result = [constructor.getFirst(), constructor.getLast()];
 	var _expectedValue = [_value[0], _value[2]];
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: isEmpty()]
@@ -158,12 +175,12 @@
 	var _result = [constructor[0].isEmpty(), constructor[1].isEmpty()];
 	var _expectedValue = [false, true];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Method: isEmpty()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: forEach()]
@@ -192,11 +209,11 @@
 	_result[1] = constructor.getSize();
 	_expectedValue[1] = 0;
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: forEach()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: forEach(readOnly)]
@@ -226,28 +243,29 @@
 	_result[1] = constructor.getSize();
 	_expectedValue[1] = array_length(_value);
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: forEach(readOnly)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
+	constructor.destroy();
+	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _value = [46, 22, -23];
 	
 	constructor = new Queue();
 	constructor.add(_value[0], _value[1], _value[2]);
 	
-	var _result = string(constructor);
-	var _expectedValue = (constructorName + "(" + string(_value[0]) + ", " + string(_value[1]) +
-						  ", " + string(_value[2]) + ")");
+	var _result = constructor.toString();
+	var _expectedValue = (constructorName + "(" + string(array_length(_value)) + " - " +
+						  string(_value[0]) + ", " + string(_value[1]) + ", " + string(_value[2]) +
+						  ")");
+	
+	unitTest.assert_equal("Method: toString()",
+						  _result, _expectedValue);
 	
 	constructor.destroy();
-	
-	unitTest.assert_equal("Method: String conversion",
-						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: toString(lenght cut)]
@@ -259,12 +277,13 @@
 	constructor.add(_value[0], _value[1]);
 	
 	var _result = constructor.toString(false, undefined, _element[0][0]);
-	var _expectedValue = (constructorName + "(" + _value[0] + _element[0][1] + ")");
-	
-	constructor.destroy();
+	var _expectedValue = (constructorName + "(" + string(array_length(_value)) + " - " +
+						  _value[0] + _element[0][1] + ")");
 	
 	unitTest.assert_equal("Method: toString(lenght cut)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Method: toString(multiline)]
@@ -278,10 +297,10 @@
 	var _expectedValue = (string(_value[0]) + "\n" + string(_value[1]) + "\n" + string(_value[2]) +
 						  "\n");
 	
-	constructor.destroy();
-	
 	unitTest.assert_equal("Method: toString(multiline)",
 						  _result, _expectedValue);
+	
+	constructor.destroy();
 	
 #endregion
 #region [Test: Methods: fromArray() / toArray()]
@@ -295,11 +314,11 @@
 	var _result = constructor[1].remove(array_length(_value));
 	var _expectedValue = [_value[0], _value[1], _value[2]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: fromArray() / toArray()",
 						  _result, _expectedValue);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Methods: fromEncodedString() / toEncodedString()]
@@ -313,10 +332,10 @@
 	var _result = constructor[1].remove(array_length(_value));
 	var _expectedValue = [_value[0], _value[1], _value[2]];
 	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
 	unitTest.assert_equal("Methods: fromEncodedString() / toEncodedString()",
 						  _result, _expectedValue);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion

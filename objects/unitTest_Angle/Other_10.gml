@@ -1,16 +1,5 @@
 /// @description Unit Testing
-#region [Test: Construction: Default value]
-	
-	constructor = new Angle();
-	
-	var _result = constructor.value;
-	var _expectedValue = 0;
-	
-	unitTest.assert_equal("Construction: Default Value", 
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Construction: Specified value]
+#region [Test: Construction: New constructor (Specified value)]
 	
 	var _base = 105;
 	
@@ -19,11 +8,11 @@
 	var _result = constructor.value;
 	var _expectedValue = _base;
 	
-	unitTest.assert_equal("Construction: Specified Value", 
+	unitTest.assert_equal("Construction: New constructor", 
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Construction: Positive value wrapping]
+#region [Test: Construction: New constructor (Positive value wrapping)]
 	
 	var _base = 370;
 	
@@ -32,11 +21,11 @@
 	var _result = constructor.value;
 	var _expectedValue = (_base - 360);
 	
-	unitTest.assert_equal("Construction: Positive value wrapping", 
+	unitTest.assert_equal("Construction: New constructor (Positive value wrapping)", 
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Construction: Negative value wrapping]
+#region [Test: Construction: New constructor (Negative value wrapping)]
 	
 	var _base = -10;
 	
@@ -45,7 +34,18 @@
 	var _result = constructor.value;
 	var _expectedValue = (360 + _base);
 	
-	unitTest.assert_equal("Construction: Negative value wrapping", 
+	unitTest.assert_equal("Construction: New constructor (Negative value wrapping)", 
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Construction: Default value]
+	
+	constructor = new Angle();
+	
+	var _result = constructor.value;
+	var _expectedValue = 0;
+	
+	unitTest.assert_equal("Construction: New constructor (Default value)", 
 						  _result, _expectedValue);
 	
 #endregion
@@ -120,16 +120,16 @@
 						  _result[1], _expectedValue);
 	
 #endregion
-#region [Test: String conversion]
+#region [Test: Method: toString()]
 	
 	var _base = 99;
 	
 	constructor = new Angle(_base);
 	
-	var _result = string(constructor);
+	var _result = constructor.toString();
 	var _expectedValue = (constructorName + "(" + string(_base) + ")");
 	
-	unitTest.assert_equal("String conversion", 
+	unitTest.assert_equal("Method: toString()", 
 						  _result, _expectedValue);
 	
 #endregion

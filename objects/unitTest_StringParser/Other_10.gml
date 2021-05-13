@@ -421,7 +421,7 @@
 	(
 		function(_i, _value, _element)
 		{
-			_element[@ _i] = string_byte_at(_value, 1);
+			_element[@ (_i - 1)] = string_byte_at(_value, 1);
 		},
 		_element
 	);
@@ -434,20 +434,18 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Untestable: Method: display_output()]
+#region [Untestable: Method: displayOutput()]
 	
-	unitTest.assert_untestable("Method: display_output()");
+	unitTest.assert_untestable("Method: displayOutput()");
 	
 #endregion
-#region [Untestable: Method: display_messageBox()]
+#region [Untestable: Method: displayMessageBox()]
 	
-	unitTest.assert_untestable("Method: display_messageBox()");
+	unitTest.assert_untestable("Method: displayMessageBox()");
 	
 #endregion
 #region [Test: Method: toString()]
 	
-	//|String representation of stringified constructors is inconsistent, therefore
-	// constructor.toString() will be used instead of string(constructor).
 	var _value = "ABCa.02";
 	
 	constructor = new StringParser(_value);
@@ -455,7 +453,7 @@
 	var _result = constructor.toString();
 	var _expectedValue = (constructorName + "(" + _value + ")");
 	
-	unitTest.assert_equal("String conversion",
+	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue);
 	
 #endregion
