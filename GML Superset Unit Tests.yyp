@@ -23,6 +23,7 @@
     {"id":{"name":"unitTest_Grid","path":"objects/unitTest_Grid/unitTest_Grid.yy",},"order":0,},
     {"id":{"name":"unitTest_Queue","path":"objects/unitTest_Queue/unitTest_Queue.yy",},"order":4,},
     {"id":{"name":"TestTileset2","path":"tilesets/TestTileset2/TestTileset2.yy",},"order":2,},
+    {"id":{"name":"unitTest_Surface","path":"objects/unitTest_Surface/unitTest_Surface.yy",},"order":4,},
     {"id":{"name":"TestFont","path":"fonts/TestFont/TestFont.yy",},"order":0,},
     {"id":{"name":"unitTest_Scale","path":"objects/unitTest_Scale/unitTest_Scale.yy",},"order":7,},
     {"id":{"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},"order":1,},
