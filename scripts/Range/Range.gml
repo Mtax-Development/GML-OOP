@@ -1,11 +1,12 @@
 /// @function				Range()
 /// @argument				{real} minimum
 /// @argument				{real} maximum
-///
+///							
 /// @description			Construct a container for two-value numeric Range with different numbers.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Range} other
 function Range() constructor
 {
@@ -15,22 +16,26 @@ function Range() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				minimum = undefined;
 				maximum = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Range"))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					minimum = _other.minimum;
-					maximum = _other.maximum;
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					minimum = argument[0];
-					maximum = argument[1];
+					if (instanceof(argument[0]) == "Range")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						minimum = _other.minimum;
+						maximum = _other.maximum;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						minimum = argument[0];
+						maximum = argument[1];
+					}
 				}
 			}
 			
@@ -72,14 +77,14 @@ function Range() constructor
 		
 			// @returns				{real}
 			// @description			Return a random real number from this Range.
-			static random_real = function()
+			static randomReal = function()
 			{
 				return random_range(minimum, maximum);
 			}
 			
 			// @returns				{int}
 			// @description			Return a random integer number from this Range.
-			static random_int = function()
+			static randomInt = function()
 			{
 				return irandom_range(minimum, maximum);
 			}
@@ -104,14 +109,25 @@ function Range() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the Range information in the
-			//						following format: minimum-maximum.
-			static toString = function()
+			//						Content will be represented with the values of this Container.
+			static toString = function(_multiline)
 			{
-				return (instanceof(self) + "(" + string(minimum) + "-" + string(maximum) + ")");
+				var _mark_separator = ((_multiline) ? "\n" : "-");
+				
+				var _string = (string(minimum) + _mark_separator + string(maximum));
+				
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+			}
+			
+			// @returns				{real[]}
+			// @description			Return an array containing all values of this Container.
+			static toArray = function()
+			{
+				return [minimum, maximum];
 			}
 			
 		#endregion
