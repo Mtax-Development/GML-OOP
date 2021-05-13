@@ -1,27 +1,25 @@
 /// @function				Color4()
-/// @argument				{color} color1?
-/// @argument				{color} color2?
-/// @argument				{color} color3?
-/// @argument				{color} color4?
-///
+/// @argument				{int:color} color1?
+/// @argument				{int:color} color2?
+/// @argument				{int:color} color3?
+/// @argument				{int:color} color4?
+///							
 /// @description			Constructs a container for four colors.
 ///							For rectangular shapes, these colors are organized by the following 
 ///							coordinates:
 ///							- color1: X1 Y1
-///							- color2: X1 Y2
-///							- color3: X2 Y1
-///							- color4: X2 Y2
-///
+///							- color2: X2 Y1
+///							- color3: X2 Y2
+///							- color4: X1 Y2
+///							
 ///							Construction methods:
-///							- Four colors: {color} color1, {color} color2, {color} color3, 
-///										   {color} color4
-///							- Default for all values: {void}
-///							   The values will be set to white.
+///							- New constructor.
+///							- Default for all values: {void|undefined}
+///							   The color values will be set to white.
 ///							- One color for all values: {color} color
-///							- Color2 + color + color: {Color2} other, {Color|color} color, 
-///													  {color} color
+///							- Color2 + color + color: {Color2} other, {color} color, {color} color
 ///							   In any order, it will be reflected in the values of this constructor.
-///							- Color2 + Color2: {Color2} color2_1, {Color2} color2_2
+///							- Color2 + Color2: {Color2} colorPair1, {Color2} colorPair2
 ///							- Color3 + color: {Color2} other, {color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color4} other
@@ -38,7 +36,7 @@ function Color4() constructor
 				color3 = c_white;
 				color4 = c_white;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Color4")
 					{
@@ -67,12 +65,13 @@ function Color4() constructor
 								and (instanceof(argument[1]) == "Color2"))
 								{
 									//|Construction method: Color2 + Color2.
-									var _color2 = [argument[0], argument[1]];
-								
-									color1 = _color2[0].color1;
-									color2 = _color2[0].color2;
-									color3 = _color2[1].color1;
-									color4 = _color2[1].color2;
+									var _colorPair1 = argument[0];
+									var _colorPair2 = argument[1];
+									
+									color1 = _colorPair1.color1;
+									color2 = _colorPair1.color2;
+									color3 = _colorPair2.color1;
+									color4 = _colorPair2.color2;
 								}
 								else
 								{
@@ -80,7 +79,7 @@ function Color4() constructor
 									if (instanceof(argument[0]) == "Color3")
 									{
 										var _color3 = argument[0];
-									
+										
 										color1 = _color3.color1;
 										color2 = _color3.color2;
 										color3 = _color3.color3;
@@ -130,7 +129,7 @@ function Color4() constructor
 							break;
 					
 							case 4:
-								//|Construction method: Four colors.
+								//|Construction method: New constructor.
 								color1 = argument[0];
 								color2 = argument[1];
 								color3 = argument[2];
@@ -152,11 +151,18 @@ function Color4() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{Color4}
-			// @description			Create a copy of this constructor with inverted color order.
-			static invertedOrder = function()
+			// @description			Invert the order of colors.
+			static reverse = function()
 			{
-				return new Color4(color4, color3, color2, color1);
+				var _color1 = color1;
+				var _color2 = color2;
+				var _color3 = color3;
+				var _color4 = color4;
+				
+				color1 = _color4;
+				color2 = _color3;
+				color3 = _color2;
+				color4 = _color1;
 			}
 			
 		#endregion
@@ -175,7 +181,7 @@ function Color4() constructor
 			{
 				var _color = [color1, color2, color3, color4];
 				var _color_count = array_length(_color);
-				var _text_color = array_create(_color_count, "");
+				var _string_color = array_create(_color_count, "");
 				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
@@ -189,28 +195,28 @@ function Color4() constructor
 					{
 						switch (_color[_i])
 						{
-							case c_aqua: _text_color[_i] = "Aqua"; break;
-							case c_black: _text_color[_i] = "Black"; break;
-							case c_blue: _text_color[_i] = "Blue"; break;
-							case c_dkgray: _text_color[_i] = "Dark Gray"; break;
-							case c_fuchsia: _text_color[_i] = "Fuchsia"; break;
-							case c_gray: _text_color[_i] = "Gray"; break;
-							case c_green: _text_color[_i] = "Green"; break;
-							case c_lime: _text_color[_i] = "Lime"; break;
-							case c_ltgray: _text_color[_i] = "Light Gray"; break;
-							case c_maroon: _text_color[_i] = "Maroon"; break;
-							case c_navy: _text_color[_i] = "Navy"; break;
-							case c_olive: _text_color[_i] = "Olive"; break;
-							case c_orange: _text_color[_i] = "Orange"; break;
-							case c_purple: _text_color[_i] = "Purple"; break;
-							case c_red: _text_color[_i] = "Red"; break;
-							case c_teal: _text_color[_i] = "Teal"; break;
-							case c_white: _text_color[_i] = "White"; break;
-							case c_yellow: _text_color[_i] = "Yellow"; break;
+							case c_aqua: _string_color[_i] = "Aqua"; break;
+							case c_black: _string_color[_i] = "Black"; break;
+							case c_blue: _string_color[_i] = "Blue"; break;
+							case c_dkgray: _string_color[_i] = "Dark Gray"; break;
+							case c_fuchsia: _string_color[_i] = "Fuchsia"; break;
+							case c_gray: _string_color[_i] = "Gray"; break;
+							case c_green: _string_color[_i] = "Green"; break;
+							case c_lime: _string_color[_i] = "Lime"; break;
+							case c_ltgray: _string_color[_i] = "Light Gray"; break;
+							case c_maroon: _string_color[_i] = "Maroon"; break;
+							case c_navy: _string_color[_i] = "Navy"; break;
+							case c_olive: _string_color[_i] = "Olive"; break;
+							case c_orange: _string_color[_i] = "Orange"; break;
+							case c_purple: _string_color[_i] = "Purple"; break;
+							case c_red: _string_color[_i] = "Red"; break;
+							case c_teal: _string_color[_i] = "Teal"; break;
+							case c_white: _string_color[_i] = "White"; break;
+							case c_yellow: _string_color[_i] = "Yellow"; break;
 							default:
 								if (_color_HSV)
 								{
-									_text_color[_i] = 
+									_string_color[_i] = 
 									("(" +
 									 "Hue: " + string(color_get_hue(_color[_i])) 
 											 + _mark_separator_inline +
@@ -221,7 +227,7 @@ function Color4() constructor
 								}
 								else
 								{
-									_text_color[_i] = 
+									_string_color[_i] = 
 									("(" +
 									 "Red: " + string(color_get_red(_color[_i]))
 											 + _mark_separator_inline +
@@ -235,10 +241,10 @@ function Color4() constructor
 					}
 					else
 					{
-						_text_color[_i] = string(_color[_i]);
+						_string_color[_i] = string(_color[_i]);
 					}
 					
-					_string += _text_color[_i];
+					_string += _string_color[_i];
 					
 					if (_i < (_color_count - 1))
 					{

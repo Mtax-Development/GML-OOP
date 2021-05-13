@@ -1,13 +1,13 @@
 /// @function				Color2()
 /// @argument				{color} color1?
 /// @argument				{color} color2?
-///
+///							
 /// @description			Constructs a container for two Colors.
-///
+///							
 ///							Construction methods:
 ///							- New constructor.
 ///							- Default for all values: {void}
-///							   The values will be set to white.
+///							   The color values will be set to white.
 ///							- One color for all values: {color} color
 ///							- Constructor copy: {Color2} other
 function Color2() constructor
@@ -56,11 +56,14 @@ function Color2() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{Color2}
-			// @description			Create a copy of this constructor with inverted color order.
-			static invertedOrder = function()
+			// @description			Invert the order of colors.
+			static reverse = function()
 			{
-				return new Color2(color2, color1);
+				var _color1 = color1;
+				var _color2 = color2;
+				
+				color1 = _color2;
+				color2 = _color1;
 			}
 			
 		#endregion
@@ -79,7 +82,7 @@ function Color2() constructor
 			{
 				var _color = [color1, color2];
 				var _color_count = array_length(_color);
-				var _text_color = array_create(_color_count, "");
+				var _string_color = array_create(_color_count, "");
 				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
@@ -93,28 +96,28 @@ function Color2() constructor
 					{
 						switch (_color[_i])
 						{
-							case c_aqua: _text_color[_i] = "Aqua"; break;
-							case c_black: _text_color[_i] = "Black"; break;
-							case c_blue: _text_color[_i] = "Blue"; break;
-							case c_dkgray: _text_color[_i] = "Dark Gray"; break;
-							case c_fuchsia: _text_color[_i] = "Fuchsia"; break;
-							case c_gray: _text_color[_i] = "Gray"; break;
-							case c_green: _text_color[_i] = "Green"; break;
-							case c_lime: _text_color[_i] = "Lime"; break;
-							case c_ltgray: _text_color[_i] = "Light Gray"; break;
-							case c_maroon: _text_color[_i] = "Maroon"; break;
-							case c_navy: _text_color[_i] = "Navy"; break;
-							case c_olive: _text_color[_i] = "Olive"; break;
-							case c_orange: _text_color[_i] = "Orange"; break;
-							case c_purple: _text_color[_i] = "Purple"; break;
-							case c_red: _text_color[_i] = "Red"; break;
-							case c_teal: _text_color[_i] = "Teal"; break;
-							case c_white: _text_color[_i] = "White"; break;
-							case c_yellow: _text_color[_i] = "Yellow"; break;
+							case c_aqua: _string_color[_i] = "Aqua"; break;
+							case c_black: _string_color[_i] = "Black"; break;
+							case c_blue: _string_color[_i] = "Blue"; break;
+							case c_dkgray: _string_color[_i] = "Dark Gray"; break;
+							case c_fuchsia: _string_color[_i] = "Fuchsia"; break;
+							case c_gray: _string_color[_i] = "Gray"; break;
+							case c_green: _string_color[_i] = "Green"; break;
+							case c_lime: _string_color[_i] = "Lime"; break;
+							case c_ltgray: _string_color[_i] = "Light Gray"; break;
+							case c_maroon: _string_color[_i] = "Maroon"; break;
+							case c_navy: _string_color[_i] = "Navy"; break;
+							case c_olive: _string_color[_i] = "Olive"; break;
+							case c_orange: _string_color[_i] = "Orange"; break;
+							case c_purple: _string_color[_i] = "Purple"; break;
+							case c_red: _string_color[_i] = "Red"; break;
+							case c_teal: _string_color[_i] = "Teal"; break;
+							case c_white: _string_color[_i] = "White"; break;
+							case c_yellow: _string_color[_i] = "Yellow"; break;
 							default:
 								if (_color_HSV)
 								{
-									_text_color[_i] = 
+									_string_color[_i] = 
 									("(" +
 									 "Hue: " + string(color_get_hue(_color[_i])) 
 											 + _mark_separator_inline +
@@ -125,7 +128,7 @@ function Color2() constructor
 								}
 								else
 								{
-									_text_color[_i] = 
+									_string_color[_i] = 
 									("(" +
 									 "Red: " + string(color_get_red(_color[_i]))
 											 + _mark_separator_inline +
@@ -139,10 +142,10 @@ function Color2() constructor
 					}
 					else
 					{
-						_text_color[_i] = string(_color[_i]);
+						_string_color[_i] = string(_color[_i]);
 					}
 					
-					_string += _text_color[_i];
+					_string += _string_color[_i];
 					
 					if (_i < (_color_count - 1))
 					{
