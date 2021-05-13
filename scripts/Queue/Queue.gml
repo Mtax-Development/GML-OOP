@@ -1,11 +1,12 @@
 /// @function				Queue()
-///
+///							
 /// @description			Constructs a Queue Data Structure, which stores data in a linear,
 ///							first-in-first-out (FIFO) model that disallows order manipulation.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							- Wrapper {int:queue} Queue
+///							- Empty: {undefined}
 ///							- Constructor copy: {Queue} other
 function Queue() constructor
 {
@@ -15,19 +16,23 @@ function Queue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Queue")
+					if (argument[0] != undefined)
 					{
-						//|Construction method: Constructor copy.
-						self.copy(argument[0]);
-					}
-					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_queue)))
-					{
-						//|Construction method: Wrapper.
-						ID = argument[0];
+						if (instanceof(argument[0]) == "Queue")
+						{
+							//|Construction method: Constructor copy.
+							self.copy(argument[0]);
+						}
+						else if ((is_real(argument[0])))
+						{
+							//|Construction method: Wrapper.
+							ID = argument[0];
+						}
 					}
 				}
 				else
@@ -418,7 +423,7 @@ function Queue() constructor
 			// @argument			{string} mark_elementEnd?
 			// @argument			{string} mark_sizeSeparator?
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
@@ -698,10 +703,10 @@ function Queue() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Decode the previously encoded string of the same Data 
-			//						Structure and recreate it into this one.
-			//						Use the "legacy" argument if that string was created
-			//						in old versions of GameMaker with different encoding.
+			// @description			Decode the previously encoded string of the same Data Structure
+			//						and recreate it into this one.
+			//						Mark it as "legacy" if that string was created in the old version
+			//						of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}

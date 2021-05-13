@@ -1,11 +1,12 @@
 /// @function				PriorityQueue()
-///
+///							
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
 ///							a linear model that orders the values based on their priority.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							- Wrapper: {int:priorityQueue} priorityQueue
+///							- Empty: {undefined}
 ///							- Constructor copy: {PriorityQueue} other
 function PriorityQueue() constructor
 {
@@ -15,19 +16,23 @@ function PriorityQueue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "PriorityQueue")
+					if (argument[0] != undefined)
 					{
-						//|Construction method: Constructor copy.
-						self.copy(argument[0]);
-					}
-					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_priority)))
-					{
-						//|Construction method: Wrapper.
-						ID = argument[0];
+						if (instanceof(argument[0]) == "PriorityQueue")
+						{
+							//|Construction method: Constructor copy.
+							self.copy(argument[0]);
+						}
+						else if ((is_real(argument[0])))
+						{
+							//|Construction method: Wrapper.
+							ID = argument[0];
+						}
 					}
 				}
 				else
@@ -448,6 +453,60 @@ function PriorityQueue() constructor
 			
 			// @argument			{int} count?
 			// @returns				{any|any[]|undefined}
+			// @description			Remove one or more values with the highest priority in this
+			//						Priority Queue and return it.
+			//						If multiple values were removed, they will be returned in an
+			//						array. If no values were removed, {undefined} will be returned.
+			static removeFirst = function(_count)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					var _size = ds_priority_size(ID);
+					if (_count == undefined) {_count = 1;}
+					
+					_count = min(_count, _size);
+					
+					if ((!(_count >= 1)) or (_size < 1))
+					{
+						return undefined;
+					}
+					else
+					{
+						if (_count == 1)
+						{
+							return ds_priority_delete_max(ID);
+						}
+						else
+						{
+							var _result = array_create(_count, undefined);
+							
+							var _i = 0;
+							repeat (_count)
+							{
+								_result[_i] = ds_priority_delete_max(ID);
+								
+								++_i;
+							}
+							
+							return _result;
+						}
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "removeFirst";
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{int} count?
+			// @returns				{any|any[]|undefined}
 			// @description			Remove one or more values with the lowest priority in this
 			//						Priority Queue and return it.
 			//						If multiple values were removed, they will be returned in an
@@ -491,61 +550,7 @@ function PriorityQueue() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "removeMin";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{int} count?
-			// @returns				{any|any[]|undefined}
-			// @description			Remove one or more values with the highest priority in this
-			//						Priority Queue and return it.
-			//						If multiple values were removed, they will be returned in an
-			//						array. If no values were removed, {undefined} will be returned.
-			static removeFirst = function(_count)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
-				{
-					var _size = ds_priority_size(ID);
-					if (_count == undefined) {_count = 1;}
-					
-					_count = min(_count, _size);
-					
-					if ((!(_count >= 1)) or (_size < 1))
-					{
-						return undefined;
-					}
-					else
-					{
-						if (_count == 1)
-						{
-							return ds_priority_delete_min(ID);
-						}
-						else
-						{
-							var _result = array_create(_count, undefined);
-							
-							var _i = 0;
-							repeat (_count)
-							{
-								_result[_i] = ds_priority_delete_max(ID);
-								
-								++_i;
-							}
-							
-							return _result;
-						}
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removeMax";
+					var _methodName = "removeLast";
 					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -567,7 +572,7 @@ function PriorityQueue() constructor
 			// @argument			{string} mark_section?
 			// @argument			{string} mark_sizeSeparator?
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
@@ -743,15 +748,17 @@ function PriorityQueue() constructor
 			}
 			
 			// @returns				{any[]}
-			// @description			Create an array with all values of this PriorityQueue.
+			// @description			Create an array with all priorities and values of this Priority
+			//						Queue, in which priorities will be in its first dimension and
+			//						values in second.
 			static toArray = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
 					
-					var _priorities = array_create(_size, undefined);
-					var _values = array_create(_size, undefined);
+					var _priority = array_create(_size, undefined);
+					var _value = array_create(_size, undefined);
 					
 					if (_size > 0)
 					{
@@ -761,10 +768,10 @@ function PriorityQueue() constructor
 						var _i = 0;
 						repeat (_size)
 						{
-							_priorities[_i] = ds_priority_find_priority(_dataCopy, 
-											  ds_priority_find_max(_dataCopy));
+							_priority[_i] = ds_priority_find_priority(_dataCopy,
+												 ds_priority_find_max(_dataCopy));
 							
-							_values[_i] = ds_priority_delete_max(_dataCopy);
+							_value[_i] = ds_priority_delete_max(_dataCopy);
 							
 							++_i;
 						}
@@ -772,7 +779,7 @@ function PriorityQueue() constructor
 						ds_priority_destroy(_dataCopy);
 					}
 					
-					return [_priorities, _values];
+					return [_priority, _value];
 				}
 				else
 				{
@@ -788,12 +795,11 @@ function PriorityQueue() constructor
 			}
 			
 			// @argument			{any[]} array
-			// @description			Add priority and value pairs from the specified array to 
-			//						this PriorityQueue.
-			//						The first dimension of the array must contain priorities
-			//						and the second their value pairs.
-			//						Values that are not provided for a priority will be set to
-			//						{undefined}.
+			// @description			Add priority and value pairs from the specified array to this
+			//						Priority Queue.
+			//						The first dimension of the array must contain priorities and the
+			//						second their values. Values that are not provided for a priority
+			///						will be set to {undefined}.
 			static fromArray = function(_array)
 			{
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))

@@ -1,13 +1,14 @@
 /// @function				Map()
-///
+///							
 /// @description			Constructs a Map Data Structure, which stores data by creating key 
 ///							and value pairs. The data inside of it is not sorted and values
 ///							are accessed either by providing a specific existing key or by
 ///							iterating through the entire Data Structure.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							- Wrapper: {int:map} map
+///							- Empty: {undefined}
 ///							- Constructor copy: {Map} other
 function Map() constructor
 {
@@ -17,19 +18,23 @@ function Map() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Map")
+					if (argument[0] != undefined)
 					{
-						//|Construction method: Constructor copy.
-						self.copy(argument[0]);
-					}
-					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_map)))
-					{
-						//|Construction method: Wrapper.
-						ID = argument[0];
+						if (instanceof(argument[0]) == "Map")
+						{
+							//|Construction method: Constructor copy.
+							self.copy(argument[0]);
+						}
+						else if ((is_real(argument[0])))
+						{
+							//|Construction method: Wrapper.
+							ID = argument[0];
+						}
 					}
 				}
 				else
@@ -789,7 +794,7 @@ function Map() constructor
 			// @argument			{string} mark_section?
 			// @argument			{string} mark_sizeSeparator?
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
@@ -1090,7 +1095,7 @@ function Map() constructor
 			// @description			Obfuscate and save the Map in the local storage of this device,
 			//						fingerprinted for use on this device only.
 			//						Arrays will be converted to DS Lists.
-			static secureSave = function(_path)
+			static secureToFile = function(_path)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
@@ -1100,7 +1105,7 @@ function Map() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "secureSave";
+					var _methodName = "secureToFile";
 					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -1113,7 +1118,7 @@ function Map() constructor
 			//						device only from its local storage.
 			//						Arrays will be converted to DS Lists.
 			//						ID of this Map will be returned or -1 if the operation failed.
-			static secureLoad = function(_path)
+			static secureFromFile = function(_path)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
@@ -1128,7 +1133,7 @@ function Map() constructor
 			// @argument			{Buffer|int:buffer} buffer
 			// @description			Save this Map into a Buffer. This Buffer is intended to be saved
 			//						as a file and then loaded later.
-			static secureSave_buffer = function(_buffer)
+			static secureToBuffer = function(_buffer)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
@@ -1145,7 +1150,7 @@ function Map() constructor
 					{
 						var _errorReport = new ErrorReport();
 						var _callstack = debug_get_callstack();
-						var _methodName = "secureSave_buffer";
+						var _methodName = "secureToBuffer";
 						var _errorText = ("Attempted to convert a Data Structure to an invalid " +
 										  "Buffer: " +
 										  "{" + string(_buffer) + "}");
@@ -1157,7 +1162,7 @@ function Map() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "secureSave_buffer";
+					var _methodName = "secureToBuffer";
 					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -1167,7 +1172,7 @@ function Map() constructor
 			// @argument			{Buffer|int:buffer} buffer
 			// @description			Load a Map that is in a Buffer that was loaded from a file and
 			//						replace this Map with it.
-			static secureLoad_buffer = function(_buffer)
+			static secureFromBuffer = function(_buffer)
 			{
 				var _source = undefined;
 				
@@ -1194,7 +1199,7 @@ function Map() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "secureLoad_buffer";
+					var _methodName = "secureFromBuffer";
 					var _errorText = ("Attempted to convert an invalid Buffer to a Data " +
 									  "Structure: " +
 									  "{" + string(_buffer) + "}");

@@ -1,12 +1,13 @@
 /// @function				List()
-///
+///							
 /// @description			Constructs a List Data Structure, which stores data in a linear
 ///							model, offering flexibility while doing so. It easily resized,
 ///							sorted and manipulated in other ways.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							- Wrapper: {int:list} list
+///							- Empty: {undefined}
 ///							- Constructor copy: {List} other
 function List() constructor
 {
@@ -16,19 +17,23 @@ function List() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "List")
+					if (argument[0] != undefined)
 					{
-						//|Construction method: Constructor copy.
-						self.copy(argument[0]);
-					}
-					else if ((is_real(argument[0])) and (ds_exists(argument[0], ds_type_list)))
-					{
-						//|Construction method: Wrapper.
-						ID = argument[0];
+						if (instanceof(argument[0]) == "List")
+						{
+							//|Construction method: Constructor copy.
+							self.copy(argument[0]);
+						}
+						else if ((is_real(argument[0])))
+						{
+							//|Construction method: Wrapper.
+							ID = argument[0];
+						}
 					}
 				}
 				else
@@ -456,7 +461,7 @@ function List() constructor
 			// @argument			{int} position
 			// @description			Remove a value at a specified position from the List and 
 			//						push the position of all values after it back by one.
-			static remove_position = function(_position)
+			static removePosition = function(_position)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -466,7 +471,7 @@ function List() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "remove_position";
+					var _methodName = "removePosition";
 					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -476,7 +481,7 @@ function List() constructor
 			// @argument			{any} value
 			// @desccription		Remove the specified value from all positions in the List
 			//						and push the position of all values after them back by one.
-			static remove_value = function(_value)
+			static removeValue = function(_value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -497,7 +502,7 @@ function List() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "remove_value";
+					var _methodName = "removeValue";
 					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
