@@ -1,14 +1,14 @@
 /// @function				Scale()
 /// @argument				{real} x?
 /// @argument				{real} y?
-///
+///							
 /// @description			Constructs a Scale container that can be used for drawing or
 ///							manipulated in other ways.
-///
+///							
 ///							Construction methods:
 ///							- Two values: {real} x, {real} y
 ///							- One number for all values: {real} value
-///							- Default (1) for all values: {void}
+///							- Default for all values: {void|undefined}
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///								1: array[0] will be set to x and y.
@@ -23,65 +23,61 @@ function Scale() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Scale"))
+				//|Construction method: Default for all values.
+				x = 1;
+				y = 1;
+				
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					x = _other.x;
-					y = _other.y;
-				}
-				else
-				{
-					switch(argument_count)
+					switch (instanceof(argument[0]))
 					{
-						case 0:
-							//|Construction method: Default (1) for all values.
-							x = 1;
-							y = 1;
+						case "Scale":
+						case "Vector2":
+							//|Construction methods: Constructor copy / From Vector2.
+							var _other = argument[0];
+							
+							x = _other.x;
+							y = _other.y;
 						break;
-		
-						case 1:
-							if (is_array(argument[0]))
+						
+						default:
+							switch (argument_count)
 							{
-								//|Construction method: From array.
-								var _array = argument[0];
-								
-								var _array_length = array_length(_array);
-								
-								switch (_array_length)
-								{
-									case 1:
-										x = _array[0];
-										y = _array[0];
-									break;
+								case 1:
+									if (is_array(argument[0]))
+									{
+										//|Construction method: From array.
+										var _array = argument[0];
 									
-									case 2:
-										x = _array[0];
-										y = _array[1];
-									break;
-								}
+										switch ( array_length(_array))
+										{
+											case 1:
+												x = _array[0];
+												y = _array[0];
+											break;
+										
+											case 2:
+											default:
+												x = _array[0];
+												y = _array[1];
+											break;
+										}
+									}
+									else
+									{
+										//|Construction method: One number for all values.
+										x = argument[0];
+										y = argument[0];
+									}
+								break;
+							
+								case 2:
+								default:
+									//|Construction method: Two values.
+									x = argument[0];
+									y = argument[1];
+								break;
 							}
-							else if (instanceof(argument[0]) == "Vector2")
-							{
-								//|Construction method: From Vector2.
-								var _vector = argument[0];
-								
-								x = _vector.x;
-								y = _vector.y;
-							}
-							else
-							{
-								//|Construction method: One number for all values.
-								x = argument[0];
-								y = argument[0];
-							}
-						break;
-		
-						case 2:
-							//|Construction method: Two values.
-							x = argument[0];
-							y = argument[1];
 						break;
 					}
 				}
@@ -91,27 +87,27 @@ function Scale() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x)) and (is_real(y)));
+				return ((is_real(x)) and (is_real(y)) and (!is_nan(x)) and (!is_nan(y)));
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @description			Reverse the x/y values of the scale.
+			// @description			Reverse the x and y values.
 			static mirror = function()
 			{
 				x = -x;
 				y = -y;
 			}
 			
-			// @description			Reverse the x value of the scale.
-			static mirror_x = function()
+			// @description			Reverse the x value.
+			static mirrorX = function()
 			{
 				x = -x;
 			}
 			
-			// @description			Reverse the y value of the scale.
-			static mirror_y = function()
+			// @description			Reverse the y value.
+			static mirrorY = function()
 			{
 				y = -y;
 			}
@@ -119,19 +115,17 @@ function Scale() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with both values of the Scale.
-			static toString = function()
+			//						Content will be represented with the values of this Container.
+			static toString = function(_multiline)
 			{
-				var _mark_separator = ", ";
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				var _string = ("x: " + string(x) + _mark_separator + "y: " + string(y));
 				
-				return (instanceof(self) + 
-						"(" + 
-						"x: " + string(x) + _mark_separator +
-						"y: " + string(y) +
-						")");
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
 			// @returns				{real[]}
