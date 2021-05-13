@@ -1,15 +1,16 @@
 /// @function				Layer()
 /// @argument				{int} depth
-///
+/// @argument				{string} name?
+///							
 /// @description			Construct a Layer resource, used to group graphical elements and sort 
 ///							their rendering depth.
-///
+///							
 ///							Construction methods:
-///							- New Layer: {int} depth
-///							- Exisiting Layer: {string} name
-///							- Constructor copy: {Layer} other
+///							- New constructor
+///							- Wrapper: {string} name
+///							- Constructor copy: {Layer} other, {string} name?
 ///							   Information about object instances will not be copied.
-function Layer(_depth) constructor
+function Layer() constructor
 {
 	#region [Methods]
 		#region <Management>
@@ -28,8 +29,8 @@ function Layer(_depth) constructor
 				visible = undefined;
 				instancesPaused = undefined;
 				
-				script_drawBegin = undefined;
-				script_drawEnd = undefined;
+				function_drawBegin = undefined;
+				function_drawEnd = undefined;
 				
 				shader = undefined;
 				
@@ -37,6 +38,7 @@ function Layer(_depth) constructor
 				spriteList = undefined;
 				backgroundList = undefined;
 				tilemapList = undefined;
+				particleSystemList = undefined;
 				
 				if (instanceof(argument[0]) == "Layer")
 				{
@@ -45,52 +47,79 @@ function Layer(_depth) constructor
 					
 					depth = _other.depth;
 					
+					if ((argument_count > 1) and (is_string(argument[1])))
+					{
+						name = argument[1];
+						ID = layer_create(depth, name);
+					}
+					else
+					{
+						ID = layer_create(depth);
+						name = layer_get_name(ID);
+					}
+					
 					location = new Vector2(_other.location);
+					self.setLocation(location);
+					
 					speed = new Vector2(_other.speed);
+					self.setSpeed(speed);
 					
 					visible = _other.visible;
+					setVisible(visible);
+					
 					instancesPaused = false;
 					
-					script_drawBegin = _other.script_drawBegin;
-					script_drawEnd = _other.script_drawEnd;
+					function_drawBegin = _other.function_drawBegin;
+					function_drawEnd = _other.function_drawEnd;
+					
+					if (function_drawBegin != undefined)
+					{
+						self.setFunctionDrawBegin(function_drawBegin);
+					}
+					
+					if (function_drawEnd != undefined)
+					{
+						self.setFunctionDrawEnd(function_drawEnd);
+					}
 					
 					shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
 																	  : _other.shader);
+					
+					if (instanceof(shader) == "Shader")
+					{
+						self.setShader(shader);
+					}
 					
 					instanceList = new List();
 					spriteList = new List();
 					backgroundList = new List();
 					tilemapList = new List();
+					particleSystemList = new List();
 					
-					var _elementLists = [spriteList, backgroundList, tilemapList];
-					var _elementLists_other = [_other.spriteList, _other.backgroundList, 
-											   _other.tilemapList];
-					var _elementTypes = [SpriteElement, BackgroundElement, TilemapElement];
+					var _elementList = [_other.spriteList, _other.backgroundList, 
+										_other.tilemapList, _other.particleSystemList];
+					var _elementType = [SpriteElement, BackgroundElement, TilemapElement,
+										ParticleSystem];
 					
-					var _i = 0;
-					repeat (array_length(_elementLists))
+					var _i = [0, 0];
+					repeat (array_length(_elementList))
 					{
-						var _j = 0;
-						
-						repeat (_elementLists_other[_i].getSize())
+						_i[1] = 0;
+						repeat (_elementList[_i[0]].getSize())
 						{
-							_elementLists[_i].add
-							(
-								new _elementTypes[_i](_elementLists_other.getValue(_j))
-							);
+							var _ = new _elementType[_i[0]](_elementList[_i[0]].getValue(_i[1]));
 							
-							++_j;
+							++_i[1];
 						}
 						
-						++_i;
+						++_i[0];
 					}
 				}
 				else
 				{
-					
 					if (is_string(argument[0]))
 					{
-						//|Construction method: Existing Layer.
+						//|Construction method: Wrapper.
 						var _name = argument[0];
 						
 						name = _name;
@@ -104,8 +133,8 @@ function Layer(_depth) constructor
 						visible = layer_get_visible(ID);
 						instancesPaused = undefined;
 						
-						script_drawBegin = layer_get_script_begin(ID);
-						script_drawEnd = layer_get_script_end(ID);
+						function_drawBegin = layer_get_script_begin(ID);
+						function_drawEnd = layer_get_script_end(ID);
 						
 						shader = layer_get_shader(ID);
 						
@@ -113,11 +142,11 @@ function Layer(_depth) constructor
 						spriteList = new List();
 						backgroundList = new List();
 						tilemapList = new List();
+						particleSystemList = new List();
 						
 						var _elements = layer_get_all_elements(ID);
 						
 						var _i = 0;
-						
 						repeat (array_length(_elements))
 						{
 							var _type = layer_get_element_type(_elements[_i]);
@@ -129,15 +158,19 @@ function Layer(_depth) constructor
 								break;
 								
 								case layerelementtype_sprite:
-									spriteList.add(new SpriteElement(_elements[_i]));
+									var _ = new SpriteElement(_elements[_i]);
 								break;
 								
 								case layerelementtype_background:
-									backgroundList.add(new BackgroundElement(_elements[_i]));
+									var _ = new BackgroundElement(_elements[_i]);
 								break;
 								
 								case layerelementtype_tilemap:
-									tilemapList.add(new TilemapElement(_elements[_i]));
+									var _ = new TilemapElement(_elements[_i]);
+								break;
+								
+								case layerelementtype_particlesystem:
+									var _ = new ParticleSystem(_elements[_i]);
 								break;
 							}
 							
@@ -146,8 +179,7 @@ function Layer(_depth) constructor
 					}
 					else
 					{
-						
-						//Construction method: New layer.
+						//Construction method: New constructor.
 						depth = argument[0];
 						
 						location = new Vector2(0, 0);
@@ -156,8 +188,8 @@ function Layer(_depth) constructor
 						visible = true;
 						instancesPaused = false;
 						
-						script_drawBegin = undefined;
-						script_drawEnd = undefined;
+						function_drawBegin = undefined;
+						function_drawEnd = undefined;
 						
 						shader = undefined;
 						
@@ -165,10 +197,18 @@ function Layer(_depth) constructor
 						spriteList = new List();
 						backgroundList = new List();
 						tilemapList = new List();
+						particleSystemList = new List();
 						
-						ID = layer_create(depth);
-						
-						name = layer_get_name(ID);
+						if ((argument_count > 1) and (is_string(argument[1])))
+						{
+							name = argument[1];
+							ID = layer_create(depth, name);
+						}
+						else
+						{
+							ID = layer_create(depth);
+							name = layer_get_name(ID);
+						}
 					}
 				}
 			}
@@ -180,22 +220,136 @@ function Layer(_depth) constructor
 				return ((is_real(ID)) and (layer_exists(ID)));
 			}
 			
+			// @argument			{bool} forceDestruction?
 			// @returns				{undefined}
-			// @description			Remove the internal Layer information from the memory.
-			static destroy = function()
+			// @description			Remove the internal information from the memory.
+			//						If there are persistent instances bound to this Layer, they will
+			//						be not be destroyed, unless the destruction is forced, but all
+			//						Data Structures of this Layer will be always destroyed.
+			static destroy = function(_forceDestruction)
 			{
-				if ((is_real(ID)) and (layer_exists(ID)))
+				var _persistentElementExists = false;
+				
+				if (instanceof(instanceList) == "List")
+				{
+					if (!_forceDestruction)
+					{
+						var _i = 0;
+						repeat (instanceList.getSize())
+						{
+							var _instance = instanceList.getValue(_i);
+						
+							if ((instance_exists(_instance)) and (_instance.persistent))
+							{
+								_persistentElementExists = true;
+								break;
+							}
+						
+							++_i;
+						}
+					}
+					
+					instanceList = instanceList.destroy();
+				}
+				
+				if (instanceof(spriteList) == "List")
+				{
+					spriteList = spriteList.destroy();
+				}
+				
+				if (instanceof(backgroundList) == "List")
+				{
+					backgroundList = backgroundList.destroy();
+				}
+				
+				if (instanceof(tilemapList) == "List")
+				{
+					tilemapList = tilemapList.destroy();
+				}
+				
+				if (instanceof(particleSystemList) == "List")
+				{
+					if (!_forceDestruction)
+					{
+						var _i = 0;
+						repeat (particleSystemList.getSize())
+						{
+							var _particleSystem = particleSystemList.getValue(_i);
+							
+							if (_particleSystem.isFunctional())
+							{
+								if (_particleSystem.persistent)
+								{
+									_persistentElementExists = true;
+								}
+								else
+								{
+									_particleSystem.destroy();
+								}
+							}
+							
+							++_i;
+						}
+					}
+					
+					particleSystemList = particleSystemList.destroy();
+				}
+				
+				if (((_forceDestruction) or (!_persistentElementExists)) and (is_real(ID))
+				and (layer_exists(ID)))
 				{
 					layer_destroy(ID);
 					
 					ID = undefined;
-					
-					instanceList = instanceList.destroy();
-					spriteList = spriteList.destroy();
-					backgroundList = backgroundList.destroy();
 				}
 				
 				return undefined;
+			}
+			
+		#endregion
+		#region <Getters>
+			
+			// @returns				{int[]}
+			// @description			Return the array of all internal element IDs held by this Layer.
+			static getElements = function()
+			{
+				if ((is_real(ID)) and (layer_exists(ID)))
+				{
+					return layer_get_all_elements(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getElements";
+					var _errorText = ("Attempted to get Elements of an invalid Layer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
+			// @argument			{int:instance} instance
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check whether the specified instance is bound to this Layer.
+			static hasInstance = function(_instance)
+			{
+				if ((is_real(ID)) and (layer_exists(ID)))
+				{
+					return layer_has_instance(ID, _instance);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "hasInstance";
+					var _errorText = ("Attempted to get Element of an invalid Layer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 		#endregion
@@ -291,51 +445,51 @@ function Layer(_depth) constructor
 				}
 			}
 			
-			// @argument			{script} script
+			// @argument			{function} function
 			// @description			Set a function that will be called during the Draw Begin of
 			//						this Layer.
-			static setScript_drawBegin = function(_script)
+			static setFunctionDrawBegin = function(_function)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					script_drawBegin = _script;
+					function_drawBegin = _function;
 					
-					layer_script_begin(ID, script_drawBegin);
+					layer_script_begin(ID, function_drawBegin);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setScript_drawBegin";
+					var _methodName = "setFunctionDrawBegin";
 					var _errorText = ("Attempted to set a property of an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{script} script
+			// @argument			{function} function
 			// @description			Set a function that will be called during the Draw End of
 			//						this Layer.
-			static setScript_drawEnd = function(_script)
+			static setFunctionDrawEnd = function(_function)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					script_drawEnd = _script;
+					function_drawEnd = _function;
 					
-					layer_script_end(ID, script_drawEnd);
+					layer_script_end(ID, function_drawEnd);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setScript_drawEnd";
+					var _methodName = "setFunctionDrawEnd";
 					var _errorText = ("Attempted to set a property of an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{Shader} Shader
+			// @argument			{Shader} shader
 			// @description			Set a Shader that will be applied to every Element of this Layer.
 			static setShader = function(_shader)
 			{
@@ -357,65 +511,16 @@ function Layer(_depth) constructor
 			}
 			
 		#endregion
-		#region <Getters>
-			
-			// @returns				{int[]}
-			// @description			Return the array of all internal element IDs held by this Layer.
-			static getElements = function()
-			{
-				if ((is_real(ID)) and (layer_exists(ID)))
-				{
-					return layer_get_all_elements(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getElements";
-					var _errorText = ("Attempted to get Elements of an invalid Layer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
-				}
-			}
-			
-			// @argument			{int:instance} instance
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check whether the specified instance is bound to this Layer.
-			static hasInstance = function(_instance)
-			{
-				if ((is_real(ID)) and (layer_exists(ID)))
-				{
-					return layer_has_instance(ID, _instance);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "hasInstance";
-					var _errorText = ("Attempted to get Element of an invalid Layer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-		#endregion
 		#region <Execution>
 			
 			// @argument			{Sprite} sprite
-			// @argument			{Vector2} location
-			// @returns				{SpriteElement} | On error: {noone}
-			// @description			Create a Sprite Element on this Layer and return it.
-			static create_sprite = function(_sprite, _location)
+			// @returns				{Layer.BackgroundElement} | On error: {noone}
+			// @description			Create a Background Element on this Layer and return it.
+			static createBackground = function(_sprite)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					var _element = new SpriteElement(_sprite, _location);
-					
-					spriteList.add(_element);
+					var _element = new BackgroundElement(_sprite);
 					
 					return _element;
 				}
@@ -423,7 +528,7 @@ function Layer(_depth) constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "create_sprite";
+					var _methodName = "createBackground";
 					var _errorText = ("Attempted to add Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -432,24 +537,25 @@ function Layer(_depth) constructor
 				}
 			}
 			
-			// @argument			{Sprite} sprite
-			// @returns				{BackgroundElement} | On error: {noone}
-			// @description			Create a Background Element on this Layer and return it.
-			static create_background = function(_sprite)
+			// @argument			{int:object} object
+			// @argument			{Vector2} location
+			// @returns				{int} | On error: {noone}
+			// @description			Create an instance on this Layer and return its internal ID.
+			static createInstance = function(_object, _location)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					var _element = new BackgroundElement(_sprite);
+					var _instance = instance_create_layer(_location.x, _location.y, ID, _object);
 					
-					backgroundList.add(_element);
+					instanceList.add(_instance);
 					
-					return _element;
+					return _instance;
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "create_background";
+					var _methodName = "createInstance";
 					var _errorText = ("Attempted to add Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -461,16 +567,14 @@ function Layer(_depth) constructor
 			// @argument			{tileset} tileset
 			// @argument			{Vector2} location
 			// @argument			{Vector2} size
-			// @returns				{TilemapElement} | On error: {noone}
+			// @returns				{Layer.TilemapElement} | On error: {noone}
 			// @description			Create a Tilemap Element on this Layer at the specified specified
 			//						location in the room and cell size and return it.
-			static create_tilemap = function(_tileset, _location, _size)
+			static createTilemap = function(_tileset, _location, _size)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
 					var _element = new TilemapElement(_tileset, _location, _size);
-					
-					tilemapList.add(_element);
 					
 					return _element;
 				}
@@ -478,7 +582,7 @@ function Layer(_depth) constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "create_tilemap";
+					var _methodName = "createTilemap";
 					var _errorText = ("Attempted to add Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -487,25 +591,23 @@ function Layer(_depth) constructor
 				}
 			}
 			
+			// @argument			{Sprite|Layer.SpriteElement|int:spriteElement} sprite
 			// @argument			{Vector2} location
-			// @argument			{object} object
-			// @returns				{int} | On error: {noone}
-			// @description			Create an instance on this Layer and return its internal ID.
-			static create_instance = function(_location, _object)
+			// @returns				{Layer.SpriteElement} | On error: {noone}
+			// @description			Create a Sprite Element on this Layer and return it.
+			static createSprite = function(_sprite, _location)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					var _instance = instance_create_layer(_location.x, _location.y, ID, _object)
+					var _element = new SpriteElement(_sprite, _location);
 					
-					instanceList.add(_instance);
-					
-					return _instance;
+					return _element;
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "create_instance";
+					var _methodName = "createSprite";
 					var _errorText = ("Attempted to add Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -514,29 +616,23 @@ function Layer(_depth) constructor
 				}
 			}
 			
-			// @argument			{bool} instancesPaused
-			// @description			Activate or deactivate all instances bound to this Layer.
-			static setInstancePause = function(_instancesPaused)
+			// @argument			{bool} persistent?
+			// @returns				{Layer.ParticleSystem} | On error: {noone}
+			// @description			Create a Particle System in this Layer and return it.
+			static createParticleSystem = function(_persistent)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					instancesPaused = _instancesPaused;
+					var _element = new ParticleSystem(_persistent);
 					
-					if (instancesPaused)
-					{
-						instance_deactivate_layer(ID);
-					}
-					else
-					{
-						instance_activate_layer(ID);
-					}
+					return _element;
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setInstancePause";
-					var _errorText = ("Attempted to set a property of an invalid Layer: " +
+					var _methodName = "createParticleSystem";
+					var _errorText = ("Attempted to add Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -545,7 +641,7 @@ function Layer(_depth) constructor
 			}
 			
 			// @description			Destroy all instances that are bound to this Layer.
-			static destroy_instances = function()
+			static destroyInstances = function()
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
@@ -557,12 +653,38 @@ function Layer(_depth) constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "create_instance";
+					var _methodName = "destroyInstances";
 					var _errorText = ("Attempted to remove Elements from an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return noone;
+				}
+			}
+			
+			// @argument			{bool} instancesPaused
+			// @description			Activate or deactivate all instances bound to this Layer.
+			static setInstancePause = function(_instancesPaused)
+			{
+				if ((is_real(ID)) and (layer_exists(ID)))
+				{
+					if (_instancesPaused)
+					{
+						instancesPaused = true;
+						instance_deactivate_layer(ID);
+					}
+					else
+					{
+						instancesPaused = false;
+						instance_activate_layer(ID);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setInstancePause";
+					var _errorText = ("Attempted to set a property of an invalid Layer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -570,15 +692,51 @@ function Layer(_depth) constructor
 		#region <Conversion>
 			
 			// @returns				{string}
-			// @description			Create a string representing the constructor.
+			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the name and depth of this
 			//						Layer.
-			static toString = function()
+			static toString = function(_multiline, _full)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					return (instanceof(self) + "(" + string(name) + ": " + string(depth) + ")");
+					var _string = "";
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
+					if (!_full)
+					{
+						_string = ("Name: " + string(name) + _mark_separator +
+								   "Depth: " + string(depth));
+					}
+					else
+					{
+						var _string_function_drawBegin = ((is_real(function_drawBegin))
+														  ? script_get_name(function_drawBegin)
+														  : string(function_drawBegin));
+						var _string_function_drawEnd = ((is_real(function_drawEnd))
+														? script_get_name(function_drawEnd)
+														: string(function_drawEnd));
+						
+						_string = ("Name: " + string(name) + _mark_separator +
+								   "Depth: " + string(depth) + _mark_separator +
+								   "Location: " + string(location) + _mark_separator +
+								   "Speed: " + string(speed) + _mark_separator +
+								   "Visible: " + string(visible) + _mark_separator +
+								   "Instances Paused: " + string(instancesPaused)
+														+ _mark_separator +
+								   "Function (Draw Begin): " + _string_function_drawBegin
+															 + _mark_separator +
+								   "Function (Draw End): " + _string_function_drawEnd
+														   + _mark_separator +
+								   "Shader: " + string(shader) + _mark_separator +
+								   "Instance List: " + string(instanceList) + _mark_separator +
+								   "Sprite List: " + string(spriteList) + _mark_separator +
+								   "Background List: " + string(backgroundList) + _mark_separator +
+								   "Tilemap List: " + string(tilemapList) + _mark_separator +
+								   "Particle System List: " + string(particleSystemList));
+					}
+					
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else
 				{
@@ -590,15 +748,14 @@ function Layer(_depth) constructor
 	#endregion
 	#region [Elements]
 		
-		// @function				Layer.SpriteElement()
-		// @argument				{Sprite} sprite
-		// @description				Construct a Sprite Element, which is used to draw a Sprite on
-		//							this Layer.
+		// @function			Layer.SpriteElement()
+		// @argument			{Sprite} sprite
+		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
 		//
-		//							Construction methods:
-		//							- New element: {Sprite} sprite
-		//							- Wrapper: {spriteElement} spriteElement
-		//							- Constructor copy: {Layer.SpriteElement} other
+		//						Construction methods:
+		//						- New element.
+		//						- Wrapper: {spriteElement} spriteElement
+		//						- Constructor copy: {Layer.SpriteElement} other
 		function SpriteElement() constructor
 		{
 			#region [[Methods]]
@@ -607,6 +764,9 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						parent = other;
+						parent.spriteList.add(self);
+						
 						ID = undefined;
 						sprite = undefined;
 						location = undefined;
@@ -617,26 +777,28 @@ function Layer(_depth) constructor
 						frame = undefined;
 						speed = undefined;
 						
-						parent = other;
+						var _instanceof_self = instanceof(self);
+						var _instanceof_other = instanceof(argument[0]);
 						
-						switch (instanceof(argument[0]))
+						switch (_instanceof_other)
 						{
-							case "SpriteElement":
+							case _instanceof_self:
 								//|Construction method: Constructor copy.
 								var _other = argument[0];
-									
-								sprite = _other.sprite;
-								ID = layer_sprite_create(parent.ID, _other.location.x,
-															_other.location.y, sprite.ID);
-									
+								
+								sprite = new Sprite(_other.sprite.ID);
 								location = new Vector2(_other.location);
+								
+								ID = layer_sprite_create(parent.ID, location.x, location.y,
+														 sprite.ID);
+								
 								scale = new Scale(_other.scale);
 								angle = new Angle(_other.angle);
 								color = _other.color;
 								alpha = _other.alpha;
 								frame = _other.frame;
 								speed = _other.speed;
-									
+								
 								layer_sprite_xscale(ID, scale.x);
 								layer_sprite_yscale(ID, scale.y);
 								layer_sprite_angle(ID, angle.value);
@@ -644,54 +806,39 @@ function Layer(_depth) constructor
 								layer_sprite_alpha(ID, alpha);
 								layer_sprite_index(ID, frame);
 								layer_sprite_speed(ID, speed);
+								
 							break;
 							
 							case "Sprite":
 								//|Construction method: New element.
 								sprite = argument[0];
 								location = argument[1];
+								
 								ID = layer_sprite_create(parent.ID, location.x, location.y,
-															sprite.ID);
-							
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								angle = new Angle(sprite.angle.value);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
-									
-								layer_sprite_xscale(ID, scale.x);
-								layer_sprite_yscale(ID, scale.y);
-								layer_sprite_angle(ID, angle.value);
-								layer_sprite_blend(ID, color);
-								layer_sprite_alpha(ID, alpha);
-								layer_sprite_index(ID, frame);
-								layer_sprite_speed(ID, speed);
+														 sprite.ID);
+								
+								angle = new Angle(0);
+								scale = new Scale(1, 1);
+								color = c_white;
+								alpha = 1;
+								frame = 0;
+								speed = 0;
 							break;
 							
 							default:
 								//|Construction method: Wrapper.
 								ID = argument[0];
-								sprite = new Sprite
-								(
-									layer_sprite_get_sprite(ID),
-									new Vector2(layer_sprite_get_x(ID), layer_sprite_get_y(ID)),
-									layer_sprite_get_index(ID),
-									layer_sprite_get_speed(ID),
-									new Scale(layer_sprite_get_xscale(ID), 
-												layer_sprite_get_yscale(ID)),
-									new Angle(layer_sprite_get_angle(ID)),
-									layer_sprite_get_blend(ID),
-									layer_sprite_get_alpha(ID)
-								);
-									
-								location = new Vector2(sprite.location.x, sprite.location.y);
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								angle = new Angle(sprite.angle.value);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
+								
+								sprite = layer_sprite_get_sprite(ID);
+								location = new Vector2(layer_sprite_get_x(ID),
+													   layer_sprite_get_y(ID));
+								angle = new Angle(layer_sprite_get_angle(ID));
+								scale = new Scale(layer_sprite_get_xscale(ID),
+												  layer_sprite_get_yscale(ID));
+								color = layer_sprite_get_blend(ID)
+								alpha = layer_sprite_get_alpha(ID)
+								frame = layer_sprite_get_index(ID)
+								speed = layer_sprite_get_speed(ID)
 							break;
 						}
 					}
@@ -708,25 +855,21 @@ function Layer(_depth) constructor
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
+							if ((instanceof(_other) == "Layer") and (_other.isFunctional()))
 							{
-								parent.spriteList.remove_value(self);
-									
+								parent.spriteList.removeValue(self);
 								parent = _other;
-									
 								parent.spriteList.add(self);
-									
+								
 								layer_element_move(ID, parent.ID);
 							}
 							else if ((is_real(_other)) and (layer_exists(_other)))
 							{
-								parent.spriteList.remove_value(self);
-									
+								parent.spriteList.removeValue(self);
 								parent = undefined;
-									
+								
 								layer_element_move(ID, _other);
 							}
 							else
@@ -761,11 +904,16 @@ function Layer(_depth) constructor
 					// @description			Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
+						if (instanceof(parent) == "Layer")
 						{
-							parent.spriteList.remove_value(self);
-							
+							 if (instanceof(parent.spriteList) == "List")
+							 {
+								parent.spriteList.removeValue(self);
+							 }
+						}
+						
+						if (self.isFunctional())
+						{
 							layer_sprite_destroy(ID);
 						}
 						
@@ -773,84 +921,155 @@ function Layer(_depth) constructor
 					}
 					
 				#endregion
-				#region <<Execution>>
+				#region <<Setters>>
 					
-					// @argument			{Sprite|int:-1} sprite
-					// @description			Set the sprite of this Sprite Element to the current
-					//						status of the specified Sprite.
-					//						A value of -1 can be specified instead of the Sprite,
-					//						in which case this element will have no Sprite assigned.
-					static update = function(_sprite)
+					// @argument			{Sprite|int:-1} sprite?
+					// @description			Set the Sprite of this Sprite Element. If it is not
+					//						specified or specified as -1, the Sprite will be cleared.
+					static setSprite = function(_sprite)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) 
-						and (layer_sprite_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							if (_sprite == -1)
+							if ((_sprite == undefined) or (_sprite == -1))
 							{
-								sprite = _sprite;
+								sprite = undefined;
 								
-								layer_sprite_change(ID, sprite);
-								
-								scale = undefined;
-								angle = undefined;
-								color = undefined;
-								alpha = undefined;
-								frame = undefined;
-								speed = undefined;
-							}
-							else if ((instanceof(_sprite) == "Sprite") and (is_real(_sprite.ID))
-							and (sprite_exists(_sprite.ID)))
-							{
-								sprite = _sprite;
-								
-								layer_sprite_change(ID, sprite.ID);
-								
-								if (sprite.location != undefined)
-								{
-									location = new Vector2(sprite.location.x, sprite.location.y);
-									
-									layer_sprite_x(ID, location.x);
-									layer_sprite_y(ID, location.y);
-								}
-								else
-								{
-									location = undefined;
-								}
-								
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								angle = new Angle(sprite.angle.value);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
-								
-								layer_sprite_xscale(ID, sprite.scale.x);
-								layer_sprite_yscale(ID, sprite.scale.y);
-								layer_sprite_angle(ID, sprite.angle.value);
-								layer_sprite_blend(ID, sprite.color);
-								layer_sprite_alpha(ID, sprite.alpha);
-								layer_sprite_index(ID, sprite.frame);
-								layer_sprite_speed(ID, sprite.speed);
+								layer_sprite_change(ID, -1);
 							}
 							else
 							{
-								var _errorReport = new ErrorReport();
-								var _callstack = debug_get_callstack();
-								var _methodName = "update";
-								var _errorText = ("Attempted to set properties of an Element " +
-												  "to an invalid Sprite:\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Sprite: " + "{" + string(_sprite) + "}");
-								_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																	 _errorText);
+								sprite = _sprite;
+									
+								layer_sprite_change(ID, sprite.ID);
 							}
 						}
 						else
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "update";
+							var _methodName = "setStretch";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{Scale} scale
+					// @description			Set the scale property of this Sprite Element.
+					static setScale = function(_scale)
+					{
+						if (self.isFunctional())
+						{
+							scale = _scale;
+							
+							layer_sprite_xscale(ID, scale.x);
+							layer_sprite_yscale(ID, scale.y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setScale";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{int:color} color
+					// @description			Set the color property of this Sprite Element.
+					static setColor = function(_color)
+					{
+						if (self.isFunctional())
+						{
+							color = _color;
+							
+							layer_sprite_blend(ID, color);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setColor";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{real} alpha
+					// @description			Set the alpha property of this Sprite Element.
+					static setAlpha = function(_alpha)
+					{
+						if (self.isFunctional())
+						{
+							alpha = _alpha;
+							
+							layer_sprite_alpha(ID, alpha);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setAlpha";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{int} frame
+					// @description			Set the current Sprite frame of this Sprite Element.
+					static setFrame = function(_frame)
+					{
+						if (self.isFunctional())
+						{
+							frame = _frame;
+							
+							layer_sprite_index(ID, frame);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setFrame";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					
+					// @argument			{real} speed
+					// @description			Set the Sprite speed property of this Sprite Element.
+					static setSpeed = function(_speed)
+					{
+						if (self.isFunctional())
+						{
+							speed = _speed;
+							
+							layer_sprite_speed(ID, speed);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setSpeed";
 							var _errorText = ("Attempted to set properties on invalid Element or " +
 											  "Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -863,20 +1082,41 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Conversion>>
 					
+					// @argument			{bool} multiline?
+					// @argument			{bool} full?
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
 					//						Content will be represented with the ID and the Sprite of
-					//						this SpriteElement.
-					static toString = function()
+					//						this Sprite Element.
+					static toString = function(_multiline, _full)
 					{
 						var _constructorName = "Layer.SpriteElement";
 						
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_sprite_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							return (_constructorName + "(" + string(ID) + ": " + 
-								   string(sprite) + ")");
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
+							
+							if (!_full)
+							{
+								var _string = ("ID: " + string(ID) + _mark_separator +
+											   "Sprite: " + string(sprite));
+							}
+							else
+							{
+								var _string = ("ID: " + string(ID) + _mark_separator +
+											   "Sprite: " + string(sprite) + _mark_separator +
+											   "Location: " + string(location) + _mark_separator +
+											   "Scale: " + string(scale) + _mark_separator +
+											   "Angle: " + string(angle) + _mark_separator +
+											   "Color: " + string(color) + _mark_separator +
+											   "Alpha: " + string(alpha) + _mark_separator +
+											   "Frame: " + string(frame) + _mark_separator +
+											   "Speed: " + string(speed));
+							}
+							
+							return ((_multiline) ? _string
+												 : (_constructorName + "(" + _string + ")"));
 						}
 						else
 						{
@@ -898,27 +1138,20 @@ function Layer(_depth) constructor
 					++_i;
 				}
 				
-				if (argument_count <= 0)
-				{
-					self.construct();
-				}
-				else
-				{
-					script_execute_ext(method_get_index(self.construct), argument_original);
-				}
-		
+				script_execute_ext(method_get_index(self.construct), argument_original);
+				
 			#endregion
 		}
 		
-		// @function				Layer.BackgroundElement()
-		// @argument				{Sprite} sprite
-		// @description				Construct a Background Element, which is used to draw a 
-		//							Background on this Layer.
+		// @function			Layer.BackgroundElement()
+		// @argument			{Sprite} sprite
+		// @description			Construct a Background Element used to draw a Background on this
+		//						Layer.
 		//
-		//							Construction methods:
-		//							- New element: {Sprite} sprite
-		//							- Wrapper: {backgroundElement} backgroundElement
-		//							- Constructor copy: {Layer.BackgroundElement} other
+		//						Construction methods:
+		//						- New element.
+		//						- Wrapper: {backgroundElement} backgroundElement
+		//						- Constructor copy: {Layer.BackgroundElement} other
 		function BackgroundElement() constructor
 		{
 			#region [[Methods]]
@@ -927,47 +1160,48 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						parent = other;
+						parent.backgroundList.add(self);
+						
 						ID = undefined;
 						sprite = undefined;
-							
 						visible = undefined;
-						stretched = undefined;
+						stretch = undefined;
 						tiled_x = undefined;
 						tiled_y = undefined;
-							
 						scale = undefined;
 						color = undefined;
 						alpha = undefined;
 						frame = undefined;
 						speed = undefined;
 						
-						parent = other;
+						var _instanceof_self = instanceof(self);
+						var _instanceof_other = instanceof(argument[0]);
 						
-						switch (instanceof(argument[0]))
+						switch (_instanceof_other)
 						{
-							case "BackgroundElement":
+							case _instanceof_self:
 								//|Construction method: Constructor copy.
 								var _other = argument[0];
-									
-								sprite = _other.sprite;
-								ID = layer_background_create(layer.ID, sprite.ID);
-									
+								
+								sprite = new Sprite(_other.sprite.ID);
+								ID = layer_background_create(parent.ID, sprite.ID);
+								
 								visible = _other.visible;
-								stretched = _other.stretched;
+								stretch = _other.stretch;
 								tiled_x = _other.tiled_x;
 								tiled_y = _other.tiled_y;
-									
-								scale = new Scale(_other.scale);
+								scale = ((instanceof(_other.sprite) == "Scale")
+										 ? new Scale(_other.scale) : _other.scale);
 								color = _other.color;
 								alpha = _other.alpha;
 								frame = _other.frame;
 								speed = _other.speed;
-									
+								
 								layer_background_visible(ID, visible);
-								layer_background_stretch(ID, stretched);
+								layer_background_stretch(ID, stretch);
 								layer_background_htiled(ID, tiled_x);
 								layer_background_vtiled(ID, tiled_y);
-									
 								layer_background_xscale(ID, scale.x);
 								layer_background_yscale(ID, scale.y);
 								layer_background_blend(ID, color);
@@ -975,58 +1209,38 @@ function Layer(_depth) constructor
 								layer_background_index(ID, frame);
 								layer_background_speed(ID, speed);
 							break;
-								
+							
 							case "Sprite":
 								//|Construction method: New element.
 								sprite = argument[0];
-								ID = layer_background_create(layer.ID, sprite.ID);
-									
+								ID = layer_background_create(parent.ID, sprite.ID);
+								
 								visible = true;
-								stretched = false;
+								stretch = false;
 								tiled_x = false;
 								tiled_y = false;
-									
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
-									
-								layer_background_xscale(ID, scale.x);
-								layer_background_yscale(ID, scale.y);
-								layer_background_blend(ID, color);
-								layer_background_alpha(ID, alpha);
-								layer_background_index(ID, frame);
-								layer_background_speed(ID, speed);
+								scale = new Scale(1, 1);
+								color = c_white;
+								alpha = 1;
+								frame = 0;
+								speed = 0;
 							break;
-								
+							
 							default:
 								//|Construction method: Wrapper.
 								ID = argument[0];
-									
+								
+								sprite = new Sprite(layer_background_get_sprite(ID));
 								visible = layer_background_get_visible(ID);
-								stretched = layer_background_get_stretch(ID);
+								stretch = layer_background_get_stretch(ID);
 								tiled_x = layer_background_get_htiled(ID);
 								tiled_y = layer_background_get_vtiled(ID);
-									
-								sprite = new Sprite
-								(
-									layer_background_get_sprite(ID),
-									undefined,
-									layer_background_get_index(ID),
-									layer_background_get_speed(ID),
-									new Scale(layer_background_get_xscale(ID), 
-												layer_background_get_yscale(ID)),
-									undefined,
-									layer_background_get_blend(ID),
-									layer_background_get_alpha(ID)
-								);
-									
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
+								scale = new Scale(layer_background_get_xscale(ID),
+												  layer_background_get_yscale(ID));
+								color = layer_background_get_blend(ID)
+								alpha = layer_background_get_alpha(ID)
+								frame = layer_background_get_index(ID)
+								speed = layer_background_get_speed(ID)
 							break;
 						}
 					}
@@ -1035,33 +1249,29 @@ function Layer(_depth) constructor
 					// @description			Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
-								(layer_sprite_exists(parent.ID, ID));
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
+								and (layer_background_exists(parent.ID, ID));
 					}
 					
 					// @argument			{Layer|layer} other
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
 							{
-								parent.backgroundList.remove_value(self);
-									
+								parent.backgroundList.removeValue(self);
 								parent = _other;
-									
 								parent.backgroundList.add(self);
 									
 								layer_element_move(ID, parent.ID);
 							}
 							else if ((is_real(_other)) and (layer_exists(_other)))
 							{
-								parent.backgroundList.remove_value(self);
-									
+								parent.backgroundList.removeValue(self);
 								parent = undefined;
-									
+								
 								layer_element_move(ID, _other);
 							}
 							else
@@ -1096,11 +1306,16 @@ function Layer(_depth) constructor
 					// @description			Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (instanceof(parent) == "Layer")
 						{
-							parent.backgroundList.remove_value(self);
-							
+							 if (instanceof(parent.spriteList) == "List")
+							 {
+								parent.backgroundList.removeValue(self);
+							 }
+						}
+						
+						if (self.isFunctional())
+						{
 							layer_background_destroy(ID);
 						}
 						
@@ -1108,95 +1323,23 @@ function Layer(_depth) constructor
 					}
 					
 				#endregion
-				#region <<Execution>>
-					
-					// @argument			{Sprite} sprite
-					// @description			Set the sprite of this Background Element to the current
-					//						status of the specified Sprite.
-					//						A value of -1 can be specified instead of the Sprite,
-					//						in which case this element will have no Sprite assigned.
-					static update = function(_sprite)
-					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
-						{
-							if (sprite == -1)
-							{
-								sprite = _sprite;
-								
-								layer_background_sprite(ID, sprite);
-								
-								scale = undefined;
-								color = undefined;
-								alpha = undefined;
-								frame = undefined;
-								speed = undefined;
-							}
-							else if ((instanceof(_sprite) == "Sprite") and (is_real(_sprite.ID))
-							and (sprite_exists(_sprite.ID)))
-							{
-								sprite = _sprite;
-								
-								scale = new Scale(sprite.scale.x, sprite.scale.y);
-								color = sprite.color;
-								alpha = sprite.alpha;
-								frame = sprite.frame;
-								speed = sprite.speed;
-								
-								layer_background_sprite(ID, sprite.ID);
-								layer_background_xscale(ID, scale.x);
-								layer_background_yscale(ID, scale.y);
-								layer_background_blend(ID, color);
-								layer_background_alpha(ID, alpha);
-								layer_background_index(ID, frame);
-								layer_background_speed(ID, speed);
-							}
-							else
-							{
-								var _errorReport = new ErrorReport();
-								var _callstack = debug_get_callstack();
-								var _methodName = "update";
-								var _errorText = ("Attempted to set properties of an Element " +
-												  "to an invalid Sprite:\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Sprite: " + "{" + string(_sprite) + "}");
-								_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																	 _errorText);
-							}
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "update";
-							var _errorText = ("Attempted to set properties on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
-					
-				#endregion
 				#region <<Setters>>
 					
-					// @argument			{bool} stretched
+					// @argument			{bool} stretch
 					// @description			Set the scretch property of this Background Element.
-					static setStretched = function(_stretched)
+					static setStretch = function(_stretch)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							stretched = _stretched;
+							stretch = _stretch;
 							
-							layer_background_stretch(ID, _stretched);
+							layer_background_stretch(ID, _stretch);
 						}
 						else
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "setStretched";
+							var _methodName = "setStretch";
 							var _errorText = ("Attempted to set properties on invalid Element or " +
 											  "Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1210,12 +1353,9 @@ function Layer(_depth) constructor
 					// @argument			{bool} tiled_y?
 					// @description			Set the tiling properties of this Background Element for
 					//						horizontal and vertical tiling respectively.
-					//						A value of {undefined} can be set for each argument,
-					//						in case of which, it will be not modified.
 					static setTiled = function(_tiled_x, _tiled_y)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if (_tiled_x != undefined) {tiled_x = _tiled_x;}
 							if (_tiled_y != undefined) {tiled_y = _tiled_y;}
@@ -1241,8 +1381,7 @@ function Layer(_depth) constructor
 					// @description			Set the visibility property of this Background Element.
 					static setVisible = function(_visible)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							visible = _visible;
 							
@@ -1262,23 +1401,205 @@ function Layer(_depth) constructor
 						}
 					}
 					
+					// @argument			{Sprite|int:-1} sprite?
+					// @argument			{Sprite} sprite
+					// @description			Set the Sprite of this Background Element. If it is not
+					//						specified or specified as -1, the Sprite will be cleared.
+					static setSprite = function(_sprite)
+					{
+						if (self.isFunctional())
+						{
+							if ((_sprite == undefined) or (_sprite == -1))
+							{
+								sprite = undefined;
+								
+								layer_background_change(ID, -1);
+							}
+							else
+							{
+								sprite = _sprite;
+									
+								layer_background_change(ID, sprite.ID);
+							}
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setSprite";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{Scale} scale
+					// @description			Set the scale property of this Background Element.
+					static setScale = function(_scale)
+					{
+						if (self.isFunctional())
+						{
+							scale = _scale;
+							
+							layer_background_xscale(ID, scale.x);
+							layer_background_yscale(ID, scale.y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setScale";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{int:color} color
+					// @description			Set the color property of this Background Element.
+					static setColor = function(_color)
+					{
+						if (self.isFunctional())
+						{
+							color = _color;
+							
+							layer_background_blend(ID, color);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setColor";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{real} alpha
+					// @description			Set the alpha property of this Background Element.
+					static setAlpha = function(_alpha)
+					{
+						if (self.isFunctional())
+						{
+							alpha = _alpha;
+							
+							layer_background_alpha(ID, alpha);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setAlpha";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{int} frame
+					// @description			Set the current Sprite frame of this Background Element.
+					static setFrame = function(_frame)
+					{
+						if (self.isFunctional())
+						{
+							frame = _frame;
+							
+							layer_background_index(ID, frame);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setFrame";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					
+					// @argument			{real} speed
+					// @description			Set the Sprite speed property of this Background Element.
+					static setSpeed = function(_speed)
+					{
+						if (self.isFunctional())
+						{
+							speed = _speed;
+							
+							layer_background_speed(ID, speed);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setSpeed";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
 				#endregion
 				#region <<Conversion>>
 					
+					// @argument			{bool} multiline?
+					// @argument			{bool} full?
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
 					//						Content will be represented with the ID and the sprite of
 					//						this BackgroundElement.
-					static toString = function()
+					static toString = function(_multiline, _full)
 					{
 						var _constructorName = "Layer.BackgroundElement";
 						
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_background_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							return (_constructorName + "(" + string(ID) + ": " + 
-								   string(sprite) + ")");
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
+							
+							var _string = "";
+							
+							if (!_full)
+							{
+								_string = ("ID: " + string(ID) + _mark_separator +
+										   "Sprite: " + string(sprite));
+							}
+							else
+							{
+								_string = ("ID: " + string(ID) + _mark_separator +
+										   "Sprite: " + string(sprite) + _mark_separator +
+										   "Visible: " + string(visible) + _mark_separator +
+										   "Stretch: " + string(stretch) + _mark_separator +
+										   "Tiled X: " + string(tiled_x) + _mark_separator +
+										   "Tiled Y: " + string(tiled_y) + _mark_separator +
+										   "Scale: " + string(scale) + _mark_separator +
+										   "Color: " + string(color) + _mark_separator +
+										   "Alpha: " + string(alpha) + _mark_separator +
+										   "Frame: " + string(frame) + _mark_separator +
+										   "Speed: " + string(speed));
+							}
+							
+							return ((_multiline) ? _string
+												 : (_constructorName + "(" + _string + ")"));
 						}
 						else
 						{
@@ -1300,28 +1621,22 @@ function Layer(_depth) constructor
 					++_i;
 				}
 				
-				if (argument_count <= 0)
-				{
-					self.construct();
-				}
-				else
-				{
-					script_execute_ext(method_get_index(self.construct), argument_original);
-				}
+				script_execute_ext(method_get_index(self.construct), argument_original);
 				
 			#endregion
 		}
 		
-		// @function				Layer.TilemapElement()
-		// @argument				{Sprite} sprite
-		// @description				Construct a Tilemap Element, which is used to draw Tiles from
-		//							a Tileset on this Layer.
+		// @function			Layer.TilemapElement()
+		// @argument			{tileset} tileset
+		// @argument			{Vector2} location
+		// @argument			{Vector2} size
+		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
+		//						this Layer.
 		//
-		//							Construction methods:
-		//							- New element: {tileset} tileset, {Vector2} location,
-		//										   {Vector2} size
-		//							- Wrapper: {int} tilemapElement
-		//							- Constructor copy: {Layer.TilemapElement} other
+		//						Construction methods:
+		//						- New element.
+		//						- Wrapper: {int} tilemapElement
+		//						- Constructor copy: {Layer.TilemapElement} other
 		function TilemapElement() constructor
 		{
 			#region [[Methods]]
@@ -1330,14 +1645,18 @@ function Layer(_depth) constructor
 					// @description			Initialize the constructor.
 					static construct = function()
 					{
+						parent = other;
+						parent.tilemapList.add(self);
+						
 						ID = undefined;
 						tileset = undefined;
 						location = undefined;
 						size = undefined;
 						
-						parent = other;
+						var _instanceof_self = instanceof(self);
+						var _instanceof_other = instanceof(argument[0]);
 						
-						if ((argument_count > 0) and (instanceof(argument[0]) == "TilemapElement"))
+						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
 						{
 							//|Construction method: Constructor copy.
 							var _other = argument[0];
@@ -1346,8 +1665,8 @@ function Layer(_depth) constructor
 							location = _other.location;
 							size = _other.size;
 							
-							ID = layer_tilemap_create(parent.ID, location.x, location.y, 
-													  tileset, size.x, size.y);
+							ID = layer_tilemap_create(parent.ID, location.x, location.y, tileset,
+													  size.x, size.y);
 						}
 						else
 						{
@@ -1358,8 +1677,8 @@ function Layer(_depth) constructor
 								location = argument[1];
 								size = argument[2];
 								
-								ID = layer_tilemap_create(parent.ID, location.x, location.y, 
-														  tileset, size.x, size.y);
+								ID = layer_tilemap_create(parent.ID, location.x, location.y, tileset,
+														  size.x, size.y);
 							}
 							else
 							{
@@ -1378,18 +1697,17 @@ function Layer(_depth) constructor
 					// @description			Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
-								(layer_sprite_exists(parent.ID, ID));
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
+								and (layer_tilemap_exists(parent.ID, ID));
 					}
 					
 					// @returns				{undefined}
 					// @description			Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
-							parent.tilemapList.remove_value(self);
+							parent.tilemapList.removeValue(self);
 							
 							layer_tilemap_destroy(ID);
 						}
@@ -1397,25 +1715,42 @@ function Layer(_depth) constructor
 						return undefined;
 					}
 					
-					// @argument			{Layer.TilemapElement.TileData}
-					// @description			Set all Tiles in this Tilemap to the Tile that the
-					//						specified Tile Data refers to.
-					//						0 can be specified instead to set these tiles to empty.
+					// @argument			{Layer.TilemapElement.TileData|int}
+					// @description			Set all Tiles in this Tilemap to empty or the specified
+					//						Tile Data.
 					static clear = function(_tiledata)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if (_tiledata == undefined)
 							{
-								_tiledata = 0;
+								tilemap_clear(ID, 0);
 							}
-							else if (instanceof(_tiledata) == "TileData")
+							else if (string_copy(instanceof(_tiledata), 1, 8) == "TileData")
 							{
-								_tiledata = _tiledata.ID
+								if (_tiledata.isFunctional())
+								{
+									tilemap_clear(ID, _tiledata.ID);
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "clear";
+									var _errorText = ("Attempted to clear an Element using an" +
+													  "invalid Tile: " +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}" +
+													  "\n" + "Other: " + "{" + string(_tiledata) +
+													  "}");
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
 							}
-							
-							tilemap_clear(ID, _tiledata);
+							else
+							{
+								tilemap_clear(ID, _tiledata);
+							}
 						}
 						else
 						{
@@ -1435,23 +1770,19 @@ function Layer(_depth) constructor
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
 							{
-								parent.tilemapList.remove_value(self);
-									
+								parent.tilemapList.removeValue(self);
 								parent = _other;
-									
 								parent.tilemapList.add(self);
 									
 								layer_element_move(ID, parent.ID);
 							}
 							else if ((is_real(_other)) and (layer_exists(_other)))
 							{
-								parent.tilemapList.remove_value(self);
-									
+								parent.tilemapList.removeValue(self);
 								parent = undefined;
 									
 								layer_element_move(ID, _other);
@@ -1487,13 +1818,12 @@ function Layer(_depth) constructor
 				#endregion
 				#region <<Getters>>
 					
-					// @returns				{int} | On error: {int}
-					// @description			Return the bit mask value for this Tilemap.
-					//						Returns 0 if there is no mask and -1 in case of an error.
+					// @returns				{int} | On error: {int:-1}
+					// @description			Return the bit mask value for this Tilemap or 0 if there
+					//						is none.
 					static getMask = function()
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							return tilemap_get_mask(ID);
 						}
@@ -1517,8 +1847,7 @@ function Layer(_depth) constructor
 					// @description			Return the current Sprite frame of this Tilemap.
 					static getFrame = function()
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							return tilemap_get_frame(ID);
 						}
@@ -1538,40 +1867,13 @@ function Layer(_depth) constructor
 						}
 					}
 					
-					// @returns				{Vector2} | On error: {undefined}
-					// @description			Return the size of Tiles in this Tilemap.
-					static getCellSize = function()
-					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
-						{
-							return new Vector2(tilemap_get_tile_width(ID), 
-											   tilemap_get_tile_height(ID));
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "getCellSize";
-							var _errorText = ("Attempted to get properties of an invalid Element " +
-											  "or Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-							
-							return undefined;
-						}
-					}
-					
 					// @argument			{Vector2} location
 					// @returns				{Layer.TilemapElement.TileData}
 					// @description			Return a TileData referring to the Tile in a cell at the
 					//						specified location.
-					static getTile_inCell = function(_location)
+					static getTileInCell = function(_location)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							return new TileData(tilemap_get(ID, _location.x, _location.y));
 						}
@@ -1579,7 +1881,7 @@ function Layer(_depth) constructor
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "getTile_inCell";
+							var _methodName = "getTileInCell";
 							var _errorText = ("Attempted to get an Element of an invalid Element " +
 											  "or Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1595,10 +1897,9 @@ function Layer(_depth) constructor
 					// @returns				{Layer.TilemapElement.TileData}
 					// @description			Return a TileData referring to the Tile at specified
 					//						point in the Room.
-					static getTile_atPoint = function(_location)
+					static getTileAtPoint = function(_location)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							return new TileData(tilemap_get_at_pixel(ID, _location.x, _location.y));
 						}
@@ -1606,7 +1907,7 @@ function Layer(_depth) constructor
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "getTile_atPoint";
+							var _methodName = "getTileAtPoint";
 							var _errorText = ("Attempted to get an Element of an invalid Element " +
 											  "or Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1624,8 +1925,7 @@ function Layer(_depth) constructor
 					//						in space.
 					static getCellAtPoint = function(_location)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							return new Vector2
 							(
@@ -1660,10 +1960,9 @@ function Layer(_depth) constructor
 					//						confirmation whether the operation was a success or not. 
 					//						If Tile Data is not provided or 0 is provided in its
 					//						place, the cell will be cleared.
-					static setTile_inCell = function(_location, _tiledata)
+					static setTileInCell = function(_location, _tiledata)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if (_tiledata == undefined)
 							{
@@ -1681,7 +1980,7 @@ function Layer(_depth) constructor
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "setTile_inCell";
+							var _methodName = "setTileInCell";
 							var _errorText = ("Attempted to set a property on invalid Element or " +
 											  "Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1701,10 +2000,9 @@ function Layer(_depth) constructor
 					//						success or not.
 					//						If Thile Data is not provided or 0 is provided in its
 					//						place, the cell will be cleared.
-					static setTile_inPoint = function(_tiledata, _location)
+					static setTileAtPoint = function(_tiledata, _location)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if (_tiledata == undefined)
 							{
@@ -1723,7 +2021,7 @@ function Layer(_depth) constructor
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "setTile_inPoint";
+							var _methodName = "setTileAtPoint";
 							var _errorText = ("Attempted to set a property on invalid Element or " +
 											  "Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1739,8 +2037,7 @@ function Layer(_depth) constructor
 					// @description			Set the tile bit mask for this Tilemap.
 					static setMask = function(_mask)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							tilemap_set_mask(ID, _mask);
 						}
@@ -1764,8 +2061,7 @@ function Layer(_depth) constructor
 					// @description			Change the Tileset used by this Tilemap.
 					static setTileset = function(_tileset)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							tileset = _tileset;
 							
@@ -1790,8 +2086,7 @@ function Layer(_depth) constructor
 					//						cells it will use.
 					static setSize = function(_size)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							size = _size;
 							
@@ -1816,12 +2111,11 @@ function Layer(_depth) constructor
 				#region <<Execution>>
 					
 					// @argument			{Vector2} location?
-					// @description			Execute the draw of this Tilemap, independent of its 
-					//						draw handled by its Layer.
+					// @description			Execute the draw of this Tilemap, independent of its draw
+					//						executed by its Layer.
 					static render = function(_location)
 					{
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							if (_location == undefined) {_location = new Vector2(0, 0);}
 							
@@ -1853,8 +2147,7 @@ function Layer(_depth) constructor
 					{
 						var _constructorName = "Layer.TilemapElement";
 						
-						if ((instanceof(parent) == "Layer") and (is_real(parent.ID)) 
-						and (layer_exists(parent.ID)) and (layer_tilemap_exists(parent.ID, ID)))
+						if (self.isFunctional())
 						{
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							
@@ -1877,15 +2170,15 @@ function Layer(_depth) constructor
 			#endregion
 			#region [[Elements]]
 				
-				// @function				Layer.TilemapElement.TileData()
-				// @argument				{int|hex} id
-				// @description				Constructs a TileData Element, which refers to a Tile
-				//							in this Tilemap.
+				// @function			Layer.TilemapElement.TileData()
+				// @argument			{int|hex} id?
+				// @description			Constructs a TileData Element, which refers to a Tile
+				//						in this Tilemap.
 				//
-				//							Construction methods:
-				//							- New constructor
-				//							- Constructor copy: {Layer.TilemapElement.TileData} other
-				function TileData(_id) constructor
+				//						Construction methods:
+				//						- New constructor
+				//						- Constructor copy: {Layer.TilemapElement.TileData} other
+				function TileData() constructor
 				{
 					#region [[[Methods]]]
 						#region <<<Management>>>
@@ -1897,17 +2190,23 @@ function Layer(_depth) constructor
 								
 								parent = other;
 								
-								if (instanceof(argument[0]) == "TileData")
+								if (argument_count > 0)
 								{
-									//|Construction method: Constructor copy.
-									var _other = argument[0];
+									var _instanceof_self = instanceof(self);
+									var _instanceof_other = instanceof(argument[0]);
 									
-									ID = _other.ID;
-								}
-								else
-								{
-									//|Construction method: New constructor.
-									ID = argument[0];
+									if (_instanceof_other == _instanceof_self)
+									{
+										//|Construction method: Constructor copy.
+										var _other = argument[0];
+									
+										ID = _other.ID;
+									}
+									else
+									{
+										//|Construction method: New constructor.
+										ID = argument[0];
+									}
 								}
 							}
 							
@@ -1916,6 +2215,29 @@ function Layer(_depth) constructor
 							static isFunctional = function()
 							{
 								return ((ID >= 0));
+							}
+							
+							// @description			Empty the Tile this Tile Data refers to.
+							static clear = function()
+							{
+								if (!(ID >= 0))
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "clear";
+									var _errorText = ("Attempted to set a property of an invalid " +
+													  "Tile:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}") + 
+													  "\n" +
+													  "Clearing the Tile ID to 0.";
+									_errorReport.reportConstructorMethod([parent, self], _callstack,
+																		 _methodName, _errorText);
+									
+									ID = 0;
+								}
+								
+								ID = tile_set_empty(ID);
 							}
 							
 						#endregion
@@ -1973,13 +2295,13 @@ function Layer(_depth) constructor
 							// @returns				{bool}
 							// @description			Check if this Tile Data refers to a Tile that was
 							//						mirrored horizontally.
-							static isMirrored_x = function()
+							static isMirroredX = function()
 							{
 								if (!(ID >= 0))
 								{
 									var _errorReport = new ErrorReport();
 									var _callstack = debug_get_callstack();
-									var _methodName = "isMirrored_x";
+									var _methodName = "isMirroredX";
 									var _errorText = ("Attempted to get a property of an invalid " +
 													  "Tile:\n" +
 													  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1998,13 +2320,13 @@ function Layer(_depth) constructor
 							// @returns				{bool}
 							// @description			Check if this Tile Data refers to a Tile that was
 							//						mirrored vertically.
-							static isMirrored_y = function()
+							static isMirroredY = function()
 							{
 								if (!(ID >= 0))
 								{
 									var _errorReport = new ErrorReport();
 									var _callstack = debug_get_callstack();
-									var _methodName = "isMirrored_y";
+									var _methodName = "isMirroredY";
 									var _errorText = ("Attempted to get a property of an invalid " +
 													  "Tile:\n" +
 													  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -2048,29 +2370,6 @@ function Layer(_depth) constructor
 						#endregion
 						#region <<<Setters>>>
 							
-							// @description			Empty the Tile this Tile Data refers to.
-							static setEmpty = function()
-							{
-								if (!(ID >= 0))
-								{
-									var _errorReport = new ErrorReport();
-									var _callstack = debug_get_callstack();
-									var _methodName = "setEmpty";
-									var _errorText = ("Attempted to set a property of an invalid " +
-													  "Tile:\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Parent: " + "{" + string(parent) + "}") + 
-													  "\n" +
-													  "Clearing the Tile ID to 0.";
-									_errorReport.reportConstructorMethod([parent, self], _callstack,
-																		 _methodName, _errorText);
-									
-									ID = 0;
-								}
-								
-								ID = tile_set_empty(ID);
-							}
-							
 							// @argument			{int}
 							// @description			Change the Tile this Tile Data refers to, based
 							//						on the index of its tileset.
@@ -2099,13 +2398,13 @@ function Layer(_depth) constructor
 							// @argument			{bool}
 							// @description			Set the horizontal mirroring property of the Tile
 							//						this Tile Data refers to.
-							static setMirror_x = function(_mirror)
+							static setMirrorX = function(_mirror)
 							{
 								if (!(ID >= 0))
 								{
 									var _errorReport = new ErrorReport();
 									var _callstack = debug_get_callstack();
-									var _methodName = "setMirror_x";
+									var _methodName = "setMirrorX";
 									var _errorText = ("Attempted to set a property of an invalid " +
 													  "Tile:\n" +
 													  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -2124,13 +2423,13 @@ function Layer(_depth) constructor
 							// @argument			{bool}
 							// @description			Set the vertical mirroring property of the Tile
 							//						this Tile Data refers to.
-							static setMirror_y = function(_mirror)
+							static setMirrorY = function(_mirror)
 							{
 								if (!(ID >= 0))
 								{
 									var _errorReport = new ErrorReport();
 									var _callstack = debug_get_callstack();
-									var _methodName = "setMirror_y";
+									var _methodName = "setMirrorY";
 									var _errorText = ("Attempted to set a property of an invalid " +
 													  "Tile:\n" +
 													  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -2206,17 +2505,27 @@ function Layer(_depth) constructor
 						#endregion
 						#region <<<Conversion>>>
 							
+							// @argument			{bool} multiline?
 							// @returns				{string}
 							// @description			Create a string representing this constructor.
 							//						Overrides the string() conversion.
 							//						Content will be represented with the ID of this
 							//						TileData.
-							static toString = function()
+							static toString = function(_multiline)
 							{
 								var _constructorName = "Layer.TilemapElement.TileData";
 								
-								return ((ID >= 0) ? (_constructorName + "(" + string(ID) + ")")
-												  : (_constructorName + "<>"));
+								if (ID >= 0)
+								{
+									var _string = string(ID);
+									
+									return ((_multiline) ? _string
+														 : (_constructorName + "(" + _string + ")"));
+								}
+								else
+								{
+									return (_constructorName + "<>");
+								}
 							}
 							
 						#endregion
@@ -2226,15 +2535,14 @@ function Layer(_depth) constructor
 						argument_original = array_create(argument_count, undefined);
 						
 						var _i = 0;
-						
 						repeat (argument_count)
 						{
 							argument_original[_i] = argument[_i];
-					
+							
 							++_i;
 						}
 						
-						self.construct(argument_original[0]);
+						script_execute_ext(method_get_index(self.construct), argument_original);
 						
 					#endregion
 				}
@@ -2252,14 +2560,772 @@ function Layer(_depth) constructor
 					++_i;
 				}
 				
-				if (argument_count <= 0)
+				script_execute_ext(method_get_index(self.construct), argument_original);
+				
+			#endregion
+		}
+		
+		// @function			Layer.ParticleSystem()
+		// @argument			{bool} persistent?
+		// @description			Construct a Particle System Element used to create Particles of
+		//						any Particle Type on this Layer.
+		//
+		//						Construction methods:
+		//						- New element.
+		//						- Constructor copy: {Layer.ParticleSystem} other
+		function ParticleSystem() constructor
+		{
+			#region [[Methods]]
+				#region <<Management>>
+					
+					// @description			Initialize the constructor.
+					static construct = function()
+					{
+						parent = other;
+						parent.particleSystemList.add(self);
+						
+						ID = undefined;
+						
+						persistent = undefined;
+						
+						location = undefined;
+						
+						automaticUpdate = undefined;
+						automaticRender = undefined;
+						
+						drawOrder_newerOnTop = undefined;
+						
+						emitterList = undefined;
+						
+						var _instanceof_self = instanceof(self);
+						var _instanceof_other = ((argument_count > 0) ? instanceof(argument[0])
+																	  : undefined);
+						
+						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
+						{
+							//|Construction method: Constructor copy.
+							var _other = argument[0];
+							
+							persistent = _other.persistent;
+							
+							ID = part_system_create_layer(parent.ID, persistent);
+							
+							self.setLocation(_other.location);
+							self.setAutomaticUpdate(_other.automaticUpdate);
+							self.setAutomaticRender(_other.automaticRender);
+							self.setDrawOrder(_other.drawOrder_newerOnTop);
+							
+							emitterList = new List();
+							
+							var _i = 0;
+							repeat (_other.emitterList.getSize())
+							{
+								var _ = new ParticleEmitter(emitterList.getValue(_i));
+								_ = undefined;
+								
+								++_i;
+							}
+						}
+						else
+						{
+							//|Construction method: New constructor.
+							persistent = (((argument_count > 0) and (argument[0] != undefined))
+										  ? argument[0] : false);
+							
+							location = new Vector2(0, 0);
+							
+							automaticUpdate = true;
+							automaticRender = true;
+							
+							drawOrder_newerOnTop = true;
+							
+							emitterList = new List();
+							
+							ID = part_system_create_layer(parent.ID, persistent);
+						}
+					}
+					
+					// @returns				{bool}
+					// @description			Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((is_real(ID)) and (part_system_exists(ID)));
+					}
+					
+					// @returns				{undefined}
+					// @description			Remove the internal information from the memory.
+					static destroy = function()
+					{
+						if (instanceof(emitterList) == "List")
+						{
+							emitterList = emitterList.destroy();
+						}
+				
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							part_system_destroy(ID);
+							
+							ID = undefined;
+						}
+						
+						return undefined;
+					}
+					
+					// @description			Remove all Particles currently existing in this Particle
+					//						System.
+					static clear = function()
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							part_particles_clear(ID);
+						}
+					}
+					
+				#endregion
+				#region <<Setters>>
+					
+					// @argument			{Vector2} location
+					// @description			Set the offset for the Particle render.
+					static setLocation = function(_location)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							location = _location;
+							
+							part_system_position(ID, location.x, location.y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setLocation";
+							var _errorText = ("Attempted to set a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{bool} automaticUpdate
+					// @description			Set whether created Particles are executed without the
+					//						update call.
+					static setAutomaticUpdate = function(_automaticUpdate)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							automaticUpdate = _automaticUpdate;
+					
+							part_system_automatic_update(ID, automaticUpdate);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setAutomaticUpdate";
+							var _errorText = ("Attempted to set a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+			
+					// @argument			{bool} automaticRender
+					// @description			Set whether created Particles are executed without the
+					//						render call.
+					static setAutomaticRender = function(_automaticRender)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							automaticRender = _automaticRender;
+					
+							part_system_automatic_draw(ID, automaticRender);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setAutomaticRender";
+							var _errorText = ("Attempted to set a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+			
+					// @argument			{bool} newerOnTop
+					// @description			Set whether older Particles are drawn benath newer.
+					static setDrawOrder = function(_newerOnTop)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							drawOrder_newerOnTop = _newerOnTop;
+					
+							part_system_draw_order(ID, _newerOnTop);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setDrawOrder";
+							var _errorText = ("Attempted to set a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+			
+				#endregion
+				#region <<Getters>>
+					
+					// @returns				{int}
+					// @description			Return a number of currently existing Particles of this
+					//						Particle System.
+					static getParticleCount = function()
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							return part_particles_count(ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "getParticleCount";
+							var _errorText = ("Attempted to get a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+					
+							return 0;
+						}
+					}
+					
+				#endregion
+				#region <<Execution>>
+			
+					// @description			Render the Particles within this Particle System.
+					static render = function()
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							part_system_drawit(ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "render";
+							var _errorText = ("Attempted to render an invalid Particle System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @description			Advance all actions of created Particles by one step.
+					static update = function()
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							part_system_update(ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "update";
+							var _errorText = ("Attempted to update an invalid Particle System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{ParticleType} particleType
+					// @returns				{ParticleSystem.ParticleEmitter} | On error: {noone}
+					// @description			Create a Particle Emitter in this Particle System.
+					static createEmitter = function(_particleType)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							return new ParticleEmitter(_particleType);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "createEmitter";
+							var _errorText = ("Attempted to add Element to an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+					
+							return noone;
+						}
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					// @argument			{bool} multiline?
+					// @argument			{bool} full?
+					// @returns				{string}
+					// @description			Create a string representing this constructor.
+					//						Overrides the string() conversion.
+					//						Content will be represented with the ID and draw sorting 
+					//						properties of this Particle System.
+					static toString = function(_multiline, _full)
+					{
+						var _constructorName = "Layer.ParticleSystem";
+						
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
+							
+							var _string = "";
+							
+							var _string_emitterNumber = (((instanceof(emitterList) == "List")
+														   and (emitterList.isFunctional()))
+														  ? string(emitterList.getSize())
+														  : string(undefined));
+							
+							if (_full)
+							{
+								var _string_drawOrder_newerOnTop;
+								
+								switch (drawOrder_newerOnTop)
+								{
+									case true: _string_drawOrder_newerOnTop = "Newer on Top"; break;
+									case false: _string_drawOrder_newerOnTop = "Older on Top"; break;
+									default: _string_drawOrder_newerOnTop = string(undefined); break;
+								}
+								
+								_string = ("ID: " + string(ID) + _mark_separator+
+										   "Persistent: " + string(persistent) + _mark_separator +
+										   "Location: " + string(location) + _mark_separator +
+										   "Automatic Update: " + string(automaticUpdate)
+																+ _mark_separator +
+										   "Automatic Render: " + string(automaticRender)
+																+ _mark_separator +
+										   "Draw Order: " + _string_drawOrder_newerOnTop
+														  + _mark_separator +
+										   "Emitter Number: " + _string_emitterNumber);
+							}
+							else
+							{
+								_string = ("ID: " + string(ID) + _mark_separator +
+										   "Emitter Number: " + _string_emitterNumber);
+							}
+							
+							return ((_multiline) ? _string
+												 : (_constructorName + "(" + _string + ")"));
+						}
+						else
+						{
+							return (_constructorName + "<>");
+						}
+					}
+					
+				#endregion
+			#endregion
+			#region [[Element]]
+				
+				// @function			Layer.ParticleSystem.ParticleEmitter()
+				// @argument			{ParticleType} particleType
+				//
+				// @description			Construct a Particle Emitter resource in this Particle
+				//						System, used to create particles of a Particles Type in
+				//						a region.
+				//
+				//						Construction methods:
+				//						- New element.
+				//						- Constructor copy: {Layer.ParticleSystem.ParticleEmitter}
+				//											other
+				function ParticleEmitter() constructor
 				{
-					self.construct();
+					#region [[[Methods]]]
+						#region <<<Management>>>
+					
+							// @description			Initialize the constructor.
+							static construct = function()
+							{
+								parent = other;
+								parent.emitterList.add(self);
+								
+								particleType = undefined;
+								
+								location = undefined;
+								shape = undefined;
+								distribution = undefined;
+								
+								streamEnabled = true;
+								streamCount = 0;
+								
+								ID = part_emitter_create(parent.ID);
+								
+								if (argument_count > 0)
+								{
+									if (string_copy(string(instanceof(argument[0])), 1, 15)
+										== "ParticleEmitter")
+									{
+										//|Construction method: Constructor copy.
+										var _other = argument[0];
+										
+										particleType = _other.particleType;
+										
+										if ((_other.location != undefined)
+										and (_other.shape != undefined)
+										and (_other.distribution != undefined))
+										{
+											self.setRegion(_other.location, _other.shape,
+														   _other.distribution);
+										}
+									}
+									else
+									{
+										//|Construction method: New constructor.
+										particleType = argument[0];
+									}
+								}
+							}
+							
+							// @returns				{bool}
+							// @description			Check if this constructor is functional.
+							static isFunctional = function()
+							{
+								return ((is_real(ID))
+										 and (string_copy(string(instanceof(parent)), 1, 14)
+											  == "ParticleSystem") and (parent.isFunctional())
+										 and (part_emitter_exists(parent.ID, ID)))
+							}
+							
+							// @returns				{undefined}
+							// @description			Remove the internal information from the memory.
+							static destroy = function()
+							{
+								if ((is_real(ID))
+									and (string_copy(string(instanceof(parent)), 1, 14)
+									== "ParticleSystem") and (parent.isFunctional())
+									and (part_emitter_exists(parent.ID, ID)))
+								{
+									parent.emitterList.removeValue(self);
+									
+									part_emitter_destroy(parent.ID, ID);
+									
+									ID = undefined;
+								}
+								
+								return undefined;
+							}
+							
+							// @description			Set all properties of this Particle Emitter to
+							//						default, except for its used Particle Type.
+							static clear = function()
+							{
+								if (self.isFunctional())
+								{
+									location = undefined;
+									shape = undefined;
+									distribution = undefined;
+								
+									streamEnabled = true;
+									streamCount = 0;
+									
+									part_emitter_clear(parent.ID, ID);
+								}
+								else if ((string_copy(string(instanceof(parent)), 1, 14) ==
+								"ParticleSystem") and (parent.isFunctional()))
+								{
+									location = undefined;
+									shape = undefined;
+									distribution = undefined;
+								
+									streamEnabled = true;
+									streamCount = 0;
+									
+									ID = part_emitter_create(parent.ID);
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "setRegion";
+									var _errorText = ("Attempted to clear an Element of an " +
+													  "invalid Particle System:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}");
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+						#endregion
+						#region <<<Setters>>>
+					
+							// @argument			{Vector4} location
+							// @argument			{constant:ps_shape_*} shape
+							// @argument			{constant:ps_distr_*} distribution
+							// @description			Set the region in which the particles will be
+							//						created.
+							static setRegion = function(_location, _shape, _distribution)
+							{
+								if (self.isFunctional())
+								{
+									location = _location;
+									shape = _shape;
+									distribution = _distribution;
+									
+									part_emitter_region(parent.ID, ID, location.x1, location.x2,
+														location.y1, location.y2, shape,
+														distribution);
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "setRegion";
+									var _errorText = ("Attempted to set properties on invalid " +
+													  "Element or Particle System:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}");
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+							// @argument			{bool} streamEnabled
+							// @description			Toggle continous particle streaming.
+							static setStreamEnabled = function(_streamEnabled)
+							{
+								if (self.isFunctional())
+								{
+									streamEnabled = _streamEnabled;
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "setStreamEnabled";
+									var _errorText = ("Attempted to set a property on invalid " +
+													  "Element or Particle System:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}");
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+							// @argument			{int} number
+							// @description			Set the number of created particles during a
+							//						stream.
+							static setStreamCount = function(_number)
+							{
+								if (self.isFunctional())
+								{
+									streamCount = _number;
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "setStreamCount";
+									var _errorText = ("Attempted to set a property on invalid " +
+													  "Element or Particle System:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}");
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+						#endregion
+						#region <<<Execution>>>
+					
+							// @argument			{int} number
+							// @description			Create a number of Particles within the region.
+							static burst = function(_number)
+							{
+								if (self.isFunctional())
+								and (instanceof(particleType) == "ParticleType")
+								and (particleType.isFunctional())
+								{
+									part_emitter_burst(parent.ID, ID, particleType.ID, _number);
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "burst";
+									var _errorText = ("Attempted to emit Praticles using an " +
+													  "invalid Particle Emitter, Particle System " +
+													  "or Particle Type:\n" +
+													  "Self: " + "{" + string(self) + "}" + "\n" +
+													  "Parent: " + "{" + string(parent) + "}" +
+													  "\n" +
+													  "Target: " + "{" + string(particleType));
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+							// @description			Continously create Particles using the stream 
+							//						configuration.
+							static stream = function()
+							{
+								if (self.isFunctional())
+								and (instanceof(particleType) == "ParticleType")
+								and (particleType.isFunctional())
+								{
+									var _number = ((streamEnabled) ? streamCount : 0);
+									
+									part_emitter_stream(parent.ID, ID, particleType.ID, _number);
+								}
+								else
+								{
+									var _errorReport = new ErrorReport();
+									var _callstack = debug_get_callstack();
+									var _methodName = "stream";
+									var _errorText = ("Attempted to emit Praticles using an " +
+													  "invalid Particle Emitter, Particle System " +
+													  "or Particle Type:\n" +
+													  "Self: " + "{" + string(self) + "}" +"\n" +
+													  "Parent: " + "{" + string(parent) + "}" +
+													  "\n" +
+													  "Target: " + "{" + string(particleType));
+									_errorReport.reportConstructorMethod(self, _callstack,
+																		 _methodName, _errorText);
+								}
+							}
+							
+						#endregion
+						#region <<<Conversion>>>
+							
+							// @returns				{string}
+							// @description			Create a string representing this constructor.
+							//						Overrides the string() conversion.
+							//						//+TODO: Content description
+							static toString = function(_multiline, _full)
+							{
+								var _constructorName = "Layer.ParticleSystem.ParticleEmitter";
+								
+								if (self.isFunctional())
+								{
+									var _string = "";
+									var _mark_separator = ((_multiline) ? "\n" : ", ");
+									
+									if (!_full)
+									{
+										_string = ("ID: " + string(ID) + _mark_separator +
+												   "Particle Type: " + string(particleType));
+									}
+									else
+									{
+										var _string_shape;
+										switch (shape)
+										{
+											case ps_shape_rectangle:
+												_string_shape = "Rectangle";
+											break;
+											
+											case ps_shape_ellipse:
+												_string_shape = "Ellipse";
+											break;
+											
+											case ps_shape_diamond:
+												_string_shape = "Diamond";
+											break;
+											
+											case ps_shape_line:
+												_string_shape = "Line";
+											break;
+											
+											default:
+												_string_shape = string(undefined);
+											break;
+										}
+										
+										var _string_distribution;
+										switch (distribution)
+										{
+											case ps_distr_linear:
+												_string_distribution = "Linear";
+											break;
+											
+											case ps_distr_gaussian:
+												_string_distribution = "Gaussian";
+											break;
+											
+											case ps_distr_invgaussian:
+												_string_distribution = "Inverse Gaussian";
+											break;
+											
+											default:
+												_string_distribution = string(undefined);
+											break;
+											
+										}
+										
+										_string = ("ID: " + string(ID) + _mark_separator +
+												   "Particle Type: " + string(particleType)
+																	 + _mark_separator +
+												   "Location: " + string(location)
+																+ _mark_separator +
+												   "Shape: " + _string_shape + _mark_separator +
+												   "Distribution: " + _string_distribution
+																	+ _mark_separator +
+												   "Stream Enabled: " + string(streamEnabled)
+																	  + _mark_separator +
+												   "Stream Count: " + string(streamCount));
+									}
+									
+									return ((_multiline) ? _string : (_constructorName + "(" +
+																	  _string + ")"));
+								}
+								else
+								{
+									return (_constructorName + "<>");
+								}
+							}
+							
+						#endregion
+					#endregion
+					#region [[[Constructor]]]
+						
+						argument_original = array_create(argument_count, undefined);
+						
+						var _i = 0;
+						repeat (argument_count)
+						{
+							argument_original[_i] = argument[_i];
+							
+							++_i;
+						}
+						
+						script_execute_ext(method_get_index(self.construct), argument_original);
+						
+					#endregion
 				}
-				else
+				
+			#endregion
+			#region [[Constructor]]
+				
+				argument_original = array_create(argument_count, undefined);
+				
+				var _i = 0;
+				repeat (argument_count)
 				{
-					script_execute_ext(method_get_index(self.construct), argument_original);
+					argument_original[_i] = argument[_i];
+					
+					++_i;
 				}
+				
+				script_execute_ext(method_get_index(self.construct), argument_original);
 				
 			#endregion
 		}

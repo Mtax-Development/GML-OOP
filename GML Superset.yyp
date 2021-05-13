@@ -4,7 +4,6 @@
     {"id":{"name":"PriorityQueue","path":"scripts/PriorityQueue/PriorityQueue.yy",},"order":3,},
     {"id":{"name":"Triangle","path":"scripts/Triangle/Triangle.yy",},"order":9,},
     {"id":{"name":"Color2","path":"scripts/Color2/Color2.yy",},"order":5,},
-    {"id":{"name":"ParticleSystem","path":"scripts/ParticleSystem/ParticleSystem.yy",},"order":3,},
     {"id":{"name":"ArrayParser","path":"scripts/ArrayParser/ArrayParser.yy",},"order":1,},
     {"id":{"name":"Grid","path":"scripts/Grid/Grid.yy",},"order":5,},
     {"id":{"name":"Sprite","path":"scripts/Sprite/Sprite.yy",},"order":5,},
