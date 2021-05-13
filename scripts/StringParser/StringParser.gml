@@ -5,7 +5,7 @@
 ///
 ///							Construction methods:
 ///							- New constructor
-///							   If the string is not specified, an empty one will be created.
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {StringParser} other
 function StringParser() constructor
 {
@@ -15,7 +15,10 @@ function StringParser() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (argument_count > 0)
+				//|Construction method: Empty.
+				ID = "";
+				
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "StringParser")
 					{
@@ -29,10 +32,6 @@ function StringParser() constructor
 						//|Construction method: New constructor.
 						ID = string(argument[0]);
 					}
-				}
-				else
-				{
-					ID = "";
 				}
 			}
 			
@@ -616,29 +615,23 @@ function StringParser() constructor
 				}
 			}
 			
-			// @returns				{string}
-			// @description			Display the string in the output of the application.
-			static display_output = function()
+			// @description			Display the string in the standard output of the application.
+			static displayOutput = function()
 			{
 				show_debug_message(ID);
-				
-				return string(ID);
 			}
 			
-			// @returns				{string}
 			// @description			Pause the execution of the application to display the string in 
 			//						the message box handled by the build target if it supports it.
-			static display_messageBox = function()
+			static displayMessageBox = function()
 			{
 				show_message(ID);
-				
-				return string(ID);
 			}
 			
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline
+			// @argument			{bool} multiline?
 			// @argument			{int|all} elementLength?
 			// @argument			{string} mark_cut?
 			// @returns				{string}
@@ -689,7 +682,7 @@ function StringParser() constructor
 			}
 			
 			// @return				{char[]}
-			// @description			Return all characters of the string in an array.
+			// @description			Return an array containing every character of the string.
 			static toArray = function()
 			{
 				var _string = string(ID);
@@ -708,8 +701,9 @@ function StringParser() constructor
 				return _array;
 			}
 			
+			// @argument			{any[]:string}
 			// @returns				{string}
-			// @description			Connect all values of an array into one string.
+			// @description			Set the string into one created from all values of an array.
 			static fromArray = function(_array)
 			{
 				var _string = "";
