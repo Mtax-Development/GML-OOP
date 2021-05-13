@@ -1,11 +1,11 @@
 /// @function				Angle()
 /// @argument				{real} value?
-///
+///							
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
-///
+///							
 ///							Construction methods:
 ///							- New constructor.
-///							   Unspecified value will be set to 0.
+///							- Default value: {void|undefined}
 ///							- Constructor copy: {Angle} other
 function Angle() constructor
 {
@@ -15,9 +15,10 @@ function Angle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Default value.
 				value = 0;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Angle")
 					{
@@ -29,7 +30,8 @@ function Angle() constructor
 					else if (is_real(argument[0]))
 					{
 						//|Construction method: New constructor.
-						self.modify(argument[0]);
+		                value += argument[0];
+		                value -= (360 * (floor(value / 360)));
 					}
 				}
 			}
@@ -38,7 +40,7 @@ function Angle() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (is_real(value));
+				return ((is_real(value)) and (!is_nan(value)) and (!is_infinity(value)));
 			}
 			
 		#endregion
@@ -46,7 +48,8 @@ function Angle() constructor
 			
 			// @argument			{Angle} other
 			// @returns				{real}
-			// @description			Returns the difference between two Angles, considering wrapping.
+			// @description			Returns the difference between this Angle and an other one, taking
+			//						wrapping into account.
 			static difference = function(_other)
 			{
 				var _result = (max(value, _other.value) - min(value, _other.value));
@@ -68,15 +71,18 @@ function Angle() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented as the value of this Angle.
-			static toString = function()
+			//						Content will be represented as the value of this Container.
+			static toString = function(_multiline)
 			{
 				if (is_real(value))
 				{
-					return (instanceof(self) + "(" + string(value) + ")");
+					var _string = string(value);
+					
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else
 				{
