@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Parsers",
-    "path": "folders/Scripts/Parsers.yy",
+    "name": "Handlers",
+    "path": "folders/Scripts/Handlers.yy",
   },
   "resourceVersion": "1.0",
   "name": "ArrayParser",

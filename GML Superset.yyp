@@ -68,7 +68,6 @@
     {"folderPath":"folders/Scripts/Shapes.yy","order":2,"resourceVersion":"1.0","name":"Shapes","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Resources.yy","order":1,"resourceVersion":"1.0","name":"Resources","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Data Structures.yy","order":3,"resourceVersion":"1.0","name":"Data Structures","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scripts/Parsers.yy","order":4,"resourceVersion":"1.0","name":"Parsers","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Handlers.yy","order":4,"resourceVersion":"1.0","name":"Handlers","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Debug.yy","order":5,"resourceVersion":"1.0","name":"Debug","tags":[],"resourceType":"GMFolder",},
   ],

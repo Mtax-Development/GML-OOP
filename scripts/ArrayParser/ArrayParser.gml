@@ -1,8 +1,8 @@
 /// @function				ArrayParser()
 /// @argument				{any[]} array?
-///
-/// @description			Constructs a Parser for operating arrays.
-///
+///							
+/// @description			Constructs a Handler for parsing arrays.
+///							
 ///							Construction methods:
 ///							- New constructor
 ///							   If the array is not specified, an empty one will be created.
