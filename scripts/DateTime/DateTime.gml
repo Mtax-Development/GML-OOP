@@ -1,27 +1,23 @@
 /// @function				DateTime()
-/// @argument				{int} year?
-/// @argument				{int} month?
-/// @argument				{int} day?
+/// @argument				{int} year
+/// @argument				{int} month
+/// @argument				{int} day
 /// @argument				{int} hour?
 /// @argument				{int} minute?
 /// @argument				{int} second?
-///
+///							
 /// @description			Constructs a container for a DateTime.
-///
+///							
 ///							Construction methods:
 ///							- New constructor
-///							   Providing no arguments will be treated as the "Empty" construcion
-///							   method.
-///							   Providing only the first argument as a number will be treated as the
-///							   "Wrapper" construction method.
-///							- Empty: {void}
 ///							- From one array: {int[]} array
 ///							   Array elements will be applied in the following order:
-///							   [year, month, day, hour, minute, second].
+///							   [year, month?, day?, hour?, minute?, second?].
 ///							- From two arrays: {int[]} date, {int[]} time
 ///								Array elements will be applied in the following order:
-///								[year, month, day], [hour, minute, second]
+///								[year, month, day], [hour, minute, second?]
 ///							- Wrapper: {real:datetime} datetime
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {DateTime} other
 function DateTime() constructor
 {
@@ -31,8 +27,8 @@ function DateTime() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
-				
 				year = undefined;
 				month = undefined;
 				week = undefined;
@@ -41,7 +37,7 @@ function DateTime() constructor
 				minute = undefined;
 				second = undefined;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "DateTime")
 					{
@@ -80,9 +76,13 @@ function DateTime() constructor
 								var _array_date = argument[0];
 								var _array_time = argument[1];
 								
+								var _second = (((array_length(_array_time) > 2)
+											   and (_array_time[2] != undefined))
+											   ? _array_time[2] : 0);
+								
 								ID = date_create_datetime(_array_date[0], _array_date[1],
 														  _array_date[2], _array_time[0],
-														  _array_time[1], _array_time[2]);
+														  _array_time[1], _second);
 								
 								year = date_get_year(ID);
 								month = date_get_month(ID);
@@ -94,11 +94,23 @@ function DateTime() constructor
 							}
 							else
 							{
-								var _array_dateTime = argument[0];
+								var _array = argument[0];
+								var _array_length = array_length(argument[0]);
 								
-								ID = date_create_datetime(_array_dateTime[0], _array_dateTime[1],
-														  _array_dateTime[2], _array_dateTime[3],
-														  _array_dateTime[4], _array_dateTime[5]);
+								var _year = _array[0];
+								var _month = (((_array_length > 1) and (_array[1] != undefined))
+											  ? _array[1] : 1);
+								var _day = (((argument_count > 2) and (_array[2] != undefined))
+											? _array[2] : 1);
+								var _hour = (((argument_count > 3) and (_array[3] != undefined))
+											 ? _array[3] : 0);
+								var _minute = (((argument_count > 4) and (_array[4] != undefined))
+											   ? _array[4] : 0);
+								var _second = (((argument_count > 5) and (_array[5] != undefined))
+											   ? _array[5] : 0);
+								
+								ID = date_create_datetime(_year, _month, _day, _hour, _minute,
+														  _second);
 								
 								year = date_get_year(ID);
 								month = date_get_month(ID);
@@ -112,12 +124,9 @@ function DateTime() constructor
 						else
 						{
 							//|Construction method: New datetime.
-							var _year = (((argument_count > 0) and (argument[0] != undefined)) ? 
-										argument[0] : 1970);
-							var _month = (((argument_count > 1) and (argument[1] != undefined)) ? 
-										argument[1] : 1);
-							var _day = (((argument_count > 2) and (argument[2] != undefined)) ? 
-										argument[2] : 1);
+							var _year = argument[0];
+							var _month = argument[1];
+							var _day = argument[2];
 							var _hour = (((argument_count > 3) and (argument[3] != undefined)) ? 
 										argument[3] : 0);
 							var _minute = (((argument_count > 4) and (argument[4] != undefined)) ? 
@@ -153,7 +162,15 @@ function DateTime() constructor
 			//						set timezone.
 			static setCurrent = function()
 			{
-				self.construct(date_current_datetime());
+				ID = date_current_datetime();
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
 			}
 			
 			// @argument			{int} year
@@ -165,7 +182,15 @@ function DateTime() constructor
 			// @description			Set this DateTime to a newly created one.
 			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
 			{
-				self.construct(date_create_datetime(_year, _month, _day, _hour, _minute, _second));
+				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
 			}
 			
 			// @argument			{int} years
@@ -186,140 +211,210 @@ function DateTime() constructor
 					ID = date_inc_minute(ID, _minutes);
 					ID = date_inc_second(ID, _seconds);
 					
-					self.construct(ID);
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "modify";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
 			// @argument			{int} number
 			// @description			Modify the years in this DateTime by a specified number.
-			static modify_years = function(_number)
+			static modifyYears = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_year(ID, _number));
+					ID = date_inc_year(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_years";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyYears";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the months in this DateTime by a specified number.
-			static modify_months = function(_number)
+			static modifyMonths = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_month(ID, _number));
+					ID = date_inc_month(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_months";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyMonths";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the weeks in this DateTime by a specified number.
-			static modify_weeks = function(_number)
+			static modifyWeeks = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_week(ID, _number));
+					ID = date_inc_week(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_weeks";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyWeeks";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the days in this DateTime by a specified number.
-			static modify_days = function(_number)
+			static modifyDays = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_day(ID, _number));
+					ID = date_inc_day(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_days";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyDays";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the hours in this DateTime by a specified number.
-			static modify_hours = function(_number)
+			static modifyHours = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_hour(ID, _number));
+					ID = date_inc_hour(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_hours";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyHours";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the minutes in this DateTime by a specified number.
-			static modify_minutes = function(_number)
+			static modifyMinutes = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_minute(ID, _number));
+					ID = date_inc_minute(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_minutes";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifyMinutes";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int} number
+			// @argument			{int} value
 			// @description			Modify the seconds in this DateTime by a specified number.
-			static modify_seconds = function(_number)
+			static modifySeconds = function(_value)
 			{
 				if (is_real(ID))
 				{
-					self.construct(date_inc_second(ID, _number));
+					ID = date_inc_second(ID, _value)
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "modify_seconds";
-					var _errorText = ("Attempted to modify an invalid date: {" + string(ID) + "}");
+					var _methodName = "modifySeconds";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
@@ -340,7 +435,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getDate";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -360,7 +456,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getTime";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -380,7 +477,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getDaysInYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -400,7 +498,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getDaysInMonth";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -421,7 +520,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getWeekOfYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -441,7 +541,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getDayOfYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -461,7 +562,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getHourOfYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -481,7 +583,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getMinuteOfYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -501,7 +604,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSecondOfYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -523,7 +627,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getWeekday";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -544,7 +649,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isToday";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -552,8 +658,8 @@ function DateTime() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the date component is a leap year - a calendar year 
-			//						that contains an additional day			
+			// @description			Check if the date component is a leap year, which is a calendar
+			//						year that contains an additional day			
 			static isLeapYear = function()
 			{
 				if (is_real(ID))
@@ -565,7 +671,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isLeapYear";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -574,8 +681,9 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{int} | On error: {undefined}
-			// @description			Compare two DateTimes and check which is first.
-			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
+			// @description			Compare this DateTime with an other one and check which is first.
+			//						Returns -1 if this date and time is earlier, 0 if even, 1 if
+			//						later.
 			static compareDateTime = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -598,8 +706,9 @@ function DateTime() constructor
 		
 			// @argument			{DateTime} other
 			// @returns				{int} | On error: {undefined}
-			// @description			Compare two dates (without time) and check which is first.
-			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
+			// @description			Compare the date components of this DateTime and an other one and
+			//						check which is first. Returns -1 if this date is earlier, 0 if
+			//						even, 1 if later.
 			static compareDate = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -622,8 +731,9 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{int} | On error: {undefined}
-			// @description			Compare time values of two DateTimes and check which is first.
-			//						Returns -1 if this date is earlier, 0 if even, 1 if later.
+			// @description			Compare the time components of this DateTimes and an other one
+			//						and check which is first. Returns -1 if this time is earlier, 0
+			//						if even, 1 if later.
 			static compareTime = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -646,8 +756,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of years between date components of two DateTimes.
-			//						Incomplete years are returned as a fraction.
+			// @description			Return number of years between date components of this DateTime
+			//						and an other one. Incomplete years are returned as a fraction.
 			static spanOfYears = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -670,8 +780,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of months between date components of two DateTimes.
-			//						Incomplete months are returned as a fraction.
+			// @description			Return number of months between date components of this DateTime
+			//						and an other one. Incomplete months are returned as a fraction.
 			static spanOfMonths = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -694,8 +804,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of weeks between date components of two DateTimes.
-			//						Incomplete weeks are returned as a fraction.
+			// @description			Return number of weeks between date components of this DateTime
+			//						and an other one. Incomplete weeks are returned as a fraction.
 			static spanOfWeeks = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -718,8 +828,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of days between date components of two DateTimes.
-			//						Incomplete days are returned as a fraction.
+			// @description			Return number of days between date components of this DateTime
+			//						and an other one. Incomplete days are returned as a fraction.
 			static spanOfDays = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -742,8 +852,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of hours between time components of two DateTimes.
-			//						Incomplete hours are returned as a fraction.
+			// @description			Return number of hours between time components of this DateTime
+			//						and an other one. Incomplete hours are returned as a fraction.
 			static spanOfHours = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -766,8 +876,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{real} | On error: {undefined}
-			// @description			Return number of minutes between time components of two DateTimes.
-			//						Incomplete minutes are returned as a fraction.
+			// @description			Return number of minutes between time components of this DateTime
+			//						and an other one. Incomplete minutes are returned as a fraction.
 			static spanOfMinutes = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -790,7 +900,8 @@ function DateTime() constructor
 			
 			// @argument			{DateTime} other
 			// @returns				{int} | On error: {undefined}
-			// @description			Return number of seconds between time components of two DateTimes.
+			// @description			Return number of seconds between time components of this DateTime
+			//						and an other one.
 			static spanOfSeconds = function(_other)
 			{
 				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
@@ -828,8 +939,8 @@ function DateTime() constructor
 					{
 						var _mark_separator = ((_multiline) ? "\n" : ", ");
 						
-						var _string = ("Date: " + self.toString_date() + _mark_separator +
-									   "Time: " + self.toString_time() + _mark_separator +
+						var _string = ("Date: " + self.toStringDate() + _mark_separator +
+									   "Time: " + self.toStringTime() + _mark_separator +
 									   "Is today: " + string(self.isToday()) + _mark_separator +
 									   "Is leap year: " + string(self.isLeapYear()) 
 														+ _mark_separator +
@@ -866,7 +977,7 @@ function DateTime() constructor
 			
 			// @returns				{string}
 			// @description			Return the date component as string.
-			static toString_date = function()
+			static toStringDate = function()
 			{
 				if (is_real(ID))
 				{
@@ -876,7 +987,7 @@ function DateTime() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "toString_date";
+					var _methodName = "toStringDate";
 					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -886,7 +997,7 @@ function DateTime() constructor
 			
 			// @returns				{string}
 			// @description			Return the time component as string.
-			static toString_time = function()
+			static toStringTime = function()
 			{
 				if (is_real(ID))
 				{
@@ -896,7 +1007,7 @@ function DateTime() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "toString_time";
+					var _methodName = "toStringTime";
 					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -915,7 +1026,7 @@ function DateTime() constructor
 			// @returns				{int[]|undefined[]}
 			// @description			Return all elements of the date component as an array, ordered
 			//						from the longest units of time to the shortest.
-			static toArray_date = function()
+			static toArrayDate = function()
 			{
 				return [year, month, day];
 			}
@@ -923,7 +1034,7 @@ function DateTime() constructor
 			// @returns				{int[]|undefined[]}
 			// @description			Return all elements of the time component as an array, ordered
 			//						from the longest units of time to the shortest.
-			static toArray_time = function()
+			static toArrayTime = function()
 			{
 				return [hour, minute, second];
 			}
