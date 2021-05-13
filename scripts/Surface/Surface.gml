@@ -1,10 +1,11 @@
 /// @function				Surface()
 /// @argument				{Vector2} size
-///
-///	@description			Constructs a Surface resource, a separate canvas for graphics drawing.
-///
+///							
+///	@description			Constructs a Surface resource, a separate canvas for graphics rendering.
+///							
 ///							Construction methods:
 ///							- New constructor
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Surface} other
 function Surface() constructor	
 {
@@ -14,26 +15,30 @@ function Surface() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				size = undefined;
-				onRecreate = undefined;
+				onCreate = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Surface"))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					size = _other.size;
-					onRecreate = _other.onRecreate;
-					ID = surface_create(size.x, size.y);
-					surface_copy(ID, 0, 0, _other.ID);
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					size = argument[0];
-					onRecreate = undefined;
-					ID = surface_create(size.x, size.y);
+					if (instanceof(argument[0]) == "Surface")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
+						
+						size = _other.size;
+						onCreate = _other.onCreate;
+						
+						ID = surface_create(size.x, size.y);
+						surface_copy(ID, 0, 0, _other.ID);
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						size = argument[0];
+						ID = surface_create(size.x, size.y);
+					}
 				}
 			}
 			
@@ -44,33 +49,68 @@ function Surface() constructor
 				return ((is_real(ID)) and (surface_exists(ID)));
 			}
 			
-			// @description			Create this Surface if it was destroyed.
+			// @description			Create this Surface if it does not exists.
+			//						The method that was specified to be executed on creation will be
+			//						called only if this Surface did not exist and was created,
+			//						providing {self} as an argument.
 			static create = function()
 			{
-				if (!((is_real(ID)) and (surface_exists(ID))))
+				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
 					ID = surface_create(size.x, size.y);
 					
-					if (is_method(onRecreate))
+					if (is_method(onCreate))
 					{
-						onRecreate();
+						onCreate(self);
 					}
 				}
 			}
 			
+			// @argument			{int:color} color?
+			// @argument			{real} alpha?
+			// @description			Set the entire content of this Surface to the specified color.
+			static clear = function(_color, _alpha)
+			{
+				self.create();
+				
+				if (_color == undefined) {_color = c_black;}
+				
+				var _target = (surface_get_target() == ID)
+				
+				if (!_target)
+				{
+					surface_set_target(ID);
+				}
+				
+				if (_alpha == undefined)
+				{
+					draw_clear(_color);
+				}
+				else
+				{
+					draw_clear_alpha(_color, _alpha);
+				}
+				
+				if (!_target)
+				{
+					surface_reset_target();
+				}
+			}
+			
 			// @argument			{Vector2} location
-			// @argument			{Surface|surface} other
+			// @argument			{Surface|int:surface} other
 			// @argument			{Vector4} other_part?
-			// @description			Copy content of other Surface to a specified location on this one.
+			// @description			Copy content of other Surface to a specified location on this
+			//						Surface.
 			static copy = function(_location, _other)
 			{
-				var _surface_source = (instanceof(_other) == "Surface" ? _other.ID : _other);
+				var _other_value = (instanceof(_other) == "Surface" ? _other.ID : _other);
 					
-				if ((is_real(_surface_source)) and (surface_exists(_surface_source)))
+				if ((is_real(_other_value)) and (surface_exists(_other_value)))
 				{
 					if (argument_count > 2)
 					{
-						if (!(is_real(ID)) and (surface_exists(ID)))
+						if ((!is_real(ID)) or (!surface_exists(ID)))
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
@@ -82,11 +122,13 @@ function Surface() constructor
 											  "Writing it to a recreated surface.");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
+							
+							self.create();
 						}
 						
 						var _other_part = argument[2];
 						
-						surface_copy_part(ID, _location.x, _location.y, _surface_source, 
+						surface_copy_part(ID, _location.x, _location.y, _other_value, 
 											_other_part.x1, _other_part.y1, _other_part.x2,
 											_other_part.y2);
 					}
@@ -94,7 +136,7 @@ function Surface() constructor
 					{
 						self.create();
 						
-						surface_copy(ID, _location.x, _location.y, _surface_source);
+						surface_copy(ID, _location.x, _location.y, _other_value);
 					}
 				}
 				else
@@ -105,8 +147,7 @@ function Surface() constructor
 					var _errorText = ("Attempted to copy data from an invalid Surface: " +
 									  "Self: " + "{" + string(self) + "}" + "\n" +
 									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															_errorText);
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -123,35 +164,9 @@ function Surface() constructor
 			}
 			
 		#endregion
-		#region <Setters>
-			
-			// @argument			{Vector2} size
-			// @descirption			Set the size of the Surface.
-			static setSize = function(_size)
-			{
-				size = _size;
-				
-				if (!((is_real(ID)) and (surface_exists(ID))))
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSize";
-					var _errorText = ("Attempted to change size of an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n" +
-									  "Recreating the Surface with the target size.");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					ID = surface_create(size.x, size.y);
-				}
-				else
-				{
-					surface_resize(ID, size.x, size.y);
-				}	
-			}
-			
-		#endregion
 		#region <Getters>
 			
+			// @returns				{bool}
 			// @description			Check whether this Surface is the current draw target.
 			static isTarget = function()
 			{
@@ -163,14 +178,13 @@ function Surface() constructor
 			// @argument			{bool} getFull?
 			// @returns				{int:color|int:color:abgr32bit} | On error: {undefined}
 			// @description			Get the pixel color on a specific spot on a Surface.
-			//						A full abgr 32bit information can be obtainted if specified,
-			//						otherwise {Color} will be returned.
+			//						A full abgr 32bit information can be obtainted if specified.
 			static getPixel = function(_location, _getFull)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{	
-					return (_getFull ? surface_getpixel_ext(ID, _location.x, _location.y) :
-									   surface_getpixel(ID, _location.x, _location.y));
+					return ((_getFull) ? surface_getpixel_ext(ID, _location.x, _location.y) :
+										 surface_getpixel(ID, _location.x, _location.y));
 				}
 				else
 				{
@@ -178,7 +192,7 @@ function Surface() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "getPixel";
 					var _errorText = ("Attempted to get data from an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -189,7 +203,7 @@ function Surface() constructor
 			// @description			Get the pointer to texture page of this Surface.
 			static getTexture = function()
 			{
-				if (!((is_real(ID)) and (surface_exists(ID))))
+				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
@@ -206,235 +220,241 @@ function Surface() constructor
 			}
 			
 		#endregion
+		#region <Setters>
+			
+			// @argument			{Vector2} size
+			// @descirption			Set the size of the Surface.
+			static setSize = function(_size)
+			{
+				size = _size;
+				
+				if ((!is_real(ID)) or (!surface_exists(ID)))
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setSize";
+					var _errorText = ("Attempted to change size of an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n" +
+									  "Recreating the Surface with the target size.");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					self.create();
+				}
+				else
+				{
+					surface_resize(ID, size.x, size.y);
+				}	
+			}
+			
+		#endregion
 		#region <Execution>
-			
-			// @argument			{bool} setAsTarget
-			// @description			Place this Surface on the top of target stack or remove it.
-			static target = function(_setAsTarget)
-			{
-				if (_setAsTarget)
-				{
-					if (!((is_real(ID)) and (surface_exists(ID))))
-					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "target";
-						var _errorText = ("Attempted to set an invalid Surface as render target: " +
-										  "{" + string(ID) + "}" + "\n" +
-										  "Recreating the Surface and providing setting it.");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
-						
-						self.create();
-					}
-					
-					surface_set_target(ID);
-				}
-				else
-				{
-					if ((is_real(ID)) and (surface_exists(ID)) and (surface_get_target() == ID))
-					{
-						surface_reset_target();
-					}
-				}
-			}
-			
-			// @argument			{Vector2} location?
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw.
-			static render = function(_location)
-			{
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
-					
-					if (argument_count > 1)
-					{
-						var _scale = ((argument[1] != undefined) ? argument[1] : new Scale(1, 1));
-						var _angle = ((argument_count > 2) and (argument[2] != undefined) ? 
-									 argument[2] : new Angle(0));
-						var _color = ((argument_count > 3) and (argument[3] != undefined) ? 
-									 argument[3] : c_white);
-						var _alpha = ((argument_count > 4) and (argument[4] != undefined) ? 
-									 argument[4] : 1);
-						
-						draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y,
-										 _angle.value, _color, _alpha);
-					}
-					else
-					{
-						draw_surface(ID, _location.x, _location.y);
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{Surface|surface} target?
-			// @argument			{Vector2} location?
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw to a specified target, ignoring the target stack.
-			static render_target = function(_target, _location)
-			{
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					if (_target == undefined) {_target = application_surface;}
-					if (_location == undefined) {_location = new Vector2(0, 0);}
-					
-					var _renderTarget = (instanceof(_target) == "Surface" ? _target.ID : _target);
-					
-					if (surface_exists(_renderTarget))
-					{
-						var _targetStack = new Stack();
-						var _currentTarget = surface_get_target();
-						
-						while ((_currentTarget != _renderTarget) 
-						and (_currentTarget != application_surface))
-						{
-							_targetStack.add(_currentTarget);
-							
-							surface_reset_target();
-							
-							_currentTarget = surface_get_target();
-						}
-						
-						if (argument_count > 2)
-						{
-							var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
-							var _angle = (((argument_count > 3) and (argument[3] != undefined)) ? 
-										 argument[3] : new Angle(0));
-							var _color = (((argument_count > 4) and (argument[4] != undefined)) ? 
-										 argument[4] : c_white);
-							var _alpha = (((argument_count > 5) and (argument[5] != undefined)) ? 
-										 argument[5] : 1);
-							
-							draw_surface_ext(ID, _location.x, _location.y, _scale.x, _scale.y, 
-											 _angle.value, _color, _alpha);
-						}
-						else
-						{
-							draw_surface(ID, _location.x, _location.y);
-						}
-						
-						repeat(_targetStack.getSize())
-						{
-							surface_set_target(_targetStack.remove());
-						}
-						
-						_targetStack = _targetStack.destroy();
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{Vector4} part_location
-			// @argument			{Vector2} location?
-			// @argument			{Scale} scale?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw of a specified part of the Surface.
-			static render_part = function(_part_location, _location)
-			{
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
-					
-					if (argument_count > 2)
-					{
-						var _scale = ((argument[2] != undefined) ? argument[2] : new Scale());
-						var _color = (((argument_count > 3) and (argument[3] != undefined)) ? 
-									 argument[3] : c_white);
-						var _alpha = (((argument_count > 4) and (argument[4] != undefined)) ? 
-									 argument[4] : 1);
-						
-						draw_surface_part_ext(ID, _part_location.x1, _part_location.y1, 
-											  _part_location.x2, _part_location.y2, 
-											  _location.x, _location.y, _scale.x, 
-											  _scale.y, _color, _alpha);
-					}
-					else
-					{
-						draw_surface_part(ID, _part_location.x1, _part_location.y1, 
-										  _part_location.x2, _part_location.y2, 
-										  _location.x, _location.y);
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
 			
 			// @argument			{Vector2} location?
 			// @argument			{Vector4} part_location?
 			// @argument			{Scale} scale?
-			// @argument			{Color4|color} color?
-			// @argument			{real} alpha?
 			// @argument			{Angle} angle?
-			// @description			Execute the draw with specified alternations.
-			static render_general = function(_part_location, _location, _scale, 
-											 _color, _alpha, _angle)
+			// @argument			{int:color|Color4} color
+			// @argument			{real} alpha?
+			// @argument			{Surface|int:surface} target?
+			// @description			Draw this Surface or a part of it to the currently targeted or
+			//						specified Surface.
+			static render = function(_location)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if (_part_location == undefined) {_part_location = new Vector4(0, 0, 
-																				   size.x, size.y);}
-					if (_location == undefined) {_location = new Vector2(0, 0);}
+					var _location_x, _location_y;
 					
-					if (_scale == undefined) {_scale = new Scale();}
-					if (_color == undefined) {_color = c_white;}
-					if (_alpha == undefined) {_alpha = 1;}
-					if (_angle == undefined) {_angle = new Angle(0);}
-					
-					var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
-					
-					if (instanceof(_color) == "Color4")
+					if (_location != undefined)
 					{
-						_color_x1y1 = _color.color1;
-						_color_x1y2 = _color.color2;
-						_color_x2y1 = _color.color3;
-						_color_x2y2 = _color.color4;
+						_location_x = _location.x;
+						_location_y = _location.y;
 					}
 					else
 					{
-						_color_x1y1 = _color;
-						_color_x1y2 = _color;
-						_color_x2y1 = _color;
-						_color_x2y2 = _color;
+						_location_x = 0;
+						_location_y = 0;
 					}
 					
-					draw_surface_general(ID, _part_location.x1, _part_location.y1, 
-										 _part_location.x2, _part_location.y2, 
-										 _location.x, _location.y, _scale.x, 
-										 _scale.y, _angle.value, _color_x1y1, 
-										 _color_x2y1, _color_x2y2, _color_x1y2, 
-										 _alpha);
+					var _targetStack = undefined;
+					
+					if ((argument_count > 6) and (argument[6] != undefined))
+					{
+						var _target = argument[6];
+						var _target_value = (instanceof(_target) == "Surface" ? _target.ID
+																			  : _target);
+						
+						if ((is_real(_target_value)) and (surface_exists(_target_value))
+						and (_target_value != ID))
+						{
+							_targetStack = ds_stack_create();
+							var _currentTarget = surface_get_target();
+							
+							while ((_currentTarget != _target_value) and (_currentTarget != 0)
+							and (_currentTarget != -1))
+							{
+								ds_stack_push(_targetStack, _currentTarget);
+								
+								surface_reset_target();
+								
+								_currentTarget = surface_get_target();
+							}
+							
+							surface_set_target(_target_value);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "render";
+							var _errorText = ("Attempted to render to an invalid Surface: " +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Other: " + "{" + string(_target) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack,_methodName,
+																 _errorText);
+						}
+					}
+					
+					var _part_location = ((argument_count > 1) ? argument[1] : undefined);
+					var _scale = ((argument_count > 2) ? argument[2] : undefined);
+					var _angle = ((argument_count > 3) ? argument[3] : undefined);
+					var _color = ((argument_count > 4) ? argument[4] : undefined);
+					var _alpha = ((argument_count > 5) ? argument[5] : undefined);
+						
+					if (((_angle != undefined) and (_part_location != undefined))
+					or (instanceof(_color) == "Color4"))
+					{
+						var _part_location_x1, _part_location_y1, _part_location_x2,
+							_part_location_y2;
+							
+						if (_part_location != undefined)
+						{
+							_part_location_x1 = _part_location.x1;
+							_part_location_y1 = _part_location.y1;
+							_part_location_x2 = _part_location.x2;
+							_part_location_y2 = _part_location.y2;
+						}
+						else
+						{
+							_part_location_x1 = 0;
+							_part_location_y1 = 0;
+							_part_location_x2 = size.x;
+							_part_location_y2 = size.y;
+						}
+							
+						var _scale_x, _scale_y;
+							
+						if (_scale != undefined)
+						{
+							_scale_x = _scale.x;
+							_scale_y = _scale.y;
+						}
+						else
+						{
+							_scale_x = 1;
+							_scale_y = 1;
+						}
+							
+						var _angle_value = ((_angle != undefined) ? _angle.value : 0);
+							
+						var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
+							
+						if (instanceof(_color) == "Color4")
+						{
+							_color_x1y1 = _color.color1;
+							_color_x1y2 = _color.color2;
+							_color_x2y1 = _color.color3;
+							_color_x2y2 = _color.color4;
+						}
+						else if (_color != undefined)
+						{
+							_color_x1y1 = _color;
+							_color_x1y2 = _color;
+							_color_x2y1 = _color;
+							_color_x2y2 = _color;
+						}
+						else
+						{
+							_color_x1y1 = c_white;
+							_color_x1y2 = c_white;
+							_color_x2y1 = c_white;
+							_color_x2y2 = c_white;
+						}
+							
+						var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
+							
+						draw_surface_general(ID, _part_location_x1, _part_location_y1, 
+											 _part_location_x2, _part_location_y2, _location_x,
+											 _location_y, _scale_x, _scale_y, _angle_value,
+											 _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
+											 _alpha_value);
+					}
+					else if (_part_location != undefined)
+					{
+						if ((_scale != undefined) or (_color != undefined)
+						or (_alpha != undefined))
+						{
+							var _scale_x, _scale_y;
+								
+							if (_scale != undefined)
+							{
+								_scale_x = _scale.x;
+								_scale_y = _scale.y;
+							}
+							else
+							{
+								_scale_x = 1;
+								_scale_y = 1;
+							}
+								
+							var _color_value = ((_color != undefined) ? _color : c_white);
+							var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
+								
+							draw_surface_part_ext(ID, _part_location.x1, _part_location.y1,
+												  _part_location.x2, _part_location.y2, _location_x,
+												  _location_y, _scale_x, _scale_y, _color_value,
+												  _alpha_value);
+						}
+						else
+						{
+							draw_surface_part(ID, _part_location.x1, _part_location.y1,
+											  _part_location.x2, _part_location.y2, _location_x,
+											  _location_y);
+						}
+					}
+					else
+					{
+						var _scale_x, _scale_y;
+							
+						if (_scale != undefined)
+						{
+							_scale_x = _scale.x;
+							_scale_y = _scale.y;
+						}
+						else
+						{
+							_scale_x = 1;
+							_scale_y = 1;
+						}
+							
+						var _angle_value = ((_angle != undefined) ? _angle.value : 0);
+						var _color_value = ((_color != undefined) ? _color : c_white);
+						var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
+							
+						draw_surface_ext(ID, _location_x, _location_y, _scale_x, _scale_y,
+											_angle_value, _color_value, _alpha_value);
+					}
+					
+					if (_targetStack != undefined)
+					{
+						surface_reset_target();
+						
+						repeat (ds_stack_size(_targetStack))
+						{
+							surface_set_target(ds_stack_pop(_targetStack));
+						}
+						
+						ds_stack_destroy(_targetStack);
+					}
 				}
 				else
 				{
@@ -442,7 +462,7 @@ function Surface() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "render";
 					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
@@ -451,146 +471,149 @@ function Surface() constructor
 			// @argument			{Vector2} location?
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
-			// @description			Execute the draw by forcing the Surface to match a specific size.
-			static render_size = function(_size, _location)
+			// @description			Draw this Surface after scaling it to match the specific size.
+			static renderSize = function(_size, _location, _color, _alpha)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
+					var _location_x, _location_y;
 					
-					if (argument_count > 2)
+					if (_location != undefined)
 					{
-						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
-						var _alpha = ((argument_count > 3) and (argument[3] != undefined) ? 
-									 argument[3] : 1);
-						
-						draw_surface_stretched_ext(ID, _location.x, _location.y, _size.x,
-												   _size.y, _color, _alpha);
+						_location_x = _location.x;
+						_location_y = _location.y;
 					}
 					else
 					{
-						draw_surface_stretched(ID, _location.x, _location.y, _size.x, _size.y);
+						_location_x = 0;
+						_location_y = 0;
 					}
+					
+					var _color_value = ((_color != undefined) ? _color : c_white);
+					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
+					
+					draw_surface_stretched_ext(ID, _location_x, _location_y, _size.x, _size.y,
+											   _color_value, _alpha_value);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "render";
+					var _methodName = "renderSize";
 					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{Vector2} location?
+			// @argument			{Vector2} offset?
 			// @argument			{Scale} scale?
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
-			// @description			Execute the tiled draw across the Room from the starting location.
-			static render_tiled = function(_location)
+			// @description			Draw this Surface tiled across the target created Surface or the
+			//						entire Room if none is set.
+			static renderTiled = function(_offset, _scale, _color, _alpha)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if (_location == undefined) {_location = new Vector2(0, 0);}
+					var _offset_x, _offset_y;
 					
-					if (argument_count > 1)
+					if (_offset != undefined)
 					{
-						var _scale = (((argument_count > 1) and (argument[1] != undefined)) ? 
-									 argument[1] : new Scale());
-						var _color = (((argument_count > 2) and (argument[2] != undefined)) ? 
-									 argument[2] : c_white);
-						var _alpha = (((argument_count > 3) and (argument[3] != undefined)) ? 
-									 argument[3] : 1);
-						
-						draw_surface_tiled_ext(ID, _location.x, _location.y, _scale.x, 
-											   _scale.y, _color, _alpha);
+						_offset_x = _offset.x;
+						_offset_y = _offset.y;
 					}
 					else
 					{
-						draw_surface_tiled(ID, _location.x, _location.y);
+						_offset_x = 0;
+						_offset_y = 0;
 					}
+					
+					var _scale_x, _scale_y;
+					
+					if (_scale != undefined)
+					{
+						_scale_x = _scale.x;
+						_scale_y = _scale.y;
+					}
+					else
+					{
+						_scale_x = 1;
+						_scale_y = 1;
+					}
+					
+					var _color_value = ((_color != undefined) ? _color : c_white);
+					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
+					
+					draw_surface_tiled_ext(ID, _offset_x, _offset_y, _scale_x, _scale_y, _color_value,
+										   _alpha_value);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "render";
+					var _methodName = "renderTiled";
 					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{int:color} color
-			// @argument			{real} alpha?
-			// @description			Set the entire content of this Surface to the specified color.
-			static clear = function(_color, _alpha)
+			// @argument			{bool} target
+			// @description			Place this Surface on the top of target stack or remove it.
+			static setTarget = function(_target)
 			{
-				self.create();
-				
-				if (_alpha == undefined) {_alpha = 1;}
-				
-				var _wasTarget = (surface_get_target() == ID)
-				
-				if (!_wasTarget)
+				switch (_target)
 				{
-					surface_set_target(ID);
-				}
-				
-				if (_alpha >= 1)
-				{
-					draw_clear(_color);
-				}
-				else
-				{
-					draw_clear_alpha(_color, _alpha);
-				}
-				
-				if (!_wasTarget)
-				{
-					surface_reset_target();
-				}
-			}
-			
-			// @argument			{int} mrt
-			// @description			Set the Multi-Render Target of this Surface for Shader operations.
-			static setMRT = function(_mrt)
-			{
-				if (!((is_real(ID)) and (surface_exists(ID))))
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setMRT";
-					var _errorText = ("Attempted to set a property of an invalid Surface: " +
-										"{" + string(ID) + "}" + "\n" +
-										"Recreating the Surface and providing setting its property.");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-						
-					self.create();
-				}
-				
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					surface_set_target_ext(_mrt, ID);
+					case true:
+						if ((!is_real(ID)) or (!surface_exists(ID)))
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setTarget";
+							var _errorText = ("Attempted to set an invalid Surface as the render " +
+											  "target: " +
+											  "{" + string(ID) + "}" + "\n" +
+											  "Recreating the Surface and setting it as target.");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							self.create();
+						}
+					
+						surface_set_target(ID);
+					break;
+					
+					case false:
+						if ((is_real(ID)) and (surface_exists(ID)) and (surface_get_target() == ID))
+						{
+							surface_reset_target();
+						}
+					break;
 				}
 			}
 			
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the ID and size of this Surface.
-			static toString = function()
+			//						Content will be represented with the properties of this Surface.
+			static toString = function(_multiline)
 			{
 				if (is_real(ID))
 				{
-					var _text_destroyed = ((surface_exists(ID)) ? "" : "; destroyed");
+					var _string = "";
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					
-					return (instanceof(self) + "(" + string(ID) + ": " + string(size) + 
-							_text_destroyed +")");
+					var _text_nonexistent = ((surface_exists(ID)) ? "" : " (nonexistent)");
+					
+					_string = ("ID: " + string(ID) + _text_nonexistent + _mark_separator +
+							   "Size: " + string(size));
+					
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else
 				{
@@ -598,22 +621,21 @@ function Surface() constructor
 				}
 			}
 			
-			// @argument			{string} filename
+			// @argument			{string:path} path
 			// @argument			{Vector4} part?
-			// @description			Save the content of this Surface to disk as a .png file.
-			static toFile = function(_filename)
+			// @description			Save the content of this Surface or a rectangular part of it to
+			//						the specified .png file.
+			static toFile = function(_path, _part)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if (argument_count > 1)
+					if (_part != undefined)
 					{
-						var _part = argument[1];
-						
-						surface_save_part(ID, _filename, _part.x1, _part.y1, _part.x2, _part.y2);
+						surface_save_part(ID, _path, _part.x1, _part.y1, _part.x2, _part.y2);
 					}
 					else
 					{
-						surface_save(ID, _filename);
+						surface_save(ID, _path);
 					}
 				}
 				else
@@ -622,26 +644,22 @@ function Surface() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "toFile";
 					var _errorText = ("Attempted to convert an invalid Surface: " +
-									  "{" + string(ID) + "}" + "\n");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
 			// @argument			{Buffer} buffer
 			// @argument			{int} offset?
-			// @argument			{int} modulo?
 			// @description			Copy information from the specified Buffer to this Surface.
-			//						A byte offset can be specified for where the operation will start.
-			//						A modulo value can be specified for number of bytes left after
-			//						every written line for storing additional data.
-			static fromBuffer = function(_buffer, _offset, _modulo)
+			//						A byte offset can be specified for where the data load will begin.
+			static fromBuffer = function(_buffer, _offset)
 			{
 				self.create();
 				
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
-					and (buffer_exists(_buffer.ID)))
+					if ((instanceof(_buffer) == "Buffer") and (_buffer.isFunctional()))
 					{
 						if (_offset == undefined) {_offset = 0;}
 					
