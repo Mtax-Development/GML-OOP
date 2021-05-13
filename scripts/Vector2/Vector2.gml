@@ -1,14 +1,13 @@
 /// @function				Vector2()
-/// @argument				x?
-/// @argument				y?
-///
+/// @argument				{real} x?
+/// @argument				{real} y?
+///							
 /// @description			Construct a Vector container for X and Y coordinate pair.
-///
+///							
 ///							Construction methods:
 ///							- Two values: {real} x, {real} y
 ///							- One number for all values: {real} value
-///							- Default for all values: {void}
-///							   The values will be set to 0.
+///							- Empty: {void|undefined}
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///							   1: array[0] will be set to x and y.
@@ -22,59 +21,62 @@ function Vector2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Default for all values.
-				x = 0;
-				y = 0;
+				//|Construction method: Empty
+				x = undefined;
+				y = undefined;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Vector2")
+					switch (instanceof(argument[0]))
 					{
-						//|Construction method: Constructor copy.
-						var _other = argument[0];
-					
-						x = _other.x;
-						y = _other.y;
-					}
-					else
-					{
-						switch (argument_count)
-						{
-							case 1:
-								if (is_array(argument[0]))
-								{
-									//|Construction method: From array.
-									var _array = argument[0];
-								
-									var _array_length = array_length(_array);
-								
-									switch (_array_length)
+						case "Vector2":
+						case "Scale":
+							//|Construction methods: Constructor copy / From Scale.
+							var _other = argument[0];
+							
+							x = _other.x;
+							y = _other.y;
+						break;
+						
+						default:
+							switch (argument_count)
+							{
+								case 1:
+									if (is_array(argument[0]))
 									{
-										case 1:
-											x = _array[0];
-											y = _array[0];
-										break;
-									
-										case 2:
-											x = _array[0];
-											y = _array[1];
-										break;
+										//|Construction method: From array.
+										var _array = argument[0];
+										
+										switch (array_length(_array))
+										{
+											case 1:
+												x = _array[0];
+												y = _array[0];
+											break;
+											
+											case 2:
+											default:
+												x = _array[0];
+												y = _array[1];
+											break;
+										}
 									}
-								}
-								else
-								{
-									//|Construction method: One number for all values.
+									else
+									{
+										//|Construction method: One number for all values.
+										x = argument[0];
+										y = argument[0];
+									}
+								break;
+								
+								case 2:
+								default:
+									//|Construction method: Two values.
 									x = argument[0];
-									y = argument[0];
-								}
-							break;
-					
-							case 2:
-								//|Construction method: Two values.
-								x = argument[0];
-								y = argument[1];
-							break;
-						}
+									y = argument[1];
+								break;
+							}
+						break;
 					}
 				}
 			}
@@ -83,7 +85,8 @@ function Vector2() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x)) and (is_real(y)));
+				return ((is_real(x)) and (is_real(y)) and (!is_nan(x)) and (!is_nan(y))
+						and (!is_infinity(x)) and (!is_infinity(y)));
 			}
 			
 		#endregion
@@ -184,23 +187,59 @@ function Vector2() constructor
 				}
 			}
 			
-			// @description			Swap the X and Y values of this Vector2.
+			// @description			Swap the x and y values of this Vector2 with each other.
 			static flip = function()
 			{
-				var x_new = y;
-				var y_new = x;
+				var _x = x;
+				var _y = y;
 				
-				x = x_new;
-				y = y_new;
+				x = _y;
+				y = _x;
 			}
+			
+			// @description			Reverse the x and y values.
+			static mirror = function()
+			{
+				x = -x;
+				y = -y;
+			}
+			
+			// @description			Reverse the x value.
+			static mirrorX = function()
+			{
+				x = -x;
+			}
+			
+			// @description			Reverse the y value.
+			static mirrorY = function()
+			{
+				y = -y;
+			}
+			
+			// @argument			{int} device?
+			// @description			Set the values to the ones of the cursor.
+			static setCursor = function(_device)
+			{
+				if (_device == undefined)
+				{
+					x = mouse_x;
+					y = mouse_y;
+				}
+				else
+				{
+					x = device_mouse_x(_device);
+					y = device_mouse_y(_device);
+				}
+			}
+			
 			
 		#endregion
 		#region <Getters>
 			
-			// @argument			{Vector2} other
+			// @argument			{Vector2|Scale} other
 			// @returns				{bool}
 			// @description			Check if the values of this Vector2 are equal to the values of
-			//						other specified Vector2.
+			//						specified other one.
 			static equals = function(_other)
 			{
 				return ((x == _other.x) and (y == _other.y));
@@ -209,30 +248,20 @@ function Vector2() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the output of X and then Y
-			//						values of this Vector2.
+			//						Content will be represented with the values of this Container.
 			static toString = function(_multiline)
 			{
-				if (_multiline)
-				{
-					return ("x: " + string(x) + "\n" +
-							"y: " + string(y));
-				}
-				else
-				{
-					var _mark_separator = ", ";
-					
-					return (instanceof(self) + "(" +
-							"x: " + string(x) + _mark_separator +
-							"y: " + string(y) +
-							")");
-				}
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				var _string = ("x: " + string(x) + _mark_separator + "y: " + string(y));
+				
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{int[]}
+			// @returns				{real[]}
 			// @description			Return an array containing all values of this Container.
 			static toArray = function()
 			{

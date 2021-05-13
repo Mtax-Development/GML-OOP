@@ -1,11 +1,11 @@
 /// @function				Vector4()
-/// @argument				x1?
-/// @argument				y1?
-/// @argument				x2?
-/// @argument				y2?
-///
+/// @argument				{real} x1?
+/// @argument				{real} y1?
+/// @argument				{real} x2?
+/// @argument				{real} y2?
+///							
 /// @description			Construct a Vector container for two X and Y coordinate pairs.
-///
+///							
 ///							Construction methods:
 ///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
@@ -21,7 +21,7 @@
 ///								   x2 and y2.
 ///							    4+: array[0] will be set to x1, array[1] will be set to y1,
 ///									array[2] will be set to x2, array[3] will be set to y2.
-///							- From two Vector2: {Vector2} pair_1, {Vector2} pair_2
+///							- From two Vector2: {Vector2} pair1, {Vector2} pair2
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
 {
@@ -31,12 +31,13 @@ function Vector4() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				x1 = 0;
-				y1 = 0;
-				x2 = 0;
-				y2 = 0;
+				//|Construction method: Empty.
+				x1 = undefined;
+				y1 = undefined;
+				x2 = undefined;
+				y2 = undefined;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Vector4")
 					{
@@ -57,10 +58,8 @@ function Vector4() constructor
 								{
 									//|Construction method: From array.
 									var _array = argument[0];
-								
-									var _array_length = array_length(_array);
-								
-									switch (_array_length)
+									
+									switch (array_length(_array))
 									{
 										case 1:
 											x1 = _array[0];
@@ -71,11 +70,12 @@ function Vector4() constructor
 									
 										case 2:
 											x1 = _array[0];
-											y1 = _array[9];
+											y1 = _array[0];
 											x2 = _array[1];
 											y2 = _array[1];
 										break;
-									
+										
+										case 4:
 										default:
 											x1 = _array[0];
 											y1 = _array[1];
@@ -93,30 +93,30 @@ function Vector4() constructor
 									y2 = argument[0];
 								}
 							break;
-						
+							
 							case 2:
 								if ((instanceof(argument[0]) == "Vector2") 
 								and (instanceof(argument[1]) == "Vector2"))
 								{
 									//|Construction method: From two Vector2.
-									var _pair_1 = argument[0];
-									var _pair_2 = argument[1];
-								
-									x1 = _pair_1.x;
-									y1 = _pair_1.y;
-									x2 = _pair_2.x;
-									y2 = _pair_2.y;
+									var _pair1 = argument[0];
+									var _pair2 = argument[1];
+									
+									x1 = _pair1.x;
+									y1 = _pair1.y;
+									x2 = _pair2.x;
+									y2 = _pair2.y;
 								}
 								else
 								{
 									//|Construction method: Number pair.
-									var _first = argument[0];
-									var _second = argument[1];
-								
-									x1 = _first;
-									y1 = _first;
-									x2 = _second;
-									y2 = _second;
+									var _pair1 = argument[0];
+									var _pair2 = argument[1];
+									
+									x1 = _pair1;
+									y1 = _pair1;
+									x2 = _pair2;
+									y2 = _pair2;
 								}
 							break;
 					
@@ -136,7 +136,10 @@ function Vector4() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2)));
+				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2))
+						and (!is_nan(x1)) and (!is_nan(y1)) and (!is_nan(x2)) and (!is_nan(y2))
+						and (!is_infinity(x1)) and (!is_infinity(y1)) and (!is_infinity(x2))
+						and (!is_infinity(y2)));
 			}
 			
 		#endregion
@@ -312,18 +315,18 @@ function Vector4() constructor
 				}
 			}
 			
-			// @description			Swap the X and Y values of this Vector4.
+			// @description			Swap the x and y values.
 			static flip = function()
 			{
-				var _x1_new = y1;
-				var _y1_new = x1;
-				var _x2_new = y2;
-				var _y2_new = x2;
+				var _x1 = x1;
+				var _y1 = y1;
+				var _x2 = x2;
+				var _y2 = y2;
 				
-				x1 = _x1_new;
-				y1 = _y1_new;
-				x2 = _x2_new;
-				y2 = _y2_new;
+				x1 = _y1;
+				y1 = _x1;
+				x2 = _y2;
+				y2 = _x2;
 			}
 			
 		#endregion
@@ -338,14 +341,14 @@ function Vector4() constructor
 			
 			// @returns				{real}
 			// @description			Return the middle point between the x values of this Vector4.
-			static getMiddle_x = function()
+			static getMiddleX = function()
 			{
 				return lerp(x1, x2, 0.5);
 			}
 			
 			// @returns				{real}
 			// @description			Return the middle point between the y values of this Vector4.
-			static getMiddle_y = function()
+			static getMiddleY = function()
 			{
 				return lerp(y1, y2, 0.5);
 			}
@@ -359,14 +362,14 @@ function Vector4() constructor
 			
 			// @returns				{real}
 			// @description			Return the direction from the first point towards the second.
-			static getAngle_1to2 = function()
+			static getAngle1to2 = function()
 			{
 				return point_direction(x1, y1, x2, y2);
 			}
 			
 			// @returns				{real}
 			// @description			Return the direction from the second point towards the first.
-			static getAngle_2to1 = function()
+			static getAngle2to1 = function()
 			{
 				return point_direction(x2, y2, x1, y1);
 			}
@@ -376,8 +379,8 @@ function Vector4() constructor
 			// @description			Check whether this and other Vector4 have the same values.
 			static equals = function(_other)
 			{
-				return ((x1 == _other.x1) and (y1 == _other.y1)
-						and (x2 == _other.x2)  and (y2 == _other.y2));
+				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
+						and (y2 == _other.y2));
 			}
 			
 			// @argument			{real} x
@@ -393,7 +396,7 @@ function Vector4() constructor
 			// @argument			{value}
 			// @returns				{real}
 			// @description			Return the point at specified precentage within the x values.
-			static interpolate_x = function(_value)
+			static interpolateX = function(_value)
 			{
 				return lerp(x1, x2, _value);
 			}
@@ -401,7 +404,7 @@ function Vector4() constructor
 			// @argument			{value}
 			// @returns				{real}
 			// @description			Return the point at specified precentage within the y values.
-			static interpolate_y = function(_value)
+			static interpolateY = function(_value)
 			{
 				return lerp(y1, y2, _value);
 			}
@@ -412,7 +415,7 @@ function Vector4() constructor
 			static isBetween = function(_location)
 			{
 				return ((_location.x == clamp(_location.x, x1, x2)) 
-					   and (_location.y == clamp(_location.y, y1, y2)));
+						and (_location.y == clamp(_location.y, y1, y2)));
 			}
 			
 		#endregion
@@ -425,23 +428,20 @@ function Vector4() constructor
 			//						values of this Vector4.
 			static toString = function(_multiline)
 			{
-				if (_multiline)
+				if (self.isFunctional())
 				{
-					return ("x1: " + string(x1) + "\n" +
-							"y1: " + string(y1) + "\n" +
-							"x2: " + string(x2) + "\n" +
-							"y2: " + string(y2));
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
+					var _string = ("x1: " + string(x1) + _mark_separator +
+								   "y1: " + string(y1) + _mark_separator +
+								   "x2: " + string(x2) + _mark_separator +
+								   "y2: " + string(y2));
+					
+					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else
 				{
-					var _mark_separator = ", ";
-					
-					return (instanceof(self) + "(" +
-							"x1: " + string(x1) + _mark_separator +
-							"y1: " + string(y1) + _mark_separator +
-							"x2: " + string(x2) + _mark_separator +
-							"y2: " + string(y2) +
-							")");
+					return (instanceof(self) + "<>");
 				}
 			}
 			
