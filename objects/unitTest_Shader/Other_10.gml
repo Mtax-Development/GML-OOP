@@ -40,13 +40,13 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result[5], _expectedValue[5]);
 	
 #endregion
-#region [Test: Construction: Constructor copy / Method: setUniform_float()]
+#region [Test: Construction: Constructor copy / Method: setUniformFloat()]
 	
 	var _element = [[asset[0], asset[1], "float"], [0.4]];
 	
 	constructor = [new Shader(_element[0][0])];
 	constructor[0].setActive();
-	constructor[0].setUniform_float(_element[0][1], _element[1][0]);
+	constructor[0].setUniformFloat(_element[0][1], _element[1][0]);
 	constructor[0].setActive();
 	constructor[1] = new Shader(constructor[0]);
 	
@@ -57,7 +57,7 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	var _expectedValue = [true, constructor[0].ID, constructor[0].name, constructor[0].compiled,
 						  constructor[0].uniform, _element[1][0], _element[0][2], true];
 	
-	unitTest.assert_equal("Construction: Constructor copy / Method: setUniform_float()",
+	unitTest.assert_equal("Construction: Constructor copy / Method: setUniformFloat()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -68,38 +68,38 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result[7], _expectedValue[7]);
 	
 #endregion
-#region [Test: Method: setUniform_int()]
+#region [Test: Method: setUniformInt()]
 	
 	var _element = [[asset[0], asset[2], "int"], [8]];
 	
 	constructor = new Shader(_element[0][0]);
 	constructor.setActive();
-	constructor.setUniform_int(_element[0][1], _element[1][0]);
+	constructor.setUniformInt(_element[0][1], _element[1][0]);
 	constructor.setActive();
 	
 	var _result = [constructor.uniform.testInt.value, constructor.uniform.testInt.type,
 				   (constructor.uniform.testInt.value >= 0)];
 	var _expectedValue = [_element[1][0], _element[0][2], true];
 	
-	unitTest.assert_equal("Method: setUniform_int()",
+	unitTest.assert_equal("Method: setUniformInt()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
 #endregion
-#region [Test: Method: setUniform_matrix()] NOT TESTED
+#region [Test: Method: setUniformMatrix()]
 	
 	var _element = [asset[0], asset[3], "matrix"];
 	
 	constructor = new Shader(_element[0]);
 	constructor.setActive();
-	constructor.setUniform_matrix(_element[1]);
+	constructor.setUniformMatrix(_element[1]);
 	constructor.setActive();
 	
 	var _result = constructor.uniform.testMat4.type;
 	var _expectedValue = _element[2];
 	
-	unitTest.assert_equal("Method: setUniform_matrix()",
+	unitTest.assert_equal("Method: setUniformMatrix()",
 						  _result, _expectedValue)
 	
 #endregion
