@@ -7,7 +7,7 @@
 ///							
 /// @description			Constructs an Ellipse Shape.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Ellipse} other
@@ -19,7 +19,7 @@ function Ellipse() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				fill_color = undefined;
 				fill_alpha = undefined;
@@ -30,7 +30,7 @@ function Ellipse() constructor
 				{
 					if (instanceof(argument[0]) == "Ellipse")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector4")
@@ -43,7 +43,7 @@ function Ellipse() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location = argument[0];
 						fill_color = ((argument_count > 1) ? argument[1] : undefined);
 						fill_alpha = ((argument_count > 2) ? argument[2] : 1);

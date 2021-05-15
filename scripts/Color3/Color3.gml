@@ -5,7 +5,7 @@
 ///							
 /// @description			Constructs a container for three colors.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
@@ -20,7 +20,7 @@ function Color3() constructor
 			
 			static construct = function()
 			{
-				//|Construction method: Default for all values.
+				//|Construction type: Default for all values.
 				color1 = c_white;
 				color2 = c_white;
 				color3 = c_white;
@@ -29,7 +29,7 @@ function Color3() constructor
 				{
 					if (instanceof(argument[0]) == "Color3")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						color1 = _other.color1;
@@ -41,7 +41,7 @@ function Color3() constructor
 						switch (argument_count)
 						{
 							case 1:
-								//|Construction method: One color for all values.
+								//|Construction type: One color for all values.
 								var _color = argument[0];
 							
 								color1 = _color;
@@ -50,7 +50,7 @@ function Color3() constructor
 							break;
 							
 							case 2:
-								//|Construction method: Color2 + color.
+								//|Construction type: Color2 + color.
 								if (instanceof(argument[0]) == "Color2")
 								{
 									var _other = argument[0];
@@ -72,7 +72,7 @@ function Color3() constructor
 							break;
 							
 							case 3:
-								//|Construction method: New constructor.
+								//|Construction type: New constructor.
 								color1 = argument[0];
 								color2 = argument[1];
 								color3 = argument[2];

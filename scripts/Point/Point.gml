@@ -5,7 +5,7 @@
 ///							
 /// @description			Constructs a Point Shape, which is a single pixel.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Point} other
@@ -17,7 +17,7 @@ function Point() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				color = undefined;
 				alpha = undefined;
@@ -26,7 +26,7 @@ function Point() constructor
 				{
 					if (instanceof(argument[0]) == "Point")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector2")

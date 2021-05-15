@@ -2,7 +2,7 @@
 ///							
 /// @description			Constructs a Font resource defining visual style of text rendering.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- Wrapper: {font} font
 ///							- Resource: {string} path, {int} size, {bool} bold, 
 ///										{bool} italic, {Range} glyphs, {bool} antialiasing
@@ -35,7 +35,7 @@ function Font() constructor
 				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Font"))
 				{
-					//|Construction method: Constructor copy.
+					//|Construction type: Constructor copy.
 					var _other = argument[0];
 					
 					switch (_other.type)
@@ -70,7 +70,7 @@ function Font() constructor
 				{
 					if ((is_real(argument[0])) and (font_exists(argument[0])))
 					{
-						//|Construction method: Wrapper.
+						//|Construction type: Wrapper.
 						type = "asset";
 						
 						ID = argument[0];
@@ -85,7 +85,7 @@ function Font() constructor
 					{
 						if (is_string(argument[0]))
 						{
-							//|Construction method: Resource.
+							//|Construction type: Resource.
 							type = "file";
 							
 							fontName = argument[0];
@@ -113,7 +113,7 @@ function Font() constructor
 							{
 								if (is_real(argument[1]))
 								{
-									//|Construction method: Sprite (utf8).
+									//|Construction type: Sprite (utf8).
 									type = "sprite (utf8)";
 									
 									sprite = _sprite;
@@ -135,7 +135,7 @@ function Font() constructor
 								}
 								else if (is_string(argument[1]))
 								{
-									//|Construction method: Sprite (glyph map).
+									//|Construction type: Sprite (glyph map).
 									type = "sprite (glyph map)";
 									
 									sprite = _sprite;

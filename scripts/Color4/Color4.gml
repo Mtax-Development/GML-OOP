@@ -12,7 +12,7 @@
 ///							- color3: X2 Y2
 ///							- color4: X1 Y2
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Default for all values: {void|undefined}
 ///							   The color values will be set to white.
@@ -30,7 +30,7 @@ function Color4() constructor
 			
 			static construct = function()
 			{
-				//|Construction method: Default for all values.
+				//|Construction type: Default for all values.
 				color1 = c_white;
 				color2 = c_white;
 				color3 = c_white;
@@ -40,7 +40,7 @@ function Color4() constructor
 				{
 					if (instanceof(argument[0]) == "Color4")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 					
 						color1 = _other.color1;
@@ -53,7 +53,7 @@ function Color4() constructor
 						switch (argument_count)
 						{
 							case 1:
-								//|Construction method: One color for all values.
+								//|Construction type: One color for all values.
 								color1 = argument[0];
 								color2 = argument[0];
 								color3 = argument[0];
@@ -64,7 +64,7 @@ function Color4() constructor
 								if ((instanceof(argument[0]) == "Color2") 
 								and (instanceof(argument[1]) == "Color2"))
 								{
-									//|Construction method: Color2 + Color2.
+									//|Construction type: Color2 + Color2.
 									var _colorPair1 = argument[0];
 									var _colorPair2 = argument[1];
 									
@@ -75,7 +75,7 @@ function Color4() constructor
 								}
 								else
 								{
-									//|Construction method: Color3 + color.
+									//|Construction type: Color3 + color.
 									if (instanceof(argument[0]) == "Color3")
 									{
 										var _color3 = argument[0];
@@ -98,7 +98,7 @@ function Color4() constructor
 							break;
 							
 							case 3:
-								//|Construction method: Color2 + color + color.
+								//|Construction type: Color2 + color + color.
 								if (instanceof(argument[0]) == "Color2")
 								{
 									var _color2 = argument[0];
@@ -129,7 +129,7 @@ function Color4() constructor
 							break;
 							
 							case 4:
-								//|Construction method: New constructor.
+								//|Construction type: New constructor.
 								color1 = argument[0];
 								color2 = argument[1];
 								color3 = argument[2];

@@ -8,6 +8,7 @@
 ///							
 /// @description			Constructs a Rectangle Shape.
 ///							
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Rectangle} other
@@ -19,7 +20,7 @@ function Rectangle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				fill_color = undefined;
 				fill_alpha = undefined;
@@ -31,7 +32,7 @@ function Rectangle() constructor
 				{
 					if (instanceof(argument[0]) == "Rectangle")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector4")
@@ -46,7 +47,7 @@ function Rectangle() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location = argument[0];
 						fill_color = (((argument_count > 1)) ? argument[1] : undefined);
 						fill_alpha = (((argument_count > 2) and (argument[2] != undefined))

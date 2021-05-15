@@ -3,7 +3,7 @@
 /// @description			Construct a Particle Type resource, a particle configuration for creation
 ///							within Particle Systems.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Constructor copy: {ParticleType} other
 function ParticleType() constructor
@@ -62,7 +62,7 @@ function ParticleType() constructor
 				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleType"))
 				{
-					//|Construction method: Constructor copy.
+					//|Construction type: Constructor copy.
 					var _other = argument[0];
 					
 					ID = part_type_create();
@@ -238,7 +238,7 @@ function ParticleType() constructor
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					ID = part_type_create();
 					
 					shape = pt_shape_pixel;

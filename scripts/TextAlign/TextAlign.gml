@@ -5,7 +5,7 @@
 /// @description			Constructs a container for two Text Alignment contants, intended for use
 ///							in text drawing.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							   Unspecified values will be set to the following:
 ///							   x: fa_left
@@ -26,7 +26,7 @@ function TextAlign() constructor
 				{
 					if (instanceof(argument[0]) == "TextAlign")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 					
 						x = _other.x;
@@ -34,7 +34,7 @@ function TextAlign() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						x = ((argument[0] != undefined) ? argument[0] : fa_left);
 						y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1]
 																				 : fa_top);

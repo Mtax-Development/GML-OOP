@@ -5,7 +5,7 @@
 ///							are accessed either by providing a specific existing key or by
 ///							iterating through the entire Data Structure.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:map} map
 ///							- Empty: {undefined}
@@ -18,7 +18,7 @@ function Map() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
@@ -27,19 +27,19 @@ function Map() constructor
 					{
 						if (instanceof(argument[0]) == "Map")
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
 						else if ((is_real(argument[0])))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 						}
 					}
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					ID = ds_map_create();
 				}
 			}

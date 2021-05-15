@@ -4,7 +4,7 @@
 ///							
 /// @description			Constructs a container for two Colors.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
@@ -18,7 +18,7 @@ function Color2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Default for all values.
+				//|Construction type: Default for all values.
 				color1 = c_white;
 				color2 = c_white;
 				
@@ -31,13 +31,13 @@ function Color2() constructor
 					}
 					else if (is_real(argument[0]))
 					{
-						//|Construction method: One color for all values.
+						//|Construction type: One color for all values.
 						color1 = argument[0];
 						color2 = argument[0];
 					}
 					else if (instanceof(argument[0]) == "Color2")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						color1 = _other.color1;

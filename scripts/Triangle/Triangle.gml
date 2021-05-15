@@ -9,6 +9,7 @@
 ///							
 /// @description			Constructs a Triangle Shape.
 ///							
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Triangle} other
@@ -20,7 +21,7 @@ function Triangle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location1 = undefined;
 				location2 = undefined;
 				location3 = undefined;
@@ -33,7 +34,7 @@ function Triangle() constructor
 				{
 					if (instanceof(argument[0]) == "Triangle")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location1 = ((instanceof(_other.location1) == "Vector2")
@@ -51,7 +52,7 @@ function Triangle() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location1 = argument[0];
 						location2 = argument[1];
 						location3 = argument[2];

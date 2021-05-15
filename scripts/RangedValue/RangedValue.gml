@@ -4,7 +4,7 @@
 ///							
 /// @description			Construct a container for a value closed in the specified Range.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							   Unspecified value will be set to the minimum value of the Range.
 ///							- Empty: {void|undefined}
@@ -17,7 +17,7 @@ function RangedValue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				range = undefined;
 				value = undefined;
 				value_original = undefined;
@@ -26,7 +26,7 @@ function RangedValue() constructor
 				{
 					if (instanceof(argument[0]) == "RangedValue")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						range = ((instanceof(_other.range) == "Range") ? new Range(_other.range)
@@ -36,7 +36,7 @@ function RangedValue() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						range = argument[0];
 						
 						var _value = (((argument_count > 1) and (argument[1] != undefined))

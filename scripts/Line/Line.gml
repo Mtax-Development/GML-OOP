@@ -6,7 +6,7 @@
 ///							
 /// @description			Construct a Line Shape.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Line} other
@@ -18,7 +18,7 @@ function Line() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				size = undefined;
 				color = undefined;
@@ -28,7 +28,7 @@ function Line() constructor
 				{
 					if (instanceof(argument[0]) == "Line")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector4")
@@ -40,7 +40,7 @@ function Line() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location = argument[0];
 						size = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																					  : 1);

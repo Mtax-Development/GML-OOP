@@ -7,7 +7,7 @@
 /// @description			Constructs an Arrow Shape, which is a Line starting at x1y1 with a
 ///							Triangle of the specified size at x2y2 pointing towards that location.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Arrow} other
@@ -19,7 +19,7 @@ function Arrow() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				size = undefined;
 				color = undefined;
@@ -29,7 +29,7 @@ function Arrow() constructor
 				{
 					if (instanceof(argument[0]) == "Arrow")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector4")
@@ -40,7 +40,7 @@ function Arrow() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location = argument[0];
 						size  = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																					   : 1);

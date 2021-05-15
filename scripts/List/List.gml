@@ -4,7 +4,7 @@
 ///							model, offering flexibility while doing so. It easily resized,
 ///							sorted and manipulated in other ways.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:list} list
 ///							- Empty: {undefined}
@@ -17,7 +17,7 @@ function List() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
@@ -26,19 +26,19 @@ function List() constructor
 					{
 						if (instanceof(argument[0]) == "List")
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
 						else if ((is_real(argument[0])))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 						}
 					}
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					ID = ds_list_create();
 					ds_list_clear(ID);
 				}

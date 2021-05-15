@@ -4,7 +4,7 @@
 ///							
 /// @description			Constructs a Room resource, used to group all other resources.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:room} other
 ///							- Constructor copy: {Room} other
@@ -31,7 +31,7 @@ function Room() constructor
 					
 					if (_other.isFunctional())
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						persistent = _other.persistent;
 						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
 																	   : _other.size);
@@ -62,13 +62,13 @@ function Room() constructor
 				}
 				else if ((argument_count > 0) and (is_real(argument[0])))
 				{
-					//|Construction method: Wrapper.
+					//|Construction type: Wrapper.
 					ID = argument[0];
 					name = room_get_name(ID);
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					size = (((argument_count > 0) and (argument[0] != undefined))
 							? argument[0] : new Vector2(0, 0));
 					persistent = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
@@ -345,7 +345,7 @@ function Room() constructor
 		// @description			A container constructor for properties of instances added to this Room
 		//						before its activation.
 		//						
-		//						Construction methods:
+		//						Construction types:
 		//						- New constructor.
 		//						- Constructor copy: {Room.AddedInstance} other
 		function AddedInstance() constructor
@@ -366,7 +366,7 @@ function Room() constructor
 						
 						if (string_copy(string(instanceof(argument[0])), 1, 13) == "AddedInstance")
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
 							object = _other.object;
@@ -377,7 +377,7 @@ function Room() constructor
 						}
 						else
 						{
-							//|Construction method: New constructor.
+							//|Construction type: New constructor.
 							object = argument[0];
 							location = (((argument_count > 1) and (argument[1] != undefined))
 										? argument[1] : new Vector2(0, 0));

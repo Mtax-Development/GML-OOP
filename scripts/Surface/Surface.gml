@@ -3,7 +3,7 @@
 ///							
 ///	@description			Constructs a Surface resource, a separate canvas for graphics rendering.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Surface} other
@@ -15,7 +15,7 @@ function Surface() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				size = undefined;
 				onCreate = undefined;
@@ -24,7 +24,7 @@ function Surface() constructor
 				{
 					if (instanceof(argument[0]) == "Surface")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
@@ -36,7 +36,7 @@ function Surface() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						size = argument[0];
 						ID = surface_create(size.x, size.y);
 					}

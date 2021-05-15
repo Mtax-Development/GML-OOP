@@ -6,7 +6,7 @@
 ///							can be read or modified invidually or by handling multiple cells at once
 ///							in a region or disk of the Grid.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:grid} grid
 ///							- Empty: {void|undefined}
@@ -19,7 +19,7 @@ function Grid() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				size = undefined;
 				
@@ -28,7 +28,7 @@ function Grid() constructor
 					switch (instanceof(argument[0]))
 					{
 						case "Grid":
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
 							size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
@@ -39,14 +39,14 @@ function Grid() constructor
 						break;
 						
 						case "Vector2":
-							//|Construction method: New constructor.
+							//|Construction type: New constructor.
 							size = new Vector2(argument[0]);
 							
 							ID = ds_grid_create(size.x, size.y);
 						break;
 						
 						default:
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 							
 							size = new Vector2(ds_grid_width(ID), ds_grid_height(ID));

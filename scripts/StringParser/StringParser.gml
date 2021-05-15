@@ -3,7 +3,7 @@
 ///							
 /// @description			Constructs a Handler for parsing strings.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {StringParser} other
@@ -15,21 +15,21 @@ function StringParser() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = "";
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "StringParser")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						ID = _other.ID;
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						ID = string(argument[0]);
 					}
 				}

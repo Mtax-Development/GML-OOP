@@ -3,7 +3,7 @@
 /// @description			Constructs a Stack Data Structure, which stores data in a linear,
 ///							last-in-first-out (LIFO) model that disallows order manipulation.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:stack} stack
 ///							- Empty: {undefined}
@@ -16,7 +16,7 @@ function Stack() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
@@ -25,19 +25,19 @@ function Stack() constructor
 					{
 						if (instanceof(argument[0]) == "Stack")
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
 						else if ((is_real(argument[0])))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 						}
 					}
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					ID = ds_stack_create();
 				}
 			}

@@ -5,7 +5,7 @@
 /// @description			Construct a Layer resource, used to group graphical elements and sort 
 ///							their rendering depth.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {string} name
 ///							- Empty: {void|undefined}
@@ -19,7 +19,7 @@ function Layer() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty
+				//|Construction type: Empty
 				ID = undefined;
 				name = undefined;
 				
@@ -46,7 +46,7 @@ function Layer() constructor
 				{
 					if (instanceof(argument[0]) == "Layer")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						depth = _other.depth;
@@ -123,7 +123,7 @@ function Layer() constructor
 					{
 						if (is_string(argument[0]))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							var _name = argument[0];
 							
 							name = _name;
@@ -183,7 +183,7 @@ function Layer() constructor
 						}
 						else
 						{
-							//Construction method: New constructor.
+							//Construction type: New constructor.
 							depth = argument[0];
 							
 							location = new Vector2(0, 0);
@@ -759,7 +759,7 @@ function Layer() constructor
 		// @argument			{Sprite} sprite
 		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
 		//						
-		//						Construction methods:
+		//						Construction types:
 		//						- New element.
 		//						- Wrapper: {spriteElement} spriteElement
 		//						- Constructor copy: {Layer.SpriteElement} other
@@ -790,7 +790,7 @@ function Layer() constructor
 						switch (_instanceof_other)
 						{
 							case _instanceof_self:
-								//|Construction method: Constructor copy.
+								//|Construction type: Constructor copy.
 								var _other = argument[0];
 								
 								sprite = new Sprite(_other.sprite.ID);
@@ -817,7 +817,7 @@ function Layer() constructor
 							break;
 							
 							case "Sprite":
-								//|Construction method: New element.
+								//|Construction type: New element.
 								sprite = argument[0];
 								location = argument[1];
 								
@@ -833,7 +833,7 @@ function Layer() constructor
 							break;
 							
 							default:
-								//|Construction method: Wrapper.
+								//|Construction type: Wrapper.
 								ID = argument[0];
 								
 								sprite = layer_sprite_get_sprite(ID);
@@ -1156,7 +1156,7 @@ function Layer() constructor
 		// @description			Construct a Background Element used to draw a Background on this
 		//						Layer.
 		//						
-		//						Construction methods:
+		//						Construction types:
 		//						- New element.
 		//						- Wrapper: {backgroundElement} backgroundElement
 		//						- Constructor copy: {Layer.BackgroundElement} other
@@ -1189,7 +1189,7 @@ function Layer() constructor
 						switch (_instanceof_other)
 						{
 							case _instanceof_self:
-								//|Construction method: Constructor copy.
+								//|Construction type: Constructor copy.
 								var _other = argument[0];
 								
 								sprite = new Sprite(_other.sprite.ID);
@@ -1219,7 +1219,7 @@ function Layer() constructor
 							break;
 							
 							case "Sprite":
-								//|Construction method: New element.
+								//|Construction type: New element.
 								sprite = argument[0];
 								ID = layer_background_create(parent.ID, sprite.ID);
 								
@@ -1235,7 +1235,7 @@ function Layer() constructor
 							break;
 							
 							default:
-								//|Construction method: Wrapper.
+								//|Construction type: Wrapper.
 								ID = argument[0];
 								
 								sprite = new Sprite(layer_background_get_sprite(ID));
@@ -1640,7 +1640,7 @@ function Layer() constructor
 		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
 		//						this Layer.
 		//						
-		//						Construction methods:
+		//						Construction types:
 		//						- New element.
 		//						- Wrapper: {int} tilemapElement
 		//						- Constructor copy: {Layer.TilemapElement} other
@@ -1665,7 +1665,7 @@ function Layer() constructor
 						
 						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
 							tileset = _other.tileset;
@@ -1679,7 +1679,7 @@ function Layer() constructor
 						{
 							if (argument_count > 2)
 							{
-								//|Construction method: New element.
+								//|Construction type: New element.
 								tileset = argument[0];
 								location = argument[1];
 								size = argument[2];
@@ -1689,7 +1689,7 @@ function Layer() constructor
 							}
 							else
 							{
-								//|Construction method: Wrapper.
+								//|Construction type: Wrapper.
 								ID = argument[0];
 								
 								tileset = tilemap_get_tileset(ID);
@@ -2181,7 +2181,7 @@ function Layer() constructor
 				// @description			Constructs a TileData Element, which refers to a Tile
 				//						in this Tilemap.
 				//						
-				//						Construction methods:
+				//						Construction types:
 				//						- New constructor
 				//						- Constructor copy: {Layer.TilemapElement.TileData} other
 				function TileData() constructor
@@ -2203,14 +2203,14 @@ function Layer() constructor
 									
 									if (_instanceof_other == _instanceof_self)
 									{
-										//|Construction method: Constructor copy.
+										//|Construction type: Constructor copy.
 										var _other = argument[0];
 									
 										ID = _other.ID;
 									}
 									else
 									{
-										//|Construction method: New constructor.
+										//|Construction type: New constructor.
 										ID = argument[0];
 									}
 								}
@@ -2576,7 +2576,7 @@ function Layer() constructor
 		// @description			Construct a Particle System Element used to create Particles of
 		//						any Particle Type on this Layer.
 		//						
-		//						Construction methods:
+		//						Construction types:
 		//						- New element.
 		//						- Constructor copy: {Layer.ParticleSystem} other
 		function ParticleSystem() constructor
@@ -2609,7 +2609,7 @@ function Layer() constructor
 						
 						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
 							persistent = _other.persistent;
@@ -2634,7 +2634,7 @@ function Layer() constructor
 						}
 						else
 						{
-							//|Construction method: New constructor.
+							//|Construction type: New constructor.
 							persistent = (((argument_count > 0) and (argument[0] != undefined))
 										  ? argument[0] : false);
 							
@@ -2948,7 +2948,7 @@ function Layer() constructor
 				//						System, used to create particles of a Particles Type in
 				//						a region.
 				//						
-				//						Construction methods:
+				//						Construction types:
 				//						- New element.
 				//						- Constructor copy: {Layer.ParticleSystem.ParticleEmitter}
 				//											other
@@ -2979,7 +2979,7 @@ function Layer() constructor
 									if (string_copy(string(instanceof(argument[0])), 1, 15)
 										== "ParticleEmitter")
 									{
-										//|Construction method: Constructor copy.
+										//|Construction type: Constructor copy.
 										var _other = argument[0];
 										
 										particleType = _other.particleType;
@@ -2994,7 +2994,7 @@ function Layer() constructor
 									}
 									else
 									{
-										//|Construction method: New constructor.
+										//|Construction type: New constructor.
 										particleType = argument[0];
 									}
 								}

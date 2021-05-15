@@ -4,7 +4,7 @@
 ///							
 /// @description			Construct a container for two-value numeric Range with different numbers.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Range} other
@@ -16,7 +16,7 @@ function Range() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				minimum = undefined;
 				maximum = undefined;
 				
@@ -24,7 +24,7 @@ function Range() constructor
 				{
 					if (instanceof(argument[0]) == "Range")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						minimum = _other.minimum;
@@ -32,7 +32,7 @@ function Range() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						minimum = argument[0];
 						maximum = argument[1];
 					}

@@ -4,7 +4,7 @@
 ///							
 /// @description			Construct a Vector container for X and Y coordinate pair.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- Two values: {real} x, {real} y
 ///							- One number for all values: {real} value
 ///							- Empty: {void|undefined}
@@ -21,7 +21,7 @@ function Vector2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty
+				//|Construction type: Empty
 				x = undefined;
 				y = undefined;
 				
@@ -31,8 +31,8 @@ function Vector2() constructor
 					{
 						case "Vector2":
 						case "Scale":
-							//|Construction method: Constructor copy.
-							//|Construction method: From Scale.
+							//|Construction type: Constructor copy.
+							//|Construction type: From Scale.
 							var _other = argument[0];
 							
 							x = _other.x;
@@ -45,7 +45,7 @@ function Vector2() constructor
 								case 1:
 									if (is_array(argument[0]))
 									{
-										//|Construction method: From array.
+										//|Construction type: From array.
 										var _array = argument[0];
 										
 										switch (array_length(_array))
@@ -64,7 +64,7 @@ function Vector2() constructor
 									}
 									else
 									{
-										//|Construction method: One number for all values.
+										//|Construction type: One number for all values.
 										x = argument[0];
 										y = argument[0];
 									}
@@ -72,7 +72,7 @@ function Vector2() constructor
 								
 								case 2:
 								default:
-									//|Construction method: Two values.
+									//|Construction type: Two values.
 									x = argument[0];
 									y = argument[1];
 								break;

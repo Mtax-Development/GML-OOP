@@ -6,7 +6,7 @@
 ///							
 /// @description			Construct a Vector container for two X and Y coordinate pairs.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
 ///							- Number pair: {real} first, {real} second
@@ -31,7 +31,7 @@ function Vector4() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				x1 = undefined;
 				y1 = undefined;
 				x2 = undefined;
@@ -41,7 +41,7 @@ function Vector4() constructor
 				{
 					if (instanceof(argument[0]) == "Vector4")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 					
 						x1 = _other.x1;
@@ -56,7 +56,7 @@ function Vector4() constructor
 							case 1:
 								if (is_array(argument[0]))
 								{
-									//|Construction method: From array.
+									//|Construction type: From array.
 									var _array = argument[0];
 									
 									switch (array_length(_array))
@@ -86,7 +86,7 @@ function Vector4() constructor
 								}
 								else
 								{
-									//|Construction method: One number for all values.
+									//|Construction type: One number for all values.
 									x1 = argument[0];
 									y1 = argument[0];
 									x2 = argument[0];
@@ -98,7 +98,7 @@ function Vector4() constructor
 								if ((instanceof(argument[0]) == "Vector2") 
 								and (instanceof(argument[1]) == "Vector2"))
 								{
-									//|Construction method: From two Vector2.
+									//|Construction type: From two Vector2.
 									var _pair1 = argument[0];
 									var _pair2 = argument[1];
 									
@@ -109,7 +109,7 @@ function Vector4() constructor
 								}
 								else
 								{
-									//|Construction method: Number pair.
+									//|Construction type: Number pair.
 									var _pair1 = argument[0];
 									var _pair2 = argument[1];
 									
@@ -121,7 +121,7 @@ function Vector4() constructor
 							break;
 							
 							case 4:
-								//|Construction method: Four values.
+								//|Construction type: Four values.
 								x1 = argument[0];
 								y1 = argument[1];
 								x2 = argument[2];

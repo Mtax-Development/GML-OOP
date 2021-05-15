@@ -3,7 +3,7 @@
 ///							
 /// @description			Constructs a Handler for parsing arrays.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty array: {void|undefined}
 ///							- Constructor copy: {ArrayParser} other
@@ -19,7 +19,7 @@ function ArrayParser() constructor
 				{
 					if (instanceof(argument[0]) == "ArrayParser")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						ID = [];
@@ -28,13 +28,13 @@ function ArrayParser() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						ID = argument[0];
 					}
 				}
 				else
 				{
-					//|Construction method: Empty array.
+					//|Construction type: Empty array.
 					ID = [];
 				}
 			}

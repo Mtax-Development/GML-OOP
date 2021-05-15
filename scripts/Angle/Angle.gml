@@ -3,7 +3,7 @@
 ///							
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Default value: {void|undefined}
 ///							- Constructor copy: {Angle} other
@@ -15,21 +15,21 @@ function Angle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Default value.
+				//|Construction type: Default value.
 				value = 0;
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Angle")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						value = _other.value;
 					}
 					else if (is_real(argument[0]))
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						value += argument[0];
 						value -= (360 * (floor(value / 360)));
 					}

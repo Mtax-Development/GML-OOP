@@ -8,7 +8,7 @@
 ///							
 /// @description			Constructs a Circle Shape.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Circle} other
@@ -20,7 +20,7 @@ function Circle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				radius = undefined;
 				fill_color = undefined;
@@ -32,7 +32,7 @@ function Circle() constructor
 				{
 					if (instanceof(argument[0]) == "Circle")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector2")
@@ -46,7 +46,7 @@ function Circle() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						location = argument[0];
 						radius = argument[1];
 						fill_color = ((argument_count > 2) ? argument[2] : undefined);

@@ -3,7 +3,7 @@
 ///							
 /// @description			Construct a Shader resource used to alter drawing.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Shader} other
@@ -15,7 +15,7 @@ function Shader() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				name = undefined;
 				compiled = undefined;
@@ -26,7 +26,7 @@ function Shader() constructor
 				{
 					if (instanceof(argument[0]) == "Shader")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 					
 						ID = _other.ID;
@@ -37,7 +37,7 @@ function Shader() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						ID = argument[0];
 						name = shader_get_name(ID);
 						compiled = shader_is_compiled(ID);

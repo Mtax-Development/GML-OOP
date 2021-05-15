@@ -8,6 +8,7 @@
 ///							
 /// @description			Constructs a Round Rectangle Shape.
 ///							
+///							Construction types:
 ///							- New constructor.
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {RoundRectangle} other
@@ -19,7 +20,7 @@ function RoundRectangle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				location = undefined;
 				radius = undefined;
 				fill_color = undefined;
@@ -31,7 +32,7 @@ function RoundRectangle() constructor
 				{
 					if (instanceof(argument[0]) == "RoundRectangle")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((instanceof(_other.location) == "Vector4")
@@ -46,7 +47,7 @@ function RoundRectangle() constructor
 					}
 					else
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						location = argument[0];
 						radius = (((argument_count > 1) and (argument[1] != undefined))
 								  ? argument[1] : new Vector2(1, 1));

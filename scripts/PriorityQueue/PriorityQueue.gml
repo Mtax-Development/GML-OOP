@@ -3,7 +3,7 @@
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
 ///							a linear model that orders the values based on their priority.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {int:priorityQueue} priorityQueue
 ///							- Empty: {undefined}
@@ -16,7 +16,7 @@ function PriorityQueue() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				
 				if (argument_count > 0)
@@ -25,19 +25,19 @@ function PriorityQueue() constructor
 					{
 						if (instanceof(argument[0]) == "PriorityQueue")
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
 						else if ((is_real(argument[0])))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 						}
 					}
 				}
 				else
 				{
-					//|Construction method: New constructor.
+					//|Construction type: New constructor.
 					ID = ds_priority_create();
 				}
 			}

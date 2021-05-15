@@ -3,7 +3,7 @@
 ///							
 /// @description			Constructs a Sprite resource used to render its frames.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Sprite} other
@@ -15,7 +15,7 @@ function Sprite() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				name = string(undefined);
 				size = undefined;
@@ -29,7 +29,7 @@ function Sprite() constructor
 				{
 					if (instanceof(argument[0]) == "Sprite")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 					
 						ID = sprite_duplicate(_other.ID);
@@ -45,7 +45,7 @@ function Sprite() constructor
 					}
 					else
 					{
-						//|Construction method: New constructor.
+						//|Construction type: New constructor.
 						ID = argument[0];
 						name = sprite_get_name(ID);
 						size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));

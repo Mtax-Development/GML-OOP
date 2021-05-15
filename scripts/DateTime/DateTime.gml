@@ -8,7 +8,7 @@
 ///							
 /// @description			Constructs a container for a DateTime.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- From one array: {int[]} array
 ///							   Array elements will be applied in the following order:
@@ -27,7 +27,7 @@ function DateTime() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction method: Empty.
+				//|Construction type: Empty.
 				ID = undefined;
 				year = undefined;
 				month = undefined;
@@ -41,7 +41,7 @@ function DateTime() constructor
 				{
 					if (instanceof(argument[0]) == "DateTime")
 					{
-						//|Construction method: Constructor copy.
+						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						ID = _other.ID;
@@ -58,7 +58,7 @@ function DateTime() constructor
 					{
 						if ((argument_count == 1) and (is_real(argument[0])))
 						{
-							//|Construction method: Wrapper.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 							
 							year = date_get_year(ID);
@@ -73,6 +73,7 @@ function DateTime() constructor
 						{
 							if ((argument_count > 1) and (is_array(argument[1])))
 							{
+								//|Construction type: From two arrays.
 								var _array_date = argument[0];
 								var _array_time = argument[1];
 								
@@ -94,6 +95,7 @@ function DateTime() constructor
 							}
 							else
 							{
+								//|Construction type: From one array.
 								var _array = argument[0];
 								var _array_length = array_length(argument[0]);
 								
@@ -123,7 +125,7 @@ function DateTime() constructor
 						}
 						else
 						{
-							//|Construction method: New datetime.
+							//|Construction type: New datetime.
 							var _year = argument[0];
 							var _month = argument[1];
 							var _day = argument[2];

@@ -6,7 +6,7 @@
 ///	@description			Constructs a Buffer, which is a region of memory, primarly used while
 ///							moving data between places, such as through network or to files.
 ///							
-///							Construction methods:
+///							Construction types:
 ///							- New constructor
 ///							- Wrapper: {buffer} other
 ///							- Constructor copy: {Buffer} other
@@ -28,7 +28,7 @@ function Buffer() constructor
 						
 						if ((is_real(_other.ID)) and (buffer_exists(_other.ID)))
 						{
-							//|Construction method: Constructor copy.
+							//|Construction type: Constructor copy.
 							var _size = buffer_get_size(_other.ID);
 							var _type = buffer_get_type(_other.ID);
 							var _aligment = buffer_get_alignment(_other.ID);
@@ -44,13 +44,13 @@ function Buffer() constructor
 						{
 							if ((is_real(argument[0])) and (buffer_exists(argument[0])))
 							{
-								//|Construction method: Wrapper.
+								//|Construction type: Wrapper.
 								ID = argument[0];
 							}
 						}
 						else
 						{
-							//|Construction method: New constructor.
+							//|Construction type: New constructor.
 							var _size = argument[0];
 							var _type = argument[1];
 							var _aligment = ((argument_count > 2) ? argument[2] : 1);
