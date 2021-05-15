@@ -356,7 +356,7 @@ function Grid() constructor
 			//						specified disk of this Grid.
 			//						If the disk contains values other than numerical, it might be
 			//						found instead and will be returned as {undefined}.
-			static getMinDisk = function(_location, _radius)
+			static getMinimumDisk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -368,7 +368,7 @@ function Grid() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getMinDisk";
+					var _methodName = "getMinimumDisk";
 					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);

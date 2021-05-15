@@ -65,7 +65,7 @@ function Shader() constructor
 			// @description			Pass one or more float-type numbers as a uniform to this Shader.
 			//						If only one value argument is passed, it can be an array or
 			//						Vector2. Otherwise all value arguments have to be numbers.
-			static setUniform_float = function(_uniform)
+			static setUniformFloat = function(_uniform)
 			{
 				if (compiled)
 				{
@@ -93,7 +93,7 @@ function Shader() constructor
 							{
 								var _errorReport = new ErrorReport();
 								var _callstack = debug_get_callstack();
-								var _methodName = "setUniform_float";
+								var _methodName = "setUniformFloat";
 								var _errorText = ("Attempted to set an uniform using an " +
 												  "unrecognized data type:\n" +
 												  "Shader: " + "{" + string(name) + "}" + "\n" +
@@ -138,7 +138,7 @@ function Shader() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setUniform_float";
+					var _methodName = "setUniformFloat";
 					var _errorText = ("Attempted to use a Shader that is not compiled: " +
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -153,7 +153,7 @@ function Shader() constructor
 			// @description			Pass one or more integer values as a uniform to this Shader.
 			//						If only one value argument is passed, it can be an array or
 			//						Vector2. Otherwise all value arguments have to be numbers.
-			static setUniform_int = function(_uniform)
+			static setUniformInt = function(_uniform)
 			{
 				if (compiled)
 				{
@@ -181,7 +181,7 @@ function Shader() constructor
 							{
 								var _errorReport = new ErrorReport();
 								var _callstack = debug_get_callstack();
-								var _methodName = "setUniform_int";
+								var _methodName = "setUniformInt";
 								var _errorText = ("Attempted to set an uniform using an " +
 												  "unrecognized data type:\n" +
 												  "Shader: " + "{" + string(name) + "}" + "\n" +
@@ -226,7 +226,7 @@ function Shader() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setUniform_int";
+					var _methodName = "setUniformInt";
 					var _errorText = ("Attempted to use a Shader that is not compiled: " +
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -237,7 +237,7 @@ function Shader() constructor
 			// @argument			{real[]} value?
 			// @description			Pass the currently set matrix or an array of its values as a
 			//						uniform to this Shader.
-			static setUniform_matrix = function(_uniform, _value)
+			static setUniformMatrix = function(_uniform, _value)
 			{
 				if (compiled)
 				{
@@ -265,7 +265,7 @@ function Shader() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "setUniform_matrix";
+					var _methodName = "setUniformMatrix";
 					var _errorText = ("Attempted to use a Shader that is not compiled: " +
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
