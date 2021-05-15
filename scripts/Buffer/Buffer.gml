@@ -25,16 +25,16 @@ function Buffer() constructor
 					if (instanceof(argument[0]) == "Buffer")
 					{
 						var _other = argument[0];
-					
+						
 						if ((is_real(_other.ID)) and (buffer_exists(_other.ID)))
 						{
 							//|Construction method: Constructor copy.
 							var _size = buffer_get_size(_other.ID);
 							var _type = buffer_get_type(_other.ID);
 							var _aligment = buffer_get_alignment(_other.ID);
-								
+							
 							ID = buffer_create(_size, _type, _aligment);
-								
+							
 							buffer_copy(_other.ID, 0, _size, ID, 0);
 						}
 					}
@@ -54,10 +54,10 @@ function Buffer() constructor
 							var _size = argument[0];
 							var _type = argument[1];
 							var _aligment = ((argument_count > 2) ? argument[2] : 1);
-						
+							
 							if (!(_size > 0)) {_size = 1;} //|Size of less than 0 is not allowed.
 														   // Size of 0 can crash the application.
-						
+							
 							ID = buffer_create(_size, _type, _aligment);
 						}
 					}
@@ -121,7 +121,7 @@ function Buffer() constructor
 						var _errorReport = new ErrorReport();
 						var _callstack = debug_get_callstack();
 						var _methodName = "copy";
-						var _errorText = ("Attempted to copy data from self: " + 
+						var _errorText = ("Attempted to copy data from self: " +
 										  "{" + string(_other) + "}");
 						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 															 _errorText);
@@ -132,7 +132,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
-					var _errorText = ("Attempted to copy data from an invalid Buffer: " + 
+					var _errorText = ("Attempted to copy data from an invalid Buffer: " +
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -156,7 +156,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSeekPosition";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -177,7 +177,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getType";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -198,7 +198,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -219,7 +219,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getAlignment";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -240,7 +240,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getPointer";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -281,7 +281,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSeekPosition";
-					var _errorText = ("Attempted to set a property of an invalid Buffer: " + 
+					var _errorText = ("Attempted to set a property of an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -306,7 +306,6 @@ function Buffer() constructor
 					var _results = array_create(_pairCount, -1);
 					
 					var _i = 0;
-					
 					repeat (_pairCount)
 					{
 						_results[_i div 2] = buffer_write(ID, argument[_i], argument[_i + 1]);
@@ -326,7 +325,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "write";
-					var _errorText = ("Attempted to write to an invalid Buffer: " + 
+					var _errorText = ("Attempted to write to an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -356,7 +355,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "fill";
-					var _errorText = ("Attempted to write to an invalid Buffer: " + 
+					var _errorText = ("Attempted to write to an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -396,7 +395,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "read";
-					var _errorText = ("Attempted to read an invalid Buffer: " + 
+					var _errorText = ("Attempted to read an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -423,7 +422,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "peek";
-					var _errorText = ("Attempted to read an invalid Buffer: " + 
+					var _errorText = ("Attempted to read an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -484,7 +483,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "compress";
-					var _errorText = ("Attempted to compress an invalid Buffer: " + 
+					var _errorText = ("Attempted to compress an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -524,7 +523,7 @@ function Buffer() constructor
 						var _errorReport = new ErrorReport();
 						var _callstack = debug_get_callstack();
 						var _methodName = "decompress";
-						var _errorText = ("Buffer decompression failed: " + 
+						var _errorText = ("Buffer decompression failed: " +
 										  "{" + string(ID) + "}");
 						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 															 _errorText);
@@ -537,7 +536,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "decompress";
-					var _errorText = ("Attempted to compress an invalid Buffer: " + 
+					var _errorText = ("Attempted to compress an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -557,11 +556,11 @@ function Buffer() constructor
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
 					var _size = buffer_get_size(ID);
 					var _type = buffer_get_type(ID);
 					var _aligment = buffer_get_alignment(ID);
-					
-					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					
 					switch(_type)
 					{
@@ -574,9 +573,9 @@ function Buffer() constructor
 					}
 					
 					var _string = ("ID: " + string(ID) + _mark_separator +
-							       "Size: " + string(_size) + _mark_separator + 
-							       "Type: " + string(_type) + _mark_separator +
-							       "Aligment: " + string(_aligment));
+								   "Size: " + string(_size) + _mark_separator +
+								   "Type: " + string(_type) + _mark_separator +
+								   "Aligment: " + string(_aligment));
 					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
@@ -608,7 +607,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toHashMD5";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -638,7 +637,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toHashSHA1";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -668,7 +667,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toString_hash_crc32";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -679,8 +678,8 @@ function Buffer() constructor
 			// @argument			{int|all} size?
 			// @argument			{int} offset?
 			// @returns				{string}
-			// @description			Return a string of this Buffer encoded using Base64 encoding
-			//						scheme, which can later be decoded to recreate it.
+			// @description			Encode this Buffer into a string using the Base64 format, from
+			//						which it can be recreated.
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
@@ -698,7 +697,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toEncodedString";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -708,8 +707,8 @@ function Buffer() constructor
 			
 			// @argument			{string} string
 			// @argument			{int} offset?
-			// @description			Decode the previously encoded string of the same Buffer and
-			//						recreate it into this one.
+			// @description			Decode a string to which a Buffer was previously encoded into this
+			//						one.
 			//						A byte offset can be specified for where the operation will start.
 			static fromEncodedString = function(_string, _offset)
 			{
@@ -724,7 +723,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "fromEncodedString";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -756,11 +755,11 @@ function Buffer() constructor
 						var _errorReport = new ErrorReport();
 						var _callstack = debug_get_callstack();
 						var _methodName = "fromSurface";
-						var _errorText = ("Attempted to convert an invalid Surface: " + 
+						var _errorText = ("Attempted to convert an invalid Surface: " +
 										  "{" + string(_surface) + "}");
 						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 															 _errorText);
-					
+						
 						return string(undefined);
 					}
 				}
@@ -769,7 +768,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "fromSurface";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -792,23 +791,23 @@ function Buffer() constructor
 			static toFile = function(_path)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
-				{					
+				{
 					if (argument_count == 1)
 					{
 						buffer_save(ID, _path);
 					}
 					else
 					{
-						var _offset = (((argument_count > 1) and (argument[1] != undefined)) ? 
-									   argument[1] : 0);
-						var _size = (((argument_count > 2) and (argument[2] != undefined) 
-									  and (argument[2] != all)) ? argument[2] : buffer_get_size(ID));
+						var _offset = (((argument_count > 1) and (argument[1] != undefined))
+									   ? argument[1] : 0);
+						var _size = (((argument_count > 2) and (argument[2] != undefined)
+									 and (argument[2] != all)) ? argument[2] : buffer_get_size(ID));
 						
-						if (argument_count <= 3)
+						if ((argument_count < 3) or (!argument[3]))
 						{
 							buffer_save_ext(ID, _path, _offset, _size);
 						}
-						else if (argument[3])
+						else
 						{
 							buffer_save_async(ID, _path, _offset, _size);
 						}
@@ -819,7 +818,7 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toFile";
-					var _errorText = ("Attempted to convert an invalid Buffer: " + 
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -846,20 +845,14 @@ function Buffer() constructor
 			//						If not performed asynchronously, {undefined} will be returned.
 			static fromFile = function(_path)
 			{
-				if (file_exists(_path))
+				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					var _offset = (((argument_count > 1) and (argument[1] != undefined)) ? 
-									argument[1] : 0);
+					var _offset = (((argument_count > 1) and (argument[1] != undefined))
+								   ? argument[1] : 0);
 					
-					if ((is_real(ID)) and (buffer_exists(ID)))
+					if ((argument_count > 2) and (argument[2] != undefined))
 					{
-						if ((argument_count <= 2) or (!argument[2]))
-						{
-							buffer_load_ext(ID, _path, _offset);
-							
-							return undefined;
-						}
-						else
+						if (file_exists("Default/" + _path))
 						{
 							var _async_size = argument[2];
 							
@@ -867,18 +860,39 @@ function Buffer() constructor
 							
 							return buffer_load_async(ID, _path, _offset, _async_size);
 						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "fromFile";
+							var _errorText = ("Attempted to load a nonexistent file: " +
+												"{" + string(_path) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							return undefined;
+						}
 					}
 					else
 					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "fromFile";
-						var _errorText = ("Attempted to write to an invalid Buffer: " + 
-										  "{" + string(ID) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
-						
-						return undefined;
+						if (file_exists(_path))
+						{
+							buffer_load_ext(ID, _path, _offset);
+							
+							return undefined;
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "fromFile";
+							var _errorText = ("Attempted to load a nonexistent file: " +
+											  "{" + string(_path) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							return undefined;
+						}
 					}
 				}
 				else
@@ -886,8 +900,8 @@ function Buffer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "fromFile";
-					var _errorText = ("Attempted to load a nonexistent file: " +
-									  "{" + string(_path) + "}");
+					var _errorText = ("Attempted to write to an invalid Buffer: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
@@ -904,22 +918,35 @@ function Buffer() constructor
 			//						forw here the operation will start and then continue until either
 			//						the specified size in bytes was affected or the end of this Buffer
 			//						is reached.
-			static fromFile_part = function(_path, _size, _offset, _file_offset)
+			static fromFilePart = function(_path, _size, _offset, _file_offset)
 			{
-				if ((is_real(ID)) and (buffer_exists(ID)))
+				if (file_exists(_path))
 				{
-					if (_offset == undefined) {_offset = 0;}
-					if (_file_offset == undefined) {_file_offset = 0;}
+					if ((is_real(ID)) and (buffer_exists(ID)))
+					{
+						if (_offset == undefined) {_offset = 0;}
+						if (_file_offset == undefined) {_file_offset = 0;}
 					
-					buffer_load_partial(ID, _path, _file_offset, _size, _offset);
+						buffer_load_partial(ID, _path, _file_offset, _size, _offset);
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "fromFilePart";
+						var _errorText = ("Attempted to write to an invalid Buffer: " +
+										  "{" + string(ID) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "fromFile_part";
-					var _errorText = ("Attempted to write to an invalid Buffer: " + 
-									  "{" + string(ID) + "}");
+					var _methodName = "fromFilePath";
+					var _errorText = ("Attempted to load a nonexistent file: " +
+										"{" + string(_path) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}

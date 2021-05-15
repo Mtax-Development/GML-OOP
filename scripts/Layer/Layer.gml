@@ -8,6 +8,7 @@
 ///							Construction methods:
 ///							- New constructor
 ///							- Wrapper: {string} name
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Layer} other, {string} name?
 ///							   Information about object instances will not be copied.
 function Layer() constructor
@@ -18,6 +19,7 @@ function Layer() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty
 				ID = undefined;
 				name = undefined;
 				
@@ -40,164 +42,14 @@ function Layer() constructor
 				tilemapList = undefined;
 				particleSystemList = undefined;
 				
-				if (instanceof(argument[0]) == "Layer")
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
-					
-					depth = _other.depth;
-					
-					if ((argument_count > 1) and (is_string(argument[1])))
+					if (instanceof(argument[0]) == "Layer")
 					{
-						name = argument[1];
-						ID = layer_create(depth, name);
-					}
-					else
-					{
-						ID = layer_create(depth);
-						name = layer_get_name(ID);
-					}
-					
-					location = new Vector2(_other.location);
-					self.setLocation(location);
-					
-					speed = new Vector2(_other.speed);
-					self.setSpeed(speed);
-					
-					visible = _other.visible;
-					setVisible(visible);
-					
-					instancesPaused = false;
-					
-					function_drawBegin = _other.function_drawBegin;
-					function_drawEnd = _other.function_drawEnd;
-					
-					if (function_drawBegin != undefined)
-					{
-						self.setFunctionDrawBegin(function_drawBegin);
-					}
-					
-					if (function_drawEnd != undefined)
-					{
-						self.setFunctionDrawEnd(function_drawEnd);
-					}
-					
-					shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
-																	  : _other.shader);
-					
-					if (instanceof(shader) == "Shader")
-					{
-						self.setShader(shader);
-					}
-					
-					instanceList = new List();
-					spriteList = new List();
-					backgroundList = new List();
-					tilemapList = new List();
-					particleSystemList = new List();
-					
-					var _elementList = [_other.spriteList, _other.backgroundList, 
-										_other.tilemapList, _other.particleSystemList];
-					var _elementType = [SpriteElement, BackgroundElement, TilemapElement,
-										ParticleSystem];
-					
-					var _i = [0, 0];
-					repeat (array_length(_elementList))
-					{
-						_i[1] = 0;
-						repeat (_elementList[_i[0]].getSize())
-						{
-							var _ = new _elementType[_i[0]](_elementList[_i[0]].getValue(_i[1]));
-							
-							++_i[1];
-						}
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 						
-						++_i[0];
-					}
-				}
-				else
-				{
-					if (is_string(argument[0]))
-					{
-						//|Construction method: Wrapper.
-						var _name = argument[0];
-						
-						name = _name;
-						ID = layer_get_id(name);
-						
-						depth = layer_get_depth(ID);
-						
-						location = new Vector2(layer_get_x(ID), layer_get_y(ID));
-						speed = new Vector2(layer_get_hspeed(ID), layer_get_vspeed(ID));
-						
-						visible = layer_get_visible(ID);
-						instancesPaused = undefined;
-						
-						function_drawBegin = layer_get_script_begin(ID);
-						function_drawEnd = layer_get_script_end(ID);
-						
-						shader = layer_get_shader(ID);
-						
-						instanceList = new List();
-						spriteList = new List();
-						backgroundList = new List();
-						tilemapList = new List();
-						particleSystemList = new List();
-						
-						var _elements = layer_get_all_elements(ID);
-						
-						var _i = 0;
-						repeat (array_length(_elements))
-						{
-							var _type = layer_get_element_type(_elements[_i]);
-							
-							switch (_type)
-							{
-								case layerelementtype_instance:
-									instanceList.add(layer_instance_get_instance(_elements[_i]));
-								break;
-								
-								case layerelementtype_sprite:
-									var _ = new SpriteElement(_elements[_i]);
-								break;
-								
-								case layerelementtype_background:
-									var _ = new BackgroundElement(_elements[_i]);
-								break;
-								
-								case layerelementtype_tilemap:
-									var _ = new TilemapElement(_elements[_i]);
-								break;
-								
-								case layerelementtype_particlesystem:
-									var _ = new ParticleSystem(_elements[_i]);
-								break;
-							}
-							
-							++_i;
-						}
-					}
-					else
-					{
-						//Construction method: New constructor.
-						depth = argument[0];
-						
-						location = new Vector2(0, 0);
-						speed = new Vector2(0, 0);
-						
-						visible = true;
-						instancesPaused = false;
-						
-						function_drawBegin = undefined;
-						function_drawEnd = undefined;
-						
-						shader = undefined;
-						
-						instanceList = new List();
-						spriteList = new List();
-						backgroundList = new List();
-						tilemapList = new List();
-						particleSystemList = new List();
+						depth = _other.depth;
 						
 						if ((argument_count > 1) and (is_string(argument[1])))
 						{
@@ -208,6 +60,159 @@ function Layer() constructor
 						{
 							ID = layer_create(depth);
 							name = layer_get_name(ID);
+						}
+						
+						location = new Vector2(_other.location);
+						self.setLocation(location);
+						
+						speed = new Vector2(_other.speed);
+						self.setSpeed(speed);
+						
+						visible = _other.visible;
+						setVisible(visible);
+						
+						instancesPaused = false;
+						
+						function_drawBegin = _other.function_drawBegin;
+						function_drawEnd = _other.function_drawEnd;
+						
+						if (function_drawBegin != undefined)
+						{
+							self.setFunctionDrawBegin(function_drawBegin);
+						}
+						
+						if (function_drawEnd != undefined)
+						{
+							self.setFunctionDrawEnd(function_drawEnd);
+						}
+						
+						shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
+																		  : _other.shader);
+						
+						if (instanceof(shader) == "Shader")
+						{
+							self.setShader(shader);
+						}
+						
+						instanceList = new List();
+						spriteList = new List();
+						backgroundList = new List();
+						tilemapList = new List();
+						particleSystemList = new List();
+						
+						var _elementList = [_other.spriteList, _other.backgroundList, 
+											_other.tilemapList, _other.particleSystemList];
+						var _elementType = [SpriteElement, BackgroundElement, TilemapElement,
+											ParticleSystem];
+						
+						var _i = [0, 0];
+						repeat (array_length(_elementList))
+						{
+							_i[1] = 0;
+							repeat (_elementList[_i[0]].getSize())
+							{
+								var _ = new _elementType[_i[0]](_elementList[_i[0]].getValue(_i[1]));
+								
+								++_i[1];
+							}
+							
+							++_i[0];
+						}
+					}
+					else
+					{
+						if (is_string(argument[0]))
+						{
+							//|Construction method: Wrapper.
+							var _name = argument[0];
+							
+							name = _name;
+							ID = layer_get_id(name);
+							
+							depth = layer_get_depth(ID);
+							
+							location = new Vector2(layer_get_x(ID), layer_get_y(ID));
+							speed = new Vector2(layer_get_hspeed(ID), layer_get_vspeed(ID));
+							
+							visible = layer_get_visible(ID);
+							instancesPaused = undefined;
+							
+							function_drawBegin = layer_get_script_begin(ID);
+							function_drawEnd = layer_get_script_end(ID);
+							
+							shader = layer_get_shader(ID);
+							
+							instanceList = new List();
+							spriteList = new List();
+							backgroundList = new List();
+							tilemapList = new List();
+							particleSystemList = new List();
+							
+							var _elements = layer_get_all_elements(ID);
+						
+							var _i = 0;
+							repeat (array_length(_elements))
+							{
+								var _type = layer_get_element_type(_elements[_i]);
+								
+								switch (_type)
+								{
+									case layerelementtype_instance:
+										instanceList.add(layer_instance_get_instance(_elements[_i]));
+									break;
+									
+									case layerelementtype_sprite:
+										var _ = new SpriteElement(_elements[_i]);
+									break;
+									
+									case layerelementtype_background:
+										var _ = new BackgroundElement(_elements[_i]);
+									break;
+									
+									case layerelementtype_tilemap:
+										var _ = new TilemapElement(_elements[_i]);
+									break;
+									
+									case layerelementtype_particlesystem:
+										var _ = new ParticleSystem(_elements[_i]);
+									break;
+								}
+								
+								++_i;
+							}
+						}
+						else
+						{
+							//Construction method: New constructor.
+							depth = argument[0];
+							
+							location = new Vector2(0, 0);
+							speed = new Vector2(0, 0);
+							
+							visible = true;
+							instancesPaused = false;
+							
+							function_drawBegin = undefined;
+							function_drawEnd = undefined;
+							
+							shader = undefined;
+							
+							instanceList = new List();
+							spriteList = new List();
+							backgroundList = new List();
+							tilemapList = new List();
+							particleSystemList = new List();
+							
+							if ((argument_count > 1) and (is_string(argument[1])))
+							{
+								name = argument[1];
+								ID = layer_create(depth, name);
+							}
+							else
+							{
+								ID = layer_create(depth);
+								name = layer_get_name(ID);
+							}
 						}
 					}
 				}
@@ -238,13 +243,13 @@ function Layer() constructor
 						repeat (instanceList.getSize())
 						{
 							var _instance = instanceList.getValue(_i);
-						
+							
 							if ((instance_exists(_instance)) and (_instance.persistent))
 							{
 								_persistentElementExists = true;
 								break;
 							}
-						
+							
 							++_i;
 						}
 					}
@@ -269,27 +274,29 @@ function Layer() constructor
 				
 				if (instanceof(particleSystemList) == "List")
 				{
-					if (!_forceDestruction)
+					var _i = 0;
+					repeat (particleSystemList.getSize())
 					{
-						var _i = 0;
-						repeat (particleSystemList.getSize())
+						var _particleSystem = particleSystemList.getValue(_i);
+						
+						if (_particleSystem.isFunctional())
 						{
-							var _particleSystem = particleSystemList.getValue(_i);
-							
-							if (_particleSystem.isFunctional())
+							if (_particleSystem.persistent)
 							{
-								if (_particleSystem.persistent)
-								{
-									_persistentElementExists = true;
-								}
-								else
+								_persistentElementExists = true;
+								
+								if (_forceDestruction)
 								{
 									_particleSystem.destroy();
 								}
 							}
-							
-							++_i;
+							else
+							{
+								_particleSystem.destroy();
+							}
 						}
+						
+						++_i;
 					}
 					
 					particleSystemList = particleSystemList.destroy();
@@ -751,7 +758,7 @@ function Layer() constructor
 		// @function			Layer.SpriteElement()
 		// @argument			{Sprite} sprite
 		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
-		//
+		//						
 		//						Construction methods:
 		//						- New element.
 		//						- Wrapper: {spriteElement} spriteElement
@@ -847,8 +854,8 @@ function Layer() constructor
 					// @description			Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional())) and
-								(layer_sprite_exists(parent.ID, ID));
+						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
+								and (layer_sprite_exists(parent.ID, ID));
 					}
 					
 					// @argument			{Layer|int:layer} other
@@ -939,7 +946,7 @@ function Layer() constructor
 							else
 							{
 								sprite = _sprite;
-									
+								
 								layer_sprite_change(ID, sprite.ID);
 							}
 						}
@@ -1087,32 +1094,33 @@ function Layer() constructor
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					//						Content will be represented with the ID and the Sprite of
-					//						this Sprite Element.
+					//						Content will be represented with the properties of this
+					//						Sprite Element.
 					static toString = function(_multiline, _full)
 					{
 						var _constructorName = "Layer.SpriteElement";
 						
 						if (self.isFunctional())
 						{
+							var _string = "";
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							
 							if (!_full)
 							{
-								var _string = ("ID: " + string(ID) + _mark_separator +
-											   "Sprite: " + string(sprite));
+								_string = ("ID: " + string(ID) + _mark_separator +
+										   "Sprite: " + string(sprite));
 							}
 							else
 							{
-								var _string = ("ID: " + string(ID) + _mark_separator +
-											   "Sprite: " + string(sprite) + _mark_separator +
-											   "Location: " + string(location) + _mark_separator +
-											   "Scale: " + string(scale) + _mark_separator +
-											   "Angle: " + string(angle) + _mark_separator +
-											   "Color: " + string(color) + _mark_separator +
-											   "Alpha: " + string(alpha) + _mark_separator +
-											   "Frame: " + string(frame) + _mark_separator +
-											   "Speed: " + string(speed));
+								_string = ("ID: " + string(ID) + _mark_separator +
+										   "Sprite: " + string(sprite) + _mark_separator +
+										   "Location: " + string(location) + _mark_separator +
+										   "Scale: " + string(scale) + _mark_separator +
+										   "Angle: " + string(angle) + _mark_separator +
+										   "Color: " + string(color) + _mark_separator +
+										   "Alpha: " + string(alpha) + _mark_separator +
+										   "Frame: " + string(frame) + _mark_separator +
+										   "Speed: " + string(speed));
 							}
 							
 							return ((_multiline) ? _string
@@ -1147,7 +1155,7 @@ function Layer() constructor
 		// @argument			{Sprite} sprite
 		// @description			Construct a Background Element used to draw a Background on this
 		//						Layer.
-		//
+		//						
 		//						Construction methods:
 		//						- New element.
 		//						- Wrapper: {backgroundElement} backgroundElement
@@ -1264,7 +1272,7 @@ function Layer() constructor
 								parent.backgroundList.removeValue(self);
 								parent = _other;
 								parent.backgroundList.add(self);
-									
+								
 								layer_element_move(ID, parent.ID);
 							}
 							else if ((is_real(_other)) and (layer_exists(_other)))
@@ -1566,17 +1574,16 @@ function Layer() constructor
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					//						Content will be represented with the ID and the sprite of
-					//						this BackgroundElement.
+					//						Content will be represented with the properties of this
+					//						Background Element.
 					static toString = function(_multiline, _full)
 					{
 						var _constructorName = "Layer.BackgroundElement";
 						
 						if (self.isFunctional())
 						{
-							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							
 							var _string = "";
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							
 							if (!_full)
 							{
@@ -1632,7 +1639,7 @@ function Layer() constructor
 		// @argument			{Vector2} size
 		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
 		//						this Layer.
-		//
+		//						
 		//						Construction methods:
 		//						- New element.
 		//						- Wrapper: {int} tilemapElement
@@ -1690,7 +1697,6 @@ function Layer() constructor
 								size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
 							}
 						}
-
 					}
 					
 					// @returns				{bool}
@@ -1973,8 +1979,8 @@ function Layer() constructor
 								_tiledata = _tiledata.ID;
 							}
 							
-							return ((_tiledata != -1) ? tilemap_set(ID, _tiledata, _location.x,
-														_location.y) : false);
+							return ((_tiledata != -1)
+									? tilemap_set(ID, _tiledata, _location.x, _location.y) : false);
 						}
 						else
 						{
@@ -2013,9 +2019,9 @@ function Layer() constructor
 								_tiledata = _tiledata.ID;
 							}
 							
-							return ((_tiledata != -1) ? tilemap_set_at_pixel(ID, _tiledata,
-																			 _location.x,
-																			 _location.y): false);
+							return ((_tiledata != -1)
+									? tilemap_set_at_pixel(ID, _tiledata, _location.x, _location.y)
+									: false);
 						}
 						else
 						{
@@ -2141,8 +2147,8 @@ function Layer() constructor
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					//						Content will be represented with the ID and properties of
-					//						this TilemapElement.
+					//						Content will be represented with the properties of this
+					//						Tilemap Element.
 					static toString = function(_multiline)
 					{
 						var _constructorName = "Layer.TilemapElement";
@@ -2174,7 +2180,7 @@ function Layer() constructor
 				// @argument			{int|hex} id?
 				// @description			Constructs a TileData Element, which refers to a Tile
 				//						in this Tilemap.
-				//
+				//						
 				//						Construction methods:
 				//						- New constructor
 				//						- Constructor copy: {Layer.TilemapElement.TileData} other
@@ -2510,7 +2516,7 @@ function Layer() constructor
 							// @description			Create a string representing this constructor.
 							//						Overrides the string() conversion.
 							//						Content will be represented with the ID of this
-							//						TileData.
+							//						Tile Data.
 							static toString = function(_multiline)
 							{
 								var _constructorName = "Layer.TilemapElement.TileData";
@@ -2569,7 +2575,7 @@ function Layer() constructor
 		// @argument			{bool} persistent?
 		// @description			Construct a Particle System Element used to create Particles of
 		//						any Particle Type on this Layer.
-		//
+		//						
 		//						Construction methods:
 		//						- New element.
 		//						- Constructor copy: {Layer.ParticleSystem} other
@@ -2660,7 +2666,7 @@ function Layer() constructor
 						{
 							emitterList = emitterList.destroy();
 						}
-				
+						
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
 							part_system_destroy(ID);
@@ -2715,7 +2721,7 @@ function Layer() constructor
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
 							automaticUpdate = _automaticUpdate;
-					
+							
 							part_system_automatic_update(ID, automaticUpdate);
 						}
 						else
@@ -2730,7 +2736,7 @@ function Layer() constructor
 																 _errorText);
 						}
 					}
-			
+					
 					// @argument			{bool} automaticRender
 					// @description			Set whether created Particles are executed without the
 					//						render call.
@@ -2739,7 +2745,7 @@ function Layer() constructor
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
 							automaticRender = _automaticRender;
-					
+							
 							part_system_automatic_draw(ID, automaticRender);
 						}
 						else
@@ -2754,7 +2760,7 @@ function Layer() constructor
 																 _errorText);
 						}
 					}
-			
+					
 					// @argument			{bool} newerOnTop
 					// @description			Set whether older Particles are drawn benath newer.
 					static setDrawOrder = function(_newerOnTop)
@@ -2762,7 +2768,7 @@ function Layer() constructor
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
 							drawOrder_newerOnTop = _newerOnTop;
-					
+							
 							part_system_draw_order(ID, _newerOnTop);
 						}
 						else
@@ -2800,14 +2806,14 @@ function Layer() constructor
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
-					
+							
 							return 0;
 						}
 					}
 					
 				#endregion
 				#region <<Execution>>
-			
+					
 					// @description			Render the Particles within this Particle System.
 					static render = function()
 					{
@@ -2865,7 +2871,7 @@ function Layer() constructor
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
-					
+							
 							return noone;
 						}
 					}
@@ -2878,22 +2884,21 @@ function Layer() constructor
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					//						Content will be represented with the ID and draw sorting 
-					//						properties of this Particle System.
+					//						Content will be represented with the properties of this
+					//						Particle System.
 					static toString = function(_multiline, _full)
 					{
 						var _constructorName = "Layer.ParticleSystem";
 						
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
-							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							
 							var _string = "";
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							
 							var _string_emitterNumber = (((instanceof(emitterList) == "List")
 														   and (emitterList.isFunctional()))
-														  ? string(emitterList.getSize())
-														  : string(undefined));
+														 ? string(emitterList.getSize())
+														 : string(undefined));
 							
 							if (_full)
 							{
@@ -2938,11 +2943,11 @@ function Layer() constructor
 				
 				// @function			Layer.ParticleSystem.ParticleEmitter()
 				// @argument			{ParticleType} particleType
-				//
+				//						
 				// @description			Construct a Particle Emitter resource in this Particle
 				//						System, used to create particles of a Particles Type in
 				//						a region.
-				//
+				//						
 				//						Construction methods:
 				//						- New element.
 				//						- Constructor copy: {Layer.ParticleSystem.ParticleEmitter}
@@ -2951,7 +2956,7 @@ function Layer() constructor
 				{
 					#region [[[Methods]]]
 						#region <<<Management>>>
-					
+							
 							// @description			Initialize the constructor.
 							static construct = function()
 							{
@@ -3010,9 +3015,9 @@ function Layer() constructor
 							static destroy = function()
 							{
 								if ((is_real(ID))
-									and (string_copy(string(instanceof(parent)), 1, 14)
-									== "ParticleSystem") and (parent.isFunctional())
-									and (part_emitter_exists(parent.ID, ID)))
+								and (string_copy(string(instanceof(parent)), 1, 14)
+									 == "ParticleSystem") and (parent.isFunctional())
+								and (part_emitter_exists(parent.ID, ID)))
 								{
 									parent.emitterList.removeValue(self);
 									
@@ -3039,8 +3044,8 @@ function Layer() constructor
 									
 									part_emitter_clear(parent.ID, ID);
 								}
-								else if ((string_copy(string(instanceof(parent)), 1, 14) ==
-								"ParticleSystem") and (parent.isFunctional()))
+								else if ((string_copy(string(instanceof(parent)), 1, 14)
+										 == "ParticleSystem") and (parent.isFunctional()))
 								{
 									location = undefined;
 									shape = undefined;
@@ -3146,7 +3151,7 @@ function Layer() constructor
 							
 						#endregion
 						#region <<<Execution>>>
-					
+							
 							// @argument			{int} number
 							// @description			Create a number of Particles within the region.
 							static burst = function(_number)
@@ -3209,7 +3214,8 @@ function Layer() constructor
 							// @returns				{string}
 							// @description			Create a string representing this constructor.
 							//						Overrides the string() conversion.
-							//						//+TODO: Content description
+							//						Content will be represented with the properties
+							//						of this Particle Emitter.
 							static toString = function(_multiline, _full)
 							{
 								var _constructorName = "Layer.ParticleSystem.ParticleEmitter";

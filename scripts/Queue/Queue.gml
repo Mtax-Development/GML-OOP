@@ -113,7 +113,7 @@ function Queue() constructor
 					{
 						ID = ds_queue_create();
 					}
-		
+					
 					ds_queue_copy(ID, _other.ID);
 				}
 				else
@@ -172,7 +172,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -193,7 +193,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -216,7 +216,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -239,7 +239,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -260,7 +260,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -322,7 +322,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " + 
+					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -348,7 +348,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -403,7 +403,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -512,7 +512,7 @@ function Queue() constructor
 								// if it would be too long.
 								if (_i < (_size - 1))
 								{
-									if ((_string_length + _mark_separator_length) >= 
+									if ((_string_length + _mark_separator_length) >=
 										 _string_lengthLimit)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -547,8 +547,8 @@ function Queue() constructor
 							else
 							{
 								//|If the elements are to be shown fully, add separators after the
-								// ones that are not last. Add a cut mark after the last one if
-								// not all elements are shown.
+								// ones that are not last. Add a cut mark after the last one if not
+								// all elements are shown.
 								if (_i < (_elementNumber - 1))
 								{
 									_string += _mark_separator;
@@ -624,7 +624,7 @@ function Queue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -680,8 +680,8 @@ function Queue() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return an encoded string of this Data Structure,
-			//						which can later be decoded to recreate it.
+			// @description			Encode this Data Structure into a string, from which it can be
+			//						recreated.
 			static toEncodedString = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
@@ -703,8 +703,8 @@ function Queue() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Decode the previously encoded string of the same Data Structure
-			//						and recreate it into this one.
+			// @description			Decode a string to which a Data Structure of the same type was
+			//						previously encoded into this one.
 			//						Mark it as "legacy" if that string was created in the old version
 			//						of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)

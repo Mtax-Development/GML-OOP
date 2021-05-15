@@ -182,7 +182,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -203,7 +203,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -225,7 +225,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -247,7 +247,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -258,8 +258,8 @@ function Map() constructor
 			// @argument			{any} key
 			// @returns				{any|undefined}
 			// @description			Return the key that is previous to the specified one.
-			//						Returns {undefined} if this Map does not exists, is empty or
-			//						the value was first.
+			//						Returns {undefined} if this Map does not exists, is empty or the
+			//						value was first.
 			static getPrevious = function(_key)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -271,7 +271,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getPrevious";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -282,8 +282,8 @@ function Map() constructor
 			// @argumnet			{any} key
 			// @returns				{any|undefined}
 			// @description			Return the key that is next to the specified one.
-			//						Returns {undefined} if this Map does not exists, is empty or
-			//						the value was last.
+			//						Returns {undefined} if this Map does not exists, is empty or the
+			//						value was last.
 			static getNext = function(_key)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -295,7 +295,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getNext";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -306,8 +306,8 @@ function Map() constructor
 			// @argument			{any} key
 			// @returns				{any|undefined}
 			// @description			Return the value of the specified key.
-			//						Returns {undefined} if this Map does not exists, is empty or
-			//						the key does not exist.
+			//						Returns {undefined} if this Map does not exists, is empty or the
+			//						key does not exist.
 			static getValue = function(_key)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -319,7 +319,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getValue";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -356,7 +356,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getAllKeys";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -394,7 +394,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getAllValues";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -416,7 +416,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "keyExists";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -427,7 +427,7 @@ function Map() constructor
 			// @argument			{any} key
 			// @returns				{bool|undefined}
 			// @description			Check if the specified key is storing a bound List.
-			//						Returns {undefined} if this Data Structure does not exists or 
+			//						Returns {undefined} if this Data Structure does not exists or
 			//						if the specified key does not hold a Data Structure.
 			static valueIsBoundList = function(_key)
 			{
@@ -440,7 +440,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "valueIsBoundList";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -451,7 +451,7 @@ function Map() constructor
 			// @argument			{any} key
 			// @returns				{bool|undefined}
 			// @description			Check if the specified key is storing a bound Map.
-			//						Returns {undefined} if this Data Structure does not exists or 
+			//						Returns {undefined} if this Data Structure does not exists or
 			//						if the specified key does not hold a Data Structure.
 			static valueIsBoundMap = function(_key)
 			{
@@ -464,7 +464,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "valueIsBoundMap";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -485,7 +485,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -532,15 +532,14 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " + 
+					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{any} key
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} key...
+			// @argument			{any} value...
 			// @returns				{bool|bool[]}
 			// @description			Add one or more key and value pairs to this Map.
 			//						Fails if a key already existed for that specific addition.
@@ -574,7 +573,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -618,7 +617,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "addBoundList";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -660,17 +659,16 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "addBoundMap";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{any} key
-			// @argument			{any} value
-			// @argument			...
-			// @description			Add one or more key and value pairs to this Map or replace
-			//						the value of the specified key if it already exists.
+			// @argument			{any} key...
+			// @argument			{any} value...
+			// @description			Add one or more key and value pairs to this Map or replace the
+			//						value of the specified key if it already exists.
 			static set = function(_key, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -694,9 +692,8 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{any} key
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} key...
+			// @argument			{any} value...
 			// @description			Set one or more values of the specified keys, but only if each
 			//						already exists in this Map.
 			//						If replacing a bound Map or List, the new value will become bound
@@ -755,8 +752,7 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{any} key
-			// @argument			...
+			// @argument			{any} key...
 			// @description			Removes one or more keys and their values from the Map.
 			static remove = function(_key)
 			{
@@ -775,7 +771,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -798,7 +794,7 @@ function Map() constructor
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd, 
+									   _mark_cut, _mark_elementStart, _mark_elementEnd,
 									   _mark_section, _mark_sizeSeparator)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -886,7 +882,7 @@ function Map() constructor
 								// if it would be too long.
 								if (_i < (_size - 1))
 								{
-									if ((_string_length + _mark_separator_length) >= 
+									if ((_string_length + _mark_separator_length) >=
 										 _string_lengthLimit)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -922,8 +918,8 @@ function Map() constructor
 							else
 							{
 								//|If the elements are to be shown fully, add separators after the
-								// ones that are not last. Add a cut mark after the last one if
-								// not all elements are shown.
+								// ones that are not last. Add a cut mark after the last one if not
+								// all elements are shown.
 								if (_i < (_elementNumber - 1))
 								{
 									_string += _mark_separator;
@@ -966,8 +962,8 @@ function Map() constructor
 			
 			// @returns				{any[]}
 			// @description			Create an array with all keys and values of this Map.
-			//						The array will contain two other arrays. First will contain
-			//						all keys and second will contain all values.
+			//						The array will contain two arrays. The first one will contain all
+			//						keys and second one will contain all values.
 			static toArray = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -999,7 +995,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -1029,7 +1025,6 @@ function Map() constructor
 					var _values_length = array_length(_values);
 						
 					var _i = 0;
-						
 					repeat (_keys_length)
 					{
 						var _value = ((_i < _values_length) ? _values[_i] : undefined);
@@ -1052,8 +1047,8 @@ function Map() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return an encoded string of this Data Structure,
-			//						which can later be decoded to recreate it.
+			// @description			Encode this Data Structure into a string, from which it can be
+			//						recreated.
 			static toEncodedString = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -1075,10 +1070,10 @@ function Map() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Decode the previously encoded string of the same Data 
-			//						Structure and recreate it into this one.
-			//						Use the "legacy" argument if that string was created
-			//						in old versions of GameMaker with different encoding.
+			// @description			Decode a string to which a Data Structure of the same type was
+			//						previously encoded into this one.
+			//						Use the "legacy" argument if that string was created in old
+			//						versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)
 			{
 				if (_legacy == undefined) {_legacy = false;}
@@ -1094,7 +1089,7 @@ function Map() constructor
 			// @argument			{string:path} path
 			// @description			Obfuscate and save the Map in the local storage of this device,
 			//						fingerprinted for use on this device only.
-			//						Arrays will be converted to DS Lists.
+			//						Arrays will be saved as DS Lists.
 			static secureToFile = function(_path)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
@@ -1113,21 +1108,35 @@ function Map() constructor
 			}
 			
 			// @argument			{string:path} path
-			// @returns				{int} | On error: -1
+			// @returns				{int}
 			// @description			Deobfuscate a Map that was obfuscated and fingeprinted for this
 			//						device only from its local storage.
-			//						Arrays will be converted to DS Lists.
+			//						Arrays will be loaded as DS Lists.
 			//						ID of this Map will be returned or -1 if the operation failed.
 			static secureFromFile = function(_path)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				if (file_exists(_path))
 				{
-					ds_map_destroy(ID);
+					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+					{
+						ds_map_destroy(ID);
+					}
+				
+					ID = ds_map_secure_load(_path);
+				
+					return ID;
 				}
-				
-				ID = ds_map_secure_load(_path);
-				
-				return ID;
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "secureFromFile";
+					var _errorText = ("Attempted to load a nonexistent file: " +
+									  "{" + string(_path) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
 			}
 			
 			// @argument			{Buffer|int:buffer} buffer
@@ -1163,7 +1172,7 @@ function Map() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "secureToBuffer";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}

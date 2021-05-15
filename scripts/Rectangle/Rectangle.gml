@@ -89,8 +89,8 @@ function Rectangle() constructor
 																					  : false);
 				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
 				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
-								   argument[4] : false);
+				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined))
+									? argument[4] : false);
 				
 				if (_list)
 				{
@@ -103,7 +103,7 @@ function Rectangle() constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_rectangle_list(other.location.x1, other.location.y1, 
+							collision_rectangle_list(other.location.x1, other.location.y1,
 													 other.location.x2, other.location.y2,
 													 _object, _precise, true, _list.ID, _listOrdered);
 						}
@@ -119,7 +119,7 @@ function Rectangle() constructor
 				else
 				{
 					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{				
+					{
 						with (_excludedInstance)
 						{
 							return collision_rectangle(other.location.x1, other.location.y1, 
@@ -256,7 +256,7 @@ function Rectangle() constructor
 				{	
 					return ((_device == undefined) ? mouse_check_button_released(_button)
 												   : device_mouse_check_button_released(_device,
-																					    _button))
+																						_button))
 				}
 				else
 				{

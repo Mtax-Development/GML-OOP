@@ -140,7 +140,7 @@ function Arrow() constructor
 							default:
 								if (_color_HSV)
 								{
-									_string_color = 
+									_string_color =
 									("(" +
 									 "Hue: " + string(color_get_hue(color))
 											 + _mark_separator_inline +
@@ -151,7 +151,7 @@ function Arrow() constructor
 								}
 								else
 								{
-									_string_color = 
+									_string_color =
 									("(" +
 									 "Red: " + string(color_get_red(color))
 											 + _mark_separator_inline +

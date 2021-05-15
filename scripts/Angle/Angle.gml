@@ -30,8 +30,8 @@ function Angle() constructor
 					else if (is_real(argument[0]))
 					{
 						//|Construction method: New constructor.
-		                value += argument[0];
-		                value -= (360 * (floor(value / 360)));
+						value += argument[0];
+						value -= (360 * (floor(value / 360)));
 					}
 				}
 			}
@@ -63,10 +63,10 @@ function Angle() constructor
 			// @argument			{real} value
 			// @description			Change the value of this Angle and wrap it.
 			static modify = function(_value)
-            {
-                value += _value;
-                value -= (360 * (floor(value / 360)));
-            }
+			{
+				value += _value;
+				value -= (360 * (floor(value / 360)));
+			}
 			
 		#endregion
 		#region <Conversion>

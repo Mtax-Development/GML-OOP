@@ -5,7 +5,7 @@
 ///							
 ///							Construction methods:
 ///							- New constructor
-///							   If the array is not specified, an empty one will be created.
+///							- Empty array: {void|undefined}
 ///							- Constructor copy: {ArrayParser} other
 function ArrayParser() constructor
 {
@@ -15,7 +15,7 @@ function ArrayParser() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "ArrayParser")
 					{
@@ -34,6 +34,7 @@ function ArrayParser() constructor
 				}
 				else
 				{
+					//|Construction method: Empty array.
 					ID = [];
 				}
 			}
@@ -60,7 +61,7 @@ function ArrayParser() constructor
 			}
 			
 			// @returns				{void[]}
-			// @description			Remove data from the array.
+			// @description			Remove all data from the array.
 			static clear = function()
 			{
 				ID = [];
@@ -101,7 +102,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid array: " + 
+					var _errorText = ("Attempted to copy from an invalid array: " +
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -145,7 +146,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid array: " + 
+					var _errorText = ("Attempted to read an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -166,7 +167,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read a property of an invalid array: " + 
+					var _errorText = ("Attempted to read a property of an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -260,7 +261,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSize";
-					var _errorText = ("Attempted to set a property an invalid array: " + 
+					var _errorText = ("Attempted to set a property an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -278,7 +279,7 @@ function ArrayParser() constructor
 			//						be accessed in it by using their name or an argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument					
+			//						- argument[2]: {any} _argument
 			static forEach = function(__function, _argument)
 			{
 				if (is_array(ID))
@@ -295,8 +296,7 @@ function ArrayParser() constructor
 				}
 			}
 			
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} value...
 			// @description			Add one or more values to the array.
 			static add = function()
 			{
@@ -315,7 +315,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid array: " + 
+					var _errorText = ("Attempted to write to an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -336,16 +336,15 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "set";
-					var _errorText = ("Attempted to write to an invalid array: " + 
+					var _errorText = ("Attempted to write to an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
 			// @argument			{int} position
-			// @argument			{any} value
-			// @argument			...
-			// @description			Add one or more values to the specified position of the array and
+			// @argument			{any} value...
+			// @description			Add one or more values to the specified positions of the array and
 			//						push values on that position and after it forward by the number of
 			//						added values. Empty positions before the specified position will
 			//						be set to 0.
@@ -366,7 +365,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "insert";
-					var _errorText = ("Attempted to write to an invalid array: " + 
+					var _errorText = ("Attempted to write to an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -374,7 +373,7 @@ function ArrayParser() constructor
 			
 			// @argument			{int} position?
 			// @argument			{int} count?
-			// @returns				{any|any[]|undefined} | On error: {undefined}
+			// @returns				{any|any[]|undefined}
 			// @description			Return one or more values starting from the specified position and
 			//						return them.
 			//						If multiple values were removed, they will be returned in an
@@ -424,7 +423,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid array: " + 
+					var _errorText = ("Attempted to remove data from an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -434,7 +433,7 @@ function ArrayParser() constructor
 			// @returns				{any[]}
 			// @description			Sort the values in the array in the specified order.
 			//						The order can be specified as {bool} for ascending order or as a
-			//						sorting {function}. 
+			//						sorting {function}.
 			//						If ordering is specified as {bool}, the sorting will work properly
 			//						only when all array values are either numbers or strings.
 			//						If ordering is specified as a {function}, it has to accept two
@@ -455,7 +454,7 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "sort";
-					var _errorText = ("Attempted to sort an invalid array: " + 
+					var _errorText = ("Attempted to sort an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -560,7 +559,7 @@ function ArrayParser() constructor
 								// if it would be too long.
 								if (_i < (_size - 1))
 								{
-									if ((_string_length + _mark_separator_length) >= 
+									if ((_string_length + _mark_separator_length) >=
 										 _string_lengthLimit)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);

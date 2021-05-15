@@ -29,7 +29,8 @@ function RangedValue() constructor
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
 						
-						range = new Range(_other.range);
+						range = ((instanceof(_other.range) == "Range") ? new Range(_other.range)
+																	   : _other.range);
 						value = _other.value;
 						value_original = _other.value_original;
 					}
@@ -156,7 +157,7 @@ function RangedValue() constructor
 			//						specified precentage.
 			static interpolate = function(_value)
 			{
-				value = clamp(lerp(range.minimum, range.maximum, _value), 
+				value = clamp(lerp(range.minimum, range.maximum, _value),
 							  range.minimum, range.maximum);
 			}
 			

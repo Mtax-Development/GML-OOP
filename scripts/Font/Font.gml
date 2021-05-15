@@ -50,12 +50,18 @@ function Font() constructor
 						break;
 						
 						case "sprite (utf8)":
-							self.construct(_other.sprite, _other.first, _other.proportional,
+							sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.ID)
+																			  : _other.sprite);
+							
+							self.construct(sprite, _other.first, _other.proportional,
 										   _other.separation, _other.antialiasing);
 						break;
 						
 						case "sprite (glyph map)":
-							self.construct(_other.sprite, _other.glyphs, _other.proportional,
+							sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.ID)
+																			  : _other.sprite);
+							
+							self.construct(sprite, _other.glyphs, _other.proportional,
 										   _other.separation, _other.antialiasing);
 						break;
 					}
@@ -64,7 +70,7 @@ function Font() constructor
 				{
 					if ((is_real(argument[0])) and (font_exists(argument[0])))
 					{
-						//|Construction method: Wrapper.					
+						//|Construction method: Wrapper.
 						type = "asset";
 						
 						ID = argument[0];
@@ -102,7 +108,7 @@ function Font() constructor
 						else
 						{
 							var _sprite = argument[0];
-						
+							
 							if (_sprite.isFunctional())
 							{
 								if (is_real(argument[1]))
@@ -140,7 +146,7 @@ function Font() constructor
 									
 									font_add_enable_aa(antialiasing);
 									
-									ID = font_add_sprite_ext(sprite.ID, glyphs, proportional, 
+									ID = font_add_sprite_ext(sprite.ID, glyphs, proportional,
 															 separation);
 									
 									if ((is_real(ID)) and (font_exists(ID)))
@@ -198,7 +204,7 @@ function Font() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getTexture";
-					var _errorText = ("Attempted to get a property of an invalid Font: " + 
+					var _errorText = ("Attempted to get a property of an invalid Font: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -207,8 +213,8 @@ function Font() constructor
 			}
 			
 			// @returns				{Vector4} | On error: {undefined}
-			// @description			Get the UV coordinates for this location of this Font
-			//						on its texture page.
+			// @description			Get the UV coordinates for this location of this Font on its
+			//						texture page.
 			static getUV = function()
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
@@ -222,7 +228,7 @@ function Font() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getUV";
-					var _errorText = ("Attempted to get a property of an invalid Font: " + 
+					var _errorText = ("Attempted to get a property of an invalid Font: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -243,7 +249,7 @@ function Font() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isActive";
-					var _errorText = ("Attempted to get a property of an invalid Font: " + 
+					var _errorText = ("Attempted to get a property of an invalid Font: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -266,7 +272,7 @@ function Font() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setActive";
-					var _errorText = ("Attempted to use an invalid Font: " + 
+					var _errorText = ("Attempted to use an invalid Font: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -280,31 +286,20 @@ function Font() constructor
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the Font name by default
-			//						and can be configured to show the properties of this Font.
+			//						Content will be represented with the properties of this Font.
 			static toString = function(_multiline, _full)
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
 				{
+					var _string = "";
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
 					if (!_full)
 					{
-						if (_multiline)
-						{
-							return ("Type: " + string(type) + "\n" +
-									"Asset Name: " + font_get_name(ID) + "\n" +
-									"Font Name: " + font_get_fontname(ID));
-						}
-						else
-						{
-							return (instanceof(self) + "(" + font_get_name(ID) + ")");
-						}
+						_string = font_get_name(ID);
 					}
 					else
 					{
-						var _mark_separator = ((_multiline) ? "\n" : ", ");
-						
-						var _string;
-						
 						switch (type)
 						{
 							case "asset":
@@ -336,29 +331,29 @@ function Font() constructor
 										   "First: " + string(first) + _mark_separator +
 										   "Proportional: " + string(proportional)
 															+ _mark_separator +
-										   "Sepearation: " + string(separation) + _mark_separator +
+										   "Separation: " + string(separation) + _mark_separator +
 										   "Antialising: " + string(antialiasing));
 							break;
 							
 							case "sprite (glyph map)":
-								_string += ("Type: " + string(type) + _mark_separator +
-											"Asset Name: " + font_get_name(ID) + _mark_separator +
-											"Font Name: " + font_get_fontname(ID) + _mark_separator +
-											"Sprite: " + string(sprite) + _mark_separator +
-											"Glyphs: " + string(glyphs) + _mark_separator +
-											"Proportional: " + string(proportional) 
-															 + _mark_separator +
-											"Sepearation: " + string(separation) + _mark_separator +
-											"Antialising: " + string(antialiasing));
+								_string = ("Type: " + string(type) + _mark_separator +
+										   "Asset Name: " + font_get_name(ID) + _mark_separator +
+										   "Font Name: " + font_get_fontname(ID) + _mark_separator +
+										   "Sprite: " + string(sprite) + _mark_separator +
+										   "Glyphs: " + string(glyphs) + _mark_separator +
+										   "Proportional: " + string(proportional) 
+										   					+ _mark_separator +
+										   "Sepearation: " + string(separation) + _mark_separator +
+										   "Antialising: " + string(antialiasing));
 							break;
 							
 							default:
-								return (instanceof(self) + "(" + string(undefined) + ")");
+								_string = font_get_name(ID);
 							break;
 						}
-						
-						return ((_multiline) ? _string : instanceof(self) + "(" + _string + ")");
 					}
+					
+					return ((_multiline) ? _string : instanceof(self) + "(" + _string + ")");
 				}
 				else
 				{

@@ -16,10 +16,10 @@
 ///							   The values will be set to 0.
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
-///							    1: array[0] will be set to all values.
-///							    2: array[0] will be set to x1 and y1, array[1] will be set to 
+///								1: array[0] will be set to all values.
+///								2: array[0] will be set to x1 and y1, array[1] will be set to 
 ///								   x2 and y2.
-///							    4+: array[0] will be set to x1, array[1] will be set to y1,
+///								4+: array[0] will be set to x1, array[1] will be set to y1,
 ///									array[2] will be set to x2, array[3] will be set to y2.
 ///							- From two Vector2: {Vector2} pair1, {Vector2} pair2
 ///							- Constructor copy: {Vector4} other
@@ -119,7 +119,7 @@ function Vector4() constructor
 									y2 = _pair2;
 								}
 							break;
-					
+							
 							case 4:
 								//|Construction method: Four values.
 								x1 = argument[0];

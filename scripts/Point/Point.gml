@@ -37,7 +37,7 @@ function Point() constructor
 					else
 					{
 						location = argument[0];
-						color = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] 
+						color = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																					   : c_white);
 						alpha = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																					   : 1);
@@ -74,7 +74,7 @@ function Point() constructor
 																					  : false);
 				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
 				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
+				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ?
 									argument[4] : false);
 				
 				if (_list)
@@ -88,13 +88,13 @@ function Point() constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_point_list(other.location.x, other.location.y, _object, 
+							collision_point_list(other.location.x, other.location.y, _object,
 												 _precise, true, _list.ID, _listOrdered);
 						}
 					}
 					else
 					{
-						collision_point_list(location.x, location.y, _object, _precise, false, 
+						collision_point_list(location.x, location.y, _object, _precise, false,
 											 _list.ID, _listOrdered);
 					}
 					
@@ -103,10 +103,10 @@ function Point() constructor
 				else
 				{
 					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{				
+					{
 						with (_excludedInstance)
 						{
-							return collision_point(other.location.x, other.location.y, _object, 
+							return collision_point(other.location.x, other.location.y, _object,
 												   _precise, true);
 						}
 					}
@@ -225,7 +225,7 @@ function Point() constructor
 				{	
 					return ((_device == undefined) ? mouse_check_button_released(_button)
 												   : device_mouse_check_button_released(_device,
-																					    _button))
+																						_button))
 				}
 				else
 				{
@@ -286,7 +286,7 @@ function Point() constructor
 				{
 					var _string_color;
 					var _mark_separator_inline = ", ";
-				
+					
 					if (is_real(color))
 					{
 						switch (color)

@@ -121,7 +121,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to copy from an invalid Data Structure: " +
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -172,7 +172,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -202,8 +202,8 @@ function Stack() constructor
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Return the top value of this Stack, which is the one that would
-			//						be removed first.
+			// @description			Return the top value of this Stack, which is the one that would be
+			//						removed first.
 			//						Returns {undefined} if this Stack does not exists or is empty.
 			static getFirst = function()
 			{
@@ -216,7 +216,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -260,7 +260,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -281,7 +281,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -343,7 +343,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " + 
+					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -371,7 +371,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -426,7 +426,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -535,7 +535,7 @@ function Stack() constructor
 								// if it would be too long.
 								if (_i < (_size - 1))
 								{
-									if ((_string_length + _mark_separator_length) >= 
+									if ((_string_length + _mark_separator_length) >=
 										 _string_lengthLimit)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -570,8 +570,8 @@ function Stack() constructor
 							else
 							{
 								//|If the elements are to be shown fully, add separators after the
-								// ones that are not last. Add a cut mark after the last one if
-								// not all elements are shown.
+								// ones that are not last. Add a cut mark after the last one if not
+								// all elements are shown.
 								if (_i < (_elementNumber - 1))
 								{
 									_string += _mark_separator;
@@ -647,7 +647,7 @@ function Stack() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -657,8 +657,8 @@ function Stack() constructor
 			
 			// @argument			{any[]} array
 			// @argument			{bool} startFromEnd?
-			// @description			Add values from the specified array to this Stack, starting
-			//						from either the start of the array or its end.
+			// @description			Add values from the specified array to this Stack, starting from
+			//						either the start of the array or its end.
 			static fromArray = function(_array, _startFromEnd)
 			{
 				if ((!is_real(ID)) and (!ds_exists(ID, ds_type_stack)))
@@ -703,8 +703,8 @@ function Stack() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return an encoded string of this Data Structure,
-			//						which can later be decoded to recreate it.
+			// @description			Encode this Data Structure into a string, from which it can be
+			//						recreated.
 			static toEncodedString = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
@@ -726,8 +726,8 @@ function Stack() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Decode the previously encoded string of the same Data Structure
-			//						and recreate it into this one.
+			// @description			Decode a string to which a Data Structure of the same type was
+			//						previously encoded into this one.
 			//						Mark it as "legacy" if that string was created in the old version
 			//						of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)

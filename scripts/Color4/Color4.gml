@@ -59,7 +59,7 @@ function Color4() constructor
 								color3 = argument[0];
 								color4 = argument[0];
 							break;
-					
+							
 							case 2:
 								if ((instanceof(argument[0]) == "Color2") 
 								and (instanceof(argument[1]) == "Color2"))
@@ -96,7 +96,7 @@ function Color4() constructor
 									}
 								}
 							break;
-					
+							
 							case 3:
 								//|Construction method: Color2 + color + color.
 								if (instanceof(argument[0]) == "Color2")
@@ -127,7 +127,7 @@ function Color4() constructor
 									color4 = _color2.color2;
 								}
 							break;
-					
+							
 							case 4:
 								//|Construction method: New constructor.
 								color1 = argument[0];

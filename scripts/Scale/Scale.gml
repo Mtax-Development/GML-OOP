@@ -33,7 +33,8 @@ function Scale() constructor
 					{
 						case "Scale":
 						case "Vector2":
-							//|Construction methods: Constructor copy / From Vector2.
+							//|Construction method: Constructor copy.
+							//|Construction method: From Vector2.
 							var _other = argument[0];
 							
 							x = _other.x;
@@ -48,7 +49,7 @@ function Scale() constructor
 									{
 										//|Construction method: From array.
 										var _array = argument[0];
-									
+										
 										switch ( array_length(_array))
 										{
 											case 1:
@@ -70,7 +71,7 @@ function Scale() constructor
 										y = argument[0];
 									}
 								break;
-							
+								
 								case 2:
 								default:
 									//|Construction method: Two values.

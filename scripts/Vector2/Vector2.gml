@@ -31,7 +31,8 @@ function Vector2() constructor
 					{
 						case "Vector2":
 						case "Scale":
-							//|Construction methods: Constructor copy / From Scale.
+							//|Construction method: Constructor copy.
+							//|Construction method: From Scale.
 							var _other = argument[0];
 							
 							x = _other.x;
@@ -231,7 +232,6 @@ function Vector2() constructor
 					y = device_mouse_y(_device);
 				}
 			}
-			
 			
 		#endregion
 		#region <Getters>

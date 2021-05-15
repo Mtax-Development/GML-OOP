@@ -82,7 +82,7 @@ function Line() constructor
 																					  : false);
 				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
 				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
+				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ?
 								   argument[4] : false);
 				
 				if (_list)
@@ -96,7 +96,7 @@ function Line() constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_line_list(other.location.x1, other.location.y1, 
+							collision_line_list(other.location.x1, other.location.y1,
 												other.location.x2, other.location.y2,
 												_object, _precise, true, _list.ID, _listOrdered);
 						}
@@ -112,10 +112,10 @@ function Line() constructor
 				else
 				{
 					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{				
+					{
 						with (_excludedInstance)
 						{
-							return collision_line(other.location.x1, other.location.y1, 
+							return collision_line(other.location.x1, other.location.y1,
 												  other.location.x2, other.location.y2, _object,
 												  _precise, true);
 						}
@@ -235,7 +235,8 @@ function Line() constructor
 									_string_color = 
 									("(" +
 									 "Red: " + string(color_get_red(color)) + _mark_separator_inline +
-									 "Green: " + string(color_get_green(color)) + _mark_separator_inline +
+									 "Green: " + string(color_get_green(color))
+											   + _mark_separator_inline +
 									 "Blue: " + string(color_get_blue(color)) +
 									 ")");
 								}

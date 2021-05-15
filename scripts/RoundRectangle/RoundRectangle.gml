@@ -82,8 +82,8 @@ function RoundRectangle() constructor
 			//						empty or containing IDs of the colliding instances.
 			//						If specified, the additions to that List can be ordered by 
 			//						distance from the center of the Shape.
-			//						Note: This Shape will be treated as a non-rounded Rectangle for
-			//							  this operation.
+			//						NOTE: This Shape will be treated as a non-rounded Rectangle for
+			//						this operation.
 			static collision = function(_object)
 			{
 				var _precise = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] 
@@ -104,7 +104,7 @@ function RoundRectangle() constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_rectangle_list(other.location.x1, other.location.y1, 
+							collision_rectangle_list(other.location.x1, other.location.y1,
 													 other.location.x2, other.location.y2,
 													 _object, _precise, true, _list.ID,
 													 _listOrdered);
@@ -121,10 +121,10 @@ function RoundRectangle() constructor
 				else
 				{
 					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{				
+					{
 						with (_excludedInstance)
 						{
-							return collision_rectangle(other.location.x1, other.location.y1, 
+							return collision_rectangle(other.location.x1, other.location.y1,
 													   other.location.x2, other.location.y2,
 													   _object, _precise, true);
 						}
@@ -253,7 +253,7 @@ function RoundRectangle() constructor
 				{	
 					return ((_device == undefined) ? mouse_check_button_released(_button)
 												   : device_mouse_check_button_released(_device,
-																					    _button))
+																						_button))
 				}
 				else
 				{
@@ -292,9 +292,9 @@ function RoundRectangle() constructor
 							_color1 = fill_color.color1;
 							_color2 = fill_color.color2;
 						}
-					
+						
 						draw_set_alpha(fill_alpha);
-					
+						
 						draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
 												 radius.x, radius.y, _color1, _color2, false);
 					}

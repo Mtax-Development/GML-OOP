@@ -82,7 +82,7 @@ function Ellipse() constructor
 																					  : false);
 				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
 				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
+				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ?
 									argument[4] : false);
 				
 				if (_list)
@@ -155,9 +155,9 @@ function Ellipse() constructor
 							_color1 = fill_color;
 							_color2 = fill_color;
 						}
-					
+						
 						draw_set_alpha(fill_alpha);
-					
+						
 						draw_ellipse_color(location.x1, location.y1, location.x2, location.y2,
 										   _color1, _color2, false);
 					}
@@ -236,7 +236,7 @@ function Ellipse() constructor
 								default:
 									if (_color_HSV)
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Hue: " + string(color_get_hue(_color[_i]))
 												 + _mark_separator_inline +
@@ -247,7 +247,7 @@ function Ellipse() constructor
 									}
 									else
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Red: " + string(color_get_red(_color[_i]))
 												 + _mark_separator +

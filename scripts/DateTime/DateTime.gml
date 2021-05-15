@@ -658,8 +658,8 @@ function DateTime() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the date component is a leap year, which is a calendar
-			//						year that contains an additional day			
+			// @description			Check if the date component is a leap year, a calendar containing
+			//						an additional day.
 			static isLeapYear = function()
 			{
 				if (is_real(ID))
@@ -703,7 +703,7 @@ function DateTime() constructor
 					return undefined;
 				}
 			}
-		
+			
 			// @argument			{DateTime} other
 			// @returns				{int} | On error: {undefined}
 			// @description			Compare the date components of this DateTime and an other one and
@@ -966,7 +966,7 @@ function DateTime() constructor
 					{
 						return ((_multiline) ? date_datetime_string(ID)
 											 : (instanceof(self) + "(" + date_datetime_string(ID) + 
-											    ")"));
+												")"));
 					}
 				}
 				else
@@ -988,7 +988,8 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toStringDate";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return string(undefined);
@@ -1008,7 +1009,9 @@ function DateTime() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toStringTime";
-					var _errorText = ("Attempted to read an invalid date: " + "{" + string(ID) + "}");
+					var _errorText = ("Attempted to read an invalid date: " +
+									  "{" + string(ID) +
+					"}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return string(undefined);

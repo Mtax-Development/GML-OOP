@@ -198,7 +198,7 @@ function Triangle() constructor
 				{	
 					return ((_device == undefined) ? mouse_check_button_released(_button)
 												   : device_mouse_check_button_released(_device,
-																					    _button))
+																						_button))
 				}
 				else
 				{
@@ -236,7 +236,7 @@ function Triangle() constructor
 						
 						draw_set_alpha(fill_alpha);
 						
-						draw_triangle_color(location1.x, location1.y, location2.x, location2.y, 
+						draw_triangle_color(location1.x, location1.y, location2.x, location2.y,
 											location3.x, location3.y, _color1, _color2, _color3,
 											false);
 					}
@@ -257,9 +257,9 @@ function Triangle() constructor
 							var _color2 = outline_color;
 							var _color3 = outline_color;
 						}
-					
+						
 						draw_set_alpha(outline_alpha);
-					
+						
 						draw_triangle_color(location1.x, location1.y, location2.x, location2.y, 
 											location3.x, location3.y, _color1, _color2, _color3,
 											true);

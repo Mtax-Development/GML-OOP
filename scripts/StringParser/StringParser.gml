@@ -62,8 +62,8 @@ function StringParser() constructor
 			
 			// @argument			{int} position
 			// @returns				{char}
-			// @description			Return a single, readable character from the string at
-			//						at the specified position.
+			// @description			Return a single, readable character from the string at the
+			//						specified position.
 			static getChar = function(_position)
 			{
 				return string_char_at(string(ID), _position);
@@ -114,7 +114,7 @@ function StringParser() constructor
 			//						escape characters.
 			static getSize = function()
 			{
-				return string_length(string(ID));	
+				return string_length(string(ID));
 			}
 			
 			// @returns				{string}
@@ -164,26 +164,39 @@ function StringParser() constructor
 				return ((_result > 0) ? _result : undefined);
 			}
 			
-			// @argument			{Font|font} font?
+			// @argument			{Font|int:font} font?
 			// @argument			{int} separation?
 			// @argument			{int} width?
 			// @returns				{Vector2}
 			// @description			Return the number of pixels the string would occupy by applying
 			//						either the specified or currently set Font.
 			//						Limitations of width before forced line-break and separation 
-			//						between lines of text can be specified to be taken into the
-			//						account.
+			//						between lines of text can be specified to be included.
 			static getPixelSize = function(_font, _separation, _width)
 			{
 				var _string = string(ID);
 				
+				var _currentFont = draw_get_font();
+				
 				if ((_font != undefined))
 				{
+					
 					if (instanceof(_font) == "Font")
 					{
-						if (font_exists(_font.ID))
+						if (_font.isFunctional())
 						{
 							draw_set_font(_font.ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "getPixelSize";
+							var _errorText = ("Attempted to use an invalid Font: " +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Other: " + "{" + string(_font) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
 						}
 					}
 					else
@@ -195,15 +208,21 @@ function StringParser() constructor
 					}
 				}
 				
+				var _result;
+				
 				if ((_separation != undefined) and (_width != undefined))
 				{
-					return new Vector2(string_width_ext(_string, _separation, _width),
-									   string_height_ext(_string, _separation, _width));
+					_result = new Vector2(string_width_ext(_string, _separation, _width),
+										  string_height_ext(_string, _separation, _width));
 				}
 				else
 				{
-					return new Vector2(string_width(_string), string_height(_string));
+					_result = new Vector2(string_width(_string), string_height(_string));
 				}
+				
+				draw_set_font(_currentFont);
+				
+				return _result;
 			}
 			
 			// @argument			{int} position
@@ -213,7 +232,6 @@ function StringParser() constructor
 			static charIsWhitespace = function(_position)
 			{
 				var _string = string(ID);
-				
 				var _string_length = string_length(_string);
 				
 				if ((_string_length <= 0) or (_position > _string_length))
@@ -224,10 +242,10 @@ function StringParser() constructor
 				var _char = string_char_at(_string, _position);
 				
 				var _whitespaceChars = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
-									    "\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
-									    "\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
-									    "\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
-									    "\u3000"];
+										"\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
+										"\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
+										"\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
+										"\u3000"];
 				
 				var _i = 0;
 				repeat (array_length(_whitespaceChars))
@@ -268,7 +286,7 @@ function StringParser() constructor
 				else
 				{
 					var _char = string_char_at(_string, _position);
-				
+					
 					if (is_array(_other))
 					{
 						var _i = 0;
@@ -278,10 +296,10 @@ function StringParser() constructor
 							{
 								return true;
 							}
-						
+							
 							++_i;
 						}
-					
+						
 						return false;
 					}
 					else
@@ -295,18 +313,17 @@ function StringParser() constructor
 			// @returns				{string[]|string|StringParser[]|StringParser}
 			// @description			Create multiple strings divided by the specified separator and
 			//						return them in an array.
-			//						The results can be returned as {StringParser} if return was
-			//						specified as parser.
+			//						The results can be returned as {StringParser} if it was specified.
 			//						Returns the string in its original state is no operation was
-			//						performed or returns self if return was specified as parser.
-			static split = function(_separator, _returnAsParser)
+			//						performed or {self} if return was specified as parser.
+			static split = function(_separator, _returnParser)
 			{
 				var _string = string(ID);
 				var _string_length = string_length(_string);
 				var _separator_lenght = string_length(_separator);
 				var _separator_count = string_count(_separator, _string);
 				
-				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1) 
+				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1)
 				and (_string_length > (_separator_lenght + 1)))
 				{
 					var _position_copy = 1;
@@ -319,12 +336,12 @@ function StringParser() constructor
 						if ((string_copy(_string, _i, _separator_lenght) == _separator) 
 						or (_i == _loopCount))
 						{
-							var _segment = string_copy(_string, _position_copy, 
+							var _segment = string_copy(_string, _position_copy,
 													   (_i - _position_copy));
 							
 							if ((string_length(_segment) > 0) and (_segment != _separator))
 							{
-								_result[array_length(_result)] = string_replace_all(_segment, 
+								_result[array_length(_result)] = string_replace_all(_segment,
 																					_separator, "");
 							}
 							
@@ -335,7 +352,7 @@ function StringParser() constructor
 						++_i;
 					}
 					
-					if (_returnAsParser)
+					if (_returnParser)
 					{
 						var _i = 0;
 						repeat (array_length(_result))
@@ -350,7 +367,7 @@ function StringParser() constructor
 				}
 				else
 				{
-					return ((_returnAsParser) ? self : _string);
+					return ((_returnParser) ? self : _string);
 				}
 			}
 			
@@ -383,9 +400,9 @@ function StringParser() constructor
 			{
 				var _string = string(ID);
 				
-				_position = ((_position == undefined) ? (string_length(_string) + 1)
-													  : clamp(_position, 1, (string_length(_string)
-																			+ 1)));
+				_position = ((_position == undefined)
+							 ? (string_length(_string) + 1)
+							 : clamp(_position, 1, (string_length(_string) + 1)));
 				
 				ID = string_delete(_string, _position, _number);
 				
@@ -397,7 +414,7 @@ function StringParser() constructor
 			// @argument			{int} decimalPlaces
 			// @argument			{bool} replace?
 			// @returns				{string}
-			// @description			Add to the string or replace it with a number that has a 
+			// @description			Add to the string or replace it with a number that has a
 			//						specified formatting for number of displayed places of
 			//						whole numbers and decimal places.
 			//						If there is less whole numbers than specified, the remaining
@@ -637,7 +654,9 @@ function StringParser() constructor
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the string of this constructor.
+			//						Content will be represented with the string of this constructor,
+			//						where linebreaks are replaced with spaces if not specified to use
+			//						multiline.
 			static toString = function(_multiline, _elementLength, _mark_cut)
 			{
 				var _string = string(ID);

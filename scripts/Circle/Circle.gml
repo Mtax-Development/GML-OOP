@@ -89,8 +89,8 @@ function Circle() constructor
 																					  : false);
 				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
 				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ? 
-								    argument[4] : false);
+				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined)) ?
+									argument[4] : false);
 				
 				if (_list)
 				{
@@ -103,13 +103,13 @@ function Circle() constructor
 					{
 						with (_excludedInstance)
 						{
-							collision_circle_list(other.location.x, other.location.y, other.radius, 
+							collision_circle_list(other.location.x, other.location.y, other.radius,
 												  _object, _precise, true, _list.ID, _listOrdered);
 						}
 					}
 					else
 					{
-						collision_circle_list(location.x, location.y, radius, _object, _precise, 
+						collision_circle_list(location.x, location.y, radius, _object, _precise,
 											  false, _list.ID, _listOrdered);
 					}
 				
@@ -118,16 +118,16 @@ function Circle() constructor
 				else
 				{
 					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{				
+					{
 						with (_excludedInstance)
 						{
-							return collision_circle(other.location.x, other.location.y, other.radius, 
-												    _object, _precise, true);
+							return collision_circle(other.location.x, other.location.y, other.radius,
+													_object, _precise, true);
 						}
 					}
 					else
 					{
-						return collision_circle(location.x, location.y, radius, _object, _precise, 
+						return collision_circle(location.x, location.y, radius, _object, _precise,
 												false);
 					}
 				}
@@ -249,7 +249,7 @@ function Circle() constructor
 				{	
 					return ((_device == undefined) ? mouse_check_button_released(_button)
 												   : device_mouse_check_button_released(_device,
-																					    _button));
+																						_button));
 				}
 				else
 				{
@@ -364,7 +364,7 @@ function Circle() constructor
 								default:
 									if (_color_HSV)
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Hue: " + string(color_get_hue(_color[_i])) 
 												 + _mark_separator_inline +
@@ -375,7 +375,7 @@ function Circle() constructor
 									}
 									else
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Red: " + string(color_get_red(_color[_i]))
 												 + _mark_separator_inline +

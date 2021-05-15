@@ -33,7 +33,8 @@ function Room() constructor
 					{
 						//|Construction method: Constructor copy.
 						persistent = _other.persistent;
-						size = _other.size;
+						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
+																	   : _other.size);
 						
 						ID = room_add();
 						room_set_width(ID, size.x);
@@ -121,8 +122,7 @@ function Room() constructor
 					var _methodName = "copy";
 					var _errorText = ("Attempted to copy from an invalid Room: " +
 									  "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															_errorText);
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
@@ -179,7 +179,7 @@ function Room() constructor
 			//						Cannot be used to free the memory if this Room was active while
 			//						persistent and is not currently active.
 			static setPersistent = function(_persistent)
-			{		
+			{
 				if ((is_real(ID)) and (room_exists(ID)))
 				{
 					if (room != ID)
@@ -196,11 +196,11 @@ function Room() constructor
 							var _callstack = debug_get_callstack();
 							var _methodName = "setPersistent";
 							var _errorText = ("Attempted to disable persistency of a Room that was " +
-											  "visited while persistent and is not currently " + 
+											  "visited while persistent and is not currently " +
 											  "active: " +
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-							_errorText);
+																 _errorText);
 						}
 					}
 					else
@@ -296,7 +296,7 @@ function Room() constructor
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the ID and name of this Room.
+			//						Content will be represented with the properties of this Room.
 			static toString = function(_multiline, _full)
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -344,7 +344,7 @@ function Room() constructor
 		// @argument			{Vector2} location?
 		// @description			A container constructor for properties of instances added to this Room
 		//						before its activation.
-		//
+		//						
 		//						Construction methods:
 		//						- New constructor.
 		//						- Constructor copy: {Room.AddedInstance} other
@@ -370,7 +370,8 @@ function Room() constructor
 							var _other = argument[0];
 							
 							object = _other.object;
-							location = _other.location;
+							location = ((instanceof(_other.location) == "Vector2")
+										? new Vector2(_other.location) : _other.location);
 							
 							ID = room_instance_add(parent.ID, location.x, location.y, object);
 						}
@@ -389,7 +390,7 @@ function Room() constructor
 					// @description			Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (is_real(object)) 
+						return ((is_real(ID)) and (is_real(object))
 								and (instanceof(location) == "Vector2")
 								and (location.isFunctional()));
 					}
@@ -401,7 +402,7 @@ function Room() constructor
 					// @returns				{string}
 					// @description			Create a string representing this constructor.
 					//						Overrides the string() conversion.
-					//						Content will be represented with the properties of the
+					//						Content will be represented with the properties of this
 					//						instance.
 					static toString = function(_multiline)
 					{

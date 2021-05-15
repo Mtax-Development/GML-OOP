@@ -27,7 +27,8 @@ function Surface() constructor
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
 						
-						size = _other.size;
+						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
+																	   : _other.size);
 						onCreate = _other.onCreate;
 						
 						ID = surface_create(size.x, size.y);

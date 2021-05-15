@@ -2,8 +2,8 @@
 /// @argument				{constant:fa_[halign]} x?
 /// @argument				{constant:fa_[valign]} y?
 ///							
-/// @description			Constructs a container for two Text Align contants, intended for use in
-///							text drawing.
+/// @description			Constructs a container for two Text Alignment contants, intended for use
+///							in text drawing.
 ///							
 ///							Construction methods:
 ///							- New constructor
@@ -36,7 +36,8 @@ function TextAlign() constructor
 					{
 						//|Construction method: New constructor.
 						x = ((argument[0] != undefined) ? argument[0] : fa_left);
-						y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1] : fa_top);
+						y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1]
+																				 : fa_top);
 					}
 				}
 			}
@@ -52,43 +53,43 @@ function TextAlign() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Set the origin of horizontal align to the left of the text.
+			// @description			Set the origin of horizontal alignment to the left of the text.
 			static setXLeft = function()
 			{
 				x = fa_left;
 			}
 			
-			// @description			Set the origin of horizontal align to the center of the text.
+			// @description			Set the origin of horizontal alignment to the center of the text.
 			static setXCenter = function()
 			{
 				x = fa_center;
 			}
 			
-			// @description			Set the origin of horizontal align to the right of the text.
+			// @description			Set the origin of horizontal alignment to the right of the text.
 			static setXRight = function()
 			{
 				x = fa_right;
 			}
 			
-			// @description			Set the origin of vertical align to the top of the text.
+			// @description			Set the origin of vertical alignment to the top of the text.
 			static setYTop = function()
 			{
 				y = fa_top;
 			}
 			
-			// @description			Set the origin of vertical align to the middle of the text.
+			// @description			Set the origin of vertical alignment to the middle of the text.
 			static setYMiddle = function()
 			{
 				y = fa_middle;
 			}
 			
-			// @description			Set the origin of vertical align to the bottom of the text.
+			// @description			Set the origin of vertical alignment to the bottom of the text.
 			static setYBottom = function()
 			{
 				y = fa_bottom;
 			}
 			
-			// @description			Mirror the non-centered x and y values of the align.
+			// @description			Mirror the non-centered x and y values of the alignment.
 			static mirror = function()
 			{
 				switch (x)
@@ -104,7 +105,7 @@ function TextAlign() constructor
 				}
 			}
 			
-			// @description			Mirror the non-centered x value of the align.
+			// @description			Mirror the non-centered x value of the alignment.
 			static mirrorX = function()
 			{
 				switch (x)
@@ -114,7 +115,7 @@ function TextAlign() constructor
 				}
 			}
 			
-			// @description			Mirror the non-centered y value of the align.
+			// @description			Mirror the non-centered y value of the alignment.
 			static mirrorY = function()
 			{
 				switch (y)
@@ -127,7 +128,7 @@ function TextAlign() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Use this Text Align for further text rendering.
+			// @description			Use this Text Alignment for further text rendering.
 			static setActive = function()
 			{
 				draw_set_halign(x);
@@ -141,8 +142,7 @@ function TextAlign() constructor
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
-			//						Content will be represented with the text equivalent of 
-			//						the align constants.
+			//						Content will be represented with both of the text alignments.
 			static toString = function(_multiline)
 			{
 				var _string_x, _string_y;

@@ -121,7 +121,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to copy from an invalid Data Structure: " +
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -172,7 +172,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -193,7 +193,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -216,7 +216,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -239,7 +239,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -263,7 +263,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getPriority";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -285,7 +285,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -353,15 +353,14 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " + 
+					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
-			// @argument			{any} priority
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} priority...
+			// @argument			{any} value...
 			// @description			Add one or more value and priority pairs to this Priority Queue.
 			static add = function(_priority, _value)
 			{
@@ -383,7 +382,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -391,9 +390,8 @@ function PriorityQueue() constructor
 				}
 			}
 			
-			// @argument			{any} priority
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} priority...
+			// @argument			{any} value...
 			// @description			Set the priority of one or more existing values.
 			static setPriority = function(_priority, _value)
 			{
@@ -415,7 +413,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "changePriority";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " + 
+					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -423,8 +421,7 @@ function PriorityQueue() constructor
 				}
 			}
 			
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} value...
 			// @description			Remove one or more specified values from this Priority Queue.
 			static remove = function(_value)
 			{
@@ -445,7 +442,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -497,7 +494,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "removeFirst";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -551,7 +548,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "removeLast";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " + 
+					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -667,7 +664,7 @@ function PriorityQueue() constructor
 								// if it would be too long.
 								if (_i < (_size - 1))
 								{
-									if ((_string_length + _mark_separator_length) >= 
+									if ((_string_length + _mark_separator_length) >=
 										 _string_lengthLimit)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -702,8 +699,8 @@ function PriorityQueue() constructor
 							else
 							{
 								//|If the elements are to be shown fully, add separators after the
-								// ones that are not last. Add a cut mark after the last one if
-								// not all elements are shown.
+								// ones that are not last. Add a cut mark after the last one if not
+								// all elements are shown.
 								if (_i < (_elementNumber - 1))
 								{
 									_string += _mark_separator;
@@ -749,8 +746,9 @@ function PriorityQueue() constructor
 			
 			// @returns				{any[]}
 			// @description			Create an array with all priorities and values of this Priority
-			//						Queue, in which priorities will be in its first dimension and
-			//						values in second.
+			//						Queue.
+			//						The array will contain two arrays. The first one will contain all
+			//						priorities and second one will contain all values.
 			static toArray = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
@@ -786,7 +784,7 @@ function PriorityQueue() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " + 
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -839,8 +837,8 @@ function PriorityQueue() constructor
 			}
 			
 			// @returns				{string}
-			// @description			Return an encoded string of this Data Structure,
-			//						which can later be decoded to recreate it.
+			// @description			Encode this Data Structure into a string, from which it can be
+			//						recreated.
 			static toEncodedString = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
@@ -862,8 +860,8 @@ function PriorityQueue() constructor
 			
 			// @argument			{string} string
 			// @argument			{bool} legacy?
-			// @description			Decode the previously encoded string of the same Data 
-			//						Structure and recreate it into this one.
+			// @description			Decode a string to which a Data Structure of the same type was
+			//						previously encoded into this one.
 			//						Use the "legacy" argument if that string was created
 			//						in old versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy)

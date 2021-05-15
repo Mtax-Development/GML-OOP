@@ -515,7 +515,7 @@ function Sprite() constructor
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
 			// @argument			{int:color|Color4} color?
-			// @argument			{int} alpha?		
+			// @argument			{int} alpha?
 			// @description			Draw this Sprite with the specified alternations to the current
 			//						Surface.
 			//						The top left point of the part will be treated as the origin point
@@ -620,7 +620,7 @@ function Sprite() constructor
 						var _color_value = ((argument[3] != undefined) ? argument[3] : c_white);
 						var _alpha_value = (((argument_count > 4) and (argument[4] != undefined))
 											? argument[4] : 1);
-					
+						
 						draw_sprite_stretched_ext(ID, _frame_value, _location.x, _location.y, _size.x,
 												  _size.y, _color_value, _alpha_value);
 					}
@@ -714,7 +714,7 @@ function Sprite() constructor
 			// @argument			{int} frame?
 			// @argument			{real} alpha?
 			// @description			Draw this Sprite with perspective altered by its edges.
-			static renderPerspective = function(_location1, _location2, _location3, _location4, 
+			static renderPerspective = function(_location1, _location2, _location3, _location4,
 												_frame, _alpha)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))

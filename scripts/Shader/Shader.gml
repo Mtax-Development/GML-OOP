@@ -5,6 +5,7 @@
 ///							
 ///							Construction methods:
 ///							- New constructor
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Shader} other
 function Shader() constructor
 {
@@ -14,31 +15,35 @@ function Shader() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction method: Empty.
 				ID = undefined;
 				name = undefined;
 				compiled = undefined;
 				uniform = undefined;
 				sampler = undefined;
 				
-				if (instanceof(argument[0]) == "Shader")
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//|Construction method: Constructor copy.
-					var _other = argument[0];
+					if (instanceof(argument[0]) == "Shader")
+					{
+						//|Construction method: Constructor copy.
+						var _other = argument[0];
 					
-					ID = _other.ID;
-					name = _other.name;
-					compiled = _other.compiled;
-					uniform = _other.uniform;
-					sampler = _other.sampler;
-				}
-				else
-				{
-					//|Construction method: New constructor.
-					ID = argument[0];
-					name = shader_get_name(ID);
-					compiled = shader_is_compiled(ID);
-					uniform = {};
-					sampler = {};
+						ID = _other.ID;
+						name = _other.name;
+						compiled = _other.compiled;
+						uniform = _other.uniform;
+						sampler = _other.sampler;
+					}
+					else
+					{
+						//|Construction method: New constructor.
+						ID = argument[0];
+						name = shader_get_name(ID);
+						compiled = shader_is_compiled(ID);
+						uniform = {};
+						sampler = {};
+					}
 				}
 			}
 			
@@ -74,7 +79,7 @@ function Shader() constructor
 							
 							if (is_real(_value))
 							{
-								shader_set_uniform_f(_handle, _value);	
+								shader_set_uniform_f(_handle, _value);
 							}
 							else if (is_array(_value))
 							{
@@ -89,7 +94,7 @@ function Shader() constructor
 								var _errorReport = new ErrorReport();
 								var _callstack = debug_get_callstack();
 								var _methodName = "setUniform_float";
-								var _errorText = ("Attempted to set an uniform using an " + 
+								var _errorText = ("Attempted to set an uniform using an " +
 												  "unrecognized data type:\n" +
 												  "Shader: " + "{" + string(name) + "}" + "\n" +
 												  "Data: " + "{" + string(_value) + "}");
@@ -162,7 +167,7 @@ function Shader() constructor
 							
 							if (is_real(_value))
 							{
-								shader_set_uniform_i(_handle, _value);	
+								shader_set_uniform_i(_handle, _value);
 							}
 							else if (is_array(_value))
 							{
@@ -177,7 +182,7 @@ function Shader() constructor
 								var _errorReport = new ErrorReport();
 								var _callstack = debug_get_callstack();
 								var _methodName = "setUniform_int";
-								var _errorText = ("Attempted to set an uniform using an " + 
+								var _errorText = ("Attempted to set an uniform using an " +
 												  "unrecognized data type:\n" +
 												  "Shader: " + "{" + string(name) + "}" + "\n" +
 												  "Data: " + "{" + string(_value) + "}");

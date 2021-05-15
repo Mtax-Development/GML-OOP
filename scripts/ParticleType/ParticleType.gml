@@ -356,7 +356,7 @@ function ParticleType() constructor
 				color = c_white;
 				color_type = "color";
 				
-				alpha = [1, undefined, undefined];	
+				alpha = [1, undefined, undefined];
 				
 				step_type = undefined;
 				step_number = 0;
@@ -389,7 +389,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setShape";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -425,7 +425,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSprite";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -447,7 +447,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setScale";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -479,15 +479,14 @@ function ParticleType() constructor
 						_size_maximum = size;
 					}
 					
-					part_type_size(ID, _size_minimum, _size_maximum, 
-								   size_increase, size_wiggle);
+					part_type_size(ID, _size_minimum, _size_maximum, size_increase, size_wiggle);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSize";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -527,7 +526,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSpeed";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -570,7 +569,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setDirection";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -616,7 +615,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setAngle";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -649,7 +648,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setGravity";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -684,7 +683,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setLife";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -726,7 +725,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setColor";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -749,7 +748,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setColorMix";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -812,12 +811,12 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setColorRGB";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
-		
+			
 			// @argument			{real|Range} hue
 			// @argument			{real|Range} saturation
 			// @argument			{real|Range} value
@@ -875,7 +874,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setColorHSV";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -897,7 +896,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setBlend";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -939,7 +938,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setAlpha";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -966,7 +965,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setStep";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -993,7 +992,7 @@ function ParticleType() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setDeath";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type:\n" +
+					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
@@ -1059,10 +1058,10 @@ function ParticleType() constructor
 							{
 								repeat (_number)
 								{
-									var _location_x = irandom_range(_shape.location.x1, 
+									var _location_x = irandom_range(_shape.location.x1,
 																	_shape.location.x2);
 									
-									var _location_y = irandom_range(_shape.location.y1, 
+									var _location_y = irandom_range(_shape.location.y1,
 																	_shape.location.y2);
 									
 									part_particles_create_color(_particleSystem.ID, _location_x,
@@ -1074,11 +1073,11 @@ function ParticleType() constructor
 								repeat (_number)
 								{
 									part_particles_create(_particleSystem.ID, 
-														  irandom_range(_shape.location.x1, 
+														  irandom_range(_shape.location.x1,
 																		_shape.location.x2),
-														  irandom_range(_shape.location.y1, 
-																		_shape.location.y2), 
-																		ID, 1);
+														  irandom_range(_shape.location.y1,
+																		_shape.location.y2),
+														  ID, 1);
 								}
 							}
 						break;
@@ -1133,7 +1132,7 @@ function ParticleType() constructor
 							if (_color != undefined)
 							{
 								repeat (_number)
-								{													
+								{
 									var _length_particle = irandom_range(0, 
 														   _shape.location.getDistance());
 									
@@ -1152,7 +1151,7 @@ function ParticleType() constructor
 							else
 							{
 								repeat (_number)
-								{													
+								{
 									var _length_particle = irandom_range(0, 
 														   _shape.location.getDistance());
 									
@@ -1184,7 +1183,7 @@ function ParticleType() constructor
 									var _location_y = ceil((_shape.location.y
 														   + (_r * sin(_theta))));
 									
-									part_particles_create_color(_particleSystem.ID, _location_x, 
+									part_particles_create_color(_particleSystem.ID, _location_x,
 																_location_y, ID, _color, 1);
 								}
 							}
@@ -1201,7 +1200,7 @@ function ParticleType() constructor
 									var _location_y = ceil((_shape.location.y
 														   + (_r * sin(_theta))));
 									
-									part_particles_create(_particleSystem.ID, _location_x, 
+									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);
 								}
 							}
@@ -1211,8 +1210,8 @@ function ParticleType() constructor
 							if (_color != undefined)
 							{
 								repeat (_number)
-								{									
-									var _width = ((max(_shape.location.x1, _shape.location.x2) 
+								{
+									var _width = ((max(_shape.location.x1, _shape.location.x2)
 												  - min(_shape.location.x1, _shape.location.x2))
 												  / 2);
 									
@@ -1220,25 +1219,25 @@ function ParticleType() constructor
 												   - min(_shape.location.y1, _shape.location.y2))
 												   / 2);
 									
-									var _angle = random((2 * pi));			
+									var _angle = random((2 * pi));
 									var _point = random(1);
 									
-									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
-													       + ((sqrt(_point) * cos(_angle))
+									var _location_x = mean(_shape.location.x1, _shape.location.x2)
+														   + ((sqrt(_point) * cos(_angle))
 														   * (_width));
 									
-									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
+									var _location_y = mean(_shape.location.y1, _shape.location.y2)
 														   + ((sqrt(_point) * sin(_angle))
 														   * (_height));
 									
-									part_particles_create_color(_particleSystem.ID, _location_x, 
+									part_particles_create_color(_particleSystem.ID, _location_x,
 																_location_y, ID, _color, 1);
 								}
 							}
 							else
 							{
 								repeat (_number)
-								{									
+								{
 									var _width = ((max(_shape.location.x1, _shape.location.x2) 
 												  - min(_shape.location.x1, _shape.location.x2))
 												  / 2);
@@ -1247,18 +1246,18 @@ function ParticleType() constructor
 												   - min(_shape.location.y1, _shape.location.y2))
 												   / 2);
 									
-									var _angle = random((2 * pi));			
+									var _angle = random((2 * pi));
 									var _point = random(1);
 									
-									var _location_x = mean(_shape.location.x1, _shape.location.x2) 
-													       + ((sqrt(_point) * cos(_angle))
+									var _location_x = mean(_shape.location.x1, _shape.location.x2)
+														   + ((sqrt(_point) * cos(_angle))
 														   * (_width));
 									
-									var _location_y = mean(_shape.location.y1, _shape.location.y2) 
+									var _location_y = mean(_shape.location.y1, _shape.location.y2)
 														   + ((sqrt(_point) * sin(_angle))
 														   * (_height));
 									
-									part_particles_create(_particleSystem.ID, _location_x, 
+									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);
 								}
 							}
@@ -1347,20 +1346,7 @@ function ParticleType() constructor
 						{
 							_string_blend = "Additive";
 						}
-							//shape
-							//sprite
-							//scale
-							//size
-							//speed
-							//direction
-							//angle
-							//gravity
-							//color
-							//blend
-							//alpha
-							//life
-							//step
-							//death
+						
 						_string = ("ID: " + string(ID) + _mark_separator +
 								   "Shape: " + _string_shape + _mark_separator +
 								   "Sprite: " + string(sprite) + _mark_separator +
@@ -1382,12 +1368,9 @@ function ParticleType() constructor
 								   "Direction Wiggle: " + string(direction_wiggle) 
 								   						+ _mark_separator +
 								   "Angle: " + string(angle) + _mark_separator +
-								   "Angle Increase: " + string(angle_increase) 
-								   							+ _mark_separator +
-								   "Angle Wiggle: " + string(angle_wiggle) 
-								   						  + _mark_separator +
-								   "Angle Relative: " + string(angle_relative) 
-								   							+ _mark_separator +
+								   "Angle Increase: " + string(angle_increase) + _mark_separator +
+								   "Angle Wiggle: " + string(angle_wiggle) + _mark_separator +
+								   "Angle Relative: " + string(angle_relative) + _mark_separator +
 								   "Gravity Value: " + string(gravity) + _mark_separator +
 								   "Gravity Direction: " + string(gravity_direction) 
 								   						 + _mark_separator +
@@ -1424,7 +1407,7 @@ function ParticleType() constructor
 					return (instanceof(self) + "<>");
 				}
 			}
-		
+			
 		#endregion
 	#endregion
 	#region [Constructor]

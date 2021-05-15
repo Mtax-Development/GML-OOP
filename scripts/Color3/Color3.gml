@@ -31,7 +31,7 @@ function Color3() constructor
 					{
 						//|Construction method: Constructor copy.
 						var _other = argument[0];
-					
+						
 						color1 = _other.color1;
 						color2 = _other.color2;
 						color3 = _other.color3;
@@ -48,7 +48,7 @@ function Color3() constructor
 								color2 = _color;
 								color3 = _color;
 							break;
-					
+							
 							case 2:
 								//|Construction method: Color2 + color.
 								if (instanceof(argument[0]) == "Color2")
@@ -70,7 +70,7 @@ function Color3() constructor
 									color3 = _other.color2;
 								}
 							break;
-					
+							
 							case 3:
 								//|Construction method: New constructor.
 								color1 = argument[0];
