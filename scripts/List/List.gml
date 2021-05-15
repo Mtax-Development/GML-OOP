@@ -388,8 +388,7 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} value...
 			// @description			Add one or more values to this List.
 			static add = function()
 			{

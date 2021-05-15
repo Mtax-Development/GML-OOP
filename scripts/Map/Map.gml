@@ -581,9 +581,8 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{any} key
-			// @argument			{List|int:list} value
-			// @argument			...
+			// @argument			{any} key...
+			// @argument			{List|int:list} value...
 			// @description			Adds one or more key and value pairs to this Map, where the
 			//						value is a List. The added value will become bound to this
 			//						Map and will be destroyed upon the destruction of this Map.

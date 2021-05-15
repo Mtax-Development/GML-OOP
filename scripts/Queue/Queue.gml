@@ -328,8 +328,7 @@ function Queue() constructor
 				}
 			}
 			
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} value...
 			// @description			Add one or more values at the tail of this Queue.
 			static add = function()
 			{

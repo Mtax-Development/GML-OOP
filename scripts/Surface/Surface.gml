@@ -7,7 +7,7 @@
 ///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Surface} other
-function Surface() constructor	
+function Surface() constructor
 {
 	#region [Methods]
 		#region <Management>

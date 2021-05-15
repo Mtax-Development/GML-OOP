@@ -102,13 +102,6 @@ function StringParser() constructor
 				return string_count(string(_substring), string(ID));
 			}
 			
-			// @returns				{string}
-			// @description			Return a version of the string containing only its digits.
-			static getDigits = function()
-			{
-				return string_digits(string(ID));
-			}
-			
 			// @returns				{int}
 			// @description			Return the number of characters in the string after parsing
 			//						escape characters.
@@ -123,6 +116,13 @@ function StringParser() constructor
 			static getLetters = function()
 			{
 				return string_letters(string(ID));
+			}
+			
+			// @returns				{string}
+			// @description			Return a version of the string containing only its digits.
+			static getDigits = function()
+			{
+				return string_digits(string(ID));
 			}
 			
 			// @returns				{string}

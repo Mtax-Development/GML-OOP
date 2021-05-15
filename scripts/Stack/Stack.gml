@@ -349,8 +349,7 @@ function Stack() constructor
 				}
 			}
 			
-			// @argument			{any} value
-			// @argument			...
+			// @argument			{any} value...
 			// @description			Add one or more values at the top of this Stack.
 			static add = function()
 			{
