@@ -477,11 +477,11 @@
 	}
 	
 #endregion
-#region [Test: Method: fromFile_part()]
+#region [Test: Method: fromFilePart()]
 	
 	var _value = [11, 22];
 	var _base = [array_length(_value), buffer_fixed, 1];
-	var _element = [buffer_u8, "BufferUnitTest_fromFile_part.dat"];
+	var _element = [buffer_u8, "BufferUnitTest_fromFilePart.dat"];
 	
 	if (file_exists(_element[1]))
 	{
@@ -493,12 +493,12 @@
 	constructor[0].write(_element[0], _value[0],
 						 _element[0], _value[1]);
 	constructor[0].toFile(_element[1]);
-	constructor[1].fromFile_part(_element[1], 1, 0, 1);
+	constructor[1].fromFilePart(_element[1], 1, 0, 1);
 	
 	var _result = constructor[1].read(_element[0]);
 	var _expectedValue = _value[1];
 	
-	unitTest.assert_equal("Methods: fromFile_part()",
+	unitTest.assert_equal("Methods: fromFilePart()",
 						  _result, _expectedValue);
 	
 	constructor[0].destroy();

@@ -115,7 +115,7 @@ asset = [TestObject];
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toSTring(multiline?, full)]
+#region [Test: Method: toString(multiline?, full)]
 	
 	var _element = [["\n", ", "], [true, new Vector2(64, 32), asset[0]]];
 	

@@ -146,21 +146,33 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #endregion
 #region [Test: Method: toString(multiline, full)]
 	
+	var _element = ["\n", ", "];
 	var _base = [new Sprite(asset[2]), ord("A"), true, 3, true];
 	
 	constructor = new Font(_base[0], _base[1], _base[2], _base[3], _base[4]);
 	
-	var _result = constructor.toString(true, true);
-	var _expectedValue = ("Type: " + "sprite (utf8)" + "\n" +
-						  "Asset Name: " + font_get_name(constructor.ID) + "\n" +
-						  "Font Name: " + font_get_fontname(constructor.ID) + "\n" +
-						  "Sprite: " + string(_base[0]) + "\n" +
-						  "First: " + string(_base[1]) + "\n" +
-						  "Proportional: " + string(_base[2]) + "\n" +
-						  "Sepearation: " + string(_base[3]) + "\n" +
-						  "Antialising: " + string(_base[4]));
+	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
+	var _expectedValue = [];
 	
-	unitTest.assert_equal("Method: toString(multiline, full)",
+	var _i = 0;
+	repeat (array_length(_element))
+	{
+		array_push(_expectedValue,
+				   ("Type: " + "sprite (utf8)" + _element[_i] +
+				    "Asset Name: " + font_get_name(constructor.ID) + _element[_i] +
+				    "Font Name: " + font_get_fontname(constructor.ID) + _element[_i] +
+				    "Sprite: " + string(_base[0]) + _element[_i] +
+				    "First: " + string(_base[1]) + _element[_i] +
+				    "Proportional: " + string(_base[2]) + _element[_i] +
+				    "Separation: " + string(_base[3]) + _element[_i] +
+				    "Antialising: " + string(_base[4])));
+		
+		++_i;
+	}
+	
+	_expectedValue[1] = (constructorName + "(" + _expectedValue[1] + ")");
+	
+	unitTest.assert_equal("Method: toString(multiline?, full)",
 						  _result, _expectedValue);
 	
 #endregion
