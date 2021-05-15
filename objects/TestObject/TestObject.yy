@@ -22,7 +22,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Objects",
-    "path": "folders/Test Assets/Objects.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Objects.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestObject",

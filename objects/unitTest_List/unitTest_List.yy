@@ -27,7 +27,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Data Structures",
-    "path": "folders/Objects/Unit Tests/Data Structures.yy",
+    "path": "folders/GML-OOP Unit Tests/Unit Tests/Data Structures.yy",
   },
   "resourceVersion": "1.0",
   "name": "unitTest_List",

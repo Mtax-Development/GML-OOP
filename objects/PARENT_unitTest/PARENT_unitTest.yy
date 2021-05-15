@@ -25,7 +25,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Unit Tests",
-    "path": "folders/Objects/Unit Tests.yy",
+    "path": "folders/GML-OOP Unit Tests/Unit Tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "PARENT_unitTest",

@@ -1,5 +1,5 @@
 # About
-This branch contains Unit Tests for GML Superset.    
+This branch contains Unit Tests for **GML-OOP**.    
 Their purpose is to ensure and prove that its every feature is possible to execute without errors and follows its intended behavior.
 
 
@@ -7,8 +7,8 @@ Their purpose is to ensure and prove that its every feature is possible to execu
 
 The following GML dependencies are required:
 
-* [GML Superset](https://github.com/Git-Mtax/GML-Superset) itself.
-* [UnitTest](https://github.com/Git-Mtax/GML-Development-Toolbox/blob/master/scripts/UnitTest/UnitTest.gml) constructor from [GML Development Toolbox](https://github.com/Git-Mtax/GML-Development-Toolbox).
+* [GML-OOP](https://github.com/Mtax-Development/GML-OOP) itself.
+* [UnitTest](https://github.com/Mtax-Development/GML-Development-Toolbox/blob/master/scripts/UnitTest/UnitTest.gml) constructor from [GML Development Toolbox](https://github.com/Git-Mtax/GML-Development-Toolbox).
 
 Include them in the project found in this branch.    
 The preferred way to do so is to use Local Packages. In GameMaker Studio 2 IDE, this can be done from the `Tools` toolbar menu, from which you can use the option `Create Local Package` on open projects of the above dependencies to then load them into the Unit Test project using the `Import Local Package` option.

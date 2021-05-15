@@ -27,7 +27,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Shapes",
-    "path": "folders/Objects/Unit Tests/Shapes.yy",
+    "path": "folders/GML-OOP Unit Tests/Unit Tests/Shapes.yy",
   },
   "resourceVersion": "1.0",
   "name": "unitTest_Point",

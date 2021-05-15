@@ -27,7 +27,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Handlers",
-    "path": "folders/Objects/Unit Tests/Handlers.yy",
+    "path": "folders/GML-OOP Unit Tests/Unit Tests/Handlers.yy",
   },
   "resourceVersion": "1.0",
   "name": "unitTest_StringParser",

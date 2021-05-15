@@ -14,7 +14,7 @@
   "duration": 30.005,
   "parent": {
     "name": "Audio",
-    "path": "folders/Test Assets/Audio.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Audio.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestAudio",

@@ -75,9 +75,10 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "Fonts",
-    "path": "folders/Test Assets/Fonts.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Fonts.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestFontImage",

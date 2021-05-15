@@ -67,9 +67,10 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"9fec7a11-1fac-4ada-8782-df853b6f6938","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "Sprites",
-    "path": "folders/Test Assets/Sprites.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Sprites.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestBackgroundSprite",

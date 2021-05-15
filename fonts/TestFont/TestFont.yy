@@ -215,7 +215,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Fonts",
-    "path": "folders/Test Assets/Fonts.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Fonts.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestFont",

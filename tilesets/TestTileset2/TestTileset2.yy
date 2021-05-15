@@ -37,7 +37,7 @@
   },
   "parent": {
     "name": "Tilesets",
-    "path": "folders/Test Assets/Tilesets.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Tilesets.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestTileset2",

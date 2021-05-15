@@ -74,7 +74,7 @@
   "nineSlice": null,
   "parent": {
     "name": "Sprites",
-    "path": "folders/Test Assets/Sprites.yy",
+    "path": "folders/GML-OOP Unit Tests/Assets/Sprites.yy",
   },
   "resourceVersion": "1.0",
   "name": "TestSprite",
