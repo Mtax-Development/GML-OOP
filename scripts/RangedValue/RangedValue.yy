@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Containers",
-    "path": "folders/Scripts/Containers.yy",
+    "path": "folders/GML-OOP/Containers.yy",
   },
   "resourceVersion": "1.0",
   "name": "RangedValue",

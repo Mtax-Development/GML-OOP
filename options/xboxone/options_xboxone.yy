@@ -1,8 +1,8 @@
 {
-  "option_xbone_display_name": "Created with GameMaker Studio 2",
-  "option_xbone_description": "Your Description",
-  "option_xbone_publisher": "Company Name",
-  "option_xbone_publisher_display_name": "Company Display Name",
+  "option_xbone_display_name": "GML-OOP",
+  "option_xbone_description": "https://github.com/Mtax-Development/GML-OOP",
+  "option_xbone_publisher": "https://github.com/Mtax-Development/GML-OOP",
+  "option_xbone_publisher_display_name": "https://github.com/Mtax-Development/GML-OOP",
   "option_xbone_version": "1.0.0.0",
   "option_xbone_product_id": "",
   "option_xbone_title_id": "01234567",

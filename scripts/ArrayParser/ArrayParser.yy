@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Handlers",
-    "path": "folders/Scripts/Handlers.yy",
+    "path": "folders/GML-OOP/Handlers.yy",
   },
   "resourceVersion": "1.0",
   "name": "ArrayParser",

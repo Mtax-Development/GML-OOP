@@ -1,6 +1,6 @@
 {
-  "option_tvos_display_name": "Made in GameMaker Studio 2",
-  "option_tvos_bundle_name": "com.company.game",
+  "option_tvos_display_name": "GML-OOP",
+  "option_tvos_bundle_name": "GML-OOP",
   "option_tvos_version": "1.0.0.0",
   "option_tvos_output_dir": "~/GameMakerStudio2/tvOS",
   "option_tvos_team_id": "",

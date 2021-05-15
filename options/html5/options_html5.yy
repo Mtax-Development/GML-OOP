@@ -1,5 +1,5 @@
 {
-  "option_html5_browser_title": "Created with GameMaker Studio 2",
+  "option_html5_browser_title": "GML-OOP",
   "option_html5_version": "1.0.0.0",
   "option_html5_foldername": "html5game",
   "option_html5_outputname": "index.html",

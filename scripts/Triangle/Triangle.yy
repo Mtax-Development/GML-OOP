@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Shapes",
-    "path": "folders/Scripts/Shapes.yy",
+    "path": "folders/GML-OOP/Shapes.yy",
   },
   "resourceVersion": "1.0",
   "name": "Triangle",
