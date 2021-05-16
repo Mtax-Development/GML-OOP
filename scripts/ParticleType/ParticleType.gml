@@ -1128,21 +1128,25 @@ function ParticleType() constructor
 						break;
 						
 						case "Line":
-							//+TODO: Line width support
 							if (_color != undefined)
 							{
 								repeat (_number)
 								{
-									var _length_particle = irandom_range(0, 
-														   _shape.location.getDistance());
-									
+									var _length = irandom_range(0, _shape.location.getDistance());
 									var _angle = _shape.location.getAngle1to2();
 									
 									var _location_x = (_shape.location.x1 
-													   + lengthdir_x(_length_particle, _angle));
+													   + lengthdir_x(_length, _angle));
 									
 									var _location_y = (_shape.location.y1 
-													   + lengthdir_y(_length_particle, _angle));
+													   + lengthdir_y(_length, _angle));
+									
+									var _side_angle = (_angle + 90);
+									var _side_length = (_shape.size / 2);
+									var _side_position = irandom_range(-_side_length, _side_length);
+									
+									_location_x += lengthdir_x(_side_position, _side_angle);
+									_location_y += lengthdir_y(_side_position, _side_angle);
 	 								
 									part_particles_create_color(_particleSystem.ID, _location_x,
 																_location_y, ID, _color, 1);
@@ -1152,16 +1156,21 @@ function ParticleType() constructor
 							{
 								repeat (_number)
 								{
-									var _length_particle = irandom_range(0, 
-														   _shape.location.getDistance());
-									
+									var _length = irandom_range(0, _shape.location.getDistance());
 									var _angle = _shape.location.getAngle1to2();
 									
 									var _location_x = (_shape.location.x1 
-													   + lengthdir_x(_length_particle, _angle));
+													   + lengthdir_x(_length, _angle));
 									
 									var _location_y = (_shape.location.y1 
-													   + lengthdir_y(_length_particle, _angle));
+													   + lengthdir_y(_length, _angle));
+									
+									var _side_angle = (_angle + 90);
+									var _side_length = (_shape.size / 2);
+									var _side_position = irandom_range(-_side_length, _side_length);
+									
+									_location_x += lengthdir_x(_side_position, _side_angle);
+									_location_y += lengthdir_y(_side_position, _side_angle);
 	 								
 									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);
