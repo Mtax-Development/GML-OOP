@@ -191,7 +191,7 @@ function Font() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{ptr}
+			// @returns				{pointer}
 			// @description			Get the pointer to texture page of this Font.
 			static getTexture = function()
 			{

@@ -231,7 +231,7 @@ function Sprite() constructor
 			}
 			
 			// @argument			{int} frame?
-			// @returns				{ptr}
+			// @returns				{pointer}
 			// @description			Return a pointer for the texture page of the specified frame
 			//						of this Sprite.
 			static getTexture = function(_frame)

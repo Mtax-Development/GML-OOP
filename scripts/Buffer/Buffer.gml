@@ -227,7 +227,7 @@ function Buffer() constructor
 				}
 			}
 			
-			// @returns				{ptr}
+			// @returns				{pointer}
 			// @description			Return the pointer to the position of this Buffer in the memory.
 			static getPointer = function()
 			{

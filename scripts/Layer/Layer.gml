@@ -858,7 +858,7 @@ function Layer() constructor
 								and (layer_sprite_exists(parent.ID, ID));
 					}
 					
-					// @argument			{Layer|int:layer} other
+					// @argument			{Layer|int:layer|string:layer} other
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -872,7 +872,8 @@ function Layer() constructor
 								
 								layer_element_move(ID, parent.ID);
 							}
-							else if ((is_real(_other)) and (layer_exists(_other)))
+							else if (((is_real(_other)) or (is_string(_other)))
+							and (layer_exists(_other)))
 							{
 								parent.spriteList.removeValue(self);
 								parent = undefined;
@@ -1261,7 +1262,7 @@ function Layer() constructor
 								and (layer_background_exists(parent.ID, ID));
 					}
 					
-					// @argument			{Layer|layer} other
+					// @argument			{Layer|int:layer|string:layer} other
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -1275,7 +1276,8 @@ function Layer() constructor
 								
 								layer_element_move(ID, parent.ID);
 							}
-							else if ((is_real(_other)) and (layer_exists(_other)))
+							else if (((is_real(_other)) or (is_string(_other)))
+							and (layer_exists(_other)))
 							{
 								parent.backgroundList.removeValue(self);
 								parent = undefined;
@@ -1634,7 +1636,7 @@ function Layer() constructor
 		}
 		
 		// @function			Layer.TilemapElement()
-		// @argument			{tileset} tileset
+		// @argument			{int:tileset} tileset
 		// @argument			{Vector2} location
 		// @argument			{Vector2} size
 		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
@@ -1772,7 +1774,7 @@ function Layer() constructor
 						}
 					}
 					
-					// @argument			{Layer|layer} other
+					// @argument			{Layer|int:layer|string:layer} other
 					// @description			Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -1786,7 +1788,8 @@ function Layer() constructor
 									
 								layer_element_move(ID, parent.ID);
 							}
-							else if ((is_real(_other)) and (layer_exists(_other)))
+							else if (((is_real(_other)) or (is_string(_other)))
+							and (layer_exists(_other)))
 							{
 								parent.tilemapList.removeValue(self);
 								parent = undefined;
@@ -2039,7 +2042,7 @@ function Layer() constructor
 						}
 					}
 					
-					// @argument			{int|hex} mask
+					// @argument			{int} mask
 					// @description			Set the tile bit mask for this Tilemap.
 					static setMask = function(_mask)
 					{
@@ -2177,7 +2180,7 @@ function Layer() constructor
 			#region [[Elements]]
 				
 				// @function			Layer.TilemapElement.TileData()
-				// @argument			{int|hex} id?
+				// @argument			{int} id?
 				// @description			Constructs a TileData Element, which refers to a Tile
 				//						in this Tilemap.
 				//						

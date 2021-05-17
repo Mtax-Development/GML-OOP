@@ -72,7 +72,7 @@ function RoundRectangle() constructor
 			
 			// @argument			{object} object
 			// @argument			{bool} precise?
-			// @argument			{instance} excludedInstance?
+			// @argument			{int:instance} excludedInstance?
 			// @argument			{bool|List} list?
 			// @argument			{bool} listOrdered?
 			// @returns				{int|List}

@@ -200,7 +200,7 @@ function Surface() constructor
 				}
 			}
 			
-			// @returns				{ptr}
+			// @returns				{pointer}
 			// @description			Get the pointer to texture page of this Surface.
 			static getTexture = function()
 			{
