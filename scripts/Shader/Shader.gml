@@ -55,6 +55,48 @@ function Shader() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			// @returns				{bool}
+			// @description			Check whether this Shader is the currently set one.
+			static isActive = function()
+			{
+				return ((compiled) ? (shader_current() == ID) : false);
+			}
+			
+			// @argument			{string} uniform
+			// @returns				{int} | On error: {undefined}
+			// @description			Get a sampler index of a uniform from this Shader
+			static getSampler = function(_uniform)
+			{
+				if (compiled)
+				{
+					var _sampler = shader_get_sampler_index(ID, _uniform);
+					var _handle = ((_sampler != -1) ? _sampler : undefined)
+					
+					var _struct =
+					{
+						handle: _handle
+					}
+					
+					variable_struct_set(sampler, _uniform, _struct);
+					
+					return _handle;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSampler";
+					var _errorText = ("Attempted to use a Shader that is not compiled: " +
+									  "{" + string(name) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			// @argument			{string} uniform
@@ -269,48 +311,6 @@ function Shader() constructor
 					var _errorText = ("Attempted to use a Shader that is not compiled: " +
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			// @returns				{bool}
-			// @description			Check whether this Shader is the currently set one.
-			static isActive = function()
-			{
-				return ((compiled) ? (shader_current() == ID) : false);
-			}
-			
-			// @argument			{string} uniform
-			// @returns				{int} | On error: {undefined}
-			// @description			Get a sampler index of a uniform from this Shader
-			static getSampler = function(_uniform)
-			{
-				if (compiled)
-				{
-					var _sampler = shader_get_sampler_index(ID, _uniform);
-					var _handle = ((_sampler != -1) ? _sampler : undefined)
-					
-					var _struct =
-					{
-						handle: _handle
-					}
-					
-					variable_struct_set(sampler, _uniform, _struct);
-					
-					return _handle;
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSampler";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
 				}
 			}
 			

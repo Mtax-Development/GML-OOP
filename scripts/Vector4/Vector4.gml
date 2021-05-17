@@ -143,6 +143,95 @@ function Vector4() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			// @returns				{Vector2}
+			// @description			Return the middle point of this Vector4.
+			static getMiddle = function()
+			{
+				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
+			}
+			
+			// @returns				{real}
+			// @description			Return the middle point between the x values of this Vector4.
+			static getMiddleX = function()
+			{
+				return lerp(x1, x2, 0.5);
+			}
+			
+			// @returns				{real}
+			// @description			Return the middle point between the y values of this Vector4.
+			static getMiddleY = function()
+			{
+				return lerp(y1, y2, 0.5);
+			}
+			
+			// @returns				{real}
+			// @description			Return the shortest distance between two points.
+			static getDistance = function()
+			{
+				return point_distance(x1, y1, x2, y2);
+			}
+			
+			// @returns				{real}
+			// @description			Return the direction from the first point towards the second.
+			static getAngle1to2 = function()
+			{
+				return point_direction(x1, y1, x2, y2);
+			}
+			
+			// @returns				{real}
+			// @description			Return the direction from the second point towards the first.
+			static getAngle2to1 = function()
+			{
+				return point_direction(x2, y2, x1, y1);
+			}
+			
+			// @argument			{Vector4} other
+			// @returns				{bool}
+			// @description			Check whether this and other Vector4 have the same values.
+			static equals = function(_other)
+			{
+				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
+						and (y2 == _other.y2));
+			}
+			
+			// @argument			{real} x
+			// @argument			{real} y
+			// @returns				{Vector2}
+			// @description			Return the point at specified respective precentages within the
+			//						x and y values.
+			static interpolate = function(_x, _y)
+			{
+				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the x values.
+			static interpolateX = function(_value)
+			{
+				return lerp(x1, x2, _value);
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the y values.
+			static interpolateY = function(_value)
+			{
+				return lerp(y1, y2, _value);
+			}
+			
+			// @argument			{Vector2} location
+			// @returns				{bool}
+			// @description			Check if a point in space is within this Vector4.
+			static isBetween = function(_location)
+			{
+				return ((_location.x == clamp(_location.x, x1, x2)) 
+						and (_location.y == clamp(_location.y, y1, y2)));
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			// @argument			{real|Vector4|Vector2} value
@@ -327,95 +416,6 @@ function Vector4() constructor
 				y1 = _x1;
 				x2 = _y2;
 				y2 = _x2;
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			// @returns				{Vector2}
-			// @description			Return the middle point of this Vector4.
-			static getMiddle = function()
-			{
-				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
-			}
-			
-			// @returns				{real}
-			// @description			Return the middle point between the x values of this Vector4.
-			static getMiddleX = function()
-			{
-				return lerp(x1, x2, 0.5);
-			}
-			
-			// @returns				{real}
-			// @description			Return the middle point between the y values of this Vector4.
-			static getMiddleY = function()
-			{
-				return lerp(y1, y2, 0.5);
-			}
-			
-			// @returns				{real}
-			// @description			Return the shortest distance between two points.
-			static getDistance = function()
-			{
-				return point_distance(x1, y1, x2, y2);
-			}
-			
-			// @returns				{real}
-			// @description			Return the direction from the first point towards the second.
-			static getAngle1to2 = function()
-			{
-				return point_direction(x1, y1, x2, y2);
-			}
-			
-			// @returns				{real}
-			// @description			Return the direction from the second point towards the first.
-			static getAngle2to1 = function()
-			{
-				return point_direction(x2, y2, x1, y1);
-			}
-			
-			// @argument			{Vector4} other
-			// @returns				{bool}
-			// @description			Check whether this and other Vector4 have the same values.
-			static equals = function(_other)
-			{
-				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
-						and (y2 == _other.y2));
-			}
-			
-			// @argument			{real} x
-			// @argument			{real} y
-			// @returns				{Vector2}
-			// @description			Return the point at specified respective precentages within the
-			//						x and y values.
-			static interpolate = function(_x, _y)
-			{
-				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
-			}
-			
-			// @argument			{value}
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the x values.
-			static interpolateX = function(_value)
-			{
-				return lerp(x1, x2, _value);
-			}
-			
-			// @argument			{value}
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the y values.
-			static interpolateY = function(_value)
-			{
-				return lerp(y1, y2, _value);
-			}
-			
-			// @argument			{Vector2} location
-			// @returns				{bool}
-			// @description			Check if a point in space is within this Vector4.
-			static isBetween = function(_location)
-			{
-				return ((_location.x == clamp(_location.x, x1, x2)) 
-						and (_location.y == clamp(_location.y, y1, y2)));
 			}
 			
 		#endregion

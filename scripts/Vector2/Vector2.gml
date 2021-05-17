@@ -91,6 +91,18 @@ function Vector2() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			// @argument			{Vector2|Scale} other
+			// @returns				{bool}
+			// @description			Check if the values of this Vector2 are equal to the values of
+			//						specified other one.
+			static equals = function(_other)
+			{
+				return ((x == _other.x) and (y == _other.y));
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			// @argument			{real|Vector2} value
@@ -231,18 +243,6 @@ function Vector2() constructor
 					x = device_mouse_x(_device);
 					y = device_mouse_y(_device);
 				}
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			// @argument			{Vector2|Scale} other
-			// @returns				{bool}
-			// @description			Check if the values of this Vector2 are equal to the values of
-			//						specified other one.
-			static equals = function(_other)
-			{
-				return ((x == _other.x) and (y == _other.y));
 			}
 			
 		#endregion

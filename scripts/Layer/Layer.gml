@@ -2691,6 +2691,33 @@ function Layer() constructor
 					}
 					
 				#endregion
+				#region <<Getters>>
+					
+					// @returns				{int}
+					// @description			Return a number of currently existing Particles of this
+					//						Particle System.
+					static getParticleCount = function()
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							return part_particles_count(ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "getParticleCount";
+							var _errorText = ("Attempted to get a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							return 0;
+						}
+					}
+					
+				#endregion
 				#region <<Setters>>
 					
 					// @argument			{Vector2} location
@@ -2787,33 +2814,6 @@ function Layer() constructor
 						}
 					}
 			
-				#endregion
-				#region <<Getters>>
-					
-					// @returns				{int}
-					// @description			Return a number of currently existing Particles of this
-					//						Particle System.
-					static getParticleCount = function()
-					{
-						if ((is_real(ID)) and (part_system_exists(ID)))
-						{
-							return part_particles_count(ID);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "getParticleCount";
-							var _errorText = ("Attempted to get a property of an invalid Particle " +
-											  "System:\n" +
-											  "{" + string(ID) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-							
-							return 0;
-						}
-					}
-					
 				#endregion
 				#region <<Execution>>
 					

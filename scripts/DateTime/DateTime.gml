@@ -158,270 +158,6 @@ function DateTime() constructor
 			}
 			
 		#endregion
-		#region <Setters>
-			
-			// @description			Set this DateTime to the current of the system using the
-			//						set timezone.
-			static setCurrent = function()
-			{
-				ID = date_current_datetime();
-				
-				year = date_get_year(ID);
-				month = date_get_month(ID);
-				week = date_get_week(ID);
-				day = date_get_day(ID);
-				hour = date_get_hour(ID);
-				minute = date_get_minute(ID);
-				second = date_get_second(ID);
-			}
-			
-			// @argument			{int} year
-			// @argument			{int} month
-			// @argument			{int} day
-			// @argument			{int} hour
-			// @argument			{int} minute
-			// @argument			{int} second
-			// @description			Set this DateTime to a newly created one.
-			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
-			{
-				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
-				
-				year = date_get_year(ID);
-				month = date_get_month(ID);
-				week = date_get_week(ID);
-				day = date_get_day(ID);
-				hour = date_get_hour(ID);
-				minute = date_get_minute(ID);
-				second = date_get_second(ID);
-			}
-			
-			// @argument			{int} years
-			// @argument			{int} months
-			// @argument			{int} days
-			// @argument			{int} hours
-			// @argument			{int} minutes
-			// @argument			{int} seconds
-			// @description			Modify any component of this DateTime by a specified number.
-			static modify = function(_years, _months, _days, _hours, _minutes, _seconds)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_year(ID, _years);
-					ID = date_inc_month(ID, _months);
-					ID = date_inc_day(ID, _days);
-					ID = date_inc_hour(ID, _hours);
-					ID = date_inc_minute(ID, _minutes);
-					ID = date_inc_second(ID, _seconds);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modify";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} number
-			// @description			Modify the years in this DateTime by a specified number.
-			static modifyYears = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_year(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyYears";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the months in this DateTime by a specified number.
-			static modifyMonths = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_month(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyMonths";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the weeks in this DateTime by a specified number.
-			static modifyWeeks = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_week(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyWeeks";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the days in this DateTime by a specified number.
-			static modifyDays = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_day(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyDays";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the hours in this DateTime by a specified number.
-			static modifyHours = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_hour(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyHours";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the minutes in this DateTime by a specified number.
-			static modifyMinutes = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_minute(ID, _value);
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifyMinutes";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{int} value
-			// @description			Modify the seconds in this DateTime by a specified number.
-			static modifySeconds = function(_value)
-			{
-				if (is_real(ID))
-				{
-					ID = date_inc_second(ID, _value)
-					
-					year = date_get_year(ID);
-					month = date_get_month(ID);
-					week = date_get_week(ID);
-					day = date_get_day(ID);
-					hour = date_get_hour(ID);
-					minute = date_get_minute(ID);
-					second = date_get_second(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "modifySeconds";
-					var _errorText = ("Attempted to modify an invalid date: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-		#endregion
 		#region <Getters>
 			
 			// @returns				{int} | On error: {undefined}
@@ -921,6 +657,270 @@ function DateTime() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
+				}
+			}
+			
+		#endregion
+		#region <Setters>
+			
+			// @description			Set this DateTime to the current of the system using the
+			//						set timezone.
+			static setCurrent = function()
+			{
+				ID = date_current_datetime();
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
+			}
+			
+			// @argument			{int} year
+			// @argument			{int} month
+			// @argument			{int} day
+			// @argument			{int} hour
+			// @argument			{int} minute
+			// @argument			{int} second
+			// @description			Set this DateTime to a newly created one.
+			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
+			{
+				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
+			}
+			
+			// @argument			{int} years
+			// @argument			{int} months
+			// @argument			{int} days
+			// @argument			{int} hours
+			// @argument			{int} minutes
+			// @argument			{int} seconds
+			// @description			Modify any component of this DateTime by a specified number.
+			static modify = function(_years, _months, _days, _hours, _minutes, _seconds)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_year(ID, _years);
+					ID = date_inc_month(ID, _months);
+					ID = date_inc_day(ID, _days);
+					ID = date_inc_hour(ID, _hours);
+					ID = date_inc_minute(ID, _minutes);
+					ID = date_inc_second(ID, _seconds);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modify";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} number
+			// @description			Modify the years in this DateTime by a specified number.
+			static modifyYears = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_year(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyYears";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the months in this DateTime by a specified number.
+			static modifyMonths = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_month(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyMonths";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the weeks in this DateTime by a specified number.
+			static modifyWeeks = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_week(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyWeeks";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the days in this DateTime by a specified number.
+			static modifyDays = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_day(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyDays";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the hours in this DateTime by a specified number.
+			static modifyHours = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_hour(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyHours";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the minutes in this DateTime by a specified number.
+			static modifyMinutes = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_minute(ID, _value);
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifyMinutes";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{int} value
+			// @description			Modify the seconds in this DateTime by a specified number.
+			static modifySeconds = function(_value)
+			{
+				if (is_real(ID))
+				{
+					ID = date_inc_second(ID, _value)
+					
+					year = date_get_year(ID);
+					month = date_get_month(ID);
+					week = date_get_week(ID);
+					day = date_get_day(ID);
+					hour = date_get_hour(ID);
+					minute = date_get_minute(ID);
+					second = date_get_second(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "modifySeconds";
+					var _errorText = ("Attempted to modify an invalid date: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			
