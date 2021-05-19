@@ -731,6 +731,44 @@ function Buffer() constructor
 				}
 			}
 			
+			// @argument			{Map} map
+			// @description			Obfuscate and save a Map in this Buffer, fingerprinted for use on
+			//						this device only.
+			//						Arrays will be saved as DS Lists.
+			static secureFromMap = function(_map)
+			{
+				if ((is_real(ID)) and (buffer_exists(ID)))
+				{
+					if ((instanceof(_map) == "Map") and (_map.isFunctional()))
+					{
+						ds_map_secure_save_buffer(_map.ID, ID);
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "secureToBuffer";
+						var _errorText = ("Attempted to convert an invalid Data Structure into a " +
+										  "Buffer:\n" +
+										  "Self: " + "{" + string(self) + "}" + "\n" +
+										  "Other: " + "{" + string(_map) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "secureFromMap";
+					var _errorText = ("Attempted to convert an invalid Buffer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return string(undefined);
+				}
+			}
+			
 			// @argument			{Surface|int:surface} surface
 			// @argument			{int} offset?
 			// @argument			{int} modulo?

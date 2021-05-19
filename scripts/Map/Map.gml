@@ -1139,45 +1139,6 @@ function Map() constructor
 			}
 			
 			// @argument			{Buffer|int:buffer} buffer
-			// @description			Save this Map into a Buffer. This Buffer is intended to be saved
-			//						as a file and then loaded later.
-			static secureToBuffer = function(_buffer)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
-				{
-					if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
-					and (buffer_exists(_buffer.ID)))
-					{
-						ds_map_secure_save_buffer(ID, _buffer.ID);
-					}
-					else if ((is_real(_buffer)) and (buffer_exists(_buffer)))
-					{
-						ds_map_secure_save_buffer(ID, _buffer);
-					}
-					else
-					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "secureToBuffer";
-						var _errorText = ("Attempted to convert a Data Structure to an invalid " +
-										  "Buffer: " +
-										  "{" + string(_buffer) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "secureToBuffer";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{Buffer|int:buffer} buffer
 			// @description			Load a Map that is in a Buffer that was loaded from a file and
 			//						replace this Map with it.
 			static secureFromBuffer = function(_buffer)
