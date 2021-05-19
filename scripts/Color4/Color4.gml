@@ -149,7 +149,7 @@ function Color4() constructor
 			}
 			
 		#endregion
-		#region <Getters>
+		#region <Setters>
 			
 			// @description			Invert the order of colors.
 			static reverse = function()

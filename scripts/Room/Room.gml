@@ -224,32 +224,6 @@ function Room() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Switch the active room to this one.
-			static setActive = function()
-			{
-				if ((is_real(ID)) and (room_exists(ID)))
-				{
-					if (room != ID)
-					{
-						previousRoom = room;
-					}
-					
-					visited = true;
-					persistenceOnVisit = persistent;
-					
-					room_goto(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "goto";
-					var _errorText = ("Attempted to switch to an invalid Room: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
 			// @argument			{object} object
 			// @argument			{Vector2} location?
 			// @returns				{Room.AddedInstance} | On error: {noone}
@@ -285,6 +259,32 @@ function Room() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return noone;
+				}
+			}
+			
+			// @description			Switch the active room to this one.
+			static setActive = function()
+			{
+				if ((is_real(ID)) and (room_exists(ID)))
+				{
+					if (room != ID)
+					{
+						previousRoom = room;
+					}
+					
+					visited = true;
+					persistenceOnVisit = persistent;
+					
+					room_goto(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "goto";
+					var _errorText = ("Attempted to switch to an invalid Room: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 			}
 			

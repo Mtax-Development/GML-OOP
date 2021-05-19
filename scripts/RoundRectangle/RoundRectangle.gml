@@ -83,8 +83,6 @@ function RoundRectangle() constructor
 			//						empty or containing IDs of the colliding instances.
 			//						If specified, the additions to that List can be ordered by 
 			//						distance from the center of the Shape.
-			//						NOTE: This Shape will be treated as a non-rounded Rectangle for
-			//						this operation.
 			static collision = function(_object)
 			{
 				var _precise = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] 
@@ -137,7 +135,17 @@ function RoundRectangle() constructor
 					}
 				}
 			}
-				
+			
+			// @argument			{Vector2} point
+			// @returns				{bool}
+			// @description			Checks whether a point in space is within this Rectangle, treating
+			//						this Shape as an unrounded Rectangle.
+			static containsPoint = function(_point)
+			{
+				return point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
+										  location.y2);
+			}
+			
 			// @argument			{int} device?
 			// @returns				{bool}
 			// @description			Check if the system cursor is over this Shape, treating this Shape

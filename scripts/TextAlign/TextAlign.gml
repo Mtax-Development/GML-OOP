@@ -53,42 +53,6 @@ function TextAlign() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Set the origin of horizontal alignment to the left of the text.
-			static setXLeft = function()
-			{
-				x = fa_left;
-			}
-			
-			// @description			Set the origin of horizontal alignment to the center of the text.
-			static setXCenter = function()
-			{
-				x = fa_center;
-			}
-			
-			// @description			Set the origin of horizontal alignment to the right of the text.
-			static setXRight = function()
-			{
-				x = fa_right;
-			}
-			
-			// @description			Set the origin of vertical alignment to the top of the text.
-			static setYTop = function()
-			{
-				y = fa_top;
-			}
-			
-			// @description			Set the origin of vertical alignment to the middle of the text.
-			static setYMiddle = function()
-			{
-				y = fa_middle;
-			}
-			
-			// @description			Set the origin of vertical alignment to the bottom of the text.
-			static setYBottom = function()
-			{
-				y = fa_bottom;
-			}
-			
 			// @description			Mirror the non-centered x and y values of the alignment.
 			static mirror = function()
 			{
@@ -123,6 +87,42 @@ function TextAlign() constructor
 					case fa_top: y = fa_bottom; break;
 					case fa_bottom: y = fa_top; break;
 				}
+			}
+			
+			// @description			Set the origin of horizontal alignment to the left of the text.
+			static setXLeft = function()
+			{
+				x = fa_left;
+			}
+			
+			// @description			Set the origin of horizontal alignment to the center of the text.
+			static setXCenter = function()
+			{
+				x = fa_center;
+			}
+			
+			// @description			Set the origin of horizontal alignment to the right of the text.
+			static setXRight = function()
+			{
+				x = fa_right;
+			}
+			
+			// @description			Set the origin of vertical alignment to the top of the text.
+			static setYTop = function()
+			{
+				y = fa_top;
+			}
+			
+			// @description			Set the origin of vertical alignment to the middle of the text.
+			static setYMiddle = function()
+			{
+				y = fa_middle;
+			}
+			
+			// @description			Set the origin of vertical alignment to the bottom of the text.
+			static setYBottom = function()
+			{
+				y = fa_bottom;
 			}
 			
 		#endregion

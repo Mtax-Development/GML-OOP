@@ -46,6 +46,152 @@ function StringParser() constructor
 		#region <Getters>
 			
 			// @argument			{int} position
+			// @argument			{char|char[]} other
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if the characer at the specified position is the same
+			//						as the specified char or is contained in an array of them.
+			static charEquals = function(_position, _other)
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				
+				if ((_string_length <= 0) or (_position > _string_length))
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "charEquals";
+					var _errorText = ("Attempted to compare a character outside string bounds:\n" + 
+									  "Self: " + "{" + string(_other) + "}" + "\n" +
+									  "Position: " + "{" + string(_position) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+				else
+				{
+					var _char = string_char_at(_string, _position);
+					
+					if (is_array(_other))
+					{
+						var _i = 0;
+						repeat (array_length(_other))
+						{
+							if (_char == _other[_i])
+							{
+								return true;
+							}
+							
+							++_i;
+						}
+						
+						return false;
+					}
+					else
+					{
+						return (_char == _other);
+					}
+				}
+			}
+			
+			// @argument			{int} position
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if the character at the specified position in the string
+			//						has the whitespace property.
+			static charIsWhitespace = function(_position)
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				
+				if ((_string_length <= 0) or (_position > _string_length))
+				{
+					return undefined;
+				}
+				
+				var _char = string_char_at(_string, _position);
+				
+				var _whitespaceChars = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
+										"\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
+										"\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
+										"\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
+										"\u3000"];
+				
+				var _i = 0;
+				repeat (array_length(_whitespaceChars))
+				{
+					if ((_whitespaceChars[_i] == _char))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
+			// @argument			{string} separator
+			// @returns				{string[]|string|StringParser[]|StringParser}
+			// @description			Create multiple strings divided by the specified separator and
+			//						return them in an array.
+			//						The results can be returned as {StringParser} if it was specified.
+			//						Returns the string in its original state is no operation was
+			//						performed or {self} if return was specified as parser.
+			static split = function(_separator, _returnParser)
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				var _separator_lenght = string_length(_separator);
+				var _separator_count = string_count(_separator, _string);
+				
+				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1)
+				and (_string_length > (_separator_lenght + 1)))
+				{
+					var _position_copy = 1;
+					var _result = [];
+					
+					var _i = 2;
+					var _loopCount = (_string_length + 1);
+					repeat (_loopCount)
+					{
+						if ((string_copy(_string, _i, _separator_lenght) == _separator) 
+						or (_i == _loopCount))
+						{
+							var _segment = string_copy(_string, _position_copy,
+													   (_i - _position_copy));
+							
+							if ((string_length(_segment) > 0) and (_segment != _separator))
+							{
+								_result[array_length(_result)] = string_replace_all(_segment,
+																					_separator, "");
+							}
+							
+							_i += _separator_lenght;
+							_position_copy = _i;
+						}
+						
+						++_i;
+					}
+					
+					if (_returnParser)
+					{
+						var _i = 0;
+						repeat (array_length(_result))
+						{
+							_result[_i] = new StringParser(_result[_i]);
+							
+							++_i;
+						}
+					}
+					
+					return _result;
+				}
+				else
+				{
+					return ((_returnParser) ? self : _string);
+				}
+			}
+			
+			// @argument			{int} position
 			// @returns				{int}
 			// @description			Return the raw byte value of a character from the string.
 			static getByte = function(_position)
@@ -225,170 +371,8 @@ function StringParser() constructor
 				return _result;
 			}
 			
-			// @argument			{int} position
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the character at the specified position in the string
-			//						has the whitespace property.
-			static charIsWhitespace = function(_position)
-			{
-				var _string = string(ID);
-				var _string_length = string_length(_string);
-				
-				if ((_string_length <= 0) or (_position > _string_length))
-				{
-					return undefined;
-				}
-				
-				var _char = string_char_at(_string, _position);
-				
-				var _whitespaceChars = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
-										"\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
-										"\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
-										"\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
-										"\u3000"];
-				
-				var _i = 0;
-				repeat (array_length(_whitespaceChars))
-				{
-					if ((_whitespaceChars[_i] == _char))
-					{
-						return true;
-					}
-					
-					++_i;
-				}
-				
-				return false;
-			}
-			
-			// @argument			{int} position
-			// @argument			{char|char[]} other
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the characer at the specified position is the same
-			//						as the specified char or is contained in an array of them.
-			static charEquals = function(_position, _other)
-			{
-				var _string = string(ID);
-				var _string_length = string_length(_string);
-				
-				if ((_string_length <= 0) or (_position > _string_length))
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "charEquals";
-					var _errorText = ("Attempted to compare a character outside string bounds:\n" + 
-									  "Self: " + "{" + string(_other) + "}" + "\n" +
-									  "Position: " + "{" + string(_position) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-				else
-				{
-					var _char = string_char_at(_string, _position);
-					
-					if (is_array(_other))
-					{
-						var _i = 0;
-						repeat (array_length(_other))
-						{
-							if (_char == _other[_i])
-							{
-								return true;
-							}
-							
-							++_i;
-						}
-						
-						return false;
-					}
-					else
-					{
-						return (_char == _other);
-					}
-				}
-			}
-			
-			// @argument			{string} separator
-			// @returns				{string[]|string|StringParser[]|StringParser}
-			// @description			Create multiple strings divided by the specified separator and
-			//						return them in an array.
-			//						The results can be returned as {StringParser} if it was specified.
-			//						Returns the string in its original state is no operation was
-			//						performed or {self} if return was specified as parser.
-			static split = function(_separator, _returnParser)
-			{
-				var _string = string(ID);
-				var _string_length = string_length(_string);
-				var _separator_lenght = string_length(_separator);
-				var _separator_count = string_count(_separator, _string);
-				
-				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1)
-				and (_string_length > (_separator_lenght + 1)))
-				{
-					var _position_copy = 1;
-					var _result = [];
-					
-					var _i = 2;
-					var _loopCount = (_string_length + 1);
-					repeat (_loopCount)
-					{
-						if ((string_copy(_string, _i, _separator_lenght) == _separator) 
-						or (_i == _loopCount))
-						{
-							var _segment = string_copy(_string, _position_copy,
-													   (_i - _position_copy));
-							
-							if ((string_length(_segment) > 0) and (_segment != _separator))
-							{
-								_result[array_length(_result)] = string_replace_all(_segment,
-																					_separator, "");
-							}
-							
-							_i += _separator_lenght;
-							_position_copy = _i;
-						}
-						
-						++_i;
-					}
-					
-					if (_returnParser)
-					{
-						var _i = 0;
-						repeat (array_length(_result))
-						{
-							_result[_i] = new StringParser(_result[_i]);
-							
-							++_i;
-						}
-					}
-					
-					return _result;
-				}
-				else
-				{
-					return ((_returnParser) ? self : _string);
-				}
-			}
-			
 		#endregion
 		#region <Setters>
-			
-			// @argument			{int} position
-			// @argument			{int} byte
-			// @returns				{string}
-			// @description			Replace the character at the specified position by other one,
-			//						specified with UTF-8 byte value.
-			static setByte = function(_position, _byte)
-			{
-				var _string = string(ID);
-				
-				_position = clamp(_position, 1, (string_length(_string)));
-				
-				ID = string_set_byte_at(_string, _position, _byte);
-				
-				return ID;
-			}
 			
 			// @argument			{int} position
 			// @argument			{int} number?
@@ -584,6 +568,22 @@ function StringParser() constructor
 					
 					++_i;
 				}
+				
+				return ID;
+			}
+			
+			// @argument			{int} position
+			// @argument			{int} byte
+			// @returns				{string}
+			// @description			Replace the character at the specified position by other one,
+			//						specified with UTF-8 byte value.
+			static setByte = function(_position, _byte)
+			{
+				var _string = string(ID);
+				
+				_position = clamp(_position, 1, (string_length(_string)));
+				
+				ID = string_set_byte_at(_string, _position, _byte);
 				
 				return ID;
 			}

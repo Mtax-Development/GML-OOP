@@ -145,6 +145,36 @@ function Vector4() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{Vector4} other
+			// @returns				{bool}
+			// @description			Check whether this and other Vector4 have the same values.
+			static equals = function(_other)
+			{
+				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
+						and (y2 == _other.y2));
+			}
+			
+			// @returns				{real}
+			// @description			Return the direction from the first point towards the second.
+			static getAngle1to2 = function()
+			{
+				return point_direction(x1, y1, x2, y2);
+			}
+			
+			// @returns				{real}
+			// @description			Return the direction from the second point towards the first.
+			static getAngle2to1 = function()
+			{
+				return point_direction(x2, y2, x1, y1);
+			}
+			
+			// @returns				{real}
+			// @description			Return the shortest distance between two points.
+			static getDistance = function()
+			{
+				return point_distance(x1, y1, x2, y2);
+			}
+			
 			// @returns				{Vector2}
 			// @description			Return the middle point of this Vector4.
 			static getMiddle = function()
@@ -164,36 +194,6 @@ function Vector4() constructor
 			static getMiddleY = function()
 			{
 				return lerp(y1, y2, 0.5);
-			}
-			
-			// @returns				{real}
-			// @description			Return the shortest distance between two points.
-			static getDistance = function()
-			{
-				return point_distance(x1, y1, x2, y2);
-			}
-			
-			// @returns				{real}
-			// @description			Return the direction from the first point towards the second.
-			static getAngle1to2 = function()
-			{
-				return point_direction(x1, y1, x2, y2);
-			}
-			
-			// @returns				{real}
-			// @description			Return the direction from the second point towards the first.
-			static getAngle2to1 = function()
-			{
-				return point_direction(x2, y2, x1, y1);
-			}
-			
-			// @argument			{Vector4} other
-			// @returns				{bool}
-			// @description			Check whether this and other Vector4 have the same values.
-			static equals = function(_other)
-			{
-				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
-						and (y2 == _other.y2));
 			}
 			
 			// @argument			{real} x

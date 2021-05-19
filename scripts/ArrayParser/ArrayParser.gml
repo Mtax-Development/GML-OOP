@@ -154,27 +154,6 @@ function ArrayParser() constructor
 				}
 			}
 			
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of elements in the array.
-			static getSize = function()
-			{
-				if (is_array(ID))
-				{
-					return array_length(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read a property of an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
 			// @argument			{any[]|ArrayParser} other
 			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this and other array have the same content.
@@ -231,6 +210,27 @@ function ArrayParser() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "getValue";
 					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of elements in the array.
+			static getSize = function()
+			{
+				if (is_array(ID))
+				{
+					return array_length(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read a property of an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					

@@ -49,46 +49,6 @@ function Range() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{real} number
-			// @returns				{bool}
-			// @description			Check whether a number is in or equal to borders of this Range.
-			static isBetween = function(_value)
-			{
-				return (_value == clamp(_value, minimum, maximum));
-			}
-			
-			// @argument			{real} number
-			// @returns				{bool}
-			// @description			Check whether a number is equal to the boundaries of this Range.
-			static isBoundary = function(_value)
-			{
-				return ((_value == minimum) or (_value == maximum));
-			}
-			
-			// @returns				{real}
-			// @description			Return the middle point of this Range.
-			static middle = function()
-			{
-				return lerp(minimum, maximum, 0.5);
-			}
-			
-		#endregion
-		#region <Execution>
-		
-			// @returns				{real}
-			// @description			Return a random real number from this Range.
-			static randomReal = function()
-			{
-				return random_range(minimum, maximum);
-			}
-			
-			// @returns				{int}
-			// @description			Return a random integer number from this Range.
-			static randomInt = function()
-			{
-				return irandom_range(minimum, maximum);
-			}
-			
 			// @argument			{real} value
 			// @returns				{real}
 			// @description			Clamp the specified number to boundaries of this Range.
@@ -104,6 +64,43 @@ function Range() constructor
 			static interpolate = function(_value)
 			{
 				return lerp(minimum, maximum, _value);
+			}
+			
+			// @returns				{real}
+			// @description			Return a random real number from this Range.
+			static randomReal = function()
+			{
+				return random_range(minimum, maximum);
+			}
+			
+			// @returns				{int}
+			// @description			Return a random integer number from this Range.
+			static randomInt = function()
+			{
+				return irandom_range(minimum, maximum);
+			}
+			
+			// @returns				{real}
+			// @description			Return the middle point of this Range.
+			static getMiddle = function()
+			{
+				return lerp(minimum, maximum, 0.5);
+			}
+			
+			// @argument			{real} number
+			// @returns				{bool}
+			// @description			Check whether a number is in or equal to borders of this Range.
+			static isBetween = function(_value)
+			{
+				return (_value == clamp(_value, minimum, maximum));
+			}
+			
+			// @argument			{real} number
+			// @returns				{bool}
+			// @description			Check whether a number is equal to the boundaries of this Range.
+			static isBoundary = function(_value)
+			{
+				return ((_value == minimum) or (_value == maximum));
 			}
 			
 		#endregion

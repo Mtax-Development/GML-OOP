@@ -138,7 +138,7 @@ function List() constructor
 		#region <Getters>
 			
 			// @argument			{any} value...
-			// @returns				{bool}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this Data Structure contains at least one of the
 			//						specified values.
 			static contains = function()
@@ -177,24 +177,26 @@ function List() constructor
 				}
 			}
 			
-			// @returns				{int}
-			// @description			Return the number of values in this Data Structure.
-			static getSize = function()
+			// @argument			{int} position
+			// @returns				{any|undefined}
+			// @description			Return the value at the specified position.
+			//						Returns {undefined} if this List or the value does not exists.
+			static getValue = function(_position)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					return ds_list_size(ID);
+					return ds_list_find_value(ID, _position);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
+					var _methodName = "getValue";
 					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return 0;
+					return undefined;
 				}
 			}
 			
@@ -303,26 +305,24 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{int} position
-			// @returns				{any|undefined}
-			// @description			Return the value at the specified position.
-			//						Returns {undefined} if this List or the value does not exists.
-			static getValue = function(_position)
+			// @returns				{int}
+			// @description			Return the number of values in this Data Structure.
+			static getSize = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					return ds_list_find_value(ID, _position);
+					return ds_list_size(ID);
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getValue";
+					var _methodName = "getSize";
 					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return 0;
 				}
 			}
 			
@@ -529,24 +529,6 @@ function List() constructor
 				}
 			}
 			
-			// @description			Randomize the position of all values in the List.
-			static shuffle = function()
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
-				{
-					ds_list_shuffle(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "shuffle";
-					var _errorText = ("Attempted to shuffle an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
 			// @argument			{bool} order_ascending
 			// @description			Sort all values in the List in ascending or descending order.
 			//						Numbers will be placed before the strings.
@@ -562,6 +544,24 @@ function List() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "sort";
 					var _errorText = ("Attempted to sort an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @description			Randomize the position of all values in the List.
+			static shuffle = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				{
+					ds_list_shuffle(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "shuffle";
+					var _errorText = ("Attempted to shuffle an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}

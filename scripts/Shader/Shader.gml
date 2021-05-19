@@ -57,13 +57,6 @@ function Shader() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{bool}
-			// @description			Check whether this Shader is the currently set one.
-			static isActive = function()
-			{
-				return ((compiled) ? (shader_current() == ID) : false);
-			}
-			
 			// @argument			{string} uniform
 			// @returns				{int} | On error: {undefined}
 			// @description			Get a sampler index of a uniform from this Shader
@@ -94,6 +87,13 @@ function Shader() constructor
 					
 					return undefined;
 				}
+			}
+			
+			// @returns				{bool}
+			// @description			Check whether this Shader is the currently set one.
+			static isActive = function()
+			{
+				return ((compiled) ? (shader_current() == ID) : false);
 			}
 			
 		#endregion

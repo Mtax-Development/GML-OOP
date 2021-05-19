@@ -131,7 +131,7 @@ function PriorityQueue() constructor
 		#region <Getters>
 			
 			// @argument			{any} value...
-			// @returns				{bool}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this Data Structure contains at least one of the
 			//						specified values.
 			static contains = function()
@@ -177,27 +177,6 @@ function PriorityQueue() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
-				}
-			}
-			
-			// @returns				{int}
-			// @description			Return the number of values in this Data Structure.
-			static getSize = function()
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
-				{
-					return ds_priority_size(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
 				}
 			}
 			
@@ -268,6 +247,27 @@ function PriorityQueue() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
+				}
+			}
+			
+			// @returns				{int}
+			// @description			Return the number of values in this Data Structure.
+			static getSize = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					return ds_priority_size(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
 				}
 			}
 			

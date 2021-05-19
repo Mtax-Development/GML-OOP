@@ -174,7 +174,7 @@ function Grid() constructor
 		#region <Getters>
 			
 			// @argument			{any} value...
-			// @returns				{bool}
+			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this Data Structure contains at least one of the
 			//						specified values.
 			static contains = function()
@@ -506,12 +506,13 @@ function Grid() constructor
 			}
 			
 			// @argument			{Vector4} location?
-			// @returns				{real} | On error: {undefined}
+			// @returns				{real|undefined}
 			// @description			Return the sum of numerical values found in cells within
 			//						the specified region of this Grid.
 			//						Strings containing only numbers will also be included. Other 
-			//						values will be ignored. If the region contains no values that can
-			//						be summed, {undefined} will be returned.
+			//						values will be ignored. If this Grid does not exist or the region
+			//						contains no values that can be summed, {undefined} will be
+			//						returned.
 			static getSum = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
@@ -541,12 +542,13 @@ function Grid() constructor
 			
 			// @argument			{Vector2} location
 			// @argument			{int} radius
-			// @returns				{real} | On error: {undefined}
+			// @returns				{real|undefined}
 			// @description			Return the sum of numerical values found in cells within
 			//						the specified disk of this Grid.
 			//						Strings containing only numbers will also be included. Other 
-			//						values will be ignored. If the disk contains no values that can
-			//						be summed, {undefined} will be returned.
+			//						values will be ignored. If this Grid does not exist or the disk
+			//						contains no values that can be summed, {undefined} will be
+			//						returned.
 			static getSumDisk = function(_location, _radius)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))

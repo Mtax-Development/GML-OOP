@@ -31,10 +31,10 @@ function Layer() constructor
 				visible = undefined;
 				instancesPaused = undefined;
 				
+				shader = undefined;
+				
 				function_drawBegin = undefined;
 				function_drawEnd = undefined;
-				
-				shader = undefined;
 				
 				instanceList = undefined;
 				spriteList = undefined;
@@ -73,6 +73,9 @@ function Layer() constructor
 						
 						instancesPaused = false;
 						
+						shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
+																		  : _other.shader);
+						
 						function_drawBegin = _other.function_drawBegin;
 						function_drawEnd = _other.function_drawEnd;
 						
@@ -85,9 +88,6 @@ function Layer() constructor
 						{
 							self.setFunctionDrawEnd(function_drawEnd);
 						}
-						
-						shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
-																		  : _other.shader);
 						
 						if (instanceof(shader) == "Shader")
 						{
@@ -316,27 +316,6 @@ function Layer() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{int[]}
-			// @description			Return the array of all internal element IDs held by this Layer.
-			static getElements = function()
-			{
-				if ((is_real(ID)) and (layer_exists(ID)))
-				{
-					return layer_get_all_elements(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getElements";
-					var _errorText = ("Attempted to get Elements of an invalid Layer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
-				}
-			}
-			
 			// @argument			{int:instance} instance
 			// @returns				{bool} | On error: {undefined}
 			// @description			Check whether the specified instance is bound to this Layer.
@@ -359,6 +338,26 @@ function Layer() constructor
 				}
 			}
 			
+			// @returns				{int[]}
+			// @description			Return the array of all internal element IDs held by this Layer.
+			static getElements = function()
+			{
+				if ((is_real(ID)) and (layer_exists(ID)))
+				{
+					return layer_get_all_elements(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getElements";
+					var _errorText = ("Attempted to get Elements of an invalid Layer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
 		#endregion
 		#region <Setters>
 			
@@ -452,6 +451,27 @@ function Layer() constructor
 				}
 			}
 			
+			// @argument			{Shader} shader
+			// @description			Set a Shader that will be applied to every Element of this Layer.
+			static setShader = function(_shader)
+			{
+				if ((is_real(ID)) and (layer_exists(ID)))
+				{
+					shader = _shader;
+					
+					layer_shader(ID, shader.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setShader";
+					var _errorText = ("Attempted to set a property of an invalid Layer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
 			// @argument			{function} function
 			// @description			Set a function that will be called during the Draw Begin of
 			//						this Layer.
@@ -490,27 +510,6 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setFunctionDrawEnd";
-					var _errorText = ("Attempted to set a property of an invalid Layer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{Shader} shader
-			// @description			Set a Shader that will be applied to every Element of this Layer.
-			static setShader = function(_shader)
-			{
-				if ((is_real(ID)) and (layer_exists(ID)))
-				{
-					shader = _shader;
-					
-					layer_shader(ID, shader.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setShader";
 					var _errorText = ("Attempted to set a property of an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -1335,82 +1334,6 @@ function Layer() constructor
 				#endregion
 				#region <<Setters>>
 					
-					// @argument			{bool} stretch
-					// @description			Set the scretch property of this Background Element.
-					static setStretch = function(_stretch)
-					{
-						if (self.isFunctional())
-						{
-							stretch = _stretch;
-							
-							layer_background_stretch(ID, _stretch);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setStretch";
-							var _errorText = ("Attempted to set properties on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
-					
-					// @argument			{bool} tiled_x?
-					// @argument			{bool} tiled_y?
-					// @description			Set the tiling properties of this Background Element for
-					//						horizontal and vertical tiling respectively.
-					static setTiled = function(_tiled_x, _tiled_y)
-					{
-						if (self.isFunctional())
-						{
-							if (_tiled_x != undefined) {tiled_x = _tiled_x;}
-							if (_tiled_y != undefined) {tiled_y = _tiled_y;}
-							
-							layer_background_htiled(ID, tiled_x);
-							layer_background_vtiled(ID, tiled_y);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setTiled";
-							var _errorText = ("Attempted to set properties on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
-					
-					// @argument			{bool} visible
-					// @description			Set the visibility property of this Background Element.
-					static setVisible = function(_visible)
-					{
-						if (self.isFunctional())
-						{
-							visible = _visible;
-							
-							layer_background_visible(ID, visible);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setVisible";
-							var _errorText = ("Attempted to set properties on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
-					
 					// @argument			{Sprite|int:-1} sprite?
 					// @argument			{Sprite} sprite
 					// @description			Set the Sprite of this Background Element. If it is not
@@ -1543,7 +1466,6 @@ function Layer() constructor
 						}
 					}
 					
-					
 					// @argument			{real} speed
 					// @description			Set the Sprite speed property of this Background Element.
 					static setSpeed = function(_speed)
@@ -1559,6 +1481,82 @@ function Layer() constructor
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
 							var _methodName = "setSpeed";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{bool} stretch
+					// @description			Set the scretch property of this Background Element.
+					static setStretch = function(_stretch)
+					{
+						if (self.isFunctional())
+						{
+							stretch = _stretch;
+							
+							layer_background_stretch(ID, _stretch);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setStretch";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{bool} tiled_x?
+					// @argument			{bool} tiled_y?
+					// @description			Set the tiling properties of this Background Element for
+					//						horizontal and vertical tiling respectively.
+					static setTiled = function(_tiled_x, _tiled_y)
+					{
+						if (self.isFunctional())
+						{
+							if (_tiled_x != undefined) {tiled_x = _tiled_x;}
+							if (_tiled_y != undefined) {tiled_y = _tiled_y;}
+							
+							layer_background_htiled(ID, tiled_x);
+							layer_background_vtiled(ID, tiled_y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setTiled";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{bool} visible
+					// @description			Set the visibility property of this Background Element.
+					static setVisible = function(_visible)
+					{
+						if (self.isFunctional())
+						{
+							visible = _visible;
+							
+							layer_background_visible(ID, visible);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setVisible";
 							var _errorText = ("Attempted to set properties on invalid Element or " +
 											  "Layer:\n" +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
@@ -1827,6 +1825,30 @@ function Layer() constructor
 				#endregion
 				#region <<Getters>>
 					
+					// @returns				{int} | On error: {undefined}
+					// @description			Return the current Sprite frame of this Tilemap.
+					static getFrame = function()
+					{
+						if (self.isFunctional())
+						{
+							return tilemap_get_frame(ID);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "getFrame";
+							var _errorText = ("Attempted to get a property of an invalid Element " +
+											  "or Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							return undefined;
+						}
+					}
+					
 					// @returns				{int} | On error: {int:-1}
 					// @description			Return the bit mask value for this Tilemap or 0 if there
 					//						is none.
@@ -1849,30 +1871,6 @@ function Layer() constructor
 																 _errorText);
 							
 							return -1;
-						}
-					}
-					
-					// @returns				{int} | On error: {undefined}
-					// @description			Return the current Sprite frame of this Tilemap.
-					static getFrame = function()
-					{
-						if (self.isFunctional())
-						{
-							return tilemap_get_frame(ID);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "getFrame";
-							var _errorText = ("Attempted to get a property of an invalid Element " +
-											  "or Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-							
-							return undefined;
 						}
 					}
 					
@@ -1961,6 +1959,80 @@ function Layer() constructor
 				#endregion
 				#region <<Setters>>
 					
+					// @argument			{int} mask
+					// @description			Set the tile bit mask for this Tilemap.
+					static setMask = function(_mask)
+					{
+						if (self.isFunctional())
+						{
+							tilemap_set_mask(ID, _mask);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setMap";
+							var _errorText = ("Attempted to set a property on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+							
+							return false;
+						}
+					}
+					
+					// @argument			{tileset} tileset
+					// @description			Change the Tileset used by this Tilemap.
+					static setTileset = function(_tileset)
+					{
+						if (self.isFunctional())
+						{
+							tileset = _tileset;
+							
+							tilemap_tileset(ID, tileset);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setTileset";
+							var _errorText = ("Attempted to set a property on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+					// @argument			{Vector2} size
+					// @description			Set the size of this Tilemap, which is the number of Tile
+					//						cells it will use.
+					static setSize = function(_size)
+					{
+						if (self.isFunctional())
+						{
+							size = _size;
+							
+							tilemap_set_width(ID, size.x);
+							tilemap_set_height(ID, size.y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setSize";
+							var _errorText = ("Attempted to set properties on invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
 					// @argument			{Vector2} location
 					// @argument			{Layer.TilemapElement.TileData|int:tiledata} tiledata?
 					// @returns				{bool}
@@ -2039,80 +2111,6 @@ function Layer() constructor
 																 _errorText);
 							
 							return false;
-						}
-					}
-					
-					// @argument			{int} mask
-					// @description			Set the tile bit mask for this Tilemap.
-					static setMask = function(_mask)
-					{
-						if (self.isFunctional())
-						{
-							tilemap_set_mask(ID, _mask);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setMap";
-							var _errorText = ("Attempted to set a property on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-							
-							return false;
-						}
-					}
-					
-					// @argument			{tileset} tileset
-					// @description			Change the Tileset used by this Tilemap.
-					static setTileset = function(_tileset)
-					{
-						if (self.isFunctional())
-						{
-							tileset = _tileset;
-							
-							tilemap_tileset(ID, tileset);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setTileset";
-							var _errorText = ("Attempted to set a property on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
-					
-					// @argument			{Vector2} size
-					// @description			Set the size of this Tilemap, which is the number of Tile
-					//						cells it will use.
-					static setSize = function(_size)
-					{
-						if (self.isFunctional())
-						{
-							size = _size;
-							
-							tilemap_set_width(ID, size.x);
-							tilemap_set_height(ID, size.y);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setSize";
-							var _errorText = ("Attempted to set properties on invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
 						}
 					}
 					
@@ -2743,6 +2741,29 @@ function Layer() constructor
 						}
 					}
 					
+					// @argument			{bool} newerOnTop
+					// @description			Set whether older Particles are drawn benath newer.
+					static setDrawOrder = function(_newerOnTop)
+					{
+						if ((is_real(ID)) and (part_system_exists(ID)))
+						{
+							drawOrder_newerOnTop = _newerOnTop;
+							
+							part_system_draw_order(ID, _newerOnTop);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "setDrawOrder";
+							var _errorText = ("Attempted to set a property of an invalid Particle " +
+											  "System:\n" +
+											  "{" + string(ID) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
 					// @argument			{bool} automaticUpdate
 					// @description			Set whether created Particles are executed without the
 					//						update call.
@@ -2790,32 +2811,33 @@ function Layer() constructor
 																 _errorText);
 						}
 					}
+			
+				#endregion
+				#region <<Execution>>
 					
-					// @argument			{bool} newerOnTop
-					// @description			Set whether older Particles are drawn benath newer.
-					static setDrawOrder = function(_newerOnTop)
+					// @argument			{ParticleType} particleType
+					// @returns				{ParticleSystem.ParticleEmitter} | On error: {noone}
+					// @description			Create a Particle Emitter in this Particle System.
+					static createEmitter = function(_particleType)
 					{
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
-							drawOrder_newerOnTop = _newerOnTop;
-							
-							part_system_draw_order(ID, _newerOnTop);
+							return new ParticleEmitter(_particleType);
 						}
 						else
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "setDrawOrder";
-							var _errorText = ("Attempted to set a property of an invalid Particle " +
+							var _methodName = "createEmitter";
+							var _errorText = ("Attempted to add Element to an invalid Particle " +
 											  "System:\n" +
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
+							
+							return noone;
 						}
 					}
-			
-				#endregion
-				#region <<Execution>>
 					
 					// @description			Render the Particles within this Particle System.
 					static render = function()
@@ -2852,30 +2874,6 @@ function Layer() constructor
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
-						}
-					}
-					
-					// @argument			{ParticleType} particleType
-					// @returns				{ParticleSystem.ParticleEmitter} | On error: {noone}
-					// @description			Create a Particle Emitter in this Particle System.
-					static createEmitter = function(_particleType)
-					{
-						if ((is_real(ID)) and (part_system_exists(ID)))
-						{
-							return new ParticleEmitter(_particleType);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "createEmitter";
-							var _errorText = ("Attempted to add Element to an invalid Particle " +
-											  "System:\n" +
-											  "{" + string(ID) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-							
-							return noone;
 						}
 					}
 					

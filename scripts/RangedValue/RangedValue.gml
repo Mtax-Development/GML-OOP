@@ -77,38 +77,6 @@ function RangedValue() constructor
 		#region <Setters>
 			
 			// @argument			{real} value
-			// @description			Set the value to specified number, clamped to the Range.
-			static set = function(_value)
-			{
-				value = clamp(_value, range.minimum, range.maximum);
-			}
-			
-			// @description			Set the value to the minimum boundary of the Range.
-			static setMinimum = function()
-			{
-				value = range.minimum;
-			}
-			
-			// @description			Set the value to the maximum boundary of the Range.
-			static setMaximum = function()
-			{
-				value = range.maximum;
-			}
-			
-			// @description			Set the value to the state it had upon constructor creation.
-			static setOriginal = function()
-			{
-				value = value_original;
-			}
-			
-			// @returns				{real}
-			// @description			Set the value the middle point of the Range.
-			static setMiddle = function()
-			{
-				value = lerp(range.minimum, range.maximum, 0.5);
-			}
-			
-			// @argument			{real} value
 			// @description			Add the specified number to the value.
 			static add = function(_value)
 			{
@@ -159,6 +127,38 @@ function RangedValue() constructor
 			{
 				value = clamp(lerp(range.minimum, range.maximum, _value),
 							  range.minimum, range.maximum);
+			}
+			
+			// @argument			{real} value
+			// @description			Set the value to specified number, clamped to the Range.
+			static set = function(_value)
+			{
+				value = clamp(_value, range.minimum, range.maximum);
+			}
+			
+			// @description			Set the value to the minimum boundary of the Range.
+			static setMinimum = function()
+			{
+				value = range.minimum;
+			}
+			
+			// @description			Set the value to the maximum boundary of the Range.
+			static setMaximum = function()
+			{
+				value = range.maximum;
+			}
+			
+			// @description			Set the value to the state it had upon constructor creation.
+			static setOriginal = function()
+			{
+				value = value_original;
+			}
+			
+			// @returns				{real}
+			// @description			Set the value the middle point of the Range.
+			static setMiddle = function()
+			{
+				value = lerp(range.minimum, range.maximum, 0.5);
 			}
 			
 		#endregion

@@ -102,7 +102,8 @@ function Buffer() constructor
 					{
 						if ((!is_real(ID)) or (!buffer_exists(ID)))
 						{
-							ID = buffer_create(buffer_get_size(_other.ID), buffer_get_type(_other.ID),
+							ID = buffer_create(buffer_get_size(_other.ID),
+											   buffer_get_type(_other.ID),
 											   buffer_get_alignment(_other.ID));
 						}
 						
@@ -185,27 +186,6 @@ function Buffer() constructor
 				}
 			}
 			
-			// @returns				{int}
-			// @description			Return the size of this Buffer in bytes.
-			static getSize = function()
-			{
-				if ((is_real(ID)) and (buffer_exists(ID)))
-				{
-					return buffer_get_size(ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
-				}
-			}
-			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the byte alignment of this Buffer.
 			static getAlignment = function()
@@ -248,18 +228,39 @@ function Buffer() constructor
 				}
 			}
 			
+			// @returns				{int}
+			// @description			Return the size of this Buffer in bytes.
+			static getSize = function()
+			{
+				if ((is_real(ID)) and (buffer_exists(ID)))
+				{
+					return buffer_get_size(ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getSize";
+					var _errorText = ("Attempted to read a property of an invalid Buffer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
+				}
+			}
+			
 		#endregion
 		#region <Setters>
 			
 			// @argument			{constant:buffer_seek_*} base
 			// @argument			{int} offset?
 			// @description			Set the seek position for this Buffer, which is the position at
-			//						which simple read and write operations are performed, after which 
-			//						that position is then advanced by the number of bytes affected.
-			//						To set that position, a base is used, which can be the start or 
-			//						end this Buffer or the position relative to the current one.
-			//						In addition to the base, a byte offset can be specified, which can
-			//						also be a negative number.
+			//						which simple read and write operations are performed, after
+			//						which that position is then advanced by the number of bytes
+			//						affected. To set that position, a base is used, which can be the
+			//						start or end this Buffer or the position relative to the current
+			//						one. In addition to the base, a byte offset can be specified,
+			//						which can also be a negative number.
 			static setSeekPosition = function(_base, _offset)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
@@ -403,33 +404,6 @@ function Buffer() constructor
 				}
 			}
 			
-			// @argument			{constant:buffer_[dataType]} type
-			// @argument			{int} offset?
-			// @returns				{bool|real|string} | On error: {undefined|int:0}
-			// @description			Get the value of the specified data type at the specified offset
-			//						from the start of this Buffer without interacting with the seek
-			//						position.
-			static getValue = function(_type, _offset)
-			{
-				if ((is_real(ID)) and (buffer_exists(ID)))
-				{
-					if (_offset == undefined) {_offset = 0;}
-					
-					return buffer_peek(ID, _offset, _type);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "peek";
-					var _errorText = ("Attempted to read an invalid Buffer: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
 			// @argument			{bool} replace?
 			// @argument			{int} size?
 			// @argument			{int} offset?
@@ -440,8 +414,8 @@ function Buffer() constructor
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
 			//						A compressed Buffer will be returned. If this Buffer was replaced
-			//						by it, self will be returned for this. Otherwise it will be a new,
-			//						separate Buffer.
+			//						by it, self will be returned for this. Otherwise it will be a
+			//						new, separate Buffer.
 			static compress = function(_replace, _size, _offset)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
@@ -537,6 +511,33 @@ function Buffer() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "decompress";
 					var _errorText = ("Attempted to compress an invalid Buffer: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{constant:buffer_[dataType]} type
+			// @argument			{int} offset?
+			// @returns				{bool|real|string} | On error: {undefined|int:0}
+			// @description			Get the value of the specified data type at the specified offset
+			//						from the start of this Buffer without interacting with the seek
+			//						position.
+			static getValue = function(_type, _offset)
+			{
+				if ((is_real(ID)) and (buffer_exists(ID)))
+				{
+					if (_offset == undefined) {_offset = 0;}
+					
+					return buffer_peek(ID, _offset, _type);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "peek";
+					var _errorText = ("Attempted to read an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -707,9 +708,10 @@ function Buffer() constructor
 			
 			// @argument			{string} string
 			// @argument			{int} offset?
-			// @description			Decode a string to which a Buffer was previously encoded into this
-			//						one.
-			//						A byte offset can be specified for where the operation will start.
+			// @description			Decode a string to which a Buffer was previously encoded into
+			//						this one.
+			//						A byte offset can be specified for where the operation
+			//						will start.
 			static fromEncodedString = function(_string, _offset)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
@@ -773,7 +775,8 @@ function Buffer() constructor
 			// @argument			{int} offset?
 			// @argument			{int} modulo?
 			// @description			Copy information from the specified Surface to this Buffer.
-			//						A byte offset can be specified for where the operation will start.
+			//						A byte offset can be specified for where the operation will
+			//						start.
 			//						For this operation, this Buffer should be of Grow type with
 			//						alignment of 1 byte.
 			static fromSurface = function(_surface, _offset)
@@ -870,7 +873,8 @@ function Buffer() constructor
 			// @returns				{int|undefined}
 			// @description			Recreate a Buffer from the specified file containing a previously
 			//						saved file and load it to this Buffer.
-			//						A byte offset can be specified for where the operation will start.
+			//						A byte offset can be specified for where the operation will
+			//						start.
 			//						If no offset is specified, this Buffer will be replaced with a
 			//						Buffer of Grow type and alignment of 1 byte.
 			//						An async size can be specified, in which case this operation will
@@ -954,8 +958,8 @@ function Buffer() constructor
 			//						a previously saved file and load it to this Buffer.
 			//						For both this Buffer and the file, a byte offset can be specified
 			//						forw here the operation will start and then continue until either
-			//						the specified size in bytes was affected or the end of this Buffer
-			//						is reached.
+			//						the specified size in bytes was affected or the end of this
+			//						Buffer is reached.
 			static fromFilePart = function(_path, _size, _offset, _file_offset)
 			{
 				if (file_exists(_path))

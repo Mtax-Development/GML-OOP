@@ -67,6 +67,18 @@ function Surface() constructor
 				}
 			}
 			
+			// @returns				{undefined}
+			// @description			Remove the internal information from the memory.
+			static destroy = function()
+			{
+				if ((is_real(ID)) and (surface_exists(ID)))
+				{
+					surface_free(ID);
+				}
+				
+				return undefined;
+			}
+			
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
 			// @description			Set the entire content of this Surface to the specified color.
@@ -152,28 +164,8 @@ function Surface() constructor
 				}
 			}
 			
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory.
-			static destroy = function()
-			{
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					surface_free(ID);
-				}
-				
-				return undefined;
-			}
-			
 		#endregion
 		#region <Getters>
-			
-			// @returns				{bool}
-			// @description			Check whether this Surface is the current draw target.
-			static isTarget = function()
-			{
-				return (((is_real(ID)) and (surface_exists(ID))) ? (surface_get_target() == ID)
-																 : false);
-			}
 			
 			// @argument			{Vector2} location
 			// @argument			{bool} getFull?
@@ -218,6 +210,14 @@ function Surface() constructor
 				}
 				
 				return surface_get_texture(ID);
+			}
+			
+			// @returns				{bool}
+			// @description			Check whether this Surface is the current draw target.
+			static isTarget = function()
+			{
+				return (((is_real(ID)) and (surface_exists(ID))) ? (surface_get_target() == ID)
+																 : false);
 			}
 			
 		#endregion

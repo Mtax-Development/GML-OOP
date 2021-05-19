@@ -297,6 +297,26 @@ function Sprite() constructor
 		#endregion
 		#region <Setters>
 			
+			// @argument			{struct:nineslice}
+			// @description			Set a Nine Slice struct that is bound to another or no other
+			//						Sprite to this Sprite.
+			static setNineslice = function(_nineslice)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					sprite_set_nineslice(ID, _nineslice);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setNineslice";
+					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
 			// @argument			{real} speed
 			// @argument			{constant:spritespeed_*} type?
 			// @description			Set the animation speed of this Sprite for every object instance.
@@ -316,26 +336,6 @@ function Sprite() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "setSpeed";
-					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{struct:nineslice}
-			// @description			Set a Nine Slice struct that is bound to another or no other
-			//						Sprite to this Sprite.
-			static setNineslice = function(_nineslice)
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					sprite_set_nineslice(ID, _nineslice);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setNineslice";
 					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);

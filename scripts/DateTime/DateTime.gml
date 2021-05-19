@@ -160,6 +160,249 @@ function DateTime() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{DateTime} other
+			// @returns				{int} | On error: {undefined}
+			// @description			Compare this DateTime with an other one and check which is first.
+			//						Returns -1 if this date and time is earlier, 0 if even, 1 if
+			//						later.
+			static compareDateTime = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_compare_datetime(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "compareDateTime";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{int} | On error: {undefined}
+			// @description			Compare the date components of this DateTime and an other one and
+			//						check which is first. Returns -1 if this date is earlier, 0 if
+			//						even, 1 if later.
+			static compareDate = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_compare_date(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "compareDate";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{int} | On error: {undefined}
+			// @description			Compare the time components of this DateTimes and an other one
+			//						and check which is first. Returns -1 if this time is earlier, 0
+			//						if even, 1 if later.
+			static compareTime = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_compare_time(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "compareTime";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of years between date components of this DateTime
+			//						and an other one. Incomplete years are returned as a fraction.
+			static spanOfYears = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_year_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfYears";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of months between date components of this DateTime
+			//						and an other one. Incomplete months are returned as a fraction.
+			static spanOfMonths = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_month_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfMonths";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of weeks between date components of this DateTime
+			//						and an other one. Incomplete weeks are returned as a fraction.
+			static spanOfWeeks = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_week_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfWeeks";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of days between date components of this DateTime
+			//						and an other one. Incomplete days are returned as a fraction.
+			static spanOfDays = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_day_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfDays";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of hours between time components of this DateTime
+			//						and an other one. Incomplete hours are returned as a fraction.
+			static spanOfHours = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_hour_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfHours";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{real} | On error: {undefined}
+			// @description			Return number of minutes between time components of this DateTime
+			//						and an other one. Incomplete minutes are returned as a fraction.
+			static spanOfMinutes = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_minute_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfMinutes";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{DateTime} other
+			// @returns				{int} | On error: {undefined}
+			// @description			Return number of seconds between time components of this DateTime
+			//						and an other one.
+			static spanOfSeconds = function(_other)
+			{
+				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
+				{
+					return date_second_span(ID, _other.ID);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "spanOfSeconds";
+					var _errorText = ("Attempted to compare invalid dates:\n" +
+									  "Self: " + "{" + string(self) + "}" + "\n" +
+									  "Other: " + "{" + string(_other) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Get the date component of this DateTime.
 			static getDate = function()
@@ -417,286 +660,8 @@ function DateTime() constructor
 				}
 			}
 			
-			// @argument			{DateTime} other
-			// @returns				{int} | On error: {undefined}
-			// @description			Compare this DateTime with an other one and check which is first.
-			//						Returns -1 if this date and time is earlier, 0 if even, 1 if
-			//						later.
-			static compareDateTime = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_compare_datetime(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "compareDateTime";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{int} | On error: {undefined}
-			// @description			Compare the date components of this DateTime and an other one and
-			//						check which is first. Returns -1 if this date is earlier, 0 if
-			//						even, 1 if later.
-			static compareDate = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_compare_date(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "compareDate";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{int} | On error: {undefined}
-			// @description			Compare the time components of this DateTimes and an other one
-			//						and check which is first. Returns -1 if this time is earlier, 0
-			//						if even, 1 if later.
-			static compareTime = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_compare_time(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "compareTime";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of years between date components of this DateTime
-			//						and an other one. Incomplete years are returned as a fraction.
-			static spanOfYears = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_year_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfYears";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of months between date components of this DateTime
-			//						and an other one. Incomplete months are returned as a fraction.
-			static spanOfMonths = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_month_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfMonths";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of weeks between date components of this DateTime
-			//						and an other one. Incomplete weeks are returned as a fraction.
-			static spanOfWeeks = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_week_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfWeeks";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of days between date components of this DateTime
-			//						and an other one. Incomplete days are returned as a fraction.
-			static spanOfDays = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_day_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfDays";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of hours between time components of this DateTime
-			//						and an other one. Incomplete hours are returned as a fraction.
-			static spanOfHours = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_hour_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfHours";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{real} | On error: {undefined}
-			// @description			Return number of minutes between time components of this DateTime
-			//						and an other one. Incomplete minutes are returned as a fraction.
-			static spanOfMinutes = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_minute_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfMinutes";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{DateTime} other
-			// @returns				{int} | On error: {undefined}
-			// @description			Return number of seconds between time components of this DateTime
-			//						and an other one.
-			static spanOfSeconds = function(_other)
-			{
-				if ((is_real(ID)) and (instanceof(_other) == "DateTime") and (is_real(_other.ID)))
-				{
-					return date_second_span(ID, _other.ID);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "spanOfSeconds";
-					var _errorText = ("Attempted to compare invalid dates:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
 		#endregion
 		#region <Setters>
-			
-			// @description			Set this DateTime to the current of the system using the
-			//						set timezone.
-			static setCurrent = function()
-			{
-				ID = date_current_datetime();
-				
-				year = date_get_year(ID);
-				month = date_get_month(ID);
-				week = date_get_week(ID);
-				day = date_get_day(ID);
-				hour = date_get_hour(ID);
-				minute = date_get_minute(ID);
-				second = date_get_second(ID);
-			}
-			
-			// @argument			{int} year
-			// @argument			{int} month
-			// @argument			{int} day
-			// @argument			{int} hour
-			// @argument			{int} minute
-			// @argument			{int} second
-			// @description			Set this DateTime to a newly created one.
-			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
-			{
-				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
-				
-				year = date_get_year(ID);
-				month = date_get_month(ID);
-				week = date_get_week(ID);
-				day = date_get_day(ID);
-				hour = date_get_hour(ID);
-				minute = date_get_minute(ID);
-				second = date_get_second(ID);
-			}
 			
 			// @argument			{int} years
 			// @argument			{int} months
@@ -922,6 +887,41 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+			}
+			
+			// @description			Set this DateTime to the current of the system using the
+			//						set timezone.
+			static setCurrent = function()
+			{
+				ID = date_current_datetime();
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
+			}
+			
+			// @argument			{int} year
+			// @argument			{int} month
+			// @argument			{int} day
+			// @argument			{int} hour
+			// @argument			{int} minute
+			// @argument			{int} second
+			// @description			Set this DateTime to a newly created one.
+			static setDateTime = function(_year, _month, _day, _hour, _minute, _second)
+			{
+				ID = date_create_datetime(_year, _month, _day, _hour, _minute, _second);
+				
+				year = date_get_year(ID);
+				month = date_get_month(ID);
+				week = date_get_week(ID);
+				day = date_get_day(ID);
+				hour = date_get_hour(ID);
+				minute = date_get_minute(ID);
+				second = date_get_second(ID);
 			}
 			
 		#endregion
