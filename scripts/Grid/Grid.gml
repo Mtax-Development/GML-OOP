@@ -210,6 +210,79 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{Vector4} location
+			// @argument			{any} value...
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if this Data Structure contains at least one of the
+			//						specified values in the specified region.
+			static containsRegion = function(_location)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _i = 1;
+					repeat ((argument_count - 1))
+					{
+						if (ds_grid_value_exists(ID, _location.x1, _location.y1, _location.x2,
+												 _location.y2, argument[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
+					
+					return false;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "containsRegion";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{Vector2} location
+			// @argument			{int} radius
+			// @argument			{any} value...
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if this Data Structure contains at least one of the
+			//						specified values in the specified disk.
+			static containsDisk = function(_location, _radius)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _i = 2;
+					repeat ((argument_count - 2))
+					{
+						if (ds_grid_value_disk_exists(ID, _location.x, _location.y, _radius,
+													  argument[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
+					
+					return false;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "containsDisk";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{Vector2} location
 			// @returns				{any|undefined}
 			// @description			Return the value of cell at the specified position in this Grid.
@@ -492,61 +565,6 @@ function Grid() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return undefined;
-				}
-			}
-			
-			// @argument			{any} value
-			// @argument			{Vector4} location?
-			// @returns				{bool}
-			// @description			Check if the specified value exists in the specified region of 
-			//						this Grid.
-			static valueExists = function(_value, _location)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					if (_location == undefined)
-					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
-					}
-					
-					return ds_grid_value_exists(ID, _location.x1, _location.y1, _location.x2,
-												_location.y2, _value);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "valueExists";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return false;
-				}
-			}
-			
-			// @argument			{any} value
-			// @argument			{Vector2} location
-			// @argument			{int} radius
-			// @returns				{bool}
-			// @description			Check if the specified value exists in the specified disk of 
-			//						this Grid.
-			static valueExistsDisk = function(_value, _location, _radius)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					return ds_grid_value_disk_exists(ID, _location.x, _location.y, _radius, _value);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "valueExistsDisk";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return false;
 				}
 			}
 			
