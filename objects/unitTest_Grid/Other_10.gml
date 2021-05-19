@@ -154,20 +154,54 @@
 	constructor[1].destroy();
 	
 #endregion
-#region [Test: Method: contains()]
+#region [Test: Methods: contains() / containsRegion() / getValueLocation()]
 	
-	var _base = new Vector2(3, 2);
-	var _value = [3, 4];
+	var _base = new Vector2(4);
+	var _element = [new Vector2(0),  new Vector4(new Vector2(0), _base), new Vector4(1, 2)];
+	var _value = [99, 88];
 	
 	constructor = new Grid(_base);
-	constructor.clear(_value[0]);
+	constructor.set(_value[0], _element[0]);
 	
-	var _result = [constructor.contains(_value[0]), constructor.contains(_value[1])];
-	var _expectedValue = [true, false];
+	var _result = [constructor.contains(_value[0]),
+				   constructor.contains(_value[1]),
+				   constructor.containsRegion(_element[1], _value[0]),
+				   constructor.containsRegion(_element[2], _value[0]),
+				   constructor.getValueLocation(_value[0]),
+				   constructor.getValueLocation(_value[0], _element[2])];
+	var _expectedValue = [true, false, true, false, _element[0], undefined];
 	
-	unitTest.assert_equal("Method: contains()",
+	unitTest.assert_equal("Methods: contains() / containsRegion() / getValueLocation()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Methods: containsDisk() / getValueLocationDisk()]
+	
+	var _base = new Vector2(3);
+	var _element = [[new Vector2(1), new Vector2(2)], [1]];
+	var _value = [11.11, 11];
+	
+	constructor = new Grid(_base);
+	constructor.set(_value[0], _element[0][0]);
+	
+	var _result = [constructor.containsDisk(_element[0][0], _element[1][0], _value[0]),
+				   constructor.containsDisk(_element[0][1], _element[1][0], _value[1]),
+				   constructor.getValueLocationDisk(_value[0], _element[0][0], _element[1][0]),
+				   constructor.getValueLocationDisk(_value[1], _element[0][1], _element[1][0])];
+	var _expectedValue = [true, false, _element[0][0], undefined];
+	
+	unitTest.assert_equal("Methods: containsDisk() / getValueLocationDisk()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 	constructor.destroy();
 	
@@ -307,55 +341,6 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Methods: valueExists() / getValueLocation()]
-	
-	var _base = new Vector2(4);
-	var _element = [new Vector2(0), new Vector4(1, 2)];
-	var _value = [99, 88];
-	
-	constructor = new Grid(_base);
-	constructor.set(_value[0], _element[0]);
-	
-	var _result = [constructor.valueExists(_value[0]), constructor.valueExists(_value[1]),
-				   constructor.valueExists(_value[0], _element[1]),
-				   constructor.getValueLocation(_value[0]),
-				   constructor.getValueLocation(_value[0], _element[1])];
-	var _expectedValue = [true, false, false, _element[0], undefined];
-	
-	unitTest.assert_equal("Methods: valueExists() / getValueLocation()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3],
-						  _result[4], _expectedValue[4]);
-	
-	constructor.destroy();
-	
-#endregion
-#region [Test: Methods: valueExistsDisk() / getValueLocationDisk()]
-	
-	var _base = new Vector2(3);
-	var _element = [[new Vector2(1), new Vector2(2)], [1]];
-	var _value = [11.11, 11];
-	
-	constructor = new Grid(_base);
-	constructor.set(_value[0], _element[0][0]);
-	
-	var _result = [constructor.valueExistsDisk(_value[0], _element[0][0], _element[1][0]),
-				   constructor.valueExistsDisk(_value[1], _element[0][1], _element[1][0]),
-				   constructor.getValueLocationDisk(_value[0], _element[0][0], _element[1][0]),
-				   constructor.getValueLocationDisk(_value[1], _element[0][1], _element[1][0])];
-	var _expectedValue = [true, false, _element[0][0], undefined];
-	
-	unitTest.assert_equal("Methods: valueExistsDisk() / getValueLocationDisk()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3]);
-	
-	constructor.destroy();
-	
-#endregion
 #region [Test: Method: setSize(size reduction)]
 	
 	var _base = new Vector2(30, 25);
@@ -366,7 +351,7 @@
 	constructor.set(_value, _element[1])
 	constructor.setSize(_element[0]);
 	
-	var _result = [constructor.size, constructor.valueExists(_value)];
+	var _result = [constructor.size, constructor.contains(_value)];
 	var _expectedValue = [_element[0], true];
 	
 	unitTest.assert_equal("Method: setSize(size reduction)",
@@ -386,8 +371,8 @@
 	constructor.clear(_value);
 	constructor.setSize(_element);
 	
-	var _result = [constructor.size, constructor.valueExists(_value),
-				   constructor.valueExists(0)];
+	var _result = [constructor.size, constructor.contains(_value),
+				   constructor.contains(0)];
 	
 	var _expectedValue = [_element, true, true];
 	
@@ -408,7 +393,7 @@
 	constructor.clear(_value);
 	constructor.setSize(_base);
 	
-	var _result = [constructor.size, constructor.valueExists(_value)];
+	var _result = [constructor.size, constructor.contains(_value)];
 	
 	var _expectedValue = [_base, true];
 	
@@ -439,7 +424,7 @@
 		}
 	);
 	
-	var _result = [constructor.valueExists(-_value), constructor.valueExists(_value)];
+	var _result = [constructor.contains(-_value), constructor.contains(_value)];
 	var _expectedValue = [true, false];
 	
 	unitTest.assert_equal("Method: forEach()",
