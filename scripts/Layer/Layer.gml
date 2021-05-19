@@ -2688,6 +2688,56 @@ function Layer() constructor
 						}
 					}
 					
+					// @argument			{Layer|int:layer|string:layer} other
+					// @description			Move this Element to another Layer.
+					static changeParent = function(_other)
+					{
+						if (self.isFunctional())
+						{
+							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
+							{
+								parent.particleSystemList.removeValue(self);
+								parent = _other;
+								parent.particleSystemList.add(self);
+									
+								layer_element_move(ID, parent.ID);
+							}
+							else if (((is_real(_other)) or (is_string(_other)))
+							and (layer_exists(_other)))
+							{
+								parent.particleSystemList.removeValue(self);
+								parent = undefined;
+									
+								layer_element_move(ID, _other);
+							}
+							else
+							{
+								var _errorReport = new ErrorReport();
+								var _callstack = debug_get_callstack();
+								var _methodName = "changeParent";
+								var _errorText = ("Attempted a parent change to an invalid Layer:" +
+												  "\n" +
+												  "Self: " + "{" + string(self) + "}" + "\n" +
+												  "Parent: " + "{" + string(parent) + "}" + "\n" +
+												  "Other: " + "{" + string(_other) + "}");
+								_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																	 _errorText);
+							}
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "changeParent";
+							var _errorText = ("Attempted a parent change on invalid Element or " +
+											  "invalid Parent:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
 				#endregion
 				#region <<Getters>>
 					
