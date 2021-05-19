@@ -248,14 +248,6 @@ function StringParser() constructor
 				return string_count(string(_substring), string(ID));
 			}
 			
-			// @returns				{int}
-			// @description			Return the number of characters in the string after parsing
-			//						escape characters.
-			static getSize = function()
-			{
-				return string_length(string(ID));
-			}
-			
 			// @returns				{string}
 			// @description			Return a version of the string containing only its letters from
 			//						the English alphabet.
@@ -308,6 +300,14 @@ function StringParser() constructor
 				}
 				
 				return ((_result > 0) ? _result : undefined);
+			}
+			
+			// @returns				{int}
+			// @description			Return the number of characters in the string after parsing
+			//						escape characters.
+			static getSize = function()
+			{
+				return string_length(string(ID));
 			}
 			
 			// @argument			{Font|int:font} font?

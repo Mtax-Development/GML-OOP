@@ -60,17 +60,17 @@ function RangedValue() constructor
 		#region <Getters>
 			
 			// @returns				{bool}
-			// @description			Check if the value is equal to the boundaries of the Range.
-			static isBoundary = function()
-			{
-				return ((value == range.minimum) or (value == range.maximum));
-			}
-			
-			// @returns				{bool}
 			// @description			Check if the value is equal to the value of another Ranged Value.
 			static equals = function(_other)
 			{
 				return (value == _other.value);
+			}
+			
+			// @returns				{bool}
+			// @description			Check if the value is equal to the boundaries of the Range.
+			static isBoundary = function()
+			{
+				return ((value == range.minimum) or (value == range.maximum));
 			}
 			
 		#endregion

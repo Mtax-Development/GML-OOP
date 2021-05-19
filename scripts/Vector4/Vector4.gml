@@ -154,6 +154,32 @@ function Vector4() constructor
 						and (y2 == _other.y2));
 			}
 			
+			// @argument			{real} x
+			// @argument			{real} y
+			// @returns				{Vector2}
+			// @description			Return the point at specified respective precentages within the
+			//						x and y values.
+			static interpolate = function(_x, _y)
+			{
+				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the x values.
+			static interpolateX = function(_value)
+			{
+				return lerp(x1, x2, _value);
+			}
+			
+			// @argument			{value}
+			// @returns				{real}
+			// @description			Return the point at specified precentage within the y values.
+			static interpolateY = function(_value)
+			{
+				return lerp(y1, y2, _value);
+			}
+			
 			// @returns				{real}
 			// @description			Return the direction from the first point towards the second.
 			static getAngle1to2 = function()
@@ -194,32 +220,6 @@ function Vector4() constructor
 			static getMiddleY = function()
 			{
 				return lerp(y1, y2, 0.5);
-			}
-			
-			// @argument			{real} x
-			// @argument			{real} y
-			// @returns				{Vector2}
-			// @description			Return the point at specified respective precentages within the
-			//						x and y values.
-			static interpolate = function(_x, _y)
-			{
-				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
-			}
-			
-			// @argument			{value}
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the x values.
-			static interpolateX = function(_value)
-			{
-				return lerp(x1, x2, _value);
-			}
-			
-			// @argument			{value}
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the y values.
-			static interpolateY = function(_value)
-			{
-				return lerp(y1, y2, _value);
 			}
 			
 			// @argument			{Vector2} location
