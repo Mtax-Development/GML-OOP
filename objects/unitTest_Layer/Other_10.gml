@@ -1637,6 +1637,34 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy(true);
 	
 #endregion
+#region [Test: ParticleSystem - Method: changeParent()]
+	
+	var _base = 31;
+	
+	constructor = [new Layer(_base), new Layer(_base)];
+	
+	with (constructor[0])
+	{
+		var _element = false;
+		
+		constructor = new ParticleSystem(_element);
+		constructor.changeParent(other.constructor[1]);
+		
+		var _result = [other.constructor[0].particleSystemList.getSize(),
+					   other.constructor[1].particleSystemList.getValue(0),
+					   constructor.parent];
+		var _expectedValue = [0, constructor, other.constructor[1]];
+		
+		other.unitTest.assert_equal("ParticleSystem - Method: changeParent()",
+									_result, _expectedValue);
+		
+		constructor.destroy();
+	}
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
+	
+#endregion
 #region [Test: ParticleSystem - Methods: clear() / getParticleCount()]
 	
 	var _base = 63;
