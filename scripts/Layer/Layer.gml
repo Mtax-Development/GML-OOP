@@ -535,7 +535,7 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "createBackground";
-					var _errorText = ("Attempted to add Element to an invalid Layer: " +
+					var _errorText = ("Attempted to add an Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -562,7 +562,7 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "createInstance";
-					var _errorText = ("Attempted to add Element to an invalid Layer: " +
+					var _errorText = ("Attempted to add an Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -589,7 +589,7 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "createTilemap";
-					var _errorText = ("Attempted to add Element to an invalid Layer: " +
+					var _errorText = ("Attempted to add an Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -614,7 +614,7 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "createSprite";
-					var _errorText = ("Attempted to add Element to an invalid Layer: " +
+					var _errorText = ("Attempted to add an Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -638,7 +638,7 @@ function Layer() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "createParticleSystem";
-					var _errorText = ("Attempted to add Element to an invalid Layer: " +
+					var _errorText = ("Attempted to add an Element to an invalid Layer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -2879,7 +2879,7 @@ function Layer() constructor
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
 							var _methodName = "createEmitter";
-							var _errorText = ("Attempted to add Element to an invalid Particle " +
+							var _errorText = ("Attempted to add an Element to an invalid Particle " +
 											  "System:\n" +
 											  "{" + string(ID) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
