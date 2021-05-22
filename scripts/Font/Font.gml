@@ -3,7 +3,7 @@
 /// @description			Constructs a Font resource defining visual style of text rendering.
 ///							
 ///							Construction types:
-///							- Wrapper: {font} font
+///							- Wrapper: {int:font} font
 ///							- Resource: {string} path, {int} size, {bool} bold, 
 ///										{bool} italic, {Range} glyphs, {bool} antialiasing
 ///							- Sprite (utf8): {Sprite} sprite, {int} first, {bool} proportional, 
@@ -20,6 +20,7 @@ function Font() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				ID = undefined;
 				type = string(undefined);
 				assetName = string(undefined);
 				fontName = string(undefined);
