@@ -46,6 +46,7 @@
     {"id":{"name":"unitTest_Color4","path":"objects/unitTest_Color4/unitTest_Color4.yy",},"order":3,},
     {"id":{"name":"unitTest_ArrayParser","path":"objects/unitTest_ArrayParser/unitTest_ArrayParser.yy",},"order":1,},
     {"id":{"name":"unitTest_Stack","path":"objects/unitTest_Stack/unitTest_Stack.yy",},"order":5,},
+    {"id":{"name":"TextAlign","path":"scripts/TextAlign/TextAlign.yy",},"order":8,},
     {"id":{"name":"PARENT_unitTest","path":"objects/PARENT_unitTest/PARENT_unitTest.yy",},"order":4,},
   ],
   "Options": [
@@ -84,7 +85,9 @@
   "TextureGroups": [
     {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
   ],
-  "IncludedFiles": [],
+  "IncludedFiles": [
+    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"TestIncludedFont.ttf","resourceType":"GMIncludedFile",},
+  ],
   "MetaData": {
     "IDEVersion": "2.3.2.560",
   },

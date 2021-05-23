@@ -118,7 +118,7 @@
 	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3]));
 	
 	var _result = constructor.getPart(_element[0], _element[1]);
-	var _expectedValue = (_value[_element[0] - 1] + _value[_element[0]] + _value[_element[0] + 1]);
+	var _expectedValue = (_value[_element[0] - 1] + _value[_element[0]] + _value[(_element[0] + 1)]);
 	
 	unitTest.assert_equal("Method: getPart()",
 						  _result, _expectedValue);
@@ -460,8 +460,8 @@
 #region [Test: Method: toString(lenght cut)]
 	
 	var _element = [30, "..."];
-	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1]))),
-				   string_repeat("I", (_element[0] + string_length(_element[1]) - 1))],
+	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1]) + 1)),
+				   string_repeat("I", (_element[0] + string_length(_element[1])))],
 				  [string_repeat("I", _element[0])]];
 	
 	constructor = [new StringParser(_value[0][0]), new StringParser(_value[0][1])];

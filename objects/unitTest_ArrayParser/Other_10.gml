@@ -367,8 +367,8 @@
 #region [Test: Method: toString(lenght cut)]
 	
 	var _element = [30, "..."];
-	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1]))),
-				   string_repeat("I", (_element[0] + string_length(_element[1]) - 1))],
+	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1]) + 1)),
+				   string_repeat("I", (_element[0] + string_length(_element[1])))],
 				  [string_repeat("I", _element[0])]];
 	
 	constructor = [new ArrayParser([_value[0][0]]), new ArrayParser([_value[0][1]])];

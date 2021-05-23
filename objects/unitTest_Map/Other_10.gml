@@ -450,25 +450,34 @@
 #endregion
 #region [Test: Method: toString(lenght cut)]
 	
-	var _element = [[30, "...", ": "], ["LenghtyKey"]];
-	var _value = [_element[1][0], string_repeat ("I", (_element[0][0] +
-				  string_length(_element[0][1]) - string_length(_element[0][2]) -
-				  string_length(_element[1][0])))];
+	var _element = [[30, "...", ": "], ["LengthyKey"]];
+	var _value = [[_element[1][0]],
+				  [string_repeat("I", (_element[0][0] + string_length(_element[0][1]) -
+				   string_length(_element[0][2]) - string_length(_element[1][0])) + 1),
+				   string_repeat("I", (_element[0][0] + string_length(_element[0][1]) -
+				   string_length(_element[0][2]) - string_length(_element[1][0])))],
+				  [string_repeat("I", (_element[0][0] - string_length(_element[0][2]) -
+				   string_length(_element[1][0])))]];
 	
-	constructor = new Map();
-	constructor.add(_value[0], _value[1]);
+	constructor = [new Map(), new Map()];
+	constructor[0].add(_value[0][0], _value[1][0]);
+	constructor[1].add(_value[0][0], _value[1][1]);
 	
-	var _result = constructor.toString(false, undefined, _element[0][0], undefined, _element[0][1],
-									   undefined, undefined, _element[0][2]);
-	var _expectedValue = (constructorName + "(" + string(1) + " - " + string(_value[0]) + ": " +
-						  string_copy(_value[1], 1, _element[0][0] -
-						  string_length(_element[1][0]) - string_length(_element[0][2])) +
-						  _element[0][1] + ")");
+	var _result = [constructor[0].toString(false, undefined, _element[0][0], undefined,
+										   _element[0][1], undefined, undefined, _element[0][2]),
+				   constructor[1].toString(false, undefined, _element[0][0], undefined,
+										   _element[0][1], undefined, undefined, _element[0][2])];
+	var _expectedValue = [(constructorName + "(" + string(1) + " - " + string(_value[0][0]) + ": " +
+						   _value[2][0] + _element[0][1] + ")"),
+						  (constructorName + "(" + string(1) + " - " + string(_value[0][0]) + ": " +
+						   _value[1][1] + ")")];
 	
 	unitTest.assert_equal("Method: toString(lenght cut)",
-						  _result, _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
-	constructor.destroy();
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: toString(multiline)]
@@ -550,7 +559,6 @@
 	constructor = [new Map(), new Map()];
 	constructor[0].add(_value[0][0], _value[0][1],
 					   _value[1][0], _value[1][1]);
-	
 	constructor[0].secureToFile(_element);
 	constructor[1].secureFromFile(_element);
 	
@@ -572,7 +580,7 @@
 	}
 	
 #endregion
-#region [Test: Methods: secureToBuffer() / secureFromBuffer()]
+#region [Test: Methods: secureFromBuffer()]
 	
 	var _element = [new Buffer(1, buffer_grow, 1), new Buffer(1, buffer_grow, 1),
 					"MapUnitTest_secureToBuffer.dat"];
@@ -585,7 +593,7 @@
 	
 	constructor = [new Map(), new Map()];
 	constructor[0].add(_value[0], _value[1]);
-	constructor[0].secureToBuffer(_element[0]);
+	_element[0].secureFromMap(constructor[0]);
 	_element[0].toFile(_element[2]);
 	_element[1].fromFile(_element[2]);
 	constructor[1].secureFromBuffer(_element[1]);

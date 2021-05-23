@@ -350,24 +350,35 @@
 #endregion
 #region [Test: Method: toString(lenght cut)]
 	
-	var _element = [[30, "...", ": "], [2, 1]];
-	var _value = [[_element[1][0], string_repeat("I", (_element[0][0] -
-				   string_length(_element[0][2]) - string_length(string(_element[1][0]))))],
-				   [_element[1][1], _element[1][1]]];
+	var _element = [30, "...", ": ", " - "];
 	
-	constructor = new PriorityQueue();
-	constructor.add(_value[0][0], _value[0][1],
-					_value[1][0], _value[1][1]);
+	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1])
+				   - (string_length(_element[2]) + 1) + 1)),
+				   string_repeat("I", (_element[0] + string_length(_element[1])
+				   - (string_length(_element[2]) + 1)))],
+				  [string_repeat("I", (_element[0] - (string_length(_element[2]) + 1)))], [5, 3]];
 	
-	var _result = constructor.toString(false, undefined, _element[0][0], undefined, _element[0][1]);
-	var _expectedValue = (constructorName + "(" + string(array_length(_element[1])) + " - " +
-						  string(_value[0][0]) + _element[0][2] + _value[0][1] + _element[0][1] +
-						  ")");
+	constructor = [new PriorityQueue(), new PriorityQueue()];
+	constructor[0].add(_value[2][0], _value[0][0], 
+					   _value[2][1], _value[0][1]);
+	constructor[1].add(_value[2][0], _value[0][1])
+	
+	var _result = [constructor[0].toString(false, undefined, _element[0], undefined, _element[1],
+										   undefined, undefined, _element[2],
+										   _element[3]),
+				   constructor[1].toString(false, undefined, _element[0], undefined, _element[1],
+										   undefined, undefined, _element[2], _element[3])];
+	var _expectedValue = [(constructorName + "(" + string(array_length(_value[2])) + _element[3] +
+						   string(_value[2][0]) + _element[2] + _value[1][0] + _element[1] + ")"),
+						  (constructorName + "(" + string(1) + _element[3] + string(_value[2][0]) +
+						   _element[2] + _value[0][1] + ")")];
 	
 	unitTest.assert_equal("Method: toString(lenght cut)",
-						  _result, _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
-	constructor.destroy();
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: toString(multiline)]

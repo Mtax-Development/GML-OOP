@@ -81,16 +81,16 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Method: middle()]
+#region [Method: getMiddle()]
 	
 	var _base = [1, 2];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
-	var _result = constructor.middle();
+	var _result = constructor.getMiddle();
 	var _expectedValue = ((_base[0] + _base[1]) / array_length(_base));
 	
-	unitTest.assert_equal("Method: middle()",
+	unitTest.assert_equal("Method: getMiddle()",
 						  _result, _expectedValue);
 	
 #endregion

@@ -429,6 +429,41 @@
 	constructor[1].destroy();
 	
 #endregion
+#region [Test: Method: secureFromMap()]
+	
+	var _base = [1, buffer_grow, 1];
+	var _element = [[new Map(), new Map()], ["BufferUnitTest_secureFromMap.dat"]];
+	var _value = ["Key1", 0.221];
+	
+	if (file_exists(_element[1][0]))
+	{
+		file_delete(_element[1][0]);
+	}
+	
+	constructor = [new Buffer(_base[0], _base[1], _base[2]), new Buffer(_base[0], _base[1], _base[2])];
+	_element[0][0].add(_value[0], _value[1]);
+	constructor[0].secureFromMap(_element[0][0]);
+	constructor[0].toFile(_element[1][0]);
+	constructor[1].fromFile(_element[1][0]);
+	_element[0][1].secureFromBuffer(constructor[1]);
+	
+	var _result = _element[0][1].getFirst();
+	var _expectedValue = _value[0];
+	
+	unitTest.assert_equal("Method: secureFromMap()",
+						  _result, _expectedValue);
+	
+	_element[0][0].destroy();
+	_element[0][1].destroy();
+	constructor[0].destroy();
+	constructor[1].destroy();
+	
+	if (file_exists(_element[1][0]))
+	{
+		file_delete(_element[1][0]);
+	}
+	
+#endregion
 #region [Test: Method: fromSurface()]
 	
 	var _base = [1, buffer_grow, 1];
