@@ -619,6 +619,7 @@ function PriorityQueue() constructor
 					var _string_lengthLimit = (string_length(_string) + _elementLength +
 											   _mark_elementStart_length + _mark_elementEnd_length);
 					var _string_lengthLimit_cut = (_string_lengthLimit + _mark_cut_length);
+					var _string_lengthLimit_cut_multiline = (_elementLength + _mark_cut_length);
 					
 					//|Data Structure preparation.
 					var _dataCopy = ds_priority_create();
@@ -643,9 +644,10 @@ function PriorityQueue() constructor
 						//|Limit element length for multiline listing.
 						if ((_multiline) and (_elementLength != all))
 						{
-							if ((string_length(_newElement)) > _elementLength)
+							if ((string_length(_newElement)) > (_string_lengthLimit_cut_multiline))
 							{
-								_newElement = string_copy(_newElement, 1, _elementLength);
+								_newElement = string_copy(_newElement, 1,
+														  _string_lengthLimit_cut_multiline);
 								_newElement += _mark_cut;
 							}
 						}
@@ -688,7 +690,7 @@ function PriorityQueue() constructor
 								{
 									//|If the current element is last, cut it if it would be too long,
 									// but expand the length check by the length of the cut mark.
-									if (_string_length >= _string_lengthLimit_cut)
+									if (_string_length > _string_lengthLimit_cut)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
 										_string += _mark_cut;

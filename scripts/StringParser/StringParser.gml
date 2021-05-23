@@ -675,7 +675,7 @@ function StringParser() constructor
 				
 				if (_elementLength != all)
 				{
-					if (string_length(_string) >= _string_lengthLimit_cut)
+					if (string_length(_string) > _string_lengthLimit_cut)
 					{
 						_string = string_copy(_string, 1, _string_lengthLimit);
 						_string += _mark_cut;

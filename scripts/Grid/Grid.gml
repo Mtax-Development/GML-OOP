@@ -1349,7 +1349,7 @@ function Grid() constructor
 								// if it would be too long.
 								if (_y < (_size_y - 1))
 								{
-									if ((_string_length + _mark_separator_length) >=
+									if ((_string_length + _mark_separator_length) >
 										 _string_lengthLimit_cut)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
@@ -1374,7 +1374,7 @@ function Grid() constructor
 									//|If the current element is last, cut it if it would be too 
 									// long, but expand the length check by the length of the cut 
 									// mark.
-									if (_string_length >= _string_lengthLimit_cut)
+									if (_string_length > _string_lengthLimit_cut)
 									{
 										_string = string_copy(_string, 1, _string_lengthLimit);
 										_string += _mark_cut;
