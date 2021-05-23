@@ -727,7 +727,7 @@ function Grid() constructor
 					repeat (argument_count div 2)
 					{
 						_value = argument[_i];
-						_location = argument[_i + 1];
+						_location = argument[(_i + 1)];
 						
 						ds_grid_set(ID, _location.x, _location.y, _value);
 						
@@ -849,7 +849,7 @@ function Grid() constructor
 					repeat (argument_count div 2)
 					{
 						_value = argument[_i];
-						_location = argument[_i + 1];
+						_location = argument[(_i + 1)];
 						
 						ds_grid_add(ID, _location.x, _location.y, _value);
 						
@@ -975,7 +975,7 @@ function Grid() constructor
 					repeat (argument_count div 2)
 					{
 						_value = argument[_i];
-						_location = argument[_i + 1];
+						_location = argument[(_i + 1)];
 						
 						ds_grid_multiply(ID, _location.x, _location.y, _value);
 						

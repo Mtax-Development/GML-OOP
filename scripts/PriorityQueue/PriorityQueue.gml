@@ -370,7 +370,7 @@ function PriorityQueue() constructor
 					repeat (argument_count div 2)
 					{
 						_priority = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[(_i + 1)];
 						
 						ds_priority_add(ID, _value, _priority);
 						
@@ -401,7 +401,7 @@ function PriorityQueue() constructor
 					repeat (argument_count div 2)
 					{
 						_priority = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[(_i + 1)];
 						
 						ds_priority_change_priority(ID, _value, _priority);
 						

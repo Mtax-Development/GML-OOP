@@ -309,7 +309,7 @@ function Buffer() constructor
 					var _i = 0;
 					repeat (_pairCount)
 					{
-						_results[_i div 2] = buffer_write(ID, argument[_i], argument[_i + 1]);
+						_results[_i div 2] = buffer_write(ID, argument[_i], argument[(_i + 1)]);
 						
 						_i += 2;
 					}

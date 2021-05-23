@@ -556,7 +556,7 @@ function Map() constructor
 					var _i = 0;
 					repeat (_pairCount)
 					{
-						_result[_i div 2] = ds_map_add(ID, argument[_i], argument[_i + 1]);
+						_result[_i div 2] = ds_map_add(ID, argument[_i], argument[(_i + 1)]);
 						
 						_i += 2;
 					}
@@ -597,7 +597,7 @@ function Map() constructor
 					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[(_i + 1)];
 						
 						if (instanceof(_value) == "List")
 						{
@@ -639,7 +639,7 @@ function Map() constructor
 					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[(_i + 1)];
 						
 						if (instanceof(_value) == "Map")
 						{
@@ -675,7 +675,7 @@ function Map() constructor
 					var _i = 0;
 					repeat (argument_count div 2)
 					{
-						ds_map_set(ID, argument[_i], argument[_i + 1]);
+						ds_map_set(ID, argument[_i], argument[(_i + 1)]);
 						
 						_i += 2;
 					}
@@ -705,7 +705,7 @@ function Map() constructor
 					repeat (argument_count div 2)
 					{
 						_key = argument[_i];
-						_value = argument[_i + 1];
+						_value = argument[(_i + 1)];
 						
 						if (ds_map_find_value(ID, _key) != undefined)
 						{
