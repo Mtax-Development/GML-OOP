@@ -33,6 +33,7 @@
     {"id":{"name":"Color4","path":"scripts/Color4/Color4.yy",},"order":7,},
     {"id":{"name":"Angle","path":"scripts/Angle/Angle.yy",},"order":3,},
     {"id":{"name":"Vector4","path":"scripts/Vector4/Vector4.yy",},"order":1,},
+    {"id":{"name":"TextDraw","path":"scripts/TextDraw/TextDraw.yy",},"order":2,},
     {"id":{"name":"Point","path":"scripts/Point/Point.yy",},"order":13,},
     {"id":{"name":"Color3","path":"scripts/Color3/Color3.yy",},"order":6,},
     {"id":{"name":"Stack","path":"scripts/Stack/Stack.yy",},"order":1,},
