@@ -6,20 +6,26 @@ function ErrorReport() constructor
 	#region [Static variables]
 		#region [[Configurable variables - General]]
 			
-			// @type		{function}
+			// @type			{function}
+			// @description		The function called upon a report, called with its description as a
+			//					string in an argument.
 			static reportFunction = show_debug_message;
 			
-			// @type		{int}
-			static maxReports = undefined;
+			// @type			{int|undefined}
+			// @description		Maximum number of times the reporting function will be called.
+			static maximumReports = undefined;
 			
-			// @type		{void[]}
+			// @type			{void[]}
+			// @description		An array holding the details of the reports.
 			static errorData = [];
 			
 		#endregion
 		#region [[Configurable variables - Specific]]
 			
-			// @type		{string[]}
-			// @example		{["Constructor.method()"]}
+			// @type			{string[]}
+			// @example			{["Constructor.method()"]}
+			// @description		An array holding strings with names of methods that will not be
+			//					reported upon error.
 			static ignoredError_constructorMethod = undefined;
 			
 		#endregion
@@ -31,7 +37,8 @@ function ErrorReport() constructor
 			// @description			Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_array(errorData)) and ((maxReports == undefined) or (maxReports > 0)));
+				return (((maximumReports == undefined) or (maximumReports > 0))
+						and (is_array(errorData)));
 			}
 			
 		#endregion
@@ -118,8 +125,8 @@ function ErrorReport() constructor
 							  _string_callstack +
 							  _string_separator);
 				
-				if ((reportFunction != undefined) and ((maxReports == undefined) 
-				or (is_array(errorData)) and (array_length(errorData) < maxReports)))
+				if ((reportFunction != undefined) and ((maximumReports == undefined) 
+				or (is_array(errorData)) and (array_length(errorData) < maximumReports)))
 				{
 					reportFunction(_string);
 				}
@@ -150,7 +157,7 @@ function ErrorReport() constructor
 					
 					var _string = ("Report Function: " + _string_reportFunction + _mark_separator +
 								   "Error Count: " + _string_errorData_length + _mark_separator +
-								   "Max Reports: " + string(maxReports));
+								   "Maximum Reports: " + string(maximumReports));
 					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
