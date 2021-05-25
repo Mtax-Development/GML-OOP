@@ -2,7 +2,7 @@
 
 **GameMaker Language Object Overlay Project** is a library created in GameMaker Language for operating the primary functionalities of GameMaker Studio 2 through a set of constructors.
 
-Please visit the project [wiki](https://github.com/Mtax-Development/GML-OOP/wiki) for more information and examples.
+Please visit the project [Wiki](https://github.com/Mtax-Development/GML-OOP/wiki) for more information and examples.
 
 
 # Initialization
@@ -16,6 +16,7 @@ The project can be importing into other GameMaker Studio 2 projects either from 
 3. In the `Tools` toolbar, open the `Import Local Package` menu.
 4. Choose the downloaded release file and open it.
 5. Choose `Add All` and then `Import`. The release should now be imported and appear in the `Asset Browser`, unless files with the same name have already existed in the project, in which case they can be replaced or the import of each such file can be skipped.
+6. Confirm that each invidual file was imported successfully.
 
 ### Creating a Package and importing it
 
@@ -27,8 +28,8 @@ The project can be importing into other GameMaker Studio 2 projects either from 
 6. Open the project in GameMaker Studio 2 to which the Package is to be included into.
 7. In the `Tools` toolbar, open the `Import Local Package` menu.
 8. Choose the previously saved Package file and open it.
-5. Choose `Add All` and then `Import`. The Package should now be imported and appear in the `Asset Browser`, unless files with the same name have already existed in the project, in which case they can be replaced or the import of each such file can be skipped.
-
+9. Choose `Add All` and then `Import`. The Package should now be imported and appear in the `Asset Browser`, unless files with the same name have already existed in the project, in which case they can be replaced or the import of each such file can be skipped.
+10. Confirm that each invidual file was imported successfully.
 
 # Credits
 
