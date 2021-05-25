@@ -2,17 +2,17 @@
 /// @argument				{real} x?
 /// @argument				{real} y?
 ///							
-/// @description			Construct a Vector container for X and Y coordinate pair.
+/// @description			Construct a Vector container for x and y coordinate pair.
 ///							
 ///							Construction types:
-///							- Two values: {real} x, {real} y
+///							- Two numbers: {real} x, {real} y
 ///							- One number for all values: {real} value
-///							- Empty: {void|undefined}
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///							   1: array[0] will be set to x and y.
 ///							   2+: array[0] will be set to x, array[1] will be set to y.
 ///							- From Scale: {Scale} other
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Vector2} other
 function Vector2() constructor
 {
@@ -73,7 +73,7 @@ function Vector2() constructor
 								
 								case 2:
 								default:
-									//|Construction type: Two values.
+									//|Construction type: Two numbers.
 									x = argument[0];
 									y = argument[1];
 								break;

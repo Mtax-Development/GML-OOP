@@ -4,16 +4,14 @@
 /// @argument				{real} x2?
 /// @argument				{real} y2?
 ///							
-/// @description			Construct a Vector container for two X and Y coordinate pairs.
+/// @description			Construct a Vector container for two x and y coordinate pairs.
 ///							
 ///							Construction types:
-///							- Four values: {real} x1, {real} y1, {real} x2, {real} y2
+///							- Four numbers: {real} x1, {real} y1, {real} x2, {real} y2
 ///							- One number for all values: {real} value
 ///							- Number pair: {real} first, {real} second
 ///							   First number will be set to x1 and y1.
 ///							   Second number will be set to x2 and y2.
-///							- Default for all values: {void}
-///							   The values will be set to 0.
 ///							- From array: {real[]} array
 ///							   Array positions will be applied depending on its size:
 ///								1: array[0] will be set to all values.
@@ -22,6 +20,7 @@
 ///								4+: array[0] will be set to x1, array[1] will be set to y1,
 ///									array[2] will be set to x2, array[3] will be set to y2.
 ///							- From two Vector2: {Vector2} pair1, {Vector2} pair2
+///							- Empty: {void|undefined}
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
 {
@@ -121,7 +120,7 @@ function Vector4() constructor
 							break;
 							
 							case 4:
-								//|Construction type: Four values.
+								//|Construction type: Four numbers.
 								x1 = argument[0];
 								y1 = argument[1];
 								x2 = argument[2];
