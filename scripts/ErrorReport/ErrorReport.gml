@@ -38,7 +38,7 @@ function ErrorReport() constructor
 		#region <Execution>
 			
 			// @argument			{struct|struct[]} constructor
-			// @argument			{any[]:callstack} callstack
+			// @argument			{any[]} callstack
 			// @argument			{string} methodName
 			// @argument			{string} errorText
 			// @description			Create a report of a constructor method error, collect its data
