@@ -84,6 +84,221 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: Method: equals()]
+	
+	var _base = [0.567, 1212.1212];
+	
+	constructor = [new Vector2(_base[0], _base[1])];
+	constructor[1] = new Vector2(constructor[0]);
+	constructor[2] = new Vector2(-_base[0], -_base[1]);
+	
+	var _result = [constructor[0].equals(constructor[1]), constructor[0].equals(constructor[2])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: equals()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: sum()]
+	
+	var _base = [42, 61];
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.sum();
+	var _expectedValue = (_base[0] + _base[1]);
+	
+	unitTest.assert_equal("Method: sum()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: sum(Vector2)]
+	
+	var _base = [0.41, 6.2, 432, 654];
+	var _element = new Vector2((_base[0] + _base[2]), (_base[1] + _base[3]));
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].sum(constructor[1]);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: sum(Vector2)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: sumX()]
+	
+	var _base = [5, 100, 6, 100];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].sumX(constructor[1]);
+	var _expectedValue = (_base[0] + _base[2]);
+	
+	unitTest.assert_equal("Method: sumX()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: sumY()]
+	
+	var _base = [5, 100, 6, 100];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].sumY(constructor[1]);
+	var _expectedValue = (_base[1] + _base[3]);
+	
+	unitTest.assert_equal("Method: sumY()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: difference()]
+
+	var _base = [0.4684, 2];
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.difference();
+	var _expectedValue = abs(_base[0] - _base[1]);
+	
+	unitTest.assert_equal("Method: difference()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: difference(Vector2)]
+	
+	var _base = [24.42, 2, -653, -235];
+	var _element = new Vector2(abs(_base[0] - _base[2]), abs(_base[1] - _base[3]));
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].difference(constructor[1]);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: difference(Vector2)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: differenceX()]
+	
+	var _base = [12, 100, 52, 200];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].differenceX(constructor[1]);
+	var _expectedValue = abs(_base[0] - _base[2]);
+	
+	unitTest.assert_equal("Method: differenceX()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: differenceY()]
+	
+	var _base = [100, 15.2, 200, 4.2];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].differenceY(constructor[1]);
+	var _expectedValue = abs(_base[1] - _base[3]);
+	
+	unitTest.assert_equal("Method: differenceY()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: product()]
+	
+	var _base = [0.4684, 11];
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.product();
+	var _expectedValue = (_base[0] * _base[1]);
+	
+	unitTest.assert_equal("Method: product()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: product(Vector2)]
+	
+	var _base = [24.5746, 38, 56, 5];
+	var _element = new Vector2((_base[0] * _base[2]), (_base[1] * _base[3]));
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].product(constructor[1]);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: product(Vector2)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: productX()]
+	
+	var _base = [57, 100, 2, 200];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].productX(constructor[1]);
+	var _expectedValue = (_base[0] * _base[2]);
+	
+	unitTest.assert_equal("Method: productX()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: productY()]
+	
+	var _base = [100, 2.4, 200, 5.78];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].productY(constructor[1]);
+	var _expectedValue = (_base[1] * _base[3]);
+	
+	unitTest.assert_equal("Method: productY()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: quotient(Vector2)]
+	
+	var _base = [25, 10, 556, 2];
+	var _element = new Vector2((_base[0] / _base[2]), (_base[1] / _base[3]));
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].quotient(constructor[1]);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: quotient(Vector2)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: quotientX()]
+	
+	var _base = [32, 0, 200, 0];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].quotientX(constructor[1]);
+	var _expectedValue = (_base[0] / _base[2]);
+	
+	unitTest.assert_equal("Method: quotientX()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: quotientY()]
+	
+	var _base = [0, 25, 0, 4];
+	
+	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	
+	var _result = constructor[0].quotientY(constructor[1]);
+	var _expectedValue = (_base[1] / _base[3]);
+	
+	unitTest.assert_equal("Method: quotientY()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: add(real)]
 	
 	var _base = [35, 125.56];
@@ -237,22 +452,6 @@
 		constructor.setCursor();
 	 }
 	);
-	
-#endregion
-#region [Test: Method: equals()]
-	
-	var _base = [0.567, 1212.1212];
-	
-	constructor = [new Vector2(_base[0], _base[1])];
-	constructor[1] = new Vector2(constructor[0]);
-	constructor[2] = new Vector2(-_base[0], -_base[1]);
-	
-	var _result = [constructor[0].equals(constructor[1]), constructor[0].equals(constructor[2])];
-	var _expectedValue = [true, false];
-	
-	unitTest.assert_equal("Method: equals()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: toString()]
