@@ -24,7 +24,7 @@ function Line() constructor
 				color = undefined;
 				alpha = undefined;
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Line")
 					{

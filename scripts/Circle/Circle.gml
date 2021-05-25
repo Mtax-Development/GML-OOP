@@ -28,7 +28,7 @@ function Circle() constructor
 				outline_color = undefined;
 				outline_alpha = undefined;
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Circle")
 					{
