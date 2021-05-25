@@ -103,6 +103,153 @@ function Vector2() constructor
 				return ((x == _other.x) and (y == _other.y));
 			}
 			
+			// @argument			{Vector2} other?
+			// @returns				{real|Vector2}
+			// @description			Return the sum of either the values of this Vector2 as a number or
+			//						if other one is specified, between the x and y values of each in a
+			//						Vector2.
+			static sum = function()
+			{
+				if ((argument_count > 0) and (argument[0] != self))
+				{
+					var _other = argument[0];
+					var _sum_x = (x + _other.x);
+					var _sum_y = (y + _other.y);
+					
+					return new Vector2(_sum_x, _sum_y);
+				}
+				else
+				{
+					return (x + y);
+				}
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the sum of the x values of this and other Vector2.
+			static sumX = function(_other)
+			{
+				return (x + _other.x);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the sum of the x values of this and other Vector2.
+			static sumY = function(_other)
+			{
+				return (y + _other.y);
+			}
+			
+			// @argument			{Vector2} other?
+			// @returns				{real|Vector2}
+			// @description			Return the difference between either the values of this Vector2 as
+			//						a number or if other one is specified, between the x and y values
+			//						of each in a Vector2.
+			static difference = function()
+			{
+				if ((argument_count > 0) and (argument[0] != self))
+				{
+					var _other = argument[0];
+					
+					var _difference_x = abs(x - _other.x);
+					var _difference_y = abs(y - _other.y);
+					
+					return new Vector2(_difference_x, _difference_y);
+				}
+				else
+				{
+					return abs(x - y);
+				}
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the difference between the x values of this and other
+			//						Vector2.
+			static differenceX = function(_other)
+			{
+				return abs(x - _other.x);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the difference between the y values of this and other
+			//						Vector2.
+			static differenceY = function(_other)
+			{
+				return abs(y - _other.y);
+			}
+			
+			// @argument			{Vector2} other?
+			// @returns				{real|Vector2}
+			// @description			Return the result of multiplication of either the values of this
+			//						Vector2 as a number or if other one is specified, the x and y
+			//						values of each in a Vector2.
+			static product = function()
+			{
+				if ((argument_count > 0) and (argument[0] != self))
+				{
+					var _other = argument[0];
+					
+					var _product_x = (x * _other.x);
+					var _product_y = (y * _other.y);
+					
+					return new Vector2(_product_x, _product_y);
+				}
+				else
+				{
+					return (x * y);
+				}
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the result of multiplication of the x values of this and
+			//						other Vector2.
+			static productX = function(_other)
+			{
+				return (x * _other.x);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the result of multiplication of the y values of this and
+			//						other Vector2.
+			static productY = function(_other)
+			{
+				return (y * _other.y);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{Vector2}
+			// @description			Return the result of the division of the values of this Vector2
+			//						divided by the values of other one.
+			static quotient = function(_other)
+			{
+				var _quotient_x = (x / _other.x);
+				var _quotient_y = (y / _other.y);
+				
+				return new Vector2(_quotient_x, _quotient_y);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the result of division of the x value of this Vector2
+			//						divided by the values of other one.
+			static quotientX = function(_other)
+			{
+				return (x / _other.x);
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the result of division of the y value of this Vector2
+			//						divided by the values of other one.
+			static quotientY = function(_other)
+			{
+				return (y / _other.y);
+			}
+			
 		#endregion
 		#region <Setters>
 			
