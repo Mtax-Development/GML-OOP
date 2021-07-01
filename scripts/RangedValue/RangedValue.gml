@@ -120,6 +120,33 @@ function RangedValue() constructor
 			}
 			
 			// @argument			{real} value
+			// @description			Modify the value by the specified number, then continously bounce
+			//						it back towards the Range if it would exceed its boundary.
+			static modifyBounce = function(_value)
+			{
+				var _rangeDifference = abs(range.maximum - range.minimum);
+				var _modulo = (_value mod (_rangeDifference * 2));
+				
+				if (_modulo != 0)
+				{
+					var _distance = abs(value - range.maximum);
+					
+					if (_modulo <= _distance)
+					{
+						value += _modulo;
+					}
+					else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
+					{
+						value = (range.maximum - (_modulo - _distance));
+					}
+					else if (_modulo > (_rangeDifference + _distance))
+					{
+						value =	(range.minimum + (_modulo - (_distance + _rangeDifference)));
+					}
+				}
+            }
+			
+			// @argument			{real} value
 			// @returns				{real}
 			// @description			Set the value to a position within the Range of the 
 			//						specified precentage.

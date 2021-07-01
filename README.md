@@ -37,6 +37,7 @@ Created, documented and maintained by [Mtax](https://github.com/Mtax-Development
 
 Contains contributions from the following users:
 * [Cereiom](https://github.com/Cereiom)
+* [SirReal](https://github.com/SirReal-1)
 
 GameMaker Studio 2 and GameMaker Language are properties of YoYo Games.    
 This is a third-party project not affiliated with YoYo Games.
