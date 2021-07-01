@@ -77,19 +77,19 @@ function RangedValue() constructor
 		#region <Setters>
 			
 			// @argument			{real} value
-			// @description			Add the specified number to the value.
-			static add = function(_value)
+			// @description			Modify the value by the specified number.
+			static modify = function(_value)
 			{
 				value = clamp((value + _value), range.minimum, range.maximum);
 			}
 			
 			// @argument			{real} value
 			// @argument			{bool} inclusive?
-			// @description			Add the specified number to the value, then wrap it to the
+			// @description			Modify the value by the specified number, then wrap it to the
 			//						furthest boundary if it is outside of the Range. The value will
 			//						also be wrapped if inclusive wrapping is specified and the value
 			//						equals the Range.
-			static addWrap = function(_value, _inclusive)
+			static modifyWrap = function(_value, _inclusive)
 			{
 				value += _value;
 				
