@@ -250,6 +250,20 @@ function Vector2() constructor
 				return (y / _other.y);
 			}
 			
+			// @returns				{real}
+			// @description			Return the lowest of all values.
+			static getMinimum = function()
+			{
+				return min(x, y);
+			}
+			
+			// @returns				{real}
+			// @description			Return the highest of all values.
+			static getMaximum = function()
+			{
+				return max(x, y);
+			}
+			
 		#endregion
 		#region <Setters>
 			
@@ -346,6 +360,45 @@ function Vector2() constructor
 						y /= _value;
 					}
 				}
+			}
+			
+			// @argument			{Vector2} target
+			// @argument			{Vector2} rate
+			// @description			Move the x and y values towards the specified target with the
+			//						specified rate without exceeding it.
+			static approach = function(_target, _rate)
+			{
+				var _value_array = [x, y];
+				var _target_array = [_target.x, _target.y];
+				var _rate_array = [abs(_rate.x), abs(_rate.y)];
+				
+				var _i = 0;
+				repeat (array_length(_value_array))
+				{
+					if (_value_array[_i] > _target_array[_i])
+					{
+						_value_array[_i] -= _rate_array[_i];
+						
+						if (_value_array[_i] < _rate_array[_i])
+						{
+							_value_array[_i] = _target_array[_i];
+						}
+					}
+					else if (_value_array[_i] < _target_array[_i])
+					{
+						_value_array[_i] += _rate_array[_i];
+						
+						if (_value_array[_i] > _rate_array[_i])
+						{
+							_value_array[_i] = _target_array[_i];
+						}
+					}
+					
+					++_i;
+				}
+				
+				x = _value_array[0];
+				y = _value_array[1];
 			}
 			
 			// @description			Swap the x and y values of this Vector2 with each other.

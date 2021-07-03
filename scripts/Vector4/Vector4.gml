@@ -541,6 +541,20 @@ function Vector4() constructor
 				return point_distance(x1, y1, x2, y2);
 			}
 			
+			// @returns				{real}
+			// @description			Return the lowest of all values.
+			static getMinimum = function()
+			{
+				return min(x1, y1, x2, y2);
+			}
+			
+			// @returns				{real}
+			// @description			Return the highest of all values.
+			static getMaximum = function()
+			{
+				return max(x1, y1, x2, y2);
+			}
+			
 			// @returns				{Vector2}
 			// @description			Return the middle point of this Vector4.
 			static getMiddle = function()
@@ -742,6 +756,47 @@ function Vector4() constructor
 						y2 /= _value;
 					}
 				}
+			}
+			
+			// @argument			{Vector4} target
+			// @argument			{Vector4} rate
+			// @description			Move the x and y values towards the specified target with the
+			//						specified rate without exceeding it.
+			static approach = function(_target, _rate)
+			{
+				var _value_array = [x1, y1, x2, y2];
+				var _target_array = [_target.x1, _target.y1, _target.x2, _target.y2];
+				var _rate_array = [abs(_rate.x1), abs(_rate.y1), abs(_rate.x2), abs(_rate.y2)];
+				
+				var _i = 0;
+				repeat (array_length(_value_array))
+				{
+					if (_value_array[_i] > _target_array[_i])
+					{
+						_value_array[_i] -= _rate_array[_i];
+						
+						if (_value_array[_i] < _rate_array[_i])
+						{
+							_value_array[_i] = _target_array[_i];
+						}
+					}
+					else if (_value_array[_i] < _target_array[_i])
+					{
+						_value_array[_i] += _rate_array[_i];
+						
+						if (_value_array[_i] > _rate_array[_i])
+						{
+							_value_array[_i] = _target_array[_i];
+						}
+					}
+					
+					++_i;
+				}
+				
+				x1 = _value_array[0];
+				y1 = _value_array[1];
+				x2 = _value_array[2];
+				y2 = _value_array[3];
 			}
 			
 			// @description			Swap the x and y values.
