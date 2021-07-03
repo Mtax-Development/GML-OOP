@@ -67,6 +67,15 @@ function Range() constructor
 			}
 			
 			// @returns				{real}
+			// @description			Return the percentage value representing the specified value
+			//						inside of the Range as a numerical value in which one whole number
+			//						is one full percentage.
+			static percent = function(_value)
+			{
+				return ((_value - minimum) / (maximum - minimum));
+			}
+			
+			// @returns				{real}
 			// @description			Return a random real number from this Range.
 			static randomReal = function()
 			{

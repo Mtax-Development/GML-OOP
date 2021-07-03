@@ -41,7 +41,6 @@ function RangedValue() constructor
 						
 						var _value = (((argument_count > 1) and (argument[1] != undefined))
 									  ? argument[1] : range.minimum);
-						
 						value = clamp(_value, range.minimum, range.maximum);
 						value_original = value;
 					}
@@ -64,6 +63,15 @@ function RangedValue() constructor
 			static equals = function(_other)
 			{
 				return (value == _other.value);
+			}
+			
+			// @returns				{real}
+			// @description			Return the percentage value representing the value inside of the
+			//						Range as a numerical value in which one whole number is one full
+			//						percentage.
+			static percent = function()
+			{
+				return ((value - range.minimum) / (range.maximum - range.minimum));
 			}
 			
 			// @returns				{bool}
