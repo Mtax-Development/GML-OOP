@@ -122,7 +122,7 @@ function Range() constructor
 			//						Content will be represented with the values of this Container.
 			static toString = function(_multiline)
 			{
-				var _mark_separator = ((_multiline) ? "\n" : "-");
+				var _mark_separator = ((_multiline) ? "\n" : " - ");
 				
 				var _string = (string(minimum) + _mark_separator + string(maximum));
 				

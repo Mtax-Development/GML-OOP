@@ -209,7 +209,7 @@ function RangedValue() constructor
 				if (self.isFunctional())
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					var _mark_separator_inline = "-";
+					var _mark_separator_inline = " - ";
 				
 					var _string = (string(value) + _mark_separator + string(range.minimum) +
 								   _mark_separator_inline + string(range.maximum));
