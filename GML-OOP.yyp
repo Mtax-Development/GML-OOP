@@ -29,6 +29,7 @@
     {"id":{"name":"Map","path":"scripts/Map/Map.yy",},"order":4,},
     {"id":{"name":"Surface","path":"scripts/Surface/Surface.yy",},"order":8,},
     {"id":{"name":"Rectangle","path":"scripts/Rectangle/Rectangle.yy",},"order":6,},
+    {"id":{"name":"SpriteDraw","path":"scripts/SpriteDraw/SpriteDraw.yy",},"order":3,},
     {"id":{"name":"List","path":"scripts/List/List.yy",},"order":0,},
     {"id":{"name":"Color4","path":"scripts/Color4/Color4.yy",},"order":7,},
     {"id":{"name":"Angle","path":"scripts/Angle/Angle.yy",},"order":3,},
