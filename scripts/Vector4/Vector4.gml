@@ -758,6 +758,16 @@ function Vector4() constructor
 				y2 = _x2;
 			}
 			
+			// @argument			{real} value
+			// @description			Set all of the values to one specified value.
+			static set = function(_value)
+			{
+				x1 = _value;
+				y1 = _value;
+				x2 = _value;
+				y2 = _value;
+			}
+			
 		#endregion
 		#region <Conversion>
 			

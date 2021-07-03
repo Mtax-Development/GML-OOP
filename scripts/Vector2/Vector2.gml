@@ -377,6 +377,14 @@ function Vector2() constructor
 				y = -y;
 			}
 			
+			// @argument			{real} value
+			// @description			Set all of the values to one specified value.
+			static set = function(_value)
+			{
+				x = _value;
+				y = _value;
+			}
+			
 			// @argument			{int} device?
 			// @description			Set the values to the ones of the cursor.
 			static setCursor = function(_device)

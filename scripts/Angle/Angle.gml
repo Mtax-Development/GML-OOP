@@ -61,6 +61,14 @@ function Angle() constructor
 		#region <Setters>
 			
 			// @argument			{real} value
+			// @description			Set the value to the specified number after wrapping it.
+			static set = function(_value)
+			{
+				value = _value;
+				value -= (360 * (floor(value / 360)));
+			}
+			
+			// @argument			{real} value
 			// @description			Change the value of this Angle and wrap it.
 			static modify = function(_value)
 			{

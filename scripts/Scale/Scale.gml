@@ -113,6 +113,14 @@ function Scale() constructor
 				y = -y;
 			}
 			
+			// @argument			{real} value
+			// @description			Set all of the values to one specified value.
+			static set = function(_value)
+			{
+				x = _value;
+				y = _value;
+			}
+			
 		#endregion
 		#region <Conversion>
 			
