@@ -243,7 +243,21 @@ function Surface() constructor
 				}
 				else
 				{
-					surface_resize(ID, size.x, size.y);
+					if ((size.x > 0) and (size.y > 0))
+					{
+						surface_resize(ID, size.x, size.y);
+					}
+					else
+					{
+						var _errorReport = new ErrorReport();
+						var _callstack = debug_get_callstack();
+						var _methodName = "setSize";
+						var _errorText = ("Attempted to set an invalid Surface size:\n" +
+										  "Self: " + "{" + string(self) + "}" + "\n" +
+										  "Target size: " + "{" + string(size) + "}");
+						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+															 _errorText);
+					}
 				}	
 			}
 			
