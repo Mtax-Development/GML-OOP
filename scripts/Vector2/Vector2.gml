@@ -439,7 +439,7 @@ function Vector2() constructor
 			}
 			
 			// @argument			{int} device?
-			// @description			Set the values to the ones of the cursor.
+			// @description			Set all of the values to the ones of the cursor.
 			static setCursor = function(_device)
 			{
 				if (_device == undefined)
