@@ -299,6 +299,20 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Methods: getMinimum() / getMaximum()]
+	
+	var _base = [-0.5, 0.5];
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = [constructor.getMinimum(), constructor.getMaximum()];
+	var _expectedValue = [_base[0], _base[1]];
+	
+	unitTest.assert_equal("Methods: getMinimum() / getMaximum()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: add(real)]
 	
 	var _base = [35, 125.56];
@@ -425,6 +439,32 @@
 	unitTest.assert_equal("Method: divide(Vector2)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: approach()]
+	
+	var _base = [0.6, 0.87];
+	var _value = [[new Vector2(0.322, 1.28), new Vector2(0.1, 0.1)], [[0.5, 0.97], [0.4, 1.07],
+				  [0.322, 1.17], [0.322, 1.27], [0.322, 1.28], [0.322, 1.28]]];
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	var _result = [];
+	var _expectedValue = [];
+	
+	var _i = 0;
+	repeat (array_length(_value[1]))
+	{
+		constructor.approach(_value[0][0], _value[0][1]);
+		
+		array_push(_result, [constructor.x, constructor.y]);
+		array_push(_expectedValue, _value[1][_i]);
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Method: approach()",
+						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: flip()]

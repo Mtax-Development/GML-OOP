@@ -77,6 +77,23 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: set()]
+	
+	var _value = [20];
+	_value[1] = (360 + _value[0]);
+	
+	constructor = [new Angle(), new Angle()];
+	constructor[0].set(_value[0]);
+	constructor[1].set(_value[1]);
+	
+	var _result = [constructor[0].value, constructor[1].value];
+	var _expectedValue = [_value[0], _value[0]];
+	
+	unitTest.assert_equal("Method: set()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: modify()]
 	
 	var _value = 105;

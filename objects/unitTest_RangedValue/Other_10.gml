@@ -234,6 +234,32 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Method: modifyBounce()]
+	
+	var _base = [[-5.5, 5], [0]];
+	var _value = [[3, 4, -6, 8.5, -11, 19, 38, 64, 0.5, 0, 1, -20],
+				  [3, 3, -3, 4.5, -4.5, -4.5, -2.5, -1.5, -1, -1, 0, 1]];
+	
+	constructor = new RangedValue(new Range(_base[0][0], _base[0][1]), _base[1][0]);
+	
+	var _result = [];
+	var _expectedValue = [];
+	
+	var _i = 0;
+	repeat (array_length(_value[0]))
+	{
+		constructor.modifyBounce(_value[0][_i]);
+		
+		array_push(_result, constructor.value);
+		array_push(_expectedValue, _value[1][_i]);
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Method: modifyBounce()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Method: interpolate()]
 	
 	var _base = [10, 11];

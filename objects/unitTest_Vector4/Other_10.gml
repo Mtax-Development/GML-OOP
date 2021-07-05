@@ -632,8 +632,22 @@
 	var _result = constructor.getDistance();
 	var _expectedValue = point_distance(_base[0], _base[1], _base[2], _base[3]);
 	
-	unitTest.assert_equal("Method: getMiddleY()",
+	unitTest.assert_equal("Method: getDistance()",
 						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Methods: getMinimum() / getMaximum()]
+	
+	var _base = [-2, 35, 55, 55];
+	
+	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = [constructor.getMinimum(), constructor.getMaximum()];
+	var _expectedValue = [_base[0], _base[2]];
+	
+	unitTest.assert_equal("Methods: getMinimum() / getMaximum()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: getMiddle()]
@@ -919,6 +933,32 @@
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Method: approach()]
+	
+	var _base = [3, -52, 52, 93.4];
+	var _value = [[new Vector4(3, -49, 50, 96), new Vector4(1, 2, 1, 1)], [[3, -50, 51, 94.4],
+				  [3, -49, 50, 95.4], [3, -49, 50, 96], [3, -49, 50, 96]]];
+	
+	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = [];
+	var _expectedValue = [];
+	
+	var _i = 0;
+	repeat (array_length(_value[1]))
+	{
+		constructor.approach(_value[0][0], _value[0][1]);
+		
+		array_push(_result, [constructor.x1, constructor.y1, constructor.x2, constructor.y2]);
+		array_push(_expectedValue, _value[1][_i]);
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Method: approach()",
+						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: flip()]

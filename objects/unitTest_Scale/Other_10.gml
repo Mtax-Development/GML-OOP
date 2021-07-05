@@ -69,6 +69,46 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Methods: getMinimum() / getMaximum()]
+	
+	var _base = [-2, 2];
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	var _result = [constructor.getMinimum(), constructor.getMaximum()];
+	var _expectedValue = [_base[0], _base[1]];
+	
+	unitTest.assert_equal("Methods: getMinimum() / getMaximum()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: approach()]
+	
+	var _base = [0.5, 0.756];
+	var _value = [[new Vector2(0.274, 1), new Vector2(0.1, 0.1)], [[0.4, 0.856], [0.3, 0.956],
+				  [0.274, 1], [0.274, 1], [0.274, 1]]];
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	var _result = [];
+	var _expectedValue = [];
+	
+	var _i = 0;
+	repeat (array_length(_value[1]))
+	{
+		constructor.approach(_value[0][0], _value[0][1]);
+		
+		array_push(_result, [constructor.x, constructor.y]);
+		array_push(_expectedValue, _value[1][_i]);
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Method: approach()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: mirror()]
 	
 	var _base = [0.2, 0.545];
@@ -110,6 +150,21 @@
 	var _expectedValue = [_base[0], -_base[1]];
 	
 	unitTest.assert_equal("Method: mirrorY()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: set()]
+	
+	var _value = 5;
+	
+	constructor = new Scale();
+	constructor.set(_value);
+	
+	var _result = [constructor.x, constructor.y];
+	var _expectedValue = [_value, _value];
+	
+	unitTest.assert_equal("Method: set()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	

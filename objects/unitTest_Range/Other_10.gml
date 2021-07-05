@@ -94,6 +94,20 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Method: percent()]
+	
+	var _base = [254, 754];
+	var _value = 0.25;
+	
+	constructor = new Range(_base[0], _base[1]);
+	
+	var _result = lerp(constructor.minimum, constructor.maximum, constructor.percent(_value));
+	var _expectedValue = _value;
+	
+	unitTest.assert_equal("Method: percent()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Method: randomReal()]
 	
 	var _base = [25.25526, 25.76336];
