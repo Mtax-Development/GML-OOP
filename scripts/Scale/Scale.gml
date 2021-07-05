@@ -128,7 +128,7 @@ function Scale() constructor
 					{
 						_value_array[_i] -= _rate_array[_i];
 						
-						if (_value_array[_i] < _rate_array[_i])
+						if (_value_array[_i] < _target_array[_i])
 						{
 							_value_array[_i] = _target_array[_i];
 						}
@@ -137,7 +137,7 @@ function Scale() constructor
 					{
 						_value_array[_i] += _rate_array[_i];
 						
-						if (_value_array[_i] > _rate_array[_i])
+						if (_value_array[_i] > _target_array[_i])
 						{
 							_value_array[_i] = _target_array[_i];
 						}
