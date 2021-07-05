@@ -135,7 +135,7 @@ function RangedValue() constructor
 				var _rangeDifference = abs(range.maximum - range.minimum);
 				var _modulo = (_value mod (_rangeDifference * 2));
 				
-				if (_modulo != 0)
+				if (_modulo > 0)
 				{
 					var _distance = abs(value - range.maximum);
 					
@@ -149,7 +149,26 @@ function RangedValue() constructor
 					}
 					else if (_modulo > (_rangeDifference + _distance))
 					{
-						value =	(range.minimum + (_modulo - (_distance + _rangeDifference)));
+						value = (range.minimum + (_modulo - (_distance + _rangeDifference)));
+					}
+				}
+				else if (_modulo < 0)
+				{
+					_modulo = abs(_modulo);
+					
+					var _distance = abs(value - range.minimum);
+					
+					if (_modulo <= _distance)
+					{
+						value -= _modulo;
+					}
+					else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
+					{
+						value = (range.minimum + (_modulo - _distance));
+					}
+					else if (_modulo > (_rangeDifference + _distance))
+					{
+						value = (range.maximum - (_modulo - (_distance + _rangeDifference)));
 					}
 				}
             }
