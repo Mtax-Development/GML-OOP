@@ -4,7 +4,7 @@
 /// @argument			{Scale} scale?
 /// @argument			{Angle} angle?
 /// @argument			{int:color} color?
-/// @argument			{int} alpha?
+/// @argument			{real} alpha?
 ///
 /// @description		Construct a handler storing information for Sprite rendering.
 ///						
