@@ -156,12 +156,12 @@
 #endregion
 #region [Method: toString()]
 	
-	var _base = [35, 2590];
+	var _base = [-2590, -35];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
 	var _result = constructor.toString();
-	var _expectedValue = (constructorName + "(" + string(_base[0]) + "-" + string(_base[1]) + ")");
+	var _expectedValue = (constructorName + "(" + string(_base[0]) + " - " + string(_base[1]) + ")");
 	
 	unitTest.assert_equal("Method: toString()",
 						  _result, _expectedValue); 
