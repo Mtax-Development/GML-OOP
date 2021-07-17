@@ -933,7 +933,7 @@ function DateTime() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the full date and time output.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if (ID != undefined)
 				{
@@ -1012,8 +1012,7 @@ function DateTime() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "toStringTime";
 					var _errorText = ("Attempted to read an invalid date: " +
-									  "{" + string(ID) +
-					"}");
+									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return string(undefined);

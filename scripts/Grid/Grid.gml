@@ -68,7 +68,7 @@ function Grid() constructor
 			//						A deep scan can be performed before the removal, which will 
 			//						iterate through this and all other Data Structures contained
 			//						in it to destroy them as well.
-			static destroy = function(_deepScan)
+			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -123,7 +123,7 @@ function Grid() constructor
 			
 			// @argument			{any} value?
 			// @description			Set all values of the Grid to a specified value.
-			static clear = function(_value)
+			static clear = function(_value = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -801,12 +801,10 @@ function Grid() constructor
 			//						specified other Grid and replace the values of cells in the 
 			//						region of the same size in this Grid, starting from the specified
 			//						target location.
-			static setRegionCopied = function(_target, _source, _other)
+			static setRegionCopied = function(_target, _source, _other = self)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_other == undefined) {_other = self;}
-					
 					if ((_other == self) or (((instanceof(_other) == "Grid")) 
 					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
@@ -929,12 +927,10 @@ function Grid() constructor
 			//						target location.
 			//						The value will be replaced if it is not the same type as the 
 			//						one already existing in the cell.
-			static addRegionCopied = function(_target, _source, _other)
+			static addRegionCopied = function(_target, _source, _other = self)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_other == undefined) {_other = self;}
-					
 					if ((_other == self) or (((instanceof(_other) == "Grid")) 
 					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
@@ -1049,12 +1045,10 @@ function Grid() constructor
 			//						specified other Grid and multiply by them the number values of
 			//						cells in the region of the same size in this Grid, starting from 
 			//						the specified target location.
-			static multiplyRegionCopied = function(_target, _source, _other)
+			static multiplyRegionCopied = function(_target, _source, _other = self)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_other == undefined) {_other = self;}
-					
 					if ((_other == self) or (((instanceof(_other) == "Grid"))
 					and (is_real(_other.ID)) and (ds_exists(_other.ID, ds_type_grid))))
 					{
@@ -1256,9 +1250,10 @@ function Grid() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "[", _mark_elementEnd = "]",
+									   _mark_sizeSeparator = " - ")
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
@@ -1270,17 +1265,8 @@ function Grid() constructor
 					{
 						_elementNumber = _size_y;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
 					
 					if (!is_real(_elementLength)) {_elementLength = ((_multiline) ? 15 : 30);}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "[";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "]";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
@@ -1494,7 +1480,6 @@ function Grid() constructor
 						var _array_y_max = array_length(_array[0]);
 						
 						var _i = 0;
-						
 						repeat (_size_x)
 						{
 							var _array_y_current = array_length(_array[_i]);
@@ -1523,7 +1508,6 @@ function Grid() constructor
 						ds_grid_clear(ID, _default);
 						
 						var _x = 0;
-						
 						repeat (_size_x)
 						{
 							var _y = 0;
@@ -1533,7 +1517,7 @@ function Grid() constructor
 								repeat (_array_y_list[_x])
 								{
 									ds_grid_set(ID, _x, _y, _array[_x][_y]);
-									_y++;
+									++_y;
 								}
 							}
 							else
@@ -1541,7 +1525,7 @@ function Grid() constructor
 								ds_grid_set(ID, _x, _y, _array[_x]);
 							}
 							
-							_x++;
+							++_x;
 						}
 					}
 				}
@@ -1584,10 +1568,8 @@ function Grid() constructor
 			//						previously encoded into this one.
 			//						Use the "legacy" argument if that string was created in old
 			//						versions of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy)
+			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
 				{
 					ID = ds_grid_create(0, 0);

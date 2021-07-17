@@ -55,7 +55,7 @@ function Queue() constructor
 			//						A deep scan can be performed before the removal, which will 
 			//						iterate through this and all other Data Structures contained
 			//						in it to destroy them as well.
-			static destroy = function(_deepScan)
+			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
@@ -361,7 +361,7 @@ function Queue() constructor
 			//						more than one value were removed, they will be returned in an
 			//						array.
 			//						Returns {undefined} if this Queue does not exists or is empty.
-			static remove = function(_count)
+			static remove = function(_count = 1)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
@@ -425,9 +425,10 @@ function Queue() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "", _mark_elementEnd = "",
+									   _mark_sizeSeparator = " - ")
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
@@ -438,17 +439,6 @@ function Queue() constructor
 					{
 						_elementNumber = _size;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
-					
-					if (!is_real(_elementLength)) {_elementLength = 30;}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
@@ -635,7 +625,7 @@ function Queue() constructor
 			// @argument			{bool} startFromEnd?
 			// @description			Add values from the specified array to this Queue, starting from
 			//						either its beginning or end.
-			static fromArray = function(_array, _startFromEnd)
+			static fromArray = function(_array, _startFromEnd = false)
 			{
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
@@ -706,10 +696,8 @@ function Queue() constructor
 			//						previously encoded into this one.
 			//						Mark it as "legacy" if that string was created in the old version
 			//						of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy)
+			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 				{
 					ID = ds_queue_create();

@@ -97,7 +97,7 @@ function RangedValue() constructor
 			//						furthest boundary if it is outside of the Range. The value will
 			//						also be wrapped if inclusive wrapping is specified and the value
 			//						equals the Range.
-			static modifyWrap = function(_value, _inclusive)
+			static modifyWrap = function(_value, _inclusive = false)
 			{
 				value += _value;
 				
@@ -223,7 +223,7 @@ function RangedValue() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the values of this Container.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if (self.isFunctional())
 				{

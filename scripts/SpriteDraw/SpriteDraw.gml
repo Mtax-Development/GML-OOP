@@ -93,7 +93,7 @@ function SpriteDraw() constructor
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this
 			//						constructor.
-			static toString = function(_multiline, _full, _color_HSV)
+			static toString = function(_multiline = false, _full = false, _color_HSV = false)
 			{
 				if (self.isFunctional())
 				{
@@ -126,28 +126,28 @@ function SpriteDraw() constructor
 							case c_white: _string_color = "White"; break;
 							case c_yellow: _string_color = "Yellow"; break;
 							default:
-									if (_color_HSV)
-									{
-										_string_color = 
-										("(" +
-										 "Hue: " + string(color_get_hue(color))
-										 		 + _mark_separator_inline +
-										 "Saturation: " + string(color_get_saturation(color))
-										 				+ _mark_separator_inline +
-										 "Value: " + string(color_get_value(color)) +
-										 ")");
-									}
-									else
-									{
-										_string_color = 
-										("(" +
-										 "Red: " + string(color_get_red(color))
-										 		 + _mark_separator_inline +
-										 "Green: " + string(color_get_green(color))
-										 		 + _mark_separator_inline +
-										 "Blue: " + string(color_get_blue(color)) +
-										 ")");
-									}
+								if (_color_HSV)
+								{
+									_string_color = 
+									("(" +
+									 "Hue: " + string(color_get_hue(color))
+										 	 + _mark_separator_inline +
+									 "Saturation: " + string(color_get_saturation(color))
+										 			+ _mark_separator_inline +
+									 "Value: " + string(color_get_value(color)) +
+									 ")");
+								}
+								else
+								{
+									_string_color = 
+									("(" +
+									 "Red: " + string(color_get_red(color))
+										 	 + _mark_separator_inline +
+									 "Green: " + string(color_get_green(color))
+										 	 + _mark_separator_inline +
+									 "Blue: " + string(color_get_blue(color)) +
+									 ")");
+								}
 							break;
 						}
 						

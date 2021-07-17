@@ -57,7 +57,7 @@ function List() constructor
 			//						A deep scan can be performed before the removal, which will 
 			//						iterate through this and all other Data Structures contained
 			//						in it to destroy them as well.
-			static destroy = function(_deepScan)
+			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -332,7 +332,7 @@ function List() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					return ds_list_empty(ID)
+					return ds_list_empty(ID);
 				}
 				else
 				{
@@ -582,9 +582,10 @@ function List() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "", _mark_elementEnd = "",
+									   _mark_sizeSeparator = " - ")
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -595,17 +596,6 @@ function List() constructor
 					{
 						_elementNumber = _size;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
-					
-					if (!is_real(_elementLength)) {_elementLength = 30;}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
@@ -830,10 +820,8 @@ function List() constructor
 			//						previously encoded into this one.
 			//						Use the "legacy" argument if that string was created
 			//						in old versions of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy)
+			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
 				{
 					ID = ds_list_create();

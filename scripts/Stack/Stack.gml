@@ -55,7 +55,7 @@ function Stack() constructor
 			//						A deep scan can be performed before the removal, which will 
 			//						iterate through this and all other Data Structures contained
 			//						in it to destroy them as well.
-			static destroy = function(_deepScan)
+			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
@@ -304,7 +304,7 @@ function Stack() constructor
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument
-			static forEach = function(__function, _argument, _readOnly)
+			static forEach = function(__function, _argument, _readOnly = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
@@ -384,12 +384,10 @@ function Stack() constructor
 			//						more than one value were removed, they will be returned in an
 			//						array.
 			//						Returns {undefined} if this Stack does not exists or is empty.
-			static remove = function(_count)
+			static remove = function(_count = 1)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
-					if (_count == undefined) {_count = 1;}
-					
 					var _size = ds_stack_size(ID);
 					
 					if ((!(_count >= 1)) or (_size < 1))
@@ -448,9 +446,10 @@ function Stack() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "", _mark_elementEnd = "",
+									   _mark_sizeSeparator = " - ")
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
@@ -461,17 +460,6 @@ function Stack() constructor
 					{
 						_elementNumber = _size;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
-					
-					if (!is_real(_elementLength)) {_elementLength = 30;}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
@@ -658,7 +646,7 @@ function Stack() constructor
 			// @argument			{bool} startFromEnd?
 			// @description			Add values from the specified array to this Stack, starting from
 			//						either the start of the array or its end.
-			static fromArray = function(_array, _startFromEnd)
+			static fromArray = function(_array, _startFromEnd = false)
 			{
 				if ((!is_real(ID)) and (!ds_exists(ID, ds_type_stack)))
 				{
@@ -729,10 +717,8 @@ function Stack() constructor
 			//						previously encoded into this one.
 			//						Mark it as "legacy" if that string was created in the old version
 			//						of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy)
+			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
 				{
 					ID = ds_stack_create();

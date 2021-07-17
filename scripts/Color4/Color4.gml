@@ -177,7 +177,7 @@ function Color4() constructor
 			//						or RGB value, unless use of HSV is specified.
 			//						Note: The constant for Silver is the same as for Light Gray, so it
 			//							  cannot be differentiated and will not be represented.
-			static toString = function(_multiline, _color_HSV)
+			static toString = function(_multiline = false, _color_HSV = false)
 			{
 				var _color = [color1, color2, color3, color4];
 				var _color_count = array_length(_color);

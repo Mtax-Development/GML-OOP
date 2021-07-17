@@ -405,15 +405,15 @@ function ParticleType() constructor
 			//						it is set to match the life time of this Particle Type. The
 			//						animation will play from either the start to finish or randomized
 			//						frames if specified.
-			static setSprite = function(_sprite, _animate, _matchAnimation, _randomize)
+			static setSprite = function(_sprite, _animate = false, _matchAnimation = false,
+										_randomize = false)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					sprite = _sprite;
-					sprite_animate = ((_animate != undefined) ? _animate : false);
-					sprite_matchAnimation = ((_matchAnimation != undefined) ? _matchAnimation
-																			: false);
-					sprite_randomize = ((_randomize != undefined) ? _randomize : false);
+					sprite_animate = _animate;
+					sprite_matchAnimation = _matchAnimation;
+					sprite_randomize = _randomize;
 					
 					shape = undefined;
 					
@@ -458,13 +458,13 @@ function ParticleType() constructor
 			// @argument			{real} wiggle?
 			// @description			Set the size properties of this Particle Type, which multiplies
 			//						the Scale of the particles.
-			static setSize = function(_size, _increase, _wiggle)
+			static setSize = function(_size, _increase = 0, _wiggle = 0)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					size = _size;
-					size_increase = ((_increase != undefined) ? _increase : 0);
-					size_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					size_increase = _increase;
+					size_wiggle = _wiggle;
 					
 					var _size_minimum, _size_maximum;
 					
@@ -497,13 +497,13 @@ function ParticleType() constructor
 			// @argument			{real} speed_wiggle?
 			// @description			Set the movement speed properties of particles of this Particle
 			//						Type, indicating how fast each will move towards its direction.
-			static setSpeed = function(_speed, _increase, _wiggle)
+			static setSpeed = function(_speed, _increase = 0, _wiggle = 0)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					speed = _speed;
-					speed_increase = ((_increase != undefined) ? _increase : 0);
-					speed_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					speed_increase = _increase;
+					speed_wiggle = _wiggle;
 					
 					var _speed_minimum, _speed_maximum;
 					
@@ -538,13 +538,13 @@ function ParticleType() constructor
 			// @description			Set the movemement direction properties of particle of this
 			//						Particle Type, which is applied only while the partices have
 			//						any speed, otherwise equaling 0.
-			static setDirection = function(_direction, _increase, _wiggle)
+			static setDirection = function(_direction, _increase = 0, _wiggle = 0)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{					
 					direction = _direction;
-					direction_increase = ((_increase != undefined) ? _increase : 0);
-					direction_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
+					direction_increase = _increase;
+					direction_wiggle = _wiggle;
 					
 					var _direction_minimum, _direction_maximum;
 					
@@ -583,14 +583,14 @@ function ParticleType() constructor
 			//						which rotates their visual representation.
 			//						The Angle can be specified to be relative to the direction that
 			//						is applied only if the particle currently has any speed.
-			static setAngle = function(_angle, _increase, _wiggle, _relative)
+			static setAngle = function(_angle, _increase = 0, _wiggle = 0, _relative = false)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{
 					angle = _angle;
-					angle_increase = ((_increase != undefined) ? _increase : 0);
-					angle_wiggle = ((_wiggle != undefined) ? _wiggle : 0);
-					angle_relative = ((_relative != undefined) ? _relative : false);
+					angle_increase = _increase;
+					angle_wiggle = _wiggle;
+					angle_relative = _relative;
 					
 					var _angle_minimum, _angle_maximum;
 					
@@ -621,7 +621,7 @@ function ParticleType() constructor
 				}
 			}
 			
-			// @argument			{real} value?
+			// @argument			{real} value
 			// @argument			{Angle} direction?
 			// @description			Set the gravity properties of the particles of this Particle
 			//						Type, which will move particles towards the specified direction,
@@ -1007,13 +1007,11 @@ function ParticleType() constructor
 			// @argument			{color} color?
 			// @description			Directly create any number of Particles of this type in the
 			//						specified location.
-			static create = function(_particleSystem, _location, _number, _color)
+			static create = function(_particleSystem, _location, _number = 1, _color)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
-					if (_number == undefined) {_number = 1;}
-					
 					if (_color != undefined)
 					{
 						part_particles_create_color(_particleSystem.ID, _location.x, _location.y, ID,
@@ -1044,13 +1042,11 @@ function ParticleType() constructor
 			// @argument			{int:color} color?
 			// @description			Directly create any number of Particles of this type in random
 			//						locations within the specified Shape.
-			static createShape = function(_particleSystem, _shape, _number, _color)
+			static createShape = function(_particleSystem, _shape, _number = 1, _color)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
-					if (_number == undefined) {_number = 1;}
-					
 					switch (instanceof(_shape))
 					{	
 						case "Rectangle":
@@ -1296,7 +1292,7 @@ function ParticleType() constructor
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Particle
 			//						Type.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
 				{

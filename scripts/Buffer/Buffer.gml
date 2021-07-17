@@ -93,7 +93,7 @@ function Buffer() constructor
 			//						For both Buffers, a byte offset can be specified for where the
 			//						operation will start and then continue until either the specified
 			//						size in bytes was affected or the end of this Buffer is reached.
-			static copy = function(_other, _size, _offset, _other_offset)
+			static copy = function(_other, _size, _offset = 0, _other_offset = 0)
 			{
 				if ((instanceof(_other) == "Buffer") and (is_real(_other.ID))
 				and (buffer_exists(_other.ID)))
@@ -111,9 +111,6 @@ function Buffer() constructor
 						{
 							_size = buffer_get_size(_other.ID);
 						}
-						
-						if (_offset == undefined) {_offset = 0;}
-						if (_other_offset == undefined) {_other_offset = 0;}
 						
 						buffer_copy(_other.ID, _other_offset, _size, ID, _offset);
 					}
@@ -261,12 +258,10 @@ function Buffer() constructor
 			//						start or end this Buffer or the position relative to the current
 			//						one. In addition to the base, a byte offset can be specified,
 			//						which can also be a negative number.
-			static setSeekPosition = function(_base, _offset)
+			static setSeekPosition = function(_base, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if (_offset == undefined) {_offset = 0;}
-					
 					if ((_base == buffer_seek_relative) or (_offset == 0))
 					{
 						buffer_seek(ID, _base, _offset);
@@ -342,12 +337,11 @@ function Buffer() constructor
 			//						from its start or the specified offset to it and ending if either
 			//						the specified size in bytes has been written or the end of this 
 			//						Buffer is reached.
-			static fill = function(_type, _value, _size, _offset)
+			static fill = function(_type, _value, _size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
+					if (_size == all) {_size = buffer_get_size(ID);}
 					
 					buffer_fill(ID, _offset, _type, _value, _size);
 				}
@@ -416,13 +410,12 @@ function Buffer() constructor
 			//						A compressed Buffer will be returned. If this Buffer was replaced
 			//						by it, self will be returned for this. Otherwise it will be a
 			//						new, separate Buffer.
-			static compress = function(_replace, _size, _offset)
+			static compress = function(_replace, _size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
-				
+					if (_size == all) {_size = buffer_get_size(ID);}
+					
 					var _new = buffer_compress(ID, _offset, _size);
 					
 					if (buffer_exists(_new))
@@ -472,7 +465,7 @@ function Buffer() constructor
 			//						A decompressed Buffer will be returned. If this Buffer was
 			//						replaced by it, self will be returned for this. Otherwise it will
 			//						be a new, separate Buffer.
-			static decompress = function(_replace)
+			static decompress = function(_replace = false)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
@@ -524,12 +517,10 @@ function Buffer() constructor
 			// @description			Get the value of the specified data type at the specified offset
 			//						from the start of this Buffer without interacting with the seek
 			//						position.
-			static getValue = function(_type, _offset)
+			static getValue = function(_type, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if (_offset == undefined) {_offset = 0;}
-					
 					return buffer_peek(ID, _offset, _type);
 				}
 				else
@@ -553,7 +544,7 @@ function Buffer() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Buffer.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
@@ -594,12 +585,11 @@ function Buffer() constructor
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
-			static toHashMD5 = function(_size, _offset)
+			static toHashMD5 = function(_size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
+					if (_size == all) {_size = buffer_get_size(ID);}
 					
 					return buffer_md5(ID, _offset, _size);
 				}
@@ -624,12 +614,11 @@ function Buffer() constructor
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
-			static toHashSHA1 = function(_size, _offset)
+			static toHashSHA1 = function(_size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
+					if (_size == all) {_size = buffer_get_size(ID);}
 					
 					return buffer_sha1(ID, _offset, _size);
 				}
@@ -654,12 +643,11 @@ function Buffer() constructor
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
-			static toHashCRC32 = function(_size, _offset)
+			static toHashCRC32 = function(_size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
+					if (_size == all) {_size = buffer_get_size(ID);}
 					
 					return buffer_crc32(ID, _offset, _size);
 				}
@@ -684,12 +672,11 @@ function Buffer() constructor
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
-			static toEncodedString = function(_size, _offset)
+			static toEncodedString = function(_size = all, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if ((_size == undefined) or (_size == all)) {_size = buffer_get_size(ID);}
-					if (_offset == undefined) {_offset = 0;}
+					if (_size == all) {_size = buffer_get_size(ID);}
 					
 					return buffer_base64_encode(ID, _offset, _size);
 				}
@@ -712,12 +699,10 @@ function Buffer() constructor
 			//						this one.
 			//						A byte offset can be specified for where the operation
 			//						will start.
-			static fromEncodedString = function(_string, _offset)
+			static fromEncodedString = function(_string, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
-					if (_offset == undefined) {_offset = 0;}
-					
 					buffer_base64_decode_ext(ID, _string, _offset);
 				}
 				else
@@ -779,7 +764,7 @@ function Buffer() constructor
 			//						start.
 			//						For this operation, this Buffer should be of Grow type with
 			//						alignment of 1 byte.
-			static fromSurface = function(_surface, _offset)
+			static fromSurface = function(_surface, _offset = 0)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
 				{
@@ -787,8 +772,6 @@ function Buffer() constructor
 					
 					if ((is_real(_surface)) and (surface_exists(_surface)))
 					{
-						if (_offset == undefined) {_offset = 0;}
-						
 						buffer_get_surface(ID, _surface, _offset);
 					}
 					else
@@ -960,15 +943,12 @@ function Buffer() constructor
 			//						forw here the operation will start and then continue until either
 			//						the specified size in bytes was affected or the end of this
 			//						Buffer is reached.
-			static fromFilePart = function(_path, _size, _offset, _file_offset)
+			static fromFilePart = function(_path, _size, _offset = 0, _file_offset = 0)
 			{
 				if (file_exists(_path))
 				{
 					if ((is_real(ID)) and (buffer_exists(ID)))
 					{
-						if (_offset == undefined) {_offset = 0;}
-						if (_file_offset == undefined) {_file_offset = 0;}
-					
 						buffer_load_partial(ID, _path, _file_offset, _size, _offset);
 					}
 					else

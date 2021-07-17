@@ -84,15 +84,9 @@ function Rectangle() constructor
 			//						empty or containing IDs of the colliding instances.
 			//						If specified, the additions to that List can be ordered by 
 			//						distance from the center of the Shape.
-			static collision = function(_object)
+			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
+										_listOrdered = false)
 			{
-				var _precise = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1] 
-																					  : false);
-				var _excludedInstance = ((argument_count > 2) ? argument[2] : undefined);
-				var _list = ((argument_count > 3) ? argument[3] : undefined);
-				var _listOrdered = (((argument_count > 4) and (argument[4] != undefined))
-									? argument[4] : false);
-				
 				if (_list)
 				{
 					if (instanceof(_list) != "List")
@@ -354,7 +348,7 @@ function Rectangle() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Shape.
-			static toString = function(_multiline, _full, _color_HSV)
+			static toString = function(_multiline = false, _full = false, _color_HSV = false)
 			{
 				var _string = "";
 				var _mark_separator = ((_multiline) ? "\n" : ", ");

@@ -176,7 +176,7 @@ function Font() constructor
 			//						not an asset Font or if is and the asset deletion was forced.
 			//						A destroyed asset Font will be remain unusable until the
 			//						application is completely shut down and then restarted.
-			static destroy = function(_forceAssetDeletion)
+			static destroy = function(_forceAssetDeletion = false)
 			{
 				if ((is_real(ID)) and (font_exists(ID)) and ((_forceAssetDeletion)
 				or (type != "asset")))
@@ -288,7 +288,7 @@ function Font() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Font.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
 				{

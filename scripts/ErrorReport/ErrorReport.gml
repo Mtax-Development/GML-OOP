@@ -141,7 +141,7 @@ function ErrorReport() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the error and configuration data.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if (_full)
 				{

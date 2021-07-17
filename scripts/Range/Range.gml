@@ -120,7 +120,7 @@ function Range() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the values of this Container.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				var _mark_separator = ((_multiline) ? "\n" : " - ");
 				

@@ -287,7 +287,7 @@ function Triangle() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Shape.
-			static toString = function(_multiline, _full, _color_HSV)
+			static toString = function(_multiline = false, _full = false, _color_HSV = false)
 			{
 				var _string = "";
 				var _mark_separator_inline = ", ";

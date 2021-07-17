@@ -109,18 +109,14 @@ function TextDraw() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the text preview.
-			static toString = function(_multiline, _full, _color_HSV, _elementLength, _mark_cut,
-									   _mark_linebreak)
+			static toString = function(_multiline = false, _full = false, _color_HSV = false,
+									   _elementLength = 30, _mark_cut = "...", _mark_linebreak = ", ")
 			{
 				var _string = "";
 				var _string_text = string(ID);
 				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
-				
-				if (!is_real(_elementLength)) {_elementLength = 30;}
-				if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-				if (!is_string(_mark_cut)) {_mark_cut = "...";}
 				
 				var _cutMark = "...";
 				
@@ -168,23 +164,23 @@ function TextDraw() constructor
 								{
 									_string_color = 
 									("(" +
-										"Hue: " + string(color_get_hue(color))
-												+ _mark_separator_inline +
-										"Saturation: " + string(color_get_saturation(color))
+									 "Hue: " + string(color_get_hue(color))
+											 + _mark_separator_inline +
+									 "Saturation: " + string(color_get_saturation(color))
 													+ _mark_separator_inline +
-										"Value: " + string(color_get_value(color)) +
-										")");
+									 "Value: " + string(color_get_value(color)) +
+									 ")");
 								}
 								else
 								{
 									_string_color = 
 									("(" +
-										"Red: " + string(color_get_red(color))
-												+ _mark_separator_inline +
-										"Green: " + string(color_get_green(color))
-												+ _mark_separator_inline +
-										"Blue: " + string(color_get_blue(color)) +
-										")");
+									 "Red: " + string(color_get_red(color))
+											 + _mark_separator_inline +
+									 "Green: " + string(color_get_green(color))
+											   + _mark_separator_inline +
+									 "Blue: " + string(color_get_blue(color)) +
+									 ")");
 								}
 						break;
 					}

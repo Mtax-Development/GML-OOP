@@ -826,12 +826,13 @@ function Vector4() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the output of X and then Y
 			//						values of this Vector4.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if (self.isFunctional())
 				{

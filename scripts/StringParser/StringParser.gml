@@ -225,7 +225,7 @@ function StringParser() constructor
 			}
 			
 			// @argument			{int} position
-			// @argument			{int} count
+			// @argument			{int} count?
 			// @returns				{string}
 			// @description			Return a part of the string, starting from the character at the
 			//						specified position and continuing forward by the specified count
@@ -281,7 +281,7 @@ function StringParser() constructor
 			//						character of the substring, always counting from the start.
 			//						Returns {undefined} if the substring does not exist in the
 			//						string.
-			static getSubstringPosition = function(_substring, _startFromEnd, _startPosition)
+			static getSubstringPosition = function(_substring, _startFromEnd = false, _startPosition)
 			{
 				var _string = string(ID);
 				var _result = undefined;
@@ -321,12 +321,10 @@ function StringParser() constructor
 			static getPixelSize = function(_font, _separation, _width)
 			{
 				var _string = string(ID);
-				
 				var _currentFont = draw_get_font();
 				
 				if ((_font != undefined))
 				{
-					
 					if (instanceof(_font) == "Font")
 					{
 						if (_font.isFunctional())
@@ -375,12 +373,12 @@ function StringParser() constructor
 		#region <Setters>
 			
 			// @argument			{int} position
-			// @argument			{int} number?
+			// @argument			{int} count?
 			// @returns				{string}
 			// @description			Delete a part of the string, starting from the character
 			//						at the specified position and continuing to the right for the 
 			//						specified number of characters or its end.
-			static remove = function(_position, _number)
+			static remove = function(_position, _count = 1)
 			{
 				var _string = string(ID);
 				
@@ -388,7 +386,7 @@ function StringParser() constructor
 							 ? (string_length(_string) + 1)
 							 : clamp(_position, 1, (string_length(_string) + 1)));
 				
-				ID = string_delete(_string, _position, _number);
+				ID = string_delete(_string, _position, _count);
 				
 				return ID;
 			}
@@ -405,7 +403,8 @@ function StringParser() constructor
 			//						places will be occupied by spaces added to the left.
 			//						If there is less decimal numbers than specified, the remaining
 			//						places will be occupied with zeros to the right.
-			static formatNumber = function(_number, _wholeNumberPlaces, _decimalPlaces, _replace)
+			static formatNumber = function(_number, _wholeNumberPlaces, _decimalPlaces,
+										   _replace = false)
 			{
 				if (_replace)
 				{
@@ -657,12 +656,9 @@ function StringParser() constructor
 			//						Content will be represented with the string of this constructor,
 			//						where linebreaks are replaced with spaces if not specified to use
 			//						multiline.
-			static toString = function(_multiline, _elementLength, _mark_cut)
+			static toString = function(_multiline = false, _elementLength = 30, _mark_cut  = "...")
 			{
 				var _string = string(ID);
-				
-				if (_elementLength == undefined) {_elementLength = 30;}
-				if (_mark_cut == undefined) {_mark_cut = "...";}
 				
 				var _string_lengthLimit = _elementLength;
 				var _string_lengthLimit_cut = (_string_lengthLimit + string_length(_mark_cut));

@@ -84,7 +84,7 @@ function Angle() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented as the value of this Container.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if (is_real(value))
 				{

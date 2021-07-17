@@ -28,7 +28,7 @@ function Shader() constructor
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
-					
+						
 						ID = _other.ID;
 						name = _other.name;
 						compiled = _other.compiled;
@@ -381,7 +381,7 @@ function Shader() constructor
 			//						Overrides the string() conversion.
 			//						Content will be represented with the name of this Shader.
 			//						If this Shader is not compiled, it will be marked as such.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if (is_real(ID))
 				{

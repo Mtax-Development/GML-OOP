@@ -82,11 +82,9 @@ function Surface() constructor
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
 			// @description			Set the entire content of this Surface to the specified color.
-			static clear = function(_color, _alpha)
+			static clear = function(_color = c_black, _alpha)
 			{
 				self.create();
-				
-				if (_color == undefined) {_color = c_black;}
 				
 				var _target = (surface_get_target() == ID)
 				
@@ -172,12 +170,12 @@ function Surface() constructor
 			// @returns				{int:color|int:color:abgr32bit} | On error: {undefined}
 			// @description			Get the pixel color on a specific spot on a Surface.
 			//						A full abgr 32bit information can be obtainted if specified.
-			static getPixel = function(_location, _getFull)
+			static getPixel = function(_location, _getFull = false)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{	
-					return ((_getFull) ? surface_getpixel_ext(ID, _location.x, _location.y) :
-										 surface_getpixel(ID, _location.x, _location.y));
+					return ((_getFull) ? surface_getpixel_ext(ID, _location.x, _location.y)
+									   : surface_getpixel(ID, _location.x, _location.y));
 				}
 				else
 				{
@@ -487,7 +485,7 @@ function Surface() constructor
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
 			// @description			Draw this Surface after scaling it to match the specific size.
-			static renderSize = function(_size, _location, _color, _alpha)
+			static renderSize = function(_size, _location, _color = c_white, _alpha = 1)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
@@ -504,11 +502,8 @@ function Surface() constructor
 						_location_y = 0;
 					}
 					
-					var _color_value = ((_color != undefined) ? _color : c_white);
-					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-					
-					draw_surface_stretched_ext(ID, _location_x, _location_y, _size.x, _size.y,
-											   _color_value, _alpha_value);
+					draw_surface_stretched_ext(ID, _location_x, _location_y, _size.x, _size.y, _color,
+											   _alpha);
 				}
 				else
 				{
@@ -527,7 +522,7 @@ function Surface() constructor
 			// @argument			{real} alpha?
 			// @description			Draw this Surface tiled across the target created Surface or the
 			//						entire Room if none is set.
-			static renderTiled = function(_offset, _scale, _color, _alpha)
+			static renderTiled = function(_offset, _scale, _color = c_white, _alpha = 1)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
@@ -557,11 +552,8 @@ function Surface() constructor
 						_scale_y = 1;
 					}
 					
-					var _color_value = ((_color != undefined) ? _color : c_white);
-					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-					
-					draw_surface_tiled_ext(ID, _offset_x, _offset_y, _scale_x, _scale_y, _color_value,
-										   _alpha_value);
+					draw_surface_tiled_ext(ID, _offset_x, _offset_y, _scale_x, _scale_y, _color,
+										   _alpha);
 				}
 				else
 				{
@@ -616,7 +608,7 @@ function Surface() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Surface.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				if (is_real(ID))
 				{

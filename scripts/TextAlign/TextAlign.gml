@@ -143,7 +143,7 @@ function TextAlign() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with both of the text alignments.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				var _string_x, _string_y;
 				var _mark_separator = ((_multiline) ? "\n" : ", ");

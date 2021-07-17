@@ -231,7 +231,7 @@ function Layer() constructor
 			//						If there are persistent instances bound to this Layer, they will
 			//						be not be destroyed, unless the destruction is forced, but all
 			//						Data Structures of this Layer will be always destroyed.
-			static destroy = function(_forceDestruction)
+			static destroy = function(_forceDestruction = false)
 			{
 				var _persistentElementExists = false;
 				
@@ -625,7 +625,7 @@ function Layer() constructor
 			// @argument			{bool} persistent?
 			// @returns				{Layer.ParticleSystem} | On error: {noone}
 			// @description			Create a Particle System in this Layer and return it.
-			static createParticleSystem = function(_persistent)
+			static createParticleSystem = function(_persistent = false)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
@@ -697,12 +697,14 @@ function Layer() constructor
 		#endregion
 		#region <Conversion>
 			
+			// @argument			{bool} multiline?
+			// @argument			{bool} full?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the name and depth of this
 			//						Layer.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
@@ -1096,7 +1098,7 @@ function Layer() constructor
 					//						Overrides the string() conversion.
 					//						Content will be represented with the properties of this
 					//						Sprite Element.
-					static toString = function(_multiline, _full)
+					static toString = function(_multiline = false, _full = false)
 					{
 						var _constructorName = "Layer.SpriteElement";
 						
@@ -1335,7 +1337,6 @@ function Layer() constructor
 				#region <<Setters>>
 					
 					// @argument			{Sprite|int:-1} sprite?
-					// @argument			{Sprite} sprite
 					// @description			Set the Sprite of this Background Element. If it is not
 					//						specified or specified as -1, the Sprite will be cleared.
 					static setSprite = function(_sprite)
@@ -1576,7 +1577,7 @@ function Layer() constructor
 					//						Overrides the string() conversion.
 					//						Content will be represented with the properties of this
 					//						Background Element.
-					static toString = function(_multiline, _full)
+					static toString = function(_multiline = false, _full = false)
 					{
 						var _constructorName = "Layer.BackgroundElement";
 						
@@ -1721,7 +1722,7 @@ function Layer() constructor
 						return undefined;
 					}
 					
-					// @argument			{Layer.TilemapElement.TileData|int}
+					// @argument			{Layer.TilemapElement.TileData|int:tiledata} tiledata?
 					// @description			Set all Tiles in this Tilemap to empty or the specified
 					//						Tile Data.
 					static clear = function(_tiledata)
@@ -1983,7 +1984,7 @@ function Layer() constructor
 						}
 					}
 					
-					// @argument			{tileset} tileset
+					// @argument			{int:tileset} tileset
 					// @description			Change the Tileset used by this Tilemap.
 					static setTileset = function(_tileset)
 					{
@@ -2081,15 +2082,11 @@ function Layer() constructor
 					//						success or not.
 					//						If Thile Data is not provided or 0 is provided in its
 					//						place, the cell will be cleared.
-					static setTileAtPoint = function(_tiledata, _location)
+					static setTileAtPoint = function(_location, _tiledata = 0)
 					{
 						if (self.isFunctional())
 						{
-							if (_tiledata == undefined)
-							{
-								_tiledata = 0;
-							}
-							else if (instanceof(_tiledata) == "TileData")
+							if (instanceof(_tiledata) == "TileData")
 							{
 								_tiledata = _tiledata.ID;
 							}
@@ -2120,12 +2117,10 @@ function Layer() constructor
 					// @argument			{Vector2} location?
 					// @description			Execute the draw of this Tilemap, independent of its draw
 					//						executed by its Layer.
-					static render = function(_location)
+					static render = function(_location = new Vector2(0, 0))
 					{
 						if (self.isFunctional())
 						{
-							if (_location == undefined) {_location = new Vector2(0, 0);}
-							
 							draw_tilemap(ID, _location.x, _location.y);
 						}
 						else
@@ -2150,7 +2145,7 @@ function Layer() constructor
 					//						Overrides the string() conversion.
 					//						Content will be represented with the properties of this
 					//						Tilemap Element.
-					static toString = function(_multiline)
+					static toString = function(_multiline = false)
 					{
 						var _constructorName = "Layer.TilemapElement";
 						
@@ -2179,8 +2174,8 @@ function Layer() constructor
 				
 				// @function			Layer.TilemapElement.TileData()
 				// @argument			{int} id?
-				// @description			Constructs a TileData Element, which refers to a Tile
-				//						in this Tilemap.
+				// @description			Constructs a TileData Element, which refers to a Tile in this
+				//						Tilemap.
 				//						
 				//						Construction types:
 				//						- New constructor
@@ -2377,7 +2372,7 @@ function Layer() constructor
 						#endregion
 						#region <<<Setters>>>
 							
-							// @argument			{int}
+							// @argument			{int} index
 							// @description			Change the Tile this Tile Data refers to, based
 							//						on the index of its tileset.
 							static setTilesetIndex = function(_index)
@@ -2402,7 +2397,7 @@ function Layer() constructor
 								ID = tile_set_index(ID, _index);
 							}
 							
-							// @argument			{bool}
+							// @argument			{bool} mirror
 							// @description			Set the horizontal mirroring property of the Tile
 							//						this Tile Data refers to.
 							static setMirrorX = function(_mirror)
@@ -2427,7 +2422,7 @@ function Layer() constructor
 								ID = tile_set_mirror(ID, _mirror);
 							}
 							
-							// @argument			{bool}
+							// @argument			{bool} mirror
 							// @description			Set the vertical mirroring property of the Tile
 							//						this Tile Data refers to.
 							static setMirrorY = function(_mirror)
@@ -2452,7 +2447,7 @@ function Layer() constructor
 								ID = tile_set_flip(ID, _mirror);
 							}
 							
-							// @argument			{bool}
+							// @argument			{bool} rotate
 							// @description			Set the 90 degree rotation property of the Tile
 							//						this Tile Data refers to.
 							static setRotate = function(_rotate)
@@ -2485,7 +2480,7 @@ function Layer() constructor
 							// @description			Execute the draw of the Tile this Tile Data
 							//						refers to, independent of its draw handled
 							//						by its Layer.
-							static render = function(_location, _frame)
+							static render = function(_location = new Vector2(0, 0), _frame = 0)
 							{
 								if (!(ID >= 0))
 								{
@@ -2503,9 +2498,6 @@ function Layer() constructor
 									ID = 0;
 								}
 								
-								if (_location == undefined) {_location = new Vector2(0, 0);}
-								if (_frame == undefined) {_frame = 0;}
-									
 								draw_tile(parent.tileset, ID, _frame, _location.x, _location.y);
 							}
 							
@@ -2518,7 +2510,7 @@ function Layer() constructor
 							//						Overrides the string() conversion.
 							//						Content will be represented with the ID of this
 							//						Tile Data.
-							static toString = function(_multiline)
+							static toString = function(_multiline = false)
 							{
 								var _constructorName = "Layer.TilemapElement.TileData";
 								
@@ -2937,7 +2929,7 @@ function Layer() constructor
 					//						Overrides the string() conversion.
 					//						Content will be represented with the properties of this
 					//						Particle System.
-					static toString = function(_multiline, _full)
+					static toString = function(_multiline = false, _full = false)
 					{
 						var _constructorName = "Layer.ParticleSystem";
 						
@@ -3262,12 +3254,14 @@ function Layer() constructor
 						#endregion
 						#region <<<Conversion>>>
 							
+							// @argument			{bool} multiline?
+							// @argument			{bool} full?
 							// @returns				{string}
 							// @description			Create a string representing this constructor.
 							//						Overrides the string() conversion.
 							//						Content will be represented with the properties
 							//						of this Particle Emitter.
-							static toString = function(_multiline, _full)
+							static toString = function(_multiline = false, _full = false)
 							{
 								var _constructorName = "Layer.ParticleSystem.ParticleEmitter";
 								

@@ -180,12 +180,12 @@ function Scale() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline
+			// @argument			{bool} multiline?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the values of this Container.
-			static toString = function(_multiline)
+			static toString = function(_multiline = false)
 			{
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _string = ("x: " + string(x) + _mark_separator + "y: " + string(y));

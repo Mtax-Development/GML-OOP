@@ -311,7 +311,8 @@ function PriorityQueue() constructor
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument
-			static forEach = function(__function, _argument, _readOnly, _orderAscending)
+			static forEach = function(__function, _argument, _readOnly = false,
+									  _orderAscending = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
@@ -454,12 +455,11 @@ function PriorityQueue() constructor
 			//						Priority Queue and return it.
 			//						If multiple values were removed, they will be returned in an
 			//						array. If no values were removed, {undefined} will be returned.
-			static removeFirst = function(_count)
+			static removeFirst = function(_count = 1)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
-					if (_count == undefined) {_count = 1;}
 					
 					_count = min(_count, _size);
 					
@@ -508,12 +508,11 @@ function PriorityQueue() constructor
 			//						Priority Queue and return it.
 			//						If multiple values were removed, they will be returned in an
 			//						array. If no values were removed, {undefined} will be returned.
-			static removeLast = function(_count)
+			static removeLast = function(_count = 1)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
-					if (_count == undefined) {_count = 1;}
 					
 					_count = min(_count, _size);
 					
@@ -572,9 +571,10 @@ function PriorityQueue() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of this Data Structure.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd, _mark_section,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "", _mark_elementEnd = "",
+									   _mark_section = ": ", _mark_sizeSeparator = " - ")
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
@@ -585,18 +585,6 @@ function PriorityQueue() constructor
 					{
 						_elementNumber = _size;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
-					
-					if (!is_real(_elementLength)) {_elementLength = 30;}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
-					if (!is_string(_mark_section)) {_mark_section = ": ";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);
@@ -866,10 +854,8 @@ function PriorityQueue() constructor
 			//						previously encoded into this one.
 			//						Use the "legacy" argument if that string was created
 			//						in old versions of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy)
+			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
 				{
 					ID = ds_priority_create();

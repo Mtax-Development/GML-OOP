@@ -51,10 +51,8 @@ function ArrayParser() constructor
 			// @returns				{any[]}
 			// @description			Replace the array with a newly created array of the specified size
 			//						filled with the specified value.
-			static create = function(_size, _value)
+			static create = function(_size = 0, _value)
 			{
-				if (_size == undefined) {_size = 0;}
-				
 				ID = array_create(_size, _value);
 				
 				return ID;
@@ -378,13 +376,10 @@ function ArrayParser() constructor
 			//						return them.
 			//						If multiple values were removed, they will be returned in an
 			//						array. If no values were removed, {undefined} will be returned.
-			static remove = function(_position, _count)
+			static remove = function(_position = 0, _count = 1)
 			{
 				if (is_array(ID))
 				{
-					if (_position == undefined) {_position = 0}
-					if (_count == undefined) {_count = 1;}
-					
 					var _size = array_length(ID);
 					
 					_count = min(_count, _size);
@@ -477,9 +472,10 @@ function ArrayParser() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented by the data of the array.
-			static toString = function(_multiline, _elementNumber, _elementLength, _mark_separator,
-									   _mark_cut, _mark_elementStart, _mark_elementEnd,
-									   _mark_sizeSeparator)
+			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
+									   _mark_separator = ", ", _mark_cut = "...",
+									   _mark_elementStart = "", _mark_elementEnd = "",
+									   _mark_sizeSeparator = " - ")
 			{
 				if (is_array(ID))
 				{
@@ -490,17 +486,6 @@ function ArrayParser() constructor
 					{
 						_elementNumber = _size;
 					}
-					else if (!is_real(_elementNumber))
-					{
-						_elementNumber = 10;
-					}
-					
-					if (!is_real(_elementLength)) {_elementLength = 30;}
-					if (!is_string(_mark_separator)) {_mark_separator = ", ";}
-					if (!is_string(_mark_cut)) {_mark_cut = "...";}
-					if (!is_string(_mark_elementStart)) {_mark_elementStart = "";}
-					if (!is_string(_mark_elementEnd)) {_mark_elementEnd = "";}
-					if (!is_string(_mark_sizeSeparator)) {_mark_sizeSeparator = " - ";}
 					
 					var _mark_separator_length = string_length(_mark_separator);
 					var _mark_cut_length = string_length(_mark_cut);

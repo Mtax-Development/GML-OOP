@@ -271,13 +271,11 @@ function Sprite() constructor
 			//						- array[5]: {int} pixels trimmed from right
 			//						- array[6]: {real} x percentage of pixels on the texture page
 			//						- array[7]: {real} y percentage of pixels on the texture page
-			static getUV = function(_frame, _full)
+			static getUV = function(_frame = 0, _full = false)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
-					
-					var _uv = sprite_get_uvs(ID, _frame_value);
+					var _uv = sprite_get_uvs(ID, _frame);
 					
 					return ((_full) ? _uv : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
 				}
@@ -320,12 +318,10 @@ function Sprite() constructor
 			// @argument			{real} speed
 			// @argument			{constant:spritespeed_*} type?
 			// @description			Set the animation speed of this Sprite for every object instance.
-			static setSpeed = function(_speed, _type)
+			static setSpeed = function(_speed, _type = spritespeed_framespersecond)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					if (_type == undefined) {_type = spritespeed_framespersecond;}
-					
 					speed = _speed;
 					speed_type = _type;
 					
@@ -358,16 +354,14 @@ function Sprite() constructor
 			//						A separate mask can be created for each frame of this Sprite,
 			//						which can be used if their shape or alpha values are to affect the
 			//						collision mask.
-			static setCollisionMask = function(_boundaryMode, _boundaryType, _boundary,
-											   _alphaTolerance, _separateMasks)
+			static setCollisionMask = function(_boundaryMode = bboxmode_automatic,
+											   _boundaryType = bboxkind_rectangular, _boundary,
+											   _alphaTolerance, _separateMasks = false)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
 					var _boundary_x1, _boundary_y1, _boundary_x2, _boundary_y2;
 				
-					if (_boundaryMode == undefined) {_boundaryMode = bboxmode_automatic;}
-					if (_boundaryType == undefined) {_boundaryType = bboxkind_rectangular;}
-					
 					if ((_boundaryMode == 0) or (_boundaryMode == 1))
 					{
 						_boundary_x1 = 0;
@@ -394,8 +388,6 @@ function Sprite() constructor
 					{
 						_alphaTolerance = 0;
 					}
-					
-					if (_separateMasks == undefined) {_separateMasks = false;}
 					
 					sprite_collision_mask(ID, _separateMasks, _boundaryMode, _boundary_x1,
 										  _boundary_y1, _boundary_x2, _boundary_y2, _boundaryType,
@@ -427,16 +419,11 @@ function Sprite() constructor
 			// @argument			{int:color} color?
 			// @argument			{int} alpha?
 			// @description			Draw this Sprite to the current Surface.
-			static render = function(_location, _frame, _scale, _angle, _color, _alpha)
+			static render = function(_location, _frame = 0, _scale = new Scale(1, 1),
+									 _angle = new Angle(0), _color = c_white, _alpha = 1)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					if (_frame == undefined) {_frame = 0;}
-					if (_scale == undefined) {_scale = new Scale(1, 1);}
-					if (_angle == undefined) {_angle = new Angle(0);}
-					if (_color == undefined) {_color = c_white;}
-					if (_alpha == undefined) {_alpha = 1;}
-					
 					draw_sprite_ext(ID, _frame, _location.x, _location.y, _scale.x, _scale.y,
 									_angle.value, _color, _alpha);
 				}
@@ -461,12 +448,10 @@ function Sprite() constructor
 			//						current Surface.
 			//						The top left point of the part will be treated as the origin point
 			//						for this draw.
-			static renderPart = function(_location, _part, _frame)
+			static renderPart = function(_location, _part, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
-				
 					if (argument_count > 3)
 					{
 						var _scale = argument[3];
@@ -488,13 +473,13 @@ function Sprite() constructor
 						var _alpha_value = (((argument_count > 5) and (argument[5] != undefined))
 											? argument[5] : 1);
 						
-						draw_sprite_part_ext(ID, _frame_value, _part.x1, _part.y1, _part.x2, _part.y2,
+						draw_sprite_part_ext(ID, _frame, _part.x1, _part.y1, _part.x2, _part.y2,
 											 _location.x, _location.y, _scale_x, _scale_y,
 											 _color_value, _alpha_value);
 					}
 					else
 					{
-						draw_sprite_part(ID, _frame_value, _part.x1, _part.y1, _part.x2, _part.y2,
+						draw_sprite_part(ID, _frame, _part.x1, _part.y1, _part.x2, _part.y2,
 										 _location.x, _location.y);
 					}
 				}
@@ -520,7 +505,8 @@ function Sprite() constructor
 			//						Surface.
 			//						The top left point of the part will be treated as the origin point
 			//						for this draw.
-			static renderGeneral = function(_location, _part, _frame, _scale, _angle, _color, _alpha)
+			static renderGeneral = function(_location, _part, _frame = 0, _scale, _angle, _color,
+											_alpha = 1)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -540,8 +526,6 @@ function Sprite() constructor
 						_part_x2 = _part.x2;
 						_part_y2 = _part.y2;
 					}
-					
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
 					
 					var _scale_x, _scale_y;
 					
@@ -582,12 +566,10 @@ function Sprite() constructor
 						_color_x1y2 = _color.color4;
 					}
 					
-					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-					
-					draw_sprite_general(ID, _frame_value, _part_x1, _part_y1, _part_x2, _part_y2,
+					draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
 										_location.x, _location.y, _scale_x, _scale_y, _angle_value,
 										_color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
-										_alpha_value);
+										_alpha);
 				}
 				else
 				{
@@ -609,24 +591,22 @@ function Sprite() constructor
 			//						the current Surface.
 			//						The top left point of this Sprite is treated as the origin point
 			//						for this draw.
-			static renderSize = function(_location, _size, _frame)
+			static renderSize = function(_location, _size, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					var _frame_value = ((_frame == undefined) ? 0 : _frame);
-					
 					if (argument_count > 3)
 					{
 						var _color_value = ((argument[3] != undefined) ? argument[3] : c_white);
 						var _alpha_value = (((argument_count > 4) and (argument[4] != undefined))
 											? argument[4] : 1);
 						
-						draw_sprite_stretched_ext(ID, _frame_value, _location.x, _location.y, _size.x,
+						draw_sprite_stretched_ext(ID, _frame, _location.x, _location.y, _size.x,
 												  _size.y, _color_value, _alpha_value);
 					}
 					else
 					{
-						draw_sprite_stretched(ID,_frame_value, _location.x, _location.y, _size.x,
+						draw_sprite_stretched(ID,_frame, _location.x, _location.y, _size.x,
 											  _size.y);
 					}
 				}
@@ -648,7 +628,7 @@ function Sprite() constructor
 			// @argument			{int} alpha?
 			// @description			Draw this Sprite tiled through the entire view, the target created
 			//						Surface or if neither are used, the current Room.
-			static renderTiled = function(_offset, _frame)
+			static renderTiled = function(_offset, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -664,8 +644,6 @@ function Sprite() constructor
 						_offset_x = 0;
 						_offset_y = 0;
 					}
-					
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
 					
 					if (argument_count > 2)
 					{
@@ -688,12 +666,12 @@ function Sprite() constructor
 						var _alpha_value = (((argument_count > 5) and (argument[5] != undefined))
 											? argument[5] : 1);
 						
-						draw_sprite_tiled_ext(ID, _frame_value, _offset_x, _offset_y, _scale_x,
+						draw_sprite_tiled_ext(ID, _frame, _offset_x, _offset_y, _scale_x,
 											  _scale_y, _color_value, _alpha_value);
 					}
 					else
 					{
-						draw_sprite_tiled(ID, _frame_value, _offset_x, _offset_y);
+						draw_sprite_tiled(ID, _frame, _offset_x, _offset_y);
 					}
 				}
 				else
@@ -715,16 +693,13 @@ function Sprite() constructor
 			// @argument			{real} alpha?
 			// @description			Draw this Sprite with perspective altered by its edges.
 			static renderPerspective = function(_location1, _location2, _location3, _location4,
-												_frame, _alpha)
+												_frame = 0, _alpha = 1)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
-					var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-					
-					draw_sprite_pos(ID, _frame_value, _location1.x, _location1.y, _location2.x,
+					draw_sprite_pos(ID, _frame, _location1.x, _location1.y, _location2.x,
 									_location2.y, _location3.x, _location3.y, _location4.x,
-									_location4.y, _alpha_value);
+									_location4.y, _alpha);
 				}
 				else
 				{
@@ -818,7 +793,7 @@ function Sprite() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the details of this Sprite.
-			static toString = function(_multiline, _full)
+			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -907,12 +882,11 @@ function Sprite() constructor
 			//						background around pixels that were next to the background pixels.
 			//						The .gif files can only have the first frame of animation loaded.
 			//						The .json (Spine) files cannot have their backgrounds removed.
-			static fromFile = function(_path, _frameCount, _origin, _removeBackground, _smooth)
+			static fromFile = function(_path, _frameCount = 1, _origin, _removeBackground = false,
+									   _smooth = false)
 			{
 				if (file_exists(_path))
 				{
-					var _frameCount_value = ((_frameCount != undefined) ? _frameCount : 1);
-					
 					var _origin_x, _origin_y;
 					
 					if (_origin != undefined)
@@ -926,13 +900,8 @@ function Sprite() constructor
 						_origin_y = 0;
 					}
 					
-					var _removeBackground_value = ((_removeBackground != undefined)
-												   ? _removeBackground : false);
-					
-					var _smooth_value = (((_removeBackground_value)) ? _smooth : false);
-					
-					ID = sprite_add(_path, _frameCount_value, _removeBackground_value, _smooth_value,
-									_origin_x, _origin_y);
+					ID = sprite_add(_path, _frameCount, _removeBackground, _smooth, _origin_x,
+									_origin_y);
 					
 					name = sprite_get_name(ID);
 					size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
