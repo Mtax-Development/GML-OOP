@@ -230,19 +230,35 @@ function Point() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a form.
-			//						Note: Form drawing produces inconsistent results across devices
-			//						and export targets due to their technical differences.
-			//						Sprite drawing should be used instead for accurate results.
+			// @description			Execute the draw of this Shape as a sprite.
 			static render = function()
 			{
+				static __createPixelSprite = function()
+				{
+					var _surface = surface_create(1, 1);
+					
+					surface_set_target(_surface);
+					{
+						draw_clear(c_white);
+					}
+					surface_reset_target();
+					
+					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0,
+															 0);
+					
+					surface_free(_surface);
+					
+					return _sprite;
+				}
+				
+				static _pixelSprite = __createPixelSprite();
+				
 				if (self.isFunctional())
 				{
 					if (alpha > 0)
 					{
-						draw_set_alpha(alpha);
-						
-						draw_point_color(location.x, location.y, color);
+						draw_sprite_ext(_pixelSprite, 0, location.x, location.y, 1, 1, 0, color,
+										alpha);
 					}
 				}
 				else

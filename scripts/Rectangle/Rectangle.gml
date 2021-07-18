@@ -262,14 +262,39 @@ function Rectangle() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a form.
-			//						NOTE: Form drawing produces inconsistent results across devices
-			//						and export targets due to their technical differences.
-			//						Sprite drawing should be used instead for accurate results.
+			// @description			Execute the draw of this Shape as a sprite.
 			static render = function()
 			{
+				static __createPixelSprite = function()
+				{
+					var _surface = surface_create(1, 1);
+					
+					surface_set_target(_surface);
+					{
+						draw_clear(c_white);
+					}
+					surface_reset_target();
+					
+					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0,
+															 0);
+					
+					surface_free(_surface);
+					
+					return _sprite;
+				}
+				
+				static _pixelSprite = __createPixelSprite();
+				
 				if (self.isFunctional())
 				{
+					var _x1 = min(location.x1, location.x2);
+					var _x2 = max(location.x1, location.x2);
+					var _y1 = min(location.y1, location.y2);
+					var _y2 = max(location.y1, location.y2);
+					
+					var _width = (_x2 - _x1);
+					var _height = (_y2 - _y1);
+					
 					if ((fill_color != undefined) and (fill_alpha > 0))
 					{
 						var _color1, _color2, _color3, _color4;
@@ -289,12 +314,10 @@ function Rectangle() constructor
 							_color4 = fill_color;
 						}
 						
-						draw_set_alpha(fill_alpha);
-						
-						draw_rectangle_color(location.x1, location.y1, location.x2, location.y2,
-											 _color1, _color2, _color3, _color4, false);
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _width, _height, 0,
+											_color1, _color2, _color3, _color4, fill_alpha);
 					}
-				
+					
 					if ((outline_color != undefined) and (outline_size != 0) and (outline_alpha > 0))
 					{
 						var _color1, _color2, _color3, _color4;
@@ -314,17 +337,28 @@ function Rectangle() constructor
 							_color4 = outline_color;
 						}
 						
-						draw_set_alpha(outline_alpha);
-					
-						var _i = 0;
-						repeat (outline_size)
-						{
-							draw_rectangle_color((location.x1 - _i), (location.y1 - _i),
-												 (location.x2 + _i), (location.y2 + _i),
-												 _color1, _color2, _color3, _color4, true);
+						//|Top.
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1 - outline_size),
+											(_y1 - outline_size), (_width + outline_size),
+											outline_size, 0, _color1, _color2, _color2, _color1,
+											outline_alpha);
 						
-							++_i;
-						}
+						//|Left.
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1 - outline_size), _y1,
+											outline_size, (_height + outline_size), 0, _color1,
+											_color1, _color4, _color4, outline_alpha);
+						
+						//|Bottom.
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x2 + outline_size),
+											(_y2 + outline_size), (-(_width + outline_size)),
+											(-outline_size),
+											0, _color3, _color4, _color4, _color3, outline_alpha);
+						
+						//|Right.
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x2 + outline_size),
+											(_y1 - outline_size), (-outline_size),
+											(_height + outline_size), 0, _color2, _color2, _color3,
+											_color3, outline_alpha);
 					}
 				}
 				else
