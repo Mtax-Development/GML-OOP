@@ -1,7 +1,7 @@
 /// @function				Line()
 /// @argument				{Vector4} location
 /// @argument				{real} size?
-/// @argument				{color|Color2} color?
+/// @argument				{color|Color2|Color4} color?
 /// @argument				{real} alpha?
 ///							
 /// @description			Construct a Line Shape.
@@ -34,8 +34,22 @@ function Line() constructor
 						location = ((instanceof(_other.location) == "Vector4")
 									? new Vector4(_other.location) : _other.location);
 						size = _other.size;
-						color = ((instanceof(_other.color) == "Color2") ? new Color2(_other.color)
-																		: _other.color);
+						
+						switch (instanceof(_other.color))
+						{
+							case "Color4":
+								color = new Color4(_other.color);
+							break;
+							
+							case "Color2":
+								color = new Color2(_other.color);
+							break;
+							
+							default:
+								color = _other.color;
+							break;
+						}
+						
 						alpha = _other.alpha;
 					}
 					else
@@ -152,17 +166,30 @@ function Line() constructor
 				{
 					if ((alpha > 0) and (size != 0))
 					{
-						var _color1, _color2;
+						var _color1, _color2, _color3, _color4;
 						
-						if (instanceof(color) == "Color2")
+						switch (instanceof(color))
 						{
-							_color1 = color.color1;
-							_color2 = color.color2;
-						}
-						else
-						{
-							_color1 = color;
-							_color2 = color;
+							case "Color4":
+								_color1 = color.color1;
+								_color2 = color.color2;
+								_color3 = color.color3;
+								_color4 = color.color4;
+							break;
+							
+							case "Color2":
+								_color1 = color.color1;
+								_color2 = color.color2;
+								_color3 = color.color2;
+								_color4 = color.color1;
+							break;
+							
+							default:
+								_color1 = color;
+								_color2 = color;
+								_color3 = color;
+								_color4 = color;
+							break;
 						}
 						
 						var _sizeOffset = (size * 0.5);
@@ -176,7 +203,7 @@ function Line() constructor
 						var _y1 = (location.y1 + lengthdir_y(_sizeOffset, (_angle + 90)));
 						
 						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _distance, size,
-											_angle, _color1, _color2, _color2, _color1, alpha);
+											_angle, _color1, _color2, _color3, _color4, alpha);
 					}
 				}
 				else
