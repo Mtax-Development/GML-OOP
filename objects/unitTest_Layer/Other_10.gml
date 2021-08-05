@@ -1167,7 +1167,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	var _result = [_element[3][1].ID];
 	var _expectedValue = [0];
 	
-	_element[3][0].setTileAtPoint(_element[1][1], _element[2][0]);
+	_element[3][0].setTileAtPoint(_element[2][0], _element[1][1]);
 	_element[3][1] = _element[3][0].getTileInCell(_element[1][0]);
 	
 	array_push(_result, _element[3][1].ID);
