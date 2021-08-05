@@ -148,7 +148,7 @@ function TextDraw() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid TextDraw: " +
+					var _errorText = ("Attempted to render through an invalid text renderer: " +
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
