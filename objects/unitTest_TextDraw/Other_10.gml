@@ -44,6 +44,29 @@ asset = [TestFont];
 						  _result[4], _expectedValue[4]);
 	
 #endregion
+#region [Test: Method: getBoundaryOffset()]
+	
+	var _base = ["GML-OOP", new Font(asset[0]), new TextAlign(fa_left, fa_top)];
+	var _element = [new TextAlign(fa_center, fa_middle),
+					new Vector4(0, 0, string_width(_base[0]), string_height(_base[0])),
+					new Vector4((-(string_width(_base[0]) * 0.5)), (-(string_height(_base[0]) * 0.5)),
+								((string_width(_base[0]) * 0.5)), ((string_height(_base[0]) * 0.5)))];
+	
+	constructor = new TextDraw(_base[0], _base[1], _base[2]);
+	
+	var _result = [constructor.getBoundaryOffset()];
+	var _expectedValue = [_element[1]];
+	
+	constructor.align = _element[0];
+	
+	array_push(_result, constructor.getBoundaryOffset());
+	array_push(_expectedValue, _element[2]);
+	
+	unitTest.assert_equal("Method: getBoundaryOffset()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: render()]
 	
 	unitTest.assert_executable
