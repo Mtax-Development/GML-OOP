@@ -67,60 +67,76 @@ function TextDraw() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{Vector4}
+			// @returns				{Vector4} | On error: {undefined}
 			// @description			Return a boundry for the space the text occupies in pixels, offset
 			//						from its origin.
 			static getBoundaryOffset = function()
 			{
-				var _x1 = undefined;
-				var _y1 = undefined;
-				var _x2 = undefined;
-				var _y2 = undefined;
-				
-				var _size_x = string_width(ID);
-				var _size_y = string_height(ID);
-				
-				switch (align.x)
+				if (self.isFunctional())
 				{
-					case fa_left:
-						_x1 = 0;
-						_x2 = _size_x;
-					break;
+					var _string = string(ID);
 					
-					case fa_center:
-						var _size_x_half = (_size_x * 0.5);
+					var _x1 = undefined;
+					var _y1 = undefined;
+					var _x2 = undefined;
+					var _y2 = undefined;
+					
+					var _size_x = string_width(_string);
+					var _size_y = string_height(_string);
+					
+					switch (align.x)
+					{
+						case fa_left:
+							_x1 = 0;
+							_x2 = _size_x;
+						break;
 						
-						_x1 = (-_size_x_half);
-						_x2 = _size_x_half;
-					break;
+						case fa_center:
+							var _size_x_half = (_size_x * 0.5);
+						
+							_x1 = (-_size_x_half);
+							_x2 = _size_x_half;
+						break;
+						
+						case fa_right:
+							_x1 = (-_size_x);
+							_x2 = 0;
+						break;
+					}
 					
-					case fa_right:
-						_x1 = (-_size_x);
-						_x2 = 0;
-					break;
+					switch (align.y)
+					{
+						case fa_top:
+							_y1 = 0;
+							_y2 = _size_y;
+						break;
+						
+						case fa_middle:
+							var _size_y_half = (_size_y * 0.5);
+						
+							_y1 = (-_size_y_half);
+							_y2 = _size_y_half;
+						break;
+						
+						case fa_bottom:
+							_y1 = (-_size_y);
+							_y2 = 0;
+						break;
+					}
+					
+					return new Vector4(_x1, _y1, _x2, _y2);
 				}
-				
-				switch (align.y)
+				else
 				{
-					case fa_top:
-						_y1 = 0;
-						_y2 = _size_y;
-					break;
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getBoundaryOffset";
+					var _errorText = ("Attempted to get a property of an invalid text renderer: " +
+									  "{" + string(self) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					case fa_middle:
-						var _size_y_half = (_size_y * 0.5);
-						
-						_y1 = (-_size_y_half);
-						_y2 = _size_y_half;
-					break;
-					
-					case fa_bottom:
-						_y1 = (-_size_y);
-						_y2 = 0;
-					break;
+					return undefined;
 				}
-				
-				return new Vector4(_x1, _y1, _x2, _y2);
 			}
 			
 		#endregion
