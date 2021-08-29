@@ -75,10 +75,24 @@ function RangedValue() constructor
 			}
 			
 			// @returns				{bool}
-			// @description			Check if the value is equal to the boundaries of the Range.
+			// @description			Check if the value is equal to either boundary of the Range.
 			static isBoundary = function()
 			{
 				return ((value == range.minimum) or (value == range.maximum));
+			}
+			
+			// @returns				{bool}
+			// @description			Check if the value is equal to the minimum boundary of the Range.
+			static isMinimum = function()
+			{
+				return ((value == range.minimum));
+			}
+			
+			// @returns				{bool}
+			// @description			Check if the value is equal to the maximum boundary of the Range.
+			static isMaximum = function()
+			{
+				return ((value == range.maximum));
 			}
 			
 		#endregion
