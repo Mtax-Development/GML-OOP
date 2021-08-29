@@ -520,6 +520,13 @@ function Vector4() constructor
 				return lerp(y1, y2, _value);
 			}
 			
+			// @returns				{Vector2[]}
+			// @description			Return an array of two Vector2 with the values of this Vector4.
+			static split = function()
+			{
+				return [Vector2(x1, y1), Vector2(x2, y2)];
+			}
+			
 			// @returns				{real}
 			// @description			Return the direction from the first point towards the second.
 			static getAngle1to2 = function()
