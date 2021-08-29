@@ -149,19 +149,21 @@ function StringParser() constructor
 				return false;
 			}
 			
-			// @argument			{string} separator
-			// @returns				{string[]|string|StringParser[]|StringParser}
+			// @argument			{any:string} separator
+			// @argument			{bool} returnParser?
+			// @returns				{string|string[]|StringParser|StringParser[]}
 			// @description			Create multiple strings divided by the specified separator and
 			//						return them in an array.
 			//						The results can be returned as {StringParser} if it was specified.
 			//						Returns the string in its original state is no operation was
 			//						performed or {self} if return was specified as parser.
-			static split = function(_separator, _returnParser)
+			static split = function(_separator, _returnParser = false)
 			{
 				var _string = string(ID);
 				var _string_length = string_length(_string);
-				var _separator_lenght = string_length(_separator);
-				var _separator_count = string_count(_separator, _string);
+				var _string_separator = string(_separator);
+				var _separator_lenght = string_length(_string_separator);
+				var _separator_count = string_count(_string_separator, _string);
 				
 				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1)
 				and (_string_length > (_separator_lenght + 1)))
@@ -173,16 +175,17 @@ function StringParser() constructor
 					var _loopCount = (_string_length + 1);
 					repeat (_loopCount)
 					{
-						if ((string_copy(_string, _i, _separator_lenght) == _separator) 
+						if ((string_copy(_string, _i, _separator_lenght) == _string_separator) 
 						or (_i == _loopCount))
 						{
 							var _segment = string_copy(_string, _position_copy,
 													   (_i - _position_copy));
 							
-							if ((string_length(_segment) > 0) and (_segment != _separator))
+							if ((string_length(_segment) > 0) and (_segment != _string_separator))
 							{
 								_result[array_length(_result)] = string_replace_all(_segment,
-																					_separator, "");
+																					_string_separator,
+																					"");
 							}
 							
 							_i += _separator_lenght;
@@ -304,19 +307,20 @@ function StringParser() constructor
 			static getSubstringPosition = function(_substring, _startFromEnd = false, _startPosition)
 			{
 				var _string = string(ID);
+				var _string_substring = string(_substring);
 				var _result = undefined;
 				
 				if (_startFromEnd)
 				{
 					if (_startPosition == undefined) {_startPosition = string_length(_string);}
 					
-					_result = string_last_pos_ext(_substring, _string, _startPosition);
+					_result = string_last_pos_ext(_string_substring, _string, _startPosition);
 				}
 				else
 				{
 					if (_startPosition == undefined) {_startPosition = 0;}
 					
-					_result = string_pos_ext(_substring, _string, _startPosition);
+					_result = string_pos_ext(_string_substring, _string, _startPosition);
 				}
 				
 				return ((_result > 0) ? _result : undefined);
@@ -461,13 +465,13 @@ function StringParser() constructor
 				
 				if (_separator != undefined)
 				{
-					_separator = string(_separator);
+					var _string_separator = string(_separator);
 					
 					var _original = _string;
 					
 					repeat (_number)
 					{
-						_string += (_separator + _original);
+						_string += (_string_separator + _original);
 					}
 					
 					ID = _string;
@@ -491,18 +495,18 @@ function StringParser() constructor
 			{
 				ID = string(ID);
 				
-				_target = string(_target);
-				_substitute = string(_substitute);
+				var _string_target = string(_target);
+				var _string_substitute = string(_substitute);
 				
 				if (_count == undefined)
 				{
-					ID = string_replace_all(ID, _target, _substitute);
+					ID = string_replace_all(ID, _string_target, _string_substitute);
 				}
 				else
 				{
 					repeat (_count)
 					{
-						ID = string_replace(ID, _target, _substitute);
+						ID = string_replace(ID, _string_target, _string_substitute);
 					}
 				}
 				
@@ -566,13 +570,12 @@ function StringParser() constructor
 					{
 						_string_new_end = (_i_backwards + 1);
 						_end_set = true;
-							
 					}
 					
 					if ((_start_set) and (_end_set))
 					{
 						ID = string_copy(ID, _string_new_start,
-											(_string_new_end - _string_new_start));
+										 (_string_new_end - _string_new_start));
 							
 						return ID;
 					}
