@@ -504,7 +504,7 @@ function Vector4() constructor
 				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
 			}
 			
-			// @argument			{value}
+			// @argument			{real} value
 			// @returns				{real}
 			// @description			Return the point at specified precentage within the x values.
 			static interpolateX = function(_value)
@@ -512,7 +512,7 @@ function Vector4() constructor
 				return lerp(x1, x2, _value);
 			}
 			
-			// @argument			{value}
+			// @argument			{real} value
 			// @returns				{real}
 			// @description			Return the point at specified precentage within the y values.
 			static interpolateY = function(_value)
