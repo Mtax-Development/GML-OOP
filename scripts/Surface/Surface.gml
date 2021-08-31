@@ -31,14 +31,14 @@ function Surface() constructor
 																	   : _other.size);
 						onCreate = _other.onCreate;
 						
-						ID = surface_create(size.x, size.y);
+						ID = surface_create(max(1, size.x), max(1, size.y));
 						surface_copy(ID, 0, 0, _other.ID);
 					}
 					else
 					{
 						//|Construction type: New constructor.
 						size = argument[0];
-						ID = surface_create(size.x, size.y);
+						ID = surface_create(max(1, size.x), max(1, size.y));
 					}
 				}
 			}
@@ -58,7 +58,7 @@ function Surface() constructor
 			{
 				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
-					ID = surface_create(size.x, size.y);
+					ID = surface_create(max(1, size.x), max(1, size.y));
 					
 					if (is_method(onCreate))
 					{
