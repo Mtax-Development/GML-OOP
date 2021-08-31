@@ -1,7 +1,7 @@
 /// @function				Line()
 /// @argument				{Vector4} location
 /// @argument				{real} size?
-/// @argument				{color|Color2|Color4} color?
+/// @argument				{int:color|Color2|Color4} color?
 /// @argument				{real} alpha?
 ///							
 /// @description			Construct a Line Shape.

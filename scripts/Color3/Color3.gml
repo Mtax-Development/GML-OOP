@@ -1,7 +1,7 @@
 /// @function				Color3()
-/// @argument				{color} color1?
-/// @argument				{color} color2?
-/// @argument				{color} color3?
+/// @argument				{int:color} color1?
+/// @argument				{int:color} color2?
+/// @argument				{int:color} color3?
 ///							
 /// @description			Constructs a container for three colors.
 ///							
@@ -9,8 +9,8 @@
 ///							- New constructor.
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
-///							- One color for all values: {color} color
-///							- Color2 + color: {Color2} other, {color} color 
+///							- One color for all values: {int:color} color
+///							- Color2 + color: {Color2} other, {int:color} color 
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color3} other
 function Color3() constructor

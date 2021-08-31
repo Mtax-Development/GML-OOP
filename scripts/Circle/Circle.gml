@@ -1,9 +1,9 @@
 /// @function				Circle()
 /// @argument				{Vector2} location
 /// @argument				{real} radius
-/// @argument				{color|Color2} fill_color?
+/// @argument				{int:color|Color2} fill_color?
 /// @argument				{real} fill_alpha?
-/// @argument				{color} outline_color?
+/// @argument				{int:color} outline_color?
 /// @argument				{real} outline_alpha?
 ///							
 /// @description			Constructs a Circle Shape.

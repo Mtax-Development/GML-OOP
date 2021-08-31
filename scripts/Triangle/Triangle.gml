@@ -2,9 +2,9 @@
 /// @argument				{Vector2} location1
 /// @argument				{Vector2} location2
 /// @argument				{Vector2} location3
-/// @argument				{color|Color3} fill_color?
-///	@argument				{real} fill_alpha?
-/// @argument				{color|Color3} outline_color?
+/// @argument				{int:color|Color3} fill_color?
+/// @argument				{real} fill_alpha?
+/// @argument				{int:color|Color3} outline_color?
 /// @argument				{real} outline_alpha?
 ///							
 /// @description			Constructs a Triangle Shape.

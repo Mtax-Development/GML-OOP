@@ -1004,7 +1004,7 @@ function ParticleType() constructor
 			// @argument			{ParticleSystem} particleSystem
 			// @argument			{Vector2} location
 			// @argument			{int} number?
-			// @argument			{color} color?
+			// @argument			{int:color} color?
 			// @description			Directly create any number of Particles of this type in the
 			//						specified location.
 			static create = function(_particleSystem, _location, _number = 1, _color)

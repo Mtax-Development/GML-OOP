@@ -1,8 +1,8 @@
 /// @function				Ellipse()
 /// @argument				{Vector4} location
-/// @argument				{color|Color2} fill_color?
+/// @argument				{int:color|Color2} fill_color?
 /// @argument				{real} fill_alpha?
-/// @argument				{color} outline_color?
+/// @argument				{int:color} outline_color?
 /// @argument				{real} outline_alpha?
 ///							
 /// @description			Constructs an Ellipse Shape.

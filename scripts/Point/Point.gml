@@ -1,6 +1,6 @@
 /// @function				Point()
 /// @argument				{Vector2} location
-/// @argument				{color} color?
+/// @argument				{int:color} color?
 /// @argument				{real} alpha?
 ///							
 /// @description			Constructs a Point Shape, which is a single pixel.

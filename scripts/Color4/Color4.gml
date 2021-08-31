@@ -16,11 +16,12 @@
 ///							- New constructor.
 ///							- Default for all values: {void|undefined}
 ///							   The color values will be set to white.
-///							- One color for all values: {color} color
-///							- Color2 + color + color: {Color2} other, {color} color, {color} color
+///							- One color for all values: {int:color} color
+///							- Color2 + color + color: {Color2} other, {int:color} color,
+///													  {int:color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Color2 + Color2: {Color2} colorPair1, {Color2} colorPair2
-///							- Color3 + color: {Color2} other, {color} color
+///							- Color3 + color: {Color2} other, {int:color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color4} other
 function Color4() constructor

@@ -1,7 +1,7 @@
 /// @function				Arrow()
 /// @argument				{Vector4} location
 /// @argument				{real} size?
-/// @argument				{color} color?
+/// @argument				{int:color} color?
 /// @argument				{real} alpha?
 ///							
 /// @description			Constructs an Arrow Shape, which is a Line starting at x1y1 with a

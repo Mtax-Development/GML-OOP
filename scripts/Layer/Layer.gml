@@ -814,7 +814,6 @@ function Layer() constructor
 								layer_sprite_alpha(ID, alpha);
 								layer_sprite_index(ID, frame);
 								layer_sprite_speed(ID, speed);
-								
 							break;
 							
 							case "Sprite":

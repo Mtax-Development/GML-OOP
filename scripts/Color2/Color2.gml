@@ -1,6 +1,6 @@
 /// @function				Color2()
-/// @argument				{color} color1?
-/// @argument				{color} color2?
+/// @argument				{int:color} color1?
+/// @argument				{int:color} color2?
 ///							
 /// @description			Constructs a container for two colors.
 ///							
@@ -8,7 +8,7 @@
 ///							- New constructor.
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
-///							- One color for all values: {color} color
+///							- One color for all values: {int:color} color
 ///							- Constructor copy: {Color2} other
 function Color2() constructor
 {

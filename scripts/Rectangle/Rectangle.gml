@@ -1,8 +1,8 @@
 /// @function				Rectangle()
 /// @argument				{Vector4} location
-/// @argument				{color|Color4} fill_color?
+/// @argument				{int:color|Color4} fill_color?
 /// @argument				{real} fill_alpha?
-/// @argument				{color|Color4} outline_color?
+/// @argument				{int:color|Color4} outline_color?
 /// @argument				{int} outline_size?
 /// @argument				{real} outline_alpha?
 ///							

@@ -1,9 +1,9 @@
 /// @function				RoundRectangle()
 /// @argument				{Vector4} location
 /// @argument				{Vector2} radius?
-/// @argument				{color|Color2} fill_color?
+/// @argument				{int:color|Color2} fill_color?
 /// @argument				{real} fill_alpha?
-/// @argument				{color} outline_color?
+/// @argument				{int:color} outline_color?
 /// @argument				{real} outline_alpha?
 ///							
 /// @description			Constructs a Round Rectangle Shape.
