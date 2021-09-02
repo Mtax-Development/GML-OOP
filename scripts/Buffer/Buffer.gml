@@ -850,7 +850,7 @@ function Buffer() constructor
 				}
 			}
 			
-			// @argument			{string} path
+			// @argument			{string:path} path
 			// @argument			{int} offset?
 			// @argument			{int|all} async_size?
 			// @returns				{int|undefined}
@@ -933,7 +933,7 @@ function Buffer() constructor
 				}
 			}
 			
-			// @argument			{string} path
+			// @argument			{string:path} path
 			// @argument			{int} size
 			// @argument			{int} offset?
 			// @argument			{int} file_offset?

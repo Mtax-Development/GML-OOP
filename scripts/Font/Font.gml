@@ -4,7 +4,7 @@
 ///							
 ///							Construction types:
 ///							- Wrapper: {int:font} font
-///							- File: {string} path, {int} size, {bool} bold, {bool} italic,
+///							- File: {string:path} path, {int} size, {bool} bold, {bool} italic,
 ///									{Range} glyphs, {bool} antialiasing
 ///							- Sprite (UTF-8): {Sprite} sprite, {int} first, {bool} proportional, 
 ///											  {int} separation, {bool} antialiasing
