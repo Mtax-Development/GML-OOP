@@ -1,13 +1,13 @@
 /// @function				Font()
 ///							
-/// @description			Constructs a Font resource defining visual style of text rendering.
+/// @description			Constructs a Font resource defining glyphs used in text rendering.
 ///							
 ///							Construction types:
 ///							- Wrapper: {int:font} font
-///							- Resource: {string} path, {int} size, {bool} bold, 
-///										{bool} italic, {Range} glyphs, {bool} antialiasing
-///							- Sprite (utf8): {Sprite} sprite, {int} first, {bool} proportional, 
-///											 {int} separation, {bool} antialiasing
+///							- File: {string} path, {int} size, {bool} bold, {bool} italic,
+///									{Range} glyphs, {bool} antialiasing
+///							- Sprite (UTF-8): {Sprite} sprite, {int} first, {bool} proportional, 
+///											  {int} separation, {bool} antialiasing
 ///							- Sprite (glyph map): {Sprite} sprite, {string} glyphs, 
 ///												  {bool} proportional, {int} separation, 
 ///												  {bool} antialiasing
@@ -50,7 +50,7 @@ function Font() constructor
 										   _other.italic, _other.glyphs, _other.antialiasing);
 						break;
 						
-						case "sprite (utf8)":
+						case "sprite (UTF-8)":
 							sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.ID)
 																			  : _other.sprite);
 							
@@ -86,7 +86,7 @@ function Font() constructor
 					{
 						if (is_string(argument[0]))
 						{
-							//|Construction type: Resource.
+							//|Construction type: File.
 							type = "file";
 							
 							fontName = argument[0];
@@ -114,8 +114,8 @@ function Font() constructor
 							{
 								if (is_real(argument[1]))
 								{
-									//|Construction type: Sprite (utf8).
-									type = "sprite (utf8)";
+									//|Construction type: Sprite (UTF-8).
+									type = "sprite (UTF-8)";
 									
 									sprite = _sprite;
 									first = argument[1];
@@ -324,7 +324,7 @@ function Font() constructor
 										   "Antialiasing: " + string(antialiasing));
 							break;
 							
-							case "sprite (utf8)":
+							case "sprite (UTF-8)":
 								_string = ("Type: " + string(type) + _mark_separator +
 										   "Asset Name: " + font_get_name(ID) + _mark_separator +
 										   "Font Name: " + font_get_fontname(ID) + _mark_separator +
