@@ -207,7 +207,7 @@ function List() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					return ((ds_list_size(ID) > 0) ? ds_list_find_value(ID, 0) : undefined);
+					return ds_list_find_value(ID, 0);
 				}
 				else
 				{
@@ -229,9 +229,7 @@ function List() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					var _size = ds_list_size(ID);
-				
-					return ((_size > 0) ? ds_list_find_value(ID, (_size - 1)) : undefined);
+					return ds_list_find_value(ID, (ds_list_size(ID) - 1));
 				}
 				else
 				{
