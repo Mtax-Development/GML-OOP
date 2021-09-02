@@ -1,10 +1,11 @@
 /// @function				Sprite()
-/// @argument				{int:sprite} sprite
 ///							
 /// @description			Constructs a Sprite resource used to render its frames.
 ///							
 ///							Construction types:
-///							- New constructor
+///							- Wrapper: {int:sprite} sprite
+///							- File: {string:path} path, {int} frameCount?, {Vector2} origin?,
+///									{bool} removeBackground?, {bool} smooth?
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Sprite} other
 function Sprite() constructor
@@ -45,17 +46,62 @@ function Sprite() constructor
 					}
 					else
 					{
-						//|Construction type: New constructor.
-						ID = argument[0];
-						name = sprite_get_name(ID);
-						size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
-						frameCount = sprite_get_number(ID);
-						origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
-						boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
-											   sprite_get_bbox_right(ID), sprite_get_bbox_bottom(ID));
-						boundary_mode = sprite_get_bbox_mode(ID);
-						speed = sprite_get_speed(ID);
-						speed_type = sprite_get_speed_type(ID);
+						if (is_real(argument[0]))
+						{
+							//|Construction type: Wrapper.
+							ID = argument[0];
+							name = sprite_get_name(ID);
+							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							frameCount = sprite_get_number(ID);
+							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
+							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
+												   sprite_get_bbox_right(ID),
+												   sprite_get_bbox_bottom(ID));
+							boundary_mode = sprite_get_bbox_mode(ID);
+							speed = sprite_get_speed(ID);
+							speed_type = sprite_get_speed_type(ID);
+						}
+						else if ((is_string(argument[0])) and (file_exists(argument[0])))
+						{
+							//|Construction type: File.
+							var _path = argument[0];
+							var _frameCount = (((argument_count > 1) and (argument[1] != undefined))
+											   ? argument[1] : 0);
+							var _removeBackground = (((argument_count > 2) and
+													  (argument[2] != undefined))
+													  ? argument[2] : false);
+							var _smooth = (((argument_count > 3) and (argument[3] != undefined))
+										  ? argument[3] : false);
+							
+							var _origin_x, _origin_y;
+							
+							if ((argument_count > 4) and (instanceof(argument[4]) == "Vector2"))
+							{
+								var _origin = argument[4];
+								
+								_origin_x = _origin.x;
+								_origin_y = _origin.y;
+							}
+							else
+							{
+								_origin_x = 0;
+								_origin_y = 0;
+							}
+							
+							ID = sprite_add(_path, _frameCount, _removeBackground, _smooth, _origin_x,
+											_origin_y);
+							
+							name = sprite_get_name(ID);
+							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							frameCount = sprite_get_number(ID);
+							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
+							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
+												   sprite_get_bbox_right(ID),
+												   sprite_get_bbox_bottom(ID));
+							boundary_mode = sprite_get_bbox_mode(ID);
+							speed = sprite_get_speed(ID);
+							speed_type = sprite_get_speed_type(ID);
+						}
 					}
 				}
 			}
@@ -862,69 +908,6 @@ function Sprite() constructor
 					var _errorText = ("Attempted to convert an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-			}
-			
-			// @argument			{string:path} path
-			// @argument			{int} frameCount?
-			// @argument			{Vector2} origin?
-			// @argument			{bool} removeBackground?
-			// @argument			{bool} smooth?
-			// @returns				{int} | On error: {undefined}
-			// @description			Refer to new Sprite by adding it from the specified file with the
-			//						.png, .jpg, .jpeg, .gif or .json (Spine) extension.
-			//						The file will be divided vertically by the number of frames, which
-			//						will be then applied as separate sprite frames.
-			//						The file can be loaded without the background, treating each pixel
-			//						with the same color as the bottommost leftmost pixel of the file
-			//						as transparent. If this is performed, the image can be smoothed by
-			//						placing a half-transparent outline with the color of that removed
-			//						background around pixels that were next to the background pixels.
-			//						The .gif files can only have the first frame of animation loaded.
-			//						The .json (Spine) files cannot have their backgrounds removed.
-			static fromFile = function(_path, _frameCount = 1, _origin, _removeBackground = false,
-									   _smooth = false)
-			{
-				if (file_exists(_path))
-				{
-					var _origin_x, _origin_y;
-					
-					if (_origin != undefined)
-					{
-						_origin_x = _origin.x;
-						_origin_y = _origin.y;
-					}
-					else
-					{
-						_origin_x = 0;
-						_origin_y = 0;
-					}
-					
-					ID = sprite_add(_path, _frameCount, _removeBackground, _smooth, _origin_x,
-									_origin_y);
-					
-					name = sprite_get_name(ID);
-					size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
-					frameCount = sprite_get_number(ID);
-					origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
-					boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
-										   sprite_get_bbox_right(ID), sprite_get_bbox_bottom(ID));
-					boundary_mode = sprite_get_bbox_mode(ID);
-					speed = sprite_get_speed(ID);
-					speed_type = sprite_get_speed_type(ID);
-					
-					return ID;
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "fromFile";
-					var _errorText = ("Attempted to load a nonexistent file: " +
-									  "{" + string(_path) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
 				}
 			}
 			
