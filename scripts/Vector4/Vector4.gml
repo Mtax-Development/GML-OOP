@@ -494,14 +494,13 @@ function Vector4() constructor
 				return [_quotient_y1, _quotient_y2];
 			}
 			
-			// @argument			{real} x
-			// @argument			{real} y
+			// @argument			{Vector2} value
 			// @returns				{Vector2}
 			// @description			Return the point at specified respective precentages within the
 			//						x and y values.
-			static interpolate = function(_x, _y)
+			static interpolate = function(_value)
 			{
-				return new Vector2(lerp(x1, x2, _x), lerp(y1, y2, _y));
+				return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
 			}
 			
 			// @argument			{real} value
