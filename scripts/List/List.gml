@@ -247,7 +247,7 @@ function List() constructor
 			// @argument			{any} value
 			// @returns				{int}
 			// @description			Return the first found position of the specified value or -1 if
-			//						not present.
+			//						the value does not exist.
 			static getFirstIndex = function(_value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
