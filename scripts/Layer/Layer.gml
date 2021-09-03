@@ -758,6 +758,7 @@ function Layer() constructor
 		
 		// @function			Layer.SpriteElement()
 		// @argument			{Sprite} sprite
+		//						
 		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
 		//						
 		//						Construction types:
@@ -1154,6 +1155,7 @@ function Layer() constructor
 		
 		// @function			Layer.BackgroundElement()
 		// @argument			{Sprite} sprite
+		//						
 		// @description			Construct a Background Element used to draw a Background on this
 		//						Layer.
 		//						
@@ -1637,6 +1639,7 @@ function Layer() constructor
 		// @argument			{int:tileset} tileset
 		// @argument			{Vector2} location
 		// @argument			{Vector2} size
+		//						
 		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
 		//						this Layer.
 		//						
@@ -2173,6 +2176,7 @@ function Layer() constructor
 				
 				// @function			Layer.TilemapElement.TileData()
 				// @argument			{int} id?
+				//						
 				// @description			Constructs a TileData Element, which refers to a Tile in this
 				//						Tilemap.
 				//						
@@ -2565,6 +2569,7 @@ function Layer() constructor
 		
 		// @function			Layer.ParticleSystem()
 		// @argument			{bool} persistent?
+		//						
 		// @description			Construct a Particle System Element used to create Particles of
 		//						any Particle Type on this Layer.
 		//						

@@ -3,7 +3,7 @@
 /// @argument				{constant:buffer_[bufferType]} type
 /// @argument				{int} aligment?
 ///							
-///	@description			Constructs a Buffer, which is a region of memory, primarly used while
+/// @description			Constructs a Buffer, which is a region of memory, primarly used while
 ///							moving data between places, such as through network or to files.
 ///							
 ///							Construction types:

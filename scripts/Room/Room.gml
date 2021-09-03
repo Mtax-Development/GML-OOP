@@ -342,6 +342,7 @@ function Room() constructor
 		// @function			Room.AddedInstance()
 		// @argument			{int:object} object
 		// @argument			{Vector2} location?
+		//						
 		// @description			A container constructor for properties of instances added to this Room
 		//						before its activation.
 		//						
