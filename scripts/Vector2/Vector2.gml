@@ -11,7 +11,7 @@
 ///							   Array positions will be applied depending on its size:
 ///							   1: array[0] will be set to x and y.
 ///							   2+: array[0] will be set to x, array[1] will be set to y.
-///							- From Scale: {Scale} other
+///							- From Scale: {Scale} scale
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Vector2} other
 function Vector2() constructor
@@ -31,13 +31,19 @@ function Vector2() constructor
 					switch (instanceof(argument[0]))
 					{
 						case "Vector2":
-						case "Scale":
 							//|Construction type: Constructor copy.
-							//|Construction type: From Scale.
 							var _other = argument[0];
 							
 							x = _other.x;
 							y = _other.y;
+						break;
+						
+						case "Scale":
+							//|Construction type: From Scale.
+							var _scale = argument[0];
+							
+							x = _scale.x;
+							y = _scale.y;
 						break;
 						
 						default:
@@ -94,7 +100,7 @@ function Vector2() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{Vector2|Scale} other
+			// @argument			{Vector2} other
 			// @returns				{bool}
 			// @description			Check if the values of this Vector2 are equal to the values of
 			//						specified other one.
