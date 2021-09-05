@@ -144,6 +144,28 @@ function Vector4() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if this Vector4 contains at least one of the specified
+			//						values.
+			static contains = function()
+			{
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _value = argument[_i];
+					
+					if ((x1 == _value) or (y1 == _value) or (x2 == _value) or (y2 == _value))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
 			// @argument			{Vector4} other
 			// @returns				{bool}
 			// @description			Check whether this and other Vector4 have the same values.

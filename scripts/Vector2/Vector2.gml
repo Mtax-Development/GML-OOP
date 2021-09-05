@@ -100,6 +100,28 @@ function Vector2() constructor
 		#endregion
 		#region <Getters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if this Vector2 contains at least one of the specified
+			//						values.
+			static contains = function()
+			{
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _value = argument[_i];
+					
+					if ((x == _value) or (y == _value))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
 			// @argument			{Vector2} other
 			// @returns				{bool}
 			// @description			Check if the values of this Vector2 are equal to the values of
