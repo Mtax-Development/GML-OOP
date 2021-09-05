@@ -5,7 +5,10 @@
 ///							Construction types:
 ///							- Wrapper: {int:sprite} sprite
 ///							- File: {string:path} path, {int} frameCount?, {Vector2} origin?,
-///									{bool} removeBackground?, {bool} smooth?
+///									{bool} removeBackground?, {bool} smoothRemovedBackground?
+///							- From Surface: {int:surface|Surface} surface, {Vector4} part,
+///											{Vector2} origin?, {bool} removeBackground?,
+///											{bool} smoothRemovedBackground?
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Sprite} other
 function Sprite() constructor
@@ -46,22 +49,7 @@ function Sprite() constructor
 					}
 					else
 					{
-						if (is_real(argument[0]))
-						{
-							//|Construction type: Wrapper.
-							ID = argument[0];
-							name = sprite_get_name(ID);
-							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
-							frameCount = sprite_get_number(ID);
-							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
-							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
-												   sprite_get_bbox_right(ID),
-												   sprite_get_bbox_bottom(ID));
-							boundary_mode = sprite_get_bbox_mode(ID);
-							speed = sprite_get_speed(ID);
-							speed_type = sprite_get_speed_type(ID);
-						}
-						else if ((is_string(argument[0])) and (file_exists(argument[0])))
+						if ((is_string(argument[0])) and (file_exists(argument[0])))
 						{
 							//|Construction type: File.
 							var _path = argument[0];
@@ -70,8 +58,9 @@ function Sprite() constructor
 							var _removeBackground = (((argument_count > 2) and
 													  (argument[2] != undefined))
 													  ? argument[2] : false);
-							var _smooth = (((argument_count > 3) and (argument[3] != undefined))
-										  ? argument[3] : false);
+							var _smoothRemovedBackground = (((argument_count > 3) and
+															(argument[3] != undefined))
+															? argument[3] : false);
 							
 							var _origin_x, _origin_y;
 							
@@ -88,9 +77,58 @@ function Sprite() constructor
 								_origin_y = 0;
 							}
 							
-							ID = sprite_add(_path, _frameCount, _removeBackground, _smooth, _origin_x,
-											_origin_y);
+							ID = sprite_add(_path, _frameCount, _removeBackground,
+											_smoothRemovedBackground, _origin_x, _origin_y);
 							
+							name = sprite_get_name(ID);
+							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							frameCount = sprite_get_number(ID);
+							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
+							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
+												   sprite_get_bbox_right(ID),
+												   sprite_get_bbox_bottom(ID));
+							boundary_mode = sprite_get_bbox_mode(ID);
+							speed = sprite_get_speed(ID);
+							speed_type = sprite_get_speed_type(ID);
+						}
+						else if ((argument_count > 1) and (instanceof(argument[1]) == "Vector4"))
+						{
+							//|Construction type: From Surface.
+							var _surface = ((instanceof(argument[0]) == "Surface") ? argument[0].ID
+																				   : argument[0]);
+							var _part = argument[1];
+							
+							var _origin_x, _origin_y;
+							
+							if ((argument_count > 2) and (instanceof(argument[2]) == "Vector2"))
+							{
+								var _origin = argument[2];
+								
+								_origin_x = _origin.x;
+								_origin_y = _origin.y;
+							}
+							else
+							{
+								_origin_x = 0;
+								_origin_y = 0;
+							}
+							
+							var _removeBackground = (((argument_count > 3) and
+													 (argument[3] != undefined))
+													 ? argument[3] : false);
+							var _smoothRemovedBackground = (((argument_count > 4) and
+															(argument[4] != undefined))
+															? argument[4] : false);
+							
+							ID = sprite_create_from_surface(_surface, _part.x1, _part.y1, _part.x2,
+															_part.y2, _removeBackground,
+															_smoothRemovedBackground, _origin_x,
+															_origin_y);
+						}
+						else if (is_real(argument[0]))
+						{
+							//|Construction type: Wrapper.
+							ID = argument[0];
 							name = sprite_get_name(ID);
 							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
 							frameCount = sprite_get_number(ID);
