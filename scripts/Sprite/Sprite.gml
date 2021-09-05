@@ -923,8 +923,9 @@ function Sprite() constructor
 			
 			// @argument			{string:path} path
 			// @argument			{int} frame?
-			// @description			Save this Sprite to the specified .png file, either only its one
-			//						specified frame or all of them in one file in a horoziontal strip.
+			// @description			Save this Sprite created during the runtime to the specified .png
+			//						file, either only its one specified frame or all of them in one
+			//						file in a horizontal strip.
 			static toFile = function(_path, _frame)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
