@@ -124,8 +124,7 @@ function Vector2() constructor
 			
 			// @argument			{Vector2} other
 			// @returns				{bool}
-			// @description			Check if the values of this Vector2 are equal to the values of
-			//						specified other one.
+			// @description			Check if this and the specified Vector2 have the same values.
 			static equals = function(_other)
 			{
 				return ((x == _other.x) and (y == _other.y));

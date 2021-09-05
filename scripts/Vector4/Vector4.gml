@@ -168,7 +168,7 @@ function Vector4() constructor
 			
 			// @argument			{Vector4} other
 			// @returns				{bool}
-			// @description			Check whether this and other Vector4 have the same values.
+			// @description			Check if this and the specified Vector4 have the same values.
 			static equals = function(_other)
 			{
 				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
