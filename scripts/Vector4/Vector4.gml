@@ -844,7 +844,7 @@ function Vector4() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			{real|Vector4|Vector2} value
+			// @argument			{real|Vector2|Vector4} value
 			// @description			Add to the values of this Vector4 the specified value or the
 			//						values of other specified Vector4 or Vector2.
 			static add = function()
@@ -878,7 +878,7 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{real|Vector4|Vector2} value
+			// @argument			{real|Vector2|Vector4} value
 			// @description			Substract from the values of this Vector4 the specified value or 
 			//						the values of other specified Vector4 or Vector2.
 			static substract = function()
@@ -912,7 +912,7 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{real|Vector4|Vector2} value
+			// @argument			{real|Vector2|Vector4} value
 			// @description			Multiply the values of this Vector4 the specified value or the 
 			//						values of other specified Vector4 or Vector2.
 			static multiply = function()
@@ -946,7 +946,7 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{real|Vector4|Vector2} value
+			// @argument			{real|Vector2|Vector4} value
 			// @description			Divide the values of this Vector4 the specified value or the 
 			//						values of other specified Vector4 or Vector2.
 			//						Attempts of division by 0 are ignored.
