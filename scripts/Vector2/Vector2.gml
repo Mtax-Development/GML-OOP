@@ -382,19 +382,15 @@ function Vector2() constructor
 			// @argument			{real|Vector2} value
 			// @description			Add to the values of this Vector2 the specified value or the
 			//						values of other specified Vector2.
-			static add = function()
+			static add = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector2")
+				if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					x += _other.x;
-					y += _other.y;
+					x += _value.x;
+					y += _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x += _value;
 					y += _value;
 				}
@@ -403,19 +399,15 @@ function Vector2() constructor
 			// @argument			{real|Vector2} value
 			// @description			Substract the values of this Vector2 the specified value or the
 			//						values of other specified Vector2.
-			static substract = function()
+			static substract = function(_value)
 			{
 				if (instanceof(argument[0]) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					x -= _other.x;
-					y -= _other.y;
+					x -= _value.x;
+					y -= _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x -= _value;
 					y -= _value;
 				}
@@ -424,19 +416,15 @@ function Vector2() constructor
 			// @argument			{real|Vector2} value
 			// @description			Multiply the values of this Vector2 by specified value or the
 			//						values of other specified Vector2.
-			static multiply = function()
+			static multiply = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector2")
+				if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					x *= _other.x;
-					y *= _other.y;
+					x *= _value.x;
+					y *= _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x *= _value;
 					y *= _value;
 				}
@@ -446,26 +434,22 @@ function Vector2() constructor
 			// @description			Divide the values of this Vector2 by specified value or the
 			//						values of other specified Vector2.
 			//						Attempts of division by 0 are ignored.
-			static divide = function()
+			static divide = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector2")
+				if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					if (_other.x != 0)
+					if (_value.x != 0)
 					{
-						x /= _other.x;
+						x /= _value.x;
 					}
 					
-					if (_other.y != 0)
+					if (_value.y != 0)
 					{
-						y /= _other.y;
+						y /= _value.y;
 					}
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					if (_value != 0)
 					{
 						x /= _value;

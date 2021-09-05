@@ -847,30 +847,24 @@ function Vector4() constructor
 			// @argument			{real|Vector2|Vector4} value
 			// @description			Add to the values of this Vector4 the specified value or the
 			//						values of other specified Vector4 or Vector2.
-			static add = function()
+			static add = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector4")
+				if (instanceof(_value) == "Vector4")
 				{
-					var _other = argument[0];
-					
-					x1 += _other.x1;
-					y1 += _other.y1;
-					x2 += _other.x2;
-					y2 += _other.y2;
+					x1 += _value.x1;
+					y1 += _value.y1;
+					x2 += _value.x2;
+					y2 += _value.y2;
 				}
-				else if (instanceof(argument[0]) == "Vector2")
+				else if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					x1 += _other.x;
-					y1 += _other.y;
-					x2 += _other.x;
-					y2 += _other.y;
+					x1 += _value.x;
+					y1 += _value.y;
+					x2 += _value.x;
+					y2 += _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x1 += _value;
 					y1 += _value;
 					x2 += _value;
@@ -881,30 +875,26 @@ function Vector4() constructor
 			// @argument			{real|Vector2|Vector4} value
 			// @description			Substract from the values of this Vector4 the specified value or 
 			//						the values of other specified Vector4 or Vector2.
-			static substract = function()
+			static substract = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector4")
+				if (instanceof(_value) == "Vector4")
 				{
-					var _other = argument[0];
-					
-					x1 -= _other.x1;
-					y1 -= _other.y1;
-					x2 -= _other.x2;
-					y2 -= _other.y2;
+					x1 -= _value.x1;
+					y1 -= _value.y1;
+					x2 -= _value.x2;
+					y2 -= _value.y2;
 				}
 				else if (instanceof(argument[0]) == "Vector2")
 				{
 					var _other = argument[0];
 					
-					x1 -= _other.x;
-					y1 -= _other.y;
-					x2 -= _other.x;
-					y2 -= _other.y;
+					x1 -= _value.x;
+					y1 -= _value.y;
+					x2 -= _value.x;
+					y2 -= _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x1 -= _value;
 					y1 -= _value;
 					x2 -= _value;
@@ -915,30 +905,24 @@ function Vector4() constructor
 			// @argument			{real|Vector2|Vector4} value
 			// @description			Multiply the values of this Vector4 the specified value or the 
 			//						values of other specified Vector4 or Vector2.
-			static multiply = function()
+			static multiply = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector4")
+				if (instanceof(_value) == "Vector4")
 				{
-					var _other = argument[0];
-					
-					x1 *= _other.x1;
-					y1 *= _other.y1;
-					x2 *= _other.x2;
-					y2 *= _other.y2;
+					x1 *= _value.x1;
+					y1 *= _value.y1;
+					x2 *= _value.x2;
+					y2 *= _value.y2;
 				}
-				else if (instanceof(argument[0]) == "Vector2")
+				else if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					x1 *= _other.x;
-					y1 *= _other.y;
-					x2 *= _other.x;
-					y2 *= _other.y;
+					x1 *= _value.x;
+					y1 *= _value.y;
+					x2 *= _value.x;
+					y2 *= _value.y;
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					x1 *= _value;
 					y1 *= _value;
 					x2 *= _value;
@@ -950,60 +934,54 @@ function Vector4() constructor
 			// @description			Divide the values of this Vector4 the specified value or the 
 			//						values of other specified Vector4 or Vector2.
 			//						Attempts of division by 0 are ignored.
-			static divide = function()
+			static divide = function(_value)
 			{
-				if (instanceof(argument[0]) == "Vector4")
+				if (instanceof(_value) == "Vector4")
 				{
-					var _other = argument[0];
-					
-					if (_other.x1 != 0)
+					if (_value.x1 != 0)
 					{
-						x1 /= _other.x1;
+						x1 /= _value.x1;
 					}
 					
-					if (_other.y1 != 0)
+					if (_value.y1 != 0)
 					{
-						y1 /= _other.y1;
+						y1 /= _value.y1;
 					}
 					
-					if (_other.x2 != 0)
+					if (_value.x2 != 0)
 					{
-						x2 /= _other.x2;
+						x2 /= _value.x2;
 					}
 					
-					if (_other.y2 != 0)
+					if (_value.y2 != 0)
 					{
-						y2 /= _other.y2;
+						y2 /= _value.y2;
 					}
 				}
-				else if (instanceof(argument[0]) == "Vector2")
+				else if (instanceof(_value) == "Vector2")
 				{
-					var _other = argument[0];
-					
-					if (_other.x != 0)
+					if (_value.x != 0)
 					{
-						x1 /= _other.x;
+						x1 /= _value.x;
 					}
 					
-					if (_other.y != 0)
+					if (_value.y != 0)
 					{
-						y1 /= _other.y;
+						y1 /= _value.y;
 					}
 					
-					if (_other.x != 0)
+					if (_value.x != 0)
 					{
-						x2 /= _other.x;
+						x2 /= _value.x;
 					}
 					
-					if (_other.y != 0)
+					if (_value.y != 0)
 					{
-						y2 /= _other.y;
+						y2 /= _value.y;
 					}
 				}
 				else
 				{
-					var _value = argument[0];
-					
 					if (_value != 0)
 					{
 						x1 /= _value;
