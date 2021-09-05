@@ -175,20 +175,45 @@ function Vector4() constructor
 						and (y2 == _other.y2));
 			}
 			
-			// @argument			{Vector4} other?
-			// @returns				{Vector4|Vector2}
+			// @argument			{real|Vector2|Vector4} value?
+			// @returns				{Vector2|Vector4}
 			// @description			Return the sum of either the values of this Vector4 as a Vector2
-			//						or if other one is specified, between the x and y values of each
-			//						in a Vector4.
+			//						or them added to the specified value or the ones of the specified
+			//						Vector2 or Vector4 as a Vector4.
 			static sum = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
-					var _sum_x1 = (x1 + _other.x1);
-					var _sum_y1 = (y1 + _other.y1);
-					var _sum_x2 = (x2 + _other.x2);
-					var _sum_y2 = (y2 + _other.y2);
+					var _value = argument[0];
+					var _sum_x1, _sum_y1, _sum_x2, _sum_y2;
+					
+					if (is_real(_value))
+					{
+						_sum_x1 = (x1 + _value);
+						_sum_y1 = (y1 + _value);
+						_sum_x2 = (x2 + _value);
+						_sum_y2 = (y2 + _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_sum_x1 = (x1 + _value.x);
+								_sum_y1 = (y1 + _value.y);
+								_sum_x2 = (x2 + _value.x);
+								_sum_y2 = (y2 + _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_sum_x1 = (x1 + _value.x1);
+								_sum_y1 = (y1 + _value.y1);
+								_sum_x2 = (x2 + _value.x2);
+								_sum_y2 = (y2 + _value.y2);
+							break;
+						}
+					}
 					
 					return new Vector4(_sum_x1, _sum_y1, _sum_x2, _sum_y2);
 				}
@@ -201,29 +226,38 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector4|Vector2} other?
+			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{real|real[]}
-			// @description			Return the sum of the x values of either this Vector4 or this and
-			//						other Vector.
+			// @description			Return the sum of the x values of either this Vector4 or them
+			//						added to the specified value of the x values of the specified
+			//						Vector2 or Vector4 in an array.
 			static sumX = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _sum_x1, _sum_x2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_sum_x1 = (x1 + _other.x1);
-							_sum_x2 = (x2 + _other.x2);
-						break;
-						
-						case "Vector2":
-							_sum_x1 = (x1 + _other.x);
-							_sum_x2 = (x2 + _other.x);
-						break;
+						_sum_x1 = (x1 + _value);
+						_sum_x2 = (x2 + _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_sum_x1 = (x1 + _value.x);
+								_sum_x2 = (x2 + _value.x);
+							break;
+							
+							case "Vector4":
+							default:
+								_sum_x1 = (x1 + _value.x1);
+								_sum_x2 = (x2 + _value.x2);
+							break;
+						}
 					}
 					
 					return [_sum_x1, _sum_x2];
@@ -234,29 +268,38 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector4|Vector2} other?
+			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{real|real[]}
-			// @description			Return the sum of the y values of either this Vector4 or this and
-			//						other Vector.
+			// @description			Return the sum of the y values of either this Vector4 or them
+			//						added to the specified value of the y values of the specified
+			//						Vector2 or Vector4 in an array.
 			static sumY = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _sum_y1, _sum_y2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_sum_y1 = (y1 + _other.y1);
-							_sum_y2 = (y2 + _other.y2);
-						break;
-						
-						case "Vector2":
-							_sum_y1 = (y1 + _other.y);
-							_sum_y2 = (y2 + _other.y);
-						break;
+						_sum_y1 = (y1 + _value);
+						_sum_y2 = (y2 + _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_sum_y1 = (y1 + _value.y);
+								_sum_y2 = (y2 + _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_sum_y1 = (y1 + _value.y1);
+								_sum_y2 = (y2 + _value.y2);
+							break;
+						}
 					}
 					
 					return [_sum_y1, _sum_y2];
@@ -267,20 +310,45 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other?
-			// @returns				{Vector4|Vector2}
-			// @description			Return the difference between either the values of this Vector4 as
-			//						a Vector2 or if other one is specified, between the x and y values
-			//						of each in a Vector4.
+			// @argument			{real|Vector2|Vector4} value?
+			// @returns				{Vector2|Vector4}
+			// @description			Return the difference between either the values of this Vector4
+			//						as a Vector2 or them and the specified value or the ones of the
+			//						specified Vector2 or Vector4 as a Vector4.
 			static difference = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
-					var _difference_x1 = abs(x1 - _other.x1);
-					var _difference_y1 = abs(y1 - _other.y1);
-					var _difference_x2 = abs(x2 - _other.x2);
-					var _difference_y2 = abs(y2 - _other.y2);
+					var _value = argument[0];
+					var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
+					
+					if (is_real(_value))
+					{
+						_difference_x1 = abs(x1 - _value);
+						_difference_y1 = abs(y1 - _value);
+						_difference_x2 = abs(x2 - _value);
+						_difference_y2 = abs(y2 - _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_difference_x1 = abs(x1 - _value.x);
+								_difference_y1 = abs(y1 - _value.y);
+								_difference_x2 = abs(x2 - _value.x);
+								_difference_y2 = abs(y2 - _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_difference_x1 = abs(x1 - _value.x1);
+								_difference_y1 = abs(y1 - _value.y1);
+								_difference_x2 = abs(x2 - _value.x2);
+								_difference_y2 = abs(y2 - _value.y2);
+							break;
+						}
+					}
 					
 					return new Vector4(_difference_x1, _difference_y1, _difference_x2,
 									   _difference_y2);
@@ -294,29 +362,38 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector4|Vector2} other?
+			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{real|real[]}
 			// @description			Return the difference between the x values of either this Vector4
-			//						or this and other Vector.
+			//						or them and the specified value or the ones of the specified
+			//						Vector2 or Vector4 in an array.
 			static differenceX = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _difference_x1, _difference_x2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_difference_x1 = abs(x1 - _other.x1);
-							_difference_x2 = abs(x2 - _other.x2);
-						break;
-						
-						case "Vector2":
-							_difference_x1 = abs(x1 - _other.x);
-							_difference_x2 = abs(x2 - _other.x);
-						break;
+						_difference_x1 = abs(x1 - _value);
+						_difference_x2 = abs(x2 - _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_difference_x1 = abs(x1 - _value.x);
+								_difference_x2 = abs(x2 - _value.x);
+							break;
+							
+							case "Vector4":
+							default:
+								_difference_x1 = abs(x1 - _value.x1);
+								_difference_x2 = abs(x2 - _value.x2);
+							break;
+						}
 					}
 					
 					return [_difference_x1, _difference_x2];
@@ -327,54 +404,87 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector4|Vector2} other?
+			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{real|real[]}
 			// @description			Return the difference between the y values of either this Vector4
-			//						or this and other Vector.
+			//						or them and the specified value or the ones of the specified
+			//						Vector2 or Vector4 in an array.
 			static differenceY = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _difference_y1, _difference_y2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_difference_y1 = abs(y1 - _other.y1);
-							_difference_y2 = abs(y2 - _other.y2);
-						break;
-						
-						case "Vector2":
-							_difference_y1 = abs(y1 - _other.y);
-							_difference_y2 = abs(y2 - _other.y);
-						break;
+						_difference_y1 = abs(y1 - _value);
+						_difference_y2 = abs(y2 - _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_difference_y1 = abs(y1 - _value.y);
+								_difference_y2 = abs(y2 - _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_difference_y1 = abs(y1 - _value.y1);
+								_difference_y2 = abs(y2 - _value.y2);
+							break;
+						}
 					}
 					
 					return [_difference_y1, _difference_y2];
 				}
 				else
 				{
-					return (max(y1, y2) - min(y1, y2));
+					return abs(y1 - y2);
 				}
 			}
 			
-			// @argument			{Vector4} other?
-			// @returns				{Vector4|Vector2}
+			// @argument			{real|Vector2|Vector4} value?
+			// @returns				{Vector2|Vector4}
 			// @description			Return the result of multiplication of either the values of this
-			//						Vector4 as a Vector2 or if other one is specified, the x and y
-			//						values of each in a Vector4.
+			//						Vector4 as a Vector2 or them multiplied by the specified value or
+			//						the ones of the specified Vector2 or Vector4 as a Vector4.
 			static product = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
+					var _value = argument[0];
+					var _product_x1, _product_y1, _product_x2, _product_y2;
 					
-					var _product_x1 = (x1 * _other.x1);
-					var _product_y1 = (y1 * _other.y1);
-					var _product_x2 = (x2 * _other.x2);
-					var _product_y2 = (y2 * _other.y2);
+					if (is_real(_value))
+					{
+						_product_x1 = (x1 * _value);
+						_product_y1 = (y1 * _value);
+						_product_x2 = (x2 * _value);
+						_product_y2 = (y2 * _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_product_x1 = (x1 * _value.x);
+								_product_y1 = (y1 * _value.y);
+								_product_x2 = (x2 * _value.x);
+								_product_y2 = (y2 * _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_product_x1 = (x1 * _value.x1);
+								_product_y1 = (y1 * _value.y1);
+								_product_x2 = (x2 * _value.x2);
+								_product_y2 = (y2 * _value.y2);
+							break;
+						}
+					}
 					
 					return new Vector4(_product_x1, _product_y1, _product_x2, _product_y2);
 				}
@@ -387,29 +497,38 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other
-			// @returns				{real}
-			// @description			Return the result of multiplication of the x values of either this
-			//						Vector4 or this and other Vector.
+			// @argument			{real|Vector2|Vector4} value?
+			// @returns				{real|real[]}
+			// @description			Return the result of multiplication of the x values of either
+			//						this Vector4 or them multiplied by the specified value or the
+			//						ones of the specified Vector2 or Vector4 as a Vector4.
 			static productX = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _product_x1, _product_x2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_product_x1 = (x1 * _other.x1);
-							_product_x2 = (x2 * _other.x2);
-						break;
-						
-						case "Vector2":
-							_product_x1 = (x1 * _other.x);
-							_product_x2 = (x2 * _other.x);
-						break;
+						_product_x1 = (x1 * _value);
+						_product_x2 = (x2 * _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_product_x1 = (x1 * _value.x);
+								_product_x2 = (x2 * _value.x);
+							break;
+							
+							case "Vector4":
+							default:
+								_product_x1 = (x1 * _value.x1);
+								_product_x2 = (x2 * _value.x2);
+							break;
+						}
 					}
 					
 					return [_product_x1, _product_x2];
@@ -420,29 +539,38 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other
-			// @returns				{real}
-			// @description			Return the result of multiplication of the y values of either this
-			//						Vector4 or this and other Vector.
+			// @argument			{real|Vector2|Vector4} value?
+			// @returns				{real|real[]}
+			// @description			Return the result of multiplication of the y values of either
+			//						this Vector4 or them multiplied by the specified value or the
+			//						ones of the specified Vector2 or Vector4 as a Vector4.
 			static productY = function()
 			{
 				if ((argument_count > 0) and (argument[0] != self))
 				{
-					var _other = argument[0];
-					
+					var _value = argument[0];
 					var _product_y1, _product_y2;
 					
-					switch (instanceof(_other))
+					if (is_real(_value))
 					{
-						case "Vector4":
-							_product_y1 = (y1 * _other.y1);
-							_product_y2 = (y2 * _other.y2);
-						break;
-						
-						case "Vector2":
-							_product_y1 = (y1 * _other.y);
-							_product_y2 = (y2 * _other.y);
-						break;
+						_product_y1 = (y1 * _value);
+						_product_y2 = (y2 * _value);
+					}
+					else
+					{
+						switch (instanceof(_value))
+						{
+							case "Vector2":
+								_product_y1 = (y1 * _value.y);
+								_product_y2 = (y2 * _value.y);
+							break;
+							
+							case "Vector4":
+							default:
+								_product_y1 = (y1 * _value.y1);
+								_product_y2 = (y2 * _value.y2);
+							break;
+						}
 					}
 					
 					return [_product_y1, _product_y2];
@@ -453,64 +581,164 @@ function Vector4() constructor
 				}
 			}
 			
-			// @argument			{Vector4} other?
+			// @argument			{real|Vector2|Vector4} value
 			// @returns				{Vector4}
-			// @description			Return the result of the division of the values of this Vector4
-			//						divided by the values of other one.
-			static quotient = function(_other)
+			// @description			Return the result of division of the values of this Vector4
+			//						divided by the specified value or the ones of the specified
+			//						Vector2 or Vector4.
+			//						Attempts of division by 0 are ignored.
+			static quotient = function(_value)
 			{
-				var _quotient_x1 = (x1 / _other.x1);
-				var _quotient_y1 = (y1 / _other.y1);
-				var _quotient_x2 = (x2 / _other.x2);
-				var _quotient_y2 = (y2 / _other.y2);
+				var _quotient_x1 = x1;
+				var _quotient_y1 = y1;
+				var _quotient_x2 = x2;
+				var _quotient_y2 = y2;
+				
+				if (is_real(_value))
+				{
+					if (_value != 0)
+					{
+						_quotient_x1 = (x1 / _value);
+						_quotient_y1 = (y1 / _value);
+						_quotient_x2 = (x2 / _value);
+						_quotient_y2 = (y2 / _value);
+					}
+				}
+				else
+				{
+					switch (instanceof(_value))
+					{
+						case "Vector2":
+							if (_value.x != 0)
+							{
+								_quotient_x1 = (x1 / _value.x);
+								_quotient_x2 = (x2 / _value.x);
+							}
+							
+							if (_value.y != 0)
+							{
+								_quotient_y1 = (y1 / _value.y);
+								_quotient_y2 = (y2 / _value.y);
+							}
+						break;
+						
+						case "Vector4":
+						default:
+							if (_value.x1 != 0)
+							{
+								_quotient_x1 = (x1 / _value.x1);
+							}
+							
+							if (_value.y1 != 0)
+							{
+								_quotient_y1 = (y1 / _value.y1);
+							}
+							
+							if (_value.x2 != 0)
+							{
+								_quotient_x2 = (x2 / _value.x2);
+							}
+							
+							if (_value.y2 != 0)
+							{
+								_quotient_y2 = (y2 / _value.y2);
+							}
+						break;
+					}
+				}
 				
 				return new Vector4(_quotient_x1, _quotient_y1, _quotient_x2, _quotient_y2);
 			}
 			
-			// @argument			{Vector4|Vector2} other
+			// @argument			{real|Vector2|Vector4} value
 			// @returns				{real[]}
-			// @description			Return the result of division of the x value of this Vector4
-			//						divided by the values of other Vector.
-			static quotientX = function(_other)
+			// @description			Return the result of division of the x values of this Vector4
+			//						divided by the specified value or values of specified Vector2 or
+			//						Vector4 in an array.
+			static quotientX = function(_value)
 			{
-				var _quotient_x1, _quotient_x2;
+				var _quotient_x1 = x1;
+				var _quotient_x2 = x2;
 				
-				switch (instanceof(_other))
+				if (is_real(_value))
 				{
-					case "Vector4":
-						_quotient_x1 = (x1 / _other.x1);
-						_quotient_x2 = (x2 / _other.x2);
-					break;
-					
-					case "Vector2":
-						_quotient_x1 = (x1 / _other.x);
-						_quotient_x2 = (x2 / _other.x);
-					break;
-					
+					if (_value != 0)
+					{
+						_quotient_x1 = (x1 / _value);
+						_quotient_x2 = (x2 / _value);
+					}
+				}
+				else
+				{
+					switch (instanceof(_value))
+					{
+						case "Vector2":
+							if (_value.x != 0)
+							{
+								_quotient_x1 = (x1 / _value.x);
+								_quotient_x2 = (x2 / _value.x);
+							}
+						break;
+						
+						case "Vector4":
+							if (_value.x1 != 0)
+							{
+								_quotient_x1 = (x1 / _value.x1);
+							}
+							
+							if (_value.x2 != 0)
+							{
+								_quotient_x2 = (x2 / _value.x2);
+							}
+						break;
+					}
 				}
 				
 				return [_quotient_x1, _quotient_x2];
 			}
 			
-			// @argument			{Vector4|Vector2} other
+			// @argument			{real|Vector2|Vector4} value
 			// @returns				{real[]}
-			// @description			Return the result of division of the y value of this Vector4
-			//						divided by the values of other Vector.
-			static quotientY = function(_other)
+			// @description			Return the result of division of the y values of this Vector4
+			//						divided by the specified value or values of specified Vector2 or
+			//						Vector4 in an array.
+			static quotientY = function(_value)
 			{
-				var _quotient_y1, _quotient_y2;
+				var _quotient_y1 = y1;
+				var _quotient_y2 = y2;
 				
-				switch (instanceof(_other))
+				if (is_real(_value))
 				{
-					case "Vector4":
-						_quotient_y1 = (y1 / _other.y1);
-						_quotient_y2 = (y2 / _other.y2);
-					break;
-					
-					case "Vector2":
-						_quotient_y1 = (y1 / _other.y);
-						_quotient_y2 = (y2 / _other.y);
-					break;
+					if (_value != 0)
+					{
+						_quotient_y1 = (y1 / _value);
+						_quotient_y2 = (y2 / _value);
+					}
+				}
+				else
+				{
+					switch (instanceof(_value))
+					{
+						case "Vector2":
+							if (_value.y != 0)
+							{
+								_quotient_y1 = (y1 / _value.y);
+								_quotient_y2 = (y2 / _value.y);
+							}
+						break;
+						
+						case "Vector4":
+							if (_value.y1 != 0)
+							{
+								_quotient_y1 = (y1 / _value.y1);
+							}
+							
+							if (_value.y2 != 0)
+							{
+								_quotient_y2 = (y2 / _value.y2);
+							}
+						break;
+					}
 				}
 				
 				return [_quotient_y1, _quotient_y2];

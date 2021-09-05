@@ -130,18 +130,27 @@ function Vector2() constructor
 				return ((x == _other.x) and (y == _other.y));
 			}
 			
-			// @argument			{Vector2} other?
+			// @argument			{real|Vector2} value?
 			// @returns				{real|Vector2}
-			// @description			Return the sum of either the values of this Vector2 as a number or
-			//						if other one is specified, between the x and y values of each in a
-			//						Vector2.
+			// @description			Return the sum of either the values of this Vector2 or them added
+			//						to the specified value or the ones of the specified Vector2.
 			static sum = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
-					var _sum_x = (x + _other.x);
-					var _sum_y = (y + _other.y);
+					var _value = argument[0];
+					var _sum_x, _sum_y;
+					
+					if (is_real(_value))
+					{
+						_sum_x = (x + _value);
+						_sum_y = (y + _value);
+					}
+					else
+					{
+						_sum_x = (x + _value.x);
+						_sum_y = (y + _value.y);
+					}
 					
 					return new Vector2(_sum_x, _sum_y);
 				}
@@ -151,35 +160,45 @@ function Vector2() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the sum of the x values of this and other Vector2.
-			static sumX = function(_other)
+			// @description			Return the sum of the x value of this and the specified value
+			//						or the x value of the specified Vector2.
+			static sumX = function(_value)
 			{
-				return (x + _other.x);
+				return ((is_real(_value)) ? (x + _value) : (x + _value.x));
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the sum of the x values of this and other Vector2.
-			static sumY = function(_other)
+			// @description			Return the sum of the y value of this and the specified value
+			//						or the y value of the specified Vector2.
+			static sumY = function(_value)
 			{
-				return (y + _other.y);
+				return ((is_real(_value)) ? (y + _value) : (y + _value.y));
 			}
 			
-			// @argument			{Vector2} other?
+			// @argument			{real|Vector2} value?
 			// @returns				{real|Vector2}
-			// @description			Return the difference between either the values of this Vector2 as
-			//						a number or if other one is specified, between the x and y values
-			//						of each in a Vector2.
+			// @description			Return the difference between either the values of this Vector2 or
+			//						them and the specified value or the ones of the specified Vector2.
 			static difference = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
+					var _value = argument[0];
+					var _difference_x, _difference_y;
 					
-					var _difference_x = abs(x - _other.x);
-					var _difference_y = abs(y - _other.y);
+					if (is_real(_value))
+					{
+						_difference_x = abs(x - _value);
+						_difference_y = abs(y - _value);
+					}
+					else
+					{
+						_difference_x = abs(x - _value.x);
+						_difference_y = abs(y - _value.y);
+					}
 					
 					return new Vector2(_difference_x, _difference_y);
 				}
@@ -189,37 +208,46 @@ function Vector2() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the difference between the x values of this and other
-			//						Vector2.
-			static differenceX = function(_other)
+			// @description			Return the difference the x value of this and the specified value
+			//						or the x value of the specified Vector2.
+			static differenceX = function(_value)
 			{
-				return abs(x - _other.x);
+				return ((is_real(_value)) ? abs(x - _value) : abs(x - _value.x));
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the difference between the y values of this and other
-			//						Vector2.
-			static differenceY = function(_other)
+			// @description			Return the difference the y value of this and the specified value
+			//						or the y value of the specified Vector2.
+			static differenceY = function(_value)
 			{
-				return abs(y - _other.y);
+				return ((is_real(_value)) ? abs(y - _value) : abs(y - _value.y));
 			}
 			
-			// @argument			{Vector2} other?
+			// @argument			{real|Vector2} value?
 			// @returns				{real|Vector2}
 			// @description			Return the result of multiplication of either the values of this
-			//						Vector2 as a number or if other one is specified, the x and y
-			//						values of each in a Vector2.
+			//						Vector2 or them multiplied by the specified value or the ones of
+			//						the specified Vector2.
 			static product = function()
 			{
-				if ((argument_count > 0) and (argument[0] != self))
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					var _other = argument[0];
+					var _value = argument[0];
+					var _product_x, _product_y;
 					
-					var _product_x = (x * _other.x);
-					var _product_y = (y * _other.y);
+					if (is_real(_value))
+					{
+						_product_x = (x * _value);
+						_product_y = (y * _value);
+					}
+					else
+					{
+						_product_x = (x * _value.x);
+						_product_y = (y * _value.y);
+					}
 					
 					return new Vector2(_product_x, _product_y);
 				}
@@ -229,52 +257,109 @@ function Vector2() constructor
 				}
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the result of multiplication of the x values of this and
-			//						other Vector2.
-			static productX = function(_other)
+			// @description			Return the result of multiplication of the x value of this and the
+			//						specified value or the x value of the specified Vector2.
+			static productX = function(_value)
 			{
-				return (x * _other.x);
+				return ((is_real(_value)) ? (x * _value) : (x * _value.x));
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
-			// @description			Return the result of multiplication of the y values of this and
-			//						other Vector2.
-			static productY = function(_other)
+			// @description			Return the result of multiplication of the y value of this and the
+			//						specified value or the y value of the specified Vector2.
+			static productY = function(_value)
 			{
-				return (y * _other.y);
+				return ((is_real(_value)) ? (y * _value) : (y * _value.y));
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{Vector2}
-			// @description			Return the result of the division of the values of this Vector2
-			//						divided by the values of other one.
-			static quotient = function(_other)
+			// @description			Return the result of division of the values of this Vector2
+			//						divided by the specified value or the ones of the specified
+			//						Vector2.
+			//						Attempts of division by 0 are ignored.
+			static quotient = function(_value)
 			{
-				var _quotient_x = (x / _other.x);
-				var _quotient_y = (y / _other.y);
+				var _quotient_x = x;
+				var _quotient_y = y;
+				
+				if (is_real(_value))
+				{
+					if (_value != 0)
+					{
+						_quotient_x = (x / _value);
+						_quotient_y = (y / _value);
+					}
+				}
+				else
+				{
+					if (_value.x != 0)
+					{
+						_quotient_x = (x / _value.x);
+					}
+					
+					if (_value.y != 0)
+					{
+						_quotient_y = (y / _value.y);
+					}
+				}
 				
 				return new Vector2(_quotient_x, _quotient_y);
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
 			// @description			Return the result of division of the x value of this Vector2
-			//						divided by the values of other one.
-			static quotientX = function(_other)
+			//						divided by the specified value or the x value of the specified
+			//						Vector2.
+			//						Attempts of division by 0 are ignored.
+			static quotientX = function(_value)
 			{
-				return (x / _other.x);
+				if (is_real(_value))
+				{
+					if (_value != 0)
+					{
+						return (x / _value);
+					}
+				}
+				else
+				{
+					if (_value.x != 0)
+					{
+						return (x / _value.x);
+					}
+				}
+				
+				return x;
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{real}
 			// @description			Return the result of division of the y value of this Vector2
-			//						divided by the values of other one.
-			static quotientY = function(_other)
+			//						divided by the specified value or the y value of the specified
+			//						Vector2.
+			//						Attempts of division by 0 are ignored.
+			static quotientY = function(_value)
 			{
-				return (y / _other.y);
+				if (is_real(_value))
+				{
+					if (_value != 0)
+					{
+						return (y / _value);
+					}
+				}
+				else
+				{
+					if (_value.y != 0)
+					{
+						return (y / _value.y);
+					}
+				}
+				
+				return y;
 			}
 			
 			// @returns				{real}
