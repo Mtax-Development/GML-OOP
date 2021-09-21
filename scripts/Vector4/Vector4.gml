@@ -744,13 +744,23 @@ function Vector4() constructor
 				return [_quotient_y1, _quotient_y2];
 			}
 			
-			// @argument			{Vector2} value
-			// @returns				{Vector2}
+			// @argument			{Vector2|Vector4} value
+			// @returns				{Vector2|Vector4}
 			// @description			Return the point at specified respective precentages within the
 			//						x and y values.
 			static interpolate = function(_value)
 			{
-				return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
+				switch (instanceof(_value))
+				{
+					case "Vector2":
+						return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
+					break;
+					
+					case "Vector4":
+						return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
+										   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
+					break;
+				}
 			}
 			
 			// @argument			{real} value
