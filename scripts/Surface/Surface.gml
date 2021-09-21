@@ -266,7 +266,7 @@ function Surface() constructor
 			// @argument			{Vector4} part_location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
-			// @argument			{int:color|Color4} color
+			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
 			// @argument			{Surface|int:surface} target?
 			// @description			Draw this Surface or a part of it to the currently targeted or

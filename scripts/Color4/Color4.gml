@@ -20,8 +20,8 @@
 ///							- Color2 + color + color: {Color2} other, {int:color} color,
 ///													  {int:color} color
 ///							   In any order, it will be reflected in the values of this constructor.
-///							- Color2 + Color2: {Color2} colorPair1, {Color2} colorPair2
-///							- Color3 + color: {Color2} other, {int:color} color
+///							- Color2 pair: {Color2} first, {Color2} second
+///							- Color3 + color: {Color3} other, {int:color} color
 ///							   In any order, it will be reflected in the values of this constructor.
 ///							- Constructor copy: {Color4} other
 function Color4() constructor
@@ -65,14 +65,14 @@ function Color4() constructor
 								if ((instanceof(argument[0]) == "Color2") 
 								and (instanceof(argument[1]) == "Color2"))
 								{
-									//|Construction type: Color2 + Color2.
-									var _colorPair1 = argument[0];
-									var _colorPair2 = argument[1];
+									//|Construction type: Color2 pair.
+									var _first = argument[0];
+									var _second = argument[1];
 									
-									color1 = _colorPair1.color1;
-									color2 = _colorPair1.color2;
-									color3 = _colorPair2.color1;
-									color4 = _colorPair2.color2;
+									color1 = _first.color1;
+									color2 = _first.color2;
+									color3 = _second.color1;
+									color4 = _second.color2;
 								}
 								else
 								{

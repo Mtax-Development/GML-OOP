@@ -19,7 +19,7 @@
 ///								   x2 and y2.
 ///								4+: array[0] will be set to x1, array[1] will be set to y1,
 ///									array[2] will be set to x2, array[3] will be set to y2.
-///							- From two Vector2: {Vector2} pair1, {Vector2} pair2
+///							- Vector2 pair: {Vector2} first, {Vector2} second
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Vector4} other
 function Vector4() constructor
@@ -97,25 +97,25 @@ function Vector4() constructor
 								if ((instanceof(argument[0]) == "Vector2") 
 								and (instanceof(argument[1]) == "Vector2"))
 								{
-									//|Construction type: From two Vector2.
-									var _pair1 = argument[0];
-									var _pair2 = argument[1];
+									//|Construction type: Vector2 pair.
+									var _first = argument[0];
+									var _second = argument[1];
 									
-									x1 = _pair1.x;
-									y1 = _pair1.y;
-									x2 = _pair2.x;
-									y2 = _pair2.y;
+									x1 = _first.x;
+									y1 = _first.y;
+									x2 = _second.x;
+									y2 = _second.y;
 								}
 								else
 								{
 									//|Construction type: Number pair.
-									var _pair1 = argument[0];
-									var _pair2 = argument[1];
+									var _first = argument[0];
+									var _second = argument[1];
 									
-									x1 = _pair1;
-									y1 = _pair1;
-									x2 = _pair2;
-									y2 = _pair2;
+									x1 = _first;
+									y1 = _first;
+									x2 = _second;
+									y2 = _second;
 								}
 							break;
 							
