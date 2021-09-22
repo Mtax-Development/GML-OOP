@@ -124,36 +124,6 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Method: mirrorX()]
-	
-	var _base = [0.25, 1];
-	
-	constructor = new Scale(_base[0], _base[1]);
-	constructor.mirrorX();
-	
-	var _result = [constructor.x, constructor.y];
-	var _expectedValue = [-_base[0], _base[1]];
-	
-	unitTest.assert_equal("Method: mirrorX()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-#endregion
-#region [Test: Method: mirrorY()]
-	
-	var _base = [2, 0.25];
-	
-	constructor = new Scale(_base[0], _base[1]);
-	constructor.mirrorY();
-	
-	var _result = [constructor.x, constructor.y];
-	var _expectedValue = [_base[0], -_base[1]];
-	
-	unitTest.assert_equal("Method: mirrorY()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-#endregion
 #region [Test: Method: set()]
 	
 	var _value = 5;

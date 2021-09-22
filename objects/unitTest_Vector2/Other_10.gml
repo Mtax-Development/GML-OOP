@@ -84,6 +84,24 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: Method: contains()]
+	
+	var _base = [2, 5.545];
+	var _value = (_base[0] + _base[1] + 1);
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = [constructor.contains(_base[0]), constructor.contains(_base[1]),
+				   constructor.contains(_value), constructor.contains(_value, _base[0])];
+	var _expectedValue = [true, true, false, true];
+	
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
 #region [Test: Method: equals()]
 	
 	var _base = [0.567, 1212.1212];
@@ -113,6 +131,21 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: sum(real)]
+	
+	var _base = [21, 6.8];
+	var _value = 0.3;
+	var _element = new Vector2((_base[0] + _value), (_base[1] + _value));
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.sum(_value);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: sum(real)",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: sum(Vector2)]
 	
 	var _base = [0.41, 6.2, 432, 654];
@@ -127,32 +160,6 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: sumX()]
-	
-	var _base = [5, 100, 6, 100];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].sumX(constructor[1]);
-	var _expectedValue = (_base[0] + _base[2]);
-	
-	unitTest.assert_equal("Method: sumX()",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: sumY()]
-	
-	var _base = [5, 100, 6, 100];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].sumY(constructor[1]);
-	var _expectedValue = (_base[1] + _base[3]);
-	
-	unitTest.assert_equal("Method: sumY()",
-						  _result, _expectedValue);
-	
-#endregion
 #region [Test: Method: difference()]
 
 	var _base = [0.4684, 2];
@@ -163,6 +170,21 @@
 	var _expectedValue = abs(_base[0] - _base[1]);
 	
 	unitTest.assert_equal("Method: difference()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: difference(real)]
+	
+	var _base = [15, 1.3];
+	var _value = 2.45;
+	var _element = new Vector2(abs(_base[0] - _value), abs(_base[1] - _value));
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.difference(_value);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: difference(real)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -180,32 +202,6 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: differenceX()]
-	
-	var _base = [12, 100, 52, 200];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].differenceX(constructor[1]);
-	var _expectedValue = abs(_base[0] - _base[2]);
-	
-	unitTest.assert_equal("Method: differenceX()",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: differenceY()]
-	
-	var _base = [100, 15.2, 200, 4.2];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].differenceY(constructor[1]);
-	var _expectedValue = abs(_base[1] - _base[3]);
-	
-	unitTest.assert_equal("Method: differenceY()",
-						  _result, _expectedValue);
-	
-#endregion
 #region [Test: Method: product()]
 	
 	var _base = [0.4684, 11];
@@ -216,6 +212,21 @@
 	var _expectedValue = (_base[0] * _base[1]);
 	
 	unitTest.assert_equal("Method: product()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: product(real)]
+	
+	var _base = [50, 75.5];
+	var _value = 2.5;
+	var _element = new Vector2((_base[0] * _value), (_base[1] * _value));
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = constructor.product(_value);
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: product(real)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -233,29 +244,18 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: productX()]
+#region [Test: Method: quotient(real)]
 	
-	var _base = [57, 100, 2, 200];
+	var _base = [100, 68.8];
+	var _value = 10;
+	var _element = new Vector2((_base[0] / _value), (_base[1] / _value));
 	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
+	constructor = new Vector2(_base[0], _base[1]);
 	
-	var _result = constructor[0].productX(constructor[1]);
-	var _expectedValue = (_base[0] * _base[2]);
+	var _result = constructor.quotient(_value);
+	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: productX()",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: productY()]
-	
-	var _base = [100, 2.4, 200, 5.78];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].productY(constructor[1]);
-	var _expectedValue = (_base[1] * _base[3]);
-	
-	unitTest.assert_equal("Method: productY()",
+	unitTest.assert_equal("Method: quotient(real)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -270,32 +270,6 @@
 	var _expectedValue = _element;
 	
 	unitTest.assert_equal("Method: quotient(Vector2)",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: quotientX()]
-	
-	var _base = [32, 0, 200, 0];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].quotientX(constructor[1]);
-	var _expectedValue = (_base[0] / _base[2]);
-	
-	unitTest.assert_equal("Method: quotientX()",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: quotientY()]
-	
-	var _base = [0, 25, 0, 4];
-	
-	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
-	
-	var _result = constructor[0].quotientY(constructor[1]);
-	var _expectedValue = (_base[1] / _base[3]);
-	
-	unitTest.assert_equal("Method: quotientY()",
 						  _result, _expectedValue);
 	
 #endregion
