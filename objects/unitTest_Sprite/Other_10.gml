@@ -24,6 +24,54 @@ asset = [TestSprite];
 	_element[0][0].destroy();
 	
 #endregion
+#region [Test: Construction: From Surface]
+	
+	var _element = new Vector2(1, 1);
+	var _base = [new Surface(_element), new Vector4(0, 0, _element.x, _element.y)];
+	
+	constructor = new Sprite(_base[0], _base[1]);
+	
+	var _result = constructor.isFunctional();
+	var _expectedValue = true;
+	
+	unitTest.assert_equal("Construction: From Surface",
+						  _result, _expectedValue);
+	
+	_base[0].destroy();
+	constructor.destroy();
+	
+#endregion
+#region [Test: Construction: File / Method: toFile()]
+	
+	var _element = [asset[0], "SpriteUnitTest_toFile.png", sprite_get_number(asset[0]),
+					new Vector2(1, 1)];
+	var _base = [new Surface(_element[3]), new Vector4(0, 0, _element[3].x, _element[3].y)];
+	
+	if (file_exists(_element[1]))
+	{
+		file_delete(_element[1]);
+	}
+	
+	constructor = [new Sprite(_base[0], _base[1])];
+	constructor[0].toFile(_element[1]);
+	constructor[1] = new Sprite(_element[1], _element[2]);
+	
+	var _result = constructor[1].frameCount;
+	var _expectedValue = _element[2];
+	
+	unitTest.assert_equal("Construction: File / Method: toFile()",
+						  _result, _expectedValue);
+	
+	if (file_exists(_element[1]))
+	{
+		file_delete(_element[1]);
+	}
+	
+	_base[0].destroy();
+	constructor[0].destroy();
+	constructor[1].destroy();
+	
+#endregion
 #region [Test: Construction: Empty]
 	
 	constructor = new Sprite();
@@ -407,32 +455,5 @@ asset = [TestSprite];
 	
 	_element[1][0].destroy();
 	constructor.destroy();
-	
-#endregion
-#region [Test: Methods: toFile() / fromFile()]
-	
-	var _element = [asset[0], "SpriteUnitTest_toFile.png", sprite_get_number(asset[0])];
-	
-	if (file_exists(_element[1]))
-	{
-		file_delete(_element[1]);
-	}
-	
-	constructor = [new Sprite(_element[0]), new Sprite()];
-	constructor[0].toFile(_element[1]);
-	constructor[1].fromFile(_element[1], _element[2]);
-	
-	var _result = constructor[1].frameCount;
-	var _expectedValue = _element[2];
-	
-	unitTest.assert_equal("Methods: toFile() / fromFile()",
-						  _result, _expectedValue);
-	
-	if (file_exists(_element[1]))
-	{
-		file_delete(_element[1]);
-	}
-	
-	constructor[1].destroy();
 	
 #endregion
