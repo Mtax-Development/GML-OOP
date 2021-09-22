@@ -704,6 +704,29 @@ function Vector4() constructor
 				y2 = _x2;
 			}
 			
+			// @description			Reverse the x and y values.
+			static mirror = function()
+			{
+				x1 = (-x1);
+				y1 = (-y1);
+				x2 = (-x2);
+				y2 = (-y2);
+			}
+			
+			// @description			Reverse the x values.
+			static mirrorX = function()
+			{
+				x1 = (-x1);
+				x2 = (-x2);
+			}
+			
+			// @description			Reverse the y values.
+			static mirrorY = function()
+			{
+				y1 = (-y1);
+				y2 = (-y2);
+			}
+			
 			// @argument			{real} value
 			// @description			Set all of the values to one specified value.
 			static set = function(_value)
