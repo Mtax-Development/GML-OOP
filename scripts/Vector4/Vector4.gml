@@ -809,13 +809,6 @@ function Vector4() constructor
 								   (is_nan(_result_y) ? 1 : _result_y));
 			}
 			
-			// @returns				{Vector2[]}
-			// @description			Return an array of two Vector2 with the values of this Vector4.
-			static split = function()
-			{
-				return [new Vector2(x1, y1), new Vector2(x2, y2)];
-			}
-			
 			// @returns				{real}
 			// @description			Return the direction from the first point towards the second.
 			static getAngle1to2 = function()
@@ -1130,6 +1123,13 @@ function Vector4() constructor
 			static toArray = function()
 			{
 				return [x1, y1, x2, y2];
+			}
+			
+			// @returns				{Vector2[]}
+			// @description			Return an array of two Vector2 with the values of this Vector4.
+			static split = function()
+			{
+				return [new Vector2(x1, y1), new Vector2(x2, y2)];
 			}
 			
 		#endregion
