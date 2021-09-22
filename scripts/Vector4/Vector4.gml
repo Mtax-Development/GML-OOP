@@ -783,7 +783,7 @@ function Vector4() constructor
 			// @description			Return an array of two Vector2 with the values of this Vector4.
 			static split = function()
 			{
-				return [Vector2(x1, y1), Vector2(x2, y2)];
+				return [new Vector2(x1, y1), new Vector2(x2, y2)];
 			}
 			
 			// @returns				{real}
