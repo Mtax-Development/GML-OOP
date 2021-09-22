@@ -227,90 +227,6 @@ function Vector4() constructor
 			}
 			
 			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the sum of the x values of either this Vector4 or them
-			//						added to the specified value of the x values of the specified
-			//						Vector2 or Vector4 in an array.
-			static sumX = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _sum_x1, _sum_x2;
-					
-					if (is_real(_value))
-					{
-						_sum_x1 = (x1 + _value);
-						_sum_x2 = (x2 + _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_sum_x1 = (x1 + _value.x);
-								_sum_x2 = (x2 + _value.x);
-							break;
-							
-							case "Vector4":
-							default:
-								_sum_x1 = (x1 + _value.x1);
-								_sum_x2 = (x2 + _value.x2);
-							break;
-						}
-					}
-					
-					return [_sum_x1, _sum_x2];
-				}
-				else
-				{
-					return (x1 + x2);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the sum of the y values of either this Vector4 or them
-			//						added to the specified value of the y values of the specified
-			//						Vector2 or Vector4 in an array.
-			static sumY = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _sum_y1, _sum_y2;
-					
-					if (is_real(_value))
-					{
-						_sum_y1 = (y1 + _value);
-						_sum_y2 = (y2 + _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_sum_y1 = (y1 + _value.y);
-								_sum_y2 = (y2 + _value.y);
-							break;
-							
-							case "Vector4":
-							default:
-								_sum_y1 = (y1 + _value.y1);
-								_sum_y2 = (y2 + _value.y2);
-							break;
-						}
-					}
-					
-					return [_sum_y1, _sum_y2];
-				}
-				else
-				{
-					return (y1 + y2);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{Vector2|Vector4}
 			// @description			Return the difference between either the values of this Vector4
 			//						as a Vector2 or them and the specified value or the ones of the
@@ -363,90 +279,6 @@ function Vector4() constructor
 			}
 			
 			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the difference between the x values of either this Vector4
-			//						or them and the specified value or the ones of the specified
-			//						Vector2 or Vector4 in an array.
-			static differenceX = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _difference_x1, _difference_x2;
-					
-					if (is_real(_value))
-					{
-						_difference_x1 = abs(x1 - _value);
-						_difference_x2 = abs(x2 - _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_difference_x1 = abs(x1 - _value.x);
-								_difference_x2 = abs(x2 - _value.x);
-							break;
-							
-							case "Vector4":
-							default:
-								_difference_x1 = abs(x1 - _value.x1);
-								_difference_x2 = abs(x2 - _value.x2);
-							break;
-						}
-					}
-					
-					return [_difference_x1, _difference_x2];
-				}
-				else
-				{
-					return abs(x1 - x2);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the difference between the y values of either this Vector4
-			//						or them and the specified value or the ones of the specified
-			//						Vector2 or Vector4 in an array.
-			static differenceY = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _difference_y1, _difference_y2;
-					
-					if (is_real(_value))
-					{
-						_difference_y1 = abs(y1 - _value);
-						_difference_y2 = abs(y2 - _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_difference_y1 = abs(y1 - _value.y);
-								_difference_y2 = abs(y2 - _value.y);
-							break;
-							
-							case "Vector4":
-							default:
-								_difference_y1 = abs(y1 - _value.y1);
-								_difference_y2 = abs(y2 - _value.y2);
-							break;
-						}
-					}
-					
-					return [_difference_y1, _difference_y2];
-				}
-				else
-				{
-					return abs(y1 - y2);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
 			// @returns				{Vector2|Vector4}
 			// @description			Return the result of multiplication of either the values of this
 			//						Vector4 as a Vector2 or them multiplied by the specified value or
@@ -494,90 +326,6 @@ function Vector4() constructor
 					var _product_y = (y1 * y2);
 					
 					return new Vector2(_product_x, _product_y);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the result of multiplication of the x values of either
-			//						this Vector4 or them multiplied by the specified value or the
-			//						ones of the specified Vector2 or Vector4 as a Vector4.
-			static productX = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _product_x1, _product_x2;
-					
-					if (is_real(_value))
-					{
-						_product_x1 = (x1 * _value);
-						_product_x2 = (x2 * _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_product_x1 = (x1 * _value.x);
-								_product_x2 = (x2 * _value.x);
-							break;
-							
-							case "Vector4":
-							default:
-								_product_x1 = (x1 * _value.x1);
-								_product_x2 = (x2 * _value.x2);
-							break;
-						}
-					}
-					
-					return [_product_x1, _product_x2];
-				}
-				else
-				{
-					return (x1 * x2);
-				}
-			}
-			
-			// @argument			{real|Vector2|Vector4} value?
-			// @returns				{real|real[]}
-			// @description			Return the result of multiplication of the y values of either
-			//						this Vector4 or them multiplied by the specified value or the
-			//						ones of the specified Vector2 or Vector4 as a Vector4.
-			static productY = function()
-			{
-				if ((argument_count > 0) and (argument[0] != self))
-				{
-					var _value = argument[0];
-					var _product_y1, _product_y2;
-					
-					if (is_real(_value))
-					{
-						_product_y1 = (y1 * _value);
-						_product_y2 = (y2 * _value);
-					}
-					else
-					{
-						switch (instanceof(_value))
-						{
-							case "Vector2":
-								_product_y1 = (y1 * _value.y);
-								_product_y2 = (y2 * _value.y);
-							break;
-							
-							case "Vector4":
-							default:
-								_product_y1 = (y1 * _value.y1);
-								_product_y2 = (y2 * _value.y2);
-							break;
-						}
-					}
-					
-					return [_product_y1, _product_y2];
-				}
-				else
-				{
-					return (y1 * y2);
 				}
 			}
 			
@@ -651,100 +399,6 @@ function Vector4() constructor
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
-			// @returns				{real[]}
-			// @description			Return the result of division of the x values of this Vector4
-			//						divided by the specified value or values of specified Vector2 or
-			//						Vector4 in an array.
-			static quotientX = function(_value)
-			{
-				var _quotient_x1 = x1;
-				var _quotient_x2 = x2;
-				
-				if (is_real(_value))
-				{
-					if (_value != 0)
-					{
-						_quotient_x1 = (x1 / _value);
-						_quotient_x2 = (x2 / _value);
-					}
-				}
-				else
-				{
-					switch (instanceof(_value))
-					{
-						case "Vector2":
-							if (_value.x != 0)
-							{
-								_quotient_x1 = (x1 / _value.x);
-								_quotient_x2 = (x2 / _value.x);
-							}
-						break;
-						
-						case "Vector4":
-							if (_value.x1 != 0)
-							{
-								_quotient_x1 = (x1 / _value.x1);
-							}
-							
-							if (_value.x2 != 0)
-							{
-								_quotient_x2 = (x2 / _value.x2);
-							}
-						break;
-					}
-				}
-				
-				return [_quotient_x1, _quotient_x2];
-			}
-			
-			// @argument			{real|Vector2|Vector4} value
-			// @returns				{real[]}
-			// @description			Return the result of division of the y values of this Vector4
-			//						divided by the specified value or values of specified Vector2 or
-			//						Vector4 in an array.
-			static quotientY = function(_value)
-			{
-				var _quotient_y1 = y1;
-				var _quotient_y2 = y2;
-				
-				if (is_real(_value))
-				{
-					if (_value != 0)
-					{
-						_quotient_y1 = (y1 / _value);
-						_quotient_y2 = (y2 / _value);
-					}
-				}
-				else
-				{
-					switch (instanceof(_value))
-					{
-						case "Vector2":
-							if (_value.y != 0)
-							{
-								_quotient_y1 = (y1 / _value.y);
-								_quotient_y2 = (y2 / _value.y);
-							}
-						break;
-						
-						case "Vector4":
-							if (_value.y1 != 0)
-							{
-								_quotient_y1 = (y1 / _value.y1);
-							}
-							
-							if (_value.y2 != 0)
-							{
-								_quotient_y2 = (y2 / _value.y2);
-							}
-						break;
-					}
-				}
-				
-				return [_quotient_y1, _quotient_y2];
-			}
-			
-			// @argument			{real|Vector2|Vector4} value
 			// @returns				{Vector2|Vector4}
 			// @description			Return the point at specified respective precentages within the
 			//						x and y values.
@@ -765,22 +419,6 @@ function Vector4() constructor
 						return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
 					break;
 				}
-			}
-			
-			// @argument			{real} value
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the x values.
-			static interpolateX = function(_value)
-			{
-				return lerp(x1, x2, _value);
-			}
-			
-			// @argument			{real} value
-			// @returns				{real}
-			// @description			Return the point at specified precentage within the y values.
-			static interpolateY = function(_value)
-			{
-				return lerp(y1, y2, _value);
 			}
 			
 			// @argument			{real|Vector2} value
@@ -849,20 +487,6 @@ function Vector4() constructor
 			static getMiddle = function()
 			{
 				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
-			}
-			
-			// @returns				{real}
-			// @description			Return the middle point between the x values of this Vector4.
-			static getMiddleX = function()
-			{
-				return lerp(x1, x2, 0.5);
-			}
-			
-			// @returns				{real}
-			// @description			Return the middle point between the y values of this Vector4.
-			static getMiddleY = function()
-			{
-				return lerp(y1, y2, 0.5);
 			}
 			
 			// @argument			{Vector2} location

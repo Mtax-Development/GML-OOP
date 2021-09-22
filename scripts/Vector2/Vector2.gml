@@ -160,24 +160,6 @@ function Vector2() constructor
 				}
 			}
 			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the sum of the x value of this and the specified value
-			//						or the x value of the specified Vector2.
-			static sumX = function(_value)
-			{
-				return ((is_real(_value)) ? (x + _value) : (x + _value.x));
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the sum of the y value of this and the specified value
-			//						or the y value of the specified Vector2.
-			static sumY = function(_value)
-			{
-				return ((is_real(_value)) ? (y + _value) : (y + _value.y));
-			}
-			
 			// @argument			{real|Vector2} value?
 			// @returns				{real|Vector2}
 			// @description			Return the difference between either the values of this Vector2 or
@@ -206,24 +188,6 @@ function Vector2() constructor
 				{
 					return abs(x - y);
 				}
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the difference the x value of this and the specified value
-			//						or the x value of the specified Vector2.
-			static differenceX = function(_value)
-			{
-				return ((is_real(_value)) ? abs(x - _value) : abs(x - _value.x));
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the difference the y value of this and the specified value
-			//						or the y value of the specified Vector2.
-			static differenceY = function(_value)
-			{
-				return ((is_real(_value)) ? abs(y - _value) : abs(y - _value.y));
 			}
 			
 			// @argument			{real|Vector2} value?
@@ -255,24 +219,6 @@ function Vector2() constructor
 				{
 					return (x * y);
 				}
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the result of multiplication of the x value of this and the
-			//						specified value or the x value of the specified Vector2.
-			static productX = function(_value)
-			{
-				return ((is_real(_value)) ? (x * _value) : (x * _value.x));
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the result of multiplication of the y value of this and the
-			//						specified value or the y value of the specified Vector2.
-			static productY = function(_value)
-			{
-				return ((is_real(_value)) ? (y * _value) : (y * _value.y));
 			}
 			
 			// @argument			{real|Vector2} value
@@ -308,58 +254,6 @@ function Vector2() constructor
 				}
 				
 				return new Vector2(_quotient_x, _quotient_y);
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the result of division of the x value of this Vector2
-			//						divided by the specified value or the x value of the specified
-			//						Vector2.
-			//						Attempts of division by 0 are ignored.
-			static quotientX = function(_value)
-			{
-				if (is_real(_value))
-				{
-					if (_value != 0)
-					{
-						return (x / _value);
-					}
-				}
-				else
-				{
-					if (_value.x != 0)
-					{
-						return (x / _value.x);
-					}
-				}
-				
-				return x;
-			}
-			
-			// @argument			{real|Vector2} value
-			// @returns				{real}
-			// @description			Return the result of division of the y value of this Vector2
-			//						divided by the specified value or the y value of the specified
-			//						Vector2.
-			//						Attempts of division by 0 are ignored.
-			static quotientY = function(_value)
-			{
-				if (is_real(_value))
-				{
-					if (_value != 0)
-					{
-						return (y / _value);
-					}
-				}
-				else
-				{
-					if (_value.y != 0)
-					{
-						return (y / _value.y);
-					}
-				}
-				
-				return y;
 			}
 			
 			// @returns				{real}
@@ -511,18 +405,6 @@ function Vector2() constructor
 			static mirror = function()
 			{
 				x = -x;
-				y = -y;
-			}
-			
-			// @description			Reverse the x value.
-			static mirrorX = function()
-			{
-				x = -x;
-			}
-			
-			// @description			Reverse the y value.
-			static mirrorY = function()
-			{
 				y = -y;
 			}
 			
