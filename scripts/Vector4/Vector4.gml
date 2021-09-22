@@ -744,7 +744,7 @@ function Vector4() constructor
 				return [_quotient_y1, _quotient_y2];
 			}
 			
-			// @argument			{Vector2|Vector4} value
+			// @argument			{real|Vector2|Vector4} value
 			// @returns				{Vector2|Vector4}
 			// @description			Return the point at specified respective precentages within the
 			//						x and y values.
@@ -759,6 +759,10 @@ function Vector4() constructor
 					case "Vector4":
 						return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
 										   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
+					break;
+					
+					default:
+						return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
 					break;
 				}
 			}
