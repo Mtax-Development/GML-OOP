@@ -356,3 +356,19 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: split()]
+	
+	var _base = [c_white, c_yellow, c_red, c_maroon];
+	var _element = [new Color2(_base[0], _base[1]), new Color2(_base[2], _base[3])];
+	
+	constructor = new Color4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = [constructor.split()[0].color1, constructor.split()[0].color2,
+				   constructor.split()[1].color1, constructor.split()[1].color2];
+	var _expectedValue = [_element[0].color1, _element[0].color2, _element[1].color1,
+						  _element[1].color2];
+	
+	unitTest.assert_equal("Method: split()",
+						  _result, _expectedValue);
+	
+#endregion
