@@ -404,8 +404,8 @@ function Vector2() constructor
 			// @description			Reverse the x and y values.
 			static mirror = function()
 			{
-				x = -x;
-				y = -y;
+				x = (-x);
+				y = (-y);
 			}
 			
 			// @argument			{real} value
