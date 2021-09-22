@@ -198,7 +198,7 @@
 	(
 		function(_i, _value, _element)
 		{
-			_element[@ _i] = -_value;
+			_element[@ _i] = (-_value);
 		},
 		_element
 	)
