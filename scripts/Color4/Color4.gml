@@ -265,6 +265,13 @@ function Color4() constructor
 				return [color1, color2, color3, color4];
 			}
 			
+			// @returns				{Color2[]}
+			// @description			Return an array of two Color2 with the values of this Color4.
+			static split = function()
+			{
+				return [new Color2(color1, color2), new Color2(color3, color4)];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
