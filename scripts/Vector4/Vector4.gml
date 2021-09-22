@@ -783,6 +783,32 @@ function Vector4() constructor
 				return lerp(y1, y2, _value);
 			}
 			
+			// @argument			{real|Vector2} value
+			// @returns				{Vector2}
+			// @description			Return the percentage value representing the specified value
+			//						inside of the boundaries made by the values of this Vector4 as a
+			//						numerical value in which one whole number is one full percentage.
+			static percent = function(_value)
+			{
+				var _result_x, _result_y;
+				
+				switch (instanceof(_value))
+				{
+					case "Vector2":
+						_result_x = ((_value.x - x1) / (x2 - x1));
+						_result_y = ((_value.y - y1) / (y2 - y1));
+					break;
+					
+					default:
+						_result_x = ((_value - x1) / (x2 - x1));
+						_result_y = ((_value - y1) / (y2 - y1));
+					break;
+				}
+				
+				return new Vector2((is_nan(_result_x) ? 1 : _result_x),
+								   (is_nan(_result_y) ? 1 : _result_y));
+			}
+			
 			// @returns				{Vector2[]}
 			// @description			Return an array of two Vector2 with the values of this Vector4.
 			static split = function()
