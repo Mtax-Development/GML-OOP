@@ -153,6 +153,29 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: count()]
+	
+	var _value = [["Key1", "Key2", "Key3", "Key4", "Key5"], [3, 3, 3, 4, 5, 6]];
+	
+	constructor = new Map();
+	
+	var _i = 0;
+	repeat (array_length(_value[0]))
+	{
+		constructor.add(_value[0][_i], _value[1][_i]);
+		
+		++_i;
+	}
+	
+	var _result = constructor.count(_value[1][0], _value[1][3], _value[1][4], _value[1][5]);
+	var _expectedValue = array_length(_value[0])
+	
+	unitTest.assert_equal("Method: count()",
+						  _result, _expectedValue);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Methods: getFirst() / getLast()]
 	
 	var _value = ["AA", "ZZ"];

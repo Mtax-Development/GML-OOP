@@ -206,6 +206,25 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: count()]
+	
+	var _value = ["GML-OOP", 35, 5, -956];
+	var _element = [new Vector2(2, 1), new Vector2(2, 2), new Vector2(3, 1), new Vector2(4, 1)];
+	var _base = new Vector2(5, 5);
+	
+	constructor = new Grid(_base);
+	constructor.set(_value[0], _element[0],
+					_value[0], _element[1],
+					_value[1], _element[2],
+					_value[2], _element[3]);
+	
+	var _result = constructor.count(_value[0], _value[1], _value[2], _value[3]);
+	var _expectedValue = array_length(_element);
+	
+	unitTest.assert_equal("Method: count()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: getCellNumber()]
 	
 	var _base = new Vector2(59, 95);

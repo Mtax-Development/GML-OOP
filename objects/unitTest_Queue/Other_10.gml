@@ -128,6 +128,32 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: count()]
+	
+	var _value = [["GML-OOP", 5, -3, -5], [11, 3, 1]];
+	
+	constructor = new Queue();
+	
+	var _i = 0;
+	repeat (array_length(_value[1]))
+	{
+		repeat (_value[1][_i])
+		{
+			constructor.add(_value[0][_i]);
+		}
+		
+		++_i;
+	}
+	
+	var _result = constructor.count(_value[0][0], _value[0][1], _value[0][2], _value[0][3]);
+	var _expectedValue = (_value[1][0] + _value[1][1] + _value[1][2]);
+	
+	unitTest.assert_equal("Method: count()",
+						  _result, _expectedValue);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Method: copy()]
 	
 	var _value = [[2, "A"], [25, "Z"]];
