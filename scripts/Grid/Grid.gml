@@ -685,23 +685,20 @@ function Grid() constructor
 					var _size_x = ds_grid_width(ID);
 					var _size_y = ds_grid_height(ID);
 					
-					if ((_size_x > 0) and (_size_y > 0))
+					var _y = 0;
+					repeat (_size_y)
 					{
-						var _y = 0;
-						repeat (_size_y)
+						var _x = 0;
+						repeat (_size_x)
 						{
-							var _x = 0;
-							repeat (_size_x)
-							{
-								var _value = ds_grid_get(ID, _x, _y);
-								
-								__function(_x, _y, _value, _argument);
-								
-								++_x;
-							}
+							var _value = ds_grid_get(ID, _x, _y);
 							
-							++_y;
+							__function(_x, _y, _value, _argument);
+							
+							++_x;
 						}
+						
+						++_y;
 					}
 				}
 				else
@@ -1421,11 +1418,9 @@ function Grid() constructor
 					if ((_size_x > 0) and (_size_y > 0))
 					{
 						var _array;
-						
 						_array[(_size_x - 1)][(_size_y - 1)] = 0;
 						
 						var _y = 0;
-						
 						repeat (_size_y)
 						{
 							var _x = 0;

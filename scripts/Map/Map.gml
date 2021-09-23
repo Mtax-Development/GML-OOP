@@ -150,29 +150,26 @@ function Map() constructor
 				{
 					var _size = ds_map_size(ID);
 					
-					if (_size > 0)
+					var _key = ds_map_find_first(ID);
+					var _i = [0, 0];
+					repeat (_size)
 					{
-						var _key = ds_map_find_first(ID);
-						var _i = [0, 0];
-						repeat (_size)
+						var _value = ds_map_find_value(ID, _key);
+						
+						_i[1] = 0;
+						repeat (argument_count)
 						{
-							var _value = ds_map_find_value(ID, _key);
-							
-							_i[1] = 0;
-							repeat (argument_count)
+							if (_value == argument[_i[1]])
 							{
-								if (_value == argument[_i[1]])
-								{
-									return true;
-								}
-								
-								++_i[1];
+								return true;
 							}
 							
-							_key = ds_map_find_next(ID, _key);
-							
-							++_i[0];
+							++_i[1];
 						}
+						
+						_key = ds_map_find_next(ID, _key);
+						
+						++_i[0];
 					}
 					
 					return false;
@@ -511,20 +508,17 @@ function Map() constructor
 				{
 					var _size = ds_map_size(ID)
 					
-					if (_size > 0)
+					var _key = ds_map_find_first(ID);
+					var _i = 0;
+					repeat (_size)
 					{
-						var _key = ds_map_find_first(ID);
-						var _i = 0;
-						repeat (_size)
-						{
-							var _value = ds_map_find_value(ID, _key);
-							
-							__function(_i, _key, _value, _argument);
-							
-							_key = ds_map_find_next(ID, _key);
-							
-							++_i;
-						}
+						var _value = ds_map_find_value(ID, _key);
+						
+						__function(_i, _key, _value, _argument);
+						
+						_key = ds_map_find_next(ID, _key);
+						
+						++_i;
 					}
 				}
 				else

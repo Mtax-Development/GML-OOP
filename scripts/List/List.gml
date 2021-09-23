@@ -362,17 +362,14 @@ function List() constructor
 				{
 					var _size = ds_list_size(ID);
 					
-					if (_size > 0)
+					var _i = 0;
+					repeat (_size)
 					{
-						var _i = 0;
-						repeat (_size)
-						{
-							var _value = ds_list_find_value(ID, _i);
+						var _value = ds_list_find_value(ID, _i);
 							
-							__function(_i, _value, _argument);
+						__function(_i, _value, _argument);
 							
-							++_i;
-						}
+						++_i;
 					}
 				}
 				else
