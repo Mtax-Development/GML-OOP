@@ -210,6 +210,59 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{any} value...
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of times the specified values occur in this
+			//						Data Structure.
+			static count = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _result = 0;
+					
+					var _size_x = ds_grid_width(ID);
+					var _size_y = ds_grid_height(ID);
+					
+					var _y = 0;
+					repeat (_size_y)
+					{
+						var _x = 0;
+						repeat (_size_x)
+						{
+							var _value = ds_grid_get(ID, _x, _y);
+							
+							var _i = 0;
+							repeat (argument_count)
+							{
+								if (_value == argument[_i])
+								{
+									++_result;
+								}
+								
+								++_i;
+							}
+							
+							++_x;
+						}
+						
+						++_y;
+					}
+					
+					return _result;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "count";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{Vector4} location
 			// @argument			{any} value...
 			// @returns				{bool} | On error: {undefined}

@@ -180,6 +180,57 @@ function Stack() constructor
 				}
 			}
 			
+			// @argument			{any} value...
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of times the specified values occur in this
+			//						Data Structure.
+			static count = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				{
+					var _result = 0;
+					
+					var _size = ds_stack_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_stack_create();
+						ds_stack_copy(_dataCopy, ID);
+						
+						repeat (_size)
+						{
+							var _value = ds_stack_pop(_dataCopy);
+							
+							var _i = 0;
+							repeat (argument_count)
+							{
+								if (_value == argument[_i])
+								{
+									++_result;
+								}
+								
+								++_i;
+							}
+						}
+						
+						ds_stack_destroy(_dataCopy);
+					}
+					
+					return _result;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "count";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{any|undefined}
 			// @description			Return the top value of this Stack, which is the one that would be
 			//						removed first.

@@ -180,6 +180,57 @@ function PriorityQueue() constructor
 				}
 			}
 			
+			// @argument			{any} value...
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of times the specified values occur in this
+			//						Data Structure.
+			static count = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				{
+					var _result = 0;
+					
+					var _size = ds_priority_size(ID);
+					
+					if (_size > 0)
+					{
+						var _dataCopy = ds_priority_create();
+						ds_priority_copy(_dataCopy, ID);
+						
+						repeat (_size)
+						{
+							var _value = ds_priority_delete_max(_dataCopy);
+							
+							var _i = 0;
+							repeat (argument_count)
+							{
+								if (_value == argument[_i])
+								{
+									++_result;
+								}
+								
+								++_i;
+							}
+						}
+						
+						ds_priority_destroy(_dataCopy);
+					}
+					
+					return _result;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "count";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{any|undefined}
 			// @description			Return any value with the highest priority in this Priority Queue.
 			//						Returns {undefined} if this Priority Queue does not exists or is
