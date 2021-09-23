@@ -168,7 +168,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Methods: getFirstIndex() / getAllIndexes()]
+#region [Test: Methods: getFirstPosition() / getPositions()]
 	
 	var _value = [[1], [0, 0, 1, -2, 1, -3, 1, 2]];
 	
@@ -176,10 +176,11 @@
 	constructor.add(_value[1][0], _value[1][1], _value[1][2], _value[1][3], _value[1][4],
 					_value[1][5], _value[1][6], _value[1][7]);
 	
-	var _result = [constructor.getFirstIndex(_value[0][0]), constructor.getAllIndexes(_value[0][0])];
+	var _result = [constructor.getFirstPosition(_value[0][0]),
+				   constructor.getPositions(_value[0][0])];
 	var _expectedValue = [2, [2, 4, 6]];
 	
-	unitTest.assert_equal("Methods: getFirstIndex() / getAllIndexes()",
+	unitTest.assert_equal("Methods: getFirstPosition() / getPositions()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -240,7 +241,7 @@
 		}
 	);
 	
-	var _result = constructor.getAllIndexes(_value[2]);
+	var _result = constructor.getPositions(_value[2]);
 	var _expectedValue = [2, 3];
 	
 	unitTest.assert_equal("Method: forEach()",
@@ -374,7 +375,7 @@
 	random_set_seed(1);
 	constructor[1].shuffle();
 	
-	var _result = [constructor[0].getFirstIndex(_value), constructor[1].getFirstIndex(_value)];
+	var _result = [constructor[0].getFirstPosition(_value), constructor[1].getFirstPosition(_value)];
 	var _expectedValue = [_element, _element];
 	
 	unitTest.assert_notEqual("Method: shuffle()",
