@@ -248,7 +248,7 @@ function List() constructor
 			// @returns				{int}
 			// @description			Return the first found position of the specified value or -1 if
 			//						the value does not exist.
-			static getFirstIndex = function(_value)
+			static getFirstPosition = function(_value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -258,7 +258,7 @@ function List() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getFirstIndex";
+					var _methodName = "getFirstPosition";
 					var _errorText = ("Attempted to read an invalid Data Structure: " + 
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -271,30 +271,30 @@ function List() constructor
 			// @returns				{int[]}
 			// @description			Return an array populated with all positions of the specified
 			//						value.
-			static getAllIndexes = function(_value)
+			static getPositions = function(_value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					var _indexes = [];
+					var _position = [];
 					
 					var _i = 0;
 					repeat (ds_list_size(ID))
 					{
 						if (ds_list_find_value(ID, _i) == _value)
 						{
-							_indexes[array_length(_indexes)] = _i;
+							array_push(_position, _i);
 						}
 						
 						++_i;
 					}
 					
-					return _indexes;
+					return _position;
 				}
 				else
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getAllIndexes";
+					var _methodName = "getPositions";
 					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
