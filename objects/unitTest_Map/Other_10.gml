@@ -181,17 +181,20 @@
 	var _value = ["AA", "ZZ"];
 	
 	constructor = new Map();
+	
+	var _result = [constructor.getFirst(), constructor.getLast()];
+	var _expectedValue = [undefined, undefined];
+	
 	constructor.add(_value[0], _value[0],
 					_value[1], _value[1]);
 	
-	var _result = [constructor.getFirst(), constructor.getLast()];
-	var _expectedValue = [_value[0], _value[(array_length(_value) - 1)]];
+	array_push(_result, constructor.getFirst(), constructor.getLast());
+	array_push(_expectedValue, _value[0], _value[(array_length(_value) - 1)]);
 	
 	array_sort(_result, true);
 	
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result, _expectedValue);
 	
 	constructor.destroy();
 	

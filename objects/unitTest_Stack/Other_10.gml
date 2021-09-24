@@ -179,14 +179,17 @@
 	var _value = [1, 2, 3];
 	
 	constructor = new Stack();
-	constructor.add(_value[0], _value[1], _value[2]);
 	
 	var _result = [constructor.getFirst(), constructor.getLast()];
-	var _expectedValue = [_value[2], _value[0]];
+	var _expectedValue = [undefined, undefined];
+	
+	constructor.add(_value[0], _value[1], _value[2]);
+	
+	array_push(_result, constructor.getFirst(), constructor.getLast());
+	array_push(_expectedValue, _value[(array_length(_value) - 1)], _value[0]);
 	
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result, _expectedValue);
 	
 	constructor.destroy();
 	

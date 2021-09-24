@@ -193,16 +193,19 @@
 	var _value = [[10, "Highest"], [5, "Middle"], [2, "Lowest"]];
 	
 	constructor = new PriorityQueue();
+	
+	var _result = [constructor.getFirst(), constructor.getLast()];
+	var _expectedValue = [undefined, undefined];
+	
 	constructor.add(_value[0][0], _value[0][1],
 					_value[1][0], _value[1][1],
 					_value[2][0], _value[2][1]);
 	
-	var _result = [constructor.getFirst(), constructor.getLast()];
-	var _expectedValue = [_value[0][1], _value[2][1]];
+	array_push(_result, constructor.getFirst(), constructor.getLast());
+	array_push(_expectedValue, _value[0][1], _value[(array_length(_value) - 1)][1]);
 	
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result, _expectedValue);
 	
 	constructor.destroy();
 	
