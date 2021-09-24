@@ -290,7 +290,7 @@
 	var _result = [constructor.getValue(_element)];
 	var _expectedValue = [_value];
 	
-	constructor.set(-_value, _element);
+	constructor.set(_element, (-_value));
 	
 	array_push(_result, constructor.getValue(_element));
 	array_push(_expectedValue, -_value);
@@ -309,16 +309,16 @@
 	
 	constructor = new List();
 	
-	constructor.replace(-_value, _element);
+	constructor.replace(_element, (-_value));
 	
 	var _result = [constructor.getSize()];
 	var _expectedValue = [0];
 	
-	constructor.set(_value, _element);
-	constructor.replace(-_value, _element);
+	constructor.set(_element, _value);
+	constructor.replace(_element, (-_value));
 	
 	array_push(_result, constructor.getValue(_element));
-	array_push(_expectedValue, -_value);
+	array_push(_expectedValue, (-_value));
 	
 	unitTest.assert_equal("Method: replace()",
 						  _result[0], _expectedValue[0],
@@ -373,7 +373,7 @@
 	constructor = new List();
 	
 	constructor.add(_value[0][0], _value[0][1], _value[0][2]);
-	constructor.insert(_value[1][0], _element);
+	constructor.insert(_element, _value[1][0]);
 	
 	var _result = [constructor.getValue(0), constructor.getValue(1), constructor.getValue(2),
 				   constructor.getValue(3)];
@@ -397,7 +397,7 @@
 	var _value = 5355.5;
 	
 	constructor = [new List()];
-	constructor[0].set(_value, _element);
+	constructor[0].set(_element, _value);
 	constructor[1] = new List(constructor[0]);
 	random_set_seed(0);
 	constructor[0].shuffle();
