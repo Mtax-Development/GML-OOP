@@ -317,49 +317,25 @@ function Shader() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{bool} target?
-			// @returns				{bool}
-			// @description			Set whether this Shader is active.
-			//						If no target for this setting is specified, the activation will be
-			//						toggled depending on its current status.
-			//						The current status of the activation will be returned.
-			static setActive = function()
+			// @argument			{bool} target
+			// @description			Set whether this Shader is currently applied.
+			static setActive = function(_target)
 			{
 				if (compiled)
 				{
-					var _target = undefined;
-					var _isActive = (shader_current() == ID);
-					
-					if (argument_count > 0)
+					switch (_target)
 					{
-						_target = argument[0];
+						case true:
+							shader_set(ID);
+						break;
 						
-						if (_target)
-						{
-							shader_set(ID);
-						}
-						else if (shader_current() == ID)
-						{
-							shader_reset();
-						}
+						case false:
+							if (shader_current() == ID)
+							{
+								shader_reset();
+							}
+						break;
 					}
-					else
-					{
-						if (_isActive)
-						{
-							_target = false;
-							
-							shader_reset();
-						}
-						else
-						{
-							_target = true;
-							
-							shader_set(ID);
-						}
-					}
-					
-					return _target;
 				}
 				else
 				{
