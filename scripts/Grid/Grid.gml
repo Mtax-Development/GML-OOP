@@ -769,7 +769,7 @@ function Grid() constructor
 			// @argument			{Vector2} location...
 			// @description			Replace any number of values in the specified cells in this Grid
 			//						by the specified values.
-			static set = function(_value, _location)
+			static set = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
