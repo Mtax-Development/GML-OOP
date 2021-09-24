@@ -1655,7 +1655,8 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 					   constructor.parent];
 		var _expectedValue = [0, constructor, other.constructor[1]];
 		
-		other.unitTest.assert_equal("ParticleSystem - Method: changeParent()",
+		other.unitTest.assert_equal(("ParticleSystem - Method: changeParent(BROKEN IN ENGINE, " +
+									 "moves the Unit Test object to a destroyed layer)"),
 									_result, _expectedValue);
 		
 		constructor.destroy();
