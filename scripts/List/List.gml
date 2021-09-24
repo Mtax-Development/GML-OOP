@@ -456,11 +456,11 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{any} value
 			// @argument			{int} position
+			// @argument			{any} value
 			// @description			Set a specified position of this List to the specified value and
 			//						any empty places before it to 0.
-			static set = function(_value, _position)
+			static set = function(_position, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -477,11 +477,11 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{any} value
 			// @argument			{int} position
+			// @argument			{any} value
 			// @description			Set a specified position of the List to the specified value, but
 			//						only if it already exists.
-			static replace = function(_value, _position)
+			static replace = function(_position, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
@@ -549,11 +549,11 @@ function List() constructor
 				}
 			}
 			
-			// @argument			{any} value
 			// @argument			{int} position
+			// @argument			{any} value
 			// @description			Add a value at a specified position to the List and push
 			//						the position of all values after it forward by one.
-			static insert = function(_value, _position)
+			static insert = function(_position, _value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
