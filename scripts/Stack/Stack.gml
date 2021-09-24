@@ -1,7 +1,7 @@
 /// @function				Stack()
 ///							
 /// @description			Constructs a Stack Data Structure, which stores data in a linear,
-///							last-in-first-out (LIFO) model that disallows order manipulation.
+///							last-in-first-out model that disallows order manipulation.
 ///							
 ///							Construction types:
 ///							- New constructor

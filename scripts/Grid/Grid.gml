@@ -2,9 +2,9 @@
 /// @argument				{Vector2} size
 ///							
 /// @description			Constructs a Grid Data Structure, which stores data in a model similar to
-///							the one used by 2D array. Each value is stored in its own cell and they
-///							can be read or modified invidually or by handling multiple cells at once
-///							in a region or disk of the Grid.
+///							the one used by 2D arrays. Each value is stored in its own cell and they
+///							can be read or modified invidually or by operating multiple cells at once
+///							in a region or a disk of the Grid.
 ///							
 ///							Construction types:
 ///							- New constructor
@@ -1246,15 +1246,15 @@ function Grid() constructor
 			}
 			
 			// @argument			{int} column
-			// @argument			{bool} ascending
+			// @argument			{bool} orderAscending
 			// @description			Sort all cells in this Grid by individually sorting the specified
 			//						vertical cell column and then applying its sort order to other
 			//						columns.
-			static sort = function(_column, _order_ascending)
+			static sort = function(_column, _orderAscending)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					ds_grid_sort(ID, _column, _order_ascending);
+					ds_grid_sort(ID, _column, _orderAscending);
 				}
 				else
 				{
