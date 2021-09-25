@@ -62,7 +62,14 @@ function ArrayParser() constructor
 			// @description			Remove all data from the array.
 			static clear = function()
 			{
-				ID = [];
+				if (is_array(ID))
+				{
+					array_resize(ID, 0);
+				}
+				else
+				{
+					ID = [];
+				}
 				
 				return ID;
 			}
