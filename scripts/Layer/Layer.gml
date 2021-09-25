@@ -2036,6 +2036,33 @@ function Layer() constructor
 						}
 					}
 					
+				#endregion
+				#region <<Execution>>
+					
+					// @argument			{Vector2} location?
+					// @description			Execute the draw of this Tilemap, independent of its draw
+					//						executed by its Layer.
+					static render = function(_location = new Vector2(0, 0))
+					{
+						if (self.isFunctional())
+						{
+							draw_tilemap(ID, _location.x, _location.y);
+						}
+						else
+						{
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "render";
+							var _errorText = ("Attempted to render an invalid Element or " +
+											  "Layer:\n" +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Parent: " + "{" + string(parent) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
+						}
+					}
+					
+
 					// @argument			{Vector2} location
 					// @argument			{Layer.TilemapElement.TileData|int:tiledata} tiledata?
 					// @returns				{bool}
@@ -2113,31 +2140,6 @@ function Layer() constructor
 						}
 					}
 					
-				#endregion
-				#region <<Execution>>
-					
-					// @argument			{Vector2} location?
-					// @description			Execute the draw of this Tilemap, independent of its draw
-					//						executed by its Layer.
-					static render = function(_location = new Vector2(0, 0))
-					{
-						if (self.isFunctional())
-						{
-							draw_tilemap(ID, _location.x, _location.y);
-						}
-						else
-						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "render";
-							var _errorText = ("Attempted to render an invalid Element or " +
-											  "Layer:\n" +
-											  "Self: " + "{" + string(self) + "}" + "\n" +
-											  "Parent: " + "{" + string(parent) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
-						}
-					}
 					
 				#endregion
 				#region <<Conversion>>
