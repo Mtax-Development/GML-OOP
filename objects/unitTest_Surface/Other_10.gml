@@ -96,24 +96,24 @@
 	constructor[1].destroy();
 	
 #endregion
-#region [Test: Methods: setTarget() / isTarget()]
+#region [Test: Methods: setActive() / isActive()]
 	
 	var _base = new Vector2(5, 5);
 	var _element = [true, false];
 	
 	constructor = new Surface(_base);
 	
-	constructor.setTarget(_element[0]);
+	constructor.setActive(_element[0]);
 	
-	var _result = [constructor.isTarget()];
+	var _result = [constructor.isActive()];
 	var _expectedValue = [_element[0]];
 	
-	constructor.setTarget(_element[1]);
+	constructor.setActive(_element[1]);
 	
-	array_push(_result, constructor.isTarget());
+	array_push(_result, constructor.isActive());
 	array_push(_expectedValue, _element[1]);
 	
-	unitTest.assert_equal("Methods: setTarget() / isTarget()",
+	unitTest.assert_equal("Methods: setActive() / isActive()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -167,17 +167,17 @@
 	
 	constructor = [new Surface(_base), new Surface(_base), new Surface(_base), new Surface(_base)];
 	constructor[3].clear(_element[0]);
-	constructor[0].setTarget(true);
-	constructor[1].setTarget(true);
+	constructor[0].setActive(true);
+	constructor[1].setActive(true);
 	constructor[3].render(undefined, undefined, undefined, undefined, undefined, undefined,
 						  constructor[2]);
 	
-	var _result = [constructor[2].getPixel(_element[1]), constructor[3].isTarget(),
-				   constructor[2].isTarget(), constructor[1].isTarget()];
+	var _result = [constructor[2].getPixel(_element[1]), constructor[3].isActive(),
+				   constructor[2].isActive(), constructor[1].isActive()];
 	var _expectedValue = [_element[0], false, false, true];
 	
-	constructor[1].setTarget(false);
-	constructor[0].setTarget(false);
+	constructor[1].setActive(false);
+	constructor[0].setActive(false);
 	
 	unitTest.assert_equal("Method: render()",
 						  _result[0], _expectedValue[0],
@@ -198,10 +198,10 @@
 	
 	constructor = [new Surface(_base), new Surface(_base)];
 	constructor[0].clear(_element[0]);
-	constructor[1].setTarget(true);
+	constructor[1].setActive(true);
 	constructor[1].clear(_element[1]);
 	constructor[0].renderSize(_element[2]);
-	constructor[1].setTarget(false);
+	constructor[1].setActive(false);
 	
 	var _result = [constructor[1].getPixel(_element[3]), constructor[1].getPixel(_element[2])]
 	var _expectedValue = [_element[0], _element[1]];
@@ -221,10 +221,10 @@
 	
 	constructor = [new Surface(_base[0]), new Surface(_base[1])];
 	constructor[0].clear(_element[0]);
-	constructor[1].setTarget(true);
+	constructor[1].setActive(true);
 	constructor[1].clear(_element[1]);
 	constructor[0].renderTiled();
-	constructor[1].setTarget(false);
+	constructor[1].setActive(false);
 	
 	var _result = constructor[1].getPixel(_element[2]);
 	var _expectedValue = _element[0];
@@ -281,10 +281,10 @@
 	constructor[0].toFile(_element[0]);
 	_element[4] = new Sprite();
 	_element[4].fromFile(_element[0]);
-	constructor[1].setTarget(true);
+	constructor[1].setActive(true);
 	constructor[1].clear(_element[2]);
 	_element[4].render(_element[3]);
-	constructor[1].setTarget(false);
+	constructor[1].setActive(false);
 	
 	var _result = constructor[1].getPixel(_element[3]);
 	var _expectedValue = _element[1];
