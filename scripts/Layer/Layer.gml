@@ -1981,8 +1981,6 @@ function Layer() constructor
 											  "Parent: " + "{" + string(parent) + "}");
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
-							
-							return false;
 						}
 					}
 					
