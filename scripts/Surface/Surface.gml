@@ -214,8 +214,14 @@ function Surface() constructor
 			// @description			Check whether this Surface is the current draw target.
 			static isTarget = function()
 			{
-				return (((is_real(ID)) and (surface_exists(ID))) ? (surface_get_target() == ID)
-																 : false);
+				if ((is_real(ID)) and (surface_exists(ID)))
+				{
+					return (surface_get_target() == ID);
+				}
+				else
+				{
+					return false;
+				}
 			}
 			
 		#endregion
