@@ -437,8 +437,6 @@ function PriorityQueue() constructor
 					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return false;
 				}
 			}
 			
@@ -468,8 +466,6 @@ function PriorityQueue() constructor
 					var _errorText = ("Attempted to write to an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return false;
 				}
 			}
 			
