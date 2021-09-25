@@ -212,7 +212,7 @@ function Surface() constructor
 			
 			// @returns				{bool}
 			// @description			Check whether this Surface is the current draw target.
-			static isTarget = function()
+			static isActive = function()
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
@@ -574,7 +574,7 @@ function Surface() constructor
 			
 			// @argument			{bool} target
 			// @description			Place this Surface on the top of target stack or remove it.
-			static setTarget = function(_target)
+			static setActive = function(_target)
 			{
 				switch (_target)
 				{
@@ -583,7 +583,7 @@ function Surface() constructor
 						{
 							var _errorReport = new ErrorReport();
 							var _callstack = debug_get_callstack();
-							var _methodName = "setTarget";
+							var _methodName = "setActive";
 							var _errorText = ("Attempted to set an invalid Surface as the render " +
 											  "target: " +
 											  "{" + string(ID) + "}" + "\n" +
