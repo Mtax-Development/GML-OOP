@@ -396,6 +396,7 @@ function List() constructor
 			
 			// @argument			{function} function
 			// @argument			{any} argument?
+			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or an argument array:
@@ -408,15 +409,19 @@ function List() constructor
 				{
 					var _size = ds_list_size(ID);
 					
+					var _functionReturn = [];
+					
 					var _i = 0;
 					repeat (_size)
 					{
 						var _value = ds_list_find_value(ID, _i);
 							
-						__function(_i, _value, _argument);
-							
+						array_push(_functionReturn, __function(_i, _value, _argument));
+						
 						++_i;
 					}
+					
+					return _functionReturn;
 				}
 				else
 				{
@@ -426,6 +431,8 @@ function List() constructor
 					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

@@ -351,6 +351,7 @@ function PriorityQueue() constructor
 			// @argument			{any} argument?
 			// @argument			{bool} readOnly?
 			// @argument			{bool} orderAscending?
+			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
 			//						it will be performed on its copy and the original will not be
@@ -368,6 +369,8 @@ function PriorityQueue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
 				{
 					var _size = ds_priority_size(ID);
+					
+					var _functionReturn = [];
 					
 					if (_size > 0)
 					{
@@ -389,7 +392,7 @@ function PriorityQueue() constructor
 						{
 							var _value = __read(_priorityQueue);
 							
-							__function(_i, _value, _argument);
+							array_push(_functionReturn, __function(_i, _value, _argument));
 							
 							++_i;
 						}
@@ -398,6 +401,8 @@ function PriorityQueue() constructor
 						{
 							ds_priority_destroy(_dataCopy);
 						}
+						
+						return _functionReturn;
 					}
 				}
 				else
@@ -408,6 +413,8 @@ function PriorityQueue() constructor
 					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

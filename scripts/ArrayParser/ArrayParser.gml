@@ -279,6 +279,7 @@ function ArrayParser() constructor
 			
 			// @returns				{function} function
 			// @argument			{any} argument?
+			// @returns				{any[]}
 			// @description			Execute a function once for each value in the array.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or an argument array:
@@ -291,15 +292,19 @@ function ArrayParser() constructor
 				{
 					var _size = array_length(ID);
 					
+					var _functionReturn = [];
+					
 					var _i = 0;
 					repeat (_size)
 					{
 						var _value = array_get(ID, _i);
 						
-						__function(_i, _value, _argument);
+						array_push(_functionReturn, __function(_i, _value, _argument));
 						
 						++_i;
 					}
+					
+					return _functionReturn;
 				}
 				else
 				{

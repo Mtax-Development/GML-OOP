@@ -724,6 +724,7 @@ function Grid() constructor
 			
 			// @argument			{function} function
 			// @argument			{any} argument?
+			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or an argument array:
@@ -738,6 +739,8 @@ function Grid() constructor
 					var _size_x = ds_grid_width(ID);
 					var _size_y = ds_grid_height(ID);
 					
+					var _functionReturn = [];
+					
 					var _y = 0;
 					repeat (_size_y)
 					{
@@ -746,13 +749,15 @@ function Grid() constructor
 						{
 							var _value = ds_grid_get(ID, _x, _y);
 							
-							__function(_x, _y, _value, _argument);
+							array_push(__function(_x, _y, _value, _argument));
 							
 							++_x;
 						}
 						
 						++_y;
 					}
+					
+					return _functionReturn;
 				}
 				else
 				{
@@ -762,6 +767,8 @@ function Grid() constructor
 					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

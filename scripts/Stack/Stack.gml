@@ -346,6 +346,7 @@ function Stack() constructor
 			// @argument			{function} function
 			// @argument			{any} argument?
 			// @argument			{bool} readOnly?
+			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
 			//						it will be performed on its copy and the original will not be
@@ -360,6 +361,8 @@ function Stack() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _size = ds_stack_size(ID);
+					
+					var _functionReturn = [];
 					
 					if (_size > 0)
 					{
@@ -378,7 +381,7 @@ function Stack() constructor
 						{
 							var _value = ds_stack_pop(_stack);
 							
-							__function(_i, _value, _argument);
+							array_push(_functionReturn, __function(_i, _value, _argument));
 							
 							++_i;
 						}
@@ -387,6 +390,8 @@ function Stack() constructor
 						{
 							ds_stack_destroy(_dataCopy);
 						}
+						
+						return _functionReturn;
 					}
 				}
 				else
@@ -397,6 +402,8 @@ function Stack() constructor
 					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

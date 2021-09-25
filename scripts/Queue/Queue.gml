@@ -325,6 +325,7 @@ function Queue() constructor
 			// @argument			{function} function
 			// @argument			{any} argument?
 			// @argument			{bool} readOnly?
+			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
 			//						it will be performed on its copy and the original will not be
@@ -339,6 +340,8 @@ function Queue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _size = ds_queue_size(ID);
+					
+					var _functionReturn = [];
 					
 					if (_size > 0)
 					{
@@ -357,7 +360,7 @@ function Queue() constructor
 						{
 							var _value = ds_queue_dequeue(_queue);
 							
-							__function(_i, _value, _argument);
+							array_push(_functionReturn, __function(_i, _value, _argument));
 							
 							++_i;
 						}
@@ -366,6 +369,8 @@ function Queue() constructor
 						{
 							ds_queue_destroy(_dataCopy);
 						}
+						
+						return _functionReturn;
 					}
 				}
 				else
@@ -376,6 +381,8 @@ function Queue() constructor
 					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

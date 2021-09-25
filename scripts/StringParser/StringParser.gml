@@ -633,6 +633,7 @@ function StringParser() constructor
 			
 			// @returns				{function} function
 			// @argument			{any} argument?
+			// @returns				{any[]}
 			// @description			Execute a function once for each character of the string.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or an argument array:
@@ -643,15 +644,19 @@ function StringParser() constructor
 			{
 				var _string = string(ID);
 				
+				var _functionReturn = [];
+				
 				var _i = 1;
 				repeat (string_length(_string))
 				{
 					var _value = string_char_at(_string, _i);
 					
-					__function(_i, _value, _argument);
+					array_push(_functionReturn, __function(_i, _value, _argument));
 					
 					++_i;
 				}
+				
+				return _functionReturn;
 			}
 			
 			// @description			Display the string in the standard output of the application.
