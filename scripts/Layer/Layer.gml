@@ -2904,12 +2904,17 @@ function Layer() constructor
 						}
 					}
 					
-					// @description			Advance all actions of created Particles by one step.
-					static update = function()
+					// @argument			{int} count?
+					// @description			Advance all actions of created Particles by the specified
+					//						number of steps.
+					static update = function(_count = 1)
 					{
 						if ((is_real(ID)) and (part_system_exists(ID)))
 						{
-							part_system_update(ID);
+							repeat (_count)
+							{
+								part_system_update(ID);
+							}
 						}
 						else
 						{
