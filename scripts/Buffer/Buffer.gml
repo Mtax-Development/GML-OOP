@@ -811,7 +811,9 @@ function Buffer() constructor
 			//						This operation can be done asynchronously, which will prevent the
 			//						game from stopping while in process.
 			//						If performed asynchronously, the file path will have "Default/"
-			//						added at the beginning of it automatically.
+			//						added at the beginning of it automatically, also the ID will be
+			//						returned that will equal the value of the ID key in Save/Load 
+			//						asynchronous event. Otherwise {undefined} will be returned.
 			static toFile = function(_path)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
@@ -833,7 +835,7 @@ function Buffer() constructor
 						}
 						else
 						{
-							buffer_save_async(ID, _path, _offset, _size);
+							return buffer_save_async(ID, _path, _offset, _size);
 						}
 					}
 				}
@@ -845,9 +847,9 @@ function Buffer() constructor
 					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
 				}
+				
+				return undefined;
 			}
 			
 			// @argument			{string:path} path
@@ -866,8 +868,7 @@ function Buffer() constructor
 			//						If performed asynchronously, the file path will have "Default/"
 			//						added at the beginning of it automatically, also the ID will be
 			//						returned that will equal the value of the ID key in Save/Load 
-			//						asynchronous event.
-			//						If not performed asynchronously, {undefined} will be returned.
+			//						asynchronous event. Otherwise {undefined} will be returned.
 			static fromFile = function(_path)
 			{
 				if ((is_real(ID)) and (buffer_exists(ID)))
