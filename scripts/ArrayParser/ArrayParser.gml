@@ -289,8 +289,10 @@ function ArrayParser() constructor
 			{
 				if (is_array(ID))
 				{
+					var _size = array_length(ID);
+					
 					var _i = 0;
-					repeat (array_length(ID))
+					repeat (_size)
 					{
 						var _value = array_get(ID, _i);
 						
@@ -298,6 +300,17 @@ function ArrayParser() constructor
 						
 						++_i;
 					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "forEach";
+					var _errorText = ("Attempted to iterate through an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			
