@@ -573,11 +573,11 @@ function List() constructor
 			// @argument			{bool} orderAscending
 			// @description			Sort all values in the List in ascending or descending order.
 			//						Numbers will be placed before the strings.
-			static sort = function(orderAscending)
+			static sort = function(_orderAscending)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
-					ds_list_sort(ID, orderAscending);
+					ds_list_sort(ID, _orderAscending);
 				}
 				else
 				{
