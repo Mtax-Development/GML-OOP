@@ -287,6 +287,24 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Methods: getMagnitude() / getNormalized()]
+	
+	var _base = [999, -5];
+	
+	constructor = new Vector2(_base[0], _base[1]);
+	
+	var _result = [constructor.getMagnitude()];
+	var _expectedValue = [sqrt(power(_base[0], 2) + power(_base[1], 2))];
+	
+	array_push(_result, constructor.getNormalized(), constructor.getNormalized(_result[0]));
+	array_push(_expectedValue, constructor.quotient(_result[0]), constructor);
+	
+	unitTest.assert_equal("Methods: getMagnitude() / getNormalized()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
+	
+#endregion
 #region [Test: Method: add(real)]
 	
 	var _base = [35, 125.56];

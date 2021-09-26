@@ -550,6 +550,25 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Methods: getMagnitude() / getNormalized()]
+	
+	var _base = [979, -4.2, 5211, 1];
+	
+	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
+	
+	var _result = [constructor.getMagnitude()];
+	var _expectedValue = [sqrt(power(_base[0], 2) + power(_base[1], 2) + power(_base[2], 2) +
+							   power(_base[3], 2))];
+	
+	array_push(_result, constructor.getNormalized(), constructor.getNormalized(_result[0]));
+	array_push(_expectedValue, constructor.quotient(_result[0]), constructor);
+	
+	unitTest.assert_equal("Methods: getMagnitude() / getNormalized()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
+	
+#endregion
 #region [Test: Method: getMiddle()]
 	
 	var _base = [5, 10, 15, 20];
