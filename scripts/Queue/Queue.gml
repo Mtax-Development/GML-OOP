@@ -100,6 +100,8 @@ function Queue() constructor
 				}
 				
 				ds_queue_clear(ID);
+				
+				return self;
 			}
 			
 			// @argument			{Queue} other
@@ -125,6 +127,8 @@ function Queue() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -409,6 +413,8 @@ function Queue() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} count?
@@ -722,6 +728,8 @@ function Queue() constructor
 									  "{" + string(_array) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{string}
@@ -760,6 +768,8 @@ function Queue() constructor
 				}
 				
 				ds_queue_read(ID, _string, _legacy);
+				
+				return self;
 			}
 			
 		#endregion

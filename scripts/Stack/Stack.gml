@@ -100,6 +100,8 @@ function Stack() constructor
 				}
 				
 				ds_stack_clear(ID);
+				
+				return self;
 			}
 			
 			// @argument			{Stack} other
@@ -125,6 +127,8 @@ function Stack() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -432,6 +436,8 @@ function Stack() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} count?
@@ -743,6 +749,8 @@ function Stack() constructor
 									  "{" + string(_array) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{string}
@@ -781,6 +789,8 @@ function Stack() constructor
 				}
 				
 				ds_stack_read(ID, _string, _legacy);
+				
+				return self;
 			}
 			
 		#endregion

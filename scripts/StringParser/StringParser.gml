@@ -398,7 +398,6 @@ function StringParser() constructor
 			
 			// @argument			{int} position
 			// @argument			{int} count?
-			// @returns				{string}
 			// @description			Delete a part of the string, starting from the character
 			//						at the specified position and continuing to the right for the 
 			//						specified number of characters or its end.
@@ -412,14 +411,13 @@ function StringParser() constructor
 				
 				ID = string_delete(_string, _position, _count);
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{real} number
 			// @argument			{int} wholeNumberPlaces
 			// @argument			{int} decimalPlaces
 			// @argument			{bool} replace?
-			// @returns				{string}
 			// @description			Add to the string or replace it with a number that has a
 			//						specified formatting for number of displayed places of
 			//						whole numbers and decimal places.
@@ -439,24 +437,22 @@ function StringParser() constructor
 					ID += string_format(_number, _wholeNumberPlaces, _decimalPlaces);
 				}
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{any:string} substring
 			// @argument			{int} position
-			// @returns				{string}
 			// @description			Insert a specified substring to the left of the specified
 			//						character.
 			static insert = function(_substring, _position)
 			{
 				ID = string_insert(string(_substring), string(ID), _position);
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{int} number
 			// @argument			{any:string} separator?
-			// @returns				{string}
 			// @description			Add the specified number of copies of the string to itself, either
 			//						as it is or with added separator before the copy.
 			static duplicate = function(_number, _separator)
@@ -481,13 +477,12 @@ function StringParser() constructor
 					ID = string_repeat(_string, (_number + 1));
 				}
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{any:string} target
 			// @argument			{any:string} substitute
 			// @argument			{int} count?
-			// @returns				{string}
 			// @description			Replace the specified target parts of the string with specified
 			//						substitute string, either in its all instances or the specified
 			//						count of times, as they are found from left to right.
@@ -510,10 +505,9 @@ function StringParser() constructor
 					}
 				}
 				
-				return ID;
+				return self;
 			}
 			
-			// @returns				{string}
 			// @description			Reverse the order of characters in the string.
 			static reverse = function()
 			{
@@ -532,11 +526,10 @@ function StringParser() constructor
 				
 				ID = _result;
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{char|char[]} charsToTrim?
-			// @returns				{string}
 			//						Remove the specified characters from the start and the end of the
 			//						string until a different character is detected. If no characters
 			//						are specified, whitespace will be removed instead.
@@ -577,7 +570,7 @@ function StringParser() constructor
 						ID = string_copy(ID, _string_new_start,
 										 (_string_new_end - _string_new_start));
 							
-						return ID;
+						return self;
 					}
 					else if (_i == _i_backwards)
 					{
@@ -585,18 +578,17 @@ function StringParser() constructor
 						
 						ID = ((__charCheck(_i, _charsToTrim)) ? "" : _char);
 						
-						return ID;
+						return self;
 					}
 					
 					++_i;
 				}
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{int} position
 			// @argument			{int} byte
-			// @returns				{string}
 			// @description			Replace the character at the specified position by other one,
 			//						specified with UTF-8 byte value.
 			static setByte = function(_position, _byte)
@@ -607,25 +599,23 @@ function StringParser() constructor
 				
 				ID = string_set_byte_at(_string, _position, _byte);
 				
-				return ID;
+				return self;
 			}
 			
-			// @returns				{string}
 			// @description			Set all letters from English alphabet in the string to lowercase.
 			static setLowercase = function()
 			{
 				ID = string_lower(string(ID));
 				
-				return ID;
+				return self;
 			}
 			
-			// @returns				{string}
 			// @description			Set all letters from English alphabet in the string to uppercase.
 			static setUppercase = function()
 			{
 				ID = string_upper(string(ID));
 				
-				return ID;
+				return self;
 			}
 			
 		#endregion
@@ -663,6 +653,8 @@ function StringParser() constructor
 			static displayOutput = function()
 			{
 				show_debug_message(ID);
+				
+				return self;
 			}
 			
 			// @description			Pause the execution of the application to display the string in 
@@ -670,6 +662,8 @@ function StringParser() constructor
 			static displayMessageBox = function()
 			{
 				show_message(ID);
+				
+				return self;
 			}
 			
 		#endregion
@@ -745,7 +739,6 @@ function StringParser() constructor
 			}
 			
 			// @argument			{any[]:string}
-			// @returns				{string}
 			// @description			Set the string into one created from all values of an array.
 			static fromArray = function(_array)
 			{
@@ -761,7 +754,7 @@ function StringParser() constructor
 				
 				ID = _string;
 				
-				return ID;
+				return self;
 			}
 			
 		#endregion

@@ -363,6 +363,8 @@ function ParticleType() constructor
 				
 				death_type = undefined;
 				death_number = 0;
+				
+				return self;
 			}
 			
 		#endregion
@@ -393,6 +395,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Sprite} sprite
@@ -429,6 +433,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Scale} scale
@@ -451,6 +457,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Range} size
@@ -490,6 +498,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Range} speed
@@ -530,6 +540,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Angle|Range} direction
@@ -573,6 +585,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Angle|Range} angle
@@ -619,6 +633,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -652,6 +668,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int|Range} life
@@ -687,6 +705,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int:color|Color2|Color3} color
@@ -729,6 +749,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Color2} colors
@@ -752,6 +774,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Range} red
@@ -815,6 +839,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Range} hue
@@ -878,6 +904,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{bool} blend_additive
@@ -900,6 +928,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real} value1
@@ -942,6 +972,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{ParticleType} type
@@ -969,6 +1001,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{ParticleType} type
@@ -996,6 +1030,8 @@ function ParticleType() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -1034,6 +1070,8 @@ function ParticleType() constructor
 									  "Target: " + "{" + string(_particleSystem) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{ParticleSystem} particleSystem
@@ -1280,6 +1318,8 @@ function ParticleType() constructor
 									  "Target: " + "{" + string(_particleSystem) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 		
 		#endregion

@@ -106,6 +106,8 @@ function List() constructor
 				}
 				
 				ds_list_clear(ID);
+				
+				return self;
 			}
 			
 			// @argument			{List} other
@@ -132,6 +134,8 @@ function List() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -461,6 +465,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position
@@ -482,6 +488,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position
@@ -503,6 +511,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position
@@ -523,6 +533,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} value
@@ -554,6 +566,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position
@@ -575,6 +589,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{bool} orderAscending
@@ -595,6 +611,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @description			Randomize the position of all values in the List.
@@ -613,6 +631,8 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -838,6 +858,8 @@ function List() constructor
 									  "{" + string(_array) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{string}
@@ -876,6 +898,8 @@ function List() constructor
 				}
 				
 				ds_list_read(ID, _string, _legacy);
+				
+				return self;
 			}
 			
 		#endregion

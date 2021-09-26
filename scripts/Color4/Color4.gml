@@ -164,6 +164,8 @@ function Color4() constructor
 				color2 = _color3;
 				color3 = _color2;
 				color4 = _color1;
+				
+				return self;
 			}
 			
 		#endregion

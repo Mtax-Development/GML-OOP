@@ -698,6 +698,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} number
@@ -725,6 +727,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -752,6 +756,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -779,6 +785,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -806,6 +814,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -833,6 +843,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -860,6 +872,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} value
@@ -887,6 +901,8 @@ function DateTime() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @description			Set this DateTime to the current of the system using the
@@ -902,6 +918,8 @@ function DateTime() constructor
 				hour = date_get_hour(ID);
 				minute = date_get_minute(ID);
 				second = date_get_second(ID);
+				
+				return self;
 			}
 			
 			// @argument			{int} year
@@ -922,6 +940,8 @@ function DateTime() constructor
 				hour = date_get_hour(ID);
 				minute = date_get_minute(ID);
 				second = date_get_second(ID);
+				
+				return self;
 			}
 			
 		#endregion

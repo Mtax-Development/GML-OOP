@@ -168,6 +168,8 @@ function TextDraw() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion

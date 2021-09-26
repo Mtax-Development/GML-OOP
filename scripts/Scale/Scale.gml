@@ -148,6 +148,8 @@ function Scale() constructor
 				
 				x = _value_array[0];
 				y = _value_array[1];
+				
+				return self;
 			}
 			
 			// @description			Reverse the x and y values.
@@ -155,6 +157,8 @@ function Scale() constructor
 			{
 				x = (-x);
 				y = (-y);
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -163,6 +167,8 @@ function Scale() constructor
 			{
 				x = _value;
 				y = _value;
+				
+				return self;
 			}
 			
 		#endregion

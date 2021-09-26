@@ -66,6 +66,8 @@ function Angle() constructor
 			{
 				value = _value;
 				value -= (360 * (floor(value / 360)));
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -74,6 +76,8 @@ function Angle() constructor
 			{
 				value += _value;
 				value -= (360 * (floor(value / 360)));
+				
+				return self;
 			}
 			
 		#endregion

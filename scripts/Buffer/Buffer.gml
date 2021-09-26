@@ -134,6 +134,8 @@ function Buffer() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -281,6 +283,8 @@ function Buffer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -354,6 +358,8 @@ function Buffer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{constant:buffer_[dataType]} type...
@@ -751,9 +757,9 @@ function Buffer() constructor
 					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Surface|int:surface} surface
@@ -783,8 +789,6 @@ function Buffer() constructor
 										  "{" + string(_surface) + "}");
 						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 															 _errorText);
-						
-						return string(undefined);
 					}
 				}
 				else
@@ -795,9 +799,9 @@ function Buffer() constructor
 					var _errorText = ("Attempted to convert an invalid Buffer: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{string:path} path
@@ -973,6 +977,8 @@ function Buffer() constructor
 										"{" + string(_path) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion

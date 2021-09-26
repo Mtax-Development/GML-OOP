@@ -527,6 +527,8 @@ function Vector4() constructor
 					x2 += _value;
 					y2 += _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
@@ -557,6 +559,8 @@ function Vector4() constructor
 					x2 -= _value;
 					y2 -= _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
@@ -585,6 +589,8 @@ function Vector4() constructor
 					x2 *= _value;
 					y2 *= _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
@@ -647,6 +653,8 @@ function Vector4() constructor
 						y2 /= _value;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector4} target
@@ -688,6 +696,8 @@ function Vector4() constructor
 				y1 = _value_array[1];
 				x2 = _value_array[2];
 				y2 = _value_array[3];
+				
+				return self;
 			}
 			
 			// @description			Swap the x and y values.
@@ -702,6 +712,8 @@ function Vector4() constructor
 				y1 = _x1;
 				x2 = _y2;
 				y2 = _x2;
+				
+				return self;
 			}
 			
 			// @description			Reverse the x and y values.
@@ -711,6 +723,8 @@ function Vector4() constructor
 				y1 = (-y1);
 				x2 = (-x2);
 				y2 = (-y2);
+				
+				return self;
 			}
 			
 			// @description			Reverse the x values.
@@ -718,6 +732,8 @@ function Vector4() constructor
 			{
 				x1 = (-x1);
 				x2 = (-x2);
+				
+				return self;
 			}
 			
 			// @description			Reverse the y values.
@@ -725,6 +741,8 @@ function Vector4() constructor
 			{
 				y1 = (-y1);
 				y2 = (-y2);
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -735,6 +753,8 @@ function Vector4() constructor
 				y1 = _value;
 				x2 = _value;
 				y2 = _value;
+				
+				return self;
 			}
 			
 		#endregion

@@ -100,6 +100,8 @@ function Color3() constructor
 				
 				color1 = _color3;
 				color3 = _color1;
+				
+				return self;
 			}
 			
 		#endregion

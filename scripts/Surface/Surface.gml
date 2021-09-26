@@ -65,6 +65,8 @@ function Surface() constructor
 						onCreate(self);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{undefined}
@@ -106,6 +108,8 @@ function Surface() constructor
 				{
 					surface_reset_target();
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector2} location
@@ -160,6 +164,8 @@ function Surface() constructor
 									  "Other: " + "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -262,7 +268,9 @@ function Surface() constructor
 						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 															 _errorText);
 					}
-				}	
+				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -484,6 +492,8 @@ function Surface() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector2} size
@@ -520,6 +530,8 @@ function Surface() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector2} offset?
@@ -570,6 +582,8 @@ function Surface() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{bool} target
@@ -604,6 +618,8 @@ function Surface() constructor
 						}
 					break;
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -660,6 +676,8 @@ function Surface() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Buffer} buffer
@@ -679,6 +697,8 @@ function Surface() constructor
 						buffer_set_surface(_buffer.ID, ID, _offset);
 					}
 				}
+				
+				return self;
 			}
 			
 		#endregion

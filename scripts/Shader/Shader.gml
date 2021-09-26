@@ -185,6 +185,8 @@ function Shader() constructor
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{string} uniform
@@ -273,6 +275,8 @@ function Shader() constructor
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{string} uniform
@@ -312,6 +316,8 @@ function Shader() constructor
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -346,6 +352,8 @@ function Shader() constructor
 									  "{" + string(name) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion

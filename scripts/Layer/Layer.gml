@@ -382,6 +382,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector2} speed
@@ -405,6 +407,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{bool} visible
@@ -428,6 +432,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} depth
@@ -449,6 +455,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Shader} shader
@@ -470,6 +478,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{function} function
@@ -492,6 +502,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{function} function
@@ -514,6 +526,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -664,6 +678,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{bool} instancesPaused
@@ -694,6 +710,8 @@ function Layer() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -909,6 +927,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @returns				{undefined}
@@ -966,6 +986,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{Scale} scale
@@ -991,6 +1013,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int:color} color
@@ -1015,6 +1039,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{real} alpha
@@ -1039,6 +1065,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int} frame
@@ -1063,6 +1091,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					
@@ -1088,6 +1118,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -1314,6 +1346,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @returns				{undefined}
@@ -1371,6 +1405,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{Scale} scale
@@ -1396,6 +1432,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int:color} color
@@ -1420,6 +1458,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{real} alpha
@@ -1444,6 +1484,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int} frame
@@ -1468,6 +1510,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{real} speed
@@ -1492,6 +1536,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} stretch
@@ -1516,6 +1562,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} tiled_x?
@@ -1544,6 +1592,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} visible
@@ -1568,6 +1618,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -1775,6 +1827,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{Layer|int:layer|string:layer} other
@@ -1825,6 +1879,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -1984,6 +2040,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int:tileset} tileset
@@ -2008,6 +2066,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{Vector2} size
@@ -2034,6 +2094,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -2060,6 +2122,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 
@@ -2245,6 +2309,8 @@ function Layer() constructor
 								}
 								
 								ID = tile_set_empty(ID);
+								
+								return self;
 							}
 							
 						#endregion
@@ -2400,6 +2466,8 @@ function Layer() constructor
 								}
 								
 								ID = tile_set_index(ID, _index);
+								
+								return self;
 							}
 							
 							// @argument			{bool} mirror
@@ -2425,6 +2493,8 @@ function Layer() constructor
 								}
 								
 								ID = tile_set_mirror(ID, _mirror);
+								
+								return self;
 							}
 							
 							// @argument			{bool} mirror
@@ -2450,6 +2520,8 @@ function Layer() constructor
 								}
 								
 								ID = tile_set_flip(ID, _mirror);
+								
+								return self;
 							}
 							
 							// @argument			{bool} rotate
@@ -2475,6 +2547,8 @@ function Layer() constructor
 								}
 								
 								ID = tile_set_rotate(ID, _rotate);
+								
+								return self;
 							}
 							
 						#endregion
@@ -2504,6 +2578,8 @@ function Layer() constructor
 								}
 								
 								draw_tile(parent.tileset, ID, _frame, _location.x, _location.y);
+								
+								return self;
 							}
 							
 						#endregion
@@ -2684,6 +2760,8 @@ function Layer() constructor
 						{
 							part_particles_clear(ID);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{Layer|int:layer|string:layer} other
@@ -2734,6 +2812,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -2787,6 +2867,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} newerOnTop
@@ -2810,6 +2892,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} automaticUpdate
@@ -2834,6 +2918,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{bool} automaticRender
@@ -2858,6 +2944,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 			
 				#endregion
@@ -2904,6 +2992,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 					// @argument			{int} count?
@@ -2928,6 +3018,8 @@ function Layer() constructor
 							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
+						
+						return self;
 					}
 					
 				#endregion
@@ -3122,6 +3214,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 						#endregion
@@ -3156,6 +3250,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 							// @argument			{bool} streamEnabled
@@ -3178,6 +3274,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 							// @argument			{int} number
@@ -3201,6 +3299,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 						#endregion
@@ -3231,6 +3331,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 							// @description			Continously create Particles using the stream 
@@ -3260,6 +3362,8 @@ function Layer() constructor
 									_errorReport.reportConstructorMethod(self, _callstack,
 																		 _methodName, _errorText);
 								}
+								
+								return self;
 							}
 							
 						#endregion

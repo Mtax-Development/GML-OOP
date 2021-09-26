@@ -80,6 +80,8 @@ function SpriteDraw() constructor
 			static render = function()
 			{
 				sprite.render(location, frame, scale, angle, color, alpha);
+				
+				return self;
 			}
 			
 		#endregion

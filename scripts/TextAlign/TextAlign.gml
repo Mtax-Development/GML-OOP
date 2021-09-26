@@ -67,6 +67,8 @@ function TextAlign() constructor
 					case fa_top: y = fa_bottom; break;
 					case fa_bottom: y = fa_top; break;
 				}
+				
+				return self;
 			}
 			
 			// @description			Mirror the non-centered x value of the alignment.
@@ -77,6 +79,8 @@ function TextAlign() constructor
 					case fa_left: x = fa_right; break;
 					case fa_right: x = fa_left; break;
 				}
+				
+				return self;
 			}
 			
 			// @description			Mirror the non-centered y value of the alignment.
@@ -87,42 +91,56 @@ function TextAlign() constructor
 					case fa_top: y = fa_bottom; break;
 					case fa_bottom: y = fa_top; break;
 				}
+				
+				return self;
 			}
 			
 			// @description			Set the origin of horizontal alignment to the left of the text.
 			static setXLeft = function()
 			{
 				x = fa_left;
+				
+				return self;
 			}
 			
 			// @description			Set the origin of horizontal alignment to the center of the text.
 			static setXCenter = function()
 			{
 				x = fa_center;
+				
+				return self;
 			}
 			
 			// @description			Set the origin of horizontal alignment to the right of the text.
 			static setXRight = function()
 			{
 				x = fa_right;
+				
+				return self;
 			}
 			
 			// @description			Set the origin of vertical alignment to the top of the text.
 			static setYTop = function()
 			{
 				y = fa_top;
+				
+				return self;
 			}
 			
 			// @description			Set the origin of vertical alignment to the middle of the text.
 			static setYMiddle = function()
 			{
 				y = fa_middle;
+				
+				return self;
 			}
 			
 			// @description			Set the origin of vertical alignment to the bottom of the text.
 			static setYBottom = function()
 			{
 				y = fa_bottom;
+				
+				return self;
 			}
 			
 		#endregion
@@ -133,6 +151,8 @@ function TextAlign() constructor
 			{
 				draw_set_halign(x);
 				draw_set_valign(y);
+				
+				return self;
 			}
 			
 		#endregion

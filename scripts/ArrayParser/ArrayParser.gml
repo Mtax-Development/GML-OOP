@@ -48,17 +48,15 @@ function ArrayParser() constructor
 			
 			// @argument			{int} size?
 			// @argument			{any} value?
-			// @returns				{any[]}
 			// @description			Replace the array with a newly created array of the specified size
 			//						filled with the specified value.
 			static create = function(_size = 0, _value)
 			{
 				ID = array_create(_size, _value);
 				
-				return ID;
+				return self;
 			}
 			
-			// @returns				{void[]}
 			// @description			Remove all data from the array.
 			static clear = function()
 			{
@@ -71,14 +69,13 @@ function ArrayParser() constructor
 					ID = [];
 				}
 				
-				return ID;
+				return self;
 			}
 			
 			// @argument			{any[]|ArrayParser} other
 			// @argument			{int} position?
 			// @argument			{int} other_position?
 			// @argument			{int} count?
-			// @returns				{any[]}
 			// @description			Copy specfied number of elements from other array to this one from
 			//						specified position in other one to specified position in this one.
 			//						If the specified positions are already occupied, their values will
@@ -99,8 +96,6 @@ function ArrayParser() constructor
 					if (_count == undefined) {_count = (array_length(_other) - _other_position);}
 					
 					array_copy(ID, _position, _other, _other_position, _count);
-					
-					return ID;
 				}
 				else
 				{
@@ -110,9 +105,9 @@ function ArrayParser() constructor
 					var _errorText = ("Attempted to copy from an invalid array: " +
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return ID;
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -258,8 +253,6 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					array_resize(ID, _size);
-					
-					return ID;
 				}
 				else
 				{
@@ -269,9 +262,9 @@ function ArrayParser() constructor
 					var _errorText = ("Attempted to set a property an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -342,6 +335,8 @@ function ArrayParser() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} value
@@ -363,6 +358,8 @@ function ArrayParser() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position
@@ -392,6 +389,8 @@ function ArrayParser() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} position?
@@ -450,7 +449,6 @@ function ArrayParser() constructor
 			}
 			
 			// @argument			{bool|function} order
-			// @returns				{any[]}
 			// @description			Sort the values in the array in the specified order.
 			//						The order can be specified as {bool} for ascending order or as a
 			//						sorting {function}.
@@ -466,8 +464,6 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					array_sort(ID, _order);
-					
-					return ID;
 				}
 				else
 				{
@@ -477,9 +473,9 @@ function ArrayParser() constructor
 					var _errorText = ("Attempted to sort an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
 				}
+				
+				return self;
 			}
 			
 		#endregion

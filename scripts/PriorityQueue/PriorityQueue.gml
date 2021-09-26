@@ -100,6 +100,8 @@ function PriorityQueue() constructor
 				}
 				
 				ds_priority_clear(ID);
+				
+				return self;
 			}
 			
 			// @argument			{PriorityQueue} other
@@ -125,6 +127,8 @@ function PriorityQueue() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -445,6 +449,8 @@ function PriorityQueue() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} priority...
@@ -474,6 +480,8 @@ function PriorityQueue() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} value...
@@ -501,6 +509,8 @@ function PriorityQueue() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{int} count?
@@ -878,6 +888,8 @@ function PriorityQueue() constructor
 									  "{" + string(_array) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{string}
@@ -916,6 +928,8 @@ function PriorityQueue() constructor
 				}
 				
 				ds_priority_read(ID, _string, _legacy);
+				
+				return self;
 			}
 			
 		#endregion

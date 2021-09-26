@@ -103,6 +103,8 @@ function RangedValue() constructor
 			static modify = function(_value)
 			{
 				value = clamp((value + _value), range.minimum, range.maximum);
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -139,6 +141,8 @@ function RangedValue() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -185,6 +189,8 @@ function RangedValue() constructor
 						value = (range.maximum - (_modulo - (_distance + _rangeDifference)));
 					}
 				}
+				
+				return self;
             }
 			
 			// @argument			{real} value
@@ -195,6 +201,8 @@ function RangedValue() constructor
 			{
 				value = clamp(lerp(range.minimum, range.maximum, _value),
 							  range.minimum, range.maximum);
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -202,24 +210,32 @@ function RangedValue() constructor
 			static set = function(_value)
 			{
 				value = clamp(_value, range.minimum, range.maximum);
+				
+				return self;
 			}
 			
 			// @description			Set the value to the minimum boundary of the Range.
 			static setMinimum = function()
 			{
 				value = range.minimum;
+				
+				return self;
 			}
 			
 			// @description			Set the value to the maximum boundary of the Range.
 			static setMaximum = function()
 			{
 				value = range.maximum;
+				
+				return self;
 			}
 			
 			// @description			Set the value to the state it had upon constructor creation.
 			static setOriginal = function()
 			{
 				value = value_original;
+				
+				return self;
 			}
 			
 			// @returns				{real}
@@ -227,6 +243,8 @@ function RangedValue() constructor
 			static setMiddle = function()
 			{
 				value = lerp(range.minimum, range.maximum, 0.5);
+				
+				return self;
 			}
 			
 		#endregion

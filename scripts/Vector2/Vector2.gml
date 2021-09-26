@@ -288,6 +288,8 @@ function Vector2() constructor
 					x += _value;
 					y += _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2} value
@@ -305,6 +307,8 @@ function Vector2() constructor
 					x -= _value;
 					y -= _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2} value
@@ -322,6 +326,8 @@ function Vector2() constructor
 					x *= _value;
 					y *= _value;
 				}
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2} value
@@ -350,6 +356,8 @@ function Vector2() constructor
 						y /= _value;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @argument			{Vector2} target
@@ -389,6 +397,8 @@ function Vector2() constructor
 				
 				x = _value_array[0];
 				y = _value_array[1];
+				
+				return self;
 			}
 			
 			// @description			Swap the x and y values of this Vector2 with each other.
@@ -399,6 +409,8 @@ function Vector2() constructor
 				
 				x = _y;
 				y = _x;
+				
+				return self;
 			}
 			
 			// @description			Reverse the x and y values.
@@ -406,6 +418,8 @@ function Vector2() constructor
 			{
 				x = (-x);
 				y = (-y);
+				
+				return self;
 			}
 			
 			// @argument			{real} value
@@ -414,6 +428,8 @@ function Vector2() constructor
 			{
 				x = _value;
 				y = _value;
+				
+				return self;
 			}
 			
 			// @argument			{int} device?
@@ -430,6 +446,8 @@ function Vector2() constructor
 					x = device_mouse_x(_device);
 					y = device_mouse_y(_device);
 				}
+				
+				return self;
 			}
 			
 		#endregion

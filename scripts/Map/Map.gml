@@ -110,6 +110,8 @@ function Map() constructor
 				}
 				
 				ds_map_clear(ID);
+				
+				return self;
 			}
 			
 			// @argument			{Map} other
@@ -135,6 +137,8 @@ function Map() constructor
 									  "{" + string(_other) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
@@ -670,6 +674,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} key...
@@ -711,6 +717,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} key...
@@ -738,6 +746,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} key...
@@ -798,6 +808,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{any} key...
@@ -823,6 +835,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			#endregion
@@ -1081,6 +1095,8 @@ function Map() constructor
 									  "{" + string(_array) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{string}
@@ -1121,6 +1137,8 @@ function Map() constructor
 				}
 				
 				ds_map_read(ID, _string, _legacy);
+				
+				return self;
 			}
 			
 			// @argument			{string:path} path
@@ -1142,6 +1160,8 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 			// @argument			{string:path} path
@@ -1201,6 +1221,8 @@ function Map() constructor
 									  "{" + string(_buffer) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				return self;
 			}
 			
 		#endregion
