@@ -279,8 +279,7 @@
 	
 	constructor[0].clear(_element[1]);
 	constructor[0].toFile(_element[0]);
-	_element[4] = new Sprite();
-	_element[4].fromFile(_element[0]);
+	_element[4] = new Sprite(_element[0]);
 	constructor[1].setActive(true);
 	constructor[1].clear(_element[2]);
 	_element[4].render(_element[3]);
