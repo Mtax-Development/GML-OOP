@@ -12,7 +12,7 @@
 ///							- New constructor
 ///							- From one array: {int[]} array
 ///							   Array elements will be applied in the following order:
-///							   [year, month?, day?, hour?, minute?, second?].
+///							   [year, month?, day?, hour?, minute?, second?]
 ///							- From two arrays: {int[]} date, {int[]} time
 ///								Array elements will be applied in the following order:
 ///								[year, month, day], [hour, minute, second?]

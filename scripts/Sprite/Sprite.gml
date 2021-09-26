@@ -293,7 +293,7 @@ function Sprite() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{struct:nineslice}
+			// @returns				{struct:nineslice} | On error: {noone}
 			// @description			Return a struct representing the Nine Slice of this Sprite.
 			//						Changes to the properties of that struct will have an immediate
 			//						effect.
@@ -311,6 +311,8 @@ function Sprite() constructor
 					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return noone;
 				}
 			}
 			
@@ -341,7 +343,7 @@ function Sprite() constructor
 			
 			// @argument			{int} frame?
 			// @argument			{bool} full?
-			// @returns				{Vector4|real[]}
+			// @returns				{Vector4|real[]} | On error: {undefined}
 			// @description			Return the UV coordinates for the location of the specified frame
 			//						of this Sprite on its texture page.
 			//						It will be returned as an Vector4 if the full information is not
