@@ -489,6 +489,37 @@ function Vector4() constructor
 				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
 			}
 			
+			// @returns				{real}
+			// @description			Return the length of this Vector.
+			static getMagnitude = function()
+			{
+				return sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
+			}
+			
+			// @argument			{real} magnitude?
+			// @description			Return the unit Vector of this Vector2, which will have its values
+			//						put into a range of -1 to 1, but with the same direction. These
+			//						values can be then multiplied by the specified magnitude.
+			static getNormalized = function(_magnitude = 1)
+			{
+				var _length = sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
+				
+				var _x1 = x1;
+				var _y1 = y1;
+				var _x2 = x2;
+				var _y2 = y2;
+				
+				if (_length != 0)
+				{
+					_x1 = ((x1 / _length) * _magnitude);
+					_y1 = ((y1 / _length) * _magnitude);
+					_x2 = ((x2 / _length) * _magnitude);
+					_y2 = ((y2 / _length) * _magnitude);
+				}
+				
+				return new Vector4(_x1, _y1, _x2, _y2);
+			}
+			
 			// @argument			{Vector2} location
 			// @returns				{bool}
 			// @description			Check if a point in space is within this Vector4.

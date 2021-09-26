@@ -270,6 +270,33 @@ function Vector2() constructor
 				return max(x, y);
 			}
 			
+			// @returns				{real}
+			// @description			Return the length of this Vector.
+			static getMagnitude = function()
+			{
+				return sqrt((x * x) + (y * y));
+			}
+			
+			// @argument			{real} magnitude?
+			// @description			Return the unit Vector of this Vector2, which will have its values
+			//						put into a range of -1 to 1, but with the same direction. These
+			//						values can be then multiplied by the specified magnitude.
+			static getNormalized = function(_magnitude = 1)
+			{
+				var _length = sqrt((x * x) + (y * y));
+				
+				var _x = x;
+				var _y = y;
+				
+				if (_length != 0)
+				{
+					_x = ((x / _length) * _magnitude);
+					_y = ((y / _length) * _magnitude);
+				}
+				
+				return new Vector2(_x, _y);
+			}
+			
 		#endregion
 		#region <Setters>
 			
