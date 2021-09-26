@@ -106,8 +106,8 @@ function Queue() constructor
 			// @description			Replace data of this Queue with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "Queue") and (is_real(_other.ID)) and 
-				(ds_exists(_other.ID, ds_type_queue)))
+				if ((instanceof(_other) == "Queue") and (is_real(_other.ID))
+				and (ds_exists(_other.ID, ds_type_queue)))
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
 					{

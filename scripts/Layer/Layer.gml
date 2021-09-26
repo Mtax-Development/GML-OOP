@@ -675,11 +675,13 @@ function Layer() constructor
 					if (_instancesPaused)
 					{
 						instancesPaused = true;
+						
 						instance_deactivate_layer(ID);
 					}
 					else
 					{
 						instancesPaused = false;
+						
 						instance_activate_layer(ID);
 					}
 				}
