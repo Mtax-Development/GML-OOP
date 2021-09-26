@@ -112,8 +112,8 @@ function Color3() constructor
 			//						Overrides the string() conversion.
 			//						Content will be represented as color names for built-in constants
 			//						or RGB value, unless use of HSV is specified.
-			//						Note: The constant for Silver is the same as for Light Gray, so it
-			//							  cannot be differentiated and will not be represented.
+			//						NOTE: The constant for Silver is the same as for Light Gray. It
+			//						cannot be differentiated and will not be represented.
 			static toString = function(_multiline = false, _color_HSV = false)
 			{
 				var _color = [color1, color2, color3];
