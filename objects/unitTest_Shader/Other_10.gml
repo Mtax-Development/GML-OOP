@@ -7,8 +7,8 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	
 	constructor = new Shader(_element[0][0]);
 	
-	var _result = [constructor.isFunctional(), constructor.isActive()];
-	var _expectedValue = [true, false];
+	var _result = [constructor.isFunctional()];
+	var _expectedValue = [true];
 	
 	constructor.setActive(_element[1][0]);
 	
@@ -20,24 +20,11 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	array_push(_result, constructor.isActive());
 	array_push(_expectedValue, _element[1][1]);
 	
-	constructor.setActive();
-	
-	array_push(_result, constructor.isActive());
-	array_push(_expectedValue, _element[1][0]);
-	
-	constructor.setActive();
-	
-	array_push(_result, constructor.isActive());
-	array_push(_expectedValue, _element[1][1]);
-	
 	unitTest.assert_equal(("Construction: New constructor / Activation / Methods: isFunctional() / " +
 						  "isActive()"),
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3],
-						  _result[4], _expectedValue[4],
-						  _result[5], _expectedValue[5]);
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Test: Construction: Constructor copy / Method: setUniformFloat()]
