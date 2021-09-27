@@ -35,7 +35,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
-#region [Test: Construction: Sprite (utf8)]
+#region [Test: Construction: Sprite (UTF-8)]
 	
 	var _base = [new Sprite(asset[2]), ord("A"), true, 3, true];
 	
@@ -44,7 +44,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 	var _result = constructor.isFunctional();
 	var _expectedValue = true;
 	
-	unitTest.assert_equal("Construction: Sprite (utf8)",
+	unitTest.assert_equal("Construction: Sprite (UTF-8)",
 						  _result, _expectedValue);
 	
 	constructor.destroy();
@@ -158,7 +158,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 	repeat (array_length(_element))
 	{
 		array_push(_expectedValue,
-				   ("Type: " + "sprite (utf8)" + _element[_i] +
+				   ("Type: " + "sprite (UTF-8)" + _element[_i] +
 				    "Asset Name: " + font_get_name(constructor.ID) + _element[_i] +
 				    "Font Name: " + font_get_fontname(constructor.ID) + _element[_i] +
 				    "Sprite: " + string(_base[0]) + _element[_i] +
