@@ -349,10 +349,9 @@ function Rectangle() constructor
 											_color1, _color4, _color4, outline_alpha);
 						
 						//|Bottom.
-						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x2 + outline_size),
-											(_y2 + outline_size), (-(_width + outline_size)),
-											(-outline_size),
-											0, _color3, _color4, _color4, _color3, outline_alpha);
+						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1), (_y2 + outline_size),
+											((_width + outline_size)), (-outline_size), 0, _color4,
+											_color3, _color3, _color4, outline_alpha);
 						
 						//|Right.
 						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x2 + outline_size),
