@@ -572,7 +572,7 @@ function Map() constructor
 					{
 						var _value = ds_map_find_value(ID, _key);
 						
-						array_push(_functionReturn, __function(_i, _value, _argument));
+						array_push(_functionReturn, __function(_i, _key, _value, _argument));
 						
 						_key = ds_map_find_next(ID, _key);
 						

@@ -757,7 +757,7 @@ function Grid() constructor
 						{
 							var _value = ds_grid_get(ID, _x, _y);
 							
-							array_push(__function(_x, _y, _value, _argument));
+							array_push(_functionReturn, __function(_x, _y, _value, _argument));
 							
 							++_x;
 						}
