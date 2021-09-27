@@ -57,6 +57,8 @@ function RoundRectangle() constructor
 						outline_alpha = ((argument_count > 5) ? argument[5] : undefined);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

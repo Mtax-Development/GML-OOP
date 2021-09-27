@@ -50,6 +50,8 @@ function Arrow() constructor
 																					   : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

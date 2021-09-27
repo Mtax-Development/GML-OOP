@@ -60,6 +60,8 @@ function SpriteDraw() constructor
 						alpha = ((argument_count > 6) ? argument[6] : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

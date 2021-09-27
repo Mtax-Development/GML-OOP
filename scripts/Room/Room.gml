@@ -80,6 +80,8 @@ function Room() constructor
 					room_set_height(ID, size.y);
 					room_set_persistent(ID, persistent);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}
@@ -393,6 +395,8 @@ function Room() constructor
 							
 							ID = room_instance_add(parent.ID, location.x, location.y, object);
 						}
+						
+						return self;
 					}
 					
 					// @returns				{bool}

@@ -42,6 +42,8 @@ function List() constructor
 					ID = ds_list_create();
 					ds_list_clear(ID);
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

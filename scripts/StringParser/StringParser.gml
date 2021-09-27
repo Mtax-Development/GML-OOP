@@ -33,6 +33,8 @@ function StringParser() constructor
 						ID = string(argument[0]);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

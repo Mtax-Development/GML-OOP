@@ -54,6 +54,8 @@ function TextDraw() constructor
 								 ? argument[4] : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

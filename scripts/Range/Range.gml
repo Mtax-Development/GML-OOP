@@ -37,6 +37,8 @@ function Range() constructor
 						maximum = argument[1];
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

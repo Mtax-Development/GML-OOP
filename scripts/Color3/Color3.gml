@@ -80,6 +80,8 @@ function Color3() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

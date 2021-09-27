@@ -40,6 +40,8 @@ function Queue() constructor
 					//|Construction type: New constructor.
 					ID = ds_queue_create();
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

@@ -51,6 +51,8 @@ function Ellipse() constructor
 						outline_alpha = ((argument_count > 4) ? argument[4] : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

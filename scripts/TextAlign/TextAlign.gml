@@ -40,6 +40,8 @@ function TextAlign() constructor
 																				 : fa_top);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

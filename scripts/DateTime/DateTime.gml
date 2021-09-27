@@ -148,6 +148,8 @@ function DateTime() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

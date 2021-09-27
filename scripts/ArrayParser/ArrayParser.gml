@@ -37,6 +37,8 @@ function ArrayParser() constructor
 					//|Construction type: Empty array.
 					ID = [];
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

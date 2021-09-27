@@ -161,6 +161,8 @@ function Font() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

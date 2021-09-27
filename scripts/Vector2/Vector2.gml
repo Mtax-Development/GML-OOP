@@ -87,6 +87,8 @@ function Vector2() constructor
 						break;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

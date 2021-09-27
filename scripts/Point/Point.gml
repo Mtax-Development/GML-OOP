@@ -43,6 +43,8 @@ function Point() constructor
 																					   : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

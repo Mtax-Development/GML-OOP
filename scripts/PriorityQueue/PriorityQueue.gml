@@ -40,6 +40,8 @@ function PriorityQueue() constructor
 					//|Construction type: New constructor.
 					ID = ds_priority_create();
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

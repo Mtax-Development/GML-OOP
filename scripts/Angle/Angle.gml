@@ -34,6 +34,8 @@ function Angle() constructor
 						value -= (360 * (floor(value / 360)));
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

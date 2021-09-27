@@ -142,6 +142,8 @@ function Sprite() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

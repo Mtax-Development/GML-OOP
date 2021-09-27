@@ -62,6 +62,8 @@ function Buffer() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

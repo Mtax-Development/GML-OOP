@@ -41,6 +41,8 @@ function Surface() constructor
 						ID = surface_create(max(1, size.x), max(1, size.y));
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

@@ -44,6 +44,8 @@ function Color2() constructor
 						color2 = _other.color2;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

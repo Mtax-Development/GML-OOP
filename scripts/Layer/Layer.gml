@@ -216,6 +216,8 @@ function Layer() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}
@@ -869,6 +871,8 @@ function Layer() constructor
 								speed = layer_sprite_get_speed(ID)
 							break;
 						}
+						
+						return self;
 					}
 					
 					// @returns				{bool}
@@ -1288,6 +1292,8 @@ function Layer() constructor
 								speed = layer_background_get_speed(ID)
 							break;
 						}
+						
+						return self;
 					}
 					
 					// @returns				{bool}
@@ -1754,6 +1760,8 @@ function Layer() constructor
 								size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
 							}
 						}
+						
+						return self;
 					}
 					
 					// @returns				{bool}
@@ -2279,6 +2287,8 @@ function Layer() constructor
 										ID = argument[0];
 									}
 								}
+								
+								return self;
 							}
 							
 							// @returns				{bool}
@@ -2724,6 +2734,8 @@ function Layer() constructor
 							
 							ID = part_system_create_layer(parent.ID, persistent);
 						}
+						
+						return self;
 					}
 					
 					// @returns				{bool}
@@ -3144,6 +3156,8 @@ function Layer() constructor
 										particleType = argument[0];
 									}
 								}
+								
+								return self;
 							}
 							
 							// @returns				{bool}

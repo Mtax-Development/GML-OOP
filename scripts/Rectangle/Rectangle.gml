@@ -59,6 +59,8 @@ function Rectangle() constructor
 										 ? argument[5] : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

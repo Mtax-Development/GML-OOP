@@ -285,6 +285,8 @@ function ParticleType() constructor
 					death_type = undefined;
 					death_number = 0;
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

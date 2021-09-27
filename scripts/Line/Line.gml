@@ -64,6 +64,8 @@ function Line() constructor
 																					   : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

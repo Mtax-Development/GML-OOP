@@ -40,6 +40,8 @@ function Stack() constructor
 					//|Construction type: New constructor.
 					ID = ds_stack_create();
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

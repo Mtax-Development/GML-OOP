@@ -129,6 +129,8 @@ function Vector4() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

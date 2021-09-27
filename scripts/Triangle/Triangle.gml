@@ -64,6 +64,8 @@ function Triangle() constructor
 										 ? argument[6] : 1);
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

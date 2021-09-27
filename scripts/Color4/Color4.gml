@@ -139,6 +139,8 @@ function Color4() constructor
 						}
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

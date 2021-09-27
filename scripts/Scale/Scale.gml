@@ -82,6 +82,8 @@ function Scale() constructor
 						break;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

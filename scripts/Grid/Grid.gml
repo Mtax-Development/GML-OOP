@@ -53,6 +53,8 @@ function Grid() constructor
 						break;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

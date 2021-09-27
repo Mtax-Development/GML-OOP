@@ -45,6 +45,8 @@ function RangedValue() constructor
 						value_original = value;
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

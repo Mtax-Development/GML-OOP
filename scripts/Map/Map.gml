@@ -42,6 +42,8 @@ function Map() constructor
 					//|Construction type: New constructor.
 					ID = ds_map_create();
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}

@@ -45,6 +45,8 @@ function Shader() constructor
 						sampler = {};
 					}
 				}
+				
+				return self;
 			}
 			
 			// @returns				{bool}
