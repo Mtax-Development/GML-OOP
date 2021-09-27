@@ -363,7 +363,7 @@
 #endregion
 #region [Test: Method: forEach() / Method: set()]
 	
-	var _value = [["Key1", 33], ["Key2", -5.5]];
+	var _value = [["Key1", 33], ["Key2", -33]];
 	
 	constructor = new Map();
 	constructor.add(_value[0][0], _value[0][1],
@@ -375,7 +375,7 @@
 		{
 			if (_value > 0)
 			{
-				constructor.set(_key, -_value);
+				constructor.set(_key, (-_value));
 			}
 		}
 	);
@@ -384,7 +384,7 @@
 	
 	array_sort(_result, true);
 	
-	var _expectedValue = [-_value[0][1], _value[1][1]];
+	var _expectedValue = [(-abs(_value[0][1])), (-abs(_value[1][1]))];
 	
 	unitTest.assert_equal("Methods: forEach()",
 						  _result, _expectedValue);
