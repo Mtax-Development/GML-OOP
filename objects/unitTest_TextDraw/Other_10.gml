@@ -145,3 +145,35 @@ asset = [TestFont];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _base = ["GML-OOP", new Font(other.asset[0])];
+	var _element = new Vector2(500, 500);
+	var _value = [65, 39];
+	
+	constructor = new TextDraw(_base[0], _base[1]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render(_element);
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
+	
+#endregion

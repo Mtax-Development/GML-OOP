@@ -230,3 +230,36 @@ asset = [TestCollisionSprite];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _base = [new Vector2(20, 40), new Vector2(0, 60), new Vector2(70, 60),
+				 new Color3(c_gray, c_yellow, c_aqua), 0.35,
+				 new Color3(c_white, c_aqua, c_red), 0.58];
+	var _value = [95, 29];
+	
+	constructor = new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
+	
+#endregion

@@ -5,6 +5,7 @@ asset = [TestCollisionSprite];
 	
 	var _base = [new Vector4(20, 20, 100, 100), new Vector2(10, 10), new Color2(c_red, c_white),
 				 0.858, c_aqua, 0.75];
+	
 	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
 	
 	var _result = [constructor.location, constructor.radius, constructor.fill_color,
@@ -227,5 +228,37 @@ asset = [TestCollisionSprite];
 	unitTest.assert_equal("Method: toString(multiline?, full)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _base = [new Vector4(20, 20, 130, 100), new Vector2(15, 10), new Color2(c_red, c_fuchsia),
+				 0.858, c_aqua, 0.75];
+	var _value = [727, 335];
+	
+	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
 	
 #endregion

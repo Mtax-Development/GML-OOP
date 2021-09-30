@@ -176,3 +176,34 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Events: beforeActivation / afterActivation]
+	
+	var _base = asset[0];
+	var _value = [2.6, 999];
+	
+	constructor = new Font(_base);
+	
+	var _result = [];
+	
+	constructor.event.beforeActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	
+	constructor.event.afterActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterActivation.argument = [_result, _value[1]];
+	
+	constructor.setActive();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeActivation / afterActivation",
+						  _result, _expectedValue);
+	
+#endregion

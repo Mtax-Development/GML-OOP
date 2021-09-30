@@ -151,3 +151,34 @@ asset = [TestCollisionSprite];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _base = [new Vector4(40, 20, 100, 100), new Color2(c_navy, c_red), 0.62, c_fuchsia, 0.52];
+	var _value = [35, 59];
+	
+	constructor = new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
+	
+#endregion

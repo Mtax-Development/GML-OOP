@@ -101,3 +101,37 @@ asset = [TestSprite];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _element = [new Sprite(other.asset[0]), new Vector2(125, 27), new Scale(0.7, 1),
+					new Angle(0)];
+	var _base = [_element[0], _element[1], 0, _element[2], _element[3], c_white, 1];
+	var _value = [35, 26];
+	
+	constructor = new SpriteDraw(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+								 _base[6]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
+	
+#endregion

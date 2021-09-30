@@ -457,3 +457,34 @@ asset = [TestSprite];
 	constructor.destroy();
 	
 #endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _element = [asset[0], new Vector2(0)];
+	var _value = [133, 575];
+	
+	constructor = new Sprite(_element[0]);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render(_element[1]);
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
+	
+#endregion

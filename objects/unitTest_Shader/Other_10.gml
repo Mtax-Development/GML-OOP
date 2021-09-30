@@ -135,3 +135,50 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Events: beforeActivation / afterActivation / beforeDeactivation / afterDeactivation]
+	
+	var _element = asset[0];
+	var _value = [26, 1.5, 23, 186];
+	
+	constructor = new Shader(_element);
+	
+	var _result = [];
+	
+	constructor.event.beforeActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	
+	constructor.event.afterActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterActivation.argument = [_result, _value[1]];
+	
+	constructor.event.beforeDeactivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
+	
+	constructor.event.afterDeactivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterDeactivation.argument = [_result, _value[3]];
+	
+	constructor.setActive(true).setActive(false);
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1]), (_value[0] + _value[1] + _value[2]),
+						  (_value[0] + _value[1] + _value[2] + _value[3])];
+	
+	unitTest.assert_equal("Event: beforeActivation / afterActivation / beforeDeactivation / " +
+						  "afterDeactivation",
+						  _result, _expectedValue);
+	
+#endregion

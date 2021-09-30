@@ -592,3 +592,41 @@ asset = [TestSprite];
 	constructor.destroy();
 	
 #endregion
+#region [Test: Events: beforeCreation / afterCreation]
+	
+	var _element = [[new Vector2(70, 55)], [new Layer(1)]];
+	_element[1][1] = _element[1][0].createParticleSystem();
+	
+	constructor = new ParticleType();
+	
+	var _value = [256, 64];
+	
+	constructor = new ParticleType();
+	
+	var _result = [];
+	
+	constructor.event.beforeCreation.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeCreation.argument = [_result, _value[0]];
+	
+	constructor.event.afterCreation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterCreation.argument = [_result, _value[1]];
+	
+	constructor.create(_element[1][1], _element[0][0]);
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeCreation / afterCreation",
+						  _result, _expectedValue);
+	
+	_element[1][1].destroy();
+	constructor.destroy();
+	
+#endregion

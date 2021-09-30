@@ -52,21 +52,21 @@
 #region [Test: Methods: create() / clear() / getPixel()]
 	
 	var _base = new Vector2(3, 3);
-	var _element = [function(_surface) {_surface.clear(c_red);}, c_red, new Vector2(0, 0)];
+	var _element = [c_red, new Vector2(0, 0)];
 	
 	constructor = new Surface(_base);
-	constructor.onCreate = _element[0];
 	constructor.destroy();
 	
 	var _result = [constructor.isFunctional()];
 	var _expectedValue = [false];
 	
 	constructor.create();
+	constructor.clear(_element[0]);
 	
-	array_push(_result, constructor.isFunctional(), constructor.getPixel(_element[2]));
-	array_push(_expectedValue, true, _element[1]);
+	array_push(_result, constructor.isFunctional(), constructor.getPixel(_element[1]));
+	array_push(_expectedValue, true, _element[0]);
 	
-	unitTest.assert_equal("Method: create()",
+	unitTest.assert_equal("Method: create() / clear() / getPixel()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
@@ -320,5 +320,116 @@
 	_element[1].destroy();
 	constructor[0].destroy();
 	constructor[1].destroy();
+	
+#endregion
+#region [Test: Events: beforeCreation / afterCreation]
+	
+	var _base = new Vector2(1, 1);
+	var _value = [15, 5];
+	
+	constructor = new Surface(_base);
+	
+	var _result = [];
+	
+	constructor.event.beforeCreation.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeCreation.argument = [_result, _value[0]];
+	
+	constructor.event.afterCreation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterCreation.argument = [_result, _value[1]];
+	
+	constructor.destroy();
+	constructor.create();
+	constructor.destroy();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeCreation / afterCreation",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Events: beforeActivation / afterActivation / beforeDeactivation / afterDeactivation]
+	
+	var _base = new Vector2(1, 1);
+	var _value = [256, 2.5, 9, 101];
+	
+	constructor = new Surface(_base);
+	
+	var _result = [];
+	
+	constructor.event.beforeActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	
+	constructor.event.afterActivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterActivation.argument = [_result, _value[1]];
+	
+	constructor.event.beforeDeactivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
+	
+	constructor.event.afterDeactivation.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterDeactivation.argument = [_result, _value[3]];
+	
+	constructor.setActive(true).setActive(false);
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1]), (_value[0] + _value[1] + _value[2]),
+						  (_value[0] + _value[1] + _value[2] + _value[3])];
+	
+	unitTest.assert_equal("Event: beforeActivation / afterActivation / beforeDeactivation / " +
+						  "afterDeactivation",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Events: beforeRender / afterRender]
+	
+	var _base = new Vector2(1, 1);
+	var _value = [555, 777];
+	
+	constructor = new Surface(_base);
+	
+	var _result = [];
+	
+	constructor.event.beforeRender.callback = function(_argument)
+	{
+		array_push(_argument[0], _argument[1]);
+	}
+	
+	constructor.event.beforeRender.argument = [_result, _value[0]];
+	
+	constructor.event.afterRender.callback = function(_argument)
+	{
+		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+	}
+	
+	constructor.event.afterRender.argument = [_result, _value[1]];
+	
+	constructor.render();
+	
+	var _expectedValue = [_value[0], (_value[0] + _value[1])];
+	
+	unitTest.assert_equal("Event: beforeRender / afterRender",
+						  _result, _expectedValue);
 	
 #endregion
