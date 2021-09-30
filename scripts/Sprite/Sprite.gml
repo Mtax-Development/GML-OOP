@@ -29,6 +29,21 @@ function Sprite() constructor
 				speed = undefined;
 				speed_type = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Sprite")
@@ -42,10 +57,23 @@ function Sprite() constructor
 						frameCount = sprite_get_number(ID);
 						origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
 						boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
-											   sprite_get_bbox_right(ID), sprite_get_bbox_bottom(ID));
+											   sprite_get_bbox_right(ID),
+											   sprite_get_bbox_bottom(ID));
 						boundary_mode = sprite_get_bbox_mode(ID);
 						speed = sprite_get_speed(ID);
 						speed_type = sprite_get_speed_type(ID);
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -439,17 +467,17 @@ function Sprite() constructor
 			// @argument			{Vector4} boundary?
 			// @argument			{int} alphaTolerance?
 			// @argument			{bool} separateMasks?
-			// @description			Set the collision mask properties of this Sprite if it was created
-			//						during the runtime only.
+			// @description			Set the collision mask properties of this Sprite if it was
+			//						created during the runtime only.
 			//						The boundary is calculated differently depending on its mode:
 			//						- The boundary itself has to be specified only if the manual mode
 			//						  is used.
-			//						- Alpha tolerance has to be specified only if the mode is not Full
-			//						  Image and will be used to ignore pixels which have the alpha
-			//						  value that equal or exceed it.
+			//						- Alpha tolerance has to be specified only if the mode is not
+			//						  Full Image and will be used to ignore pixels which have the
+			//						  alpha value that equal or exceed it.
 			//						A separate mask can be created for each frame of this Sprite,
-			//						which can be used if their shape or alpha values are to affect the
-			//						collision mask.
+			//						which can be used if their shape or alpha values are to affect
+			//						the collision mask.
 			static setCollisionMask = function(_boundaryMode = bboxmode_automatic,
 											   _boundaryType = bboxkind_rectangular, _boundary,
 											   _alphaTolerance, _separateMasks = false)
@@ -522,8 +550,18 @@ function Sprite() constructor
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					draw_sprite_ext(ID, _frame, _location.x, _location.y, _scale.x, _scale.y,
 									_angle.value, _color, _alpha);
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -546,12 +584,17 @@ function Sprite() constructor
 			// @argument			{int} alpha?
 			// @description			Draw only the specified rectangular part of this Sprite to the
 			//						current Surface.
-			//						The top left point of the part will be treated as the origin point
-			//						for this draw.
+			//						The top left point of the part will be treated as the origin
+			//						point for this render.
 			static renderPart = function(_location, _part, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					if (argument_count > 3)
 					{
 						var _scale = argument[3];
@@ -582,6 +625,11 @@ function Sprite() constructor
 						draw_sprite_part(ID, _frame, _part.x1, _part.y1, _part.x2, _part.y2,
 										 _location.x, _location.y);
 					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -605,13 +653,18 @@ function Sprite() constructor
 			// @argument			{int} alpha?
 			// @description			Draw this Sprite with the specified alternations to the current
 			//						Surface.
-			//						The top left point of the part will be treated as the origin point
-			//						for this draw.
+			//						The top left point of the part will be treated as the origin
+			//						point for this render.
 			static renderGeneral = function(_location, _part, _frame = 0, _scale, _angle, _color,
 											_alpha = 1)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _part_x1, _part_y1, _part_x2, _part_y2;
 					
 					if (_part == undefined)
@@ -672,6 +725,11 @@ function Sprite() constructor
 										_location.x, _location.y, _scale_x, _scale_y, _angle_value,
 										_color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
 										_alpha);
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -699,6 +757,11 @@ function Sprite() constructor
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					if (argument_count > 3)
 					{
 						var _color_value = ((argument[3] != undefined) ? argument[3] : c_white);
@@ -712,6 +775,11 @@ function Sprite() constructor
 					{
 						draw_sprite_stretched(ID,_frame, _location.x, _location.y, _size.x,
 											  _size.y);
+					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
 					}
 				}
 				else
@@ -732,12 +800,17 @@ function Sprite() constructor
 			// @argument			{Scale} scale?
 			// @argument			{int:color} color?
 			// @argument			{int} alpha?
-			// @description			Draw this Sprite tiled through the entire view, the target created
-			//						Surface or if neither are used, the current Room.
+			// @description			Draw this Sprite tiled through the entire view, the target
+			//						created Surface or if neither are used, the current Room.
 			static renderTiled = function(_offset, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _offset_x, _offset_y;
 					
 					if (_offset != undefined)
@@ -779,6 +852,11 @@ function Sprite() constructor
 					{
 						draw_sprite_tiled(ID, _frame, _offset_x, _offset_y);
 					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -805,9 +883,19 @@ function Sprite() constructor
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					draw_sprite_pos(ID, _frame, _location1.x, _location1.y, _location2.x,
 									_location2.y, _location3.x, _location3.y, _location4.x,
 									_location4.y, _alpha);
+									
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{

@@ -18,7 +18,57 @@ function Surface() constructor
 				//|Construction type: Empty.
 				ID = undefined;
 				size = undefined;
-				onCreate = undefined;
+				
+				event =
+				{
+					beforeCreation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterCreation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					beforeActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					beforeDeactivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterDeactivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
@@ -29,7 +79,39 @@ function Surface() constructor
 						
 						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
 																	   : _other.size);
-						onCreate = _other.onCreate;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeCreation.callback = _other.event.beforeCreation.callback;
+							event.beforeCreation.argument = _other.event.beforeCreation.argument;
+							event.afterCreation.callback = _other.event.afterCreation.callback;
+							event.afterCreation.argument = _other.event.afterCreation.argument;
+							
+							event.beforeActivation.callback = _other.event.beforeActivation
+																		  .callback;
+							event.beforeActivation.argument = _other.event.beforeActivation
+																		  .argument;
+							event.afterActivation.callback = _other.event.afterActivation.callback;
+							event.afterActivation.argument = _other.event.afterActivation.argument;
+							
+							event.beforeDeactivation.callback = _other.event.beforeDeactivation
+																	  .callback;
+							event.beforeDeactivation.argument = _other.event.beforeDeactivation
+																	  .argument;
+							event.afterDeactivation.callback = _other.event.afterDeactivation
+																	 .callback;
+							event.afterDeactivation.argument = _other.event.afterDeactivation
+																	 .argument;
+							
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 						
 						ID = surface_create(max(1, size.x), max(1, size.y));
 						surface_copy(ID, 0, 0, _other.ID);
@@ -53,18 +135,20 @@ function Surface() constructor
 			}
 			
 			// @description			Create this Surface if it does not exists.
-			//						The method that was specified to be executed on creation will be
-			//						called only if this Surface did not exist and was created,
-			//						providing {self} as an argument.
 			static create = function()
 			{
 				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					{
+						event.beforeCreation.callback(event.beforeCreation.argument);
+					}
+					
 					ID = surface_create(max(1, size.x), max(1, size.y));
 					
-					if (is_method(onCreate))
+					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
 					{
-						onCreate(self);
+						event.afterCreation.callback(event.afterCreation.argument);
 					}
 				}
 				
@@ -291,6 +375,11 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _location_x, _location_y;
 					
 					if (_location != undefined)
@@ -484,6 +573,11 @@ function Surface() constructor
 						
 						ds_stack_destroy(_targetStack);
 					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -507,6 +601,11 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _location_x, _location_y;
 					
 					if (_location != undefined)
@@ -522,6 +621,11 @@ function Surface() constructor
 					
 					draw_surface_stretched_ext(ID, _location_x, _location_y, _size.x, _size.y, _color,
 											   _alpha);
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -546,6 +650,11 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _offset_x, _offset_y;
 					
 					if (_offset != undefined)
@@ -574,6 +683,11 @@ function Surface() constructor
 					
 					draw_surface_tiled_ext(ID, _offset_x, _offset_y, _scale_x, _scale_y, _color,
 										   _alpha);
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
 				else
 				{
@@ -609,14 +723,34 @@ function Surface() constructor
 							
 							self.create();
 						}
-					
+						
+						if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+						{
+							event.beforeActivation.callback(event.beforeActivation.argument);
+						}
+						
 						surface_set_target(ID);
+						
+						if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+						{
+							event.afterActivation.callback(event.afterActivation.argument);
+						}
 					break;
 					
 					case false:
 						if ((is_real(ID)) and (surface_exists(ID)) and (surface_get_target() == ID))
 						{
+							if ((is_struct(event))) and (is_method(event.beforeDeactivation.callback))
+							{
+								event.beforeDeactivation.callback(event.beforeDeactivation.argument);
+							}
+							
 							surface_reset_target();
+							
+							if ((is_struct(event))) and (is_method(event.afterDeactivation.callback))
+							{
+								event.afterDeactivation.callback(event.afterDeactivation.argument);
+							}
 						}
 					break;
 				}

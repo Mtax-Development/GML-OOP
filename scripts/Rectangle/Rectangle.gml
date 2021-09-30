@@ -28,6 +28,21 @@ function Rectangle() constructor
 				outline_size = undefined;
 				outline_alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Rectangle")
@@ -44,6 +59,18 @@ function Rectangle() constructor
 										 ? new Color4(_other.outline_color) : _other.outline_color);
 						outline_size = _other.outline_size;
 						outline_alpha = _other.outline_alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -289,6 +316,11 @@ function Rectangle() constructor
 				
 				if (self.isFunctional())
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					var _x1 = min(location.x1, location.x2);
 					var _x2 = max(location.x1, location.x2);
 					var _y1 = min(location.y1, location.y2);
@@ -360,6 +392,11 @@ function Rectangle() constructor
 											(_y1 - outline_size), (-outline_size),
 											(_height + outline_size), 0, _color2, _color2, _color3,
 											_color3, outline_alpha);
+					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
 					}
 				}
 				else

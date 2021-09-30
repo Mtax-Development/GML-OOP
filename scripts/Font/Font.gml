@@ -34,6 +34,21 @@ function Font() constructor
 				proportional = undefined;
 				separation = undefined;
 				
+				event =
+				{
+					beforeActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "Font"))
 				{
 					//|Construction type: Constructor copy.
@@ -65,6 +80,20 @@ function Font() constructor
 							self.construct(sprite, _other.glyphs, _other.proportional,
 										   _other.separation, _other.antialiasing);
 						break;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeActivation.callback = _other.event.beforeActivation
+																		  .callback;
+							event.beforeActivation.argument = _other.event.beforeActivation
+																		  .argument;
+							event.afterActivation.callback = _other.event.afterActivation.callback;
+							event.afterActivation.argument = _other.event.afterActivation.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 				}
 				else
@@ -268,7 +297,17 @@ function Font() constructor
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+					{
+						event.beforeActivation.callback(event.beforeActivation.argument);
+					}
+					
 					draw_set_font(ID);
+					
+					if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+					{
+						event.afterActivation.callback(event.afterActivation.argument);
+					}
 				}
 				else
 				{

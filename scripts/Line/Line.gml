@@ -24,6 +24,21 @@ function Line() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Line")
@@ -51,6 +66,18 @@ function Line() constructor
 						}
 						
 						alpha = _other.alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -168,6 +195,11 @@ function Line() constructor
 				{
 					if ((alpha > 0) and (size != 0))
 					{
+						if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+						{
+							event.beforeRender.callback(event.beforeRender.argument);
+						}
+						
 						var _color1, _color2, _color3, _color4;
 						
 						switch (instanceof(color))
@@ -206,6 +238,11 @@ function Line() constructor
 						
 						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _distance, size,
 											_angle, _color1, _color2, _color3, _color4, alpha);
+						
+						if ((is_struct(event))) and (is_method(event.afterRender.callback))
+						{
+							event.afterRender.callback(event.afterRender.argument);
+						}
 					}
 				}
 				else

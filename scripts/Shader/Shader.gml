@@ -22,6 +22,33 @@ function Shader() constructor
 				uniform = undefined;
 				sampler = undefined;
 				
+				event =
+				{
+					beforeActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterActivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					beforeDeactivation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterDeactivation:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Shader")
@@ -34,6 +61,29 @@ function Shader() constructor
 						compiled = _other.compiled;
 						uniform = _other.uniform;
 						sampler = _other.sampler;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeActivation.callback = _other.event.beforeActivation
+																		  .callback;
+							event.beforeActivation.argument = _other.event.beforeActivation
+																		  .argument;
+							event.afterActivation.callback = _other.event.afterActivation.callback;
+							event.afterActivation.argument = _other.event.afterActivation.argument;
+							
+							event.beforeDeactivation.callback = _other.event.beforeDeactivation
+																	  .callback;
+							event.beforeDeactivation.argument = _other.event.beforeDeactivation
+																	  .argument;
+							event.afterDeactivation.callback = _other.event.afterDeactivation
+																	 .callback;
+							event.afterDeactivation.argument = _other.event.afterDeactivation
+																	 .argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -334,13 +384,37 @@ function Shader() constructor
 					switch (_target)
 					{
 						case true:
+							if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+							{
+								event.beforeActivation.callback(event.beforeActivation.argument);
+							}
+							
 							shader_set(ID);
+							
+							if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+							{
+								event.afterActivation.callback(event.afterActivation.argument);
+							}
 						break;
 						
 						case false:
 							if (shader_current() == ID)
 							{
+								if ((is_struct(event)))
+								and (is_method(event.beforeDeactivation.callback))
+								{
+									event.beforeDeactivation.callback(event.beforeDeactivation
+																		   .argument);
+								}
+								
 								shader_reset();
+								
+								if ((is_struct(event)))
+								and (is_method(event.afterDeactivation.callback))
+								{
+									event.afterDeactivation.callback(event.afterDeactivation
+																		  .argument);
+								}
 							}
 						break;
 					}

@@ -60,6 +60,21 @@ function ParticleType() constructor
 				death_type = undefined;
 				death_number = undefined;
 				
+				event =
+				{
+					beforeCreation:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterCreation:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleType"))
 				{
 					//|Construction type: Constructor copy.
@@ -234,6 +249,18 @@ function ParticleType() constructor
 					if (death_type != undefined)
 					{
 						self.setDeath(death_type, death_number);
+					}
+					
+					if (is_struct(_other.event))
+					{
+						event.beforeCreation.callback = _other.event.beforeCreation.callback;
+						event.beforeCreation.argument = _other.event.beforeCreation.argument;
+						event.afterCreation.callback = _other.event.afterCreation.callback;
+						event.afterCreation.argument = _other.event.afterCreation.argument;
+					}
+					else
+					{
+						event = _other.event;
 					}
 				}
 				else
@@ -1050,6 +1077,11 @@ function ParticleType() constructor
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					{
+						event.beforeCreation.callback(event.beforeCreation.argument);
+					}
+					
 					if (_color != undefined)
 					{
 						part_particles_create_color(_particleSystem.ID, _location.x, _location.y, ID,
@@ -1059,6 +1091,11 @@ function ParticleType() constructor
 					{
 						part_particles_create(_particleSystem.ID, _location.x, _location.y, ID,
 											  _number);
+					}
+					
+					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
+					{
+						event.afterCreation.callback(event.afterCreation.argument);
 					}
 				}
 				else
@@ -1087,6 +1124,11 @@ function ParticleType() constructor
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
+					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					{
+						event.beforeCreation.callback(event.beforeCreation.argument);
+					}
+					
 					switch (instanceof(_shape))
 					{	
 						case "Rectangle":
@@ -1307,6 +1349,11 @@ function ParticleType() constructor
 								}
 							}
 						break;
+					}
+					
+					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
+					{
+						event.afterCreation.callback(event.afterCreation.argument);
 					}
 				}
 				else

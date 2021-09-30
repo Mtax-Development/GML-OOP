@@ -28,6 +28,21 @@ function RoundRectangle() constructor
 				outline_color = undefined;
 				outline_alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "RoundRectangle")
@@ -44,6 +59,18 @@ function RoundRectangle() constructor
 						fill_alpha = _other.fill_alpha;
 						outline_color = _other.outline_color;
 						outline_alpha = _other.outline_alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -277,6 +304,11 @@ function RoundRectangle() constructor
 			{
 				if (self.isFunctional())
 				{
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
 					if ((fill_color != undefined) and (fill_alpha > 0))
 					{
 						var _color1, _color2;
@@ -311,6 +343,11 @@ function RoundRectangle() constructor
 						draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
 												 radius.x, radius.y, outline_color, outline_color,
 												 true);
+					}
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
 					}
 				}
 				else

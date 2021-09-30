@@ -29,6 +29,21 @@ function SpriteDraw() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "SpriteDraw")
@@ -47,6 +62,18 @@ function SpriteDraw() constructor
 																	   : _other.angle);
 						color = _other.color;
 						alpha = _other.alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -81,7 +108,17 @@ function SpriteDraw() constructor
 			// @description			Execute the draw.
 			static render = function()
 			{
+				if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+				{
+					event.beforeRender.callback(event.beforeRender.argument);
+				}
+				
 				sprite.render(location, frame, scale, angle, color, alpha);
+				
+				if ((is_struct(event))) and (is_method(event.afterRender.callback))
+				{
+					event.afterRender.callback(event.afterRender.argument);
+				}
 				
 				return self;
 			}

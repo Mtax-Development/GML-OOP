@@ -25,6 +25,21 @@ function Arrow() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Arrow")
@@ -37,6 +52,18 @@ function Arrow() constructor
 						size = _other.size;
 						color = _other.color;
 						alpha = _other.alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -75,10 +102,20 @@ function Arrow() constructor
 				{
 					if (alpha > 0)
 					{
+						if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+						{
+							event.beforeRender.callback(event.beforeRender.argument);
+						}
+						
 						draw_set_alpha(alpha);
 						draw_set_color(color);
 						
 						draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
+						
+						if ((is_struct(event))) and (is_method(event.afterRender.callback))
+						{
+							event.afterRender.callback(event.afterRender.argument);
+						}
 					}
 				}
 				else

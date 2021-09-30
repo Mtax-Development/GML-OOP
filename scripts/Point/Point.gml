@@ -22,6 +22,21 @@ function Point() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Point")
@@ -33,6 +48,18 @@ function Point() constructor
 									? new Vector2(_other.location) : _other.location);
 						color = _other.color;
 						alpha = _other.alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -259,8 +286,18 @@ function Point() constructor
 				{
 					if (alpha > 0)
 					{
+						if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+						{
+							event.beforeRender.callback(event.beforeRender.argument);
+						}
+						
 						draw_sprite_ext(_pixelSprite, 0, location.x, location.y, 1, 1, 0, color,
 										alpha);
+						
+						if ((is_struct(event))) and (is_method(event.afterRender.callback))
+						{
+							event.afterRender.callback(event.afterRender.argument);
+						}
 					}
 				}
 				else

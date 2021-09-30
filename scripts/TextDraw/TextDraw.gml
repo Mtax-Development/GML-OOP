@@ -26,6 +26,21 @@ function TextDraw() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				event =
+				{
+					beforeRender:
+					{
+						callback: undefined,
+						argument: undefined
+					},
+					
+					afterRender:
+					{
+						callback: undefined,
+						argument: undefined
+					}
+				};
+				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "TextDraw")
@@ -40,6 +55,18 @@ function TextDraw() constructor
 								 ? new TextAlign(_other.align) : _other.align);
 						color = _other.color;
 						alpha = _other.alpha;
+						
+						if (is_struct(_other.event))
+						{
+							event.beforeRender.callback = _other.event.beforeRender.callback;
+							event.beforeRender.argument = _other.event.beforeRender.argument;
+							event.afterRender.callback = _other.event.afterRender.callback;
+							event.afterRender.argument = _other.event.afterRender.argument;
+						}
+						else
+						{
+							event = _other.event;
+						}
 					}
 					else
 					{
@@ -152,6 +179,11 @@ function TextDraw() constructor
 				{
 					if (alpha > 0)
 					{
+						if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+						{
+							event.beforeRender.callback(event.beforeRender.argument);
+						}
+						
 						draw_set_font(font.ID);
 						draw_set_halign(align.x);
 						draw_set_valign(align.y);
@@ -159,6 +191,11 @@ function TextDraw() constructor
 						draw_set_alpha(alpha);
 						
 						draw_text(_location.x, _location.y, string(ID));
+						
+						if ((is_struct(event))) and (is_method(event.afterRender.callback))
+						{
+							event.afterRender.callback(event.afterRender.argument);
+						}
 					}
 				}
 				else
