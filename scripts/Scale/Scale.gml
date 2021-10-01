@@ -163,6 +163,22 @@ function Scale() constructor
 				return self;
 			}
 			
+			// @description			Reverse the x value.
+			static mirrorX = function()
+			{
+				x = (-x);
+				
+				return self;
+			}
+
+			// @description			Reverse the y value.
+			static mirrorY = function()
+			{
+				y = (-y);
+				
+				return self;
+			}
+			
 			// @argument			{real} value
 			// @description			Set all of the values to one specified value.
 			static set = function(_value)
