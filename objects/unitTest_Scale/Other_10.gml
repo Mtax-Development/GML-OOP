@@ -69,6 +69,40 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: contains()]
+	
+	var _base = [0.1, 0.25];
+	var _value = (_base[0] + _base[1] + 1);
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	var _result = [constructor.contains(_base[0]), constructor.contains(_base[1]),
+				   constructor.contains(_value), constructor.contains(_value, _base[0])];
+	var _expectedValue = [true, true, false, true];
+	
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Method: equals()]
+	
+	var _base = [0.53, 0.9];
+	
+	constructor = [new Scale(_base[0], _base[1])];
+	constructor[1] = new Scale(constructor[0]);
+	constructor[2] = new Scale(-_base[0], -_base[1]);
+	
+	var _result = [constructor[0].equals(constructor[1]), constructor[0].equals(constructor[2])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: equals()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Methods: getMinimum() / getMaximum()]
 	
 	var _base = [-2, 2];
