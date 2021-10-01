@@ -113,6 +113,35 @@ function Scale() constructor
 		#endregion
 		#region <Setters>
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if this Scale contains at least one of the specified values.
+			static contains = function()
+			{
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _value = argument[_i];
+					
+					if ((x == _value) or (y == _value))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
+			// @argument			{Scale} other
+			// @returns				{bool}
+			// @description			Check if this and the specified Scale have the same values.
+			static equals = function(_other)
+			{
+				return ((x == _other.x) and (y == _other.y));
+			}
+			
 			// @argument			{Vector2} target
 			// @argument			{Vector2} rate
 			// @description			Move the x and y values towards the specified target with the
