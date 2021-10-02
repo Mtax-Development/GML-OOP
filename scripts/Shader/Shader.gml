@@ -372,6 +372,39 @@ function Shader() constructor
 				return self;
 			}
 			
+			// @description			Update the uniforms in this Shader with all values held by the
+			//						uniform struct.
+			static updateUniforms = function()
+			{
+				var _uniform = variable_struct_get_names(uniform);
+				
+				var _i = 0;
+				repeat (array_length(_uniform))
+				{
+					var _struct = variable_struct_get(uniform, _uniform[_i]);
+					var _value_array = (is_array(_struct.value) ? _struct.value : [_struct.value]);
+					var _argument = [_uniform[_i]];
+					array_copy(_argument, 1, _value_array, 0, array_length(_value_array));
+					
+					switch (_struct.type)
+					{
+						case "float":
+							script_execute_ext(method_get_index(self.setUniformFloat), _argument);
+						break;
+						
+						case "int":
+							script_execute_ext(method_get_index(self.setUniformInt), _argument);
+						break;
+						
+						case "matrix":
+							script_execute_ext(method_get_index(self.setUniformMatrix), _argument);
+						break;
+					}
+					
+					++_i;
+				}
+			}
+			
 		#endregion
 		#region <Execution>
 			
