@@ -62,6 +62,63 @@ function Shader() constructor
 						uniform = _other.uniform;
 						sampler = _other.sampler;
 						
+						if (is_struct(_other.uniform))
+						{
+							uniform = {};
+							
+							var _uniform = variable_struct_get_names(_other.uniform);
+							
+							var _i = 0;
+							repeat (array_length(_uniform))
+							{
+								var _other_struct = variable_struct_get(_other.uniform, _uniform[_i]);
+								
+								var _struct = 
+								{
+									handle: _other_struct.handle,
+									type: _other_struct.type,
+									value: ((is_array(_other_struct.value))
+											? array_copy([], 0, _other_struct.value, 0,
+														 array_length(_other_struct))
+											: _other_struct.value)
+								};
+								
+								variable_struct_set(uniform, _uniform[_i], _struct);
+								
+								++_i;
+							}
+						}
+						else
+						{
+							uniform = _other.uniform;
+						}
+						
+						if (is_struct(_other.sampler))
+						{
+							sampler = {};
+							
+							var _sampler = variable_struct_get_names(_other.sampler);
+							
+							var _i = 0;
+							repeat (array_length(_sampler))
+							{
+								var _other_struct = variable_struct_get(uniform, _uniform[_i]);
+								
+								var _struct = 
+								{
+									handle: _other_struct.handle
+								};
+								
+								variable_struct_set(sampler, _sampler[_i], _struct);
+								
+								++_i;
+							}
+						}
+						else
+						{
+							sampler = _other.sampler;
+						}
+						
 						if (is_struct(_other.event))
 						{
 							event.beforeActivation.callback = _other.event.beforeActivation
