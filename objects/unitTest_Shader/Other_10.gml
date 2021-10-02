@@ -90,6 +90,34 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result, _expectedValue)
 	
 #endregion
+#region [Test: Method: updateUniforms()]
+	
+	var _element = [[asset[0], asset[1], asset[2], "float", "int"], [7.4, 8]];
+	
+	constructor = new Shader(_element[0][0]);
+	constructor.setActive(true);
+	constructor.setUniformFloat(_element[0][1], _element[1][0]);
+	constructor.setUniformInt(_element[0][2], _element[1][1]);
+	++constructor.uniform.testFloat.value;
+	++constructor.uniform.testInt.value;
+	constructor.updateUniforms();
+	constructor.setActive(false);
+	
+	var _result = [constructor.uniform.testFloat.value, constructor.uniform.testFloat.type,
+				   (constructor.uniform.testFloat.value >= 0), constructor.uniform.testInt.value,
+				   constructor.uniform.testInt.type, (constructor.uniform.testInt.value >= 0)];
+	var _expectedValue = [(_element[1][0] + 1), _element[0][3], true, (_element[1][1] + 1),
+						  _element[0][4], true];
+	
+	unitTest.assert_equal("Method: updateUniforms()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
+	
+#endregion
 #region [Test: Method: getSampler()]
 	
 	var _element = [[asset[0], asset[4]]];
