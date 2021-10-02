@@ -32,9 +32,9 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	var _element = [[asset[0], asset[1], "float"], [0.4]];
 	
 	constructor = [new Shader(_element[0][0])];
-	constructor[0].setActive();
+	constructor[0].setActive(true);
 	constructor[0].setUniformFloat(_element[0][1], _element[1][0]);
-	constructor[0].setActive();
+	constructor[0].setActive(false);
 	constructor[1] = new Shader(constructor[0]);
 	
 	var _result = [constructor[1].isFunctional(), constructor[1].ID, constructor[1].name,
@@ -60,9 +60,9 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	var _element = [[asset[0], asset[2], "int"], [8]];
 	
 	constructor = new Shader(_element[0][0]);
-	constructor.setActive();
+	constructor.setActive(true);
 	constructor.setUniformInt(_element[0][1], _element[1][0]);
-	constructor.setActive();
+	constructor.setActive(false);
 	
 	var _result = [constructor.uniform.testInt.value, constructor.uniform.testInt.type,
 				   (constructor.uniform.testInt.value >= 0)];
@@ -79,9 +79,9 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	var _element = [asset[0], asset[3], "matrix"];
 	
 	constructor = new Shader(_element[0]);
-	constructor.setActive();
+	constructor.setActive(true);
 	constructor.setUniformMatrix(_element[1]);
-	constructor.setActive();
+	constructor.setActive(false);
 	
 	var _result = constructor.uniform.testMat4.type;
 	var _expectedValue = _element[2];
@@ -95,9 +95,9 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	var _element = [[asset[0], asset[4]]];
 	
 	constructor = new Shader(_element[0][0]);
-	constructor.setActive();
+	constructor.setActive(true);
 	_element[1][0] = constructor.getSampler(_element[0][1]);
-	constructor.setActive();
+	constructor.setActive(false);
 	
 	var _result = [constructor.sampler.testSampler2D.handle, (_element[1][0] >= 0)];
 	var _expectedValue = [_element[1][0], true];
