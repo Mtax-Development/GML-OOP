@@ -38,11 +38,11 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	constructor[1] = new Shader(constructor[0]);
 	
 	var _result = [constructor[1].isFunctional(), constructor[1].ID, constructor[1].name,
-				   constructor[1].compiled, constructor[1].uniform,
+				   constructor[1].compiled, (constructor[0].uniform != constructor[1].uniform),
 				   constructor[1].uniform.testFloat.value, constructor[1].uniform.testFloat.type,
 				   (constructor[1].uniform.testFloat.value >= 0)];
 	var _expectedValue = [true, constructor[0].ID, constructor[0].name, constructor[0].compiled,
-						  constructor[0].uniform, _element[1][0], _element[0][2], true];
+						  true, _element[1][0], _element[0][2], true];
 	
 	unitTest.assert_equal("Construction: Constructor copy / Method: setUniformFloat()",
 						  _result[0], _expectedValue[0],
