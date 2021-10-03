@@ -165,9 +165,12 @@ function Circle() constructor
 			}
 			
 			// @argument			{int} device?
+			// @argument			{bool} GUI?
 			// @returns				{bool}
 			// @description			Check if the system cursor is over this Shape.
-			static cursorOver = function(_device)
+			//						If the device is specified, the position of the cursor on the GUI
+			//						layer can be used.
+			static cursorOver = function(_device, _GUI = false)
 			{
 				var _cursor_x, _cursor_y;
 				
@@ -178,8 +181,16 @@ function Circle() constructor
 				}
 				else
 				{
-					_cursor_x = device_mouse_x(_device);
-					_cursor_y = device_mouse_y(_device);
+					if (_GUI)
+					{
+						_cursor_x = device_mouse_x_to_gui(_device);
+						_cursor_y = device_mouse_y_to_gui(_device);
+					}
+					else
+					{
+						_cursor_x = device_mouse_x(_device);
+						_cursor_y = device_mouse_y(_device);
+					}
 				}
 				
 				return point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius);
@@ -187,10 +198,13 @@ function Circle() constructor
 			
 			// @argument			{constant:mb_*} button
 			// @argument			{int} device?
+			// @argument			{bool} GUI?
 			// @returns				{bool}
 			// @description			Check if the system cursor is over this Shape while its specified
 			//						mouse button is pressed or held.
-			static cursorHold = function(_button, _device)
+			//						If the device is specified, the position of the cursor on the GUI
+			//						layer can be used.
+			static cursorHold = function(_button, _device, _GUI = false)
 			{
 				var _cursor_x, _cursor_y;
 				
@@ -201,8 +215,16 @@ function Circle() constructor
 				}
 				else
 				{
-					_cursor_x = device_mouse_x(_device);
-					_cursor_y = device_mouse_y(_device);
+					if (_GUI)
+					{
+						_cursor_x = device_mouse_x_to_gui(_device);
+						_cursor_y = device_mouse_y_to_gui(_device);
+					}
+					else
+					{
+						_cursor_x = device_mouse_x(_device);
+						_cursor_y = device_mouse_y(_device);
+					}
 				}
 				
 				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
@@ -218,10 +240,13 @@ function Circle() constructor
 			
 			// @argument			{constant:mb_*} button
 			// @argument			{int} device?
+			// @argument			{bool} GUI?
 			// @returns				{bool}
 			// @description			Check if the system cursor is over this Shape while its specified
 			//						mouse button was pressed in this frame.
-			static cursorPressed = function(_button, _device)
+			//						If the device is specified, the position of the cursor on the GUI
+			//						layer can be used.
+			static cursorPressed = function(_button, _device, _GUI = false)
 			{
 				var _cursor_x, _cursor_y;
 				
@@ -232,8 +257,16 @@ function Circle() constructor
 				}
 				else
 				{
-					_cursor_x = device_mouse_x(_device);
-					_cursor_y = device_mouse_y(_device);
+					if (_GUI)
+					{
+						_cursor_x = device_mouse_x_to_gui(_device);
+						_cursor_y = device_mouse_y_to_gui(_device);
+					}
+					else
+					{
+						_cursor_x = device_mouse_x(_device);
+						_cursor_y = device_mouse_y(_device);
+					}
 				}
 				
 				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
@@ -250,10 +283,13 @@ function Circle() constructor
 			
 			// @argument			{constant:mb_*} button
 			// @argument			{int} device?
+			// @argument			{bool} GUI?
 			// @returns				{bool}
 			// @description			Check if the system cursor is over this Shape while the specified
 			//						mouse button was released in this frame.
-			static cursorReleased = function(_button, _device)
+			//						If the device is specified, the position of the cursor on the GUI
+			//						layer can be used.
+			static cursorReleased = function(_button, _device, _GUI = false)
 			{
 				var _cursor_x, _cursor_y;
 				
@@ -264,8 +300,16 @@ function Circle() constructor
 				}
 				else
 				{
-					_cursor_x = device_mouse_x(_device);
-					_cursor_y = device_mouse_y(_device);
+					if (_GUI)
+					{
+						_cursor_x = device_mouse_x_to_gui(_device);
+						_cursor_y = device_mouse_y_to_gui(_device);
+					}
+					else
+					{
+						_cursor_x = device_mouse_x(_device);
+						_cursor_y = device_mouse_y(_device);
+					}
 				}
 				
 				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
