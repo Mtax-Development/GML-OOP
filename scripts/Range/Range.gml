@@ -53,7 +53,7 @@ function Range() constructor
 			
 			// @argument			{real} value
 			// @returns				{real}
-			// @description			Clamp the specified number to boundaries of this Range.
+			// @description			Restrict the specified number to boundaries of this Range.
 			static clampTo = function(_value)
 			{
 				return clamp(_value, minimum, maximum);

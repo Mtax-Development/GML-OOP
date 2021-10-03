@@ -430,6 +430,15 @@ function Vector2() constructor
 				return self;
 			}
 			
+			// @argument			{Vector4} boundary
+			// @description			Restrict the values of this Vector2 to the boundaries of the
+			//						specified Vector4.
+			static clampTo = function(_boundary)
+			{
+				x = clamp(x, min(_boundary.x1, _boundary.x2), max(_boundary.x1, _boundary.x2));
+				y = clamp(y, min(_boundary.y1, _boundary.y2), max(_boundary.y1, _boundary.y2));
+			}
+			
 			// @description			Swap the x and y values of this Vector2 with each other.
 			static flip = function()
 			{

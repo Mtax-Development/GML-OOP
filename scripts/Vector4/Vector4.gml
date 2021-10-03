@@ -733,6 +733,22 @@ function Vector4() constructor
 				return self;
 			}
 			
+			// @argument			{Vector4} boundary
+			// @description			Restrict the values of this Vector4 to the boundaries of other
+			//						specified Vector4.
+			static clampTo = function(_boundary)
+			{
+				var _minimum_x = min(_boundary.x1, _boundary.x2);
+				var _maximum_x = max(_boundary.x1, _boundary.x2);
+				var _minimum_y = min(_boundary.y1, _boundary.y2);
+				var _maximum_y = max(_boundary.y1, _boundary.y2);
+				
+				x1 = clamp(x1, _minimum_x, _maximum_x);
+				y1 = clamp(y1, _minimum_y, _maximum_y);
+				x2 = clamp(x2, _minimum_x, _maximum_x);
+				y2 = clamp(y2, _minimum_y, _maximum_y);
+			}
+			
 			// @description			Swap the x and y values.
 			static flip = function()
 			{
