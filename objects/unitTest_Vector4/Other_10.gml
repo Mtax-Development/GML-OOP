@@ -854,6 +854,25 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: clampTo()]
+	
+	var _base = [25, -25, 35, 30];
+	var _value = [15, 15, 30, 30];
+	var _element = new Vector4(_value[0], _value[1], _value[2], _value[3]);
+	
+	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
+	constructor.clampTo(_element);
+	
+	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
+	var _expectedValue = [_base[0], _value[1], _value[2], _base[3]];
+	
+	unitTest.assert_equal("Method: clampTo()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
 #region [Test: Method: flip()]
 	
 	var _base = [120, 240, 360, 480];
