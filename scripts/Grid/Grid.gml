@@ -1425,7 +1425,7 @@ function Grid() constructor
 						}
 						else
 						{
-							//|Cut strings and add cut or separation marks if appriopate.
+							//|Cut strings and add cut or separation marks if appropriate.
 							if (_elementLength != all)
 							{
 								var _string_length = string_length(_string);

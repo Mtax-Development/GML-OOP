@@ -556,7 +556,7 @@ function ArrayParser() constructor
 						//|Add the element string with all its parts.
 						_string += (_mark_elementStart + _newElement + _mark_elementEnd);
 						
-						//|Cut strings and add cut or separation marks if appriopate.
+						//|Cut strings and add cut or separation marks if appropriate.
 						if (!_multiline)
 						{
 							if (_elementLength != all)
