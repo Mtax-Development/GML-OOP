@@ -22,7 +22,7 @@ function Vector2() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction type: Empty
+				//|Construction type: Empty.
 				x = undefined;
 				y = undefined;
 				

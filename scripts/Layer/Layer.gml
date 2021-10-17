@@ -19,7 +19,7 @@ function Layer() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction type: Empty
+				//|Construction type: Empty.
 				ID = undefined;
 				name = undefined;
 				
