@@ -806,14 +806,31 @@ function Vector4() constructor
 				return self;
 			}
 			
-			// @argument			{real} value
-			// @description			Set all of the values to one specified value.
+			// @argument			{real|Vector2|Vector4} value
+			// @description			Set all of values to the ones of the specified value.
 			static set = function(_value)
 			{
-				x1 = _value;
-				y1 = _value;
-				x2 = _value;
-				y2 = _value;
+				if (is_real(_value))
+				{
+					x1 = _value;
+					y1 = _value;
+					x2 = _value;
+					y2 = _value;
+				}
+				else if (instanceof(_value) == "Vector2")
+				{
+					x1 = _value.x;
+					y1 = _value.y;
+					x2 = _value.x;
+					y2 = _value.y;
+				}
+				else
+				{
+					x1 = _value.x1;
+					y1 = _value.y1;
+					x2 = _value.x2;
+					y2 = _value.y2;
+				}
 				
 				return self;
 			}

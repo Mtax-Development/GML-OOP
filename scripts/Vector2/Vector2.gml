@@ -467,12 +467,20 @@ function Vector2() constructor
 				return self;
 			}
 			
-			// @argument			{real} value
+			// @argument			{real|Vector2} value
 			// @description			Set all of the values to one specified value.
 			static set = function(_value)
 			{
-				x = _value;
-				y = _value;
+				if (is_real(_value))
+				{
+					x = _value;
+					y = _value;
+				}
+				else
+				{
+					x = _value.x;
+					y = _value.y;
+				}
 				
 				return self;
 			}
