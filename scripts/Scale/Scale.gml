@@ -142,7 +142,7 @@ function Scale() constructor
 				return ((x == _other.x) and (y == _other.y));
 			}
 			
-			// @argument			{Vector2} target
+			// @argument			{Scale} target
 			// @argument			{Vector2} rate
 			// @description			Move the x and y values towards the specified target with the
 			//						specified rate without exceeding it.
