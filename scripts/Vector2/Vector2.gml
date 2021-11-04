@@ -489,15 +489,15 @@ function Vector2() constructor
 			// @description			Set all of the values to the ones of the cursor.
 			static setCursor = function(_device)
 			{
-				if (_device == undefined)
-				{
-					x = mouse_x;
-					y = mouse_y;
-				}
-				else
+				if (is_real(_device))
 				{
 					x = device_mouse_x(_device);
 					y = device_mouse_y(_device);
+				}
+				else
+				{
+					x = mouse_x;
+					y = mouse_y;
 				}
 				
 				return self;
