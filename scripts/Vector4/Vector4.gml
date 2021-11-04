@@ -168,13 +168,25 @@ function Vector4() constructor
 				return false;
 			}
 			
-			// @argument			{Vector4} other
+			// @argument			{real|Vector2|Vector4} other
 			// @returns				{bool}
-			// @description			Check if this and the specified Vector4 have the same values.
-			static equals = function(_other)
+			// @description			Check if the respective values are equal to the specified value.
+			static equals = function(_value)
 			{
-				return ((x1 == _other.x1) and (y1 == _other.y1) and (x2 == _other.x2)
-						and (y2 == _other.y2));
+				if (is_real(_value))
+				{
+					return ((x1 == _value) and (y1 == _value) and (x2 == _value) and (y2 == _value));
+				}
+				else if (instanceof(_value) == "Vector2")
+				{
+					return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x)
+							and (y2 == _value.y));
+				}
+				else
+				{
+					return ((x1 == _value.x1) and (y1 == _value.y1) and (x2 == _value.x2)
+							and (y2 == _value.y2));
+				}
 			}
 			
 			// @argument			{real|Vector2|Vector4} value?

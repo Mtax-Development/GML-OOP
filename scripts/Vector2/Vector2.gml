@@ -124,12 +124,19 @@ function Vector2() constructor
 				return false;
 			}
 			
-			// @argument			{Vector2} other
+			// @argument			{real|Vector2} value
 			// @returns				{bool}
-			// @description			Check if this and the specified Vector2 have the same values.
-			static equals = function(_other)
+			// @description			Check if the respective values are equal to the specified value.
+			static equals = function(_value)
 			{
-				return ((x == _other.x) and (y == _other.y));
+				if (is_real(_value))
+				{
+					return ((x == _value) and (y == _value));
+				}
+				else
+				{
+					return ((x == _value.x) and (y == _value.y));
+				}
 			}
 			
 			// @argument			{real|Vector2} value?
