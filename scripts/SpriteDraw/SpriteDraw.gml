@@ -108,16 +108,28 @@ function SpriteDraw() constructor
 			// @description			Execute the draw.
 			static render = function()
 			{
-				if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+				if (self.isFunctional())
 				{
-					event.beforeRender.callback(event.beforeRender.argument);
+					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					{
+						event.beforeRender.callback(event.beforeRender.argument);
+					}
+					
+					sprite.render(location, frame, scale, angle, color, alpha);
+					
+					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					{
+						event.afterRender.callback(event.afterRender.argument);
+					}
 				}
-				
-				sprite.render(location, frame, scale, angle, color, alpha);
-				
-				if ((is_struct(event))) and (is_method(event.afterRender.callback))
+				else
 				{
-					event.afterRender.callback(event.afterRender.argument);
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "render";
+					var _errorText = ("Attempted to render through an invalid Sprite renderer: " +
+									  "{" + string(self) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 				
 				return self;
@@ -136,82 +148,75 @@ function SpriteDraw() constructor
 			//						constructor.
 			static toString = function(_multiline = false, _full = false, _color_HSV = false)
 			{
-				if (self.isFunctional())
+				var _string = "";
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				
+				if (_full)
 				{
-					var _string = "";
-					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					
-					if (_full)
-					{
-						var _mark_separator_inline = ", ";
+					var _mark_separator_inline = ", ";
 						
-						var _string_color;
-						switch (color)
-						{
-							case c_aqua: _string_color = "Aqua"; break;
-							case c_black: _string_color = "Black"; break;
-							case c_blue: _string_color = "Blue"; break;
-							case c_dkgray: _string_color = "Dark Gray"; break;
-							case c_fuchsia: _string_color = "Fuchsia"; break;
-							case c_gray: _string_color = "Gray"; break;
-							case c_green: _string_color = "Green"; break;
-							case c_lime: _string_color = "Lime"; break;
-							case c_ltgray: _string_color = "Light Gray"; break;
-							case c_maroon: _string_color = "Maroon"; break;
-							case c_navy: _string_color = "Navy"; break;
-							case c_olive: _string_color = "Olive"; break;
-							case c_orange: _string_color = "Orange"; break;
-							case c_purple: _string_color = "Purple"; break;
-							case c_red: _string_color = "Red"; break;
-							case c_teal: _string_color = "Teal"; break;
-							case c_white: _string_color = "White"; break;
-							case c_yellow: _string_color = "Yellow"; break;
-							default:
-								if (_color_HSV)
-								{
-									_string_color = 
-									("(" +
-									 "Hue: " + string(color_get_hue(color))
-										 	 + _mark_separator_inline +
-									 "Saturation: " + string(color_get_saturation(color))
-										 			+ _mark_separator_inline +
-									 "Value: " + string(color_get_value(color)) +
-									 ")");
-								}
-								else
-								{
-									_string_color = 
-									("(" +
-									 "Red: " + string(color_get_red(color))
-										 	 + _mark_separator_inline +
-									 "Green: " + string(color_get_green(color))
-										 	 + _mark_separator_inline +
-									 "Blue: " + string(color_get_blue(color)) +
-									 ")");
-								}
-							break;
-						}
-						
-						_string = ("Sprite: " + string(sprite) + _mark_separator +
-								   "Location: " + string(location) + _mark_separator +
-								   "Frame: " + string(frame) + _mark_separator +
-								   "Scale: " + string(scale) + _mark_separator +
-								   "Angle: " + string(angle) + _mark_separator +
-								   "Color: " + _string_color + _mark_separator +
-								   "Alpha: " + string(alpha));
-					}
-					else
+					var _string_color;
+					switch (color)
 					{
-						_string = ("Sprite: " + string(sprite) + _mark_separator +
-								   "Location: " + string(location));
+						case c_aqua: _string_color = "Aqua"; break;
+						case c_black: _string_color = "Black"; break;
+						case c_blue: _string_color = "Blue"; break;
+						case c_dkgray: _string_color = "Dark Gray"; break;
+						case c_fuchsia: _string_color = "Fuchsia"; break;
+						case c_gray: _string_color = "Gray"; break;
+						case c_green: _string_color = "Green"; break;
+						case c_lime: _string_color = "Lime"; break;
+						case c_ltgray: _string_color = "Light Gray"; break;
+						case c_maroon: _string_color = "Maroon"; break;
+						case c_navy: _string_color = "Navy"; break;
+						case c_olive: _string_color = "Olive"; break;
+						case c_orange: _string_color = "Orange"; break;
+						case c_purple: _string_color = "Purple"; break;
+						case c_red: _string_color = "Red"; break;
+						case c_teal: _string_color = "Teal"; break;
+						case c_white: _string_color = "White"; break;
+						case c_yellow: _string_color = "Yellow"; break;
+						default:
+							if (_color_HSV)
+							{
+								_string_color = 
+								("(" +
+								 "Hue: " + string(color_get_hue(color))
+								 		 + _mark_separator_inline +
+								 "Saturation: " + string(color_get_saturation(color))
+								 	 			+ _mark_separator_inline +
+								 "Value: " + string(color_get_value(color)) +
+								 ")");
+							}
+							else
+							{
+								_string_color = 
+								("(" +
+								 "Red: " + string(color_get_red(color))
+								 		 + _mark_separator_inline +
+								 "Green: " + string(color_get_green(color))
+								 		   + _mark_separator_inline +
+								 "Blue: " + string(color_get_blue(color)) +
+								 ")");
+							}
+						break;
 					}
 					
-					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+					_string = ("Sprite: " + string(sprite) + _mark_separator +
+								"Location: " + string(location) + _mark_separator +
+								"Frame: " + string(frame) + _mark_separator +
+								"Scale: " + string(scale) + _mark_separator +
+								"Angle: " + string(angle) + _mark_separator +
+								"Color: " + _string_color + _mark_separator +
+								"Alpha: " + string(alpha));
 				}
 				else
 				{
-					return (instanceof(self) + "<>");
+					_string = ("Sprite: " + string(sprite) + _mark_separator +
+							   "Location: " + string(location));
 				}
+				
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
 		#endregion
