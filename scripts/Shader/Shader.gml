@@ -476,14 +476,20 @@ function Shader() constructor
 						case true:
 							if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
 							{
-								event.beforeActivation.callback(event.beforeActivation.argument);
+								script_execute_ext(method_get_index(event.beforeActivation.callback),
+												   ((is_array(event.beforeActivation.argument)
+													? event.beforeActivation.argument
+													: [event.beforeActivation.argument])));
 							}
 							
 							shader_set(ID);
 							
 							if ((is_struct(event))) and (is_method(event.afterActivation.callback))
 							{
-								event.afterActivation.callback(event.afterActivation.argument);
+								script_execute_ext(method_get_index(event.afterActivation.callback),
+												   ((is_array(event.afterActivation.argument)
+													? event.afterActivation.argument
+													: [event.afterActivation.argument])));
 							}
 						break;
 						
@@ -493,8 +499,10 @@ function Shader() constructor
 								if ((is_struct(event)))
 								and (is_method(event.beforeDeactivation.callback))
 								{
-									event.beforeDeactivation.callback(event.beforeDeactivation
-																		   .argument);
+									script_execute_ext(method_get_index(event.beforeDeactivation.callback),
+													   ((is_array(event.beforeDeactivation.argument)
+														? event.beforeDeactivation.argument
+														: [event.beforeDeactivation.argument])));
 								}
 								
 								shader_reset();
@@ -502,8 +510,10 @@ function Shader() constructor
 								if ((is_struct(event)))
 								and (is_method(event.afterDeactivation.callback))
 								{
-									event.afterDeactivation.callback(event.afterDeactivation
-																		  .argument);
+									script_execute_ext(method_get_index(event.afterDeactivation.callback),
+													   ((is_array(event.afterDeactivation.argument)
+														? event.afterDeactivation.argument
+														: [event.afterDeactivation.argument])));
 								}
 							}
 						break;

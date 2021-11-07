@@ -197,7 +197,10 @@ function Line() constructor
 					{
 						if ((is_struct(event))) and (is_method(event.beforeRender.callback))
 						{
-							event.beforeRender.callback(event.beforeRender.argument);
+							script_execute_ext(method_get_index(event.beforeRender.callback),
+											   ((is_array(event.beforeRender.argument)
+												? event.beforeRender.argument
+												: [event.beforeRender.argument])));
 						}
 						
 						var _color1, _color2, _color3, _color4;
@@ -241,7 +244,10 @@ function Line() constructor
 						
 						if ((is_struct(event))) and (is_method(event.afterRender.callback))
 						{
-							event.afterRender.callback(event.afterRender.argument);
+							script_execute_ext(method_get_index(event.afterRender.callback),
+											   ((is_array(event.afterRender.argument)
+												? event.afterRender.argument
+												: [event.afterRender.argument])));
 						}
 					}
 				}

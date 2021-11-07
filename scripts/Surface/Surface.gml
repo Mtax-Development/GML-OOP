@@ -141,14 +141,20 @@ function Surface() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
 					{
-						event.beforeCreation.callback(event.beforeCreation.argument);
+						script_execute_ext(method_get_index(event.beforeCreation.callback),
+										   ((is_array(event.beforeCreation.argument)
+											? event.beforeCreation.argument
+											: [event.beforeCreation.argument])));
 					}
 					
 					ID = surface_create(max(1, size.x), max(1, size.y));
 					
 					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
 					{
-						event.afterCreation.callback(event.afterCreation.argument);
+						script_execute_ext(method_get_index(event.afterCreation.callback),
+										   ((is_array(event.afterCreation.argument)
+											? event.afterCreation.argument
+											: [event.afterCreation.argument])));
 					}
 				}
 				
@@ -377,7 +383,10 @@ function Surface() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
 					{
-						event.beforeRender.callback(event.beforeRender.argument);
+						script_execute_ext(method_get_index(event.beforeRender.callback),
+										   ((is_array(event.beforeRender.argument)
+											? event.beforeRender.argument
+											: [event.beforeRender.argument])));
 					}
 					
 					var _location_x, _location_y;
@@ -576,7 +585,10 @@ function Surface() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
-						event.afterRender.callback(event.afterRender.argument);
+						script_execute_ext(method_get_index(event.afterRender.callback),
+										   ((is_array(event.afterRender.argument)
+											? event.afterRender.argument
+											: [event.afterRender.argument])));
 					}
 				}
 				else
@@ -603,7 +615,10 @@ function Surface() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
 					{
-						event.beforeRender.callback(event.beforeRender.argument);
+						script_execute_ext(method_get_index(event.beforeRender.callback),
+										   ((is_array(event.beforeRender.argument)
+											? event.beforeRender.argument
+											: [event.beforeRender.argument])));
 					}
 					
 					var _location_x, _location_y;
@@ -624,7 +639,10 @@ function Surface() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
-						event.afterRender.callback(event.afterRender.argument);
+						script_execute_ext(method_get_index(event.afterRender.callback),
+										   ((is_array(event.afterRender.argument)
+											? event.afterRender.argument
+											: [event.afterRender.argument])));
 					}
 				}
 				else
@@ -652,7 +670,10 @@ function Surface() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
 					{
-						event.beforeRender.callback(event.beforeRender.argument);
+						script_execute_ext(method_get_index(event.beforeRender.callback),
+										   ((is_array(event.beforeRender.argument)
+											? event.beforeRender.argument
+											: [event.beforeRender.argument])));
 					}
 					
 					var _offset_x, _offset_y;
@@ -686,7 +707,10 @@ function Surface() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
-						event.afterRender.callback(event.afterRender.argument);
+						script_execute_ext(method_get_index(event.afterRender.callback),
+										   ((is_array(event.afterRender.argument)
+											? event.afterRender.argument
+											: [event.afterRender.argument])));
 					}
 				}
 				else
@@ -726,14 +750,20 @@ function Surface() constructor
 						
 						if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
 						{
-							event.beforeActivation.callback(event.beforeActivation.argument);
+							script_execute_ext(method_get_index(event.beforeActivation.callback),
+											   ((is_array(event.beforeActivation.argument)
+												? event.beforeActivation.argument
+												: [event.beforeActivation.argument])));
 						}
 						
 						surface_set_target(ID);
 						
 						if ((is_struct(event))) and (is_method(event.afterActivation.callback))
 						{
-							event.afterActivation.callback(event.afterActivation.argument);
+							script_execute_ext(method_get_index(event.afterActivation.callback),
+											   ((is_array(event.afterActivation.argument)
+												? event.afterActivation.argument
+												: [event.afterActivation.argument])));
 						}
 					break;
 					
@@ -742,14 +772,20 @@ function Surface() constructor
 						{
 							if ((is_struct(event))) and (is_method(event.beforeDeactivation.callback))
 							{
-								event.beforeDeactivation.callback(event.beforeDeactivation.argument);
+								script_execute_ext(method_get_index(event.beforeDeactivation.callback),
+												   ((is_array(event.beforeDeactivation.argument)
+													? event.beforeDeactivation.argument
+													: [event.beforeDeactivation.argument])));
 							}
 							
 							surface_reset_target();
 							
 							if ((is_struct(event))) and (is_method(event.afterDeactivation.callback))
 							{
-								event.afterDeactivation.callback(event.afterDeactivation.argument);
+								script_execute_ext(method_get_index(event.afterDeactivation.callback),
+												   ((is_array(event.afterDeactivation.argument)
+													? event.afterDeactivation.argument
+													: [event.afterDeactivation.argument])));
 							}
 						}
 					break;

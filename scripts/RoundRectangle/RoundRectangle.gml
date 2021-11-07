@@ -350,7 +350,10 @@ function RoundRectangle() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
 					{
-						event.beforeRender.callback(event.beforeRender.argument);
+						script_execute_ext(method_get_index(event.beforeRender.callback),
+										   ((is_array(event.beforeRender.argument)
+											? event.beforeRender.argument
+											: [event.beforeRender.argument])));
 					}
 					
 					if ((fill_color != undefined) and (fill_alpha > 0))
@@ -391,7 +394,10 @@ function RoundRectangle() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
-						event.afterRender.callback(event.afterRender.argument);
+						script_execute_ext(method_get_index(event.afterRender.callback),
+										   ((is_array(event.afterRender.argument)
+											? event.afterRender.argument
+											: [event.afterRender.argument])));
 					}
 				}
 				else

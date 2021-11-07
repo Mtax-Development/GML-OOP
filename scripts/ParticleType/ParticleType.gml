@@ -1079,7 +1079,10 @@ function ParticleType() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
 					{
-						event.beforeCreation.callback(event.beforeCreation.argument);
+						script_execute_ext(method_get_index(event.beforeCreation.callback),
+										   ((is_array(event.beforeCreation.argument)
+											? event.beforeCreation.argument
+											: [event.beforeCreation.argument])));
 					}
 					
 					if (_color != undefined)
@@ -1095,7 +1098,10 @@ function ParticleType() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
 					{
-						event.afterCreation.callback(event.afterCreation.argument);
+						script_execute_ext(method_get_index(event.afterCreation.callback),
+										   ((is_array(event.afterCreation.argument)
+											? event.afterCreation.argument
+											: [event.afterCreation.argument])));
 					}
 				}
 				else
@@ -1126,7 +1132,10 @@ function ParticleType() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
 					{
-						event.beforeCreation.callback(event.beforeCreation.argument);
+						script_execute_ext(method_get_index(event.beforeCreation.callback),
+										   ((is_array(event.beforeCreation.argument)
+											? event.beforeCreation.argument
+											: [event.beforeCreation.argument])));
 					}
 					
 					switch (instanceof(_shape))
@@ -1353,7 +1362,10 @@ function ParticleType() constructor
 					
 					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
 					{
-						event.afterCreation.callback(event.afterCreation.argument);
+						script_execute_ext(method_get_index(event.afterCreation.callback),
+										   ((is_array(event.afterCreation.argument)
+											? event.afterCreation.argument
+											: [event.afterCreation.argument])));
 					}
 				}
 				else

@@ -299,14 +299,20 @@ function Font() constructor
 				{
 					if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
 					{
-						event.beforeActivation.callback(event.beforeActivation.argument);
+						script_execute_ext(method_get_index(event.beforeActivation.callback),
+										   ((is_array(event.beforeActivation.argument)
+											? event.beforeActivation.argument
+											: [event.beforeActivation.argument])));
 					}
 					
 					draw_set_font(ID);
 					
 					if ((is_struct(event))) and (is_method(event.afterActivation.callback))
 					{
-						event.afterActivation.callback(event.afterActivation.argument);
+						script_execute_ext(method_get_index(event.afterActivation.callback),
+										   ((is_array(event.afterActivation.argument)
+											? event.afterActivation.argument
+											: [event.afterActivation.argument])));
 					}
 				}
 				else
