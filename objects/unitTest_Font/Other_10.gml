@@ -185,16 +185,16 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 	
 	var _result = [];
 	
-	constructor.event.beforeActivation.callback = function(_argument)
+	constructor.event.beforeActivation.callback = function()
 	{
-		array_push(_argument[0], _argument[1]);
+		array_push(argument[0], argument[1]);
 	}
 	
 	constructor.event.beforeActivation.argument = [_result, _value[0]];
 	
-	constructor.event.afterActivation.callback = function(_argument)
+	constructor.event.afterActivation.callback = function()
 	{
-		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
 	constructor.event.afterActivation.argument = [_result, _value[1]];

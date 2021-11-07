@@ -605,16 +605,16 @@ asset = [TestSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeCreation.callback = function(_argument)
+	constructor.event.beforeCreation.callback = function()
 	{
-		array_push(_argument[0], _argument[1]);
+		array_push(argument[0], argument[1]);
 	}
 	
 	constructor.event.beforeCreation.argument = [_result, _value[0]];
 	
-	constructor.event.afterCreation.callback = function(_argument)
+	constructor.event.afterCreation.callback = function()
 	{
-		array_push(_argument[0], (_argument[0][(array_length(_argument[0]) - 1)] + _argument[1]));
+		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
 	constructor.event.afterCreation.argument = [_result, _value[1]];
