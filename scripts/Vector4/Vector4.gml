@@ -761,6 +761,72 @@ function Vector4() constructor
 				y2 = clamp(y2, _minimum_y, _maximum_y);
 			}
 			
+			// @argument			{real|Vector2|Vector4} value
+			// @description			Perform a calculation with the specified value by substracting its
+			//						respective values from the first set of values and adding them to
+			//						the second set.
+			static grow = function(_value)
+			{
+				switch (instanceof(_value))
+				{
+					case "Vector4":
+						x1 -= _value.x1;
+						y1 -= _value.y1;
+						x2 += _value.x2;
+						y2 += _value.y2;
+					break;
+					
+					case "Vector2":
+						x1 -= _value.x;
+						y1 -= _value.y;
+						x2 += _value.x;
+						y2 += _value.y;
+					break;
+					
+					default:
+						x1 -= _value;
+						y1 -= _value;
+						x2 += _value;
+						y2 += _value;
+					break;
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2|Vector4} value
+			// @description			Perform a calculation with the specified value by adding its
+			//						respective values to the first set of values and substracting them
+			//						from the second set.
+			static shrink = function(_value)
+			{
+				switch (instanceof(_value))
+				{
+					case "Vector4":
+						x1 += _value.x1;
+						y1 += _value.y1;
+						x2 -= _value.x2;
+						y2 -= _value.y2;
+					break;
+					
+					case "Vector2":
+						x1 += _value.x;
+						y1 += _value.y;
+						x2 -= _value.x;
+						y2 -= _value.y;
+					break;
+					
+					default:
+						x1 += _value;
+						y1 += _value;
+						x2 -= _value;
+						y2 -= _value;
+					break;
+				}
+				
+				return self;
+			}
+			
 			// @description			Swap the x and y values.
 			static flip = function()
 			{
