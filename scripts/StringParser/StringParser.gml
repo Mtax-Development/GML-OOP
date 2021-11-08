@@ -628,7 +628,7 @@ function StringParser() constructor
 			// @returns				{any[]}
 			// @description			Execute a function once for each character of the string.
 			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or an argument array:
+			//						be accessed in it by using their name or the argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {char} _value
 			//						- argument[2]: {any} _argument

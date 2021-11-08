@@ -277,7 +277,7 @@ function ArrayParser() constructor
 			// @returns				{any[]}
 			// @description			Execute a function once for each value in the array.
 			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or an argument array:
+			//						be accessed in it by using their name or the argument array:
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument
