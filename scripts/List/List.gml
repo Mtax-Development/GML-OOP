@@ -159,13 +159,15 @@ function List() constructor
 						_i[1] = 0;
 						repeat (argument_count)
 						{
-							if (ds_list_find_value(ID, _i[1]) == argument[_i[1]])
+							if (ds_list_find_value(ID, _i[0]) == argument[_i[1]])
 							{
 								return true;
 							}
 							
 							++_i[1];
 						}
+						
+						++_i[0];
 					}
 					
 					return false;
