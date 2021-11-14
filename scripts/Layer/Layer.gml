@@ -19,7 +19,7 @@ function Layer() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction type: Empty.
+				//|Construction type: Empty
 				ID = undefined;
 				name = undefined;
 				
@@ -560,14 +560,23 @@ function Layer() constructor
 			}
 			
 			// @argument			{int:object} object
-			// @argument			{Vector2} location
-			// @returns				{int} | On error: {noone}
+			// @argument			{Vector2} location?
+			// @returns				{int:instance} | On error: {noone}
 			// @description			Create an instance on this Layer and return its internal ID.
 			static createInstance = function(_object, _location)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					var _instance = instance_create_layer(_location.x, _location.y, ID, _object);
+					var _location_x = 0;
+					var _location_y = 0;
+					
+					if (_location != undefined)
+					{
+						_location_x = _location.x;
+						_location_y = _location.y;
+					}
+					
+					var _instance = instance_create_layer(_location_x, _location_y, ID, _object);
 					
 					instanceList.add(_instance);
 					
@@ -662,14 +671,38 @@ function Layer() constructor
 				}
 			}
 			
-			// @description			Destroy all instances that are bound to this Layer.
-			static destroyInstances = function()
+			// @argument			{int:instance|int:object|all} target
+			// @description			Destroy the specified instance, objects or all instances of this
+			//						Layer.
+			static destroyInstance = function(_target)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
 				{
-					instanceList.clear();
-					
-					layer_destroy_instances(ID);
+					if (_target == all)
+					{
+						instanceList.clear();
+						
+						layer_destroy_instances(ID);
+					}
+					else
+					{
+						var _i = 0;
+						repeat (instanceList.getSize())
+						{
+							var _instance = instanceList.getValue(_i);
+							
+							if ((_instance.id == _target) or (_instance.object_index == _target))
+							{
+								instance_destroy(_instance);
+								
+								instanceList.removePosition(_i);
+							}
+							else
+							{
+								++_i;
+							}
+						}
+					}
 				}
 				else
 				{
