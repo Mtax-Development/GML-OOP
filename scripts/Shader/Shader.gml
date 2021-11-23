@@ -59,8 +59,6 @@ function Shader() constructor
 						ID = _other.ID;
 						name = _other.name;
 						compiled = _other.compiled;
-						uniform = _other.uniform;
-						sampler = _other.sampler;
 						
 						if (is_struct(_other.uniform))
 						{
