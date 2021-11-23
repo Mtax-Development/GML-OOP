@@ -1,6 +1,6 @@
 {
   "option_html5_browser_title": "GML-OOP",
-  "option_html5_version": "1.0.0.0",
+  "option_html5_version": "0.0.0.0",
   "option_html5_foldername": "html5game",
   "option_html5_outputname": "index.html",
   "option_html5_splash_png": "${base_options_dir}/html5/splash.png",

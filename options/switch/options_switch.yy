@@ -8,7 +8,7 @@
   "option_switch_enable_fileaccess_checking": true,
   "option_switch_splash_screen": "${base_options_dir}/switch/splash.png",
   "option_switch_use_splash": false,
-  "option_switch_allow_debug_output": false,
+  "option_switch_allow_debug_output": true,
   "resourceVersion": "1.0",
   "name": "Switch",
   "tags": [],

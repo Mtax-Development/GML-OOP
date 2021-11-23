@@ -1,6 +1,6 @@
 {
   "option_linux_display_name": "GML-OOP",
-  "option_linux_version": "1.0.0.0",
+  "option_linux_version": "0.0.0",
   "option_linux_maintainer_email": "https://github.com/Mtax-Development",
   "option_linux_homepage": "https://github.com/Mtax-Development/GML-OOP",
   "option_linux_short_desc": "https://github.com/Mtax-Development/GML-OOP",
@@ -10,7 +10,7 @@
   "option_linux_icon": "${base_options_dir}/linux/icons/64.png",
   "option_linux_start_fullscreen": false,
   "option_linux_allow_fullscreen": false,
-  "option_linux_interpolate_pixels": false,
+  "option_linux_interpolate_pixels": true,
   "option_linux_display_cursor": true,
   "option_linux_sync": false,
   "option_linux_resize_window": false,

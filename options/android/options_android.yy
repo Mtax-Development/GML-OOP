@@ -1,7 +1,7 @@
 {
   "option_android_sync_amazon": false,
   "option_android_display_name": "GML-OOP",
-  "option_android_version": "1.0.0.0",
+  "option_android_version": "0.0.0.0",
   "option_android_tools_from_version": false,
   "option_android_build_tools": "",
   "option_android_support_lib": "",
@@ -62,7 +62,7 @@
   "option_android_permission_read_phone_state": false,
   "option_android_permission_network_state": false,
   "option_android_permission_internet": true,
-  "option_android_permission_bluetooth": true,
+  "option_android_permission_bluetooth": false,
   "option_android_permission_record_audio": false,
   "option_android_application_tag_inject": "",
   "option_android_google_apk_expansion": false,
