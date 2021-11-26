@@ -397,13 +397,10 @@ function Grid() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_location == undefined)
-					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
-					}
-					
-					var _result = ds_grid_get_max(ID, _location.x1, _location.y1, _location.x2,
-												  _location.y2);
+					var _result = ((_location == undefined)
+								   ? ds_grid_get_max(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID))
+								   : ds_grid_get_max(ID, _location.x1, _location.y1, _location.x2,
+													 _location.y2));
 					
 					return ((is_real(_result) ? _result : undefined));
 				}
@@ -458,13 +455,10 @@ function Grid() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_location == undefined)
-					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
-					}
-					
-					var _result = ds_grid_get_min(ID, _location.x1, _location.y1, _location.x2,
-												  _location.y2);
+					var _result = ((_location == undefined)
+								   ? ds_grid_get_min(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID))
+								   : ds_grid_get_min(ID, _location.x1, _location.y1, _location.x2,
+													 _location.y2));
 					
 					return ((is_real(_result) ? _result : undefined));
 				}
@@ -517,14 +511,12 @@ function Grid() constructor
 			static getMean = function(_location)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					if (_location == undefined)
-					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
-					}
-					
-					return ds_grid_get_mean(ID, _location.x1, _location.y1, _location.x2,
-											_location.y2);
+				{	
+					return ((_location == undefined) ? ds_grid_get_mean(ID, 0, 0, ds_grid_width(ID),
+																		ds_grid_height(ID))
+													 : ds_grid_get_mean(ID, _location.x1,
+																		_location.y1, _location.x2,
+																		_location.y2));
 				}
 				else
 				{
@@ -576,13 +568,10 @@ function Grid() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
-					if (_location == undefined)
-					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
-					}
-					
-					var _result = ds_grid_get_sum(ID, _location.x1, _location.y1, _location.x2,
-												  _location.y2);
+					var _result = ((_location == undefined)
+								   ? ds_grid_get_sum(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID))
+								   : ds_grid_get_sum(ID, _location.x1, _location.y1, _location.x2,
+													 _location.y2));
 					
 					return (((!is_nan(_result)) and (is_real(_result))) ? _result : undefined);
 				}
@@ -640,15 +629,23 @@ function Grid() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
 				{
+					var _location_x, _location_y;
+					
 					if (_location == undefined)
 					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+						var _size_x = ds_grid_width(ID);
+						var _size_y = ds_grid_height(ID);
+						
+						_location_x = ds_grid_value_x(ID, 0, 0, _size_x, _size_y, _value);
+						_location_y = ds_grid_value_y(ID, 0, 0, _size_x, _size_y, _value);
 					}
-					
-					var _location_x = ds_grid_value_x(ID, _location.x1, _location.y1, _location.x2,
+					else
+					{
+						_location_x = ds_grid_value_x(ID, _location.x1, _location.y1, _location.x2,
 													  _location.y2, _value);
-					var _location_y = ds_grid_value_y(ID, _location.x1, _location.y1, _location.x2,
+						_location_y = ds_grid_value_y(ID, _location.x1, _location.y1, _location.x2,
 													  _location.y2, _value);
+					}
 					
 					return ((_location_x >= 0) and (_location_y >= 0)) ? new Vector2(_location_x,
 																					 _location_y)
@@ -822,11 +819,13 @@ function Grid() constructor
 				{
 					if (_location == undefined)
 					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+						ds_grid_set_region(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID), _value);
 					}
-					
-					ds_grid_set_region(ID, _location.x1, _location.y1, _location.x2, 
-									   _location.y2, _value);
+					else
+					{
+						ds_grid_set_region(ID, _location.x1, _location.y1, _location.x2,
+										   _location.y2, _value);
+					}
 				}
 				else
 				{
@@ -952,11 +951,13 @@ function Grid() constructor
 				{
 					if (_location == undefined)
 					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+						ds_grid_add_region(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID), _value);
 					}
-					
-					ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2, _location.y2,
-									   _value);
+					else
+					{
+						ds_grid_add_region(ID, _location.x1, _location.y1, _location.x2,
+										   _location.y2, _value);
+					}
 				}
 				else
 				{
@@ -1082,11 +1083,14 @@ function Grid() constructor
 				{
 					if (_location == undefined)
 					{
-						_location = new Vector4(0, 0, ds_grid_width(ID), ds_grid_height(ID));
+						ds_grid_multiply_region(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID),
+												_value);
 					}
-					
-					ds_grid_multiply_region(ID, _location.x1, _location.y1, _location.x2,
-											_location.y2, _value);
+					else
+					{
+						ds_grid_multiply_region(ID, _location.x1, _location.y1, _location.x2,
+												_location.y2, _value);
+					}
 				}
 				else
 				{

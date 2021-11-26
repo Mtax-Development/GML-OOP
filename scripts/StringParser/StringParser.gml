@@ -259,9 +259,7 @@ function StringParser() constructor
 			{
 				var _string = string(ID);
 				
-				if (_count == undefined) {_count = string_length(_string);}
-				
-				return string_copy(_string, _position, _count);
+				return string_copy(_string, _position, (_count ?? string_length(_string)));
 			}
 			
 			// @argument			{any:string} substring
@@ -314,15 +312,12 @@ function StringParser() constructor
 				
 				if (_startFromEnd)
 				{
-					if (_startPosition == undefined) {_startPosition = string_length(_string);}
-					
-					_result = string_last_pos_ext(_string_substring, _string, _startPosition);
+					_result = string_last_pos_ext(_string_substring, _string,
+												  (_startPosition ?? string_length(_string)));
 				}
 				else
 				{
-					if (_startPosition == undefined) {_startPosition = 0;}
-					
-					_result = string_pos_ext(_string_substring, _string, _startPosition);
+					_result = string_pos_ext(_string_substring, _string, (_startPosition ?? 0));
 				}
 				
 				return ((_result > 0) ? _result : undefined);

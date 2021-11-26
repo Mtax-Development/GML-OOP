@@ -82,7 +82,7 @@ function ArrayParser() constructor
 			//						specified position in other one to specified position in this one.
 			//						If the specified positions are already occupied, their values will
 			//						be overwritten.
-			static copy = function(_other, _position, _other_position, _count)
+			static copy = function(_other, _position = 0, _other_position = 0, _count)
 			{
 				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
 				
@@ -93,11 +93,8 @@ function ArrayParser() constructor
 						ID = array_create((_position - 1), undefined);
 					}
 					
-					if (_position == undefined) {_position = 0;}
-					if (_other_position == undefined) {_other_position = 0;}
-					if (_count == undefined) {_count = (array_length(_other) - _other_position);}
-					
-					array_copy(ID, _position, _other, _other_position, _count);
+					array_copy(ID, _position, _other, _other_position,
+							   (_count ?? (array_length(_other) - _other_position)));
 				}
 				else
 				{

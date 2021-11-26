@@ -856,7 +856,7 @@ function Surface() constructor
 			// @argument			{int} offset?
 			// @description			Copy information from the specified Buffer to this Surface.
 			//						A byte offset can be specified for where the data load will begin.
-			static fromBuffer = function(_buffer, _offset)
+			static fromBuffer = function(_buffer, _offset = 0)
 			{
 				self.create();
 				
@@ -864,8 +864,6 @@ function Surface() constructor
 				{
 					if ((instanceof(_buffer) == "Buffer") and (_buffer.isFunctional()))
 					{
-						if (_offset == undefined) {_offset = 0;}
-					
 						buffer_set_surface(_buffer.ID, ID, _offset);
 					}
 				}

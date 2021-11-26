@@ -1131,8 +1131,6 @@ function Map() constructor
 			//						versions of GameMaker with different encoding.
 			static fromEncodedString = function(_string, _legacy = false)
 			{
-				if (_legacy == undefined) {_legacy = false;}
-				
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
 				{
 					ID = ds_map_create();

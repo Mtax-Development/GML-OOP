@@ -429,8 +429,6 @@ function Queue() constructor
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
-					if (_count == undefined) {_count = 1;}
-					
 					var _size = ds_queue_size(ID);
 					
 					if ((!(_count >= 1)) or (_size < 1))
