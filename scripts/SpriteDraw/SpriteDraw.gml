@@ -80,11 +80,16 @@ function SpriteDraw() constructor
 						//|Construction type: New constructor.
 						sprite = argument[0];
 						location = argument[1];
-						frame = ((argument_count > 2) ? argument[2] : 0);
-						scale = ((argument_count > 3) ? argument[3] : new Scale(1, 1));
-						angle = ((argument_count > 4) ? argument[4] : new Angle(0));
-						color = ((argument_count > 5) ? argument[5] : c_white);
-						alpha = ((argument_count > 6) ? argument[6] : 1);
+						frame = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
+																					   : 0);
+						scale = (((argument_count > 3) and (argument[3] != undefined))
+								 ? argument[3] : new Scale(1, 1));
+						angle = (((argument_count > 4) and (argument[4] != undefined))
+								 ? argument[4] : new Angle(0));
+						color = (((argument_count > 5) and (argument[5] != undefined)) ? argument[5]
+																					   : c_white);
+						alpha = (((argument_count > 6) and (argument[6] != undefined)) ? argument[6]
+																					   : 1);
 					}
 				}
 				
