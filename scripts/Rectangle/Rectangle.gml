@@ -335,8 +335,16 @@ function Rectangle() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a sprite.
-			static render = function()
+			// @argument			{Vector4} location?
+			// @argument			{int:color|Color4} fill_color?
+			// @argument			{real} fill_alpha?
+			// @argument			{int:color|Color4} outline_color?
+			// @argument			{int} outline_size?
+			// @argument			{real} outline_alpha?
+			// @description			Execute the draw of this Shape as a sprite, using data of this
+			//						constructor or specified replaced parts of it for this call only.
+			static render = function(_location,_fill_color, _fill_alpha, _outline_color,
+									 _outline_size, _outline_alpha)
 			{
 				static __createPixelSprite = function()
 				{
@@ -357,6 +365,13 @@ function Rectangle() constructor
 				}
 				
 				static _pixelSprite = __createPixelSprite();
+				
+				var _location_original = location;
+				var _fill_color_original = fill_color;
+				var _fill_alpha_original = fill_alpha;
+				var _outline_color_original = outline_color;
+				var _outline_size_original = outline_size;
+				var _outline_alpha_original = outline_alpha;
 				
 				if (self.isFunctional())
 				{
@@ -458,6 +473,13 @@ function Rectangle() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				location = _location_original;
+				fill_color = _fill_color_original;
+				fill_alpha = _fill_alpha_original;
+				outline_color = _outline_color_original;
+				outline_size = _outline_size_original;
+				outline_alpha = _outline_alpha_original;
 				
 				return self;
 			}

@@ -1,11 +1,11 @@
-/// @argument			{Sprite} sprite
-/// @argument			{Vector2} location
+/// @argument			{Sprite} sprite?
+/// @argument			{Vector2} location?
 /// @argument			{int} frame?
 /// @argument			{Scale} scale?
 /// @argument			{Angle} angle?
 /// @argument			{int:color} color?
 /// @argument			{real} alpha?
-///
+///						
 /// @description		Construct a handler storing information for Sprite rendering.
 ///						
 ///						Construction types:
@@ -79,7 +79,7 @@ function SpriteDraw() constructor
 					{
 						//|Construction type: New constructor.
 						sprite = argument[0];
-						location = argument[1];
+						location = ((argument_count > 1) ? argument[1] : undefined);
 						frame = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																					   : 0);
 						scale = (((argument_count > 3) and (argument[3] != undefined))
@@ -110,9 +110,33 @@ function SpriteDraw() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw.
-			static render = function()
+			// @argument			{Sprite} sprite?
+			// @argument			{Vector2} location?
+			// @argument			{int} frame?
+			// @argument			{Scale} scale?
+			// @argument			{Angle} angle?
+			// @argument			{int:color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw, using data of this constructor or specified
+			//						replaced parts of it for this call only.
+			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha)
 			{
+				var _sprite_original = sprite;
+				var _location_original = location;
+				var _frame_original = frame;
+				var _scale_original = scale;
+				var _angle_original = angle;
+				var _color_original = color;	
+				var _alpha_original = alpha;
+				
+				sprite = (_sprite ?? sprite)		
+				location = (_location ?? location);
+				frame = (_frame ?? frame);
+				scale = (_scale ?? scale);
+				angle = (_angle ?? angle);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
+				
 				if (self.isFunctional())
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
@@ -142,6 +166,14 @@ function SpriteDraw() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				sprite = _sprite_original;
+				location = _location_original;
+				frame = _frame_original;
+				scale = _scale_original;
+				angle = _angle_original;
+				color = _color_original;
+				alpha = _alpha_original;
 				
 				return self;
 			}

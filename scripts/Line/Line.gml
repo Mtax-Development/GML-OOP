@@ -168,8 +168,13 @@ function Line() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a sprite.
-			static render = function()
+			// @argument			{Vector4} location?
+			// @argument			{real} size?
+			// @argument			{int:color|Color2|Color4} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw of this Shape as a sprite, using data of this
+			//						constructor or specified replaced parts of it for this call only.
+			static render = function(_location, _size, _color, _alpha)
 			{
 				static __createPixelSprite = function()
 				{
@@ -190,6 +195,16 @@ function Line() constructor
 				}
 				
 				static _pixelSprite = __createPixelSprite();
+				
+				var _location_original = location;
+				var _size_original = size;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				location = (_location ?? location);
+				size = (_size ?? size);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
 				
 				if (self.isFunctional())
 				{
@@ -260,6 +275,11 @@ function Line() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				location = _location_original;
+				size = _size_original;
+				color = _color_original;
+				alpha = _alpha_original;
 				
 				return self;
 			}

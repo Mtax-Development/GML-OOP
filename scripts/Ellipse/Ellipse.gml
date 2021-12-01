@@ -154,14 +154,27 @@ function Ellipse() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a form.
+			// @argument			{Vector4} location?
+			// @argument			{int:color|Color2} fill_color?
+			// @argument			{real} fill_alpha?
+			// @argument			{int:color} outline_color?
+			// @argument			{real} outline_alpha?
+			// @description			Execute the draw of this Shape as a form, using data of this
+			//						constructor or specified replaced parts of it for this call only.
 			//						Form drawing of this Shape is dependant on the currently set
 			//						Circle precission.
 			//						NOTE: Form drawing produces inconsistent results across devices
 			//						and export targets due to their technical differences.
 			//						Sprite drawing should be used instead for accurate results.
-			static render = function()
+			static render = function(_location,_fill_color, _fill_alpha, _outline_color,
+									 _outline_alpha)
 			{
+				var _location_original = location;
+				var _fill_color_original = fill_color;
+				var _fill_alpha_original = fill_alpha;
+				var _outline_color_original = outline_color;
+				var _outline_alpha_original = outline_alpha;
+				
 				if (self.isFunctional())
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
@@ -218,6 +231,12 @@ function Ellipse() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				location = _location_original;
+				fill_color = _fill_color_original;
+				fill_alpha = _fill_alpha_original;
+				outline_color = _outline_color_original;
+				outline_alpha = _outline_alpha_original;
 				
 				return self;
 			}

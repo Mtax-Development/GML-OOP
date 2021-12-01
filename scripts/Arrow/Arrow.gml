@@ -9,7 +9,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor.
-///							- Empty: {void|undefined}
+///							- Empty: {void}
 ///							- Constructor copy: {Arrow} other
 function Arrow() constructor
 {
@@ -92,12 +92,27 @@ function Arrow() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Execute the draw of this Shape as a form.
+			// @argument			{Vector4} location?
+			// @argument			{real} size?
+			// @argument			{int:color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw of this Shape as a form, using data of this
+			//						constructor or specified replaced parts of it for this call only.
 			//						NOTE: Form drawing produces inconsistent results across devices
 			//						and export targets due to their technical differences.
 			//						Sprite drawing should be used instead for accurate results.
-			static render = function()
+			static render = function(_location, _size, _color, _alpha)
 			{
+				var _location_original = location;
+				var _size_original = size;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				location = (_location ?? location);
+				size = (_size ?? size);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
+				
 				if (self.isFunctional())
 				{
 					if (alpha > 0)
@@ -133,6 +148,11 @@ function Arrow() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				location = _location_original;
+				size = _size_original;
+				color = _color_original;
+				alpha = _alpha_original;
 				
 				return self;
 			}

@@ -283,12 +283,36 @@ function Triangle() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{Vector2} location1?
+			// @argument			{Vector2} location2?
+			// @argument			{Vector2} location3?
+			// @argument			{int:color|Color3} fill_color?
+			// @argument			{real} fill_alpha?
+			// @argument			{int:color|Color3} outline_color?
+			// @argument			{real} outline_alpha?
 			// @description			Execute the draw of this Shape as a form.
 			//						NOTE: Form drawing produces inconsistent results across devices
 			//						and export targets due to their technical differences.
 			//						Sprite drawing should be used instead for accurate results.
-			static render = function()
+			static render = function(_location1, _location2, _location3, _fill_color, _fill_alpha,
+									 _outline_color, _outline_alpha)
 			{
+				var _location1_original = location1;
+				var _location2_original = location2;
+				var _location3_original = location3;
+				var _fill_color_original = fill_color;
+				var _fill_alpha_original = fill_alpha;
+				var _outline_color_original = outline_color;
+				var _outline_alpha_original = outline_alpha;
+				
+				location1 = (_location1 ?? location1);
+				location2 = (_location2 ?? location2);
+				location3 = (_location3 ?? location3);
+				fill_color = (_fill_color ?? fill_color);
+				fill_alpha = (_fill_alpha ?? fill_alpha);
+				outline_color = (_outline_color ?? outline_color);
+				outline_alpha = (_outline_alpha ?? outline_alpha);
+				
 				if (self.isFunctional())
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
@@ -364,6 +388,14 @@ function Triangle() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				location1 = _location1_original;
+				location2 = _location2_original;
+				location3 = _location3_original;
+				fill_color = _fill_color_original;
+				fill_alpha = _fill_alpha_original;
+				outline_color = _outline_color_original;
+				outline_alpha = _outline_alpha_original;
 				
 				return self;
 			}

@@ -1,11 +1,12 @@
 /// @function				TextDraw()
 /// @argument				{any:string} string
 /// @argument				{Font} font
+/// @argument				{Vector2} location
 /// @argument				{TextAlign} align?
 /// @argument				{int:color} color?
 /// @argument				{real} alpha?
 ///							
-/// @description			Constructs a Handler for drawing strings.
+/// @description			Constructs a handler information for string rendering.
 ///							
 ///							Construction types:
 ///							- New constructor
@@ -22,6 +23,7 @@ function TextDraw() constructor
 				//|Construction type: Empty.
 				ID = "";
 				font = undefined;
+				location = undefined;
 				align = undefined;
 				color = undefined;
 				alpha = undefined;
@@ -51,6 +53,9 @@ function TextDraw() constructor
 						ID = _other.ID;
 						font = ((instanceof(_other.font) == "Font") ? new Font(_other.font.ID)
 																	: _other.font);
+						location = ((instanceof(_other.location) == "Vector2")
+									? new Vector2(_other.location)
+									: _other.location);
 						align = ((instanceof(_other.align) == "TextAlign")
 								 ? new TextAlign(_other.align) : _other.align);
 						color = _other.color;
@@ -72,13 +77,14 @@ function TextDraw() constructor
 					{
 						//Construction type: New constructor.
 						ID = string(argument[0]);
-						font = argument[1];
-						align = (((argument_count > 2) and (argument[2] != undefined))
-								 ? argument[2] : new TextAlign());
-						color = (((argument_count > 3) and (argument[3] != undefined))
-								 ? argument[3] : c_white);
-						alpha = (((argument_count > 4) and (argument[4] != undefined))
-								 ? argument[4] : 1);
+						font = ((argument_count > 1) ? argument[1] : undefined);
+						location = ((argument_count > 2) ? argument[2] : undefined);
+						align = (((argument_count > 3) and (argument[3] != undefined))
+								 ? argument[3] : new TextAlign());
+						color = (((argument_count > 4) and (argument[4] != undefined))
+								 ? argument[4] : c_white);
+						alpha = (((argument_count > 5) and (argument[5] != undefined))
+								 ? argument[5] : 1);
 					}
 				}
 				
@@ -90,6 +96,7 @@ function TextDraw() constructor
 			static isFunctional = function()
 			{
 				return ((is_real(alpha)) and (instanceof(font) == "Font") and (font.isFunctional())
+						and (instanceof(location) == "Vector2") and (location.isFunctional())
 						and (instanceof(align) == "TextAlign") and (align.isFunctional()));
 			}
 			
@@ -101,7 +108,7 @@ function TextDraw() constructor
 			//						from its origin.
 			static getBoundaryOffset = function()
 			{
-				if (self.isFunctional())
+				if ((instanceof(font) == "Font") and (font.isFunctional()))
 				{
 					var _string = string(ID);
 					
@@ -110,8 +117,14 @@ function TextDraw() constructor
 					var _x2 = undefined;
 					var _y2 = undefined;
 					
-					var _size_x = string_width(_string);
-					var _size_y = string_height(_string);
+					var _font_previous = draw_get_font();
+					
+					draw_set_font(font.ID);
+					{
+						var _size_x = string_width(_string);
+						var _size_y = string_height(_string);
+					}
+					draw_set_font(_font_previous);
 					
 					switch (align.x)
 					{
@@ -160,7 +173,8 @@ function TextDraw() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getBoundaryOffset";
-					var _errorText = ("Attempted to get a property of an invalid text renderer: " +
+					var _errorText = ("Attempted to get text size of a text renderer with an " +
+									  "invalid font: " +
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
@@ -171,10 +185,30 @@ function TextDraw() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector2} location
-			// @description			Execute the draw of the text.
-			static render = function(_location)
+			// @argument			{any:string} string?
+			// @argument			{Font} font?
+			// @argument			{Vector2} location?
+			// @argument			{TextAlign} align?
+			// @argument			{int:color} color?
+			// @argument			{real} alpha?
+			// @description			Execute the draw of the text, using data of this constructor or
+			//						specified replaced parts of it for this call only.
+			static render = function(_string, _font, _location, _align, _color, _alpha)
 			{
+				var _string_original = ID;
+				var _font_original = font;
+				var _location_original = location;
+				var _align_original = align;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				ID = (_string ?? ID);
+				font = (_font ?? font);
+				location = (_location ?? location);
+				align = (_align ?? align);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
+				
 				if (self.isFunctional())
 				{
 					if (alpha > 0)
@@ -193,7 +227,7 @@ function TextDraw() constructor
 						draw_set_color(color);
 						draw_set_alpha(alpha);
 						
-						draw_text(_location.x, _location.y, string(ID));
+						draw_text(location.x, location.y, string(ID));
 						
 						if ((is_struct(event))) and (is_method(event.afterRender.callback))
 						{
@@ -213,6 +247,13 @@ function TextDraw() constructor
 									  "{" + string(self) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
+				
+				ID = _string_original;
+				font = _font_original;
+				location = _location_original;
+				align = _align_original;
+				color = _color_original;
+				alpha = _alpha_original;
 				
 				return self;
 			}
@@ -309,6 +350,7 @@ function TextDraw() constructor
 					
 					_string = ("Text: " + _string_text + _mark_separator +
 							   "Font: " + string(font) + _mark_separator +
+							   "Location: " + string(location) + _mark_separator +
 							   "Align: " + string(align) + _mark_separator +
 							   "Color: " + string(_string_color) + _mark_separator +
 							   "Alpha: " + string(alpha));
