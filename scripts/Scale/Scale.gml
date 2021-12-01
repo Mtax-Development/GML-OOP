@@ -183,6 +183,45 @@ function Scale() constructor
 				return self;
 			}
 			
+			// @argument			{real|Scale} value
+			// @description			Perform a calculation with the specified value by adding it to
+			//						respective values with the same sign as the values of this Scale.
+			static grow = function(_value)
+			{
+				if (is_real(_value))
+				{
+					x += (abs(_value) * sign(x));
+					y += (abs(_value) * sign(y));
+				}
+				else
+				{
+					x += (abs(_value.x) * sign(x));
+					y += (abs(_value.y) * sign(y));
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Scale} value
+			// @description			Perform a calculation with the specified value by substracting it
+			//						from its respective values with the same sign as the values of
+			//						this Scale.
+			static shrink = function(_value)
+			{
+				if (is_real(_value))
+				{
+					x -= (abs(_value) * sign(x));
+					y -= (abs(_value) * sign(y));
+				}
+				else
+				{
+					x -= (abs(_value.x) * sign(x));
+					y -= (abs(_value.y) * sign(y));
+				}
+				
+				return self;
+			}
+			
 			// @description			Reverse the x and y values.
 			static mirror = function()
 			{

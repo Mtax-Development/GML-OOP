@@ -437,6 +437,46 @@ function Vector2() constructor
 				return self;
 			}
 			
+			// @argument			{real|Vector2} value
+			// @description			Perform a calculation with the specified value by adding to its
+			//						respective values with the same sign as the values of this
+			//						Vector2.
+			static grow = function(_value)
+			{
+				if (is_real(_value))
+				{
+					x += (abs(_value) * sign(x));
+					y += (abs(_value) * sign(y));
+				}
+				else
+				{
+					x += (abs(_value.x) * sign(x));
+					y += (abs(_value.y) * sign(y));
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2} value
+			// @description			Perform a calculation with the specified value by substracting it
+			//						from its respective values with the same sign as the values of
+			//						this Vector2.
+			static shrink = function(_value)
+			{
+				if (is_real(_value))
+				{
+					x -= (abs(_value) * sign(x));
+					y -= (abs(_value) * sign(y));
+				}
+				else
+				{
+					x -= (abs(_value.x) * sign(x));
+					y -= (abs(_value.y) * sign(y));
+				}
+				
+				return self;
+			}
+			
 			// @argument			{Vector4} boundary
 			// @description			Restrict the values of this Vector2 to the boundaries of the
 			//						specified Vector4.
