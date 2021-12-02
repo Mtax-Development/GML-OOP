@@ -345,21 +345,7 @@ function Surface() constructor
 				}
 				else
 				{
-					if ((size.x > 0) and (size.y > 0))
-					{
-						surface_resize(ID, size.x, size.y);
-					}
-					else
-					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "setSize";
-						var _errorText = ("Attempted to set an invalid Surface size:\n" +
-										  "Self: " + "{" + string(self) + "}" + "\n" +
-										  "Target size: " + "{" + string(size) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
-					}
+					surface_resize(ID, max(1, size.x), max(1, size.y));
 				}
 				
 				return self;
@@ -772,7 +758,8 @@ function Surface() constructor
 						{
 							if ((is_struct(event))) and (is_method(event.beforeDeactivation.callback))
 							{
-								script_execute_ext(method_get_index(event.beforeDeactivation.callback),
+								script_execute_ext(method_get_index(event.beforeDeactivation
+																		 .callback),
 												   ((is_array(event.beforeDeactivation.argument)
 													? event.beforeDeactivation.argument
 													: [event.beforeDeactivation.argument])));
