@@ -62,11 +62,19 @@ function Angle() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			{real} value
-			// @description			Set the value to the specified number after wrapping it.
+			// @argument			{real|Angle} value
+			// @description			Set the value to the specified one after wrapping it.
 			static set = function(_value)
 			{
-				value = _value;
+				if (is_real(_value))
+				{
+					value = _value;
+				}
+				else
+				{
+					value = _value.value;
+				}
+				
 				value -= (360 * (floor(value / 360)));
 				
 				return self;
