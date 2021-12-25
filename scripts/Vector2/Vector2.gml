@@ -525,6 +525,84 @@ function Vector2() constructor
 				return self;
 			}
 			
+			// @argument			{real|Vector2} value?
+			// @description			Set all of the values of to their equivalents rounded down or the
+			//						ones of the specified value.
+			static setFloor = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x = floor(x);
+					y = floor(y);
+				}
+				else if (is_real(_value))
+				{
+					var _value_floor = floor(_value);
+					
+					x = _value_floor;
+					y = _value_floor;
+				}
+				else
+				{
+					x = floor(_value.x);
+					y = floor(_value.y);
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2} value?
+			// @description			Set all of the values of to their equivalents rounded down or up
+			//						or the ones of the specified value.
+			static setRound = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x = round(x);
+					y = round(y);
+				}
+				else if (is_real(_value))
+				{
+					var _value_round = round(_value);
+					
+					x = _value_round;
+					y = _value_round;
+				}
+				else
+				{
+					x = round(_value.x);
+					y = round(_value.y);
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2} value?
+			// @description			Set all of the values of to their equivalents rounded up or the
+			//						ones of the specified value.
+			static setCeil = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x = ceil(x);
+					y = ceil(y);
+				}
+				else if (is_real(_value))
+				{
+					var _value_ceil = ceil(_value);
+					
+					x = _value_ceil;
+					y = _value_ceil;
+				}
+				else
+				{
+					x = ceil(_value.x);
+					y = ceil(_value.y);
+				}
+				
+				return self;
+			}
+			
 			// @argument			{int} device?
 			// @description			Set all of the values to the ones of the cursor.
 			static setCursor = function(_device)

@@ -901,6 +901,157 @@ function Vector4() constructor
 				return self;
 			}
 			
+			// @argument			{real|Vector2|Vector4} value?
+			// @description			Set all of the values of to their equivalents rounded down or the
+			//						ones of the specified value.
+			static setFloor = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x1 = floor(x1);
+					y1 = floor(y1);
+					x2 = floor(x2);
+					y2 = floor(y2);
+				}
+				else if (is_real(_value))
+				{
+					var _value_floor = floor(_value);
+					
+					x1 = _value_floor;
+					y1 = _value_floor;
+					x2 = _value_floor;
+					y2 = _value_floor;
+				}
+				else if (instanceof(_value) == "Vector2")
+				{
+					var _value_x_floor = floor(_value.x);
+					var _value_y_floor = floor(_value.y);
+					
+					x1 = _value_x_floor;
+					y1 = _value_y_floor;
+					x2 = _value_x_floor;
+					y2 = _value_y_floor;
+				}
+				else
+				{
+					x1 = floor(_value.x1);
+					y1 = floor(_value.y1);
+					x2 = floor(_value.x2);
+					y2 = floor(_value.y2);
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2|Vector4} value?
+			// @description			Set all of the values of to their equivalents rounded down or up
+			//						or the ones of the specified value.
+			static setRound = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x1 = round(x1);
+					y1 = round(y1);
+					x2 = round(x2);
+					y2 = round(y2);
+				}
+				else if (is_real(_value))
+				{
+					var _value_round = round(_value);
+					
+					x1 = _value_round;
+					y1 = _value_round;
+					x2 = _value_round;
+					y2 = _value_round;
+				}
+				else if (instanceof(_value) == "Vector2")
+				{
+					var _value_x_round = round(_value.x);
+					var _value_y_round = round(_value.y);
+					
+					x1 = _value_x_round;
+					y1 = _value_y_round;
+					x2 = _value_x_round;
+					y2 = _value_y_round;
+				}
+				else
+				{
+					x1 = round(_value.x1);
+					y1 = round(_value.y1);
+					x2 = round(_value.x2);
+					y2 = round(_value.y2);
+				}
+				
+				return self;
+			}
+			
+			// @argument			{real|Vector2|Vector4} value?
+			// @description			Set all of the values of to their equivalents rounded up or the
+			//						ones of the specified value.
+			static setCeil = function(_value)
+			{
+				if (_value == undefined)
+				{
+					x1 = ceil(x1);
+					y1 = ceil(y1);
+					x2 = ceil(x2);
+					y2 = ceil(y2);
+				}
+				else if (is_real(_value))
+				{
+					var _value_ceil = ceil(_value);
+					
+					x1 = _value_ceil;
+					y1 = _value_ceil;
+					x2 = _value_ceil;
+					y2 = _value_ceil;
+				}
+				else if (instanceof(_value) == "Vector2")
+				{
+					var _value_x_ceil = ceil(_value.x);
+					var _value_y_ceil = ceil(_value.y);
+					
+					x1 = _value_x_ceil;
+					y1 = _value_y_ceil;
+					x2 = _value_x_ceil;
+					y2 = _value_y_ceil;
+				}
+				else
+				{
+					x1 = ceil(_value.x1);
+					y1 = ceil(_value.y1);
+					x2 = ceil(_value.x2);
+					y2 = ceil(_value.y2);
+				}
+				
+				return self;
+			}
+			
+			// @argument			{int} device?
+			// @description			Set all of the values to the ones of the cursor.
+			static setCursor = function(_device)
+			{
+				if (is_real(_device))
+				{
+					var _mouse_x = device_mouse_x(_device);
+					var _mouse_y = device_mouse_y(_device);
+					
+					x1 = _mouse_x;
+					y1 = _mouse_y;
+					x2 = _mouse_x;
+					y2 = _mouse_y;
+				}
+				else
+				{
+					x1 = mouse_x;
+					y1 = mouse_y;
+					x2 = mouse_x;
+					y2 = mouse_y;
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Conversion>
 			
