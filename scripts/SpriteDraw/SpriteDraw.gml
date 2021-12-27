@@ -129,7 +129,7 @@ function SpriteDraw() constructor
 				var _color_original = color;	
 				var _alpha_original = alpha;
 				
-				sprite = (_sprite ?? sprite)		
+				sprite = (_sprite ?? sprite);
 				location = (_location ?? location);
 				frame = (_frame ?? frame);
 				scale = (_scale ?? scale);
