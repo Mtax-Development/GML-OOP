@@ -86,7 +86,7 @@ function ArrayParser() constructor
 			{
 				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
 				
-				if ((is_array(_other)) and (array_length(_other) > 0))
+				if (is_array(_other))
 				{
 					if (!is_array(ID))
 					{
