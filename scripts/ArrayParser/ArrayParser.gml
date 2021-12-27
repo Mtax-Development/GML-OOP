@@ -399,7 +399,7 @@ function ArrayParser() constructor
 			//						return them.
 			//						If multiple values were removed, they will be returned in an
 			//						array. If no values were removed, {undefined} will be returned.
-			static remove = function(_position = 0, _count = 1)
+			static removePosition = function(_position = 0, _count = 1)
 			{
 				if (is_array(ID))
 				{
@@ -444,6 +444,79 @@ function ArrayParser() constructor
 					var _errorText = ("Attempted to remove data from an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
+			// @argument			{any|ArrayParser}
+			// @returns				{int}
+			// @description			Remove all occurences of the specified value. If an ArrayParser is
+			//						specified as the value, all occurences of its the values of its
+			//						array will be removed. The number of removed values will be
+			//						returned.
+			static removeValue = function(_value)
+			{
+				if (is_array(ID))
+				{
+					var _result = 0;
+					
+					if (instanceof(_value) == "ArrayParser")
+					{
+						var _i = [0, 0];
+						repeat (array_length(ID))
+						{
+							var _iteratorModifier = 1;
+							
+							_i[1] = 0;
+							repeat (array_length(_value.ID))
+							{
+								if (ID[_i[0]] == _value.ID[_i[1]])
+								{
+									array_delete(ID, _i[0], 1);
+									
+									++_result;
+									_iteratorModifier = 0;
+									
+									break;
+								}
+								
+								++_i[1]
+							}
+							
+							_i[0] += _iteratorModifier;
+						}
+						
+						return _result;
+					}
+					else
+					{
+						var _i = 0;
+						repeat (array_length(ID))
+						{
+							if (ID[_i] == _value)
+							{
+								array_delete(ID, _i, 1);
+								
+								++_result;
+							}
+							else
+							{
+								++_i;
+							}
+						}
+						
+						return _result;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "remove";
+					var _errorText = ("Attempted to remove data from an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return 0;
 				}
 			}
 			
