@@ -354,13 +354,11 @@ function Sprite() constructor
 			// @returns				{pointer}
 			// @description			Return a pointer for the texture page of the specified frame
 			//						of this Sprite.
-			static getTexture = function(_frame)
+			static getTexture = function(_frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					var _frame_value = ((_frame != undefined) ? _frame : 0);
-					
-					return sprite_get_texture(ID, _frame_value);
+					return sprite_get_texture(ID, _frame);
 				}
 				else
 				{
@@ -372,6 +370,32 @@ function Sprite() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return pointer_invalid;
+				}
+			}
+			
+			// @argument			{int} frame?
+			// @returns				{Vector2} | On error: {undefined}
+			// @description			Get the texel size of the texture page of the specified frame of
+			//						this Sprite.
+			static getTexelSize = function(_frame = 0)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					var _texture = sprite_get_texture(ID, _frame);
+					
+					return new Vector2(texture_get_texel_width(_texture),
+									   texture_get_texel_height(_texture));
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getTexelSize";
+					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
 				}
 			}
 			

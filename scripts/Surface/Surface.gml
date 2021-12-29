@@ -308,6 +308,29 @@ function Surface() constructor
 				return surface_get_texture(ID);
 			}
 			
+			// @returns				{Vector2}
+			// @description			Get the texel size of the texture page of this Surface.
+			static getTexelSize = function()
+			{
+				if ((!is_real(ID)) or (!surface_exists(ID)))
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getTexelSize";
+					var _errorText = ("Attempted to get texture of an invalid Surface: " +
+									  "{" + string(ID) + "}" + "\n" +
+									  "Recreating the Surface and providing its texture.");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					self.create();
+				}
+				
+				var _texture = surface_get_texture(ID);
+				
+				return new Vector2(texture_get_texel_width(_texture),
+								   texture_get_texel_height(_texture));
+			}
+			
 			// @returns				{bool}
 			// @description			Check whether this Surface is the current draw target.
 			static isActive = function()
