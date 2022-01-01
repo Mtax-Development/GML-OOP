@@ -48,13 +48,30 @@ function Angle() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{Angle} other
-			// @returns				{real}
-			// @description			Returns the difference between this Angle and an other one, taking
-			//						wrapping into account.
-			static difference = function(_other)
+			// @argument			{real|Angle} value
+			// @returns				{bool}
+			// @description			Check if the value of this Angle is equal to the specified one.
+			static equals = function(_value)
 			{
-				var _result = (max(value, _other.value) - min(value, _other.value));
+				var _value_other = ((is_real(_value) ? _value : _value.value));
+				_value_other -= (360 * (floor(_value_other / 360)));
+				
+				var _value_wrapped = (value - (360 * (floor(value / 360))));
+				
+				return (_value_wrapped == _value_other);
+			}
+			
+			// @argument			{real|Angle} value
+			// @returns				{real}
+			// @description			Returns the difference between this and the specified Angle.
+			static difference = function(_value)
+			{
+				var _value_other = ((is_real(_value) ? _value : _value.value));
+				_value_other -= (360 * (floor(_value_other / 360)));
+				
+				var _value_wrapped = (value - (360 * (floor(value / 360))));
+				
+				var _result = (max(_value_wrapped, _value_other) - min(_value_wrapped, _value_other));
 				
 				return ((180 < _result) ? (360 - _result) : _result);
 			}
