@@ -377,7 +377,7 @@ function Sprite() constructor
 			// @returns				{Vector2} | On error: {undefined}
 			// @description			Get the texel size of the texture page of the specified frame of
 			//						this Sprite.
-			static getTexelSize = function(_frame = 0)
+			static getTexel = function(_frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -390,7 +390,7 @@ function Sprite() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getTexelSize";
+					var _methodName = "getTexel";
 					var _errorText = ("Attempted to get a property of an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);

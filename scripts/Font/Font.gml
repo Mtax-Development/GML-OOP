@@ -246,7 +246,7 @@ function Font() constructor
 			
 			// @returns				{Vector2} | On error: {undefined}
 			// @description			Get the texel size of the texture page of this Font.
-			static getTexelSize = function()
+			static getTexel = function()
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
 				{
@@ -259,7 +259,7 @@ function Font() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getTexelSize";
+					var _methodName = "getTexel";
 					var _errorText = ("Attempted to get a property of an invalid Font: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);

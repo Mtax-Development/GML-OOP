@@ -310,13 +310,13 @@ function Surface() constructor
 			
 			// @returns				{Vector2}
 			// @description			Get the texel size of the texture page of this Surface.
-			static getTexelSize = function()
+			static getTexel = function()
 			{
 				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "getTexelSize";
+					var _methodName = "getTexel";
 					var _errorText = ("Attempted to get texture of an invalid Surface: " +
 									  "{" + string(ID) + "}" + "\n" +
 									  "Recreating the Surface and providing its texture.");
