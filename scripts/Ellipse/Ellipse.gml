@@ -175,6 +175,12 @@ function Ellipse() constructor
 				var _outline_color_original = outline_color;
 				var _outline_alpha_original = outline_alpha;
 				
+				location = (_location ?? location);
+				fill_color = (_fill_color ?? fill_color);
+				fill_alpha = (_fill_alpha ?? fill_alpha);
+				outline_color = (_outline_color ?? outline_color);
+				outline_alpha = (_outline_alpha ?? outline_alpha);
+				
 				if (self.isFunctional())
 				{
 					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
