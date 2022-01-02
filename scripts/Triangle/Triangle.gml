@@ -323,6 +323,13 @@ function Triangle() constructor
 											: [event.beforeRender.argument])));
 					}
 					
+					var _location1_x = round(location1.x);
+					var _location1_y = round(location1.y);
+					var _location2_x = round(location2.x);
+					var _location2_y = round(location2.y);
+					var _location3_x = round(location3.x);
+					var _location3_y = round(location3.y);
+					
 					if ((fill_color != undefined) and (fill_alpha > 0))
 					{
 						var _color1, _color2, _color3;
@@ -342,8 +349,8 @@ function Triangle() constructor
 						
 						draw_set_alpha(fill_alpha);
 						
-						draw_triangle_color(location1.x, location1.y, location2.x, location2.y,
-											location3.x, location3.y, _color1, _color2, _color3,
+						draw_triangle_color(_location1_x, _location1_y, _location2_x, _location2_y,
+											_location3_x, _location3_y, _color1, _color2, _color3,
 											false);
 					}
 				
@@ -366,8 +373,8 @@ function Triangle() constructor
 						
 						draw_set_alpha(outline_alpha);
 						
-						draw_triangle_color(location1.x, location1.y, location2.x, location2.y, 
-											location3.x, location3.y, _color1, _color2, _color3,
+						draw_triangle_color(_location1_x, _location1_y, _location2_x, _location2_y,
+											_location3_x, _location3_y, _color1, _color2, _color3,
 											true);
 					}
 					

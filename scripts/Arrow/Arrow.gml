@@ -128,7 +128,8 @@ function Arrow() constructor
 						draw_set_alpha(alpha);
 						draw_set_color(color);
 						
-						draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
+						draw_arrow(round(location.x1), round(location.y1), round(location.x2),
+								   round(location.y2), size);
 						
 						if ((is_struct(event))) and (is_method(event.afterRender.callback))
 						{

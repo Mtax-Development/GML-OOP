@@ -390,10 +390,15 @@ function Rectangle() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					var _x1 = min(location.x1, location.x2);
-					var _x2 = max(location.x1, location.x2);
-					var _y1 = min(location.y1, location.y2);
-					var _y2 = max(location.y1, location.y2);
+					var _location_x1 = round(location.x1);
+					var _location_y1 = round(location.y1);
+					var _location_x2 = round(location.x2);
+					var _location_y2 = round(location.y2);
+					
+					var _x1 = min(_location_x1, _location_x2);
+					var _x2 = max(_location_x1, _location_x2);
+					var _y1 = min(_location_y1, _location_y2);
+					var _y2 = max(_location_y1, _location_y2);
 					
 					var _width = (_x2 - _x1);
 					var _height = (_y2 - _y1);

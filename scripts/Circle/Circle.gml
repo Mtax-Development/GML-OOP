@@ -367,6 +367,9 @@ function Circle() constructor
 											: [event.beforeRender.argument])));
 					}
 					
+					var _location_x = round(location.x);
+					var _location_y = round(location.y);
+					
 					if ((fill_color != undefined) and (fill_alpha > 0))
 					{
 						var _color1, _color2;
@@ -384,14 +387,14 @@ function Circle() constructor
 						
 						draw_set_alpha(fill_alpha);
 						
-						draw_circle_color(location.x, location.y, radius, _color1, _color2, false);
+						draw_circle_color(_location_x, _location_y, radius, _color1, _color2, false);
 					}
 					
 					if ((outline_color != undefined) and (outline_alpha > 0))
 					{
 						draw_set_alpha(outline_alpha);
 						
-						draw_circle_color(location.x, location.y, radius, outline_color,
+						draw_circle_color(_location_x, _location_y, radius, outline_color,
 										  outline_color, true);
 					}
 					

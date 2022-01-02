@@ -218,6 +218,11 @@ function Line() constructor
 												: [event.beforeRender.argument])));
 						}
 						
+						var _location_x1 = round(location.x1);
+						var _location_y1 = round(location.y1);
+						var _location_x2 = round(location.x2);
+						var _location_y2 = round(location.y2);
+						
 						var _color1, _color2, _color3, _color4;
 						
 						switch (instanceof(color))
@@ -246,13 +251,13 @@ function Line() constructor
 						
 						var _sizeOffset = (size * 0.5);
 						
-						var _distance = point_distance(location.x1, location.y1, location.x2,
-													   location.y2);
-						var _angle = point_direction(location.x1, location.y1, location.x2,
-													 location.y2);
+						var _distance = point_distance(_location_x1, _location_y1, _location_x2,
+													   _location_y2);
+						var _angle = point_direction(_location_x1, _location_y1, _location_x2,
+													 _location_y2);
 						
-						var _x1 = (location.x1 + lengthdir_x(_sizeOffset, (_angle + 90)));
-						var _y1 = (location.y1 + lengthdir_y(_sizeOffset, (_angle + 90)));
+						var _x1 = (_location_x1 + lengthdir_x(_sizeOffset, (_angle + 90)));
+						var _y1 = (_location_y1 + lengthdir_y(_sizeOffset, (_angle + 90)));
 						
 						draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _distance, size,
 											_angle, _color1, _color2, _color3, _color4, alpha);
