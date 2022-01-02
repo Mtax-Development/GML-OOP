@@ -44,13 +44,55 @@ function ErrorReport() constructor
 		#endregion
 		#region <Execution>
 			
+			// @argument			{any[]} callstack
+			// @argument			{string} errorLocation
+			// @argument			{string} errorText
+			// @description			Create an error report, collect its data and log it with the
+			//						function that is assigned to the appropriate constructor variable.
+			static reportError = function(_callstack, _errorLocation, _errorText)
+			{
+				var _string_reportType = "Error";
+				
+				if (is_array(errorData))
+				{
+					var _reportData = [_string_reportType, _errorLocation, _errorText, _callstack];
+					
+					array_push(errorData, _reportData);
+					
+					var _string_callstack = "";
+					
+					var _i = 0;
+					repeat (array_length(_callstack))
+					{
+						_string_callstack += (string(_callstack[_i]) + "\n");
+						
+						++_i;
+					}
+					
+					var _string_separator = string_repeat("#", 92);
+					
+					var _string = (_string_separator + "\n" +
+								   _string_reportType + " @ " + string(_errorLocation) + ": " + "\n" +
+								   string(_errorText) + "\n\n" +
+								   "Callstack: " + "\n" +
+								   _string_callstack +
+								   _string_separator);
+					
+					if ((reportFunction != undefined) and ((maximumReports == undefined) 
+					or (is_array(errorData)) and (array_length(errorData) < maximumReports)))
+					{
+						reportFunction(_string);
+					}
+				}
+			}
+			
 			// @argument			{struct|struct[]} constructor
 			// @argument			{any[]} callstack
 			// @argument			{string} methodName
 			// @argument			{string} errorText
 			// @description			Create a report of a constructor method error, collect its data
-			//						and log it with the function that is set in the apprioate
-			//						constructor variable.
+			//						and log it with the function that is assigned to in the
+			//						appropriate constructor variable.
 			static reportConstructorMethod = function(_constructor, _callstack, _methodName,
 													  _errorText)
 			{
