@@ -265,6 +265,19 @@ function Vector2() constructor
 				return new Vector2(_quotient_x, _quotient_y);
 			}
 			
+			// @argument			{Vector2} other
+			// @argument			{bool} normalize?
+			// @returns				{real}
+			// @description			Return the sum of each value of this and other Vector2 being
+			//						multiplied by their respective other value, which is an expression
+			//						of the angular reliationship between its two points. The returned
+			//						value can be normalized, which will place it between -1 and 1.
+			static dotProduct = function(_other, _normalize = false)
+			{
+				return ((_normalize) ? dot_product_normalized(x, y, _other.x, _other.y)
+									 : dot_product(x, y, _other.x, _other.y));
+			}
+			
 			// @returns				{real}
 			// @description			Return the lowest of all values.
 			static getMinimum = function()

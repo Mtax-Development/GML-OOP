@@ -412,6 +412,18 @@ function Vector4() constructor
 				return new Vector4(_quotient_x1, _quotient_y1, _quotient_x2, _quotient_y2);
 			}
 			
+			// @argument			{bool} normalize?
+			// @returns				{real}
+			// @description			Return the sum of each value of this Vector4 being multiplied by
+			//						its respective other value, which is an expression of the angular
+			//						reliationship between its two points. The returned value can be
+			//						normalized, which will place it between -1 and 1.
+			static dotProduct = function(_normalize = false)
+			{
+				return ((_normalize) ? dot_product_normalized(x1, y1, x2, y2)
+									 : dot_product(x1, y1, x2, y2));
+			}
+			
 			// @argument			{real|Vector2|Vector4} value
 			// @returns				{Vector2|Vector4}
 			// @description			Return the point at specified respective precentages within the
