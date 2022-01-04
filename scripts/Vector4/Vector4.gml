@@ -19,6 +19,7 @@
 ///								   x2 and y2.
 ///								4+: array[0] will be set to x1, array[1] will be set to y1,
 ///									array[2] will be set to x2, array[3] will be set to y2.
+///							- From Scale or Vector2: {Scale|Vector2} other
 ///							- Vector2 pair: {Vector2} first, {Vector2} second
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Vector4} other
@@ -53,6 +54,8 @@ function Vector4() constructor
 						switch(argument_count)
 						{
 							case 1:
+								var _argument_instanceof = instanceof(argument[0]);
+								
 								if (is_array(argument[0]))
 								{
 									//|Construction type: From array.
@@ -82,6 +85,17 @@ function Vector4() constructor
 											y2 = _array[3];
 										break;
 									}
+								}
+								else if ((_argument_instanceof == "Vector2")
+								or (_argument_instanceof == "Scale"))
+								{
+									//|Construction type: From Scale or Vector2.
+									var _other = argument[0];
+									
+									x1 = _other.x;
+									y1 = _other.y;
+									x2 = _other.x;
+									y2 = _other.y;
 								}
 								else
 								{
