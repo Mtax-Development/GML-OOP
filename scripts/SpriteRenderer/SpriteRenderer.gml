@@ -1,18 +1,19 @@
-/// @argument			{Sprite} sprite?
-/// @argument			{Vector2} location?
-/// @argument			{int} frame?
-/// @argument			{Scale} scale?
-/// @argument			{Angle} angle?
-/// @argument			{int:color} color?
-/// @argument			{real} alpha?
-///						
-/// @description		Construct a handler storing information for Sprite rendering.
-///						
-///						Construction types:
-///						- New constructor
-///						- Empty: {void}
-///						- Constructor copy: {SpriteDraw} other
-function SpriteDraw() constructor
+/// @function				SpriteRenderer()
+/// @argument				{Sprite} sprite?
+/// @argument				{Vector2} location?
+/// @argument				{int} frame?
+/// @argument				{Scale} scale?
+/// @argument				{Angle} angle?
+/// @argument				{int:color} color?
+/// @argument				{real} alpha?
+///							
+/// @description			Construct a handler storing information for Sprite rendering.
+///							
+///							Construction types:
+///							- New constructor
+///							- Empty: {void}
+///							- Constructor copy: {SpriteRenderer} other
+function SpriteRenderer() constructor
 {
 	#region [Methods]
 		#region <Management>
@@ -46,7 +47,7 @@ function SpriteDraw() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "SpriteDraw")
+					if (instanceof(argument[0]) == "SpriteRenderer")
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

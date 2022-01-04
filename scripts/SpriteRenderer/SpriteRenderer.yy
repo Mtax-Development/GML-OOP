@@ -6,7 +6,7 @@
     "path": "folders/GML-OOP/Handlers.yy",
   },
   "resourceVersion": "1.0",
-  "name": "SpriteDraw",
+  "name": "SpriteRenderer",
   "tags": [],
   "resourceType": "GMScript",
 }

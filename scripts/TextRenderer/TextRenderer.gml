@@ -1,4 +1,4 @@
-/// @function				TextDraw()
+/// @function				TextRenderer()
 /// @argument				{any:string} string
 /// @argument				{Font} font
 /// @argument				{Vector2} location
@@ -11,8 +11,8 @@
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
-///							- Constructor copy: {TextDraw} other
-function TextDraw() constructor
+///							- Constructor copy: {TextRenderer} other
+function TextRenderer() constructor
 {
 	#region [Methods]
 		#region <Management>
@@ -45,7 +45,7 @@ function TextDraw() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "TextDraw")
+					if (instanceof(argument[0]) == "TextRenderer")
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -227,7 +227,7 @@ function TextDraw() constructor
 						draw_set_color(color);
 						draw_set_alpha(alpha);
 						
-						draw_text(location.x, location.y, string(ID));
+						draw_text(round(location.x), round(location.y), string(ID));
 						
 						if ((is_struct(event))) and (is_method(event.afterRender.callback))
 						{

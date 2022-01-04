@@ -6,7 +6,7 @@
     "path": "folders/GML-OOP/Handlers.yy",
   },
   "resourceVersion": "1.0",
-  "name": "TextDraw",
+  "name": "TextRenderer",
   "tags": [],
   "resourceType": "GMScript",
 }
