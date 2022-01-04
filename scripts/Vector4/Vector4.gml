@@ -511,8 +511,9 @@ function Vector4() constructor
 			}
 			
 			// @argument			{real} magnitude?
+			// @returns				{Vector4}
 			// @description			Return the unit vector of this Vector4, which will have its
-			//						values put into a range of -1 to 1, but with the same direction.
+			//						values placed between -1 and 1, but with the same direction.
 			//						These values are then multiplied by the specified magnitude.
 			static getNormalized = function(_magnitude = 1)
 			{

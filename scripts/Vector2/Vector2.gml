@@ -287,9 +287,10 @@ function Vector2() constructor
 			}
 			
 			// @argument			{real} magnitude?
-			// @description			Return the unit vector of this Vector2, which will have its values
-			//						put into a range of -1 to 1, but with the same direction. These
-			//						values are then multiplied by the specified magnitude.
+			// @returns				{Vector2}
+			// @description			Return the unit vector of this Vector2, which will have its
+			//						values placed between -1 and 1, but with the same direction.
+			//						These values are then multiplied by the specified magnitude.
 			static getNormalized = function(_magnitude = 1)
 			{
 				var _length = sqrt((x * x) + (y * y));
