@@ -786,8 +786,7 @@ function Sprite() constructor
 				return self;
 			}
 			
-			// @argument			{Vector2} location
-			// @argument			{Vector2} size
+			// @argument			{Vector4} location
 			// @argument			{int} frame?
 			// @argument			{int:color} color?
 			// @argument			{int} alpha?
@@ -795,7 +794,7 @@ function Sprite() constructor
 			//						the current Surface.
 			//						The top left point of this Sprite is treated as the origin point
 			//						for this draw.
-			static renderSize = function(_location, _size, _frame = 0)
+			static renderSize = function(_location, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -807,19 +806,27 @@ function Sprite() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					if (argument_count > 3)
+					var _minimum_x = min(_location.x1, _location.x2);
+					var _maximum_x = max(_location.x1, _location.x2);
+					var _minimum_y = min(_location.y1, _location.y2);
+					var _maximum_y = max(_location.y1, _location.y2);
+					
+					var _x1 = _minimum_x;
+					var _y1 = _minimum_y;
+					var _x2 = (_maximum_x - _minimum_x);
+					var _y2 = (_maximum_y - _minimum_y);
+					
+					if (argument_count > 2)
 					{
-						var _color_value = ((argument[3] != undefined) ? argument[3] : c_white);
-						var _alpha_value = (((argument_count > 4) and (argument[4] != undefined))
-											? argument[4] : 1);
+						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
+						var _alpha = (((argument_count > 3) and (argument[3] != undefined))
+									  ? argument[3] : 1);
 						
-						draw_sprite_stretched_ext(ID, _frame, _location.x, _location.y, _size.x,
-												  _size.y, _color_value, _alpha_value);
+						draw_sprite_stretched_ext(ID, _frame, _x1, _y1, _x2, _y2, _color, _alpha);
 					}
 					else
 					{
-						draw_sprite_stretched(ID,_frame, _location.x, _location.y, _size.x,
-											  _size.y);
+						draw_sprite_stretched(ID, _frame, _x1, _y1, _x2, _y2);
 					}
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))

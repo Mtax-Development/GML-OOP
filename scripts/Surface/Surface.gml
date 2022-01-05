@@ -613,12 +613,11 @@ function Surface() constructor
 				return self;
 			}
 			
-			// @argument			{Vector2} size
-			// @argument			{Vector2} location?
+			// @argument			{Vector2|Vector4} location
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
 			// @description			Draw this Surface after scaling it to match the specific size.
-			static renderSize = function(_size, _location, _color = c_white, _alpha = 1)
+			static renderSize = function(_location, _color = c_white, _alpha = 1)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
@@ -630,21 +629,31 @@ function Surface() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					var _location_x, _location_y;
+					var _x1, _y1, _x2, _y2;
 					
-					if (_location != undefined)
+					switch (instanceof(_location))
 					{
-						_location_x = _location.x;
-						_location_y = _location.y;
-					}
-					else
-					{
-						_location_x = 0;
-						_location_y = 0;
+						case "Vector2":
+							_x1 = 0;
+							_y1 = 0;
+							_x2 = _location.x;
+							_y2 = _location.y;
+						break;
+						
+						case "Vector4":
+							var _minimum_x = min(_location.x1, _location.x2);
+							var _maximum_x = max(_location.x1, _location.x2);
+							var _minimum_y = min(_location.y1, _location.y2);
+							var _maximum_y = max(_location.y1, _location.y2);
+							
+							_x1 = _minimum_x;
+							_y1 = _minimum_y;
+							_x2 = (_maximum_x - _minimum_x);
+							_y2 = (_maximum_y - _minimum_y);
+						break;
 					}
 					
-					draw_surface_stretched_ext(ID, _location_x, _location_y, _size.x, _size.y, _color,
-											   _alpha);
+					draw_surface_stretched_ext(ID, _x1, _y1, _x2, _y2, _color, _alpha);
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
