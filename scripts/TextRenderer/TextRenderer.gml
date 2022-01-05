@@ -54,8 +54,7 @@ function TextRenderer() constructor
 						font = ((instanceof(_other.font) == "Font") ? new Font(_other.font.ID)
 																	: _other.font);
 						location = ((instanceof(_other.location) == "Vector2")
-									? new Vector2(_other.location)
-									: _other.location);
+									? new Vector2(_other.location) : _other.location);
 						align = ((instanceof(_other.align) == "TextAlign")
 								 ? new TextAlign(_other.align) : _other.align);
 						color = _other.color;
