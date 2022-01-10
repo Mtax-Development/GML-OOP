@@ -445,7 +445,7 @@ function Surface() constructor
 							var _errorText = ("Attempted to render to an invalid Surface: " +
 											  "Self: " + "{" + string(self) + "}" + "\n" +
 											  "Other: " + "{" + string(_target) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack,_methodName,
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
 																 _errorText);
 						}
 					}

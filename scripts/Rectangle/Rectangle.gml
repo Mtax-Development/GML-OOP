@@ -343,7 +343,7 @@ function Rectangle() constructor
 			// @argument			{real} outline_alpha?
 			// @description			Execute the draw of this Shape as a sprite, using data of this
 			//						constructor or specified replaced parts of it for this call only.
-			static render = function(_location,_fill_color, _fill_alpha, _outline_color,
+			static render = function(_location, _fill_color, _fill_alpha, _outline_color,
 									 _outline_size, _outline_alpha)
 			{
 				static __createPixelSprite = function()

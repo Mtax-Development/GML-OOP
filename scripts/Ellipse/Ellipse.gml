@@ -166,7 +166,7 @@ function Ellipse() constructor
 			//						NOTE: Form drawing produces inconsistent results across devices
 			//						and export targets due to their technical differences.
 			//						Sprite drawing should be used instead for accurate results.
-			static render = function(_location,_fill_color, _fill_alpha, _outline_color,
+			static render = function(_location, _fill_color, _fill_alpha, _outline_color,
 									 _outline_alpha)
 			{
 				var _location_original = location;
