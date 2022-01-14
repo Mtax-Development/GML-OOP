@@ -1071,7 +1071,7 @@ function Sprite() constructor
 						
 						if (is_real(speed))
 						{
-							switch(speed_type)
+							switch (speed_type)
 							{
 								case spritespeed_framespersecond:
 									_string_speed_type = " Frames Per Second";

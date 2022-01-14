@@ -51,7 +51,7 @@ function Vector4() constructor
 					}
 					else
 					{
-						switch(argument_count)
+						switch (argument_count)
 						{
 							case 1:
 								var _argument_instanceof = instanceof(argument[0]);

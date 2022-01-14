@@ -562,7 +562,7 @@ function Buffer() constructor
 					var _type = buffer_get_type(ID);
 					var _aligment = buffer_get_alignment(ID);
 					
-					switch(_type)
+					switch (_type)
 					{
 						case buffer_fixed: _type = "Fixed"; break;
 						case buffer_grow: _type = "Grow"; break;
