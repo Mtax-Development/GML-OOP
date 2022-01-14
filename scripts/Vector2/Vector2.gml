@@ -26,7 +26,7 @@ function Vector2() constructor
 				x = undefined;
 				y = undefined;
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					switch (instanceof(argument[0]))
 					{

@@ -37,7 +37,7 @@ function Vector4() constructor
 				x2 = undefined;
 				y2 = undefined;
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Vector4")
 					{
