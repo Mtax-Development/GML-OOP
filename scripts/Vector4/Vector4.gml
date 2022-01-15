@@ -789,9 +789,9 @@ function Vector4() constructor
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
-			// @description			Perform a calculation with the specified value by substracting its
-			//						respective values from the first set of values and adding them to
-			//						the second set.
+			// @description			Perform a calculation with the specified value by substracting
+			//						its respective values from the first set of values and adding
+			//						them to the second set.
 			static grow = function(_value)
 			{
 				switch (instanceof(_value))
@@ -823,8 +823,8 @@ function Vector4() constructor
 			
 			// @argument			{real|Vector2|Vector4} value
 			// @description			Perform a calculation with the specified value by adding its
-			//						respective values to the first set of values and substracting them
-			//						from the second set.
+			//						respective values to the first set of values and substracting
+			//						them from the second set.
 			static shrink = function(_value)
 			{
 				switch (instanceof(_value))
