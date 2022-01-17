@@ -319,6 +319,24 @@ function Vector2() constructor
 				return new Vector2(_x, _y);
 			}
 			
+			// @argument			{bool} booleanSign?
+			// @returns				{Vector2}
+			// @description			Return a Vector2 with each respective value representing the sign
+			//						of the number: -1 for a negative number, 0 for itself and 1 for a
+			//						positive number. If the result is specified to be returned as the
+			//						boolean sign, -1 will be set for 0 as well.
+			getSign = function(_booleanSign = false)
+			{
+				if (_booleanSign)
+				{
+					return new Vector2(((x) ? 1 : -1), ((y) ? 1 : -1));
+				}
+				else
+				{
+					return new Vector2(sign(x), sign(y));
+				}
+			}
+			
 		#endregion
 		#region <Setters>
 			

@@ -561,6 +561,25 @@ function Vector4() constructor
 				return new Vector4(_x1, _y1, _x2, _y2);
 			}
 			
+			// @argument			{bool} booleanSign?
+			// @returns				{Vector4}
+			// @description			Return a Vector4 with each respective value representing the sign
+			//						of the number: -1 for a negative number, 0 for itself and 1 for a
+			//						positive number. If the result is specified to be returned as the
+			//						boolean sign, -1 will be set for 0 as well.
+			getSign = function(_booleanSign = false)
+			{
+				if (_booleanSign)
+				{
+					return new Vector4(((x1) ? 1 : -1), ((y1) ? 1 : -1), ((x2) ? 1 : -1),
+									   ((y2) ? 1 : -1))
+				}
+				else
+				{
+					return new Vector4(sign(x1), sign(y1), sign(x2), sign(y2));
+				}
+			}
+			
 			// @argument			{Vector2} location
 			// @returns				{bool}
 			// @description			Check if a point in space is within this Vector4.
