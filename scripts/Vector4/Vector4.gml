@@ -133,7 +133,7 @@ function Vector4() constructor
 								}
 							break;
 							
-							case 4:
+							default:
 								//|Construction type: Four numbers.
 								x1 = argument[0];
 								y1 = argument[1];

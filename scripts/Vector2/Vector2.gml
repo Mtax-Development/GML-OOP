@@ -77,7 +77,6 @@ function Vector2() constructor
 									}
 								break;
 								
-								case 2:
 								default:
 									//|Construction type: Two numbers.
 									x = argument[0];
