@@ -567,7 +567,7 @@ function Sprite() constructor
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
 			// @argument			{int:color} color?
-			// @argument			{int} alpha?
+			// @argument			{real} alpha?
 			// @description			Draw this Sprite to the current Surface.
 			static render = function(_location, _frame = 0, _scale = new Scale(1, 1),
 									 _angle = new Angle(0), _color = c_white, _alpha = 1)
@@ -611,7 +611,7 @@ function Sprite() constructor
 			// @argument			{int} frame?
 			// @argument			{Scale} scale?
 			// @argument			{int:color} color?
-			// @argument			{int} alpha?
+			// @argument			{real} alpha?
 			// @description			Draw only the specified rectangular part of this Sprite to the
 			//						current Surface.
 			//						The top left point of the part will be treated as the origin
@@ -686,7 +686,7 @@ function Sprite() constructor
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
 			// @argument			{int:color|Color4} color?
-			// @argument			{int} alpha?
+			// @argument			{real} alpha?
 			// @description			Draw this Sprite with the specified alternations to the current
 			//						Surface.
 			//						The top left point of the part will be treated as the origin
@@ -789,7 +789,7 @@ function Sprite() constructor
 			// @argument			{Vector4} location
 			// @argument			{int} frame?
 			// @argument			{int:color} color?
-			// @argument			{int} alpha?
+			// @argument			{real} alpha?
 			// @description			Draw this Sprite after scaling it to match the specified size to
 			//						the current Surface.
 			//						The top left point of this Sprite is treated as the origin point
@@ -854,7 +854,7 @@ function Sprite() constructor
 			// @argument			{int} frame?
 			// @argument			{Scale} scale?
 			// @argument			{int:color} color?
-			// @argument			{int} alpha?
+			// @argument			{real} alpha?
 			// @description			Draw this Sprite tiled through the entire view, the target
 			//						created Surface or if neither are used, the current Room.
 			static renderTiled = function(_offset, _frame = 0)
