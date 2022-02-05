@@ -461,6 +461,30 @@ function Sprite() constructor
 				return self;
 			}
 			
+			// @argument			{Vector2} origin
+			// @description			Set the origin point, which is an offset from the top-left pixel
+			//						of this Sprite added to its render location and the center of
+			//						rotation.
+			//						Applicable only if this Sprite is an asset Sprite.
+			static setOrigin = function(_origin)
+			{
+				if ((is_real(ID)) and (sprite_exists(ID)))
+				{
+					origin = _origin;
+					
+					sprite_set_offset(ID, origin.x, origin.y);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "setOrigin";
+					var _errorText = ("Attempted to set a property of an invalid Sprite: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+			}
+			
 			// @argument			{real} speed
 			// @argument			{constant:spritespeed_*} type?
 			// @description			Set the animation speed of this Sprite for every object instance.
