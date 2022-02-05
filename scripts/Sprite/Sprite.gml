@@ -7,7 +7,7 @@
 ///							- New constructor
 ///							- From file: {string:path} path, {int} frameCount?, {Vector2} origin?,
 ///										 {bool} removeBackground?, {bool} smoothRemovedBackground?
-///							- From Surface: {int:surface|Surface} surface, {Vector4} part,
+///							- From Surface: {int:surface|Surface} surface, {Vector4|all} part,
 ///											{Vector2} origin?, {bool} removeBackground?,
 ///											{bool} smoothRemovedBackground?
 ///							- Empty: {void|undefined}
@@ -120,12 +120,36 @@ function Sprite() constructor
 							speed = sprite_get_speed(ID);
 							speed_type = sprite_get_speed_type(ID);
 						}
-						else if ((argument_count > 1) and (instanceof(argument[1]) == "Vector4"))
+						else if ((argument_count > 1) and ((argument[1] == all)
+						or (instanceof(argument[1]) == "Vector4")))
 						{
 							//|Construction type: From Surface.
 							var _surface = ((instanceof(argument[0]) == "Surface") ? argument[0].ID
 																				   : argument[0]);
-							var _part = argument[1];
+							
+							var _part_x1, _part_y1, _part_x2, _part_y2;
+							
+							if (argument[1] == all)
+							{
+								_part_x1 = 0;
+								_part_y1 = 0;
+								_part_x2 = surface_get_width(_surface);
+								_part_y2 = surface_get_height(_surface);
+							}
+							else
+							{
+								var _part = argument[1];
+								
+								var _part_minimum_x = min(_part.x1, _part.x2);
+								var _part_maximum_x = max(_part.x1, _part.x2);
+								var _part_minimum_y = min(_part.y1, _part.y2);
+								var _part_maximum_y = max(_part.y1, _part.y2);
+								
+								_part_x1 = _part_minimum_x;
+								_part_y1 = _part_minimum_y;
+								_part_x2 = (_part_maximum_x - _part_minimum_x);
+								_part_y2 = (_part_maximum_y - _part_minimum_y);
+							}
 							
 							var _origin_x, _origin_y;
 							
@@ -149,8 +173,8 @@ function Sprite() constructor
 															(argument[4] != undefined))
 															? argument[4] : false);
 							
-							ID = sprite_create_from_surface(_surface, _part.x1, _part.y1, _part.x2,
-															_part.y2, _removeBackground,
+							ID = sprite_create_from_surface(_surface, _part_x1, _part_y1, _part_x2,
+															_part_y2, _removeBackground,
 															_smoothRemovedBackground, _origin_x,
 															_origin_y);
 						}
