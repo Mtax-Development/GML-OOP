@@ -1,11 +1,12 @@
 /// @function				Sprite()
+/// @argument				{int:sprite} sprite
 ///							
 /// @description			Constructs a Sprite resource used to render its frames.
 ///							
 ///							Construction types:
-///							- Wrapper: {int:sprite} sprite
-///							- File: {string:path} path, {int} frameCount?, {Vector2} origin?,
-///									{bool} removeBackground?, {bool} smoothRemovedBackground?
+///							- New constructor
+///							- From file: {string:path} path, {int} frameCount?, {Vector2} origin?,
+///										 {bool} removeBackground?, {bool} smoothRemovedBackground?
 ///							- From Surface: {int:surface|Surface} surface, {Vector4} part,
 ///											{Vector2} origin?, {bool} removeBackground?,
 ///											{bool} smoothRemovedBackground?
@@ -79,7 +80,7 @@ function Sprite() constructor
 					{
 						if ((is_string(argument[0])) and (file_exists(argument[0])))
 						{
-							//|Construction type: File.
+							//|Construction type: From file.
 							var _path = argument[0];
 							var _frameCount = (((argument_count > 1) and (argument[1] != undefined))
 											   ? argument[1] : 0);
@@ -155,7 +156,7 @@ function Sprite() constructor
 						}
 						else if (is_real(argument[0]))
 						{
-							//|Construction type: Wrapper.
+							//|Construction type: New constructor.
 							ID = argument[0];
 							name = sprite_get_name(ID);
 							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
@@ -182,8 +183,8 @@ function Sprite() constructor
 			}
 			
 			// @returns				{undefined}
-			// @description			Remove the internal information from the memory if this Sprite
-			//						was creating during the runtime only.
+			// @description			Remove the internal information from the memory.
+			//						Applicable only if this Sprite was created during the runtime.
 			static destroy = function()
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
@@ -197,8 +198,8 @@ function Sprite() constructor
 			}
 			
 			// @argument			{Sprite|int:sprite} other
-			// @description			Replace this Sprite with another one if this Sprite was created
-			//						during the runtime only.
+			// @description			Replace this Sprite with another one.
+			//						Applicable only if this Sprite was created during the runtime.
 			static replace = function(_other)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
@@ -401,7 +402,7 @@ function Sprite() constructor
 			
 			// @argument			{int} frame?
 			// @argument			{bool} full?
-			// @returns				{Vector4|real[]} | On error: {undefined}
+			// @returns				{Vector4|real[8]} | On error: {undefined}
 			// @description			Return the UV coordinates for the location of the specified frame
 			//						of this Sprite on its texture page.
 			//						It will be returned as an Vector4 if the full information is not
@@ -515,8 +516,8 @@ function Sprite() constructor
 			// @argument			{Vector4} boundary?
 			// @argument			{int} alphaTolerance?
 			// @argument			{bool} separateMasks?
-			// @description			Set the collision mask properties of this Sprite if it was
-			//						created during the runtime only.
+			// @description			Set the collision mask properties of this Sprite.
+			//						Applicable only if this Sprite was created during the runtime.
 			//						The boundary is calculated differently depending on its mode:
 			//						- The boundary itself has to be specified only if the manual mode
 			//						  is used.
@@ -702,10 +703,8 @@ function Sprite() constructor
 			// @argument			{int} frame?
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
-			// @description			Draw this Sprite after scaling it to match the specified size to
-			//						the current Surface.
-			//						The top left point of this Sprite is treated as the origin point
-			//						for this draw.
+			// @description			Draw this Sprite to the currently active Surface after scaling it
+			//						to match the specified location area.
 			static renderSize = function(_location, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
@@ -767,8 +766,9 @@ function Sprite() constructor
 			// @argument			{Scale} scale?
 			// @argument			{int:color} color?
 			// @argument			{real} alpha?
-			// @description			Draw this Sprite tiled through the entire view, the target
-			//						created Surface or if neither are used, the current Room.
+			// @description			Draw this Sprite repeatedly tiled through the entire view, the
+			//						currently active created Surface or if neither are used, the
+			//						current Room.
 			static renderTiled = function(_offset, _frame = 0)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
@@ -850,7 +850,8 @@ function Sprite() constructor
 			// @argument			{Vector2} location4
 			// @argument			{int} frame?
 			// @argument			{real} alpha?
-			// @description			Draw this Sprite with perspective altered by its edges.
+			// @description			Draw this Sprite to the currently active Surface with perspective
+			//						altered by its boundaries.
 			static renderPerspective = function(_location1, _location2, _location3, _location4,
 												_frame = 0, _alpha = 1)
 			{
@@ -1016,9 +1017,9 @@ function Sprite() constructor
 			
 			// @argument			{string:path} path
 			// @argument			{int} frame?
-			// @description			Save this Sprite created during the runtime to the specified .png
-			//						file, either only its one specified frame or all of them in one
-			//						file in a horizontal strip.
+			// @description			Save this Sprite to the specified .png file, either only its one
+			//						specified frame or all of them in one file in a horizontal strip.
+			//						Applicable only if this Sprite was created during the runtime.
 			static toFile = function(_path, _frame)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
