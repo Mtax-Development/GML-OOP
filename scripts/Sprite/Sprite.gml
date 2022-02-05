@@ -566,11 +566,12 @@ function Sprite() constructor
 			// @argument			{int} frame?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
-			// @argument			{int:color} color?
+			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
-			// @description			Draw this Sprite to the current Surface.
+			// @argument			{Vector4} part?
+			// @description			Draw this Sprite or a part of it to the currently active Surface.
 			static render = function(_location, _frame = 0, _scale = new Scale(1, 1),
-									 _angle = new Angle(0), _color = c_white, _alpha = 1)
+									 _angle = new Angle(0), _color = c_white, _alpha = 1, _part)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -582,15 +583,82 @@ function Sprite() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					draw_sprite_ext(ID, _frame, _location.x, _location.y, _scale.x, _scale.y,
-									_angle.value, _color, _alpha);
+					var _color_isReal = is_real(_color);
+					
+					if ((!_color_isReal) or (_part != undefined))
+					{
+						var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
+						
+						if (_color_isReal)
+						{
+							_color_x1y1 = _color;
+							_color_x2y1 = _color;
+							_color_x2y2 = _color;
+							_color_x1y2 = _color;
+						}
+						else
+						{
+							_color_x1y1 = _color.color1;
+							_color_x2y1 = _color.color2;
+							_color_x2y2 = _color.color3;
+							_color_x1y2 = _color.color4;
+						}
+						
+						var _origin_x = sprite_get_xoffset(ID);
+						var _origin_y = sprite_get_yoffset(ID);
+						
+						var _sprite_size_x = sprite_get_width(ID);
+						var _sprite_size_y = sprite_get_height(ID);
+						
+						var _part_x1, _part_y1, _part_x2, _part_y2;
+						
+						if (_part != undefined)
+						{
+							_part_x1 = clamp(_part.x1, 0, _sprite_size_x);
+							_part_y1 = clamp(_part.y1, 0, _sprite_size_y);
+							_part_x2 = clamp(_part.x2, 0, (_sprite_size_x - _part_x1));
+							_part_y2 = clamp(_part.y2, 0, (_sprite_size_y - _part_y1));
+						}
+						else
+						{
+							_part_x1 = 0;
+							_part_y1 = 0;
+							_part_x2 = _sprite_size_x;
+							_part_y2 = _sprite_size_y;
+						}
+						
+						_origin_x = lerp(_part_x1, (_part_x1 + _part_x2),
+										 (_origin_x / _sprite_size_x));
+						_origin_y = lerp(_part_y1, (_part_x1 + _part_y2),
+										 (_origin_y / _sprite_size_y));
+						
+						var _partOrigin_x = (_part_x1 - _origin_x);
+						var _partOrigin_y = (_part_y1 - _origin_y);
+						var _angle_dcos = dcos(_angle.value);
+						var _angle_dsin = dsin(_angle.value);
+						
+						var _location_x = (_location.x + (_partOrigin_x * _angle_dcos) +
+										   (_partOrigin_y * _angle_dsin));
+						var _location_y = (_location.y - (_partOrigin_x * _angle_dsin) +
+										   (_partOrigin_y * _angle_dcos));
+						
+						draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
+											_location_x, _location_y, _scale.x, _scale.y,
+											_angle.value, _color_x1y1, _color_x2y1, _color_x2y2,
+											_color_x1y2, _alpha);
+					}
+					else
+					{
+						draw_sprite_ext(ID, _frame, _location.x, _location.y, _scale.x, _scale.y,
+										_angle.value, _color, _alpha);
+					}
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
 						script_execute_ext(method_get_index(event.afterRender.callback),
 										   ((is_array(event.afterRender.argument)
-										   ? event.afterRender.argument
-										   : [event.afterRender.argument])));
+											? event.afterRender.argument
+											: [event.afterRender.argument])));
 					}
 				}
 				else
@@ -598,186 +666,6 @@ function Sprite() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Sprite: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Vector4} part
-			// @argument			{int} frame?
-			// @argument			{Scale} scale?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Draw only the specified rectangular part of this Sprite to the
-			//						current Surface.
-			//						The top left point of the part will be treated as the origin
-			//						point for this render.
-			static renderPart = function(_location, _part, _frame = 0)
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
-					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-										   ? event.beforeRender.argument
-										   : [event.beforeRender.argument])));
-					}
-					
-					if (argument_count > 3)
-					{
-						var _scale = argument[3];
-						var _scale_x, _scale_y;
-						
-						if (_scale == undefined)
-						{
-							_scale_x = 1;
-							_scale_y = 1;
-						}
-						else
-						{
-							_scale_x = _scale.x;
-							_scale_y = _scale.y;
-						}
-						
-						var _color_value = (((argument_count > 4) and (argument[4] != undefined))
-											? argument[4] : c_white);
-						var _alpha_value = (((argument_count > 5) and (argument[5] != undefined))
-											? argument[5] : 1);
-						
-						draw_sprite_part_ext(ID, _frame, _part.x1, _part.y1, _part.x2, _part.y2,
-											 _location.x, _location.y, _scale_x, _scale_y,
-											 _color_value, _alpha_value);
-					}
-					else
-					{
-						draw_sprite_part(ID, _frame, _part.x1, _part.y1, _part.x2, _part.y2,
-										 _location.x, _location.y);
-					}
-					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
-					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "renderPart";
-					var _errorText = ("Attempted to render an invalid Sprite: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{Vector4} part?
-			// @argument			{int} frame?
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{int:color|Color4} color?
-			// @argument			{real} alpha?
-			// @description			Draw this Sprite with the specified alternations to the current
-			//						Surface.
-			//						The top left point of the part will be treated as the origin
-			//						point for this render.
-			static renderGeneral = function(_location, _part, _frame = 0, _scale, _angle, _color,
-											_alpha = 1)
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
-					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
-					}
-					
-					var _part_x1, _part_y1, _part_x2, _part_y2;
-					
-					if (_part == undefined)
-					{
-						_part_x1 = 0;
-						_part_y1 = 0;
-						_part_x2 = sprite_get_width(ID);
-						_part_y2 = sprite_get_height(ID);
-					}
-					else
-					{
-						_part_x1 = _part.x1;
-						_part_y1 = _part.y1;
-						_part_x2 = _part.x2;
-						_part_y2 = _part.y2;
-					}
-					
-					var _scale_x, _scale_y;
-					
-					if (_scale == undefined)
-					{
-						_scale_x = 1;
-						_scale_y = 1;
-					}
-					else
-					{
-						_scale_x = _scale.x;
-						_scale_y = _scale.y;
-					}
-					
-					var _angle_value = ((_angle != undefined) ? _angle.value : 0);
-					
-					var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
-					
-					if (_color == undefined)
-					{
-						_color_x1y1 = c_white;
-						_color_x2y1 = c_white;
-						_color_x2y2 = c_white;
-						_color_x1y2 = c_white;
-					}
-					else if (is_real(_color))
-					{
-						_color_x1y1 = _color;
-						_color_x2y1 = _color;
-						_color_x2y2 = _color;
-						_color_x1y2 = _color;
-					}
-					else
-					{
-						_color_x1y1 = _color.color1;
-						_color_x2y1 = _color.color2;
-						_color_x2y2 = _color.color3;
-						_color_x1y2 = _color.color4;
-					}
-					
-					draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
-										_location.x, _location.y, _scale_x, _scale_y, _angle_value,
-										_color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
-										_alpha);
-					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
-					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "renderGeneral";
 					var _errorText = ("Attempted to render an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
