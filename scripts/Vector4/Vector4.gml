@@ -916,6 +916,36 @@ function Vector4() constructor
 				return self;
 			}
 			
+			// @argument			{bool} orderAscending
+			// @description			Sort the first and second set of values so each of them is higher
+			//						than the other one, depending on the specified order.
+			static sort = function(_orderAscending)
+			{
+				var _x1, _y1, _x2, _y2;
+				
+				switch (_orderAscending)
+				{
+					case false:
+						_x1 = max(x1, x2);
+						_y1 = max(y1, y2);
+						_x2 = min(x1, x2);
+						_y2 = min(y1, y2);
+					break;
+					
+					case true:
+						_x1 = min(x1, x2);
+						_y1 = min(y1, y2);
+						_x2 = max(x1, x2);
+						_y2 = max(y1, y2);
+					break;
+				}
+				
+				x1 = _x1;
+				y1 = _y1;
+				x2 = _x2;
+				y2 = _y2;
+			}
+			
 			// @argument			{real|Vector2|Vector4} value
 			// @description			Set all of values to the ones of the specified value.
 			static set = function(_value)
