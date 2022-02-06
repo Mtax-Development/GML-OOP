@@ -567,7 +567,7 @@ function Vector4() constructor
 			//						of the number: -1 for a negative number, 0 for itself and 1 for a
 			//						positive number. If the result is specified to be returned as the
 			//						boolean sign, -1 will be set for 0 as well.
-			getSign = function(_booleanSign = false)
+			static getSign = function(_booleanSign = false)
 			{
 				if (_booleanSign)
 				{
