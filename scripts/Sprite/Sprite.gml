@@ -633,9 +633,37 @@ function Sprite() constructor
 					}
 					
 					var _color_isReal = is_real(_color);
+					var _location_isVector4 = (instanceof(_location) == "Vector4");
 					
-					if ((!_color_isReal) or (_part != undefined))
+					if ((!_color_isReal) or (_location_isVector4) or (_part != undefined))
 					{
+						var _size_x = sprite_get_width(ID);
+						var _size_y = sprite_get_height(ID);
+						
+						var _origin_x = sprite_get_xoffset(ID);
+						var _origin_y = sprite_get_yoffset(ID);
+						
+						var _location_x, _location_y, _scale_x, _scale_y;
+						
+						if (_location_isVector4)
+						{
+							_scale_x = (((_location.x2 - _location.x1) / _size_x)
+										* _scale.x);
+							_scale_y = (((_location.y2 - _location.y1) / _size_y)
+										* _scale.y);
+							
+							_location_x = _location.x1 + (_origin_x * _scale_x);
+							_location_y = _location.y1 + (_origin_y * _scale_y);
+						}
+						else
+						{
+							_location_x = _location.x;
+							_location_y = _location.y;
+							
+							_scale_x = _scale.x;
+							_scale_y = _scale.y;
+						}
+						
 						var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
 						
 						if (_color_isReal)
@@ -653,46 +681,40 @@ function Sprite() constructor
 							_color_x1y2 = _color.color4;
 						}
 						
-						var _origin_x = sprite_get_xoffset(ID);
-						var _origin_y = sprite_get_yoffset(ID);
-						
-						var _sprite_size_x = sprite_get_width(ID);
-						var _sprite_size_y = sprite_get_height(ID);
-						
 						var _part_x1, _part_y1, _part_x2, _part_y2;
 						
 						if (_part != undefined)
 						{
-							_part_x1 = clamp(_part.x1, 0, _sprite_size_x);
-							_part_y1 = clamp(_part.y1, 0, _sprite_size_y);
-							_part_x2 = clamp(_part.x2, 0, (_sprite_size_x - _part_x1));
-							_part_y2 = clamp(_part.y2, 0, (_sprite_size_y - _part_y1));
+							_part_x1 = clamp(_part.x1, 0, _size_x);
+							_part_y1 = clamp(_part.y1, 0, _size_y);
+							_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
+							_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
 						}
 						else
 						{
 							_part_x1 = 0;
 							_part_y1 = 0;
-							_part_x2 = _sprite_size_x;
-							_part_y2 = _sprite_size_y;
+							_part_x2 = _size_x;
+							_part_y2 = _size_y;
 						}
 						
-						_origin_x = lerp(_part_x1, (_part_x1 + _part_x2),
-										 (_origin_x / _sprite_size_x));
-						_origin_y = lerp(_part_y1, (_part_x1 + _part_y2),
-										 (_origin_y / _sprite_size_y));
+						var _origin_transformed_x = (_part_x1 -
+													 lerp(_part_x1, (_part_x1 + _part_x2),
+														  ((_origin_x * _scale_x) / _size_x)));
+						var _origin_transformed_y = (_part_y1 -
+													 lerp(_part_y1, (_part_y1 + _part_y2),
+														  ((_origin_y * _scale_y) / _size_y)));
 						
-						var _partOrigin_x = (_part_x1 - _origin_x);
-						var _partOrigin_y = (_part_y1 - _origin_y);
 						var _angle_dcos = dcos(_angle.value);
 						var _angle_dsin = dsin(_angle.value);
 						
-						var _location_x = (_location.x + (_partOrigin_x * _angle_dcos) +
-										   (_partOrigin_y * _angle_dsin));
-						var _location_y = (_location.y - (_partOrigin_x * _angle_dsin) +
-										   (_partOrigin_y * _angle_dcos));
+						_location_x = (_location_x + (_origin_transformed_x * _angle_dcos) +
+									   (_origin_transformed_y * _angle_dsin));
+						_location_y = (_location_y - (_origin_transformed_x * _angle_dsin) +
+									   (_origin_transformed_y * _angle_dcos));
 						
 						draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
-											_location_x, _location_y, _scale.x, _scale.y,
+											_location_x, _location_y, _scale_x, _scale_y,
 											_angle.value, _color_x1y1, _color_x2y1, _color_x2y2,
 											_color_x1y2, _alpha);
 					}
@@ -715,68 +737,6 @@ function Sprite() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Sprite: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{Vector4} location
-			// @argument			{int} frame?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Draw this Sprite to the currently active Surface after scaling it
-			//						to match the specified location area.
-			static renderSize = function(_location, _frame = 0)
-			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
-				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
-					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
-					}
-					
-					var _minimum_x = min(_location.x1, _location.x2);
-					var _maximum_x = max(_location.x1, _location.x2);
-					var _minimum_y = min(_location.y1, _location.y2);
-					var _maximum_y = max(_location.y1, _location.y2);
-					
-					var _x1 = _minimum_x;
-					var _y1 = _minimum_y;
-					var _x2 = (_maximum_x - _minimum_x);
-					var _y2 = (_maximum_y - _minimum_y);
-					
-					if (argument_count > 2)
-					{
-						var _color = ((argument[2] != undefined) ? argument[2] : c_white);
-						var _alpha = (((argument_count > 3) and (argument[3] != undefined))
-									  ? argument[3] : 1);
-						
-						draw_sprite_stretched_ext(ID, _frame, _x1, _y1, _x2, _y2, _color, _alpha);
-					}
-					else
-					{
-						draw_sprite_stretched(ID, _frame, _x1, _y1, _x2, _y2);
-					}
-					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
-					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "renderSize";
 					var _errorText = ("Attempted to render an invalid Sprite: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
