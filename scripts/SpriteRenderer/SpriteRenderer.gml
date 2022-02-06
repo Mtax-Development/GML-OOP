@@ -1,11 +1,12 @@
 /// @function				SpriteRenderer()
 /// @argument				{Sprite} sprite?
-/// @argument				{Vector2} location?
+/// @argument				{Vector2|Vector4} location?
 /// @argument				{int} frame?
 /// @argument				{Scale} scale?
 /// @argument				{Angle} angle?
-/// @argument				{int:color} color?
+/// @argument				{int:color|Color4} color?
 /// @argument				{real} alpha?
+/// @argument				{Vector4} part?
 ///							
 /// @description			Construct a handler storing information for Sprite rendering.
 ///							
@@ -29,6 +30,7 @@ function SpriteRenderer() constructor
 				angle = undefined;
 				color = undefined;
 				alpha = undefined;
+				part = undefined;
 				
 				event =
 				{
@@ -63,6 +65,8 @@ function SpriteRenderer() constructor
 																	   : _other.angle);
 						color = _other.color;
 						alpha = _other.alpha;
+						part = ((instanceof(_other.part) == "Vector4") ? new Vector4(_other.part)
+																	   : _other.part);
 						
 						if (is_struct(_other.event))
 						{
@@ -91,6 +95,7 @@ function SpriteRenderer() constructor
 																					   : c_white);
 						alpha = (((argument_count > 6) and (argument[6] != undefined)) ? argument[6]
 																					   : 1);
+						part = ((argument_count > 7) ? argument[7] : undefined);
 					}
 				}
 				
@@ -105,22 +110,26 @@ function SpriteRenderer() constructor
 						and (instanceof(location) == "Vector2") and (location.isFunctional())
 						and (is_real(frame)) and (instanceof(scale) == "Scale")
 						and (scale.isFunctional()) and (instanceof(angle) == "Angle")
-						and (angle.isFunctional()) and (is_real(color)) and (is_real(alpha)));
+						and (angle.isFunctional()) and (is_real(color)) and (is_real(alpha))
+						and ((part == undefined) or ((instanceof(part) == "Vector4")
+						and (part.isFunctional()))));
 			}
 			
 		#endregion
 		#region <Execution>
 			
 			// @argument			{Sprite} sprite?
-			// @argument			{Vector2} location?
+			// @argument			{Vector2|Vector4} location?
 			// @argument			{int} frame?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
-			// @argument			{int:color} color?
+			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
+			// @argument			{Vector4} part?
 			// @description			Execute the draw, using data of this constructor or specified
 			//						replaced parts of it for this call only.
-			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha)
+			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha,
+									 _part)
 			{
 				var _sprite_original = sprite;
 				var _location_original = location;
@@ -129,6 +138,7 @@ function SpriteRenderer() constructor
 				var _angle_original = angle;
 				var _color_original = color;	
 				var _alpha_original = alpha;
+				var _part_original = part;
 				
 				sprite = (_sprite ?? sprite);
 				location = (_location ?? location);
@@ -137,6 +147,7 @@ function SpriteRenderer() constructor
 				angle = (_angle ?? angle);
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
+				part = (_part ?? part);
 				
 				if (self.isFunctional())
 				{
@@ -148,7 +159,7 @@ function SpriteRenderer() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					sprite.render(location, frame, scale, angle, color, alpha);
+					sprite.render(location, frame, scale, angle, color, alpha, part);
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
@@ -175,6 +186,7 @@ function SpriteRenderer() constructor
 				angle = _angle_original;
 				color = _color_original;
 				alpha = _alpha_original;
+				part = _part_original;
 				
 				return self;
 			}
@@ -198,61 +210,69 @@ function SpriteRenderer() constructor
 				if (_full)
 				{
 					var _mark_separator_inline = ", ";
-						
 					var _string_color;
-					switch (color)
+					
+					if (instanceof(color) == "Color4")
 					{
-						case c_aqua: _string_color = "Aqua"; break;
-						case c_black: _string_color = "Black"; break;
-						case c_blue: _string_color = "Blue"; break;
-						case c_dkgray: _string_color = "Dark Gray"; break;
-						case c_fuchsia: _string_color = "Fuchsia"; break;
-						case c_gray: _string_color = "Gray"; break;
-						case c_green: _string_color = "Green"; break;
-						case c_lime: _string_color = "Lime"; break;
-						case c_ltgray: _string_color = "Light Gray"; break;
-						case c_maroon: _string_color = "Maroon"; break;
-						case c_navy: _string_color = "Navy"; break;
-						case c_olive: _string_color = "Olive"; break;
-						case c_orange: _string_color = "Orange"; break;
-						case c_purple: _string_color = "Purple"; break;
-						case c_red: _string_color = "Red"; break;
-						case c_teal: _string_color = "Teal"; break;
-						case c_white: _string_color = "White"; break;
-						case c_yellow: _string_color = "Yellow"; break;
-						default:
-							if (_color_HSV)
-							{
-								_string_color = 
-								("(" +
-								 "Hue: " + string(color_get_hue(color))
-								 		 + _mark_separator_inline +
-								 "Saturation: " + string(color_get_saturation(color))
-								 	 			+ _mark_separator_inline +
-								 "Value: " + string(color_get_value(color)) +
-								 ")");
-							}
-							else
-							{
-								_string_color = 
-								("(" +
-								 "Red: " + string(color_get_red(color))
-								 		 + _mark_separator_inline +
-								 "Green: " + string(color_get_green(color))
-								 		   + _mark_separator_inline +
-								 "Blue: " + string(color_get_blue(color)) +
-								 ")");
-							}
-						break;
+						_string_color = string(color);
+					}
+					else
+					{
+						switch (color)
+						{
+							case c_aqua: _string_color = "Aqua"; break;
+							case c_black: _string_color = "Black"; break;
+							case c_blue: _string_color = "Blue"; break;
+							case c_dkgray: _string_color = "Dark Gray"; break;
+							case c_fuchsia: _string_color = "Fuchsia"; break;
+							case c_gray: _string_color = "Gray"; break;
+							case c_green: _string_color = "Green"; break;
+							case c_lime: _string_color = "Lime"; break;
+							case c_ltgray: _string_color = "Light Gray"; break;
+							case c_maroon: _string_color = "Maroon"; break;
+							case c_navy: _string_color = "Navy"; break;
+							case c_olive: _string_color = "Olive"; break;
+							case c_orange: _string_color = "Orange"; break;
+							case c_purple: _string_color = "Purple"; break;
+							case c_red: _string_color = "Red"; break;
+							case c_teal: _string_color = "Teal"; break;
+							case c_white: _string_color = "White"; break;
+							case c_yellow: _string_color = "Yellow"; break;
+							default:
+								if (_color_HSV)
+								{
+									_string_color = 
+									("(" +
+									 "Hue: " + string(color_get_hue(color))
+									 		 + _mark_separator_inline +
+									 "Saturation: " + string(color_get_saturation(color))
+									 	 			+ _mark_separator_inline +
+									 "Value: " + string(color_get_value(color)) +
+									 ")");
+								}
+								else
+								{
+									_string_color = 
+									("(" +
+									 "Red: " + string(color_get_red(color))
+									 		 + _mark_separator_inline +
+									 "Green: " + string(color_get_green(color))
+									 		   + _mark_separator_inline +
+									 "Blue: " + string(color_get_blue(color)) +
+									 ")");
+								}
+							break;
+						}
 					}
 					
 					_string = ("Sprite: " + string(sprite) + _mark_separator +
-								"Location: " + string(location) + _mark_separator +
-								"Frame: " + string(frame) + _mark_separator +
-								"Scale: " + string(scale) + _mark_separator +
-								"Angle: " + string(angle) + _mark_separator +
-								"Color: " + _string_color + _mark_separator +
-								"Alpha: " + string(alpha));
+							   "Location: " + string(location) + _mark_separator +
+							   "Frame: " + string(frame) + _mark_separator +
+							   "Scale: " + string(scale) + _mark_separator +
+							   "Angle: " + string(angle) + _mark_separator +
+							   "Color: " + _string_color + _mark_separator +
+							   "Alpha: " + string(alpha) + _mark_separator +
+							   "Part: " + string(part));
 				}
 				else
 				{
