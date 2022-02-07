@@ -377,16 +377,18 @@ function Surface() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector2} location?
-			// @argument			{Vector4} part_location?
+			// @argument			{Vector2|Vector4} location?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
 			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
+			// @argument			{Vector4} part?
+			// @argument			{Vector2} origin?
 			// @argument			{Surface|int:surface} target?
-			// @description			Draw this Surface or a part of it to the currently targeted or
+			// @description			Draw this Surface or a part of it to the currently active or
 			//						specified Surface.
-			static render = function(_location)
+			static render = function(_location, _scale, _angle, _color = c_white, _alpha = 1, _part,
+									 _origin, _target)
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
@@ -398,24 +400,10 @@ function Surface() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					var _location_x, _location_y;
-					
-					if (_location != undefined)
-					{
-						_location_x = _location.x;
-						_location_y = _location.y;
-					}
-					else
-					{
-						_location_x = 0;
-						_location_y = 0;
-					}
-					
 					var _targetStack = undefined;
 					
-					if ((argument_count > 6) and (argument[6] != undefined))
+					if (_target != undefined)
 					{
-						var _target = argument[6];
 						var _target_value = (instanceof(_target) == "Surface" ? _target.ID
 																			  : _target);
 						
@@ -423,6 +411,7 @@ function Surface() constructor
 						and (_target_value != ID))
 						{
 							_targetStack = ds_stack_create();
+							
 							var _currentTarget = surface_get_target();
 							
 							while ((_currentTarget != _target_value) and (_currentTarget != 0)
@@ -450,137 +439,108 @@ function Surface() constructor
 						}
 					}
 					
-					var _part_location = ((argument_count > 1) ? argument[1] : undefined);
-					var _scale = ((argument_count > 2) ? argument[2] : undefined);
-					var _angle = ((argument_count > 3) ? argument[3] : undefined);
-					var _color = ((argument_count > 4) ? argument[4] : undefined);
-					var _alpha = ((argument_count > 5) ? argument[5] : undefined);
-						
-					if (((_angle != undefined) and (_part_location != undefined))
-					or (instanceof(_color) == "Color4"))
+					var _scale_x = 1;
+					var _scale_y = 1;
+					
+					if (_scale != undefined)
 					{
-						var _part_location_x1, _part_location_y1, _part_location_x2,
-							_part_location_y2;
-							
-						if (_part_location != undefined)
-						{
-							_part_location_x1 = _part_location.x1;
-							_part_location_y1 = _part_location.y1;
-							_part_location_x2 = _part_location.x2;
-							_part_location_y2 = _part_location.y2;
-						}
-						else
-						{
-							_part_location_x1 = 0;
-							_part_location_y1 = 0;
-							_part_location_x2 = size.x;
-							_part_location_y2 = size.y;
-						}
-							
-						var _scale_x, _scale_y;
-							
-						if (_scale != undefined)
-						{
-							_scale_x = _scale.x;
-							_scale_y = _scale.y;
-						}
-						else
-						{
-							_scale_x = 1;
-							_scale_y = 1;
-						}
-							
-						var _angle_value = ((_angle != undefined) ? _angle.value : 0);
-							
-						var _color_x1y1, _color_x1y2, _color_x2y1, _color_x2y2;
-							
-						if (instanceof(_color) == "Color4")
-						{
-							_color_x1y1 = _color.color1;
-							_color_x1y2 = _color.color2;
-							_color_x2y1 = _color.color3;
-							_color_x2y2 = _color.color4;
-						}
-						else if (_color != undefined)
-						{
-							_color_x1y1 = _color;
-							_color_x1y2 = _color;
-							_color_x2y1 = _color;
-							_color_x2y2 = _color;
-						}
-						else
-						{
-							_color_x1y1 = c_white;
-							_color_x1y2 = c_white;
-							_color_x2y1 = c_white;
-							_color_x2y2 = c_white;
-						}
-							
-						var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-							
-						draw_surface_general(ID, _part_location_x1, _part_location_y1, 
-											 _part_location_x2, _part_location_y2, _location_x,
-											 _location_y, _scale_x, _scale_y, _angle_value,
-											 _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
-											 _alpha_value);
+						_scale_x = _scale.x;
+						_scale_y = _scale.y;
 					}
-					else if (_part_location != undefined)
+					
+					var _origin_x = 0;
+					var _origin_y = 0;
+					
+					if (_origin != undefined)
 					{
-						if ((_scale != undefined) or (_color != undefined)
-						or (_alpha != undefined))
+						_origin_x = _origin.x;
+						_origin_y = _origin.y;
+					}
+					
+					var _size_x = surface_get_width(ID);
+					var _size_y = surface_get_height(ID);
+					
+					var _location_x = 0;
+					var _location_y = 0;
+					
+					if (_location != undefined)
+					{
+						if (instanceof(_location) == "Vector4")
 						{
-							var _scale_x, _scale_y;
-								
-							if (_scale != undefined)
-							{
-								_scale_x = _scale.x;
-								_scale_y = _scale.y;
-							}
-							else
-							{
-								_scale_x = 1;
-								_scale_y = 1;
-							}
-								
-							var _color_value = ((_color != undefined) ? _color : c_white);
-							var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-								
-							draw_surface_part_ext(ID, _part_location.x1, _part_location.y1,
-												  _part_location.x2, _part_location.y2, _location_x,
-												  _location_y, _scale_x, _scale_y, _color_value,
-												  _alpha_value);
+							_scale_x = (((_location.x2 - _location.x1) / _size_x) * _scale_x);
+							_scale_y = (((_location.y2 - _location.y1) / _size_y) * _scale_y);
+						
+							_location_x = _location.x1 + (_origin_x * _scale_x);
+							_location_y = _location.y1 + (_origin_y * _scale_y);
 						}
 						else
 						{
-							draw_surface_part(ID, _part_location.x1, _part_location.y1,
-											  _part_location.x2, _part_location.y2, _location_x,
-											  _location_y);
+							_location_x = _location.x;
+							_location_y = _location.y;
 						}
+					}
+					
+					var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
+					
+					if (is_real(_color))
+					{
+						_color_x1y1 = _color;
+						_color_x2y1 = _color;
+						_color_x2y2 = _color;
+						_color_x1y2 = _color;
 					}
 					else
 					{
-						var _scale_x, _scale_y;
-							
-						if (_scale != undefined)
-						{
-							_scale_x = _scale.x;
-							_scale_y = _scale.y;
-						}
-						else
-						{
-							_scale_x = 1;
-							_scale_y = 1;
-						}
-							
-						var _angle_value = ((_angle != undefined) ? _angle.value : 0);
-						var _color_value = ((_color != undefined) ? _color : c_white);
-						var _alpha_value = ((_alpha != undefined) ? _alpha : 1);
-							
-						draw_surface_ext(ID, _location_x, _location_y, _scale_x, _scale_y,
-											_angle_value, _color_value, _alpha_value);
+						_color_x1y1 = _color.color1;
+						_color_x2y1 = _color.color2;
+						_color_x2y2 = _color.color3;
+						_color_x1y2 = _color.color4;
 					}
 					
-					if (_targetStack != undefined)
+					var _part_x1, _part_y1, _part_x2, _part_y2;
+					
+					if (_part != undefined)
+					{
+						_part_x1 = clamp(_part.x1, 0, _size_x);
+						_part_y1 = clamp(_part.y1, 0, _size_y);
+						_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
+						_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
+					}
+					else
+					{
+						_part_x1 = 0;
+						_part_y1 = 0;
+						_part_x2 = _size_x;
+						_part_y2 = _size_y;
+					}
+					
+					var _angle_value = 0;
+					
+					if (_angle != undefined)
+					{
+						_angle_value = _angle.value;
+					}
+					
+					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _part_x2),
+																 ((_origin_x * _scale_x) /
+																  _size_x)));
+					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _part_y2),
+																 ((_origin_y * _scale_y) /
+																  _size_y)));
+					
+					var _angle_dcos = dcos(_angle_value);
+					var _angle_dsin = dsin(_angle_value);
+					
+					_location_x = (_location_x + (_origin_transformed_x * _angle_dcos) +
+								   (_origin_transformed_y * _angle_dsin));
+					_location_y = (_location_y - (_origin_transformed_x * _angle_dsin) +
+								   (_origin_transformed_y * _angle_dcos));
+					
+					draw_surface_general(ID, _part_x1, _part_y1, _part_x2, _part_y2, _location_x,
+										 _location_y, _scale_x, _scale_y, _angle_value, _color_x1y1,
+										 _color_x2y1, _color_x2y2, _color_x1y2, _alpha);
+					
+					if (is_real(_targetStack))
 					{
 						surface_reset_target();
 						
@@ -605,69 +565,6 @@ function Surface() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Surface: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{Vector2|Vector4} location
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Draw this Surface after scaling it to match the specific size.
-			static renderSize = function(_location, _color = c_white, _alpha = 1)
-			{
-				if ((is_real(ID)) and (surface_exists(ID)))
-				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
-					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
-					}
-					
-					var _x1, _y1, _x2, _y2;
-					
-					switch (instanceof(_location))
-					{
-						case "Vector2":
-							_x1 = 0;
-							_y1 = 0;
-							_x2 = _location.x;
-							_y2 = _location.y;
-						break;
-						
-						case "Vector4":
-							var _minimum_x = min(_location.x1, _location.x2);
-							var _maximum_x = max(_location.x1, _location.x2);
-							var _minimum_y = min(_location.y1, _location.y2);
-							var _maximum_y = max(_location.y1, _location.y2);
-							
-							_x1 = _minimum_x;
-							_y1 = _minimum_y;
-							_x2 = (_maximum_x - _minimum_x);
-							_y2 = (_maximum_y - _minimum_y);
-						break;
-					}
-					
-					draw_surface_stretched_ext(ID, _x1, _y1, _x2, _y2, _color, _alpha);
-					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
-					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
-					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "renderSize";
 					var _errorText = ("Attempted to render an invalid Surface: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
