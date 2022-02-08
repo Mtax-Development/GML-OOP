@@ -618,9 +618,12 @@ function Sprite() constructor
 			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
 			// @argument			{Vector4} part?
-			// @description			Draw this Sprite or a part of it to the currently active Surface.
-			static render = function(_location, _frame = 0, _scale = new Scale(1, 1),
-									 _angle = new Angle(0), _color = c_white, _alpha = 1, _part)
+			// @argument			{Vector2} origin?
+			// @argument			{Surface|int:surface} target?
+			// @description			Draw this Sprite or a part of it to the currently active or
+			//						specified Surface.
+			static render = function(_location, _frame = 0, _scale, _angle, _color = c_white,
+									 _alpha = 1, _part, _origin, _target)
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
@@ -632,96 +635,155 @@ function Sprite() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					var _color_isReal = is_real(_color);
-					var _location_isVector4 = (instanceof(_location) == "Vector4");
+					var _targetStack = undefined;
 					
-					if ((!_color_isReal) or (_location_isVector4) or (_part != undefined))
+					if (_target != undefined)
 					{
-						var _size_x = sprite_get_width(ID);
-						var _size_y = sprite_get_height(ID);
+						var _target_value = (instanceof(_target) == "Surface" ? _target.ID
+																			  : _target);
 						
-						var _origin_x = sprite_get_xoffset(ID);
-						var _origin_y = sprite_get_yoffset(ID);
-						
-						var _location_x, _location_y, _scale_x, _scale_y;
-						
-						if (_location_isVector4)
+						if ((is_real(_target_value)) and (surface_exists(_target_value)))
 						{
-							_scale_x = (((_location.x2 - _location.x1) / _size_x)
-										* _scale.x);
-							_scale_y = (((_location.y2 - _location.y1) / _size_y)
-										* _scale.y);
+							_targetStack = ds_stack_create();
 							
-							_location_x = _location.x1 + (_origin_x * _scale_x);
-							_location_y = _location.y1 + (_origin_y * _scale_y);
-						}
-						else
-						{
-							_location_x = _location.x;
-							_location_y = _location.y;
+							var _currentTarget = surface_get_target();
 							
-							_scale_x = _scale.x;
-							_scale_y = _scale.y;
-						}
-						
-						var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
-						
-						if (_color_isReal)
-						{
-							_color_x1y1 = _color;
-							_color_x2y1 = _color;
-							_color_x2y2 = _color;
-							_color_x1y2 = _color;
-						}
-						else
-						{
-							_color_x1y1 = _color.color1;
-							_color_x2y1 = _color.color2;
-							_color_x2y2 = _color.color3;
-							_color_x1y2 = _color.color4;
-						}
-						
-						var _part_x1, _part_y1, _part_x2, _part_y2;
-						
-						if (_part != undefined)
-						{
-							_part_x1 = clamp(_part.x1, 0, _size_x);
-							_part_y1 = clamp(_part.y1, 0, _size_y);
-							_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
-							_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
+							while ((_currentTarget != _target_value) and (_currentTarget != 0)
+							and (_currentTarget != -1))
+							{
+								ds_stack_push(_targetStack, _currentTarget);
+								
+								surface_reset_target();
+								
+								_currentTarget = surface_get_target();
+							}
+							
+							surface_set_target(_target_value);
 						}
 						else
 						{
-							_part_x1 = 0;
-							_part_y1 = 0;
-							_part_x2 = _size_x;
-							_part_y2 = _size_y;
+							var _errorReport = new ErrorReport();
+							var _callstack = debug_get_callstack();
+							var _methodName = "render";
+							var _errorText = ("Attempted to render to an invalid Surface: " +
+											  "Self: " + "{" + string(self) + "}" + "\n" +
+											  "Other: " + "{" + string(_target) + "}");
+							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
+																 _errorText);
 						}
-						
-						var _origin_transformed_x = (_part_x1 -
-													 lerp(_part_x1, (_part_x1 + _part_x2),
-														  ((_origin_x * _scale_x) / _size_x)));
-						var _origin_transformed_y = (_part_y1 -
-													 lerp(_part_y1, (_part_y1 + _part_y2),
-														  ((_origin_y * _scale_y) / _size_y)));
-						
-						var _angle_dcos = dcos(_angle.value);
-						var _angle_dsin = dsin(_angle.value);
-						
-						_location_x = (_location_x + (_origin_transformed_x * _angle_dcos) +
-									   (_origin_transformed_y * _angle_dsin));
-						_location_y = (_location_y - (_origin_transformed_x * _angle_dsin) +
-									   (_origin_transformed_y * _angle_dcos));
-						
-						draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
-											_location_x, _location_y, _scale_x, _scale_y,
-											_angle.value, _color_x1y1, _color_x2y1, _color_x2y2,
-											_color_x1y2, _alpha);
+					}
+					
+					var _size_x = sprite_get_width(ID);
+					var _size_y = sprite_get_height(ID);
+					
+					var _scale_x = 1;
+					var _scale_y = 1;
+					
+					if (_scale != undefined)
+					{
+						_scale_x = _scale.x;
+						_scale_y = _scale.y;
+					}
+					
+					var _origin_x, _origin_y;
+					
+					if (_origin != undefined)
+					{
+						_origin_x = _origin.x;
+						_origin_y = _origin.y;
 					}
 					else
 					{
-						draw_sprite_ext(ID, _frame, _location.x, _location.y, _scale.x, _scale.y,
-										_angle.value, _color, _alpha);
+						_origin_x = sprite_get_xoffset(ID);
+						_origin_y = sprite_get_yoffset(ID);
+					}
+					
+					var _location_x, _location_y;
+					
+					if ((instanceof(_location) == "Vector4"))
+					{
+						_scale_x = (((_location.x2 - _location.x1) / _size_x) * _scale_x);
+						_scale_y = (((_location.y2 - _location.y1) / _size_y) * _scale_y);
+						
+						_location_x = _location.x1 + (_origin_x * _scale_x);
+						_location_y = _location.y1 + (_origin_y * _scale_y);
+					}
+					else
+					{
+						_location_x = _location.x;
+						_location_y = _location.y;
+					}
+					
+					var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
+					
+					if (is_real(_color))
+					{
+						_color_x1y1 = _color;
+						_color_x2y1 = _color;
+						_color_x2y2 = _color;
+						_color_x1y2 = _color;
+					}
+					else
+					{
+						_color_x1y1 = _color.color1;
+						_color_x2y1 = _color.color2;
+						_color_x2y2 = _color.color3;
+						_color_x1y2 = _color.color4;
+					}
+					
+					var _part_x1, _part_y1, _part_x2, _part_y2;
+					
+					if (_part != undefined)
+					{
+						_part_x1 = clamp(_part.x1, 0, _size_x);
+						_part_y1 = clamp(_part.y1, 0, _size_y);
+						_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
+						_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
+					}
+					else
+					{
+						_part_x1 = 0;
+						_part_y1 = 0;
+						_part_x2 = _size_x;
+						_part_y2 = _size_y;
+					}
+					
+					var _angle_value = 0;
+					
+					if (_angle != undefined)
+					{
+						_angle_value = _angle.value;
+					}
+					
+					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _part_x2),
+																 ((_origin_x * _scale_x) /
+																  _size_x)));
+					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _part_y2),
+																 ((_origin_y * _scale_y) /
+																  _size_y)));
+					
+					var _angle_dcos = dcos(_angle_value);
+					var _angle_dsin = dsin(_angle_value);
+					
+					_location_x = (_location_x + (_origin_transformed_x * _angle_dcos) +
+									(_origin_transformed_y * _angle_dsin));
+					_location_y = (_location_y - (_origin_transformed_x * _angle_dsin) +
+									(_origin_transformed_y * _angle_dcos));
+					
+					draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
+										_location_x, _location_y, _scale_x, _scale_y, _angle_value,
+										_color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2, _alpha);
+					
+					if (is_real(_targetStack))
+					{
+						surface_reset_target();
+						
+						repeat (ds_stack_size(_targetStack))
+						{
+							surface_set_target(ds_stack_pop(_targetStack));
+						}
+						
+						ds_stack_destroy(_targetStack);
 					}
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
