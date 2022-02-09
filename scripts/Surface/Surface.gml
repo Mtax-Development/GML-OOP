@@ -404,8 +404,8 @@ function Surface() constructor
 					
 					if (_target != undefined)
 					{
-						var _target_value = (instanceof(_target) == "Surface" ? _target.ID
-																			  : _target);
+						var _target_value = ((instanceof(_target) == "Surface") ? _target.ID
+																				: _target);
 						
 						if ((is_real(_target_value)) and (surface_exists(_target_value))
 						and (_target_value != ID))
@@ -414,8 +414,8 @@ function Surface() constructor
 							
 							var _currentTarget = surface_get_target();
 							
-							while ((_currentTarget != _target_value) and (_currentTarget != 0)
-							and (_currentTarget != -1))
+							while ((_currentTarget != _target_value) and (_currentTarget > 0)
+							and (_currentTarget != application_surface))
 							{
 								ds_stack_push(_targetStack, _currentTarget);
 								
