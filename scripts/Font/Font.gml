@@ -4,8 +4,8 @@
 ///							
 ///							Construction types:
 ///							- Wrapper: {int:font} font
-///							- File: {string:path} path, {int} size, {bool} bold, {bool} italic,
-///									{Range} glyphs, {bool} antialiasing
+///							- From file: {string:path} path, {int} size, {bool} bold, {bool} italic,
+///										 {Range} glyphs, {bool} antialiasing
 ///							- Sprite (UTF-8): {Sprite} sprite, {int} first, {bool} proportional, 
 ///											  {int} separation, {bool} antialiasing
 ///							- Sprite (glyph map): {Sprite} sprite, {string} glyphs, 
@@ -115,7 +115,7 @@ function Font() constructor
 					{
 						if (is_string(argument[0]))
 						{
-							//|Construction type: File.
+							//|Construction type: From file.
 							type = "file";
 							
 							fontName = argument[0];
