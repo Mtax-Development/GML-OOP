@@ -7,6 +7,8 @@
 /// @argument				{int:color|Color4} color?
 /// @argument				{real} alpha?
 /// @argument				{Vector4} part?
+/// @argument				{Vector2} origin?
+/// @argument				{Surface|int:surface} target?
 ///							
 /// @description			Construct a handler storing information for Sprite rendering.
 ///							
@@ -31,6 +33,8 @@ function SpriteRenderer() constructor
 				color = undefined;
 				alpha = undefined;
 				part = undefined;
+				origin = undefined;
+				target = undefined;
 				
 				event =
 				{
@@ -67,6 +71,9 @@ function SpriteRenderer() constructor
 						alpha = _other.alpha;
 						part = ((instanceof(_other.part) == "Vector4") ? new Vector4(_other.part)
 																	   : _other.part);
+						origin = ((instanceof(_other.origin) == "Vector2")
+								  ? new Vector2(_other.origin) : _other.origin);
+						target = _other.target;
 						
 						if (is_struct(_other.event))
 						{
@@ -96,6 +103,8 @@ function SpriteRenderer() constructor
 						alpha = (((argument_count > 6) and (argument[6] != undefined)) ? argument[6]
 																					   : 1);
 						part = ((argument_count > 7) ? argument[7] : undefined);
+						origin = ((argument_count > 8) ? argument[8] : undefined);
+						target = ((argument_count > 9) ? argument[9] : undefined);
 					}
 				}
 				
@@ -112,7 +121,10 @@ function SpriteRenderer() constructor
 						and (scale.isFunctional()) and (instanceof(angle) == "Angle")
 						and (angle.isFunctional()) and (is_real(color)) and (is_real(alpha))
 						and ((part == undefined) or ((instanceof(part) == "Vector4")
-						and (part.isFunctional()))));
+						and (part.isFunctional()))) and ((origin == undefined)
+						or ((instanceof(origin) == "Vector2") and (origin.isFunctional())))
+						and ((target == undefined) or ((is_real(target))
+						or ((instanceof(target) == "Surface") and (target.isFunctional())))));
 			}
 			
 		#endregion
@@ -126,10 +138,12 @@ function SpriteRenderer() constructor
 			// @argument			{int:color|Color4} color?
 			// @argument			{real} alpha?
 			// @argument			{Vector4} part?
+			// @argument			{Vector2} origin?
+			// @argument			{Surface|int:surface} target?
 			// @description			Execute the draw, using data of this constructor or specified
 			//						replaced parts of it for this call only.
 			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha,
-									 _part)
+									 _part, _origin, _target)
 			{
 				var _sprite_original = sprite;
 				var _location_original = location;
@@ -139,6 +153,8 @@ function SpriteRenderer() constructor
 				var _color_original = color;	
 				var _alpha_original = alpha;
 				var _part_original = part;
+				var _origin_original = origin;
+				var _target_original = target;
 				
 				sprite = (_sprite ?? sprite);
 				location = (_location ?? location);
@@ -148,6 +164,8 @@ function SpriteRenderer() constructor
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				part = (_part ?? part);
+				origin = (_origin ?? origin);
+				target = (_target ?? target);
 				
 				if (self.isFunctional())
 				{
@@ -159,7 +177,7 @@ function SpriteRenderer() constructor
 											: [event.beforeRender.argument])));
 					}
 					
-					sprite.render(location, frame, scale, angle, color, alpha, part);
+					sprite.render(location, frame, scale, angle, color, alpha, part, origin, target);
 					
 					if ((is_struct(event))) and (is_method(event.afterRender.callback))
 					{
@@ -187,6 +205,8 @@ function SpriteRenderer() constructor
 				color = _color_original;
 				alpha = _alpha_original;
 				part = _part_original;
+				origin = _origin_original;
+				target = _target_original;
 				
 				return self;
 			}
