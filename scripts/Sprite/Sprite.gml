@@ -1,10 +1,9 @@
 /// @function				Sprite()
-/// @argument				{int:sprite} sprite
 ///							
 /// @description			Constructs a Sprite resource used to render its frames.
 ///							
 ///							Construction types:
-///							- New constructor
+///							- Wrapper: {int:sprite} sprite
 ///							- From file: {string:path} path, {int} frameCount?, {Vector2} origin?,
 ///										 {bool} removeBackground?, {bool} smoothRemovedBackground?
 ///							- From Surface: {int:surface|Surface} surface, {Vector4|all} part,
@@ -180,7 +179,7 @@ function Sprite() constructor
 						}
 						else if (is_real(argument[0]))
 						{
-							//|Construction type: New constructor.
+							//|Construction type: Wrapper.
 							ID = argument[0];
 							name = sprite_get_name(ID);
 							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
