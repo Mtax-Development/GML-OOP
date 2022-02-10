@@ -82,31 +82,42 @@ function Surface() constructor
 						
 						if (is_struct(_other.event))
 						{
-							event.beforeCreation.callback = _other.event.beforeCreation.callback;
-							event.beforeCreation.argument = _other.event.beforeCreation.argument;
-							event.afterCreation.callback = _other.event.afterCreation.callback;
-							event.afterCreation.argument = _other.event.afterCreation.argument;
+							event = {};
 							
-							event.beforeActivation.callback = _other.event.beforeActivation
-																		  .callback;
-							event.beforeActivation.argument = _other.event.beforeActivation
-																		  .argument;
-							event.afterActivation.callback = _other.event.afterActivation.callback;
-							event.afterActivation.argument = _other.event.afterActivation.argument;
+							var _eventList = variable_struct_get_names(_other.event);
 							
-							event.beforeDeactivation.callback = _other.event.beforeDeactivation
-																	  .callback;
-							event.beforeDeactivation.argument = _other.event.beforeDeactivation
-																	  .argument;
-							event.afterDeactivation.callback = _other.event.afterDeactivation
-																	 .callback;
-							event.afterDeactivation.argument = _other.event.afterDeactivation
-																	 .argument;
-							
-							event.beforeRender.callback = _other.event.beforeRender.callback;
-							event.beforeRender.argument = _other.event.beforeRender.argument;
-							event.afterRender.callback = _other.event.afterRender.callback;
-							event.afterRender.argument = _other.event.afterRender.argument;
+							var _i = [0, 0];
+							repeat (array_length(_eventList))
+							{
+								var _event = {};
+								var _other_event = variable_struct_get(_other.event,
+																	   _eventList[_i[0]]);
+								var _eventPropertyList = variable_struct_get_names(_other_event);
+								
+								_i[1] = 0;
+								repeat (array_length(_eventPropertyList))
+								{
+									var _property = variable_struct_get(_other_event,
+																		_eventPropertyList[_i[1]]);
+									
+									var _value = _property;
+									
+									if (is_array(_property))
+									{
+										_value = [];
+										
+										array_copy(_value, 0, _property, 0, array_length(_property));
+									}
+									
+									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+									
+									++_i[1];
+								}
+								
+								variable_struct_set(event, _eventList[_i[0]], _event);
+								
+								++_i[0];
+							}
 						}
 						else
 						{
@@ -139,22 +150,56 @@ function Surface() constructor
 			{
 				if ((!is_real(ID)) or (!surface_exists(ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeCreation.callback),
-										   ((is_array(event.beforeCreation.argument)
-											? event.beforeCreation.argument
-											: [event.beforeCreation.argument])));
+						var _callback = ((is_array(event.beforeCreation.callback))
+										 ? event.beforeCreation.callback
+										 : [event.beforeCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeCreation.argument))
+										 ? event.beforeCreation.argument
+										 : array_create(_callback_count,
+														event.beforeCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					ID = surface_create(max(1, size.x), max(1, size.y));
 					
-					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
+					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterCreation.callback),
-										   ((is_array(event.afterCreation.argument)
-											? event.afterCreation.argument
-											: [event.afterCreation.argument])));
+						var _callback = ((is_array(event.afterCreation.callback))
+										 ? event.afterCreation.callback
+										 : [event.afterCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterCreation.argument))
+										 ? event.afterCreation.argument
+										 : array_create(_callback_count,
+														event.afterCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				
@@ -392,12 +437,29 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
+						var _callback = ((is_array(event.beforeRender.callback))
+										 ? event.beforeRender.callback
+										 : [event.beforeRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeRender.argument))
+										 ? event.beforeRender.argument
+										 : array_create(_callback_count,
+														event.beforeRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					var _targetStack = undefined;
@@ -552,12 +614,27 @@ function Surface() constructor
 						ds_stack_destroy(_targetStack);
 					}
 					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
+						var _callback = ((is_array(event.afterRender.callback))
+										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterRender.argument))
+										 ? event.afterRender.argument
+										 : array_create(_callback_count, event.afterRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else
@@ -583,12 +660,29 @@ function Surface() constructor
 			{
 				if ((is_real(ID)) and (surface_exists(ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
+						var _callback = ((is_array(event.beforeRender.callback))
+										 ? event.beforeRender.callback
+										 : [event.beforeRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeRender.argument))
+										 ? event.beforeRender.argument
+										 : array_create(_callback_count,
+														event.beforeRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					var _offset_x, _offset_y;
@@ -620,12 +714,27 @@ function Surface() constructor
 					draw_surface_tiled_ext(ID, _offset_x, _offset_y, _scale_x, _scale_y, _color,
 										   _alpha);
 					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
+						var _callback = ((is_array(event.afterRender.callback))
+										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterRender.argument))
+										 ? event.afterRender.argument
+										 : array_create(_callback_count, event.afterRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else
@@ -663,45 +772,114 @@ function Surface() constructor
 							self.create();
 						}
 						
-						if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+						if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 						{
-							script_execute_ext(method_get_index(event.beforeActivation.callback),
-											   ((is_array(event.beforeActivation.argument)
-												? event.beforeActivation.argument
-												: [event.beforeActivation.argument])));
+							var _callback = ((is_array(event.beforeActivation.callback))
+											 ? event.beforeActivation.callback
+											 : [event.beforeActivation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((is_array(event.beforeActivation.argument))
+											 ? event.beforeActivation.argument
+											 : array_create(_callback_count,
+															event.beforeActivation.argument));
+							
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								if (is_method(_callback[_i]))
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   ((is_array(_argument[_i]) ? _argument[_i]
+																				 : [_argument[_i]])));
+								}
+								
+								++_i;
+							}
 						}
 						
 						surface_set_target(ID);
 						
-						if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+						if ((is_struct(event)) and (event.afterActivation.callback != undefined))
 						{
-							script_execute_ext(method_get_index(event.afterActivation.callback),
-											   ((is_array(event.afterActivation.argument)
-												? event.afterActivation.argument
-												: [event.afterActivation.argument])));
+							var _callback = ((is_array(event.afterActivation.callback))
+											 ? event.afterActivation.callback
+											 : [event.afterActivation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((is_array(event.afterActivation.argument))
+											 ? event.afterActivation.argument
+											 : array_create(_callback_count,
+															event.afterActivation.argument));
+							
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								if (is_method(_callback[_i]))
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   ((is_array(_argument[_i]) ? _argument[_i]
+																				 : [_argument[_i]])));
+								}
+								
+								++_i;
+							}
 						}
 					break;
 					
 					case false:
-						if ((is_real(ID)) and (surface_exists(ID)) and (surface_get_target() == ID))
+						if (surface_get_target() == ID)
 						{
-							if ((is_struct(event))) and (is_method(event.beforeDeactivation.callback))
+							if ((is_struct(event))
+							and (event.beforeDeactivation.callback != undefined))
 							{
-								script_execute_ext(method_get_index(event.beforeDeactivation
-																		 .callback),
-												   ((is_array(event.beforeDeactivation.argument)
-													? event.beforeDeactivation.argument
-													: [event.beforeDeactivation.argument])));
+								var _callback = ((is_array(event.beforeDeactivation.callback))
+												 ? event.beforeDeactivation.callback
+												 : [event.beforeDeactivation.callback]);
+								var _callback_count = array_length(_callback);
+								var _argument = ((is_array(event.beforeDeactivation.argument))
+												 ? event.beforeDeactivation.argument
+												 : array_create(_callback_count,
+																event.beforeDeactivation.argument));
+								
+								var _i = 0;
+								repeat (_callback_count)
+								{
+									if (is_method(_callback[_i]))
+									{
+										script_execute_ext(method_get_index(_callback[_i]),
+														   ((is_array(_argument[_i])
+														    ? _argument[_i] : [_argument[_i]])));
+									}
+									
+									++_i;
+								}
 							}
 							
 							surface_reset_target();
 							
-							if ((is_struct(event))) and (is_method(event.afterDeactivation.callback))
+							if ((is_struct(event))
+							and (event.afterDeactivation.callback != undefined))
 							{
-								script_execute_ext(method_get_index(event.afterDeactivation.callback),
-												   ((is_array(event.afterDeactivation.argument)
-													? event.afterDeactivation.argument
-													: [event.afterDeactivation.argument])));
+								var _callback = ((is_array(event.afterDeactivation.callback))
+												 ? event.afterDeactivation.callback
+												 : [event.afterDeactivation.callback]);
+								var _callback_count = array_length(_callback);
+								var _argument = ((is_array(event.afterDeactivation.argument))
+												 ? event.afterDeactivation.argument
+												 : array_create(_callback_count,
+																event.afterDeactivation.argument));
+								
+								var _i = 0;
+								repeat (_callback_count)
+								{
+									if (is_method(_callback[_i]))
+									{
+										script_execute_ext(method_get_index(_callback[_i]),
+														   ((is_array(_argument[_i])
+														    ? _argument[_i] : [_argument[_i]])));
+									}
+									
+									++_i;
+								}
 							}
 						}
 					break;

@@ -119,21 +119,42 @@ function Shader() constructor
 						
 						if (is_struct(_other.event))
 						{
-							event.beforeActivation.callback = _other.event.beforeActivation
-																		  .callback;
-							event.beforeActivation.argument = _other.event.beforeActivation
-																		  .argument;
-							event.afterActivation.callback = _other.event.afterActivation.callback;
-							event.afterActivation.argument = _other.event.afterActivation.argument;
+							event = {};
 							
-							event.beforeDeactivation.callback = _other.event.beforeDeactivation
-																	  .callback;
-							event.beforeDeactivation.argument = _other.event.beforeDeactivation
-																	  .argument;
-							event.afterDeactivation.callback = _other.event.afterDeactivation
-																	 .callback;
-							event.afterDeactivation.argument = _other.event.afterDeactivation
-																	 .argument;
+							var _eventList = variable_struct_get_names(_other.event);
+							
+							var _i = [0, 0];
+							repeat (array_length(_eventList))
+							{
+								var _event = {};
+								var _other_event = variable_struct_get(_other.event,
+																	   _eventList[_i[0]]);
+								var _eventPropertyList = variable_struct_get_names(_other_event);
+								
+								_i[1] = 0;
+								repeat (array_length(_eventPropertyList))
+								{
+									var _property = variable_struct_get(_other_event,
+																		_eventPropertyList[_i[1]]);
+									
+									var _value = _property;
+									
+									if (is_array(_property))
+									{
+										_value = [];
+										
+										array_copy(_value, 0, _property, 0, array_length(_property));
+									}
+									
+									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+									
+									++_i[1];
+								}
+								
+								variable_struct_set(event, _eventList[_i[0]], _event);
+								
+								++_i[0];
+							}
 						}
 						else
 						{
@@ -472,46 +493,116 @@ function Shader() constructor
 					switch (_target)
 					{
 						case true:
-							if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+							if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 							{
-								script_execute_ext(method_get_index(event.beforeActivation.callback),
-												   ((is_array(event.beforeActivation.argument)
-													? event.beforeActivation.argument
-													: [event.beforeActivation.argument])));
+								var _callback = ((is_array(event.beforeActivation.callback))
+												 ? event.beforeActivation.callback
+												 : [event.beforeActivation.callback]);
+								var _callback_count = array_length(_callback);
+								var _argument = ((is_array(event.beforeActivation.argument))
+												 ? event.beforeActivation.argument
+												 : array_create(_callback_count,
+																event.beforeActivation.argument));
+								
+								var _i = 0;
+								repeat (_callback_count)
+								{
+									if (is_method(_callback[_i]))
+									{
+										script_execute_ext(method_get_index(_callback[_i]),
+														   ((is_array(_argument[_i])
+														    ? _argument[_i] : [_argument[_i]])));
+									}
+									
+									++_i;
+								}
 							}
 							
 							shader_set(ID);
 							
-							if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+							if ((is_struct(event)) and (event.afterActivation.callback != undefined))
 							{
-								script_execute_ext(method_get_index(event.afterActivation.callback),
-												   ((is_array(event.afterActivation.argument)
-													? event.afterActivation.argument
-													: [event.afterActivation.argument])));
+								var _callback = ((is_array(event.afterActivation.callback))
+												 ? event.afterActivation.callback
+												 : [event.afterActivation.callback]);
+								var _callback_count = array_length(_callback);
+								var _argument = ((is_array(event.afterActivation.argument))
+												 ? event.afterActivation.argument
+												 : array_create(_callback_count,
+																event.afterActivation.argument));
+							
+								var _i = 0;
+								repeat (_callback_count)
+								{
+									if (is_method(_callback[_i]))
+									{
+										script_execute_ext(method_get_index(_callback[_i]),
+														   ((is_array(_argument[_i])
+														    ? _argument[_i] : [_argument[_i]])));
+									}
+								
+									++_i;
+								}
 							}
 						break;
 						
 						case false:
 							if (shader_current() == ID)
 							{
-								if ((is_struct(event)))
-								and (is_method(event.beforeDeactivation.callback))
+								if ((is_struct(event))
+								and (event.beforeDeactivation.callback != undefined))
 								{
-									script_execute_ext(method_get_index(event.beforeDeactivation.callback),
-													   ((is_array(event.beforeDeactivation.argument)
-														? event.beforeDeactivation.argument
-														: [event.beforeDeactivation.argument])));
+									var _callback = ((is_array(event.beforeDeactivation.callback))
+													 ? event.beforeDeactivation.callback
+													 : [event.beforeDeactivation.callback]);
+									var _callback_count = array_length(_callback);
+									var _argument = ((is_array(event.beforeDeactivation.argument))
+													 ? event.beforeDeactivation.argument
+													 : array_create(_callback_count,
+																	event.beforeDeactivation
+																		 .argument));
+								
+									var _i = 0;
+									repeat (_callback_count)
+									{
+										if (is_method(_callback[_i]))
+										{
+											script_execute_ext(method_get_index(_callback[_i]),
+															   ((is_array(_argument[_i])
+															    ? _argument[_i] : [_argument[_i]])));
+										}
+									
+										++_i;
+									}
 								}
 								
 								shader_reset();
 								
-								if ((is_struct(event)))
-								and (is_method(event.afterDeactivation.callback))
+								if ((is_struct(event))
+								and (event.afterDeactivation.callback != undefined))
 								{
-									script_execute_ext(method_get_index(event.afterDeactivation.callback),
-													   ((is_array(event.afterDeactivation.argument)
-														? event.afterDeactivation.argument
-														: [event.afterDeactivation.argument])));
+									var _callback = ((is_array(event.afterDeactivation.callback))
+													 ? event.afterDeactivation.callback
+													 : [event.afterDeactivation.callback]);
+									var _callback_count = array_length(_callback);
+									var _argument = ((is_array(event.afterDeactivation.argument))
+													 ? event.afterDeactivation.argument
+													 : array_create(_callback_count,
+																	event.afterDeactivation
+																		 .argument));
+								
+									var _i = 0;
+									repeat (_callback_count)
+									{
+										if (is_method(_callback[_i]))
+										{
+											script_execute_ext(method_get_index(_callback[_i]),
+															   ((is_array(_argument[_i])
+															    ? _argument[_i] : [_argument[_i]])));
+										}
+									
+										++_i;
+									}
 								}
 							}
 						break;

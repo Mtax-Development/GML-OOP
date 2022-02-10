@@ -67,10 +67,42 @@ function Triangle() constructor
 						
 						if (is_struct(_other.event))
 						{
-							event.beforeRender.callback = _other.event.beforeRender.callback;
-							event.beforeRender.argument = _other.event.beforeRender.argument;
-							event.afterRender.callback = _other.event.afterRender.callback;
-							event.afterRender.argument = _other.event.afterRender.argument;
+							event = {};
+							
+							var _eventList = variable_struct_get_names(_other.event);
+							
+							var _i = [0, 0];
+							repeat (array_length(_eventList))
+							{
+								var _event = {};
+								var _other_event = variable_struct_get(_other.event,
+																	   _eventList[_i[0]]);
+								var _eventPropertyList = variable_struct_get_names(_other_event);
+								
+								_i[1] = 0;
+								repeat (array_length(_eventPropertyList))
+								{
+									var _property = variable_struct_get(_other_event,
+																		_eventPropertyList[_i[1]]);
+									
+									var _value = _property;
+									
+									if (is_array(_property))
+									{
+										_value = [];
+										
+										array_copy(_value, 0, _property, 0, array_length(_property));
+									}
+									
+									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+									
+									++_i[1];
+								}
+								
+								variable_struct_set(event, _eventList[_i[0]], _event);
+								
+								++_i[0];
+							}
 						}
 						else
 						{
@@ -315,12 +347,29 @@ function Triangle() constructor
 				
 				if (self.isFunctional())
 				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
+						var _callback = ((is_array(event.beforeRender.callback))
+										 ? event.beforeRender.callback
+										 : [event.beforeRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeRender.argument))
+										 ? event.beforeRender.argument
+										 : array_create(_callback_count,
+														event.beforeRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					var _location1_x = round(location1.x);
@@ -378,12 +427,27 @@ function Triangle() constructor
 											true);
 					}
 					
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
+						var _callback = ((is_array(event.afterRender.callback))
+										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterRender.argument))
+										 ? event.afterRender.argument
+										 : array_create(_callback_count, event.afterRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else

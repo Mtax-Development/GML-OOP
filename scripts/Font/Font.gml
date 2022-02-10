@@ -80,20 +80,49 @@ function Font() constructor
 							self.construct(sprite, _other.glyphs, _other.proportional,
 										   _other.separation, _other.antialiasing);
 						break;
+					}
+					
+					if (is_struct(_other.event))
+					{
+						event = {};
 						
-						if (is_struct(_other.event))
+						var _eventList = variable_struct_get_names(_other.event);
+						
+						var _i = [0, 0];
+						repeat (array_length(_eventList))
 						{
-							event.beforeActivation.callback = _other.event.beforeActivation
-																		  .callback;
-							event.beforeActivation.argument = _other.event.beforeActivation
-																		  .argument;
-							event.afterActivation.callback = _other.event.afterActivation.callback;
-							event.afterActivation.argument = _other.event.afterActivation.argument;
+							var _event = {};
+							var _other_event = variable_struct_get(_other.event, _eventList[_i[0]]);
+							var _eventPropertyList = variable_struct_get_names(_other_event);
+							
+							_i[1] = 0;
+							repeat (array_length(_eventPropertyList))
+							{
+								var _property = variable_struct_get(_other_event,
+																	_eventPropertyList[_i[1]]);
+								
+								var _value = _property;
+								
+								if (is_array(_property))
+								{
+									_value = [];
+									
+									array_copy(_value, 0, _property, 0, array_length(_property));
+								}
+								
+								variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+								
+								++_i[1];
+							}
+							
+							variable_struct_set(event, _eventList[_i[0]], _event);
+							
+							++_i[0];
 						}
-						else
-						{
-							event = _other.event;
-						}
+					}
+					else
+					{
+						event = _other.event;
 					}
 				}
 				else
@@ -321,22 +350,56 @@ function Font() constructor
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeActivation.callback))
+					if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeActivation.callback),
-										   ((is_array(event.beforeActivation.argument)
+						var _callback = ((is_array(event.beforeActivation.callback))
+											? event.beforeActivation.callback
+											: [event.beforeActivation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeActivation.argument))
 											? event.beforeActivation.argument
-											: [event.beforeActivation.argument])));
+											: array_create(_callback_count,
+														event.beforeActivation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					draw_set_font(ID);
 					
-					if ((is_struct(event))) and (is_method(event.afterActivation.callback))
+					if ((is_struct(event)) and (event.afterActivation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterActivation.callback),
-										   ((is_array(event.afterActivation.argument)
-											? event.afterActivation.argument
-											: [event.afterActivation.argument])));
+						var _callback = ((is_array(event.afterActivation.callback))
+										 ? event.afterActivation.callback
+										 : [event.afterActivation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterActivation.argument))
+										 ? event.afterActivation.argument
+										 : array_create(_callback_count,
+														event.afterActivation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else

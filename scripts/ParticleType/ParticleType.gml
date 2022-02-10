@@ -253,10 +253,41 @@ function ParticleType() constructor
 					
 					if (is_struct(_other.event))
 					{
-						event.beforeCreation.callback = _other.event.beforeCreation.callback;
-						event.beforeCreation.argument = _other.event.beforeCreation.argument;
-						event.afterCreation.callback = _other.event.afterCreation.callback;
-						event.afterCreation.argument = _other.event.afterCreation.argument;
+						event = {};
+						
+						var _eventList = variable_struct_get_names(_other.event);
+						
+						var _i = [0, 0];
+						repeat (array_length(_eventList))
+						{
+							var _event = {};
+							var _other_event = variable_struct_get(_other.event, _eventList[_i[0]]);
+							var _eventPropertyList = variable_struct_get_names(_other_event);
+							
+							_i[1] = 0;
+							repeat (array_length(_eventPropertyList))
+							{
+								var _property = variable_struct_get(_other_event,
+																	_eventPropertyList[_i[1]]);
+								
+								var _value = _property;
+								
+								if (is_array(_property))
+								{
+									_value = [];
+									
+									array_copy(_value, 0, _property, 0, array_length(_property));
+								}
+								
+								variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+									
+								++_i[1];
+							}
+							
+							variable_struct_set(event, _eventList[_i[0]], _event);
+							
+							++_i[0];
+						}
 					}
 					else
 					{
@@ -1077,12 +1108,29 @@ function ParticleType() constructor
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeCreation.callback),
-										   ((is_array(event.beforeCreation.argument)
-											? event.beforeCreation.argument
-											: [event.beforeCreation.argument])));
+						var _callback = ((is_array(event.beforeCreation.callback))
+										 ? event.beforeCreation.callback
+										 : [event.beforeCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeCreation.argument))
+										 ? event.beforeCreation.argument
+										 : array_create(_callback_count,
+														event.beforeCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					if (_color != undefined)
@@ -1096,12 +1144,29 @@ function ParticleType() constructor
 											  _number);
 					}
 					
-					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
+					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterCreation.callback),
-										   ((is_array(event.afterCreation.argument)
-											? event.afterCreation.argument
-											: [event.afterCreation.argument])));
+						var _callback = ((is_array(event.afterCreation.callback))
+										 ? event.afterCreation.callback
+										 : [event.afterCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterCreation.argument))
+										 ? event.afterCreation.argument
+										 : array_create(_callback_count,
+														event.afterCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else
@@ -1130,12 +1195,29 @@ function ParticleType() constructor
 				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
 				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeCreation.callback))
+					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeCreation.callback),
-										   ((is_array(event.beforeCreation.argument)
-											? event.beforeCreation.argument
-											: [event.beforeCreation.argument])));
+						var _callback = ((is_array(event.beforeCreation.callback))
+										 ? event.beforeCreation.callback
+										 : [event.beforeCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.beforeCreation.argument))
+										 ? event.beforeCreation.argument
+										 : array_create(_callback_count,
+														event.beforeCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 					
 					switch (instanceof(_shape))
@@ -1360,12 +1442,29 @@ function ParticleType() constructor
 						break;
 					}
 					
-					if ((is_struct(event))) and (is_method(event.afterCreation.callback))
+					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterCreation.callback),
-										   ((is_array(event.afterCreation.argument)
-											? event.afterCreation.argument
-											: [event.afterCreation.argument])));
+						var _callback = ((is_array(event.afterCreation.callback))
+										 ? event.afterCreation.callback
+										 : [event.afterCreation.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((is_array(event.afterCreation.argument))
+										 ? event.afterCreation.argument
+										 : array_create(_callback_count,
+														event.afterCreation.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   ((is_array(_argument[_i]) ? _argument[_i]
+																			 : [_argument[_i]])));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else
