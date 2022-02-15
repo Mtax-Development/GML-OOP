@@ -358,7 +358,9 @@ function SpriteRenderer() constructor
 							   "Angle: " + string(angle) + _mark_separator +
 							   "Color: " + _string_color + _mark_separator +
 							   "Alpha: " + string(alpha) + _mark_separator +
-							   "Part: " + string(part));
+							   "Part: " + string(part) + _mark_separator +
+							   "Origin: " + string(origin) + _mark_separator +
+							   "Target: " + string(target));
 				}
 				else
 				{
