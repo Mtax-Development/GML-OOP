@@ -60,8 +60,22 @@ function SpriteRenderer() constructor
 						
 						sprite = ((instanceof(_other.sprite) == "Sprite")
 								  ? new Sprite(_other.sprite.ID) : _other.sprite);
-						location = ((instanceof(_other.location) == "Vector2")
-									? new Vector2(_other.location) : _other.location);
+						
+						switch (instanceof(_other.location))
+						{
+							case "Vector2":
+								location = new Vector2(_other.location);
+							break;
+							
+							case "Vector4":
+								location = new Vector4(_other.location);
+							break;
+							
+							default:
+								location = _other.location;
+							break;
+						}
+						
 						frame = _other.frame;
 						scale = ((instanceof(_other.scale) == "Scale") ? new Scale(_other.scale)
 																	   : _other.scale);
