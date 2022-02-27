@@ -487,18 +487,15 @@ function Vector4() constructor
 								   (is_nan(_result_y) ? 1 : _result_y));
 			}
 			
-			// @returns				{real}
-			// @description			Return the direction from the first point towards the second.
-			static getAngle1to2 = function()
+			// @argument			{bool} fromSecond?
+			// @returns				{Angle}
+			// @description			Return the Angle from first set of the values of this Vector4
+			//						towards the second, or if specified, from second set of values
+			//						towards the first.
+			static getAngle = function(_fromSecond = false)
 			{
-				return point_direction(x1, y1, x2, y2);
-			}
-			
-			// @returns				{real}
-			// @description			Return the direction from the second point towards the first.
-			static getAngle2to1 = function()
-			{
-				return point_direction(x2, y2, x1, y1);
+				return ((_fromSecond) ? new Angle(point_direction(x2, y2, x1, y1))
+									  : new Angle(point_direction(x1, y1, x2, y2)));
 			}
 			
 			// @returns				{real}
