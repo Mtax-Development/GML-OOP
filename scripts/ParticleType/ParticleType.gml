@@ -1223,7 +1223,7 @@ function ParticleType() constructor
 					switch (instanceof(_shape))
 					{	
 						case "Rectangle":
-							if (_color != undefined)
+							if (is_real(_color))
 							{
 								repeat (_number)
 								{
@@ -1252,7 +1252,7 @@ function ParticleType() constructor
 						break;
 						
 						case "Triangle":
-							if (_color != undefined)
+							if (is_real(_color))
 							{
 								repeat (_number)
 								{
@@ -1297,12 +1297,20 @@ function ParticleType() constructor
 						break;
 						
 						case "Line":
-							if (_color != undefined)
+							if (is_real(_color))
 							{
+								var _distance = point_distance(_shape.location.x1,
+															   _shape.location.y1,
+															   _shape.location.x2,
+															   _shape.location.y2);
+								var _angle = point_direction(_shape.location.x1, _shape.location.y1,
+															 _shape.location.x2, _shape.location.y2);
+								var _side_angle = (_angle + 90);
+								var _side_length = (_shape.size * 0.5);
+								
 								repeat (_number)
 								{
-									var _length = irandom_range(0, _shape.location.getDistance());
-									var _angle = _shape.location.getAngle1to2();
+									var _length = irandom_range(0, _distance);
 									
 									var _location_x = (_shape.location.x1 
 													   + lengthdir_x(_length, _angle));
@@ -1310,8 +1318,6 @@ function ParticleType() constructor
 									var _location_y = (_shape.location.y1 
 													   + lengthdir_y(_length, _angle));
 									
-									var _side_angle = (_angle + 90);
-									var _side_length = (_shape.size / 2);
 									var _side_position = irandom_range(-_side_length, _side_length);
 									
 									_location_x += lengthdir_x(_side_position, _side_angle);
@@ -1323,10 +1329,18 @@ function ParticleType() constructor
 							}
 							else
 							{
+								var _distance = point_distance(_shape.location.x1,
+															   _shape.location.y1,
+															   _shape.location.x2,
+															   _shape.location.y2);
+								var _angle = point_direction(_shape.location.x1, _shape.location.y1,
+															 _shape.location.x2, _shape.location.y2);
+								var _side_angle = (_angle + 90);
+								var _side_length = (_shape.size * 0.5);
+								
 								repeat (_number)
 								{
-									var _length = irandom_range(0, _shape.location.getDistance());
-									var _angle = _shape.location.getAngle1to2();
+									var _length = irandom_range(0, _distance);
 									
 									var _location_x = (_shape.location.x1 
 													   + lengthdir_x(_length, _angle));
@@ -1334,8 +1348,6 @@ function ParticleType() constructor
 									var _location_y = (_shape.location.y1 
 													   + lengthdir_y(_length, _angle));
 									
-									var _side_angle = (_angle + 90);
-									var _side_length = (_shape.size / 2);
 									var _side_position = irandom_range(-_side_length, _side_length);
 									
 									_location_x += lengthdir_x(_side_position, _side_angle);
@@ -1348,7 +1360,7 @@ function ParticleType() constructor
 						break;
 						
 						case "Circle":
-							if (_color != undefined)
+							if (is_real(_color))
 							{
 								repeat (_number)
 								{
@@ -1385,28 +1397,26 @@ function ParticleType() constructor
 						break;
 						
 						case "Ellipse":
-							if (_color != undefined)
+							if (is_real(_color))
 							{
+								var _size_x = ((max(_shape.location.x1, _shape.location.x2)
+												- min(_shape.location.x1, _shape.location.x2))
+											   * 0.5);
+								
+								var _size_y = ((max(_shape.location.y1, _shape.location.y2)
+												- min(_shape.location.y1, _shape.location.y2))
+											   * 0.5);
+								
 								repeat (_number)
 								{
-									var _width = ((max(_shape.location.x1, _shape.location.x2)
-												  - min(_shape.location.x1, _shape.location.x2))
-												  / 2);
-									
-									var _height = ((max(_shape.location.y1, _shape.location.y2)
-												   - min(_shape.location.y1, _shape.location.y2))
-												   / 2);
-									
 									var _angle = random((2 * pi));
 									var _point = random(1);
 									
-									var _location_x = mean(_shape.location.x1, _shape.location.x2)
-														   + ((sqrt(_point) * cos(_angle))
-														   * (_width));
+									var _location_x = (mean(_shape.location.x1, _shape.location.x2)
+													   + ((sqrt(_point) * cos(_angle)) * _size_x));
 									
-									var _location_y = mean(_shape.location.y1, _shape.location.y2)
-														   + ((sqrt(_point) * sin(_angle))
-														   * (_height));
+									var _location_y = (mean(_shape.location.y1, _shape.location.y2)
+													   + ((sqrt(_point) * sin(_angle)) * _size_y));
 									
 									part_particles_create_color(_particleSystem.ID, _location_x,
 																_location_y, ID, _color, 1);
@@ -1414,26 +1424,24 @@ function ParticleType() constructor
 							}
 							else
 							{
+								var _size_x = ((max(_shape.location.x1, _shape.location.x2)
+												- min(_shape.location.x1, _shape.location.x2))
+											   * 0.5);
+								
+								var _size_y = ((max(_shape.location.y1, _shape.location.y2)
+												- min(_shape.location.y1, _shape.location.y2))
+											   * 0.5);
+								
 								repeat (_number)
 								{
-									var _width = ((max(_shape.location.x1, _shape.location.x2) 
-												  - min(_shape.location.x1, _shape.location.x2))
-												  / 2);
-									
-									var _height = ((max(_shape.location.y1, _shape.location.y2)
-												   - min(_shape.location.y1, _shape.location.y2))
-												   / 2);
-									
 									var _angle = random((2 * pi));
 									var _point = random(1);
 									
-									var _location_x = mean(_shape.location.x1, _shape.location.x2)
-														   + ((sqrt(_point) * cos(_angle))
-														   * (_width));
+									var _location_x = (mean(_shape.location.x1, _shape.location.x2)
+													   + ((sqrt(_point) * cos(_angle)) * _size_x));
 									
-									var _location_y = mean(_shape.location.y1, _shape.location.y2)
-														   + ((sqrt(_point) * sin(_angle))
-														   * (_height));
+									var _location_y = (mean(_shape.location.y1, _shape.location.y2)
+													   + ((sqrt(_point) * sin(_angle)) * _size_y));
 									
 									part_particles_create(_particleSystem.ID, _location_x,
 														  _location_y, ID, 1);
