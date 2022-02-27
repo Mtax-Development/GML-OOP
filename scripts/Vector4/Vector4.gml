@@ -508,6 +508,24 @@ function Vector4() constructor
 				return point_distance(x1, y1, x2, y2);
 			}
 			
+			// @argument			{Vector2} target
+			// @returns				{Vector2}
+			// @description			Return the value pair that is the closest to the specified
+			//						target.
+			static getClosest = function(_target)
+			{
+				var _difference_x1 = abs(_target.x - x1);
+				var _difference_y1 = abs(_target.y - y1);
+				var _difference_x2 = abs(_target.x - x2);
+				var _difference_y2 = abs(_target.y - y2);
+				
+				var _minimum_x = min(_difference_x1, _difference_x2);
+				var _minimum_y = min(_difference_y1, _difference_y2);
+				
+				return new Vector2(((_minimum_x == _difference_x1) ? x1 : x2),
+								   ((_minimum_y == _difference_y1) ? y1 : y2));
+			}
+			
 			// @argument			{bool} separate?
 			// @returns				{real|Vector2}
 			// @description			Return the lowest of all values or if the values are specified to
