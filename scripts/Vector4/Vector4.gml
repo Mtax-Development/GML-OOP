@@ -946,7 +946,7 @@ function Vector4() constructor
 				y2 = _y2;
 			}
 			
-			// @argument			{real|Vector2|Vector4} value
+			// @argument			{real|Vector2|Vector4|Scale} value
 			// @description			Set all of values to the ones of the specified value.
 			static set = function(_value)
 			{
@@ -957,25 +957,25 @@ function Vector4() constructor
 					x2 = _value;
 					y2 = _value;
 				}
-				else if (instanceof(_value) == "Vector2")
-				{
-					x1 = _value.x;
-					y1 = _value.y;
-					x2 = _value.x;
-					y2 = _value.y;
-				}
-				else
+				else if (instanceof(_value) == "Vector4")
 				{
 					x1 = _value.x1;
 					y1 = _value.y1;
 					x2 = _value.x2;
 					y2 = _value.y2;
 				}
+				else
+				{
+					x1 = _value.x;
+					y1 = _value.y;
+					x2 = _value.x;
+					y2 = _value.y;
+				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Vector2|Vector4} value?
+			// @argument			{real|Vector2|Vector4|Scale} value?
 			// @description			Set all of the values of to their equivalents rounded down or the
 			//						ones of the specified value.
 			static setFloor = function(_value)
@@ -996,7 +996,14 @@ function Vector4() constructor
 					x2 = _value_floor;
 					y2 = _value_floor;
 				}
-				else if (instanceof(_value) == "Vector2")
+				else if (instanceof(_value) == "Vector4")
+				{
+					x1 = floor(_value.x1);
+					y1 = floor(_value.y1);
+					x2 = floor(_value.x2);
+					y2 = floor(_value.y2);
+				}
+				else
 				{
 					var _value_x_floor = floor(_value.x);
 					var _value_y_floor = floor(_value.y);
@@ -1006,18 +1013,11 @@ function Vector4() constructor
 					x2 = _value_x_floor;
 					y2 = _value_y_floor;
 				}
-				else
-				{
-					x1 = floor(_value.x1);
-					y1 = floor(_value.y1);
-					x2 = floor(_value.x2);
-					y2 = floor(_value.y2);
-				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Vector2|Vector4} value?
+			// @argument			{real|Vector2|Vector4|Scale} value?
 			// @description			Set all of the values of to their equivalents rounded down or up
 			//						or the ones of the specified value.
 			static setRound = function(_value)
@@ -1038,7 +1038,14 @@ function Vector4() constructor
 					x2 = _value_round;
 					y2 = _value_round;
 				}
-				else if (instanceof(_value) == "Vector2")
+				else if (instanceof(_value) == "Vector4")
+				{
+					x1 = round(_value.x1);
+					y1 = round(_value.y1);
+					x2 = round(_value.x2);
+					y2 = round(_value.y2);
+				}
+				else
 				{
 					var _value_x_round = round(_value.x);
 					var _value_y_round = round(_value.y);
@@ -1048,18 +1055,11 @@ function Vector4() constructor
 					x2 = _value_x_round;
 					y2 = _value_y_round;
 				}
-				else
-				{
-					x1 = round(_value.x1);
-					y1 = round(_value.y1);
-					x2 = round(_value.x2);
-					y2 = round(_value.y2);
-				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Vector2|Vector4} value?
+			// @argument			{real|Vector2|Vector4|Scale} value?
 			// @description			Set all of the values of to their equivalents rounded up or the
 			//						ones of the specified value.
 			static setCeil = function(_value)
@@ -1080,7 +1080,14 @@ function Vector4() constructor
 					x2 = _value_ceil;
 					y2 = _value_ceil;
 				}
-				else if (instanceof(_value) == "Vector2")
+				else if (instanceof(_value) == "Vector4")
+				{
+					x1 = ceil(_value.x1);
+					y1 = ceil(_value.y1);
+					x2 = ceil(_value.x2);
+					y2 = ceil(_value.y2);
+				}
+				else
 				{
 					var _value_x_ceil = ceil(_value.x);
 					var _value_y_ceil = ceil(_value.y);
@@ -1089,13 +1096,6 @@ function Vector4() constructor
 					y1 = _value_y_ceil;
 					x2 = _value_x_ceil;
 					y2 = _value_y_ceil;
-				}
-				else
-				{
-					x1 = ceil(_value.x1);
-					y1 = ceil(_value.y1);
-					x2 = ceil(_value.x2);
-					y2 = ceil(_value.y2);
 				}
 				
 				return self;
