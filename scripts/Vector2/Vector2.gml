@@ -277,6 +277,23 @@ function Vector2() constructor
 									 : dot_product(x, y, _other.x, _other.y));
 			}
 			
+			// @argument			{Vector2} target
+			// @returns				{Angle}
+			// @description			Return the Angle from this Vector2 towards the specified one.
+			static getAngle = function(_target)
+			{
+				return new Angle(point_direction(x, y, _target.x, _target.y));
+			}
+			
+			// @argument			{Vector2} other
+			// @returns				{real}
+			// @description			Return the shortest distance between this and the specified
+			//						Vector2.
+			static getDistance = function(_other)
+			{
+				return point_distance(x, y, _other.x, _other.y);
+			}
+			
 			// @returns				{real}
 			// @description			Return the lowest of all values.
 			static getMinimum = function()
