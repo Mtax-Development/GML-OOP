@@ -508,18 +508,22 @@ function Vector4() constructor
 				return point_distance(x1, y1, x2, y2);
 			}
 			
-			// @returns				{real}
-			// @description			Return the lowest of all values.
-			static getMinimum = function()
+			// @argument			{bool} separate?
+			// @returns				{real|Vector2}
+			// @description			Return the lowest of all values or if the values are specified to
+			//						be separated, the lowest of each value pair.
+			static getMinimum = function(_separate = false)
 			{
-				return min(x1, y1, x2, y2);
+				return ((_separate) ? new Vector2(min(x1, x2), min(y1, y2)) : min(x1, y1, x2, y2));
 			}
 			
-			// @returns				{real}
-			// @description			Return the highest of all values.
-			static getMaximum = function()
+			// @argument			{bool} separate?
+			// @returns				{real|Vector2}
+			// @description			Return the highest of all values or if the values are specified
+			//						to be separated, the highlowest of each value pair.
+			static getMaximum = function(_separate = false)
 			{
-				return max(x1, y1, x2, y2);
+				return ((_separate) ? new Vector2(max(x1, x2), max(y1, y2)) : max(x1, y1, x2, y2));
 			}
 			
 			// @returns				{Vector2}
