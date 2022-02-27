@@ -526,7 +526,7 @@ function Vector4() constructor
 			// @description			Return the middle point of this Vector4.
 			static getMiddle = function()
 			{
-				return new Vector2(lerp(x1, x2, 0.5), lerp(y1, y2, 0.5));
+				return new Vector2(mean(x1, x2), mean(y1, y2));
 			}
 			
 			// @returns				{real}
