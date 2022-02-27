@@ -295,14 +295,14 @@ function Vector2() constructor
 			}
 			
 			// @returns				{real}
-			// @description			Return the lowest of all values.
+			// @description			Return the lowest of both values.
 			static getMinimum = function()
 			{
 				return min(x, y);
 			}
 			
 			// @returns				{real}
-			// @description			Return the highest of all values.
+			// @description			Return the highest of both values.
 			static getMaximum = function()
 			{
 				return max(x, y);
