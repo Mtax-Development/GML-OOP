@@ -5,7 +5,8 @@
 ///							
 ///							Construction types:
 ///							- New constructor.
-///							- Default value: {void|undefined}
+///							- Default value: {void}
+///							- Empty: {undefined}
 ///							- Constructor copy: {Angle} other
 function Angle() constructor
 {
@@ -15,10 +16,10 @@ function Angle() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction type: Default value.
-				value = 0;
+				//|Construction type: Empty.
+				value = undefined;
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					if (instanceof(argument[0]) == "Angle")
 					{
@@ -30,9 +31,14 @@ function Angle() constructor
 					else if (is_real(argument[0]))
 					{
 						//|Construction type: New constructor.
-						value += argument[0];
+						value = argument[0];
 						value -= (360 * (floor(value / 360)));
 					}
+				}
+				else
+				{
+					//|Construction type: Default value.
+					value = 0;
 				}
 				
 				return self;
