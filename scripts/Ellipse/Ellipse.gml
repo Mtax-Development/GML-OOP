@@ -321,12 +321,12 @@ function Ellipse() constructor
 			
 			// @argument			{bool} multiline?
 			// @argument			{bool} full?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Shape.
-			static toString = function(_multiline = false, _full = false, _color_HSV = false)
+			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
 				
@@ -369,7 +369,7 @@ function Ellipse() constructor
 								case c_white: _string_color[_i] = "White"; break;
 								case c_yellow: _string_color[_i] = "Yellow"; break;
 								default:
-									if (_color_HSV)
+									if (_colorHSV)
 									{
 										_string_color[_i] =
 										("(" +
@@ -398,7 +398,7 @@ function Ellipse() constructor
 						{
 							if (instanceof(_color[_i]) == "Color2")
 							{
-								_string_color[_i] = _color[_i].toString(false, _color_HSV);
+								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}
 							else
 							{

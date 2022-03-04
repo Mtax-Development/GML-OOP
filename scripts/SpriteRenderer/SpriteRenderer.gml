@@ -296,13 +296,13 @@ function SpriteRenderer() constructor
 			
 			// @argument			{bool} multiline?
 			// @argument			{bool} full?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this
 			//						constructor.
-			static toString = function(_multiline = false, _full = false, _color_HSV = false)
+			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -339,9 +339,9 @@ function SpriteRenderer() constructor
 							case c_white: _string_color = "White"; break;
 							case c_yellow: _string_color = "Yellow"; break;
 							default:
-								if (_color_HSV)
+								if (_colorHSV)
 								{
-									_string_color = 
+									_string_color =
 									("(" +
 									 "Hue: " + string(color_get_hue(color))
 									 		 + _mark_separator_inline +
@@ -352,7 +352,7 @@ function SpriteRenderer() constructor
 								}
 								else
 								{
-									_string_color = 
+									_string_color =
 									("(" +
 									 "Red: " + string(color_get_red(color))
 									 		 + _mark_separator_inline +

@@ -174,7 +174,7 @@ function Color4() constructor
 		#region <Conversion>
 			
 			// @argument			{bool} multiline?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
@@ -182,7 +182,7 @@ function Color4() constructor
 			//						or RGB value, unless use of HSV is specified.
 			//						NOTE: The constant for Silver is the same as for Light Gray. It
 			//						cannot be differentiated and will not be represented.
-			static toString = function(_multiline = false, _color_HSV = false)
+			static toString = function(_multiline = false, _colorHSV = false)
 			{
 				var _color = [color1, color2, color3, color4];
 				var _color_count = array_length(_color);
@@ -219,9 +219,9 @@ function Color4() constructor
 							case c_white: _string_color[_i] = "White"; break;
 							case c_yellow: _string_color[_i] = "Yellow"; break;
 							default:
-								if (_color_HSV)
+								if (_colorHSV)
 								{
-									_string_color[_i] = 
+									_string_color[_i] =
 									("(" +
 									 "Hue: " + string(color_get_hue(_color[_i])) 
 											 + _mark_separator_inline +
@@ -232,7 +232,7 @@ function Color4() constructor
 								}
 								else
 								{
-									_string_color[_i] = 
+									_string_color[_i] =
 									("(" +
 									 "Red: " + string(color_get_red(_color[_i]))
 											 + _mark_separator_inline +

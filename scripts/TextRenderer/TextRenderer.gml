@@ -326,7 +326,7 @@ function TextRenderer() constructor
 			
 			// @argument			{bool} multiline?
 			// @argument			{bool} full?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @argument			{int|all} elementLength?
 			// @argument			{string} mark_separator?
 			// @argument			{string} mark_cut?
@@ -335,7 +335,7 @@ function TextRenderer() constructor
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the text preview.
-			static toString = function(_multiline = false, _full = false, _color_HSV = false,
+			static toString = function(_multiline = false, _full = false, _colorHSV = false,
 									   _elementLength = 30, _mark_cut = "...", _mark_linebreak = ", ")
 			{
 				var _string = "";
@@ -386,28 +386,28 @@ function TextRenderer() constructor
 						case c_white: _string_color = "White"; break;
 						case c_yellow: _string_color = "Yellow"; break;
 						default:
-								if (_color_HSV)
-								{
-									_string_color = 
-									("(" +
-									 "Hue: " + string(color_get_hue(color))
-											 + _mark_separator_inline +
-									 "Saturation: " + string(color_get_saturation(color))
-													+ _mark_separator_inline +
-									 "Value: " + string(color_get_value(color)) +
-									 ")");
-								}
-								else
-								{
-									_string_color = 
-									("(" +
-									 "Red: " + string(color_get_red(color))
-											 + _mark_separator_inline +
-									 "Green: " + string(color_get_green(color))
-											   + _mark_separator_inline +
-									 "Blue: " + string(color_get_blue(color)) +
-									 ")");
-								}
+							if (_colorHSV)
+							{
+								_string_color =
+								("(" +
+								 "Hue: " + string(color_get_hue(color))
+										 + _mark_separator_inline +
+								 "Saturation: " + string(color_get_saturation(color))
+												+ _mark_separator_inline +
+								"Value: " + string(color_get_value(color)) +
+								 ")");
+							}
+							else
+							{
+								_string_color =
+								("(" +
+								 "Red: " + string(color_get_red(color))
+										 + _mark_separator_inline +
+								 "Green: " + string(color_get_green(color))
+										   + _mark_separator_inline +
+								 "Blue: " + string(color_get_blue(color)) +
+								 ")");
+							}
 						break;
 					}
 					

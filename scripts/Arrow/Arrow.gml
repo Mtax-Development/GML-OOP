@@ -227,12 +227,12 @@ function Arrow() constructor
 			
 			// @argument			{bool} multiline?
 			// @argument			{bool} full?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Shape.
-			static toString = function(_multiline = false, _full = false, _color_HSV = false)
+			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -270,7 +270,7 @@ function Arrow() constructor
 							case c_white: _string_color = "White"; break;
 							case c_yellow: _string_color = "Yellow"; break;
 							default:
-								if (_color_HSV)
+								if (_colorHSV)
 								{
 									_string_color =
 									("(" +

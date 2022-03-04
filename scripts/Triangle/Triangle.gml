@@ -476,12 +476,12 @@ function Triangle() constructor
 			
 			// @argument			{bool} multiline?
 			// @argument			{bool} full?
-			// @argument			{bool} color_HSV?
+			// @argument			{bool} colorHSV?
 			// @returns				{string}
 			// @description			Create a string representing this constructor.
 			//						Overrides the string() conversion.
 			//						Content will be represented with the properties of this Shape.
-			static toString = function(_multiline = false, _full = false, _color_HSV = false)
+			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
 				var _mark_separator_inline = ", ";
@@ -526,9 +526,9 @@ function Triangle() constructor
 								case c_white: _string_color[_i] = "White"; break;
 								case c_yellow: _string_color[_i] = "Yellow"; break;
 								default:
-									if (_color_HSV)
+									if (_colorHSV)
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Hue: " + string(color_get_hue(_color[_i]))
 												 + _mark_separator_inline +
@@ -539,7 +539,7 @@ function Triangle() constructor
 									}
 									else
 									{
-										_string_color[_i] = 
+										_string_color[_i] =
 										("(" +
 										 "Red: " + string(color_get_red(_color[_i]))
 												 + _mark_separator_inline +
@@ -555,7 +555,7 @@ function Triangle() constructor
 						{
 							if (instanceof(_color[_i]) == "Color3")
 							{
-								_string_color[_i] = _color[_i].toString(false, _color_HSV);
+								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}
 							else
 							{
