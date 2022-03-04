@@ -185,7 +185,7 @@ function ArrayParser() constructor
 			{
 				if (is_array(ID))
 				{
-					if (_position < (array_length(ID)))
+					if (_position < array_length(ID))
 					{
 						return array_get(ID, _position);
 					}
@@ -606,7 +606,7 @@ function ArrayParser() constructor
 					var _i = 0;
 					repeat (min(_size, _elementNumber))
 					{
-						//|Get Data Structure Element.
+						//|Get array element.
 						var _newElement = string(array_get(ID, _i));
 						
 						//|Remove line-breaks.
