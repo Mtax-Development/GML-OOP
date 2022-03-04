@@ -216,6 +216,66 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @returns				{any|undefined}
+			// @description			Return the first value in this array.
+			//						Returns {undefined} if this array does not exists or is empty.
+			static getFirst = function()
+			{
+				if (is_array(ID))
+				{
+					if (array_length(ID) > 0)
+					{
+						return array_get(ID, 0);
+					}
+					else
+					{
+						return undefined;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getFirst";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @returns				{any|undefined}
+			// @description			Return the last value in this array.
+			//						Returns {undefined} if this array does not exists or is empty.
+			static getLast = function()
+			{
+				if (is_array(ID))
+				{
+					var _size = array_length(ID);
+					
+					if (_size > 0)
+					{
+						return array_get(ID, (_size - 1));
+					}
+					else
+					{
+						return undefined;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getLast";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the number of elements in the array.
 			static getSize = function()
@@ -229,6 +289,27 @@ function ArrayParser() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getSize";
+					var _errorText = ("Attempted to read a property of an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @returns				{bool} | On error: {undefined}
+			// @description			Check if this array has no values in it.
+			static isEmpty = function()
+			{
+				if (is_array(ID))
+				{
+					return (array_length(ID) <= 0);
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "isEmpty";
 					var _errorText = ("Attempted to read a property of an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
