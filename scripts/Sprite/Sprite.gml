@@ -642,7 +642,7 @@ function Sprite() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector2} location
+			// @argument			{Vector2|Vector4} location
 			// @argument			{int} frame?
 			// @argument			{Scale} scale?
 			// @argument			{Angle} angle?
