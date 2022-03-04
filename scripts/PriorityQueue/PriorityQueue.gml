@@ -329,7 +329,7 @@ function PriorityQueue() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure has any values in it.
+			// @description			Check if this Data Structure has no values in it.
 			//						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{

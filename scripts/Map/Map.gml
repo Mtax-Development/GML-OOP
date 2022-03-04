@@ -525,7 +525,7 @@ function Map() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure does not contain any values in it.
+			// @description			Check if this Data Structure has no values in it.
 			static isEmpty = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
