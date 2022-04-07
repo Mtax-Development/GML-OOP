@@ -5,10 +5,23 @@ unitTest = new UnitTest(script_get_name(constructorType));
 
 order_display = true;
 
+errorMessage = undefined;
+
 show_debug_message("Executing Unit Tests: " + constructorName);
 
-event_user(0);
+try
+{
+	event_user(0);
+}
+catch (_exception)
+{
+	errorMessage = _exception.message;
+}
 
-show_debug_message("Unit Testing of " + constructorName + " complete: " +
-				   (string(unitTest.testID - unitTest.getFailedTestCount()) + "/" +
-				    string(unitTest.testID)) + " tests passed.");
+if (errorMessage == undefined)
+{
+	show_debug_message("Unit Testing of " + constructorName + " complete: " +
+					   (string(unitTest.testID - unitTest.getFailedTestCount()) + "/" +
+					    string(unitTest.testID)) + " tests passed.");
+}
+
