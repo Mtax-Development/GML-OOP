@@ -45,7 +45,20 @@
 	var _result = constructor.value;
 	var _expectedValue = 0;
 	
-	unitTest.assert_equal("Construction: New constructor (Default value)", 
+	unitTest.assert_equal("Construction: Default value", 
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Construction: Empty]
+	
+	var _base = undefined;
+	
+	constructor = new Angle(_base);
+	
+	var _result = constructor.value;
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Construction: Empty", 
 						  _result, _expectedValue);
 	
 #endregion
@@ -82,16 +95,18 @@
 	var _value = [20];
 	_value[1] = (360 + _value[0]);
 	
-	constructor = [new Angle(), new Angle()];
+	constructor = [new Angle(), new Angle(), new Angle()];
 	constructor[0].set(_value[0]);
 	constructor[1].set(_value[1]);
+	constructor[2].set(constructor[0]);
 	
-	var _result = [constructor[0].value, constructor[1].value];
-	var _expectedValue = [_value[0], _value[0]];
+	var _result = [constructor[0].value, constructor[1].value, constructor[2].value];
+	var _expectedValue = [_value[0], _value[0], _value[0]];
 	
 	unitTest.assert_equal("Method: set()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Test: Method: modify()]
@@ -107,6 +122,23 @@
 	
 	unitTest.assert_equal("Method: modify()", 
 						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: equals()]
+	
+	var _base = 55;
+	
+	constructor = [new Angle(_base), new Angle(_base), new Angle(-_base)];
+	
+	var _result = [constructor[0].equals(_base), constructor[0].equals(-_base),
+				   constructor[0].equals(constructor[1]), constructor[0].equals(constructor[2])];
+	var _expectedValue = [true, false, true, false];
+	
+	unitTest.assert_equal("Method: equals()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 #endregion
 #region [Test: Method: difference(positive value)]
