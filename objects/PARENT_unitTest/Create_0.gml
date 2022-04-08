@@ -5,7 +5,7 @@ unitTest = new UnitTest(script_get_name(constructorType));
 
 order_display = true;
 
-errorMessage = undefined;
+exception = undefined;
 
 show_debug_message("Executing Unit Tests: " + constructorName);
 
@@ -15,10 +15,10 @@ try
 }
 catch (_exception)
 {
-	errorMessage = _exception.message;
+	exception = _exception;
 }
 
-if (errorMessage == undefined)
+if (exception == undefined)
 {
 	show_debug_message("Unit Testing of " + constructorName + " complete: " +
 					   (string(unitTest.testID - unitTest.getFailedTestCount()) + "/" +
