@@ -102,13 +102,13 @@ function DateTime() constructor
 								var _year = _array[0];
 								var _month = (((_array_length > 1) and (_array[1] != undefined))
 											  ? _array[1] : 1);
-								var _day = (((argument_count > 2) and (_array[2] != undefined))
+								var _day = (((_array_length > 2) and (_array[2] != undefined))
 											? _array[2] : 1);
-								var _hour = (((argument_count > 3) and (_array[3] != undefined))
+								var _hour = (((_array_length > 3) and (_array[3] != undefined))
 											 ? _array[3] : 0);
-								var _minute = (((argument_count > 4) and (_array[4] != undefined))
+								var _minute = (((_array_length > 4) and (_array[4] != undefined))
 											   ? _array[4] : 0);
-								var _second = (((argument_count > 5) and (_array[5] != undefined))
+								var _second = (((_array_length > 5) and (_array[5] != undefined))
 											   ? _array[5] : 0);
 								
 								ID = date_create_datetime(_year, _month, _day, _hour, _minute,
