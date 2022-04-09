@@ -13,6 +13,18 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new Range();
+	
+	var _result = [constructor.minimum, constructor.maximum];
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result[0], _expectedValue,
+						  _result[1], _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [15.25, 25.99999991];
