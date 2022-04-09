@@ -21,7 +21,7 @@
 	var _result = [constructor.color1, constructor.color2, constructor.color3];
 	var _expectedValue = [c_white, c_white, c_white];
 	
-	unitTest.assert_equal("Construction: Default values",
+	unitTest.assert_equal("Construction: Default for all values",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);

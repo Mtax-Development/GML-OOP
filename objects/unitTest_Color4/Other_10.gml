@@ -76,7 +76,7 @@
 						  _result[11], _expectedValue[11]);
 	
 #endregion
-#region [Test: Construction: Color2 + Color2]
+#region [Test: Construction: Color2 pair]
 	
 	var _base = [[c_red, c_green], [c_blue, c_black]];
 	
@@ -93,7 +93,7 @@
 						  constructor[0][1].color1, constructor[0][1].color2,
 						  constructor[0][0].color1, constructor[0][0].color2];
 	
-	unitTest.assert_equal("Construction: Color2 + Color2",
+	unitTest.assert_equal("Construction: Color2 pair",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
