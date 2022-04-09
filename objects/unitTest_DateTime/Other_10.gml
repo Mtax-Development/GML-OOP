@@ -18,6 +18,45 @@
 						  _result[5], _expectedValue[5]);
 	
 #endregion
+#region [Test: Construction: From one array]
+	
+	var _base = [1995, 5, 25, 15, 12, 1];
+	
+	constructor = new DateTime(_base);
+	
+	var _result = [constructor.year, constructor.month, constructor.day, constructor.hour,
+				   constructor.minute, constructor.second];
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Construction: From one array",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
+	
+#endregion
+#region [Test: Construction: From two arrays]
+	
+	var _base = [[1992, 2, 22], [12, 11, 5]];
+	
+	constructor = new DateTime(_base[0], _base[1]);
+	
+	var _result = [constructor.year, constructor.month, constructor.day, constructor.hour,
+				   constructor.minute, constructor.second];
+	var _expectedValue = [_base[0][0], _base[0][1], _base[0][2], _base[1][0], _base[1][1],
+						  _base[1][2]];
+	
+	unitTest.assert_equal("Construction: From two arrays",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
+	
+#endregion
 #region [Test: Construction: Wrapper]
 	
 	var _base = [2002, 2, 25, 5, 5, 5];
@@ -126,7 +165,7 @@
 						  date_get_day(_element), date_get_hour(_element), 
 						  date_get_minute(_element), date_get_second(_element)];
 	
-	unitTest.assert_equal("Method: setCurrent()",
+	unitTest.assert_equal("Method: setDatetime()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
