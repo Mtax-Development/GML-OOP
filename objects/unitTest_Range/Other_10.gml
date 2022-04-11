@@ -180,7 +180,7 @@
 						  _result, _expectedValue); 
 	
 #endregion
-#region [Method: toString()]
+#region [Method: toString(multiline?)]
 	
 	var _base = [-2590, -35];
 	
