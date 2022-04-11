@@ -113,15 +113,17 @@
 	
 	var _value = 105;
 	
-	constructor = new Angle(0);
+	constructor = [new Angle(0), new Angle(0)];
 	
-	constructor.modify(_value);
+	constructor[0].modify(_value);
+	constructor[1].modify(constructor[0]);
 	
-	var _result = constructor.value;
+	var _result = [constructor[0].value, constructor[1].value];
 	var _expectedValue = _value;
 	
 	unitTest.assert_equal("Method: modify()", 
-						  _result, _expectedValue);
+						  _result[0], _expectedValue,
+						  _result[1], _expectedValue);
 	
 #endregion
 #region [Test: Method: equals()]
@@ -147,11 +149,12 @@
 	
 	constructor = [new Angle(_base[0]), new Angle(_base[1])];
 	
-	var _result = constructor[0].difference(constructor[1]);
+	var _result = [constructor[0].difference(constructor[1]), constructor[0].difference(_base[1])];
 	var _expectedValue = (360 - _base[1] + _base[0]);
 	
 	unitTest.assert_equal("Method: difference(positive value)", 
-						  _result, _expectedValue);
+						  _result[0], _expectedValue,
+						  _result[1], _expectedValue);
 	
 #endregion
 #region [Test: Method: difference(negative value)]
@@ -161,12 +164,16 @@
 	constructor = [new Angle(_base[0]), new Angle(_base[1])];
 	
 	var _result = [constructor[0].difference(constructor[1]),
-				   constructor[1].difference(constructor[0])];
+				   constructor[1].difference(constructor[0]),
+				   constructor[0].difference(_base[1]),
+				   constructor[1].difference(_base[0])];
 	var _expectedValue = (max(_base[0], _base[1]) - min(_base[0], _base[1]));
 	
 	unitTest.assert_equal("Method: difference(negative value)", 
 						  _result[0], _expectedValue,
-						  _result[1], _expectedValue);
+						  _result[1], _expectedValue,
+						  _result[2], _expectedValue,
+						  _result[3], _expectedValue);
 	
 #endregion
 #region [Test: Method: toString()]
