@@ -335,3 +335,19 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Method: toString(multiline?)]
+	
+	var _base = [-10, -5];
+	
+	constructor = new RangedValue(new Range(_base[0], _base[1]));
+	
+	var _result = [constructor.toString(false), constructor.toString(true)];
+	var _expectedValue = [(constructorName + "(" +  string(_base[0]) + ", " + string(_base[0]) +
+						   " - " + string(_base[1]) + ")"), string(_base[0]) + "\n" +
+						   string(_base[0]) + " - " + string(_base[1])];
+	
+	unitTest.assert_equal("Method: toString(multiline?)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
