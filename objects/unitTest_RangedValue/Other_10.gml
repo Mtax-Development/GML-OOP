@@ -97,32 +97,48 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: setMinimum()]
+#region [Methods: setMinimum() / isMinimum()]
 	
 	var _base = [12, 22];
+	var _value = mean(_base[0], _base[1]);
 	
-	constructor = new RangedValue(new Range(_base[0], _base[1]));
+	constructor = new RangedValue(new Range(_base[0], _base[1]), _value);
+	
+	var _result = [constructor.value, constructor.isMinimum()];
+	var _expectedValue = [_value, false];
+	
 	constructor.setMinimum();
 	
-	var _result = constructor.value;
-	var _expectedValue = _base[0];
+	array_push(_result, constructor.value, constructor.isMinimum());
+	array_push(_expectedValue, _base[0], true);
 	
-	unitTest.assert_equal("Method: setMinimum()",
-						  _result, _expectedValue);
+	unitTest.assert_equal("Methods: setMinimum() / isMinimum()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 #endregion
-#region [Method: setMaximum()]
+#region [Methods: setMaximum() / isMaximum()]
 	
 	var _base = [30, 35];
+	var _value = mean(_base[0], _base[1]);
 	
-	constructor = new RangedValue(new Range(_base[0], _base[1]));
+	constructor = new RangedValue(new Range(_base[0], _base[1]), _value);
+	
+	var _result = [constructor.value, constructor.isMaximum()];
+	var _expectedValue = [_value, false];
+	
 	constructor.setMaximum();
 	
-	var _result = constructor.value;
-	var _expectedValue = _base[1];
+	array_push(_result, constructor.value, constructor.isMaximum());
+	array_push(_expectedValue, _base[1], true);
 	
-	unitTest.assert_equal("Method: setMaximum()",
-						  _result, _expectedValue);
+	unitTest.assert_equal("Methods: setMaximum() / isMaximum()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 #endregion
 #region [Method: setOriginal()]
@@ -275,20 +291,47 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Method: toString()]
+#region [Method: equals()]
 	
-	var _base = [-10, -5];
+	var _base = [1, 5];
+	
+	constructor = [new RangedValue(new Range(_base[0], _base[1]))];
+	constructor[1] = new RangedValue(constructor[0]);
+	
+	var _result = [constructor[0].equals(constructor[1])];
+	var _expectedValue = [true];
+	
+	constructor[1].modify(mean(_base[0], _base[1]));
+	
+	array_push(_result, constructor[0].equals(constructor[1]));
+	array_push(_expectedValue, false);
+	
+	unitTest.assert_equal("Method: equals()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Method: percent()]
+	
+	var _base = [0, 10];
 	
 	constructor = new RangedValue(new Range(_base[0], _base[1]));
 	
-	var _result = constructor.toString();
-	var _expectedValue = (constructorName + 
-						 "(" + 
-						 string(_base[0]) + ", " +
-						 string(_base[0]) + " - " + string(_base[1]) +
-						 ")");
+	var _result = [];
+	var _expectedValue = [];
 	
-	unitTest.assert_equal("Method: toString()",
+	var _i = 0;
+	repeat (10)
+	{
+		array_push(_result, constructor.percent());
+		array_push(_expectedValue, (_i / 10));
+		
+		constructor.modify(1);
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Method: percent()",
 						  _result, _expectedValue);
 	
 #endregion
