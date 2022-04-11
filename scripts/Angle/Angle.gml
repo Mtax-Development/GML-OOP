@@ -103,11 +103,11 @@ function Angle() constructor
 				return self;
 			}
 			
-			// @argument			{real} value
+			// @argument			{real|Angle} value
 			// @description			Change the value of this Angle and wrap it.
 			static modify = function(_value)
 			{
-				value += _value;
+				value += ((is_real(_value)) ? _value : (_value.value));
 				value -= (360 * (floor(value / 360)));
 				
 				return self;
