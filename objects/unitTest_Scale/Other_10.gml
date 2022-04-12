@@ -39,6 +39,37 @@
 						  _result[1], _expectedValue);
 	
 #endregion
+#region [Test: Construction: From array]
+	
+	var _base = [-2.5, 5];
+	
+	constructor = [new Scale(_base), new Scale([_base[0]])];
+	
+	var _result = [constructor[0].x, constructor[0].y, constructor[1].x, constructor[1].y];
+	var _expectedValue = [_base[0], _base[1], _base[0], _base[0]];
+	
+	unitTest.assert_equal("Construction: From array",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Construction: From Vector2]
+	
+	var _base = [-1.5, 15];
+	var _element = new Vector2(_base[0], _base[1]);
+	
+	constructor = new Scale(_element);
+	
+	var _result = [constructor.x, constructor.y];
+	var _expectedValue = [_base[0], _base[1]];
+	
+	unitTest.assert_equal("Construction: From Vector2",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [0.5, 0.8745];
@@ -143,6 +174,46 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Methods: grow() / shrink()]
+	
+	var _base = [-105, 105];
+	var _value = [5, -5];
+	var _element = new Scale(_value[0], _value[1]);
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	constructor.grow(_element);
+	
+	var _result = [constructor.x, constructor.y];
+	var _expectedValue = [(_base[0] - _value[0]), (_base[1] - _value[1])];
+	
+	constructor.grow(_value[0]);
+	
+	array_push(_result, constructor.x, constructor.y);
+	array_push(_expectedValue, (_base[0] - _value[0] - _value[0]),
+			   (_base[1] - _value[1] + _value[0]));
+	
+	constructor.shrink(_value[0]);
+	
+	array_push(_result, constructor.x, constructor.y);
+	array_push(_expectedValue, (_base[0] - _value[0]), (_base[1] - _value[1]));
+	
+	constructor.shrink(_element);
+	
+	array_push(_result, constructor.x, constructor.y);
+	array_push(_expectedValue, _base[0], _base[1]);
+	
+	unitTest.assert_equal("Methods: grow() / shrink()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7]);
+	
+#endregion
 #region [Test: Method: mirror()]
 	
 	var _base = [0.2, 0.545];
@@ -190,17 +261,25 @@
 #endregion
 #region [Test: Method: set()]
 	
-	var _value = 5;
+	var _value = [5, 7];
+	var _element = new Vector2(_value[0], _value[1]);
 	
-	constructor = new Scale();
-	constructor.set(_value);
+	constructor = [new Scale(), new Scale(), new Scale()];
+	constructor[0].set(_value[0]);
+	constructor[1].set(_element);
+	constructor[2].set(constructor[1]);
 	
-	var _result = [constructor.x, constructor.y];
-	var _expectedValue = [_value, _value];
+	var _result = [constructor[0].x, constructor[0].y, constructor[1].x, constructor[1].y,
+				   constructor[2].x, constructor[2].y];
+	var _expectedValue = [_value[0], _value[0], _value[0], _value[1], _value[0], _value[1]];
 	
 	unitTest.assert_equal("Method: set()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
 	
 #endregion
 #region [Test: Method: toString()]
@@ -217,6 +296,19 @@
 						 ")");
 	
 	unitTest.assert_equal("Method: toString()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: toArray()]
+	
+	var _base = [25.5, -55.75];
+	
+	constructor = new Scale(_base[0], _base[1]);
+	
+	var _result = constructor.toArray();
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Method: toArray()",
 						  _result, _expectedValue);
 	
 #endregion
