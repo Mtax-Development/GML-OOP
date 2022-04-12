@@ -96,23 +96,6 @@ function Scale() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{real}
-			// @description			Return the lowest of all values.
-			static getMinimum = function()
-			{
-				return min(x, y);
-			}
-			
-			// @returns				{real}
-			// @description			Return the highest of all values.
-			static getMaximum = function()
-			{
-				return max(x, y);
-			}
-			
-		#endregion
-		#region <Setters>
-			
 			// @argument			{any} value...
 			// @returns				{bool}
 			// @description			Check if this Scale contains at least one of the specified values.
@@ -141,6 +124,23 @@ function Scale() constructor
 			{
 				return ((x == _other.x) and (y == _other.y));
 			}
+			
+			// @returns				{real}
+			// @description			Return the lowest of all values.
+			static getMinimum = function()
+			{
+				return min(x, y);
+			}
+			
+			// @returns				{real}
+			// @description			Return the highest of all values.
+			static getMaximum = function()
+			{
+				return max(x, y);
+			}
+			
+		#endregion
+		#region <Setters>
 			
 			// @argument			{Scale} target
 			// @argument			{Vector2} rate
