@@ -25,6 +25,22 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Construction: Constructor copy]
+	
+	var _base = [fa_right, fa_top];
+	
+	constructor = [new TextAlign(_base[0], _base[1])];
+	
+	constructor[1] = new TextAlign(constructor[0]);
+	
+	var _result = [constructor[1].x, constructor[1].y];
+	var _expectedValue = [_base[0], _base[1]];
+	
+	unitTest.assert_equal("Construction: Constructor copy",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: isFunctional()]
 	
 	constructor = [new TextAlign(), new TextAlign()];
@@ -186,6 +202,31 @@
 						  _result[3], _expectedValue[3]);
 	
 #endregion
+#region [Test: Method: setActive()]
+	
+	var _base = [fa_right, fa_bottom];
+	var _value = [fa_left, fa_top];
+	
+	constructor = new TextAlign(_base[0], _base[1]);
+	
+	draw_set_halign(_value[0]);
+	draw_set_valign(_value[1]);
+	
+	var _result = [draw_get_halign(), draw_get_valign()];
+	var _expectedValue = [_value[0], _value[1]];
+	
+	constructor.setActive();
+	
+	array_push(_result, draw_get_halign(), draw_get_valign());
+	array_push(_expectedValue, _base[0], _base[1]);
+	
+	unitTest.assert_equal("Method: setActive()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
 #region [Test: Method: toString()]
 	
 	var _base = [fa_left, fa_top];
@@ -214,6 +255,19 @@
 						  "y: " + "Middle");
 	
 	unitTest.assert_equal("Method: toString(multiline)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: toArray()]
+	
+	var _base = [fa_right, fa_bottom];
+	
+	constructor = new TextAlign(_base[0], _base[1]);
+	
+	var _result = constructor.toArray();
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Method: toArray()",
 						  _result, _expectedValue);
 	
 #endregion
