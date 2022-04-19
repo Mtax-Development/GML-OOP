@@ -25,6 +25,19 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Construction: From array]
+	
+	var _base = [fa_left, fa_bottom];
+	
+	constructor = new TextAlign(_base);
+	
+	var _result = [constructor.x, constructor.y];
+	var _expectedValue = _base;
+	
+	unitTest.assert_equal("Construction: From array",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [fa_right, fa_top];
