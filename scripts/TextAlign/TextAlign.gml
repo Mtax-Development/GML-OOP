@@ -10,6 +10,9 @@
 ///							   Unspecified values will be set to the following:
 ///							   x: fa_left
 ///							   y: fa_top
+///							- From array: {constant:textalign[]} array
+///							   The first array position will be set to the x property and the second
+///							   array position will be set to y property.
 ///							- Constructor copy: {TextAlign} other
 function TextAlign() constructor
 {
@@ -28,9 +31,17 @@ function TextAlign() constructor
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
-					
+						
 						x = _other.x;
 						y = _other.y;
+					}
+					else if (is_array(argument[0]))
+					{
+						//|Construction type: From array.
+						var _array = argument[0];
+						
+						x = _array[0];
+						y = _array[1];
 					}
 					else
 					{
