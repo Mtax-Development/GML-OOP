@@ -216,59 +216,6 @@ function Grid() constructor
 				}
 			}
 			
-			// @argument			{any} value...
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of times the specified values occur in this
-			//						Data Structure.
-			static count = function()
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _result = 0;
-					
-					var _size_x = ds_grid_width(ID);
-					var _size_y = ds_grid_height(ID);
-					
-					var _y = 0;
-					repeat (_size_y)
-					{
-						var _x = 0;
-						repeat (_size_x)
-						{
-							var _value = ds_grid_get(ID, _x, _y);
-							
-							var _i = 0;
-							repeat (argument_count)
-							{
-								if (_value == argument[_i])
-								{
-									++_result;
-								}
-								
-								++_i;
-							}
-							
-							++_x;
-						}
-						
-						++_y;
-					}
-					
-					return _result;
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "count";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
 			// @argument			{Vector4} location
 			// @argument			{any} value...
 			// @returns				{bool} | On error: {undefined}
@@ -342,6 +289,59 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{any} value...
+			// @returns				{int} | On error: {undefined}
+			// @description			Return the number of times the specified values occur in this
+			//						Data Structure.
+			static count = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _result = 0;
+					
+					var _size_x = ds_grid_width(ID);
+					var _size_y = ds_grid_height(ID);
+					
+					var _y = 0;
+					repeat (_size_y)
+					{
+						var _x = 0;
+						repeat (_size_x)
+						{
+							var _value = ds_grid_get(ID, _x, _y);
+							
+							var _i = 0;
+							repeat (argument_count)
+							{
+								if (_value == argument[_i])
+								{
+									++_result;
+								}
+								
+								++_i;
+							}
+							
+							++_x;
+						}
+						
+						++_y;
+					}
+					
+					return _result;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "count";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{Vector2} location
 			// @returns				{any|undefined}
 			// @description			Return the value of cell at the specified position in this Grid.
@@ -384,64 +384,6 @@ function Grid() constructor
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
 					return 0;
-				}
-			}
-			
-			// @argument			{Vector4} location?
-			// @returns				{real} | On error: {undefined}
-			// @description			Return the highest numerical value found in cells within the
-			//						specified region of this Grid.
-			//						If the region contains values other than numerical, it might be
-			//						found instead and will be returned as {undefined}.
-			static getMaximum = function(_location)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _result = ((_location == undefined)
-								   ? ds_grid_get_max(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID))
-								   : ds_grid_get_max(ID, _location.x1, _location.y1, _location.x2,
-													 _location.y2));
-					
-					return ((is_real(_result) ? _result : undefined));
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getMaximum";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
-				}
-			}
-			
-			// @argument			{Vector2} location
-			// @argument			{int} radius
-			// @returns				{real} | On error: {undefined}
-			// @description			Return the highest numerical value found in cells within the
-			//						specified disk of this Grid.
-			//						If the disk contains values other than numerical, it might be
-			//						found instead and will be returned as {undefined}.
-			static getMaximumDisk = function(_location, _radius)
-			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
-				{
-					var _result = ds_grid_get_disk_max(ID, _location.x, _location.y, _radius);
-					
-					return ((is_real(_result) ? _result : undefined));
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getMaximumDisk";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
 				}
 			}
 			
@@ -495,6 +437,64 @@ function Grid() constructor
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
 					var _methodName = "getMinimumDisk";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{Vector4} location?
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the highest numerical value found in cells within the
+			//						specified region of this Grid.
+			//						If the region contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
+			static getMaximum = function(_location)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _result = ((_location == undefined)
+								   ? ds_grid_get_max(ID, 0, 0, ds_grid_width(ID), ds_grid_height(ID))
+								   : ds_grid_get_max(ID, _location.x1, _location.y1, _location.x2,
+													 _location.y2));
+					
+					return ((is_real(_result) ? _result : undefined));
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMaximum";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
+			// @argument			{Vector2} location
+			// @argument			{int} radius
+			// @returns				{real} | On error: {undefined}
+			// @description			Return the highest numerical value found in cells within the
+			//						specified disk of this Grid.
+			//						If the disk contains values other than numerical, it might be
+			//						found instead and will be returned as {undefined}.
+			static getMaximumDisk = function(_location, _radius)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					var _result = ds_grid_get_disk_max(ID, _location.x, _location.y, _radius);
+					
+					return ((is_real(_result) ? _result : undefined));
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getMaximumDisk";
 					var _errorText = ("Attempted to read an invalid Data Structure: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
