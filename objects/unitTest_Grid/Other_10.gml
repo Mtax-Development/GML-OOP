@@ -56,6 +56,18 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new Grid();
+	
+	var _result = [constructor.ID, constructor.size];
+	var _expectedValue = [undefined, undefined];
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = new Vector2(3);
@@ -69,7 +81,6 @@
 	
 	var _result = [constructor[1].getValue(_element[0]), constructor[1].getValue(_element[1])];
 	var _expectedValue = [_value, _value];
-	
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
@@ -240,7 +251,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Methods: getMaximum() / getMinimum()]
+#region [Test: Methods: getMinimum() / getMaximum()]
 	
 	var _base = new Vector2(3);
 	var _element = [new Vector2(0), new Vector2(1), new Vector2(2), new Vector2(2, 1)];
@@ -252,12 +263,12 @@
 					_value[2], _element[2],
 					_value[3], _element[3]);
 	
-	var _result = [constructor.getMaximum(new Vector4(0, 1)),
-				   constructor.getMinimum(new Vector4(0, 1)), constructor.getMaximum(),
-				   constructor.getMinimum()];
-	var _expectedValue = [_value[0], _value[1], _value[2], _value[3]];
+	var _result = [constructor.getMinimum(new Vector4(0, 1)),
+				   constructor.getMaximum(new Vector4(0, 1)), constructor.getMinimum(),
+				   constructor.getMaximum()];
+	var _expectedValue = [_value[1], _value[0], _value[3], _value[2]];
 	
-	unitTest.assert_equal("Methods: getMaximum() / getMinimum()",
+	unitTest.assert_equal("Methods: getMinimum() / getMaximum()]",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -266,7 +277,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Methods: getMaximumDisk() / getMinimumDisk()]
+#region [Test: Methods: getMinimumDisk() / getMaximumDisk()]
 	
 	var _base = new Vector2(5);
 	var _element = [[new Vector2(0), new Vector2(4), new Vector2(2), new Vector2(3)],
@@ -279,11 +290,11 @@
 					_value[2], _element[0][2],
 					_value[3], _element[0][3]);
 	
-	var _result = [constructor.getMaximumDisk(_element[1][0], _element[1][1]),
-				   constructor.getMinimumDisk(_element[1][0], _element[1][1])];
-	var _expectedValue = [_value[2], _value[3]];
+	var _result = [constructor.getMinimumDisk(_element[1][0], _element[1][1]),
+				   constructor.getMaximumDisk(_element[1][0], _element[1][1])];
+	var _expectedValue = [_value[3], _value[2]];
 	
-	unitTest.assert_equal("Methods: getMaximumDisk() / getMinimumDisk()",
+	unitTest.assert_equal("Methods: getMinimumDisk() / getMaximumDisk()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -730,7 +741,7 @@
 	constructor[1].destroy();
 	
 #endregion
-#region [Test: Method: add()]
+#region [Test: Method: multiply()]
 	
 	var _base = new Vector2(3);
 	var _element = [new Vector2(0), new Vector2(1), new Vector2(2)];
