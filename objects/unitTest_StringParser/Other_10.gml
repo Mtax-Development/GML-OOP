@@ -54,6 +54,67 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: contains()]
+	
+	var _value = ["ABC", "A", "X"];
+	
+	constructor = new StringParser(_value[0]);
+	
+	var _result = [constructor.contains(_value[0]), constructor.contains(_value[1]),
+				   constructor.contains(_value[2])];
+	var _expectedValue = [true, true, false];
+	
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
+	
+#endregion
+#region [Test: Method: charIsWhitespace()]
+	
+	var _value = " A";
+	
+	constructor = new StringParser(_value);
+	
+	var _result = [constructor.charIsWhitespace(1),
+				   constructor.charIsWhitespace(string_length(_value))];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: charIsWhitespace()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: charEquals()]
+	
+	var _value = ["A", "3", "B"];
+	var _element = 1;
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
+	
+	var _result = [constructor.charEquals(_element, _value[(_element - 1)]),
+				   constructor.charEquals(_element, _value[(_element)])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: charEquals()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: split()]
+	
+	var _value = ["ABC", "-", "CBA", "-", "XYZ", "-"];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3] + _value[4] +
+									_value[5]));
+	
+	var _result = constructor.split(_value[1]);
+	var _expectedValue = [_value[0], _value[2], _value[4]];
+	
+	unitTest.assert_equal("Method: split()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Methods: setByte() / getByte()]
 	
 	var _value = "###";
@@ -151,19 +212,6 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getSize()]
-	
-	var _value = ["1", "2", "3", "4"];
-	
-	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3]));
-	
-	var _result = constructor.getSize();
-	var _expectedValue = array_length(_value);
-	
-	unitTest.assert_equal("Method: getSize",
-						  _result, _expectedValue);
-	
-#endregion
 #region [Test: Method: getLetters()]
 	
 	var _value = ["V", "111", "B", "C"];
@@ -208,6 +256,19 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: Method: getSize()]
+	
+	var _value = ["1", "2", "3", "4"];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3]));
+	
+	var _result = constructor.getSize();
+	var _expectedValue = array_length(_value);
+	
+	unitTest.assert_equal("Method: getSize",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: getPixelSize()]
 	
 	var _value = "ABC";
@@ -221,79 +282,22 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: charIsWhitespace()]
-	
-	var _value = " A";
-	
-	constructor = new StringParser(_value);
-	
-	var _result = [constructor.charIsWhitespace(1),
-				   constructor.charIsWhitespace(string_length(_value))];
-	var _expectedValue = [true, false];
-	
-	unitTest.assert_equal("Method: charIsWhitespace()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-#endregion
-#region [Test: Method: charEquals()]
-	
-	var _value = ["A", "3", "B"];
-	var _element = 1;
-	
-	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
-	
-	var _result = [constructor.charEquals(_element, _value[(_element - 1)]),
-				   constructor.charEquals(_element, _value[(_element)])];
-	var _expectedValue = [true, false];
-	
-	unitTest.assert_equal("Method: charEquals()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-#endregion
-#region [Test: Method: split()]
-	
-	var _value = ["ABC", "-", "CBA", "-", "XYZ", "-"];
-	
-	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3] + _value[4] +
-									_value[5]));
-	
-	var _result = constructor.split(_value[1]);
-	var _expectedValue = [_value[0], _value[2], _value[4]];
-	
-	unitTest.assert_equal("Method: split()",
-						  _result, _expectedValue);
-	
-#endregion
-#region [Test: Method: setByte()]
-	
-	var _value = ["A", "B"];
-	
-	constructor = new StringParser((_value[0] + _value[1]));
-	
-	var _result = constructor.setByte((array_length(_value)), constructor.getByte(1));
-	var _expectedValue = (_value[0] + _value[0]);
-	
-	unitTest.assert_equal("Method: setByte()",
-						  _result, _expectedValue);
-	
-#endregion
 #region [Test: Method: remove()]
 	
 	var _value = ["1", "ABC", "1234"];
 	var _element = 2;
 	
 	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
+	constructor.remove(_element, string_length(_value[1]))
 	
-	var _result = constructor.remove(_element, string_length(_value[1]));
+	var _result = constructor.ID;
 	var _expectedValue = (_value[0] + _value[2]);
 	
 	unitTest.assert_equal("Method: remove()",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: insert()]
+#region [Test: Method: formatNumber()]
 	
 	var _value = [12.0009, "12.0009"];
 	var _element = [2, 4];
@@ -303,6 +307,20 @@
 	
 	var _result = constructor.ID;
 	var _expectedValue = _value[1];
+	
+	unitTest.assert_equal("Method: formatNumber()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: insert()]
+	
+	_value = ["AB", "+", 2, "A+B"];
+	
+	constructor = new StringParser(_value[0]);
+	constructor.insert(_value[1], _value[2]);
+	
+	var _result = constructor.ID;
+	var _expectedValue = _value[3];
 	
 	unitTest.assert_equal("Method: insert()",
 						  _result, _expectedValue);
@@ -314,8 +332,9 @@
 	var _element = [3, "-"];
 	
 	constructor = new StringParser(_value);
+	constructor.duplicate(_element[0], _element[1]);
 	
-	var _result = constructor.duplicate(_element[0], _element[1]);
+	var _result = constructor.ID;
 	var _expectedValue = _value;
 	
 	repeat (_element[0])
@@ -334,8 +353,9 @@
 	
 	constructor = new StringParser(_value[0] + _value[1] + _value[2] + _value[3] + _value[4] +
 								   _value[5]);
+	constructor.replace(_element[0], _element[1], _element[2]);
 	
-	var _result = constructor.replace(_element[0], _element[1], _element[2]);
+	var _result = constructor.ID;
 	var _expectedValue = (_value[0] + _element[1] + _value[2] + _element[1] + _value[4] + _value[5]);
 	
 	unitTest.assert_equal("Method: replace()",
@@ -347,7 +367,9 @@
 	var _value = ["A", "B", "C", "D", "E"];
 	
 	constructor = new StringParser((_value[0] + _value[1] + _value[2] + _value[3] + _value[4]));
-	var _result = constructor.reverse();
+	constructor.reverse();
+	
+	var _result = constructor.ID;
 	var _expectedValue = (_value[4] + _value[3] + _value[2] + _value[1] + _value[0]);
 	
 	unitTest.assert_equal("Method: reverse()",
@@ -390,8 +412,9 @@
 	var _value = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
 	
 	constructor = new StringParser(_value[0]);
+	constructor.setLowercase();
 	
-	var _result = constructor.setLowercase();
+	var _result = constructor.ID;
 	var _expectedValue = _value[1];
 	
 	unitTest.assert_equal("Method: setLowercase()",
@@ -403,8 +426,9 @@
 	var _value = ["abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 	
 	constructor = new StringParser(_value[0]);
+	constructor.setUppercase();
 	
-	var _result = constructor.setUppercase();
+	var _result = constructor.ID;
 	var _expectedValue = _value[1];
 	
 	unitTest.assert_equal("Method: setUppercase()",
