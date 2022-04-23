@@ -59,6 +59,17 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new Map(undefined);
+	
+	var _result = constructor.ID;
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _value = [["Key1", "A"], ["Key2", -0.25]];
@@ -134,6 +145,22 @@
 						  _result[1], _expectedValue[1]);
 	
 	constructor.destroy();
+	
+#endregion
+#region [Test: Method: copy()]
+	
+	var _value = ["Key", "Value"];
+	
+	constructor = [new Map(), new Map()];
+	constructor[0].add(_value[0], _value[1]);
+	constructor[1].copy(constructor[0]);
+	constructor[0].clear();
+	
+	var _result = constructor[1].getValue(_value[0]);
+	var _expectedValue = _value[1];
+	
+	unitTest.assert_equal("Method: copy()",
+						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: contains()]
