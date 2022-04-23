@@ -67,6 +67,17 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new PriorityQueue(undefined);
+	
+	var _result = constructor.ID;
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _value = [[10, "ABC"], [20, "BC"], [100, "CB"]];
