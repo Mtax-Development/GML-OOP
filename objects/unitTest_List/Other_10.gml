@@ -56,6 +56,17 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new List(undefined);
+	
+	var _result = constructor.ID;
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _value = [-5, 0.65, "ZYX"];
@@ -132,6 +143,26 @@
 						  _result[1], _expectedValue[1]);
 	
 	constructor.destroy();
+	
+#endregion
+#region [Test: Method: copy()]
+	
+	var _value = [5, "GML-OOP", -5];
+	
+	constructor = [new List(), new List()];
+	
+	constructor[0].add(_value[0], _value[1], _value[2]);
+	constructor[1].copy(constructor[0]);
+	constructor[0].clear();
+	
+	var _result = [constructor[1].getValue(0), constructor[1].getValue(1),
+				   constructor[1].getValue(2)];
+	var _expectedValue = [_value[0], _value[1], _value[2]];
+	
+	unitTest.assert_equal("Method: copy()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
 	
 #endregion
 #region [Test: Method: contains()]
@@ -388,34 +419,6 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Method: shuffle()]
-	
-	//|This test checks results of a method with random results, based on a pre-determined seed.
-	// It was not tested on every target platform. Due to difference in how seeds work between them,
-	// there is a miniscule non-zero chance that assertion will declare a failure on some of them.
-	var _element = 2000;
-	var _value = 5355.5;
-	
-	constructor = [new List()];
-	constructor[0].set(_element, _value);
-	constructor[1] = new List(constructor[0]);
-	random_set_seed(0);
-	constructor[0].shuffle();
-	random_set_seed(1);
-	constructor[1].shuffle();
-	
-	var _result = [constructor[0].getFirstPosition(_value), constructor[1].getFirstPosition(_value)];
-	var _expectedValue = [_element, _element];
-	
-	unitTest.assert_notEqual("Method: shuffle()",
-							 _result[0], _expectedValue[0],
-							 _result[1], _expectedValue[1],
-							 _result[0], _result[1]);
-	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
-#endregion
 #region [Test: Method: sort()]
 	
 	//|The built-in ds_list_sort() function is currently broken.
@@ -447,6 +450,34 @@
 						  _result[7], _expectedValue[7],
 						  _result[8], _expectedValue[8],
 						  _result[9], _expectedValue[9]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
+	
+#endregion
+#region [Test: Method: shuffle()]
+	
+	//|This test checks results of a method with random results, based on a pre-determined seed.
+	// It was not tested on every target platform. Due to difference in how seeds work between them,
+	// there is a miniscule non-zero chance that assertion will declare a failure on some of them.
+	var _element = 2000;
+	var _value = 5355.5;
+	
+	constructor = [new List()];
+	constructor[0].set(_element, _value);
+	constructor[1] = new List(constructor[0]);
+	random_set_seed(0);
+	constructor[0].shuffle();
+	random_set_seed(1);
+	constructor[1].shuffle();
+	
+	var _result = [constructor[0].getFirstPosition(_value), constructor[1].getFirstPosition(_value)];
+	var _expectedValue = [_element, _element];
+	
+	unitTest.assert_notEqual("Method: shuffle()",
+							 _result[0], _expectedValue[0],
+							 _result[1], _expectedValue[1],
+							 _result[0], _result[1]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
