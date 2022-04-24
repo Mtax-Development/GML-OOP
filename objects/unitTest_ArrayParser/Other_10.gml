@@ -125,18 +125,18 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
-#region [Test: Method: getSize()]
+#region [Test: Method: contains()]
 	
-	var _value = 20;
+	var _value = [[2, 6, 8], [-1]];
 	
-	constructor = new ArrayParser();
-	constructor.create(_value, _value);
+	constructor = new ArrayParser([_value[0][0], _value[0][1], _value[0][2]]);
 	
-	var _result = constructor.getSize();
-	var _expectedValue = _value;
+	var _result = [constructor.contains(_value[0][0]), constructor.contains(_value[1][0])];
+	var _expectedValue = [true, false];
 	
-	unitTest.assert_equal("Method: getSize()",
-						  _result, _expectedValue);
+	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: equals()]
@@ -166,6 +166,48 @@
 	
 	unitTest.assert_equal("Method: getValue()",
 						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Methods: getFirst() / getLast()]
+	
+	var _value = [10, 20, 30];
+	
+	constructor = new ArrayParser([_value[0], _value[1], _value[2]]);
+	
+	var _result = [constructor.getFirst(), constructor.getLast()];
+	var _expectedValue = [_value[0], _value[2]];
+	
+	unitTest.assert_equal("Methods: getFirst() / getLast()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: getSize()]
+	
+	var _value = 20;
+	
+	constructor = new ArrayParser();
+	constructor.create(_value, _value);
+	
+	var _result = constructor.getSize();
+	var _expectedValue = _value;
+	
+	unitTest.assert_equal("Method: getSize()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: isEmpty()]
+	
+	var _value = ["GML-OOP"];
+	
+	constructor = [new ArrayParser(), new ArrayParser([_value[0]])];
+	
+	var _result = [constructor[0].isEmpty(), constructor[1].isEmpty()];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: isEmpty()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: setSize()]
@@ -270,32 +312,68 @@
 						  _result[5], _expectedValue[5]);
 	
 #endregion
-#region [Test: Method: remove(multiple)]
-	
-	var _value = [1, 2, 3, 4, 5];
-	
-	constructor = new ArrayParser([_value[0], _value[1], _value[2], _value[3], _value[4]]);
-	
-	var _result = constructor.remove(1, 3);
-	var _expectedValue = [_value[1], _value[2], _value[3]];
-	
-	unitTest.assert_equal("Method: remove(multiple)",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2]);
-	
-#endregion
-#region [Test: Method: remove(single)]
+#region [Test: Method: removePosition(single)]
 	
 	var _value = ["A", "B.190", "FC"];
 	
 	constructor = new ArrayParser([_value[0], _value[1], _value[2]]);
 	
-	var _result = constructor.remove();
+	var _result = constructor.removePosition();
 	var _expectedValue = _value[0];
 	
-	unitTest.assert_equal("Method: remove(single)",
+	unitTest.assert_equal("Method: removePosition(single)",
 						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: removePosition(multiple)]
+	
+	var _value = [[1, 2, 3, 4, 5], [1, 3]];
+	
+	constructor = new ArrayParser([_value[0][0], _value[0][1], _value[0][2], _value[0][3],
+								   _value[0][4]]);
+	
+	var _result = [constructor.removePosition(_value[1][0], _value[1][1])];
+	
+	array_push(_result, constructor.ID)
+	
+	var _expectedValue = [[_value[0][1], _value[0][2], _value[0][3]], [_value[0][0], _value[0][4]]];
+	
+	unitTest.assert_equal("Method: removePosition(multiple)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: removePosition(none)]
+	
+	constructor = new ArrayParser();
+	
+	var _result = constructor.removePosition();
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Method: removePosition(none)",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: removeValue()]
+	
+	var _value = [[1, 2, 3, 4, 5], [2, 3, 4]];
+	
+	constructor = [new ArrayParser([_value[0][0], _value[0][1], _value[0][2], _value[0][3],
+									_value[0][4]]),
+				   new ArrayParser([_value[0][0], _value[0][1], _value[0][2], _value[0][3],
+									_value[0][4]]),
+				   new ArrayParser([_value[1][0], _value[1][1], _value[1][2]])];
+	
+	constructor[0].removeValue(_value[0][0]);
+	constructor[1].removeValue(constructor[2])
+	
+	var _result = [constructor[0].ID, constructor[1].ID];
+	var _expectedValue = [[_value[0][1], _value[0][2], _value[0][3], _value[0][4]],
+						  [_value[0][0], _value[0][4]]];
+	
+	unitTest.assert_equal("Method: removeValue()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: sort(numbers)]
