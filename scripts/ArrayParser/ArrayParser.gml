@@ -486,7 +486,7 @@ function ArrayParser() constructor
 				{
 					var _size = array_length(ID);
 					
-					_count = min(_count, _size);
+					_count = min(_count, (_size - _position));
 					
 					if ((!(_count >= 1)) or (_size < 1))
 					{
@@ -496,7 +496,7 @@ function ArrayParser() constructor
 					{
 						var _result = array_get(ID, _position);
 						
-						array_delete(ID, _position, _count);
+						array_delete(ID, _position, 1);
 						
 						return _result;
 					}
@@ -521,7 +521,7 @@ function ArrayParser() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "remove";
+					var _methodName = "removePosition";
 					var _errorText = ("Attempted to remove data from an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
@@ -560,7 +560,7 @@ function ArrayParser() constructor
 									break;
 								}
 								
-								++_i[1]
+								++_i[1];
 							}
 							
 							_i[0] += _iteratorModifier;
@@ -592,7 +592,7 @@ function ArrayParser() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "remove";
+					var _methodName = "removeValue";
 					var _errorText = ("Attempted to remove data from an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
