@@ -68,15 +68,27 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #region [Test: Construction: Constructor copy]
 	
 	var _base = asset[0];
+	var _element = [function(_) {return _;}, "argument"];
 	
 	constructor = [new Font(_base)];
+	constructor[0].event.beforeActivation.callback = _element[0];
+	constructor[0].event.beforeActivation.argument = _element[1];
+	constructor[0].event.afterActivation.callback = _element[0];
+	constructor[0].event.afterActivation.argument = _element[1];
 	constructor[1] = new Font(constructor[0]);
 	
-	var _result = constructor[1].isFunctional();
-	var _expectedValue = true;
+	var _result = [constructor[1].isFunctional(), constructor[1].event.beforeActivation.callback,
+				   constructor[1].event.beforeActivation.argument,
+				   constructor[1].event.afterActivation.callback,
+				   constructor[1].event.afterActivation.argument];
+	var _expectedValue = [true, _element[0], _element[1], _element[0], _element[1]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
-						  _result, _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
@@ -97,6 +109,22 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: getTexel()]
+	
+	var _base = asset[0];
+	var _element = [font_get_texture(_base)];
+	_element[1] = new Vector2(texture_get_texel_width(_element[0]),
+							  texture_get_texel_height(_element[0]));
+	
+	constructor = new Font(_base);
+	
+	var _result = constructor.getTexel();
+	var _expectedValue = _element[1];
+	
+	unitTest.assert_equal("Method: getTexel()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: getUV()]
 	
 	var _base = asset[0];
@@ -108,7 +136,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 				   or (_element.x2 > 0) or (_element.y2 > 0)));
 	var _expectedValue = true;
 	
-	unitTest.assert_equal("Method: getUV",
+	unitTest.assert_equal("Method: getUV()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -190,14 +218,14 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	constructor.event.beforeActivation.argument = [[_result, _value[0]]];
 	
 	constructor.event.afterActivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterActivation.argument = [_result, _value[1]];
+	constructor.event.afterActivation.argument = [[_result, _value[1]]];
 	
 	constructor.setActive();
 	
