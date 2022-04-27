@@ -30,7 +30,7 @@
     "path": "folders/GML-OOP Unit Tests/Unit Tests/Handlers.yy",
   },
   "resourceVersion": "1.0",
-  "name": "unitTest_TextDraw",
+  "name": "unitTest_TextRenderer",
   "tags": [],
   "resourceType": "GMObject",
 }
