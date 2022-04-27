@@ -37,6 +37,7 @@
     {"id":{"name":"TestShader","path":"shaders/TestShader/TestShader.yy",},"order":0,},
     {"id":{"name":"unitTest_Vector4","path":"objects/unitTest_Vector4/unitTest_Vector4.yy",},"order":10,},
     {"id":{"name":"unitTest_RangedValue","path":"objects/unitTest_RangedValue/unitTest_RangedValue.yy",},"order":6,},
+    {"id":{"name":"unitTest_SurfaceRenderer","path":"objects/unitTest_SurfaceRenderer/unitTest_SurfaceRenderer.yy",},"order":3,},
     {"id":{"name":"unitTest_Triangle","path":"objects/unitTest_Triangle/unitTest_Triangle.yy",},"order":7,},
     {"id":{"name":"unitTest_List","path":"objects/unitTest_List/unitTest_List.yy",},"order":1,},
     {"id":{"name":"unitTest_Buffer","path":"objects/unitTest_Buffer/unitTest_Buffer.yy",},"order":1,},
