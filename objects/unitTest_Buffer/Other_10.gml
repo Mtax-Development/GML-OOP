@@ -180,24 +180,6 @@
 	constructor[1].destroy();
 	
 #endregion
-#region [Test: Method: getSize()]
-	
-	var _base = [[68, buffer_grow, 2], [128, buffer_fixed, 4]];
-	
-	constructor = [new Buffer(_base[0][0], _base[0][1], _base[0][2]),
-				   new Buffer(_base[1][0], _base[1][1], _base[1][2])];
-	
-	var _result = [constructor[0].getSize(), constructor[1].getSize()];
-	var _expectedValue = [_base[0][0], _base[1][0]];
-	
-	unitTest.assert_equal("Method: getSize()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-	constructor[0].destroy();
-	constructor[1].destroy();
-	
-#endregion
 #region [Test: Method: getAlignment()]
 	
 	var _base = [[12, buffer_fixed, 1], [18, buffer_grow, 4]];
@@ -229,6 +211,24 @@
 						  _result, _expectedValue);
 	
 	constructor.destroy();
+	
+#endregion
+#region [Test: Method: getSize()]
+	
+	var _base = [[68, buffer_grow, 2], [128, buffer_fixed, 4]];
+	
+	constructor = [new Buffer(_base[0][0], _base[0][1], _base[0][2]),
+				   new Buffer(_base[1][0], _base[1][1], _base[1][2])];
+	
+	var _result = [constructor[0].getSize(), constructor[1].getSize()];
+	var _expectedValue = [_base[0][0], _base[1][0]];
+	
+	unitTest.assert_equal("Method: getSize()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor[0].destroy();
+	constructor[1].destroy();
 	
 #endregion
 #region [Test: Method: fill()]
@@ -354,7 +354,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: toHashMD5()]
+#region [Test: Method: toHashMD5()]
 	
 	var _value = 31;
 	var _base = [12, buffer_grow, 3];
@@ -372,7 +372,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: toHashSHA1()]
+#region [Test: Method: toHashSHA1()]
 	
 	var _value = 13;
 	var _base = [11, buffer_fixed, 2];
@@ -390,7 +390,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: toHashCRC32()]
+#region [Test: Method: toHashCRC32()]
 	
 	var _value = 12;
 	var _base = [10, buffer_wrap, 1];
