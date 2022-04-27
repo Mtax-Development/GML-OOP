@@ -57,7 +57,7 @@ function SurfaceRenderer() constructor
 						var _other = argument[0];
 						
 						surface = ((instanceof(_other.surface) == "Surface")
-								  ? new Surface(_other.surface.ID) : _other.surface);
+								   ? new Surface(_other.surface) : _other.surface);
 						
 						switch (instanceof(_other.location))
 						{
