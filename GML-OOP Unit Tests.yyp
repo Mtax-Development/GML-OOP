@@ -47,7 +47,7 @@
     {"id":{"name":"unitTest_Color4","path":"objects/unitTest_Color4/unitTest_Color4.yy",},"order":3,},
     {"id":{"name":"unitTest_ArrayParser","path":"objects/unitTest_ArrayParser/unitTest_ArrayParser.yy",},"order":1,},
     {"id":{"name":"unitTest_Stack","path":"objects/unitTest_Stack/unitTest_Stack.yy",},"order":5,},
-    {"id":{"name":"unitTest_SpriteDraw","path":"objects/unitTest_SpriteDraw/unitTest_SpriteDraw.yy",},"order":2,},
+    {"id":{"name":"unitTest_SpriteRenderer","path":"objects/unitTest_SpriteRenderer/unitTest_SpriteRenderer.yy",},"order":2,},
     {"id":{"name":"PARENT_unitTest","path":"objects/PARENT_unitTest/PARENT_unitTest.yy",},"order":5,},
   ],
   "Options": [
