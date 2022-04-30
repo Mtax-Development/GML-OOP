@@ -20,29 +20,49 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	array_push(_result, constructor.isActive());
 	array_push(_expectedValue, _element[1][1]);
 	
-	unitTest.assert_equal(("Construction: New constructor / Activation / Methods: isFunctional() / " +
-						  "isActive()"),
+	unitTest.assert_equal("Construction: New constructor / Activation / Methods: isFunctional() / " +
+						  "isActive()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new Shader();
+	
+	var _result = constructor.ID;
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy / Method: setUniformFloat()]
 	
-	var _element = [[asset[0], asset[1], "float"], [0.4]];
+	var _element = [[asset[0], asset[1], "float"], [0.4], [function(_) {return _;}, "argument"]];
 	
 	constructor = [new Shader(_element[0][0])];
 	constructor[0].setActive(true);
 	constructor[0].setUniformFloat(_element[0][1], _element[1][0]);
 	constructor[0].setActive(false);
+	constructor[0].event.beforeActivation.callback = _element[2][0];
+	constructor[0].event.beforeActivation.argument = _element[2][1];
+	constructor[0].event.afterActivation.callback = _element[2][0];
+	constructor[0].event.afterActivation.argument = _element[2][1];
 	constructor[1] = new Shader(constructor[0]);
 	
 	var _result = [constructor[1].isFunctional(), constructor[1].ID, constructor[1].name,
 				   constructor[1].compiled, (constructor[0].uniform != constructor[1].uniform),
 				   constructor[1].uniform.testFloat.value, constructor[1].uniform.testFloat.type,
-				   (constructor[1].uniform.testFloat.value >= 0)];
+				   (constructor[1].uniform.testFloat.value >= 0),
+				   constructor[1].event.beforeActivation.callback,
+				   constructor[1].event.beforeActivation.argument,
+				   constructor[1].event.afterActivation.callback,
+				   constructor[1].event.afterActivation.argument];
 	var _expectedValue = [true, constructor[0].ID, constructor[0].name, constructor[0].compiled,
-						  true, _element[1][0], _element[0][2], true];
+						  true, _element[1][0], _element[0][2], true, _element[2][0], _element[2][1],
+						  _element[2][0], _element[2][1]];
 	
 	unitTest.assert_equal("Construction: Constructor copy / Method: setUniformFloat()",
 						  _result[0], _expectedValue[0],
@@ -52,7 +72,11 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5],
 						  _result[6], _expectedValue[6],
-						  _result[7], _expectedValue[7]);
+						  _result[7], _expectedValue[7],
+						  _result[8], _expectedValue[8],
+						  _result[9], _expectedValue[9],
+						  _result[10], _expectedValue[10],
+						  _result[11], _expectedValue[11]);
 	
 #endregion
 #region [Test: Method: setUniformInt()]
@@ -177,28 +201,28 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	constructor.event.beforeActivation.argument = [[_result, _value[0]]];
 	
 	constructor.event.afterActivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterActivation.argument = [_result, _value[1]];
+	constructor.event.afterActivation.argument = [[_result, _value[1]]];
 	
 	constructor.event.beforeDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
+	constructor.event.beforeDeactivation.argument = [[_result, _value[2]]];
 	
 	constructor.event.afterDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterDeactivation.argument = [_result, _value[3]];
+	constructor.event.afterDeactivation.argument = [[_result, _value[3]]];
 	
 	constructor.setActive(true).setActive(false);
 	
