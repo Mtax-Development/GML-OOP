@@ -81,11 +81,6 @@ asset = [TestObject];
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: setActive]
-	
-	unitTest.assert_untestable("Method: setActive()");
-	
-#endregion
 #region [Test: Method: createInstance()]
 	
 	var _element = asset[0];
@@ -99,6 +94,11 @@ asset = [TestObject];
 	unitTest.assert_equal("Method: createInstance()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: setActive()]
+	
+	unitTest.assert_untestable("Method: setActive()");
 	
 #endregion
 #region [Test: Method: toString()]
