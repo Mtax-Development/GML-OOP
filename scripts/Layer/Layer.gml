@@ -672,8 +672,9 @@ function Layer() constructor
 			}
 			
 			// @argument			{int:instance|int:object|all} target
-			// @description			Destroy the specified instance, objects or all instances of this
-			//						Layer.
+			// @description			Destroy the specified or all instances or objects of this Layer.
+			//						If {all} is specified, the instances will be destroyed instantly.
+			//						Otherwise, they will remain until the next application frame.
 			static destroyInstance = function(_target)
 			{
 				if ((is_real(ID)) and (layer_exists(ID)))
