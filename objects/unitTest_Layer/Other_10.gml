@@ -39,6 +39,17 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy();
 	
 #endregion
+#region [Test: Construction: Empty]
+	
+	constructor = new Layer();
+	
+	var _result = constructor.ID;
+	var _expectedValue = undefined;
+	
+	unitTest.assert_equal("Construction: Empty",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [3, "LayerToCopy", "CopiedLayer"];
@@ -129,12 +140,49 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: createParticleSystem()]
+	
+	var _base = 7;
+	
+	constructor = new Layer(_base);
+	var _element = constructor.createParticleSystem();
+	
+	var _result = [_element.isFunctional(), constructor.particleSystemList.getValue(0)];
+	var _expectedValue = [true, _element];
+	
+	unitTest.assert_equal("Method: createParticleSystem()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: hasInstance()]
+	
+	//|The built-in layer_has_instance() function is currently broken.
+	// It returns -1 instead of false if the instance does not exist.
+	var _element = [[asset[1], new Vector2(0, 0)]];
+	var _base = 8;
+	
+	constructor = new Layer(_base);
+	_element[1][0] = constructor.createInstance(_element[0][0], _element[0][1]);
+	_element[1][1] = instance_create_depth(_element[0][1].x, _element[0][1].y, _base,
+										   _element[0][0]);
+	
+	var _result = [constructor.hasInstance(_element[1][0]), constructor.hasInstance(_element[1][1])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: hasInstance(BROKEN IN ENGINE)",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: getElements()]
 	
 	var _element = [[new Vector2(1, 1), new Vector2(16, 16), new Vector2(25, 25)]];
 	_element[1] = [[new Sprite(asset[0])], [asset[2], _element[0][0], _element[0][1]],
 				   [new Sprite(asset[4])]];
-	var _base = 8;
+	var _base = 9;
 	
 	constructor = new Layer(_base);
 	_element[2] = [constructor.createBackground(_element[1][0][0]),
@@ -155,26 +203,6 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 						  _result[2], _expectedValue[2]);
 	
 	constructor.destroy();
-	
-#endregion
-#region [Test: Method: hasInstance()]
-	
-	//|The built-in layer_has_instance() function is currently broken.
-	// It returns -1 instead of false if the instance does not exist.
-	var _element = [[asset[1], new Vector2(0, 0)]];
-	var _base = 9;
-	
-	constructor = new Layer(_base);
-	_element[1][0] = constructor.createInstance(_element[0][0], _element[0][1]);
-	_element[1][1] = instance_create_depth(_element[0][1].x, _element[0][1].y, _base,
-										   _element[0][0]);
-	
-	var _result = [constructor.hasInstance(_element[1][0]), constructor.hasInstance(_element[1][1])];
-	var _expectedValue = [true, false];
-	
-	unitTest.assert_equal("Method: hasInstance(BROKEN IN ENGINE)",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: setLocation()]
@@ -245,6 +273,23 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: setShader()]
+	
+	var _element = new Shader(TestShader);
+	var _base = 16;
+	
+	constructor = new Layer(_base);
+	constructor.setShader(_element);
+	
+	var _result = constructor.shader;
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: setShader()",
+						  _result, _expectedValue);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Method: setFunctionDrawBegin()]
 	
 	var _element = (function() {var _function_drawBegin = false; _function_drawBegin = true;});
@@ -279,48 +324,37 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy();
 	
 #endregion
-#region [Test: Method: setShader()]
+#region [Test: Method: destroyInstance()]
 	
-	var _element = new Shader(TestShader);
-	var _base = 16;
-	
-	constructor = new Layer(_base);
-	constructor.setShader(_element);
-	
-	var _result = constructor.shader;
-	var _expectedValue = _element;
-	
-	unitTest.assert_equal("Method: setShader()",
-						  _result, _expectedValue);
-	
-	constructor.destroy();
-	
-#endregion
-#region [Test: Method: destroyInstances()]
-	
-	var _element = [asset[1], new Vector2(0, 0), 5];
+	var _element = [[asset[1], new Vector2(0, 0), 5], []];
 	var _base = 17;
 	
 	constructor = new Layer(_base);
 	
-	repeat (_element[2])
+	repeat (_element[0][2])
 	{
-		constructor.createInstance(_element[0], _element[1]);
+		array_push(_element[1], constructor.createInstance(_element[0][0], _element[0][1]));
 	}
 	
 	var _result = [array_length(constructor.getElements()), constructor.instanceList.getSize()];
-	var _expectedValue = [_element[2], _element[2]];
+	var _expectedValue = [_element[0][2], _element[0][2]];
 	
-	constructor.destroyInstances();
+	constructor.destroyInstance(_element[1][(array_length(_element[1]) - 1)]);
+	
+	array_push(_result, constructor.instanceList.getSize());
+	array_push(_expectedValue, (_element[0][2] - 1));
+	
+	constructor.destroyInstance(all);
 	
 	array_push(_result, array_length(constructor.getElements()), constructor.instanceList.getSize());
 	array_push(_expectedValue, 0, 0);
 	
-	unitTest.assert_equal("Method: destroyInstances()",
+	unitTest.assert_equal("Method: destroyInstance()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3]);
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4]);
 	
 	constructor.destroy();
 	
@@ -745,7 +779,63 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor[1].destroy();
 	
 #endregion
-#region [Test: BackgroundElement - Method: setStretched()]
+#region [Test: BackgroundElement - Methods: setSprite() / setScale() / setColor() / setAlpha() / ...]
+	
+	var _element = [[asset[0]], [-1, new Scale(0.5, 0.75), c_red, 0.7, 1, 14]];
+	_element[0][1] = new Sprite(_element[0][0]);
+	var _base = 35;
+	
+	constructor = new Layer(_base);
+	_element[2][0] = constructor.createBackground(_element[0][1]);
+	_element[2][0].setSprite();
+	layer_background_sprite(_element[2][0].ID, -1);
+	
+	var _result = [layer_background_get_sprite(_element[2][0].ID)];
+	var _expectedValue = [_element[1][0]];
+	
+	_element[2][0].setSprite(_element[0][1]);
+	_element[2][0].setScale(_element[1][1]);
+	_element[2][0].setColor(_element[1][2]);
+	_element[2][0].setAlpha(_element[1][3]);
+	_element[2][0].setFrame(_element[1][4]);
+	_element[2][0].setSpeed(_element[1][5]);
+	
+	array_push(_result, _element[2][0].sprite, _element[2][0].scale, _element[2][0].color,
+						_element[2][0].alpha, _element[2][0].frame, _element[2][0].speed,
+						layer_background_get_sprite(_element[2][0].ID),
+						layer_background_get_xscale(_element[2][0].ID),
+						layer_background_get_yscale(_element[2][0].ID),
+						layer_background_get_blend(_element[2][0].ID),
+						layer_background_get_alpha(_element[2][0].ID),
+						layer_background_get_index(_element[2][0].ID),
+						layer_background_get_speed(_element[2][0].ID));
+	
+	array_push(_expectedValue, _element[0][1], _element[1][1], _element[1][2], _element[1][3],
+							   _element[1][4], _element[1][5], _element[0][1].ID, _element[1][1].x,
+							   _element[1][1].y, _element[1][2], _element[1][3], _element[1][4],
+							   _element[1][5]);
+	
+	unitTest.assert_equal("BackgroundElement - Methods: setSprite() / setScale() / setColor() / " +
+						  "setAlpha() / setFrame() / setSpeed()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7],
+						  _result[8], _expectedValue[8],
+						  _result[9], _expectedValue[9],
+						  _result[10], _expectedValue[10],
+						  _result[11], _expectedValue[11],
+						  _result[12], _expectedValue[12]);
+	
+	_element[2][0].destroy();
+	constructor.destroy();
+	
+#endregion
+#region [Test: BackgroundElement - Method: setStretch()]
 	
 	var _element = [[asset[0]]];
 	_element[0][1] = new Sprite(_element[0][0]);
@@ -763,7 +853,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	array_push(_result, layer_background_get_stretch(_element[1][0].ID), _element[1][0].stretch);
 	array_push(_expectedValue, false, false);
 	
-	unitTest.assert_equal("BackgroundElement - Method: setStretched()",
+	unitTest.assert_equal("BackgroundElement - Method: setStretch()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -833,62 +923,6 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3]);
 	
-	constructor.destroy();
-	
-#endregion
-#region [Test: BackgroundElement - Methods: setSprite() / setScale() / setColor() / setAlpha() / ...]
-	
-	var _element = [[asset[0]], [-1, new Scale(0.5, 0.75), c_red, 0.7, 1, 14]];
-	_element[0][1] = new Sprite(_element[0][0]);
-	var _base = 35;
-	
-	constructor = new Layer(_base);
-	_element[2][0] = constructor.createBackground(_element[0][1]);
-	_element[2][0].setSprite();
-	layer_background_sprite(_element[2][0].ID, -1);
-	
-	var _result = [layer_background_get_sprite(_element[2][0].ID)];
-	var _expectedValue = [_element[1][0]];
-	
-	_element[2][0].setSprite(_element[0][1]);
-	_element[2][0].setScale(_element[1][1]);
-	_element[2][0].setColor(_element[1][2]);
-	_element[2][0].setAlpha(_element[1][3]);
-	_element[2][0].setFrame(_element[1][4]);
-	_element[2][0].setSpeed(_element[1][5]);
-	
-	array_push(_result, _element[2][0].sprite, _element[2][0].scale, _element[2][0].color,
-						_element[2][0].alpha, _element[2][0].frame, _element[2][0].speed,
-						layer_background_get_sprite(_element[2][0].ID),
-						layer_background_get_xscale(_element[2][0].ID),
-						layer_background_get_yscale(_element[2][0].ID),
-						layer_background_get_blend(_element[2][0].ID),
-						layer_background_get_alpha(_element[2][0].ID),
-						layer_background_get_index(_element[2][0].ID),
-						layer_background_get_speed(_element[2][0].ID));
-	
-	array_push(_expectedValue, _element[0][1], _element[1][1], _element[1][2], _element[1][3],
-							   _element[1][4], _element[1][5], _element[0][1].ID, _element[1][1].x,
-							   _element[1][1].y, _element[1][2], _element[1][3], _element[1][4],
-							   _element[1][5]);
-	
-	unitTest.assert_equal("BackgroundElement - Methods: setSprite() / setScale() / setColor() / " +
-						  "setAlpha() / setFrame() / setSpeed()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3],
-						  _result[4], _expectedValue[4],
-						  _result[5], _expectedValue[5],
-						  _result[6], _expectedValue[6],
-						  _result[7], _expectedValue[7],
-						  _result[8], _expectedValue[8],
-						  _result[9], _expectedValue[9],
-						  _result[10], _expectedValue[10],
-						  _result[11], _expectedValue[11],
-						  _result[12], _expectedValue[12]);
-	
-	_element[2][0].destroy();
 	constructor.destroy();
 	
 #endregion
@@ -1639,6 +1673,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 #endregion
 #region [Test: ParticleSystem - Method: changeParent()]
 	
+	/*
 	var _base = 31;
 	
 	constructor = [new Layer(_base), new Layer(_base)];
@@ -1655,8 +1690,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 					   constructor.parent];
 		var _expectedValue = [0, constructor, other.constructor[1]];
 		
-		other.unitTest.assert_equal(("ParticleSystem - Method: changeParent(BROKEN IN ENGINE, " +
-									 "moves the Unit Test object to a destroyed layer)"),
+		other.unitTest.assert_equal(("ParticleSystem - Method: changeParent()"),
 									_result, _expectedValue);
 		
 		constructor.destroy();
@@ -1664,6 +1698,10 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
+	*/
+	
+	unitTest.assert_untestable("ParticleSystem - Method: changeParent(BROKEN IN ENGINE, " +
+							   "UNTESTABLE)");
 	
 #endregion
 #region [Test: ParticleSystem - Methods: clear() / getParticleCount()]
