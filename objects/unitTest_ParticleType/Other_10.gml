@@ -20,17 +20,28 @@ asset = [TestSprite];
 #endregion
 #region [Test: Construction: Constructor copy / Method: setShape()]
 	
-	var _element = pt_shape_line;
+	var _element = [pt_shape_line, function(_) {return _;}, "argument"];
 	
 	constructor = [new ParticleType()];
-	constructor[0].setShape(_element);
+	constructor[0].event.beforeCreation.callback = _element[1];
+	constructor[0].event.beforeCreation.argument = _element[2];
+	constructor[0].event.afterCreation.callback = _element[1];
+	constructor[0].event.afterCreation.argument = _element[2];
+	constructor[0].setShape(_element[0]);
 	constructor[1] = new ParticleType(constructor[0]);
 	
-	var _result = constructor[1].shape;
-	var _expectedValue = _element;
+	var _result = [constructor[1].shape, constructor[1].event.beforeCreation.callback,
+				   constructor[1].event.beforeCreation.argument,
+				   constructor[1].event.afterCreation.callback,
+				   constructor[1].event.afterCreation.argument];
+	var _expectedValue = [_element[0], _element[1], _element[2], _element[1], _element[2]];
 	
 	unitTest.assert_equal("Construction: Constructor copy / Method: setShape()",
-						  _result, _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
@@ -77,6 +88,22 @@ asset = [TestSprite];
 	constructor.destroy();
 	
 #endregion
+#region [Test: Method: setScale()]
+	
+	var _element = new Scale(0.35, 0.678);
+	
+	constructor = new ParticleType();
+	constructor.setScale(_element);
+	
+	var _result = constructor.scale;
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: setScale()",
+						  _result, _expectedValue);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Method: setSize()]
 	
 	var _element = [new Range(0.25, 0.998), true, true];
@@ -91,22 +118,6 @@ asset = [TestSprite];
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
-	
-	constructor.destroy();
-	
-#endregion
-#region [Test: Method: setScale()]
-	
-	var _element = new Scale(0.35, 0.678);
-	
-	constructor = new ParticleType();
-	constructor.setScale(_element);
-	
-	var _result = constructor.scale;
-	var _expectedValue = _element;
-	
-	unitTest.assert_equal("Method: setScale()",
-						  _result, _expectedValue);
 	
 	constructor.destroy();
 	
@@ -196,22 +207,6 @@ asset = [TestSprite];
 	var _expectedValue = _element;
 	
 	unitTest.assert_equal("Method: setLife()",
-						  _result, _expectedValue);
-	
-	constructor.destroy();
-	
-#endregion
-#region [Test: Method: setLife()]
-	
-	var _element = true;
-	
-	constructor = new ParticleType();
-	constructor.setBlend(_element);
-	
-	var _result = constructor.blend_additive;
-	var _expectedValue = _element;
-	
-	unitTest.assert_equal("Method: setBlend()",
 						  _result, _expectedValue);
 	
 	constructor.destroy();
@@ -327,6 +322,22 @@ asset = [TestSprite];
 	unitTest.assert_equal("Method: setColorHSV()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: setBlend()]
+	
+	var _element = true;
+	
+	constructor = new ParticleType();
+	constructor.setBlend(_element);
+	
+	var _result = constructor.blend_additive;
+	var _expectedValue = _element;
+	
+	unitTest.assert_equal("Method: setBlend()",
+						  _result, _expectedValue);
 	
 	constructor.destroy();
 	
@@ -610,14 +621,14 @@ asset = [TestSprite];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeCreation.argument = [_result, _value[0]];
+	constructor.event.beforeCreation.argument = [[_result, _value[0]]];
 	
 	constructor.event.afterCreation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterCreation.argument = [_result, _value[1]];
+	constructor.event.afterCreation.argument = [[_result, _value[1]]];
 	
 	constructor.create(_element[1][1], _element[0][0]);
 	
