@@ -85,14 +85,22 @@ asset = [TestSprite];
 #endregion
 #region [Test: Construction: Constructor copy]
 	
-	var _element = [[new Surface(new Vector2(2, 2))]];
-	_element[1][0] = sprite_create_from_surface(_element[0][0].ID, 0, 0, 1, 1, false, false, 0, 0);
+	var _element = [[new Surface(new Vector2(2, 2))], [function(_) {return _;}, "argument"]];
+	_element[2][0] = sprite_create_from_surface(_element[0][0].ID, 0, 0, 1, 1, false, false, 0, 0);
 	
-	constructor = [new Sprite(_element[1][0])];
+	constructor = [new Sprite(_element[2][0])];
+	constructor[0].event.beforeRender.callback = _element[1][0];
+	constructor[0].event.beforeRender.argument = _element[1][1];
+	constructor[0].event.afterRender.callback = _element[1][0];
+	constructor[0].event.afterRender.argument = _element[1][1];
 	constructor[1] = new Sprite(constructor[0]);
 	
-	var _result = [(constructor[1].ID != _element), constructor[1].isFunctional()];
-	var _expectedValue = [true, true];
+	var _result = [(constructor[1].ID != _element), constructor[1].isFunctional(),
+				   constructor[1].event.beforeRender.callback,
+				   constructor[1].event.beforeRender.argument,
+				   constructor[1].event.afterRender.callback,
+				   constructor[1].event.afterRender.argument];
+	var _expectedValue = [true, true, _element[1][0], _element[1][1], _element[1][0], _element[1][1]];
 	
 	constructor[1].destroy();
 	
@@ -101,7 +109,12 @@ asset = [TestSprite];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6]);
 	
 	_element[0][0].destroy();
 	constructor[0].destroy();
@@ -180,6 +193,23 @@ asset = [TestSprite];
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: Method: getTexel()]
+	
+	var _base = asset[0];
+	var _element = [0];
+	_element[1] = sprite_get_texture(_base, _element[0]);
+	_element[2] = new Vector2(texture_get_texel_width(_element[1]),
+							  texture_get_texel_height(_element[1]));
+	
+	constructor = new Sprite(_base);
+	
+	var _result = constructor.getTexel(_element[0]);
+	var _expectedValue = _element[2];
+	
+	unitTest.assert_equal("Method: getTexel()",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: getUV()]
 	
 	var _element = [[asset[0]], ["Vector4"]];
@@ -195,30 +225,6 @@ asset = [TestSprite];
 	unitTest.assert_equal("Method: getUV()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
-	
-#endregion
-#region [Test: Method: setSpeed()]
-	
-	var _element = [[new Surface(new Vector2(2, 2))]];
-	_element[1] = [sprite_create_from_surface(_element[0][0].ID, 0, 0, 1, 1, false, false, 0, 0)];
-	_element[2] = [14, spritespeed_framespersecond];
-	
-	constructor = new Sprite(_element[1][0]);
-	constructor.setSpeed(_element[2][0], _element[2][1]);
-	
-	var _result = [constructor.speed, constructor.speed_type,
-				   (constructor.speed == sprite_get_speed(_element[1][0])),
-				   (constructor.speed_type == sprite_get_speed_type(_element[1][0]))];
-	var _expectedValue = [_element[2][0], _element[2][1], true, true];
-	
-	unitTest.assert_equal("Method: setSpeed()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3]);
-	
-	_element[0][0].destroy();
-	constructor.destroy();
 	
 #endregion
 #region [Test: Method: setNineslice()]
@@ -242,6 +248,52 @@ asset = [TestSprite];
 	var _expectedValue = [_element[3][0], _element[3][1], _element[3][2], _element[3][3]];
 	
 	unitTest.assert_equal("Method: setNineslice()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+	_element[0][0].destroy();
+	constructor.destroy();
+	
+#endregion
+#region [Test: Method: setOrigin()]
+	
+	var _base = asset[0];
+	var _element = [new Vector2(sprite_get_xoffset(_base), sprite_get_yoffset(_base)),
+					new Vector2((sprite_get_xoffset(_base) + 1), (sprite_get_yoffset(_base) + 2))];
+	
+	constructor = new Sprite(_base);
+	constructor.setOrigin(_element[1]);
+	
+	var _result = [constructor.origin.x, constructor.origin.y, sprite_get_xoffset(_base),
+				   sprite_get_yoffset(_base)];
+	var _expectedValue = [_element[1].x, _element[1].y, _element[1].x, _element[1].y];
+	
+	unitTest.assert_equal("Method: setOrigin()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+	constructor.setOrigin(_element[0]);
+	
+#endregion
+#region [Test: Method: setSpeed()]
+	
+	var _element = [[new Surface(new Vector2(2, 2))]];
+	_element[1] = [sprite_create_from_surface(_element[0][0].ID, 0, 0, 1, 1, false, false, 0, 0)];
+	_element[2] = [14, spritespeed_framespersecond];
+	
+	constructor = new Sprite(_element[1][0]);
+	constructor.setSpeed(_element[2][0], _element[2][1]);
+	
+	var _result = [constructor.speed, constructor.speed_type,
+				   (constructor.speed == sprite_get_speed(_element[1][0])),
+				   (constructor.speed_type == sprite_get_speed_type(_element[1][0]))];
+	var _expectedValue = [_element[2][0], _element[2][1], true, true];
+	
+	unitTest.assert_equal("Method: setSpeed()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
@@ -281,59 +333,20 @@ asset = [TestSprite];
 	("Method: render()",
 	 function()
 	 {
-		var _element = [other.asset[0], new Vector2(200, 200)];
+		var _element = [other.asset[0], new Vector2(2, 2), 0, new Scale(0.9, 0.95), new Angle(45),
+						new Color4(c_red, c_green, c_blue, c_black), c_yellow, 0.9,
+						new Vector4(0, 0, (sprite_get_width(other.asset[0]) - 1),
+									(sprite_get_height(other.asset[0]) - 1)), new Vector2(1, 1),
+						new Surface(new Vector2(sprite_get_width(other.asset[0]),
+												sprite_get_height(other.asset[0])))];
 	
 		constructor = new Sprite(_element[0]);
 		constructor.render(_element[1]);
-	 }
-	);
-	
-#endregion
-#region [Test: Method: renderPart()]
-	
-	unitTest.assert_executable
-	("Method: renderPart()",
-	 function()
-	 {
-		var _element = [other.asset[0], new Vector2(200, 200), new Vector4(0, 0, 1, 1), 0,
-						new Scale(0.5, 0.75), c_lime, 0.897];
-	
-		constructor = new Sprite(_element[0]);
-		constructor.renderPart(_element[1], _element[2]);
-		constructor.renderPart(_element[1], _element[2], _element[3], _element[4], _element[5],
-							   _element[6]);
-	 }
-	);
-	
-#endregion
-#region [Test: Method: renderGeneral()]
-	
-	unitTest.assert_executable
-	("Method: renderGeneral()",
-	 function()
-	 {
-		var _element = [other.asset[0], new Vector2(250, 250), new Vector4(0, 0, 1, 1), 0,
-						new Scale(0.5, 0.75), new Angle(30), c_navy, 0.789];
-	
-		constructor = new Sprite(_element[0]);
-		constructor.renderGeneral(_element[1]);
-		constructor.renderGeneral(_element[1], _element[2], _element[3], _element[4], _element[5],
-								  _element[6], _element[7]);
-	 }
-	);
-	
-#endregion
-#region [Test: Method: renderSize()]
-	
-	unitTest.assert_executable
-	("Method: renderSize()",
-	 function()
-	 {
-		var _element = [other.asset[0], new Vector2(300, 300), new Vector2(15, 15), 0, c_red, 0.756];
+		constructor.render(_element[1], undefined, undefined, undefined, _element[6]);
+		constructor.render(_element[1], _element[2], _element[3], _element[4], _element[5],
+						   _element[7], _element[8], _element[9], _element[10]);
 		
-		constructor = new Sprite(_element[0]);
-		constructor.renderSize(_element[1], _element[2]);
-		constructor.renderSize(_element[1], _element[2], _element[3], _element[4], _element[5]);
+		_element[10].destroy();
 	 }
 	);
 	
@@ -471,14 +484,14 @@ asset = [TestSprite];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
+	constructor.event.beforeRender.argument = [[_result, _value[0]]];
 	
 	constructor.event.afterRender.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.argument = [[_result, _value[1]]];
 	
 	constructor.render(_element[1]);
 	
