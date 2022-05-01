@@ -5,6 +5,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor
+///							- Wrapper: {int:surface} surface
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Surface} other
 function Surface() constructor
@@ -126,6 +127,12 @@ function Surface() constructor
 						
 						ID = surface_create(max(1, size.x), max(1, size.y));
 						surface_copy(ID, 0, 0, _other.ID);
+					}
+					else if (is_real(argument[0]))
+					{
+						//|Construction type: Wrapper.
+						ID = argument[0];
+						size = new Vector2(surface_get_width(ID), surface_get_height(ID));
 					}
 					else
 					{
