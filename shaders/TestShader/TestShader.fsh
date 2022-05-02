@@ -25,3 +25,4 @@ void main()
 	vec4 v_vColor = vec4(testFloat, (0.1 * float(testInt)), (v_vColor.b - samplerParse.x), alpha);
     gl_FragColor = (v_vColor * texture2D(gm_BaseTexture, v_vTexcoord));
 }
+

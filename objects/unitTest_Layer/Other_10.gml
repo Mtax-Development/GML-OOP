@@ -2064,3 +2064,4 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	constructor.destroy();
 	
 #endregion
+

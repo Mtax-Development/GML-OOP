@@ -263,3 +263,4 @@ asset = [TestCollisionSprite];
 						  _result, _expectedValue);
 	
 #endregion
+

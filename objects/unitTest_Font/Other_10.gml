@@ -235,3 +235,4 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 						  _result, _expectedValue);
 	
 #endregion
+

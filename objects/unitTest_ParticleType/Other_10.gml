@@ -641,3 +641,4 @@ asset = [TestSprite];
 	constructor.destroy();
 	
 #endregion
+
