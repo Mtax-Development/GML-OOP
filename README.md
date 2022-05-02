@@ -1,17 +1,17 @@
 # About
 This branch contains Unit Tests for **GML-OOP**.    
-Their purpose is to ensure and prove that its every feature is possible to execute without errors and follows its intended behavior.
+Their purpose is to ensure and prove that its every feature is possible to execute without errors and follows intended behavior.
 
 
 # Initialization
 
-The following GML dependencies are required:
+The following GameMaker Language dependencies are required:
 
 * [GML-OOP](https://github.com/Mtax-Development/GML-OOP) itself.
 * [UnitTest](https://github.com/Mtax-Development/GML-Development-Toolbox/blob/master/scripts/UnitTest/UnitTest.gml) constructor from [GML Development Toolbox](https://github.com/Git-Mtax/GML-Development-Toolbox).
 
 Include them in the project found in this branch.    
-The preferred way to do so is to use Local Packages. In GameMaker Studio 2 IDE, this can be done from the `Tools` toolbar menu, from which you can use the option `Create Local Package` on open projects of the above dependencies to then load them into the Unit Test project using the `Import Local Package` option.
+The preferred way to do so is to use Local Packages. In the GameMaker IDE, this can be done from the `Tools` toolbar menu, from which you can use the option `Create Local Package` on open projects of the above dependencies to then load them into the Unit Test project using the `Import Local Package` option.
 
 
 # Usage
@@ -24,9 +24,9 @@ The `order_display` variable in its `Create Event` is a condition required to us
 
 # Expansion
 
-Most of steps necessary in creation of Unit Tests for new constructors have been automatized.
+Most of steps necessary in creation of Unit Tests for new constructors have been automated.
 
-Therefore, a proper constructor Unit Test has to fulfill the following requirements:
+A proper constructor Unit Test has to fulfill the following requirements:
 
 * Be a child of `PARENT_unitTest` and execute its inherited events.
 * Execute its Unit Tests in its `User Event 0` using the methods of `Unit Test` constructor referred to by the `unitTest` variable inherited from the parent.
