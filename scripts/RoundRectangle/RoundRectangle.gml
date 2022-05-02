@@ -635,3 +635,4 @@ function RoundRectangle() constructor
 		
 	#endregion
 }
+

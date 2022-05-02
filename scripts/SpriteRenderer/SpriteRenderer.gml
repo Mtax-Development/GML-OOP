@@ -403,3 +403,4 @@ function SpriteRenderer() constructor
 		
 	#endregion
 }
+

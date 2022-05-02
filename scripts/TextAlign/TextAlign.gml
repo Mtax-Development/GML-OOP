@@ -227,3 +227,4 @@ function TextAlign() constructor
 		
 	#endregion
 }
+

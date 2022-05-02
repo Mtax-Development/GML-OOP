@@ -676,3 +676,4 @@ function Shader() constructor
 		
 	#endregion
 }
+

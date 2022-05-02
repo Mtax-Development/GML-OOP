@@ -546,3 +546,4 @@ function Point() constructor
 		
 	#endregion
 }
+

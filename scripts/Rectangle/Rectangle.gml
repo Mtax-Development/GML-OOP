@@ -681,3 +681,4 @@ function Rectangle() constructor
 		
 	#endregion
 }
+

@@ -710,3 +710,4 @@ function Vector2() constructor
 		
 	#endregion
 }
+

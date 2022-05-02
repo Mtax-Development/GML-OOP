@@ -187,3 +187,4 @@ function Color2() constructor
 		
 	#endregion
 }
+

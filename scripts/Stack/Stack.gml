@@ -813,3 +813,4 @@ function Stack() constructor
 		
 	#endregion
 }
+

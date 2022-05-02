@@ -596,3 +596,4 @@ function Triangle() constructor
 		
 	#endregion
 }
+

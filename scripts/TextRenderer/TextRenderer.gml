@@ -444,3 +444,4 @@ function TextRenderer() constructor
 		
 	#endregion
 }
+

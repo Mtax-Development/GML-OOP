@@ -1209,3 +1209,4 @@ function Sprite() constructor
 		
 	#endregion
 }
+

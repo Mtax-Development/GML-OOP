@@ -772,3 +772,4 @@ function StringParser() constructor
 		
 	#endregion
 }
+
