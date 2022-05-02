@@ -103,6 +103,21 @@ asset = [TestCollisionSprite];
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: containsPoint()]
+	
+	var _base = new Vector4(0, 0, 25, 25);
+	var _element = [new Vector2(_base.x2, _base.y2), new Vector2((_base.x2 + 1), (_base.y2 + 1))];
+	
+	constructor = new RoundRectangle(_base);
+	
+	var _result = [constructor.containsPoint(_element[0]), constructor.containsPoint(_element[1])];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: containsPoint()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: cursorOver()]
 	
 	unitTest.assert_executable
@@ -245,14 +260,14 @@ asset = [TestCollisionSprite];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
+	constructor.event.beforeRender.argument = [[_result, _value[0]]];
 	
 	constructor.event.afterRender.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.argument = [[_result, _value[1]]];
 	
 	constructor.render();
 	
