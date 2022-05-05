@@ -346,7 +346,7 @@ function Vector2() constructor
 			{
 				if (_booleanSign)
 				{
-					return new Vector2(((x) ? 1 : -1), ((y) ? 1 : -1));
+					return new Vector2(((x > 0) ? 1 : -1), ((y > 0) ? 1 : -1));
 				}
 				else
 				{
