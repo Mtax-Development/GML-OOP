@@ -822,6 +822,8 @@ function Vector4() constructor
 				y1 = clamp(y1, _minimum_y, _maximum_y);
 				x2 = clamp(x2, _minimum_x, _maximum_x);
 				y2 = clamp(y2, _minimum_y, _maximum_y);
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2|Vector4} value
@@ -963,6 +965,8 @@ function Vector4() constructor
 				y1 = _y1;
 				x2 = _x2;
 				y2 = _y2;
+				
+				return self;
 			}
 			
 			// @argument			{real|Vector2|Vector4|Scale} value
