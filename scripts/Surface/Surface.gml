@@ -159,11 +159,13 @@ function Surface() constructor
 				{
 					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeCreation.callback))
+						var _callback_isArray = is_array(event.beforeCreation.callback);
+						var _argument_isArray = is_array(event.beforeCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeCreation.callback
 										 : [event.beforeCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeCreation.argument
 										 : array_create(_callback_count,
 														event.beforeCreation.argument));
@@ -174,8 +176,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -186,11 +189,13 @@ function Surface() constructor
 					
 					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterCreation.callback))
+						var _callback_isArray = is_array(event.afterCreation.callback);
+						var _argument_isArray = is_array(event.afterCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.afterCreation.callback
 										 : [event.afterCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterCreation.argument
 										 : array_create(_callback_count,
 														event.afterCreation.argument));
@@ -201,8 +206,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -446,11 +452,13 @@ function Surface() constructor
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeRender.callback))
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeRender.callback
 										 : [event.beforeRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
@@ -461,8 +469,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												    (((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -623,12 +632,16 @@ function Surface() constructor
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterRender.callback))
-										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
+										 ? event.afterRender.callback
+										 : [event.afterRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterRender.argument
-										 : array_create(_callback_count, event.afterRender.argument));
+										 : array_create(_callback_count,
+														event.afterRender.argument));
 						
 						var _i = 0;
 						repeat (_callback_count)
@@ -636,8 +649,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												    (((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -669,11 +683,13 @@ function Surface() constructor
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeRender.callback))
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeRender.callback
 										 : [event.beforeRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
@@ -684,8 +700,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -723,12 +740,16 @@ function Surface() constructor
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterRender.callback))
-										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
+										 ? event.afterRender.callback
+										 : [event.afterRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterRender.argument
-										 : array_create(_callback_count, event.afterRender.argument));
+										 : array_create(_callback_count,
+														event.afterRender.argument));
 						
 						var _i = 0;
 						repeat (_callback_count)
@@ -736,8 +757,9 @@ function Surface() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -781,11 +803,13 @@ function Surface() constructor
 						
 						if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 						{
-							var _callback = ((is_array(event.beforeActivation.callback))
+							var _callback_isArray = is_array(event.beforeActivation.callback);
+							var _argument_isArray = is_array(event.beforeActivation.argument);
+							var _callback = ((_callback_isArray)
 											 ? event.beforeActivation.callback
 											 : [event.beforeActivation.callback]);
 							var _callback_count = array_length(_callback);
-							var _argument = ((is_array(event.beforeActivation.argument))
+							var _argument = ((_argument_isArray)
 											 ? event.beforeActivation.argument
 											 : array_create(_callback_count,
 															event.beforeActivation.argument));
@@ -796,8 +820,10 @@ function Surface() constructor
 								if (is_method(_callback[_i]))
 								{
 									script_execute_ext(method_get_index(_callback[_i]),
-													   ((is_array(_argument[_i]) ? _argument[_i]
-																				 : [_argument[_i]])));
+														(((!_callback_isArray)
+														  and (_argument_isArray))
+														 ? _argument : ((is_array(_argument[_i])
+														 ? _argument[_i] : [_argument[_i]]))));
 								}
 								
 								++_i;
@@ -808,11 +834,13 @@ function Surface() constructor
 						
 						if ((is_struct(event)) and (event.afterActivation.callback != undefined))
 						{
-							var _callback = ((is_array(event.afterActivation.callback))
+							var _callback_isArray = is_array(event.afterActivation.callback);
+							var _argument_isArray = is_array(event.afterActivation.argument);
+							var _callback = ((_callback_isArray)
 											 ? event.afterActivation.callback
 											 : [event.afterActivation.callback]);
 							var _callback_count = array_length(_callback);
-							var _argument = ((is_array(event.afterActivation.argument))
+							var _argument = ((_argument_isArray)
 											 ? event.afterActivation.argument
 											 : array_create(_callback_count,
 															event.afterActivation.argument));
@@ -823,8 +851,10 @@ function Surface() constructor
 								if (is_method(_callback[_i]))
 								{
 									script_execute_ext(method_get_index(_callback[_i]),
-													   ((is_array(_argument[_i]) ? _argument[_i]
-																				 : [_argument[_i]])));
+														(((!_callback_isArray)
+														  and (_argument_isArray))
+														 ? _argument : ((is_array(_argument[_i])
+														 ? _argument[_i] : [_argument[_i]]))));
 								}
 								
 								++_i;
@@ -836,13 +866,15 @@ function Surface() constructor
 						if (surface_get_target() == ID)
 						{
 							if ((is_struct(event))
-							and (event.beforeDeactivation.callback != undefined))
+								and (event.beforeDeactivation.callback != undefined))
 							{
-								var _callback = ((is_array(event.beforeDeactivation.callback))
+								var _callback_isArray = is_array(event.beforeDeactivation.callback);
+								var _argument_isArray = is_array(event.beforeDeactivation.argument);
+								var _callback = ((_callback_isArray)
 												 ? event.beforeDeactivation.callback
 												 : [event.beforeDeactivation.callback]);
 								var _callback_count = array_length(_callback);
-								var _argument = ((is_array(event.beforeDeactivation.argument))
+								var _argument = ((_argument_isArray)
 												 ? event.beforeDeactivation.argument
 												 : array_create(_callback_count,
 																event.beforeDeactivation.argument));
@@ -853,10 +885,12 @@ function Surface() constructor
 									if (is_method(_callback[_i]))
 									{
 										script_execute_ext(method_get_index(_callback[_i]),
-														   ((is_array(_argument[_i])
-														    ? _argument[_i] : [_argument[_i]])));
+															(((!_callback_isArray)
+															  and (_argument_isArray))
+															 ? _argument : ((is_array(_argument[_i])
+															 ? _argument[_i] : [_argument[_i]]))));
 									}
-									
+								
 									++_i;
 								}
 							}
@@ -864,13 +898,15 @@ function Surface() constructor
 							surface_reset_target();
 							
 							if ((is_struct(event))
-							and (event.afterDeactivation.callback != undefined))
+								and (event.afterDeactivation.callback != undefined))
 							{
-								var _callback = ((is_array(event.afterDeactivation.callback))
+								var _callback_isArray = is_array(event.afterDeactivation.callback);
+								var _argument_isArray = is_array(event.afterDeactivation.argument);
+								var _callback = ((_callback_isArray)
 												 ? event.afterDeactivation.callback
 												 : [event.afterDeactivation.callback]);
 								var _callback_count = array_length(_callback);
-								var _argument = ((is_array(event.afterDeactivation.argument))
+								var _argument = ((_argument_isArray)
 												 ? event.afterDeactivation.argument
 												 : array_create(_callback_count,
 																event.afterDeactivation.argument));
@@ -881,8 +917,10 @@ function Surface() constructor
 									if (is_method(_callback[_i]))
 									{
 										script_execute_ext(method_get_index(_callback[_i]),
-														   ((is_array(_argument[_i])
-														    ? _argument[_i] : [_argument[_i]])));
+															(((!_callback_isArray)
+															  and (_argument_isArray))
+															 ? _argument : ((is_array(_argument[_i])
+															 ? _argument[_i] : [_argument[_i]]))));
 									}
 									
 									++_i;

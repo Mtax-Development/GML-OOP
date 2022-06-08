@@ -217,11 +217,13 @@ function Ellipse() constructor
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeRender.callback))
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeRender.callback
 										 : [event.beforeRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
@@ -232,8 +234,9 @@ function Ellipse() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -276,12 +279,16 @@ function Ellipse() constructor
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterRender.callback))
-										 ? event.afterRender.callback : [event.afterRender.callback]);
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
+										 ? event.afterRender.callback
+										 : [event.afterRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterRender.argument
-										 : array_create(_callback_count, event.afterRender.argument));
+										 : array_create(_callback_count,
+														event.afterRender.argument));
 						
 						var _i = 0;
 						repeat (_callback_count)
@@ -289,8 +296,9 @@ function Ellipse() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;

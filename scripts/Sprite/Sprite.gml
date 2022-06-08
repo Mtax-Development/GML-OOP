@@ -660,11 +660,13 @@ function Sprite() constructor
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeRender.callback))
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeRender.callback
 										 : [event.beforeRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
@@ -675,8 +677,9 @@ function Sprite() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -836,11 +839,13 @@ function Sprite() constructor
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterRender.callback))
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.afterRender.callback
 										 : [event.afterRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterRender.argument
 										 : array_create(_callback_count,
 														event.afterRender.argument));
@@ -851,8 +856,9 @@ function Sprite() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -886,11 +892,13 @@ function Sprite() constructor
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeRender.callback))
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeRender.callback
 										 : [event.beforeRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
@@ -901,8 +909,9 @@ function Sprite() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -953,11 +962,13 @@ function Sprite() constructor
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterRender.callback))
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.afterRender.callback
 										 : [event.afterRender.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterRender.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterRender.argument
 										 : array_create(_callback_count,
 														event.afterRender.argument));
@@ -968,8 +979,9 @@ function Sprite() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -1002,24 +1014,64 @@ function Sprite() constructor
 			{
 				if ((is_real(ID)) and (sprite_exists(ID)))
 				{
-					if ((is_struct(event))) and (is_method(event.beforeRender.callback))
+					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.beforeRender.callback),
-										   ((is_array(event.beforeRender.argument)
-											? event.beforeRender.argument
-											: [event.beforeRender.argument])));
+						var _callback_isArray = is_array(event.beforeRender.callback);
+						var _argument_isArray = is_array(event.beforeRender.argument);
+						var _callback = ((_callback_isArray)
+										 ? event.beforeRender.callback
+										 : [event.beforeRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((_argument_isArray)
+										 ? event.beforeRender.argument
+										 : array_create(_callback_count,
+														event.beforeRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
+							}
+							
+							++_i;
+						}
 					}
 					
 					draw_sprite_pos(ID, _frame, _location1.x, _location1.y, _location2.x,
 									_location2.y, _location3.x, _location3.y, _location4.x,
 									_location4.y, _alpha);
 									
-					if ((is_struct(event))) and (is_method(event.afterRender.callback))
+					if ((is_struct(event)) and (event.afterRender.callback != undefined))
 					{
-						script_execute_ext(method_get_index(event.afterRender.callback),
-										   ((is_array(event.afterRender.argument)
-											? event.afterRender.argument
-											: [event.afterRender.argument])));
+						var _callback_isArray = is_array(event.afterRender.callback);
+						var _argument_isArray = is_array(event.afterRender.argument);
+						var _callback = ((_callback_isArray)
+										 ? event.afterRender.callback
+										 : [event.afterRender.callback]);
+						var _callback_count = array_length(_callback);
+						var _argument = ((_argument_isArray)
+										 ? event.afterRender.argument
+										 : array_create(_callback_count,
+														event.afterRender.argument));
+						
+						var _i = 0;
+						repeat (_callback_count)
+						{
+							if (is_method(_callback[_i]))
+							{
+								script_execute_ext(method_get_index(_callback[_i]),
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
+							}
+							
+							++_i;
+						}
 					}
 				}
 				else

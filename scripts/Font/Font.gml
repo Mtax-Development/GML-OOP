@@ -352,11 +352,13 @@ function Font() constructor
 				{
 					if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeActivation.callback))
+						var _callback_isArray = is_array(event.beforeActivation.callback);
+						var _argument_isArray = is_array(event.beforeActivation.argument);
+						var _callback = ((_callback_isArray)
 											? event.beforeActivation.callback
 											: [event.beforeActivation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeActivation.argument))
+						var _argument = ((_argument_isArray)
 											? event.beforeActivation.argument
 											: array_create(_callback_count,
 														event.beforeActivation.argument));
@@ -367,8 +369,10 @@ function Font() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray)
+														and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -379,13 +383,15 @@ function Font() constructor
 					
 					if ((is_struct(event)) and (event.afterActivation.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterActivation.callback))
-										 ? event.afterActivation.callback
-										 : [event.afterActivation.callback]);
+						var _callback_isArray = is_array(event.afterActivation.callback);
+						var _argument_isArray = is_array(event.afterActivation.argument);
+						var _callback = ((_callback_isArray)
+											? event.afterActivation.callback
+											: [event.afterActivation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterActivation.argument))
-										 ? event.afterActivation.argument
-										 : array_create(_callback_count,
+						var _argument = ((_argument_isArray)
+											? event.afterActivation.argument
+											: array_create(_callback_count,
 														event.afterActivation.argument));
 						
 						var _i = 0;
@@ -394,8 +400,10 @@ function Font() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray)
+														and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;

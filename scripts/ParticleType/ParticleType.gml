@@ -1110,11 +1110,13 @@ function ParticleType() constructor
 				{
 					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeCreation.callback))
+						var _callback_isArray = is_array(event.beforeCreation.callback);
+						var _argument_isArray = is_array(event.beforeCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeCreation.callback
 										 : [event.beforeCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeCreation.argument
 										 : array_create(_callback_count,
 														event.beforeCreation.argument));
@@ -1125,8 +1127,9 @@ function ParticleType() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -1146,11 +1149,13 @@ function ParticleType() constructor
 					
 					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterCreation.callback))
+						var _callback_isArray = is_array(event.afterCreation.callback);
+						var _argument_isArray = is_array(event.afterCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.afterCreation.callback
 										 : [event.afterCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterCreation.argument
 										 : array_create(_callback_count,
 														event.afterCreation.argument));
@@ -1161,8 +1166,9 @@ function ParticleType() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -1197,11 +1203,13 @@ function ParticleType() constructor
 				{
 					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.beforeCreation.callback))
+						var _callback_isArray = is_array(event.beforeCreation.callback);
+						var _argument_isArray = is_array(event.beforeCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.beforeCreation.callback
 										 : [event.beforeCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.beforeCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.beforeCreation.argument
 										 : array_create(_callback_count,
 														event.beforeCreation.argument));
@@ -1212,8 +1220,9 @@ function ParticleType() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
@@ -1452,11 +1461,13 @@ function ParticleType() constructor
 					
 					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
-						var _callback = ((is_array(event.afterCreation.callback))
+						var _callback_isArray = is_array(event.afterCreation.callback);
+						var _argument_isArray = is_array(event.afterCreation.argument);
+						var _callback = ((_callback_isArray)
 										 ? event.afterCreation.callback
 										 : [event.afterCreation.callback]);
 						var _callback_count = array_length(_callback);
-						var _argument = ((is_array(event.afterCreation.argument))
+						var _argument = ((_argument_isArray)
 										 ? event.afterCreation.argument
 										 : array_create(_callback_count,
 														event.afterCreation.argument));
@@ -1467,8 +1478,9 @@ function ParticleType() constructor
 							if (is_method(_callback[_i]))
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-												   ((is_array(_argument[_i]) ? _argument[_i]
-																			 : [_argument[_i]])));
+													(((!_callback_isArray) and (_argument_isArray))
+													 ? _argument : ((is_array(_argument[_i])
+													 ? _argument[_i] : [_argument[_i]]))));
 							}
 							
 							++_i;
