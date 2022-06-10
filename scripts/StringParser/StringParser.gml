@@ -162,58 +162,74 @@ function StringParser() constructor
 			static split = function(_separator, _returnParser = false)
 			{
 				var _string = string(ID);
-				var _string_length = string_length(_string);
 				var _string_separator = string(_separator);
-				var _separator_lenght = string_length(_string_separator);
 				var _separator_count = string_count(_string_separator, _string);
+				var _string_length = string_length(_string);
+				var _separator_length = string_length(_separator);
 				
-				if ((_string_length > 1) and (_separator_lenght >= 1) and (_separator_count >= 1)
-				and (_string_length > (_separator_lenght + 1)))
+				if (_separator_length > 0)
 				{
-					var _position_copy = 1;
-					var _result = [];
+					var _separator_count = ((_string_length -
+										     string_length(string_replace_all(_string, _separator,
+																			  "")))
+										    / _separator_length);
 					
-					var _i = 2;
-					var _loopCount = (_string_length + 1);
-					repeat (_loopCount)
+					if ((_separator_count > 0)
+					and (_string_length != (_separator_length * _separator_count)))
 					{
-						if ((string_copy(_string, _i, _separator_lenght) == _string_separator) 
-						or (_i == _loopCount))
+						var _result = [];
+						var _segment;
+						var _position = 1;
+						
+						repeat (_separator_count)
 						{
-							var _segment = string_copy(_string, _position_copy,
-													   (_i - _position_copy));
-							
-							if ((string_length(_segment) > 0) and (_segment != _string_separator))
+							if (string_copy(_string, _position, _separator_length) != _separator)
 							{
-								_result[array_length(_result)] = string_replace_all(_segment,
-																					_string_separator,
-																					"");
+								var _segment_end = string_pos_ext(_string_separator, _string,
+																  _position);
+								var _segment_length = (_segment_end - _position);
+								
+								if (_segment_length > 0)
+								{
+									_segment = string_copy(_string, _position, _segment_length);
+									
+									if (_segment != _separator)
+									{
+										array_push(_result, _segment);
+									}
+								}
+								
+								_position = _segment_end;
 							}
 							
-							_i += _separator_lenght;
-							_position_copy = _i;
+							_position += _separator_length;
 						}
 						
-						++_i;
-					}
-					
-					if (_returnParser)
-					{
-						var _i = 0;
-						repeat (array_length(_result))
+						_position = string_last_pos(_string_separator, _string) + _separator_length;
+						_segment = string_copy(_string, _position,
+											   (_string_length - _position + 1));
+						
+						if (string_length(_segment) > 0) and (_segment != _separator)
 						{
-							_result[_i] = new StringParser(_result[_i]);
-							
-							++_i;
+							array_push(_result, _segment);
 						}
+						
+						if (_returnParser)
+						{
+							var _i = 0;
+							repeat (array_length(_result))
+							{
+								_result[_i] = new StringParser(_result[_i]);
+								
+								++_i;
+							}
+						}
+						
+						return _result;
 					}
-					
-					return _result;
 				}
-				else
-				{
-					return ((_returnParser) ? self : _string);
-				}
+				
+				return ((_returnParser) ? self : _string);
 			}
 			
 			// @argument			{int} position
