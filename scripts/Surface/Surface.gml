@@ -140,6 +140,12 @@ function Surface() constructor
 						size = argument[0];
 						ID = surface_create(max(1, size.x), max(1, size.y));
 					}
+					
+					surface_set_target(ID);
+					{
+						draw_clear_alpha(c_black, 0);
+					}
+					surface_reset_target();
 				}
 				
 				return self;
@@ -186,6 +192,12 @@ function Surface() constructor
 					}
 					
 					ID = surface_create(max(1, size.x), max(1, size.y));
+					
+					surface_set_target(ID);
+					{
+						draw_clear_alpha(c_black, 0);
+					}
+					surface_reset_target();
 					
 					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
 					{
