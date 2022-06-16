@@ -393,6 +393,34 @@ function SpriteRenderer() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			// @returns				{real[+]}
+			// @description			Return an array containing the values of all properties of this
+			//						Renderer. If any of properties contain multiple values, they
+			//						be returned in a nested array.
+			static toArray = function()
+			{
+				var _sprite = ((instanceof(sprite) == "Sprite") ? sprite.ID : sprite);
+				
+				var _location = location;
+				switch (instanceof(location))
+				{
+					case "Vector2":
+					case "Vector4":
+						_location = location.toArray();
+					break;
+				}
+				
+				var _scale = ((instanceof(scale) == "Scale") ? scale.toArray() : scale);
+				var _angle = ((instanceof(angle) == "Angle") ? angle.value : angle);
+				var _color = ((instanceof(color) == "Color4") ? color.toArray() : color);
+				var _part = ((instanceof(part) == "Vector4") ? part.toArray() : part);
+				var _origin = ((instanceof(origin) == "Vector2") ? origin.toArray() : origin);
+				var _target = ((instanceof(target) == "Surface") ? target.ID : target);
+				
+				return [_sprite, _location, frame, _scale, _angle, _color, alpha, _part,
+						_origin, _target];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
