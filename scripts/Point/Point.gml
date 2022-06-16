@@ -402,8 +402,8 @@ function Point() constructor
 					
 					if (alpha > 0)
 					{
-						draw_sprite_ext(_pixelSprite, 0, round(location.x), round(location.y), 1, 1,
-										0, color, alpha);
+						draw_sprite_ext(_pixelSprite, 0, location.x, location.y, 1, 1, 0, color,
+										alpha);
 					}
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))

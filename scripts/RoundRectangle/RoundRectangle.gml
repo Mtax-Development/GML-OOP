@@ -430,11 +430,6 @@ function RoundRectangle() constructor
 						}
 					}
 					
-					var _location_x1 = round(location.x1);
-					var _location_y1 = round(location.y1);
-					var _location_x2 = round(location.x2);
-					var _location_y2 = round(location.y2);
-					
 					if ((fill_color != undefined) and (fill_alpha > 0))
 					{
 						var _color1, _color2;
@@ -458,18 +453,17 @@ function RoundRectangle() constructor
 						
 						draw_set_alpha(fill_alpha);
 						
-						draw_roundrect_color_ext(_location_x1, _location_y1, _location_x2,
-												 _location_y2, radius.x, radius.y, _color1, _color2,
-												 false);
+						draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
+												 radius.x, radius.y, _color1, _color2, false);
 					}
 				
 					if ((outline_color != undefined) and (outline_alpha > 0))
 					{
 						draw_set_alpha(outline_alpha);
 					
-						draw_roundrect_color_ext(_location_x1, _location_y1, _location_x2,
-												 _location_y2, radius.x, radius.y, outline_color,
-												 outline_color, true);
+						draw_roundrect_color_ext(location.x1, location.y1, location.x2, location.y2,
+												 radius.x, radius.y, outline_color, outline_color,
+												 true);
 					}
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
