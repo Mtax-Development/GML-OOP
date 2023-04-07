@@ -18,6 +18,7 @@ function Color3() constructor
 	#region [Methods]
 		#region <Management>
 			
+			// @description			Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Default for all values.
