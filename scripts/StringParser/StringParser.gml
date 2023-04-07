@@ -767,7 +767,7 @@ function StringParser() constructor
 				return _array;
 			}
 			
-			// @argument			{any[]:string}
+			// @argument			{any[]:string} array
 			// @description			Set the string into one created from all values of an array.
 			static fromArray = function(_array)
 			{
