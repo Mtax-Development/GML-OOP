@@ -8,7 +8,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Wrapper: {buffer} other
+///							- Wrapper: {int:buffer} other
 ///							- Constructor copy: {Buffer} other
 function Buffer() constructor
 {
