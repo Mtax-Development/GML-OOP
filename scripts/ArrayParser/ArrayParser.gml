@@ -526,7 +526,7 @@ function ArrayParser() constructor
 				}
 			}
 			
-			// @argument			{any|ArrayParser}
+			// @argument			{any|ArrayParser} value
 			// @returns				{int}
 			// @description			Remove all occurences of the specified value. If an ArrayParser is
 			//						specified as the value, all occurences of its the values of its
