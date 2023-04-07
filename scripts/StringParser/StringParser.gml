@@ -559,7 +559,7 @@ function StringParser() constructor
 			}
 			
 			// @argument			{char|char[]} charsToTrim?
-			//						Remove the specified characters from the start and the end of the
+			// @description			Remove the specified characters from the start and the end of the
 			//						string until a different character is detected. If no characters
 			//						are specified, whitespace will be removed instead.
 			static trim = function(_charsToTrim)
