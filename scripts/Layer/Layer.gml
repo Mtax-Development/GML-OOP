@@ -818,8 +818,8 @@ function Layer() constructor
 		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
 		//						
 		//						Construction types:
-		//						- New element.
-		//						- Wrapper: {spriteElement} spriteElement
+		//						- New element
+		//						- Wrapper: {int:spriteElement} spriteElement
 		//						- Constructor copy: {Layer.SpriteElement} other
 		function SpriteElement() constructor
 		{
@@ -1232,8 +1232,8 @@ function Layer() constructor
 		//						Layer.
 		//						
 		//						Construction types:
-		//						- New element.
-		//						- Wrapper: {backgroundElement} backgroundElement
+		//						- New element
+		//						- Wrapper: {int:backgroundElement} backgroundElement
 		//						- Constructor copy: {Layer.BackgroundElement} other
 		function BackgroundElement() constructor
 		{
@@ -1738,8 +1738,8 @@ function Layer() constructor
 		//						this Layer.
 		//						
 		//						Construction types:
-		//						- New element.
-		//						- Wrapper: {int} tilemapElement
+		//						- New element
+		//						- Wrapper: {int:tilemapElement} tilemapElement
 		//						- Constructor copy: {Layer.TilemapElement} other
 		function TilemapElement() constructor
 		{
@@ -2289,7 +2289,8 @@ function Layer() constructor
 				//						Tilemap.
 				//						
 				//						Construction types:
-				//						- New constructor
+				//						- New element
+				//						- Empty: {void}
 				//						- Constructor copy: {Layer.TilemapElement.TileData} other
 				function TileData() constructor
 				{
@@ -2696,7 +2697,7 @@ function Layer() constructor
 		//						any Particle Type on this Layer.
 		//						
 		//						Construction types:
-		//						- New element.
+		//						- New element
 		//						- Constructor copy: {Layer.ParticleSystem} other
 		function ParticleSystem() constructor
 		{
@@ -3141,7 +3142,7 @@ function Layer() constructor
 				//						a region.
 				//						
 				//						Construction types:
-				//						- New element.
+				//						- New element
 				//						- Constructor copy: {Layer.ParticleSystem.ParticleEmitter}
 				//											other
 				function ParticleEmitter() constructor
