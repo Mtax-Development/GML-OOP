@@ -811,7 +811,7 @@ function Buffer() constructor
 			// @argument			{int} size?
 			// @argument			{bool} async?
 			// @returns				{int|undefined}
-			//						Save the data of this Buffer to the specified file.
+			// @description			Save the data of this Buffer to the specified file.
 			//						A byte offset can be specified for where the operation will start
 			//						and then continue until either the specified size in bytes was
 			//						affected or the end of this Buffer is reached.
