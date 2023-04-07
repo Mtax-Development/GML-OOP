@@ -495,7 +495,7 @@ function Sprite() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			{struct:nineslice}
+			// @argument			{struct:nineslice} nineslice
 			// @description			Set a Nine Slice struct that is bound to another or no other
 			//						Sprite to this Sprite.
 			static setNineslice = function(_nineslice)
