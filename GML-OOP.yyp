@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMProject",
+  "resourceVersion": "1.6",
+  "name": "GML-OOP",
   "resources": [
     {"id":{"name":"Color3","path":"scripts/Color3/Color3.yy",},"order":2,},
     {"id":{"name":"Map","path":"scripts/Map/Map.yy",},"order":2,},
@@ -52,8 +55,6 @@
     {"name":"Switch","path":"options/switch/options_switch.yy",},
     {"name":"tvOS","path":"options/tvos/options_tvos.yy",},
     {"name":"Windows","path":"options/windows/options_windows.yy",},
-    {"name":"Windows UWP","path":"options/windowsuap/options_windowsuap.yy",},
-    {"name":"Xbox One","path":"options/xboxone/options_xboxone.yy",},
     {"name":"operagx","path":"options/operagx/options_operagx.yy",},
   ],
   "defaultScriptType": 1,
@@ -64,26 +65,22 @@
   },
   "RoomOrderNodes": [],
   "Folders": [
-    {"folderPath":"folders/GML-OOP.yy","order":1,"resourceVersion":"1.0","name":"GML-OOP","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Containers.yy","order":1,"resourceVersion":"1.0","name":"Containers","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Data Structures.yy","order":2,"resourceVersion":"1.0","name":"Data Structures","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Debug.yy","order":3,"resourceVersion":"1.0","name":"Debug","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Handlers.yy","order":4,"resourceVersion":"1.0","name":"Handlers","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Resources.yy","order":5,"resourceVersion":"1.0","name":"Resources","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/GML-OOP/Shapes.yy","order":6,"resourceVersion":"1.0","name":"Shapes","tags":[],"resourceType":"GMFolder",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GML-OOP","folderPath":"folders/GML-OOP.yy","order":1,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Containers","folderPath":"folders/GML-OOP/Containers.yy","order":1,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Data Structures","folderPath":"folders/GML-OOP/Data Structures.yy","order":2,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Debug","folderPath":"folders/GML-OOP/Debug.yy","order":3,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Handlers","folderPath":"folders/GML-OOP/Handlers.yy","order":4,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Resources","folderPath":"folders/GML-OOP/Resources.yy","order":5,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Shapes","folderPath":"folders/GML-OOP/Shapes.yy","order":6,},
   ],
   "AudioGroups": [
-    {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
+    {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},
   ],
   "TextureGroups": [
-    {"isScaled":true,"compressFormat":"bz2","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
+    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","isScaled":true,"compressFormat":"bz2","loadType":"default","directory":"","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,},
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2022.5.0.8",
+    "IDEVersion": "2022.0.0.19",
   },
-  "resourceVersion": "1.5",
-  "name": "GML-OOP",
-  "tags": [],
-  "resourceType": "GMProject",
 }
