@@ -419,7 +419,7 @@ function Surface() constructor
 		#region <Setters>
 			
 			// @argument			{Vector2} size
-			// @descirption			Set the size of the Surface.
+			// @description			Set the size of the Surface.
 			static setSize = function(_size)
 			{
 				size = _size;
