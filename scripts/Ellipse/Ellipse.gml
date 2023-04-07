@@ -8,7 +8,7 @@
 /// @description			Constructs an Ellipse Shape.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Ellipse} other
 function Ellipse() constructor

@@ -7,7 +7,7 @@
 /// @description			Construct a Line Shape.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Line} other
 function Line() constructor

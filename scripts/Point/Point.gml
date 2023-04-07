@@ -6,7 +6,7 @@
 /// @description			Constructs a Point Shape, which is a single pixel.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Point} other
 function Point() constructor

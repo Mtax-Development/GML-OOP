@@ -10,7 +10,7 @@
 /// @description			Constructs a Triangle Shape.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Triangle} other
 function Triangle() constructor

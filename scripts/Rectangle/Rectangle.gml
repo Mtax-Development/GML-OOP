@@ -9,7 +9,7 @@
 /// @description			Constructs a Rectangle Shape.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void|undefined}
 ///							- Constructor copy: {Rectangle} other
 function Rectangle() constructor

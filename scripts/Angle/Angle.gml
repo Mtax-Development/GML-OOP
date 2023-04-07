@@ -4,7 +4,7 @@
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Default value: {void}
 ///							- Empty: {undefined}
 ///							- Constructor copy: {Angle} other

@@ -1,11 +1,11 @@
 /// @function				Color2()
-/// @argument				{int:color} color1?
+/// @argument				{real} color1?
 /// @argument				{int:color} color2?
 ///							
 /// @description			Constructs a container for two colors.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
 ///							- One color for all values: {int:color} color

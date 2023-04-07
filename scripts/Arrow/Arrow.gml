@@ -8,7 +8,7 @@
 ///							Triangle of the specified size at x2y2 pointing towards that location.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void}
 ///							- Constructor copy: {Arrow} other
 function Arrow() constructor

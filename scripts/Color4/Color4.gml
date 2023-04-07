@@ -13,7 +13,7 @@
 ///							- color4: X1 Y2
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Default for all values: {void|undefined}
 ///							   The color values will be set to white.
 ///							- One color for all values: {int:color} color

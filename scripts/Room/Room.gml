@@ -357,7 +357,7 @@ function Room() constructor
 		//						before its activation.
 		//						
 		//						Construction types:
-		//						- New constructor.
+		//						- New element
 		//						- Constructor copy: {Room.AddedInstance} other
 		function AddedInstance() constructor
 		{
@@ -388,7 +388,7 @@ function Room() constructor
 						}
 						else
 						{
-							//|Construction type: New constructor.
+							//|Construction type: New element
 							object = argument[0];
 							location = (((argument_count > 1) and (argument[1] != undefined))
 										? argument[1] : new Vector2(0, 0));

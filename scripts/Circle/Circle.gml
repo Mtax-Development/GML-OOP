@@ -9,7 +9,7 @@
 /// @description			Constructs a Circle Shape.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Empty: {void}
 ///							- Constructor copy: {Circle} other
 function Circle() constructor

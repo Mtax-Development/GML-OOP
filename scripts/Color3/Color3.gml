@@ -6,7 +6,7 @@
 /// @description			Constructs a container for three colors.
 ///							
 ///							Construction types:
-///							- New constructor.
+///							- New constructor
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
 ///							- One color for all values: {int:color} color
