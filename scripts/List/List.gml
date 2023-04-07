@@ -542,7 +542,7 @@ function List() constructor
 			}
 			
 			// @argument			{any} value
-			// @desccription		Remove the specified value from all positions in the List and push
+			// @description			Remove the specified value from all positions in the List and push
 			//						the position of all values after them back by one.
 			static removeValue = function(_value)
 			{
