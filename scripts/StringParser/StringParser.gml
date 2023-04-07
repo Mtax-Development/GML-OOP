@@ -510,12 +510,12 @@ function StringParser() constructor
 			}
 			
 			// @argument			{any:string} target
-			// @argument			{any:string} substitute
+			// @argument			{any:string} substitute?
 			// @argument			{int} count?
 			// @description			Replace the specified target parts of the string with specified
 			//						substitute string, either in its all instances or the specified
 			//						count of times, as they are found from left to right.
-			static replace = function(_target, _substitute, _count)
+			static replace = function(_target, _substitute = "", _count)
 			{
 				ID = string(ID);
 				
