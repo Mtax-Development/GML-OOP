@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMTileSet",
+  "resourceVersion": "1.0",
+  "name": "TestTileset2",
   "spriteId": {
     "name": "TestTilesetSprite",
     "path": "sprites/TestTilesetSprite/TestTilesetSprite.yy",
@@ -39,8 +42,4 @@
     "name": "Tilesets",
     "path": "folders/GML-OOP Unit Tests/Assets/Tilesets.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "TestTileset2",
-  "tags": [],
-  "resourceType": "GMTileSet",
 }

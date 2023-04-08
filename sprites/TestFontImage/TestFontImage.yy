@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMSprite",
+  "resourceVersion": "1.0",
+  "name": "TestFontImage",
   "bboxMode": 0,
   "collisionKind": 1,
   "type": 0,
@@ -14,6 +17,7 @@
   "HTile": false,
   "VTile": false,
   "For3D": false,
+  "DynamicTexturePage": false,
   "width": 16,
   "height": 16,
   "textureGroupId": {
@@ -24,18 +28,14 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"1d34cc82-a573-49e2-a457-3735b96cc6c0","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"1d34cc82-a573-49e2-a457-3735b96cc6c0","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":{"name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"1d34cc82-a573-49e2-a457-3735b96cc6c0","tags":[],"resourceType":"GMSpriteFrame",},
-    {"compositeImage":{"FrameId":{"name":"bef83f78-b093-4951-b9a9-7f4ef8b104f3","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"bef83f78-b093-4951-b9a9-7f4ef8b104f3","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":{"name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"bef83f78-b093-4951-b9a9-7f4ef8b104f3","tags":[],"resourceType":"GMSpriteFrame",},
-    {"compositeImage":{"FrameId":{"name":"24059a60-93f3-43fa-ae48-445d7becc8eb","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"24059a60-93f3-43fa-ae48-445d7becc8eb","path":"sprites/TestFontImage/TestFontImage.yy",},"LayerId":{"name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","name":"24059a60-93f3-43fa-ae48-445d7becc8eb","tags":[],"resourceType":"GMSpriteFrame",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"1d34cc82-a573-49e2-a457-3735b96cc6c0",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"bef83f78-b093-4951-b9a9-7f4ef8b104f3",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"24059a60-93f3-43fa-ae48-445d7becc8eb",},
   ],
   "sequence": {
-    "spriteId": {"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},
+    "resourceType": "GMSequence",
+    "resourceVersion": "1.4",
+    "name": "TestFontImage",
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 0.0,
@@ -46,11 +46,11 @@
     "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MessageEventKeyframe>",},
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
-      {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","spriteId":null,"keyframes":{"Keyframes":[
             {"id":"7615de65-2091-49ca-ad4d-af08200c6083","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"1d34cc82-a573-49e2-a457-3735b96cc6c0","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
             {"id":"2ab5354e-325c-4247-a1b6-4b390bef95ba","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"bef83f78-b093-4951-b9a9-7f4ef8b104f3","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
             {"id":"706762cf-7c15-4be0-a0da-5918232b2ca4","Key":2.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"24059a60-93f3-43fa-ae48-445d7becc8eb","path":"sprites/TestFontImage/TestFontImage.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": false,
@@ -66,22 +66,13 @@
     "yorigin": 8,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"TestFontImage","path":"sprites/TestFontImage/TestFontImage.yy",},
-    "resourceVersion": "1.4",
-    "name": "TestFontImage",
-    "tags": [],
-    "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","tags":[],"resourceType":"GMImageLayer",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"aaf111a5-8ffc-46ae-89c6-3279fcefafbb","visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default",},
   ],
   "nineSlice": null,
   "parent": {
     "name": "Fonts",
     "path": "folders/GML-OOP Unit Tests/Assets/Fonts.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "TestFontImage",
-  "tags": [],
-  "resourceType": "GMSprite",
 }

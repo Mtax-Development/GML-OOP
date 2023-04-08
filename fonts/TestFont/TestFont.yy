@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMFont",
+  "resourceVersion": "1.0",
+  "name": "TestFont",
   "hinting": 0,
   "glyphOperations": 0,
   "interpreter": 0,
@@ -219,8 +222,4 @@
     "name": "Fonts",
     "path": "folders/GML-OOP Unit Tests/Assets/Fonts.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "TestFont",
-  "tags": [],
-  "resourceType": "GMFont",
 }
