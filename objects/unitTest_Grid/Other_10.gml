@@ -427,7 +427,7 @@
 	
 	var _expectedValue = [_base, true];
 	
-	unitTest.assert_equal("Method: setSize(size increase)",
+	unitTest.assert_equal("Method: setSize(same size)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
