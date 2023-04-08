@@ -387,6 +387,84 @@ function Grid() constructor
 				}
 			}
 			
+			// @argument			{int} position
+			// @returns				{any[]}
+			// @description			Return all values on the specified x position in an array or an
+			//						empty array if that position is outside of this Grid.
+			static getRow = function(_position)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					if (_position == clamp(_position, 0, (ds_grid_height(ID) - 1)))
+					{
+						var _row = [];
+						var _i = 0;
+						repeat (ds_grid_width(ID))
+						{
+							array_push(_row, ds_grid_get(ID, _i, _position));
+							
+							++_i;
+						}
+						
+						return _row;
+					}
+					else
+					{
+						return [];
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getRow";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
+			// @argument			{int} position
+			// @returns				{any[]}
+			// @description			Return all values on the specified y position in an array or an
+			//						empty array if that position is outside of this Grid.
+			static getColumn = function(_position)
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				{
+					if (_position == clamp(_position, 0, (ds_grid_width(ID) - 1)))
+					{
+						var _column = [];
+						var _i = 0;
+						repeat (ds_grid_height(ID))
+						{
+							array_push(_column, ds_grid_get(ID, _position, _i));
+							
+							++_i;
+						}
+						
+						return _column;
+					}
+					else
+					{
+						return [];
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getColumn";
+					var _errorText = ("Attempted to read an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
 			// @argument			{Vector4} location?
 			// @returns				{real} | On error: {undefined}
 			// @description			Return the lowest numerical value found in cells within the

@@ -295,6 +295,43 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{int} position
+			// @returns				{any[]}
+			// @description			Return the values at the specified position in the nested arrays.
+			static getColumn = function(_position)
+			{
+				if (is_array(ID))
+				{
+					var _column = [];
+					var _i = 0;
+					repeat (array_length(ID))
+					{
+						var _value = ID[_i];
+						
+						if ((is_array(_value))
+						and (_position == clamp(_position, 0, (array_length(_value) - 1))))
+						{
+							array_push(_column, _value[_position]);
+						}
+						
+						++_i;
+					}
+					
+					return _column;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getColumn";
+					var _errorText = ("Attempted to read a property of an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
 			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this array has no values in it.
 			static isEmpty = function()
