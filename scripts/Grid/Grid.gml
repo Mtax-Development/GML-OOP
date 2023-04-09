@@ -2,7 +2,7 @@
 /// @argument				{Vector2} size
 ///							
 /// @description			Constructs a Grid Data Structure, which stores data in a model similar to
-///							the one used by 2D arrays. Each value is stored in its own cell and they
+///							a two-dimensional array. Each value is stored in its own cell and where it
 ///							can be read or modified invidually or by operating multiple cells at once
 ///							in a region or a disk of the Grid.
 ///							
