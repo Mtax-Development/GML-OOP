@@ -242,16 +242,25 @@ function Map() constructor
 				}
 			}
 			
-			// @argument			{any} key
+			// @argument			{any} key...
 			// @returns				{any|undefined}
-			// @description			Return the value of the specified key.
+			// @description			Return the value of a single specified key or final nested key.
 			//						Returns {undefined} if this Map does not exists, is empty or the
 			//						key does not exist.
-			static getValue = function(_key)
+			static getValue = function()
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
-					return ds_map_find_value(ID, _key);
+					var _value = self;
+					var _i = 0;
+					repeat (argument_count)
+					{
+						_value = ds_map_find_value(_value.ID, argument[_i]);
+						
+						++_i;
+					}
+					
+					return _value;
 				}
 				else
 				{
