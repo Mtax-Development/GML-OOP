@@ -1041,7 +1041,7 @@ function Map() constructor
 						_values[0] = ds_map_find_value(ID, _keys[0]);
 						
 						var _i = 1;
-						repeat (_size - 1)
+						repeat (_size - _i)
 						{
 							_keys[_i] = ds_map_find_next(ID, _keys[_i - 1]);
 							_values[_i] = ds_map_find_value(ID, _keys[_i]);
