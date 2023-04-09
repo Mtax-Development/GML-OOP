@@ -1110,6 +1110,98 @@ function Map() constructor
 				return self;
 			}
 			
+			// @returns				{struct}
+			// @description			Create a struct with all keys and values of this Map, as well as
+			//						its nested Maps represented as structs.
+			//						Keys with names that do not follow variable naming rules will not
+			//						be accessible with the struct variable dot notation, but can still
+			//						be accessed through a function or an accessor.
+			static toStruct = function()
+			{
+				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				{
+					var _size = ds_map_size(ID);
+					var _struct = {};
+					
+					if (_size > 0)
+					{	
+						var _key = ds_map_find_first(ID);
+						var _value = ds_map_find_value(ID, _key);
+						
+						if (instanceof(_value) == "Map")
+						{
+							_value = _value.toStruct();
+						}
+						
+						variable_struct_set(_struct, _key, _value);
+						
+						var _i = 1;
+						repeat (_size - _i)
+						{
+							_key = ds_map_find_next(ID, _key);
+							_value = ds_map_find_value(ID, _key);
+							
+							if (instanceof(_value) == "Map")
+							{
+								_value = _value.toStruct();
+							}
+							
+							variable_struct_set(_struct, _key, _value);
+							
+							++_i;
+						}
+					}
+					
+					return _struct;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "toStruct";
+					var _errorText = ("Attempted to convert an invalid Data Structure: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return {};
+				}
+			}
+			
+			// @argument			{struct} struct
+			// @description			Add key and value pairs from the specified struct to this Map
+			//						and its nested structs to newly created Maps nested in this Map.
+			//						Already existing keys will not be overwritten.
+			static fromStruct = function(_struct)
+			{
+				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+				{
+					ID = ds_map_create();
+				}
+				
+				var _key = variable_struct_get_names(_struct);
+				var _i = 0;
+				repeat (array_length(_key))
+				{
+					if (!ds_map_exists(ID, _key[_i]))
+					{
+						var _value = variable_struct_get(_struct, _key[_i]);
+						
+						if (is_struct(_value))
+						{
+							ds_map_add(ID, _key[_i], new Map().fromStruct(_value));
+						}
+						else
+						{
+							ds_map_add(ID, _key[_i], _value);
+						}
+					}
+					
+					++_i;
+				}
+				
+				return self;
+			}
+			
 			// @returns				{string}
 			// @description			Encode this Data Structure into a string, from which it can be
 			//						recreated.
