@@ -47,21 +47,41 @@ function StringParser() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any:string} substring...
+			// @argument			{string|all} filter...
 			// @returns				{bool}
-			// @description			Check if at least one occurence of the specified substrings are
-			//						contained within the string.
+			// @description			Check if at least one occurence of any of the specified filter
+			//						substrings is contained in the string. If the specified filter is
+			//						{all}, instead check if the string contains every of substrings
+			//						specified after it.
 			static contains = function()
 			{
-				var _i = 0;
+				var _string = string(ID);
+				var _i = [0, 0];
 				repeat (argument_count)
 				{
-					if (string_count(string(argument[_i]), string(ID)) > 0)
+					if ((argument[_i[0]] == all) and (argument_count > (_i[0] + 1)))
+					{
+						_i[1] = (_i[0] + 1);
+						repeat (argument_count - _i[1])
+						{
+							if (!((is_string(argument[_i[1]]))
+							and (string_count(argument[_i[1]], _string) > 0)))
+							{
+								return false;
+							}
+							
+							++_i[1];
+						}
+						
+						return true;
+					}
+					else if ((is_string(argument[_i[0]]))
+					and (string_count(argument[_i[0]], _string) > 0))
 					{
 						return true;
 					}
 					
-					++_i;
+					++_i[0];
 				}
 				
 				return false;
