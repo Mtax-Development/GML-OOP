@@ -866,8 +866,8 @@ function Grid() constructor
 					var _i = 0;
 					repeat (argument_count div 2)
 					{
-						_value = argument[_i];
-						_location = argument[(_i + 1)];
+						var _value = argument[_i];
+						var _location = argument[(_i + 1)];
 						
 						ds_grid_set(ID, _location.x, _location.y, _value);
 						
