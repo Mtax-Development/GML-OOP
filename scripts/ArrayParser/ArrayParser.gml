@@ -1,5 +1,5 @@
 /// @function				ArrayParser()
-/// @argument				{any[]} array?
+/// @argument				{any:array} value?
 ///							
 /// @description			Constructs a Handler for parsing arrays.
 ///							
@@ -28,7 +28,9 @@ function ArrayParser() constructor
 					else
 					{
 						//|Construction type: New constructor.
-						ID = argument[0];
+						var _value = argument[0];
+						
+						ID = ((is_array(_value)) ? _value : [_value]);
 					}
 				}
 				else
@@ -357,6 +359,21 @@ function ArrayParser() constructor
 		#endregion
 		#region <Setters>
 			
+			// @argument			{any:array|ArrayParser} value
+			// @description			Set the value of this parser to the specified value by ensuring it
+			//						is an array. If an {ArrayParser} is specified, its value will be
+			//						set as a reference, without copying or changing it. Changes in
+			//						either parser will be then reflected in the other one.
+			static set = function(_value)
+			{
+				ID = ((is_array(_value)) ? _value
+										 : ((instanceof(_value) == "ArrayParser")
+											? _value.ID
+											: [_value]));
+				
+				return self;
+			}
+			
 			// @argument			{int} size
 			// @returns				{any[]} | On error: {undefined}
 			// @description			Set the number of elements in this array to the specified one.
@@ -459,7 +476,7 @@ function ArrayParser() constructor
 			// @argument			{int} position
 			// @description			Set a specified position of the array to specified value and any
 			//						empty places before it to 0.
-			static set = function(_value, _position)
+			static setValue = function(_value, _position)
 			{
 				if (is_array(ID))
 				{
@@ -469,7 +486,7 @@ function ArrayParser() constructor
 				{
 					var _errorReport = new ErrorReport();
 					var _callstack = debug_get_callstack();
-					var _methodName = "set";
+					var _methodName = "setValue";
 					var _errorText = ("Attempted to write to an invalid array: " +
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
