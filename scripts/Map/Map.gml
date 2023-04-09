@@ -1,9 +1,9 @@
 /// @function				Map()
 ///							
-/// @description			Constructs a Map Data Structure, which stores data by creating key 
-///							and value pairs. The data inside of it is not sorted and values
-///							are accessed either by providing a specific existing key or by
-///							iterating through the entire Data Structure.
+/// @description			Constructs a Map Data Structure, which stores data by creating key and
+///							value pairs. The contained data is not sorted and values are accessed
+///							either by providing a specific existing key or by iterating through the
+///							the entire Map.
 ///							
 ///							Construction types:
 ///							- New constructor
