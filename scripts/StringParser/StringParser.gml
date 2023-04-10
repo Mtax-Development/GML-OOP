@@ -141,7 +141,7 @@ function StringParser() constructor
 			// @argument			{int} position
 			// @argument			{char|char[]} other
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the characer at the specified position is the same
+			// @description			Check if the character at the specified position is the same
 			//						as the specified char or is contained in an array of them.
 			static charEquals = function(_position, _other)
 			{
