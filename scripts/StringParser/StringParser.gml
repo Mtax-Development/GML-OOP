@@ -302,6 +302,22 @@ function StringParser() constructor
 				return ((_returnParser) ? self : _string);
 			}
 			
+			// @returns				{char}
+			// @description			Return the first character in the string.
+			static getFirst = function()
+			{
+				return string_char_at(string(ID), 1);
+			}
+			
+			// @returns				{char}
+			// @description			Return the last character in the string.
+			static getLast = function()
+			{
+				var _string = string(ID);
+				
+				return string_char_at(_string, string_length(_string));
+			}
+			
 			// @argument			{int} position
 			// @returns				{int}
 			// @description			Return the raw byte value of a character from the string.
