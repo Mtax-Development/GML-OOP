@@ -189,7 +189,7 @@ function StringParser() constructor
 			// @argument			{int} position
 			// @returns				{bool} | On error: {undefined}
 			// @description			Check if the character at the specified position in the string
-			//						has the whitespace property.
+			//						is an invisible character without a glyph.
 			static charIsWhitespace = function(_position)
 			{
 				var _string = string(ID);
@@ -201,17 +201,16 @@ function StringParser() constructor
 				}
 				
 				var _char = string_char_at(_string, _position);
-				
-				var _whitespaceChars = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
+				var _char_whitespace = ["\u0009", "\u000a", "\u000b", "\u000c", "\u000d", "\u0020", 
 										"\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", 
 										"\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", 
-										"\u2009", "\u200a", "\u2028", "\u2029", "\u202f", "\u205f", 
-										"\u3000"];
+										"\u2009", "\u200a", "\u200b", "\u200c", "\u200d", "\u2028",
+										"\u2029", "\u202f", "\u205f", "\u2060", "\u3000", "\ufeff"];
 				
 				var _i = 0;
-				repeat (array_length(_whitespaceChars))
+				repeat (array_length(_char_whitespace))
 				{
-					if ((_whitespaceChars[_i] == _char))
+					if (_char_whitespace[_i] == _char)
 					{
 						return true;
 					}
