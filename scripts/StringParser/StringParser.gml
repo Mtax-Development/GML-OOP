@@ -87,6 +87,57 @@ function StringParser() constructor
 				return false;
 			}
 			
+			// @argument			{any:string} substring...
+			// @returns				{bool}
+			// @description			Check if the string starts with any of the specified substrings.
+			static startsWith = function()
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _substring = string(argument[_i]);
+					var _substring_length = string_length(_substring);
+					
+					if ((_substring_length > 0) and (_string_length >= _substring_length)
+					and (string_copy(_string, 1, _substring_length) == _substring))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
+			// @argument			{any:string} substring...
+			// @returns				{bool}
+			// @description			Check if the string ends with any of the specified substrings.
+			static endsWith = function()
+			{
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _substring = string(argument[_i]);
+					var _substring_length = string_length(_substring);
+					
+					if ((_substring_length > 0) and (_string_length >= _substring_length)
+					and (string_copy(_string, (_string_length - _substring_length + 1),
+									 _substring_length) == _substring))
+					{
+						return true;
+					}
+					
+					++_i;
+				}
+				
+				return false;
+			}
+			
 			// @argument			{int} position
 			// @argument			{char|char[]} other
 			// @returns				{bool} | On error: {undefined}
