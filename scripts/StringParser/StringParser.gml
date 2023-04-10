@@ -335,8 +335,7 @@ function StringParser() constructor
 			
 			// @argument			{int} position
 			// @returns				{char}
-			// @description			Return a single, readable character of the string at the specified
-			//						position.
+			// @description			Return a single readable character at the specified position.
 			static getChar = function(_position)
 			{
 				return string_char_at(string(ID), _position);
