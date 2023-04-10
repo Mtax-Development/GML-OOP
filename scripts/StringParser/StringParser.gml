@@ -51,8 +51,8 @@ function StringParser() constructor
 			// @returns				{bool}
 			// @description			Check if at least one occurence of any of the specified filter
 			//						substrings is contained in the string. If the specified filter is
-			//						{all}, instead check if the string contains every of substrings
-			//						specified after it.
+			//						{all}, check if the string contains every of substrings specified
+			//						after it.
 			static contains = function()
 			{
 				var _string = string(ID);
