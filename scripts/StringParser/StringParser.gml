@@ -318,6 +318,108 @@ function StringParser() constructor
 				return string_char_at(_string, string_length(_string));
 			}
 			
+			// @argument			{string} token_start?
+			// @argument			{string} token_end?
+			// @argument			{string|string[]} token_ignore?
+			// @argument			{bool} include_tokens?
+			// @returns				{string|string[]}
+			// @description			Return a part of the string between two specified substrings or
+			//						the start or the end of the string, excluding parts containing
+			//						the specified ignored substring.
+			//						If the result contains more than one of parts, they will be
+			//						returned in an array. An empty string will be returned if it
+			//						contains no parts. Used start and end of parts can be specified
+			//						to be added back to them.
+			static getBetween = function(_token_start = "", _token_end = "", _token_ignore,
+										 _include_tokens = false)
+			{
+				var _result = [];
+				var _string = string(ID);
+				var _string_length = string_length(_string);
+				var _token_start_length = string_length(_token_start);
+				var _token_start_has_content = (_token_start_length > 0);
+				var _token_start_position = 0;
+				var _token_start_count = ((_token_start_has_content)
+										  ? string_count(_token_start, _string) : 1);
+				var _token_end_has_content = (string_length(_token_end) > 0);
+				var _token_ignore_count = 0;
+				
+				if (_token_ignore != undefined)
+				{
+					if (!is_array(_token_ignore))
+					{
+						_token_ignore = [_token_ignore];
+					}
+					
+					_token_ignore_count = array_length(_token_ignore);
+				}
+				
+				repeat (_token_start_count)
+				{
+					_token_start_position = ((_token_start_has_content)
+											 ? string_pos_ext(_token_start, _string,
+															  _token_start_position)
+											 : 1);
+					
+					if (_token_start_position > 0)
+					{
+						_token_start_position += _token_start_length;
+						
+						var _token_end_position = ((_token_end_has_content)
+												   ? string_pos_ext(_token_end, _string,
+																	_token_start_position)
+												   : _string_length);
+						
+						if (_token_end_position > 0)
+						{
+							var _part = string_copy(_string, _token_start_position,
+													(_token_end_position -
+													 ((_token_end_has_content)
+													  ? _token_start_position : 0)));
+							
+							if (string_length(_part) > 0)
+							{
+								var _part_ignore = false;
+								
+								var _i = 0;
+								repeat (_token_ignore_count)
+								{
+									if (string_count(_token_ignore[_i], _part) > 0)
+									{
+										_part_ignore = true;
+										
+										break;
+									}
+									
+									++_i;
+								}
+								
+								if (!_part_ignore)
+								{
+									array_push(_result,
+											   ((_include_tokens) ? (_token_start + _part +
+																	 _token_end)
+																  : _part));
+								}
+							}
+						}
+					}
+				}
+				
+				switch (array_length(_result))
+				{
+					case 0:
+						return "";
+					break;
+					case 1:
+						return _result[0];
+					break;
+					default:
+						return _result;
+					break;
+				}
+			}
+			
 			// @argument			{int} position
 			// @returns				{int}
 			// @description			Return the raw byte value of a character from the string.
