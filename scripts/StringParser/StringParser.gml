@@ -222,14 +222,15 @@ function StringParser() constructor
 			}
 			
 			// @argument			{any:string} separator
-			// @argument			{bool} returnParser?
-			// @returns				{string|string[]|StringParser|StringParser[]}
+			// @argument			{function|constructor:StringParser} parse_part?
+			// @returns				{string|StringParser|StringParser[]|any[]}
 			// @description			Create multiple strings divided by the specified separator and
-			//						return them in an array.
-			//						The results can be returned as {StringParser} if it was specified.
-			//						Returns the string in its original state is no operation was
-			//						performed or {self} if return was specified as parser.
-			static split = function(_separator, _returnParser = false)
+			//						return them in an array. Separated string parts can returned as
+			//						{StringParser} if specified or by the specified function, which
+			//						will be provided each string part as its only argument.
+			//						Returns a single unseparated string if the separator is not
+			//						present or {self} if the return was specified as {StringParser}.
+			static split = function(_separator, _parse_part)
 			{
 				var _string = string(ID);
 				var _string_separator = string(_separator);
@@ -279,12 +280,12 @@ function StringParser() constructor
 						_segment = string_copy(_string, _position,
 											   (_string_length - _position + 1));
 						
-						if (string_length(_segment) > 0) and (_segment != _separator)
+						if ((string_length(_segment) > 0) and (_segment != _separator))
 						{
 							array_push(_result, _segment);
 						}
 						
-						if (_returnParser)
+						if (_parse_part == StringParser)
 						{
 							var _i = 0;
 							repeat (array_length(_result))
@@ -294,12 +295,23 @@ function StringParser() constructor
 								++_i;
 							}
 						}
+						else if (is_method(_parse_part))
+						{
+							var _i = 0;
+							repeat (array_length(_result))
+							{
+								_result[_i] = script_execute(method_get_index(_parse_part),
+															 _result[_i]);
+								
+								++_i;
+							}
+						}
 						
 						return _result;
 					}
 				}
 				
-				return ((_returnParser) ? self : _string);
+				return ((_parse_part == StringParser) ? self : _string);
 			}
 			
 			// @returns				{char}
