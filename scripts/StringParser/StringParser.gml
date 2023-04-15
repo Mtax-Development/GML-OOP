@@ -330,14 +330,14 @@ function StringParser() constructor
 			}
 			
 			// @returns				{char}
-			// @description			Return the first character in the string.
+			// @description			Return the first character of the string.
 			static getFirst = function()
 			{
 				return string_char_at(string(ID), 1);
 			}
 			
 			// @returns				{char}
-			// @description			Return the last character in the string.
+			// @description			Return the last character of the string.
 			static getLast = function()
 			{
 				var _string = string(ID);
@@ -468,22 +468,6 @@ function StringParser() constructor
 			static getChar = function(_position)
 			{
 				return string_char_at(string(ID), _position);
-			}
-			
-			// @returns				{char}
-			// @description			Return the first character of the string.
-			static getFirst = function()
-			{
-				return string_char_at(string(ID), 1);
-			}
-			
-			// @returns				{char}
-			// @description			Return the last character of the string.
-			static getLast = function()
-			{
-				var _string = string(ID);
-				
-				return string_char_at(_string, string_length(_string));
 			}
 			
 			// @argument			{int} position
