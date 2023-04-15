@@ -285,25 +285,34 @@ function StringParser() constructor
 							array_push(_result, _segment);
 						}
 						
-						if (_parse_part == StringParser)
+						if (_parse_part != undefined)
 						{
-							var _i = 0;
-							repeat (array_length(_result))
+							if (_parse_part == StringParser)
 							{
-								_result[_i] = new StringParser(_result[_i]);
-								
-								++_i;
+								var _i = 0;
+								repeat (array_length(_result))
+								{
+									_result[_i] = new StringParser(_result[_i]);
+									
+									++_i;
+								}
 							}
-						}
-						else if (is_method(_parse_part))
-						{
-							var _i = 0;
-							repeat (array_length(_result))
+							else
 							{
-								_result[_i] = script_execute(method_get_index(_parse_part),
-															 _result[_i]);
+								var _function_index = ((is_method(_parse_part)
+													   ? method_get_index(_parse_part)
+													   : _parse_part));
 								
-								++_i;
+								if (is_real(_function_index))
+								{
+									var _i = 0;
+									repeat (array_length(_result))
+									{
+										_result[_i] = script_execute(_function_index, _result[_i]);
+										
+										++_i;
+									}
+								}
 							}
 						}
 						
