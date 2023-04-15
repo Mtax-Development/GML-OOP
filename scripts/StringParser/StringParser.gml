@@ -225,11 +225,13 @@ function StringParser() constructor
 			// @argument			{function|constructor:StringParser} parse_part?
 			// @returns				{string|StringParser|StringParser[]|any[]}
 			// @description			Create multiple strings divided by the specified separator and
-			//						return them in an array. Separated string parts can returned as
-			//						{StringParser} if specified or by the specified function, which
-			//						will be provided each string part as its only argument.
-			//						Returns a single unseparated string if the separator is not
-			//						present or {self} if the return was specified as {StringParser}.
+			//						return them in an array. Parts of the string can be parsed after
+			//						separating them and returned as {StringParser} if specified as
+			//						such or by the specified function, which will be provided each
+			//						string part as its only argument. The value of this parser will
+			//						be set to a string part for the duration of each execution only.
+			//						If the separator is not present, a single unseparated is returned
+			//						or {self} if the parsing was specified as {StringParser}.
 			static split = function(_separator, _parse_part)
 			{
 				var _string = string(ID);
@@ -299,6 +301,7 @@ function StringParser() constructor
 							}
 							else
 							{
+								var _constructor_value_original = ID;
 								var _function_index = ((is_method(_parse_part)
 													   ? method_get_index(_parse_part)
 													   : _parse_part));
@@ -308,11 +311,14 @@ function StringParser() constructor
 									var _i = 0;
 									repeat (array_length(_result))
 									{
+										ID = _result[_i];
 										_result[_i] = script_execute(_function_index, _result[_i]);
 										
 										++_i;
 									}
 								}
+								
+								ID = _constructor_value_original;
 							}
 						}
 						
