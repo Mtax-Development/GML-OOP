@@ -814,6 +814,16 @@ function StringParser() constructor
 				return self;
 			}
 			
+			// @argument			{any:string|StringParser} value
+			// @description			Stringify and set the specified value or the value of other
+			//						parser as the value of this parser.
+			static set = function(_value)
+			{
+				ID = ((instanceof(_value) == "StringParser") ? string(_value.ID) : string(_value));
+				
+				return self;
+			}
+			
 			// @argument			{int} position
 			// @argument			{int} byte
 			// @description			Replace the character at the specified position by other one,
