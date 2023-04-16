@@ -15,13 +15,15 @@ function ArrayParser() constructor
 			// @description			Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction type: Empty array.
+				ID = [];
+				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "ArrayParser")
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
-						ID = [];
 						
 						array_copy(ID, 0, _other.ID, 0, array_length(_other.ID));
 					}
@@ -32,11 +34,6 @@ function ArrayParser() constructor
 						
 						ID = ((is_array(_value)) ? _value : [_value]);
 					}
-				}
-				else
-				{
-					//|Construction type: Empty array.
-					ID = [];
 				}
 				
 				return self;
