@@ -572,21 +572,24 @@ function Map() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
 				{
 					var _size = ds_map_size(ID)
-					
 					var _functionReturn = [];
+					var _dataCopy = ds_map_create();
+					ds_map_copy(_dataCopy, ID);
 					
-					var _key = ds_map_find_first(ID);
+					var _key = ds_map_find_first(_dataCopy);
 					var _i = 0;
 					repeat (_size)
 					{
-						var _value = ds_map_find_value(ID, _key);
+						var _value = ds_map_find_value(_dataCopy, _key);
 						
 						array_push(_functionReturn, __function(_i, _key, _value, _argument));
 						
-						_key = ds_map_find_next(ID, _key);
+						_key = ds_map_find_next(_dataCopy, _key);
 						
 						++_i;
 					}
+					
+					ds_map_destroy(_dataCopy);
 					
 					return _functionReturn;
 				}
@@ -599,7 +602,7 @@ function Map() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			

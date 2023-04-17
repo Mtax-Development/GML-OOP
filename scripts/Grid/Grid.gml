@@ -821,8 +821,9 @@ function Grid() constructor
 				{
 					var _size_x = ds_grid_width(ID);
 					var _size_y = ds_grid_height(ID);
-					
 					var _functionReturn = [];
+					var _dataCopy = ds_grid_create(_size_x, _size_y);
+					ds_grid_copy(_dataCopy, ID);
 					
 					var _y = 0;
 					repeat (_size_y)
@@ -830,7 +831,7 @@ function Grid() constructor
 						var _x = 0;
 						repeat (_size_x)
 						{
-							var _value = ds_grid_get(ID, _x, _y);
+							var _value = ds_grid_get(_dataCopy, _x, _y);
 							
 							array_push(_functionReturn, __function(_x, _y, _value, _argument));
 							
@@ -839,6 +840,8 @@ function Grid() constructor
 						
 						++_y;
 					}
+					
+					ds_grid_destroy(_dataCopy);
 					
 					return _functionReturn;
 				}
@@ -851,7 +854,7 @@ function Grid() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			

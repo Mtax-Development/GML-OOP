@@ -334,8 +334,8 @@ function Queue() constructor
 			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
-			//						it will be performed on its copy and the original will not be
-			//						modified in order to read the values.
+			//						it will be performed solely on its copy and the original will not
+			//						be modified in order to read the values.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or the argument array:
 			//						- argument[0]: {int} _i
@@ -346,38 +346,34 @@ function Queue() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
 					var _size = ds_queue_size(ID);
-					
 					var _functionReturn = [];
+					var _dataCopy = ds_queue_create();
+					ds_queue_copy(_dataCopy, ID);
 					
-					if (_size > 0)
+					var _removableData = ((_readOnly) ? [_dataCopy] : [_dataCopy, ID]);
+					var _removableData_count = array_length(_removableData);
+					var _i = [0, 0];
+					repeat (_size)
 					{
-						var _queue = ID;
-						
-						if (_readOnly)
+						var _removedData = [];
+						_i[1] = 0;
+						repeat (_removableData_count)
 						{
-							var _dataCopy = ds_queue_create();
-							ds_queue_copy(_dataCopy, ID);
-						
-							_queue = _dataCopy;
-						}
-						
-						var _i = 0;
-						repeat (_size)
-						{
-							var _value = ds_queue_dequeue(_queue);
+							_removedData[_i[1]] = ds_queue_dequeue(_removableData[_i[1]]);
 							
-							array_push(_functionReturn, __function(_i, _value, _argument));
-							
-							++_i;
+							++_i[1];
 						}
 						
-						if (_readOnly)
-						{
-							ds_queue_destroy(_dataCopy);
-						}
+						var _value = _removedData[0];
 						
-						return _functionReturn;
+						array_push(_functionReturn, __function(_i[0], _value, _argument));
+						
+						++_i[0];
 					}
+					
+					ds_queue_destroy(_dataCopy);
+					
+					return _functionReturn;
 				}
 				else
 				{
@@ -388,7 +384,7 @@ function Queue() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			

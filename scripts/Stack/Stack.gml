@@ -355,8 +355,8 @@ function Stack() constructor
 			// @returns				{any[]}
 			// @description			Execute a function once for each element in this Data Structure.
 			//						It can be treated as read-only for this operation, in which case
-			//						it will be performed on its copy and the original will not be
-			//						modified in order to read the values.
+			//						it will be performed solely on its copy and the original will not
+			//						be modified in order to read the values.
 			//						The following arguments will be provided to the function and can
 			//						be accessed in it by using their name or the argument array:
 			//						- argument[0]: {int} _i
@@ -367,38 +367,34 @@ function Stack() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
 				{
 					var _size = ds_stack_size(ID);
-					
 					var _functionReturn = [];
+					var _dataCopy = ds_stack_create();
+					ds_stack_copy(_dataCopy, ID);
 					
-					if (_size > 0)
+					var _removableData = ((_readOnly) ? [_dataCopy] : [_dataCopy, ID]);
+					var _removableData_count = array_length(_removableData);
+					var _i = [0, 0];
+					repeat (_size)
 					{
-						var _stack = ID;
-						
-						if (_readOnly)
+						var _removedData = [];
+						_i[1] = 0;
+						repeat (_removableData_count)
 						{
-							var _dataCopy = ds_stack_create();
-							ds_stack_copy(_dataCopy, ID);
+							_removedData[_i[1]] = ds_stack_pop(_removableData[_i[1]]);
 							
-							_stack = _dataCopy;
+							++_i[1];
 						}
 						
-						var _i = 0;
-						repeat (_size)
-						{
-							var _value = ds_stack_pop(_stack);
-							
-							array_push(_functionReturn, __function(_i, _value, _argument));
-							
-							++_i;
-						}
+						var _value = _removedData[0];
 						
-						if (_readOnly)
-						{
-							ds_stack_destroy(_dataCopy);
-						}
+						array_push(_functionReturn, __function(_i[0], _value, _argument));
 						
-						return _functionReturn;
+						++_i[0];
 					}
+					
+					ds_stack_destroy(_dataCopy);
+					
+					return _functionReturn;
 				}
 				else
 				{
@@ -409,7 +405,7 @@ function Stack() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			

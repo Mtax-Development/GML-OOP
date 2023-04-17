@@ -414,13 +414,14 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					var _size = array_length(ID);
+					var _dataCopy = [];
+					array_copy(_dataCopy, 0, ID, 0, _size);
 					
 					var _functionReturn = [];
-					
 					var _i = 0;
 					repeat (_size)
 					{
-						var _value = array_get(ID, _i);
+						var _value = array_get(_dataCopy, _i);
 						
 						array_push(_functionReturn, __function(_i, _value, _argument));
 						
@@ -438,7 +439,7 @@ function ArrayParser() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			

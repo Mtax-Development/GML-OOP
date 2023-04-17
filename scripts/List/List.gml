@@ -416,18 +416,22 @@ function List() constructor
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
 				{
 					var _size = ds_list_size(ID);
-					
 					var _functionReturn = [];
+					var _dataCopy = ds_list_create();
+					ds_list_clear(_dataCopy);
+					ds_list_copy(_dataCopy, ID);
 					
 					var _i = 0;
 					repeat (_size)
 					{
-						var _value = ds_list_find_value(ID, _i);
+						var _value = ds_list_find_value(_dataCopy, _i);
 							
 						array_push(_functionReturn, __function(_i, _value, _argument));
 						
 						++_i;
 					}
+					
+					ds_list_destroy(_dataCopy);
 					
 					return _functionReturn;
 				}
@@ -440,7 +444,7 @@ function List() constructor
 									  "{" + string(ID) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 					
-					return undefined;
+					return [];
 				}
 			}
 			
