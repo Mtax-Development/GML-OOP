@@ -76,11 +76,18 @@ function ArrayParser() constructor
 			// @argument			{int} position?
 			// @argument			{int} other_position?
 			// @argument			{int} count?
-			// @description			Copy specfied number of elements from other array to this one from
-			//						specified position in other one to specified position in this one.
-			//						If the specified positions are already occupied, their values will
-			//						be overwritten.
-			static copy = function(_other, _position = 0, _other_position = 0, _count)
+			// @argument			{function} condition_copy?
+			// @argument			{function} condition_execute?
+			// @description			Copy to this array the specfied number of elements or all of them
+			//						from the specified position in other array to a specified position
+			//						in this array or the beginning of either array. Values at already
+			//						occupied positions will be overwritten. Condition functions can be
+			//						specified. These function will be providen each candidate value as
+			//						the only argument. That candidate value will be copied only if the
+			//						specified functions return true. The execution stops if the second
+			//						condition function is specified and returns false.
+			static copy = function(_other, _position = 0, _other_position = 0, _count,
+								   __condition_copy, __condition_execute)
 			{
 				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
 				
@@ -91,8 +98,45 @@ function ArrayParser() constructor
 						ID = array_create((_position - 1), undefined);
 					}
 					
-					array_copy(ID, _position, _other, _other_position,
-							   (_count ?? (array_length(_other) - _other_position)));
+					var _other_size = array_length(_other);
+					var _remaining_position_count = (_other_size - _other_position);
+					
+					if ((__condition_copy != undefined) or (__condition_execute != undefined))
+					{
+						if (__condition_copy == undefined)
+						{
+							__condition_copy = function() {return true;}
+						}
+						
+						if (__condition_execute == undefined)
+						{
+							__condition_execute = function() {return true;}
+						}
+						
+						var _i = _other_position;
+						repeat (min((_count ?? _remaining_position_count), _remaining_position_count))
+						{
+							var _value = array_get(_other, _i);
+							
+							if (!__condition_execute(_value))
+							{
+								break;
+							}
+							else if (__condition_copy(_value))
+							{
+								array_set(ID, _position, _value);
+								
+								++_position;
+							}
+							
+							++_i;
+						}
+					}
+					else
+					{
+						array_copy(ID, _position, _other, _other_position,
+								   (_count ?? (_remaining_position_count)));
+					}
 				}
 				else
 				{
