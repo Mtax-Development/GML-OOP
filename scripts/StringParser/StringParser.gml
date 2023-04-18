@@ -756,39 +756,37 @@ function StringParser() constructor
 				return self;
 			}
 			
-			// @argument			{char|char[]} charsToTrim?
+			// @argument			{char|char[]} trimmedChar?
+			// @argument			{bool} keep_left?
+			// @argument			{bool} keep_right?
 			// @description			Remove the specified characters from the start and the end of the
 			//						string until a different character is detected. If no characters
-			//						are specified, whitespace will be removed instead.
-			static trim = function(_charsToTrim)
+			//						are specified, whitespace will be removed instead. Either side of
+			//						the string can be specified to not be affected.
+			static trim = function(_trimmedChar, _keep_start = false, _keep_end = false)
 			{
 				ID = string(ID);
-				
 				var _string_length = string_length(ID);
-				
-				var __charCheck = ((_charsToTrim != undefined) ? self.charEquals
+				var __charCheck = ((_trimmedChar != undefined) ? self.charEquals
 															   : self.charIsWhitespace);
-				
-				var _string_new_start = 0;
-				var _string_new_end = _string_length;
-					
-				var _start_set = false;
-				var _end_set = false;
-					
-				var _i = 1;
+				var _string_new_start = 1;
+				var _string_new_end = (_string_length + 1);
+				var _start_set = _keep_start;
+				var _end_set = _keep_end;
+				var _position_forward = 1;
 				repeat (_string_length)
 				{
-					var _i_backwards = (_string_length + 1 - _i);
+					var _position_backward = (_string_length + 1 - _position_forward);
 					
-					if ((!_start_set) and (!__charCheck(_i, _charsToTrim)))
+					if ((!_start_set) and (!__charCheck(_position_forward, _trimmedChar)))
 					{
-						_string_new_start = _i;
+						_string_new_start = _position_forward;
 						_start_set = true;
 					}
 					
-					if ((!_end_set) and (!__charCheck(_i_backwards, _charsToTrim)))
+					if ((!_end_set) and (!__charCheck(_position_backward, _trimmedChar)))
 					{
-						_string_new_end = (_i_backwards + 1);
+						_string_new_end = (_position_backward + 1);
 						_end_set = true;
 					}
 					
@@ -796,19 +794,23 @@ function StringParser() constructor
 					{
 						ID = string_copy(ID, _string_new_start,
 										 (_string_new_end - _string_new_start));
-							
+						
 						return self;
 					}
-					else if (_i == _i_backwards)
+					else if (_position_forward >= _string_new_end)
 					{
-						var _char = string_char_at(ID, _i);
+						ID = string_copy(ID, _position_forward,
+										 (_string_new_end - _string_new_start));
 						
-						ID = ((__charCheck(_i, _charsToTrim)) ? "" : _char);
+						if ((string_length(ID) == 1) and (__charCheck(1, _trimmedChar)))
+						{
+							ID = "";
+						}
 						
 						return self;
 					}
 					
-					++_i;
+					++_position_forward;
 				}
 				
 				return self;
