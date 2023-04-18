@@ -978,15 +978,19 @@ function StringParser() constructor
 			}
 			
 			// @argument			{any[]:string} array
-			// @description			Set the string into one created from all values of an array.
-			static fromArray = function(_array)
+			// @argument			{any:string} connector?
+			// @description			Set the string into one created from connecting all values of the
+			//						specified array. A specified connector string can be included in
+			//						between parts of the string.
+			static fromArray = function(_array, _connector = "")
 			{
 				var _string = "";
-				
+				var _string_connector = string(_connector);
+				var _count = array_length(_array);
 				var _i = 0;
-				repeat (array_length(_array))
+				repeat (_count)
 				{
-					_string += string(_array[_i]);
+					_string += (string(_array[_i]) + (((_i + 1) < _count) ? _string_connector : ""));
 					
 					++_i;
 				}
