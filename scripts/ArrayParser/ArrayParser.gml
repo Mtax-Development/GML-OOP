@@ -195,6 +195,80 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{function} condition
+			// @argument			{any} argument?
+			// @argument			{bool} matchAll?
+			// @returns				{bool}
+			// @description			Check if the array contains a value fulfilling the specified
+			//						condition function by causing it to return true at least once or
+			//						for all cases as it is executed once for each value of the array.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or the argument array:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _value
+			//						- argument[2]: {any} _argument
+			static containsCondition = function(__condition, _argument, _matchAll = false)
+			{
+				if (is_array(ID))
+				{
+					if (_matchAll)
+					{
+						var _i = [0, 0];
+						repeat (array_length(ID))
+						{
+							var _value = array_get(ID, _i[0]);
+							_i[1] = 0;
+							repeat (argument_count)
+							{
+								if (!__condition(_i[1], _value, _argument))
+								{
+									return false;
+								}
+								
+								++_i[1];
+							}
+							
+							++_i[0];
+						}
+						
+						return true;
+					}
+					else
+					{
+						var _i = [0, 0];
+						repeat (array_length(ID))
+						{
+							var _value = array_get(ID, _i[0]);
+							_i[1] = 0;
+							repeat (argument_count)
+							{
+								if (__condition(_i[1], _value, _argument))
+								{
+									return true;
+								}
+								
+								++_i[1];
+							}
+							
+							++_i[0];
+						}
+						
+						return false;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "containsCondition";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{any[]|ArrayParser} other
 			// @returns				{bool} | On error: {undefined}
 			// @description			Check if this and other array have the same content.
