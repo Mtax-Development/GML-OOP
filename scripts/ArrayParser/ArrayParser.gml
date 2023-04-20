@@ -258,6 +258,88 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{any|any[]|ArrayParser} value?...
+			// @returns				{any[]}
+			// @description			Return all values among this array and specified values and arrays
+			//						in a new array that does not contain duplicate values.
+			static getUniqueValues = function()
+			{
+				if (is_array(ID))
+				{
+					var _result = [];
+					var _position = 0;
+					var _size = array_length(ID);
+					var _value_map = ds_map_create();
+					
+					var _i = 0;
+					repeat (_size)
+					{
+						if (ds_map_add(_value_map, array_get(ID, _i), _position))
+						{
+							++_position;
+						}
+						
+						++_i;
+					}
+					
+					_position = clamp((_position - 1), 0, _size);
+					
+					var _i = [0, 0];
+					repeat (argument_count)
+					{
+						var _argument = argument[_i[0]];
+						var _value = ((instanceof(_argument) == "ArrayParser") ? _argument.ID
+																			   : _argument);
+						
+						if (is_array(_value))
+						{
+							_i[1] = 0;
+							repeat (array_length(_value))
+							{
+								if (ds_map_add(_value_map, _value[_i[1]], _position))
+								{
+									++_position;
+								}
+								
+								++_i[1];
+							}
+						}
+						else
+						{
+							if (ds_map_add(_value_map, _value, _position))
+							{
+								++_position;
+							}
+						}
+						
+						++_i[0];
+					}
+					
+					var _key = ds_map_find_first(_value_map);
+					repeat (ds_map_size(_value_map))
+					{
+						array_set(_result, ds_map_find_value(_value_map, _key), _key);
+						
+						_key = ds_map_find_next(_value_map, _key);
+					}
+					
+					ds_map_destroy(_value_map);
+					
+					return _result;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getUniqueValues";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
 			// @returns				{any|undefined}
 			// @description			Return the first value in this array.
 			//						Returns {undefined} if this array does not exists or is empty.
