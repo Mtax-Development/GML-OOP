@@ -614,6 +614,48 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{function} condition
+			// @argument			{any} argument?
+			// @returns				{int[]}
+			// @description			Return an array with all positions of values fulfilling the
+			//						specified condition function by causing it to return true.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or the argument array:
+			//						- argument[0]: {int} _i
+			//						- argument[1]: {any} _value
+			//						- argument[2]: {any} _argument
+			static getPositionsCondition = function(__condition, _argument)
+			{
+				if (is_array(ID))
+				{
+					var _position = [];
+					var _size = array_length(ID);
+					var _i = 0;
+					repeat (_size)
+					{
+						if (__condition(_i, array_get(ID, _i), _argument))
+						{
+							array_push(_position, _i);
+						}
+						
+						++_i;
+					}
+					
+					return _position;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getPositionsCondition";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the number of elements in the array.
 			static getSize = function()
