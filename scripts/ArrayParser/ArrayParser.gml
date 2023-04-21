@@ -151,6 +151,83 @@ function ArrayParser() constructor
 				return self;
 			}
 			
+			// @argument			{any|any[]|constructor:Parser|constructor:DataStructure} data...
+			// @description			Append to the array the specified values or all values of the
+			//						specified structures.
+			static merge = function()
+			{
+				if (is_array(ID))
+				{
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _data = argument[_i];
+						
+						if (is_array(_data))
+						{
+							array_copy(ID, array_length(ID), _data, 0, array_length(_data));
+						}
+						else if (is_struct(_data))
+						{
+							switch (instanceof(_data))
+							{
+								case "ArrayParser":
+									if (is_array(_data.ID))
+									{
+										array_copy(ID, array_length(ID), _data.ID, 0,
+												   array_length(_data.ID));
+									}
+									else
+									{
+										array_push(ID, _data.ID);
+									}
+								break;
+								
+								case "StringParser":
+									array_push(ID, _data.ID);
+								break;
+								
+								case "Grid":
+								case "Map":
+								case "List":
+								case "PriorityQueue":
+								case "Queue":
+								case "Stack":
+									var _structure_data = _data.forEach(function()
+									{
+										return argument[(argument_count - 2)];
+									});
+									
+									array_copy(ID, array_length(ID), _structure_data, 0,
+											   array_length(_structure_data));
+								break;
+								
+								default:
+									array_push(ID, _data);
+								break;
+							}
+						}
+						else
+						{
+							array_push(ID, _data);
+						}
+						
+						++_i;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "merge";
+					var _errorText = ("Attempted to write to an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Getters>
 			
