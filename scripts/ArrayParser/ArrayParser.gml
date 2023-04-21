@@ -262,44 +262,30 @@ function ArrayParser() constructor
 				{
 					if (_matchAll)
 					{
-						var _i = [0, 0];
+						var _i = 0;
 						repeat (array_length(ID))
 						{
-							var _value = array_get(ID, _i[0]);
-							_i[1] = 0;
-							repeat (argument_count)
+							if (!__condition(_i, array_get(ID, _i), _argument))
 							{
-								if (!__condition(_i[1], _value, _argument))
-								{
-									return false;
-								}
-								
-								++_i[1];
+								return false;
 							}
 							
-							++_i[0];
+							++_i;
 						}
 						
 						return true;
 					}
 					else
 					{
-						var _i = [0, 0];
+						var _i = 0;
 						repeat (array_length(ID))
 						{
-							var _value = array_get(ID, _i[0]);
-							_i[1] = 0;
-							repeat (argument_count)
+							if (__condition(_i, array_get(ID, _i), _argument))
 							{
-								if (__condition(_i[1], _value, _argument))
-								{
-									return true;
-								}
-								
-								++_i[1];
+								return true;
 							}
 							
-							++_i[0];
+							++_i;
 						}
 						
 						return false;
