@@ -195,6 +195,55 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{any} value...
+			// @returns				{bool}
+			// @description			Check if the array contains all of the specified values.
+			static containsAll = function()
+			{
+				if (is_array(ID))
+				{
+					var _size = array_length(ID);
+					var _i = [0, 0];
+					repeat (argument_count)
+					{
+						var _argument_current = argument[_i[0]];
+						var _value_exists = false;
+						_i[1] = 0;
+						repeat (_size)
+						{
+							if (array_get(ID, _i[1]) == _argument_current)
+							{
+								_value_exists = true;
+								
+								break;
+							}
+							
+							++_i[1];
+						}
+						
+						if (!_value_exists)
+						{
+							return false;
+						}
+						
+						++_i[0];
+					}
+					
+					return true;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "containsAll";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @argument			{function} condition
 			// @argument			{any} argument?
 			// @argument			{bool} matchAll?
