@@ -518,26 +518,18 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					var _size = array_length(ID);
-					
-					if (_size > 0)
+					var _i = 0;
+					repeat (_size)
 					{
-						var _i = 0;
-						repeat (_size)
+						if (array_get(ID, _i) == _value)
 						{
-							if (array_get(ID, _i) == _value)
-							{
-								return _i;
-							}
-							
-							++_i;
+							return _i;
 						}
 						
-						return -1;
+						++_i;
 					}
-					else
-					{
-						return -1;
-					}
+					
+					return -1;
 				}
 				else
 				{
@@ -561,26 +553,18 @@ function ArrayParser() constructor
 				if (is_array(ID))
 				{
 					var _size = array_length(ID);
-					
-					if (_size > 0)
+					var _i = (_size - 1);
+					repeat (_size)
 					{
-						var _i = (_size - 1);
-						repeat (_size)
+						if (array_get(ID, _i) == _value)
 						{
-							if (array_get(ID, _i) == _value)
-							{
-								return _i;
-							}
-							
-							--_i;
+							return _i;
 						}
-						
-						return -1;
+							
+						--_i;
 					}
-					else
-					{
-						return -1;
-					}
+					
+					return -1;
 				}
 				else
 				{
@@ -604,26 +588,18 @@ function ArrayParser() constructor
 				{
 					var _position = [];
 					var _size = array_length(ID);
-					
-					if (_size > 0)
+					var _i = 0;
+					repeat (_size)
 					{
-						var _i = 0;
-						repeat (_size)
+						if (array_get(ID, _i) == _value)
 						{
-							if (array_get(ID, _i) == _value)
-							{
-								array_push(_position, _value);
-							}
-							
-							++_i;
+							array_push(_position, _value);
 						}
 						
-						return _position;
+						++_i;
 					}
-					else
-					{
-						return _position;
-					}
+					
+					return _position;
 				}
 				else
 				{
