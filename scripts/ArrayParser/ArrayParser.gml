@@ -523,6 +523,135 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{any} value
+			// @returns				{int}
+			// @description			Return the first found position of the specified value or -1 if
+			//						the value does not exist.
+			static getFirstPosition = function(_value)
+			{
+				if (is_array(ID))
+				{
+					var _size = array_length(ID);
+					
+					if (_size > 0)
+					{
+						var _i = 0;
+						repeat (_size)
+						{
+							if (array_get(ID, _i) == _value)
+							{
+								return _i;
+							}
+							
+							++_i;
+						}
+						
+						return -1;
+					}
+					else
+					{
+						return -1;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getFirstPosition";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return -1;
+				}
+			}
+			
+			// @argument			{any} value
+			// @returns				{int}
+			// @description			Return the last found position of the specified value or -1 if
+			//						the value does not exist.
+			static getLastPosition = function(_value)
+			{
+				if (is_array(ID))
+				{
+					var _size = array_length(ID);
+					
+					if (_size > 0)
+					{
+						var _i = (_size - 1);
+						repeat (_size)
+						{
+							if (array_get(ID, _i) == _value)
+							{
+								return _i;
+							}
+							
+							--_i;
+						}
+						
+						return -1;
+					}
+					else
+					{
+						return -1;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getLastPosition";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return -1;
+				}
+			}
+			
+			// @argument			{any} value
+			// @returns				{int[]}
+			// @description			Return an array with all positions of the specified value.
+			static getPositions = function(_value)
+			{
+				if (is_array(ID))
+				{
+					var _position = [];
+					var _size = array_length(ID);
+					
+					if (_size > 0)
+					{
+						var _i = 0;
+						repeat (_size)
+						{
+							if (array_get(ID, _i) == _value)
+							{
+								array_push(_position, _value);
+							}
+							
+							++_i;
+						}
+						
+						return _position;
+					}
+					else
+					{
+						return _position;
+					}
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getPositions";
+					var _errorText = ("Attempted to read an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return [];
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the number of elements in the array.
 			static getSize = function()

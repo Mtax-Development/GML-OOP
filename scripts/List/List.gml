@@ -323,8 +323,7 @@ function List() constructor
 			
 			// @argument			{any} value
 			// @returns				{int[]}
-			// @description			Return an array populated with all positions of the specified
-			//						value.
+			// @description			Return an array with all positions of the specified value.
 			static getPositions = function(_value)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
