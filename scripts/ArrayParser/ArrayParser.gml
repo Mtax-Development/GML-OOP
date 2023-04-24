@@ -196,7 +196,8 @@ function ArrayParser() constructor
 									var _structure_data = _data.forEach(function()
 									{
 										return argument[(argument_count - 2)];
-									});
+									},
+									undefined, true);
 									
 									array_copy(ID, array_length(ID), _structure_data, 0,
 											   array_length(_structure_data));
