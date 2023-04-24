@@ -341,7 +341,7 @@ function Queue() constructor
 			//						- argument[0]: {int} _i
 			//						- argument[1]: {any} _value
 			//						- argument[2]: {any} _argument
-			static forEach = function(__function, _argument, _readOnly)
+			static forEach = function(__function, _argument, _readOnly = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
 				{
