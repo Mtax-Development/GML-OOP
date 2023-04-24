@@ -78,9 +78,9 @@ function ArrayParser() constructor
 			// @argument			{int} count?
 			// @argument			{function} condition_copy?
 			// @argument			{function} condition_execute?
-			// @description			Copy to this array the specfied number of elements or all of them
+			// @description			Copy to the array the specfied number of elements or all of them
 			//						from the specified position in other array to a specified position
-			//						in this array or the beginning of either array. Values at already
+			//						in the array or the beginning of either array. Values at already
 			//						occupied positions will be overwritten. Condition functions can be
 			//						specified. These function will be providen each candidate value as
 			//						the only argument. That candidate value will be copied only if the
@@ -447,7 +447,7 @@ function ArrayParser() constructor
 			
 			// @argument			{any|any[]|ArrayParser} value?...
 			// @returns				{any[]}
-			// @description			Return all values among this array and specified values and arrays
+			// @description			Return all values among the array and specified values and arrays
 			//						in a new array that does not contain duplicate values.
 			static getUniqueValues = function()
 			{
@@ -528,8 +528,8 @@ function ArrayParser() constructor
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Return the first value in this array.
-			//						Returns {undefined} if this array does not exists or is empty.
+			// @description			Return the first value in the array.
+			//						Returns {undefined} if the array does not exists or is empty.
 			static getFirst = function()
 			{
 				if (is_array(ID))
@@ -557,8 +557,8 @@ function ArrayParser() constructor
 			}
 			
 			// @returns				{any|undefined}
-			// @description			Return the last value in this array.
-			//						Returns {undefined} if this array does not exists or is empty.
+			// @description			Return the last value in the array.
+			//						Returns {undefined} if the array does not exists or is empty.
 			static getLast = function()
 			{
 				if (is_array(ID))
@@ -793,7 +793,7 @@ function ArrayParser() constructor
 			}
 			
 			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this array has no values in it.
+			// @description			Check if the array has no values in it.
 			static isEmpty = function()
 			{
 				if (is_array(ID))
@@ -833,11 +833,10 @@ function ArrayParser() constructor
 			
 			// @argument			{int} size
 			// @returns				{any[]} | On error: {undefined}
-			// @description			Set the number of elements in this array to the specified one.
+			// @description			Set the number of elements in the array to the specified one.
 			//						If the specified size is lower than current, values from the end
-			//						will be removed.
-			//						If the specified size is higher than current, empty positions will
-			//						be set to 0.
+			//						will be removed. If the specified size is higher than current,
+			//						empty positions will be set to 0.
 			static setSize = function(_size)
 			{
 				if (is_array(ID))
