@@ -832,16 +832,29 @@ function ArrayParser() constructor
 			}
 			
 			// @argument			{int} size
-			// @returns				{any[]} | On error: {undefined}
+			// @argument			{any} value_default?
 			// @description			Set the number of elements in the array to the specified one.
 			//						If the specified size is lower than current, values from the end
 			//						will be removed. If the specified size is higher than current,
-			//						empty positions will be set to 0.
-			static setSize = function(_size)
+			//						values in new positions will be set to the specified default value
+			//						or {undefined} if unspecified.
+			static setSize = function(_size, _value_default)
 			{
 				if (is_array(ID))
 				{
-					array_resize(ID, _size);
+					var _size_current = array_length(ID);
+					
+					if (_size > _size_current)
+					{
+						var _count = (_size - _size_current);
+						
+						array_copy(ID, _size_current,
+								   array_create(_count, _value_default), 0, _count);
+					}
+					else
+					{
+						array_resize(ID, _size);
+					}
 				}
 				else
 				{
