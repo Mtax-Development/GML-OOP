@@ -453,7 +453,6 @@ function ArrayParser() constructor
 			{
 				if (is_array(ID))
 				{
-					var _result = [];
 					var _position = 0;
 					var _size = array_length(ID);
 					var _value_map = ds_map_create();
@@ -500,8 +499,10 @@ function ArrayParser() constructor
 						++_i[0];
 					}
 					
+					var _result_count = ds_map_size(_value_map);
+					var _result = array_create(_result_count, undefined);
 					var _key = ds_map_find_first(_value_map);
-					repeat (ds_map_size(_value_map))
+					repeat (_result_count)
 					{
 						array_set(_result, ds_map_find_value(_value_map, _key), _key);
 						
