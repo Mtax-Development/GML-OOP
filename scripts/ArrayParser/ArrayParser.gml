@@ -469,8 +469,6 @@ function ArrayParser() constructor
 						++_i;
 					}
 					
-					_position = clamp((_position - 1), 0, _size);
-					
 					var _i = [0, 0];
 					repeat (argument_count)
 					{
