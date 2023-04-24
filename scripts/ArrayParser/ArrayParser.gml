@@ -734,6 +734,71 @@ function ArrayParser() constructor
 				}
 			}
 			
+			// @argument			{function} reducer
+			// @argument			{any} initial_value?
+			// @argument			{any} argument?
+			// @returns				{any} | On error: {undefined}
+			// @description			Execute a function to compare each value in the array with the
+			//						previous return value and return the final of these values. The
+			//						comparison starts from either the specified initial value or the
+			//						first value of the array.
+			//						The following arguments will be provided to the function and can
+			//						be accessed in it by using their name or the argument array:
+			//						- argument[0]: {any} _value_previous
+			//						- argument[1]: {any} _value_current
+			//						- argument[2]: {int} _i
+			//						- argument[3]: {any} _argument
+			static getReduction = function(__reducer, _initial_value, _argument)
+			{
+				if (is_array(ID))
+				{
+					var _size = array_length(ID);
+					
+					switch (_size)
+					{
+						case 0: return undefined; break;
+						case 1: return array_get(ID, 0); break;
+					}
+					
+					var _position_start, _value_previous, _iteration_count;
+					
+					if (_initial_value != undefined)
+					{
+						_position_start = 0;
+						_value_previous = _initial_value;
+						_iteration_count = _size;
+					}
+					else
+					{
+						_position_start = 1;
+						_value_previous = array_get(ID, 0);
+						_iteration_count = (_size - _position_start);
+					}
+					
+					var _i = _position_start;
+					repeat (_iteration_count)
+					{
+						_value_previous = __reducer(_value_previous, array_get(ID, _i), _i,
+													_argument);
+						
+						++_i;
+					}
+					
+					return _value_previous;
+				}
+				else
+				{
+					var _errorReport = new ErrorReport();
+					var _callstack = debug_get_callstack();
+					var _methodName = "getReduction";
+					var _errorText = ("Attempted to iterate through an invalid array: " +
+									  "{" + string(ID) + "}");
+					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					
+					return undefined;
+				}
+			}
+			
 			// @returns				{int} | On error: {undefined}
 			// @description			Return the number of elements in the array.
 			static getSize = function()
