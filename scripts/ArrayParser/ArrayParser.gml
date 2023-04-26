@@ -72,51 +72,87 @@ function ArrayParser() constructor
 				return self;
 			}
 			
-			// @argument			{any[]|ArrayParser} other
-			// @argument			{int} position?
-			// @argument			{int} other_position?
+			// @argument			{any[]|ArrayParser} source
+			// @argument			{int} target_position?
+			// @argument			{int} source_position?
 			// @argument			{int} count?
 			// @argument			{function} condition_copy?
 			// @argument			{function} condition_execute?
 			// @description			Copy to the array the specfied number of elements or all of them
-			//						from the specified position in other array to a specified position
-			//						in the array or the beginning of either array. Values at already
-			//						occupied positions will be overwritten. Condition functions can be
-			//						specified. These function will be providen each candidate value as
-			//						the only argument. That candidate value will be copied only if the
-			//						specified functions return true. The execution stops if the second
-			//						condition function is specified and returns false.
-			static copy = function(_other, _position = 0, _other_position = 0, _count,
+			//						from the specified position in the source array to the specified
+			//						target position or the beginning of either array if unspecified.
+			//						If the specified target position is negative, the values will be
+			//						copied to that absolute position of the target backwards. If the
+			//						specified number of values to copy from the source is negative,
+			//						these values will be copied backwards from the end of source.
+			//						Values at already occupied positions will be overwritten.
+			//						Positions exceeding the target array size will have their value
+			//						set to {undefined} if values were not copied into them.
+			//						Condition functions can be specified and providen each candidate
+			//						value as the only argument. That candidate value will be copied
+			//						only if the specified functions return true. The execution stops
+			//						if the second condition function is specified and returns false.
+			static copy = function(_source, _target_position = 0, _source_position = 0, _count,
 								   __condition_copy, __condition_execute)
 			{
-				if (instanceof(_other) == "ArrayParser") {_other = _other.ID;}
+				if (instanceof(_source) == "ArrayParser") {_source = _source.ID;}
 				
-				if (is_array(_other))
+				if (is_array(_source))
 				{
+					var _target_position_abs = abs(_target_position);
+					
 					if (!is_array(ID))
 					{
-						ID = array_create((_position - 1), undefined);
+						ID = array_create((abs(_target_position) + 1), undefined);
+					}
+					else
+					{
+						var _target_size = array_length(ID);
+						
+						if (_target_position_abs >= _target_size)
+						{
+							var _target_position_size_difference = ((_target_position_abs + 1) -
+																	_target_size);
+							
+							array_copy(ID, _target_size,
+									   array_create(_target_position_size_difference, undefined), 0,
+									   _target_position_size_difference);
+						}
 					}
 					
-					var _other_size = array_length(_other);
-					var _remaining_position_count = (_other_size - _other_position);
+					var _source_size = array_length(_source);
 					
-					if ((__condition_copy != undefined) or (__condition_execute != undefined))
+					if ((_target_position < 0) or (_source_position < 0)
+					or (__condition_copy != undefined) or (__condition_execute != undefined))
 					{
-						if (__condition_copy == undefined)
+						var _target_position_boolsign = ((_target_position >= 0) ? 1 : -1);
+						var _force_count_backward = ((_count == undefined)
+													 and (_target_position_boolsign == -1));
+						var _count_abs = ((is_real(_count)) ? abs(_count) : _count);
+						var __passthrough = function() {return true;};
+						
+						var _remaining_position_count, _count_boolsign;
+						
+						if ((_count < 0) or (_force_count_backward))
 						{
-							__condition_copy = function() {return true;}
+							_remaining_position_count = (_source_position + 1);
+							_count_boolsign = -1;
+						}
+						else
+						{
+							_remaining_position_count = (_source_size - _source_position);
+							_count_boolsign = 1;
 						}
 						
-						if (__condition_execute == undefined)
-						{
-							__condition_execute = function() {return true;}
-						}
+						__condition_copy ??= __passthrough;
+						__condition_execute ??= __passthrough;
 						
-						var _i = _other_position;
-						repeat (min((_count ?? _remaining_position_count), _remaining_position_count))
+						var _target_position_current = _target_position_abs;
+						var _source_position_current = _source_position;
+						repeat (min((_count_abs ?? _remaining_position_count),
+									_remaining_position_count))
 						{
-							var _value = array_get(_other, _i);
+							var _value = array_get(_source, _source_position_current);
 							
 							if (!__condition_execute(_value))
 							{
@@ -124,18 +160,18 @@ function ArrayParser() constructor
 							}
 							else if (__condition_copy(_value))
 							{
-								array_set(ID, _position, _value);
+								array_set(ID, _target_position_current, _value);
 								
-								++_position;
+								_target_position_current += _target_position_boolsign;
 							}
 							
-							++_i;
+							_source_position_current += _count_boolsign;
 						}
 					}
 					else
 					{
-						array_copy(ID, _position, _other, _other_position,
-								   (_count ?? (_remaining_position_count)));
+						array_copy(ID, _target_position, _source, _source_position,
+								   (_count ?? (_source_size - _source_position)));
 					}
 				}
 				else
@@ -144,7 +180,7 @@ function ArrayParser() constructor
 					var _callstack = debug_get_callstack();
 					var _methodName = "copy";
 					var _errorText = ("Attempted to copy from an invalid array: " +
-									  "{" + string(_other) + "}");
+									  "{" + string(_source) + "}");
 					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 				
