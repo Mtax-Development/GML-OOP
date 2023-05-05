@@ -1,19 +1,19 @@
 /// @function				Range()
-/// @argument				{real} minimum
-/// @argument				{real} maximum
+/// @argument				minimum {real}
+/// @argument				maximum {real}
 ///							
 /// @description			Construct a container for two-value numeric Range with different numbers.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
-///							- Constructor copy: {Range} other
+///							- Constructor copy: other {Range}
 function Range() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -41,8 +41,8 @@ function Range() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(minimum)) and (is_real(maximum)));
@@ -51,64 +51,127 @@ function Range() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{real} value
-			// @returns				{real}
-			// @description			Restrict the specified number to boundaries of this Range.
+			/// @argument			value {real}
+			/// @returns			{real} | On error: {any}
+			/// @description		Restrict the specified number to boundaries of this Range.
 			static clampTo = function(_value)
 			{
-				return clamp(_value, minimum, maximum);
+				try
+				{
+					return clamp(_value, minimum, maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "clampTo()"], _exception);
+				}
+				
+				return _value;
 			}
 			
-			// @argument			{real} value
-			// @returns				{real}
-			// @description			Return the value at the position within this Range of the 
-			//						specified precentage.
+			/// @argument			value {real}
+			/// @returns			{real} | On error: {any}
+			/// @description		Return the value at the position within this Range of the 
+			///						specified precentage.
 			static interpolate = function(_value)
 			{
-				return lerp(minimum, maximum, _value);
+				try
+				{
+					return lerp(minimum, maximum, _value);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "interpolate()"], _exception);
+				}
+				
+				return _value;
 			}
 			
-			// @returns				{real}
-			// @description			Return the percentage value representing the specified value
-			//						inside of the Range as a numerical value in which one whole
-			//						number is one full percentage.
+			/// @returns			{real} | On error: {any}
+			/// @description		Return the percentage value representing the specified value
+			///						inside of the Range as a numerical value in which one whole
+			///						number is one full percentage.
 			static percent = function(_value)
 			{
-				return ((_value - minimum) / (maximum - minimum));
+				try
+				{
+					return ((_value - minimum) / (maximum - minimum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "percent()"], _exception);
+				}
+				
+				return _value;
 			}
 			
-			// @returns				{real}
-			// @description			Return a random real number from this Range.
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return a random real number from this Range.
 			static randomReal = function()
 			{
-				return random_range(minimum, maximum);
+				try
+				{
+					return random_range(minimum, maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "randomReal()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
-			// @returns				{int}
-			// @description			Return a random integer number from this Range.
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Return a random integer number from this Range.
 			static randomInt = function()
 			{
-				return irandom_range(minimum, maximum);
+				try
+				{
+					return irandom_range(minimum, maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "randomInt()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
-			// @returns				{real}
-			// @description			Return the middle point of this Range.
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return the middle point of this Range.
 			static getMiddle = function()
 			{
-				return lerp(minimum, maximum, 0.5);
+				try
+				{
+					return lerp(minimum, maximum, 0.5);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getMiddle()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
-			// @argument			{real} number
-			// @returns				{bool}
-			// @description			Check whether a number is in or equal to borders of this Range.
+			/// @argument			value {real}
+			/// @returns			{bool}
+			/// @description		Check whether a number is in or equal to borders of this Range.
 			static isBetween = function(_value)
 			{
-				return (_value == clamp(_value, minimum, maximum));
+				try
+				{
+					return (_value == clamp(_value, minimum, maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "isBetween()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @argument			{real} number
-			// @returns				{bool}
-			// @description			Check whether a number is equal to the boundaries of this Range.
+			/// @argument			value {real}
+			/// @returns			{bool}
+			/// @description		Check whether a number is equal to the boundaries of this Range.
 			static isBoundary = function(_value)
 			{
 				return ((_value == minimum) or (_value == maximum));
@@ -117,22 +180,21 @@ function Range() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the values of this Container.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the values of this Container.
 			static toString = function(_multiline = false)
 			{
 				var _mark_separator = ((_multiline) ? "\n" : " - ");
-				
 				var _string = (string(minimum) + _mark_separator + string(maximum));
 				
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{real[]}
-			// @description			Return an array containing all values of this Container.
+			/// @returns			{real[]}
+			/// @description		Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [minimum, maximum];

@@ -1,6 +1,6 @@
 /// @function				TextAlign()
-/// @argument				{constant:fa_[halign]} x?
-/// @argument				{constant:fa_[valign]} y?
+/// @argument				x? {constant:fa_[halign]}
+/// @argument				y? {constant:fa_[valign]}
 ///							
 /// @description			Constructs a container for two Text Alignment contants, intended for use
 ///							in text drawing.
@@ -10,16 +10,16 @@
 ///							   Unspecified values will be set to the following:
 ///							   x: fa_left
 ///							   y: fa_top
-///							- From array: {constant:textalign[]} array
+///							- From array: array {constant:textalign[]}
 ///							   The first array position will be set to the x property and the second
 ///							   array position will be set to y property.
-///							- Constructor copy: {TextAlign} other
+///							- Constructor copy: other {TextAlign}
 function TextAlign() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				x = fa_left;
@@ -31,7 +31,6 @@ function TextAlign() constructor
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
-						
 						x = _other.x;
 						y = _other.y;
 					}
@@ -39,7 +38,6 @@ function TextAlign() constructor
 					{
 						//|Construction type: From array.
 						var _array = argument[0];
-						
 						x = _array[0];
 						y = _array[1];
 					}
@@ -47,16 +45,16 @@ function TextAlign() constructor
 					{
 						//|Construction type: New constructor.
 						x = ((argument[0] != undefined) ? argument[0] : fa_left);
-						y = ((argument_count > 1) and (argument[1] != undefined) ? argument[1]
-																				 : fa_top);
+						y = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
+																				   : fa_top);
 					}
 				}
 				
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return (((x == fa_left) or (x == fa_center) or (x == fa_right)) and ((y == fa_top)
@@ -66,7 +64,7 @@ function TextAlign() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Mirror the non-centered x and y values of the alignment.
+			/// @description		Mirror the non-centered x and y values of the alignment.
 			static mirror = function()
 			{
 				switch (x)
@@ -84,7 +82,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Mirror the non-centered x value of the alignment.
+			/// @description		Mirror the non-centered x value of the alignment.
 			static mirrorX = function()
 			{
 				switch (x)
@@ -96,7 +94,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Mirror the non-centered y value of the alignment.
+			/// @description		Mirror the non-centered y value of the alignment.
 			static mirrorY = function()
 			{
 				switch (y)
@@ -108,7 +106,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of horizontal alignment to the left of the text.
+			/// @description		Set the origin of horizontal alignment to the left of the text.
 			static setXLeft = function()
 			{
 				x = fa_left;
@@ -116,7 +114,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of horizontal alignment to the center of the text.
+			/// @description		Set the origin of horizontal alignment to the center of the text.
 			static setXCenter = function()
 			{
 				x = fa_center;
@@ -124,7 +122,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of horizontal alignment to the right of the text.
+			/// @description		Set the origin of horizontal alignment to the right of the text.
 			static setXRight = function()
 			{
 				x = fa_right;
@@ -132,7 +130,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of vertical alignment to the top of the text.
+			/// @description		Set the origin of vertical alignment to the top of the text.
 			static setYTop = function()
 			{
 				y = fa_top;
@@ -140,7 +138,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of vertical alignment to the middle of the text.
+			/// @description		Set the origin of vertical alignment to the middle of the text.
 			static setYMiddle = function()
 			{
 				y = fa_middle;
@@ -148,7 +146,7 @@ function TextAlign() constructor
 				return self;
 			}
 			
-			// @description			Set the origin of vertical alignment to the bottom of the text.
+			/// @description		Set the origin of vertical alignment to the bottom of the text.
 			static setYBottom = function()
 			{
 				y = fa_bottom;
@@ -159,11 +157,20 @@ function TextAlign() constructor
 		#endregion
 		#region <Execution>
 			
-			// @description			Use this Text Alignment for further text rendering.
+			/// @description		Use this Text Alignment for further text rendering.
 			static setActive = function()
 			{
-				draw_set_halign(x);
-				draw_set_valign(y);
+				if (self.isFunctional())
+				{
+					draw_set_halign(x);
+					draw_set_valign(y);
+				}
+				else
+				{
+					new ErrorReport().report([other, self, "setActive"],
+											 ("Attempted to use invalid text align for rendering: " +
+											  "{" + string(self) + "}"));
+				}
 				
 				return self;
 			}
@@ -171,11 +178,11 @@ function TextAlign() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with both of the text alignments.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with both of the text alignments.
 			static toString = function(_multiline = false)
 			{
 				var _string_x, _string_y;
@@ -202,8 +209,8 @@ function TextAlign() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{real[]}
-			// @description			Return an array containing all values of this Container.
+			/// @returns			{real[]}
+			/// @description		Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [x, y];

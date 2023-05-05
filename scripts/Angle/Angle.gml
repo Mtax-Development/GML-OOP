@@ -1,5 +1,5 @@
 /// @function				Angle()
-/// @argument				{real} value?
+/// @argument				value? {real}
 ///							
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 ///							
@@ -7,13 +7,13 @@
 ///							- New constructor
 ///							- Default value: {void}
 ///							- Empty: {undefined}
-///							- Constructor copy: {Angle} other
+///							- Constructor copy: other {Angle}
 function Angle() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -44,8 +44,8 @@ function Angle() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(value)) and (!is_nan(value)) and (!is_infinity(value)));
@@ -54,61 +54,91 @@ function Angle() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{real|Angle} value
-			// @returns				{bool}
-			// @description			Check if the value of this Angle is equal to the specified one.
+			/// @argument			value {real|Angle}
+			/// @returns			{bool}
+			/// @description		Check if the value of this Angle is equal to the specified one.
 			static equals = function(_value)
 			{
-				var _value_other = ((is_real(_value) ? _value : _value.value));
-				_value_other -= (360 * (floor(_value_other / 360)));
+				try
+				{
+					var _value_other = ((is_real(_value) ? _value : _value.value));
+					_value_other -= (360 * (floor(_value_other / 360)));
+					var _value_wrapped = (value - (360 * (floor(value / 360))));
+					
+					return (_value_wrapped == _value_other);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "equals()"], _exception);
+				}
 				
-				var _value_wrapped = (value - (360 * (floor(value / 360))));
-				
-				return (_value_wrapped == _value_other);
+				return false;
 			}
 			
-			// @argument			{real|Angle} value
-			// @returns				{real}
-			// @description			Returns the difference between this and the specified Angle.
+			/// @argument			value {real|Angle}
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Returns the difference between this and the specified Angle.
 			static difference = function(_value)
 			{
-				var _value_other = ((is_real(_value) ? _value : _value.value));
-				_value_other -= (360 * (floor(_value_other / 360)));
+				try
+				{
+					var _value_other = ((is_real(_value) ? _value : _value.value));
+					_value_other -= (360 * (floor(_value_other / 360)));
+					var _value_wrapped = (value - (360 * (floor(value / 360))));
+					var _result = (max(_value_wrapped, _value_other) -
+								   min(_value_wrapped, _value_other));
+					
+					return ((180 < _result) ? (360 - _result) : _result);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
 				
-				var _value_wrapped = (value - (360 * (floor(value / 360))));
-				
-				var _result = (max(_value_wrapped, _value_other) - min(_value_wrapped, _value_other));
-				
-				return ((180 < _result) ? (360 - _result) : _result);
+				return undefined;
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @argument			{real|Angle} value
-			// @description			Set the value to the specified one after wrapping it.
+			/// @argument			value {real|Angle}
+			/// @description		Set the value to the specified one after wrapping it.
 			static set = function(_value)
 			{
-				if (is_real(_value))
+				try
 				{
-					value = _value;
+					if (is_real(_value))
+					{
+						value = _value;
+					}
+					else
+					{
+						value = _value.value;
+					}
+					
+					value -= (360 * (floor(value / 360)));
 				}
-				else
+				catch (_exception)
 				{
-					value = _value.value;
+					new ErrorReport().report([other, self, "set()"], _exception);
 				}
-				
-				value -= (360 * (floor(value / 360)));
 				
 				return self;
 			}
 			
-			// @argument			{real|Angle} value
-			// @description			Change the value of this Angle and wrap it.
+			/// @argument			value {real|Angle}
+			/// @description		Change the value of this Angle and wrap it.
 			static modify = function(_value)
 			{
-				value += ((is_real(_value)) ? _value : (_value.value));
-				value -= (360 * (floor(value / 360)));
+				try
+				{
+					value += ((is_real(_value)) ? _value : (_value.value));
+					value -= (360 * (floor(value / 360)));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "modify()"], _exception);
+				}
 				
 				return self;
 			}
@@ -116,11 +146,11 @@ function Angle() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented as the value of this Container.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented as the value of this Container.
 			static toString = function(_multiline = false)
 			{
 				if (is_real(value))

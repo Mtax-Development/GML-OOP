@@ -1,18 +1,18 @@
 /// @function				Shader()
-/// @argument				{int:shader} shader
+/// @argument				shader {int:shader}
 ///							
 /// @description			Construct a Shader resource used to alter drawing.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
-///							- Constructor copy: {Shader} other
+///							- Constructor copy: other {Shader}
 function Shader() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -96,12 +96,10 @@ function Shader() constructor
 							sampler = {};
 							
 							var _sampler = variable_struct_get_names(_other.sampler);
-							
 							var _i = 0;
 							repeat (array_length(_sampler))
 							{
 								var _other_struct = variable_struct_get(uniform, _uniform[_i]);
-								
 								var _struct = 
 								{
 									handle: _other_struct.handle
@@ -122,7 +120,6 @@ function Shader() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -136,7 +133,6 @@ function Shader() constructor
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
@@ -175,8 +171,8 @@ function Shader() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (shader_is_compiled(ID)));
@@ -185,16 +181,15 @@ function Shader() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{string} uniform
-			// @returns				{int} | On error: {undefined}
-			// @description			Get a sampler index of a uniform from this Shader
+			/// @argument			uniform {string}
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Get a sampler index of a uniform from this Shader
 			static getSampler = function(_uniform)
 			{
-				if (compiled)
+				if ((is_real(ID)) and (shader_is_compiled(ID)))
 				{
 					var _sampler = shader_get_sampler_index(ID, _uniform);
 					var _handle = ((_sampler != -1) ? _sampler : undefined)
-					
 					var _struct =
 					{
 						handle: _handle
@@ -206,440 +201,507 @@ function Shader() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSampler";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "getSampler()"],
+											 ("Attempted to use an invalid Shader: " +
+											  "{" + string(ID) + "}"));
 					
 					return undefined;
 				}
 			}
 			
-			// @returns				{bool}
-			// @description			Check whether this Shader is the currently set one.
+			/// @returns			{bool}
+			/// @description		Check whether this Shader is the currently set one.
 			static isActive = function()
 			{
-				return ((compiled) ? (shader_current() == ID) : false);
+				return ((shader_is_compiled(ID)) ? (shader_current() == ID) : false);
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @argument			{string} uniform
-			// @argument			{real|real[]|Vector2} value1
-			// @argument			{real} value2?
-			// @argument			{real} value3?
-			// @argument			{real} value4?
-			// @description			Pass one or more float-type numbers as a uniform to this Shader.
-			//						If only one value argument is passed, it can be an array or
-			//						Vector2. Otherwise all value arguments have to be numbers.
+			/// @argument			uniform {string}
+			/// @argument			value1 {real|real[]|Vector2}
+			/// @argument			value2? {real}
+			/// @argument			value3? {real}
+			/// @argument			value4? {real}
+			/// @description		Pass one or more float-type numbers as a uniform to this Shader.
+			///						If only one value argument is passed, it can be an array or
+			///						Vector2. Otherwise all value arguments have to be numbers.
 			static setUniformFloat = function(_uniform)
 			{
-				if (compiled)
+				try
 				{
-					var _value = undefined;
-					var _handle = shader_get_uniform(ID, _uniform);
-					
-					switch (argument_count)
+					if ((is_real(ID)) and (shader_is_compiled(ID)))
 					{
-						case 2:
-							var _value = argument[1];
-							
-							if (is_real(_value))
-							{
-								shader_set_uniform_f(_handle, _value);
-							}
-							else if (is_array(_value))
-							{
-								shader_set_uniform_f_array(_handle, _value);
-							}
-							else if (instanceof(_value) == "Vector2")
-							{
-								shader_set_uniform_f(_handle, _value.x, _value.y);
-							}
-							else
-							{
-								var _errorReport = new ErrorReport();
-								var _callstack = debug_get_callstack();
-								var _methodName = "setUniformFloat";
-								var _errorText = ("Attempted to set an uniform using an " +
-												  "unrecognized data type:\n" +
-												  "Shader: " + "{" + string(name) + "}" + "\n" +
-												  "Data: " + "{" + string(_value) + "}");
-								_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																	 _errorText);
+						var _value = undefined;
+						var _handle = shader_get_uniform(ID, _uniform);
+						
+						switch (argument_count)
+						{
+							case 2:
+								var _value = argument[1];
 								
-								exit;
-							}
-						break;
-						
-						case 3:
-							_value = [argument[1], argument[2]];
+								if (is_real(_value))
+								{
+									shader_set_uniform_f(_handle, _value);
+								}
+								else if (is_array(_value))
+								{
+									shader_set_uniform_f_array(_handle, _value);
+								}
+								else if (instanceof(_value) == "Vector2")
+								{
+									shader_set_uniform_f(_handle, _value.x, _value.y);
+								}
+								else
+								{
+									new ErrorReport().report([other, self, "setUniformFloat()"],
+															  ("Attempted to set an uniform using " +
+															   "an unrecognized data type:" + "\n" +
+															   "Shader: " + "{" + string(name) + "}" +
+															   "\n" + "Data: " + "{" + string(_value) +
+																"}"));
+									
+									return self;
+								}
+							break;
 							
-							shader_set_uniform_f(_handle, _value[0], _value[1]);
-						break;
-						
-						case 4:
-							_value = [argument[1], argument[2], argument[3]];
-							
-							shader_set_uniform_f(_handle, _value[0], _value[1], _value[2]);
-						break;
-						
-						case 5:
-						default:
-							_value = [argument[1], argument[2], argument[3], argument[4]];
-							
-							shader_set_uniform_f(_handle, _value[0], _value[1], _value[2], _value[3]);
-						break;
-					}
-					
-					var _struct = 
-					{
-						handle: ((_handle != -1) ? _handle : undefined),
-						type: "float",
-						value: _value
-					};
-					
-					variable_struct_set(uniform, _uniform, _struct);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setUniformFloat";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{string} uniform
-			// @argument			{int|int[]|Vector2} value1
-			// @argument			{int} value2?
-			// @argument			{int} value3?
-			// @argument			{int} value4?
-			// @description			Pass one or more integer values as a uniform to this Shader.
-			//						If only one value argument is passed, it can be an array or
-			//						Vector2. Otherwise all value arguments have to be numbers.
-			static setUniformInt = function(_uniform)
-			{
-				if (compiled)
-				{
-					var _value = undefined;
-					var _handle = shader_get_uniform(ID, _uniform);
-					
-					switch (argument_count)
-					{
-						case 2:
-							var _value = argument[1];
-							
-							if (is_real(_value))
-							{
-								shader_set_uniform_i(_handle, _value);
-							}
-							else if (is_array(_value))
-							{
-								shader_set_uniform_i_array(_handle, _value);
-							}
-							else if (instanceof(_value) == "Vector2")
-							{
-								shader_set_uniform_i(_handle, _value.x, _value.y);
-							}
-							else
-							{
-								var _errorReport = new ErrorReport();
-								var _callstack = debug_get_callstack();
-								var _methodName = "setUniformInt";
-								var _errorText = ("Attempted to set an uniform using an " +
-												  "unrecognized data type:\n" +
-												  "Shader: " + "{" + string(name) + "}" + "\n" +
-												  "Data: " + "{" + string(_value) + "}");
-								_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																	 _errorText);
+							case 3:
+								_value = [argument[1], argument[2]];
 								
-								exit;
-							}
-						break;
-						
-						case 3:
-							_value = [argument[1], argument[2]];
+								shader_set_uniform_f(_handle, _value[0], _value[1]);
+							break;
 							
-							shader_set_uniform_i(_handle, _value[0], _value[1]);
-						break;
-						
-						case 4:
-							_value = [argument[1], argument[2], argument[3]];
+							case 4:
+								_value = [argument[1], argument[2], argument[3]];
+								
+								shader_set_uniform_f(_handle, _value[0], _value[1], _value[2]);
+							break;
 							
-							shader_set_uniform_i(_handle, _value[0], _value[1], _value[2]);
-						break;
+							case 5:
+							default:
+								_value = [argument[1], argument[2], argument[3], argument[4]];
+								
+								shader_set_uniform_f(_handle, _value[0], _value[1], _value[2],
+													 _value[3]);
+							break;
+						}
 						
-						case 5:
-						default:
-							_value = [argument[1], argument[2], argument[3], argument[4]];
-							
-							shader_set_uniform_i(_handle, _value[0], _value[1], _value[2], _value[3]);
-						break;
-					}
-					
-					var _struct = 
-					{
-						handle: ((_handle != -1) ? _handle : undefined),
-						type: "int",
-						value: _value
-					};
-					
-					variable_struct_set(uniform, _uniform, _struct);
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setUniformInt";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{string} uniform
-			// @argument			{real[]} value?
-			// @description			Pass the currently set matrix or an array of its values as a
-			//						uniform to this Shader.
-			static setUniformMatrix = function(_uniform, _value)
-			{
-				if (compiled)
-				{
-					var _handle = shader_get_uniform(ID, _uniform);
-					
-					if (is_array(_value))
-					{
-						shader_set_uniform_matrix_array(_handle, _value);
+						var _struct = 
+						{
+							handle: ((_handle != -1) ? _handle : undefined),
+							type: "float",
+							value: _value
+						};
+						
+						variable_struct_set(uniform, _uniform, _struct);
 					}
 					else
 					{
-						shader_set_uniform_matrix(_handle);
+						new ErrorReport().report([other, self, "setUniformFloat()"],
+												 ("Attempted to use an invalid Shader: " +
+												  "{" + string(ID) + "}"));
 					}
-					
-					var _struct = 
-					{
-						handle: _handle,
-						type: "matrix",
-						value: _value
-					};
-					
-					variable_struct_set(uniform, _uniform, _struct);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setUniformMatrix";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setUniformFloat()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @description			Update the uniforms in this Shader with all values held by the
-			//						uniform struct.
+			/// @argument			uniform {string}
+			/// @argument			value1 {int|int[]|Vector2}
+			/// @argument			value2? {int}
+			/// @argument			value3? {int}
+			/// @argument			value4? {int}
+			/// @description		Pass one or more integer values as a uniform to this Shader.
+			///						If only one value argument is passed, it can be an array or
+			///						Vector2. Otherwise all value arguments have to be numbers.
+			static setUniformInt = function(_uniform)
+			{
+				try
+				{
+					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					{
+						var _value = undefined;
+						var _handle = shader_get_uniform(ID, _uniform);
+						
+						switch (argument_count)
+						{
+							case 2:
+								var _value = argument[1];
+								
+								if (is_real(_value))
+								{
+									shader_set_uniform_i(_handle, _value);
+								}
+								else if (is_array(_value))
+								{
+									shader_set_uniform_i_array(_handle, _value);
+								}
+								else if (instanceof(_value) == "Vector2")
+								{
+									shader_set_uniform_i(_handle, _value.x, _value.y);
+								}
+								else
+								{
+									new ErrorReport().report([other, self, "setUniformInt()"],
+															  ("Attempted to set an uniform using " +
+															   "an unrecognized data type:" + "\n" +
+															   "Shader: " + "{" + string(name) + "}" +
+															   "\n" + "Data: " + "{" + string(_value) +
+																"}"));
+									
+									return self;
+								}
+							break;
+							
+							case 3:
+								_value = [argument[1], argument[2]];
+								
+								shader_set_uniform_i(_handle, _value[0], _value[1]);
+							break;
+							
+							case 4:
+								_value = [argument[1], argument[2], argument[3]];
+								
+								shader_set_uniform_i(_handle, _value[0], _value[1], _value[2]);
+							break;
+							
+							case 5:
+							default:
+								_value = [argument[1], argument[2], argument[3], argument[4]];
+								
+								shader_set_uniform_i(_handle, _value[0], _value[1], _value[2],
+													 _value[3]);
+							break;
+						}
+						
+						var _struct = 
+						{
+							handle: ((_handle != -1) ? _handle : undefined),
+							type: "int",
+							value: _value
+						};
+						
+						variable_struct_set(uniform, _uniform, _struct);
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setUniformInt()"],
+												 ("Attempted to use an invalid Shader: " +
+												  "{" + string(ID) + "}"));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setUniformInt()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			uniform {string}
+			/// @argument			value? {real[]}
+			/// @description		Pass the currently set matrix or an array of its values as a
+			///						uniform to this Shader.
+			static setUniformMatrix = function(_uniform, _value)
+			{
+				try
+				{
+					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					{
+						var _handle = shader_get_uniform(ID, _uniform);
+						
+						if (is_array(_value))
+						{
+							shader_set_uniform_matrix_array(_handle, _value);
+						}
+						else
+						{
+							shader_set_uniform_matrix(_handle);
+						}
+						
+						var _struct = 
+						{
+							handle: _handle,
+							type: "matrix",
+							value: _value
+						};
+						
+						variable_struct_set(uniform, _uniform, _struct);
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setUniformMatrix()"],
+												 ("Attempted to use an invalid Shader: " +
+												  "{" + string(ID) + "}"));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setUniformMatrix()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @description		Update the uniforms in this Shader with all values held by the
+			///						uniform struct.
 			static updateUniforms = function()
 			{
-				var _uniform = variable_struct_get_names(uniform);
-				
-				var _i = 0;
-				repeat (array_length(_uniform))
+				try
 				{
-					var _struct = variable_struct_get(uniform, _uniform[_i]);
-					var _value_array = (is_array(_struct.value) ? _struct.value : [_struct.value]);
-					var _argument = [_uniform[_i]];
-					array_copy(_argument, 1, _value_array, 0, array_length(_value_array));
-					
-					switch (_struct.type)
+					var _uniform = variable_struct_get_names(uniform);
+					var _i = 0;
+					repeat (array_length(_uniform))
 					{
-						case "float":
-							script_execute_ext(method_get_index(self.setUniformFloat), _argument);
-						break;
+						try
+						{
+							var _struct = variable_struct_get(uniform, _uniform[_i]);
+							var _value_array = (is_array(_struct.value) ? _struct.value
+																		: [_struct.value]);
+							var _argument = [_uniform[_i]];
+							array_copy(_argument, 1, _value_array, 0, array_length(_value_array));
+							
+							switch (_struct.type)
+							{
+								case "float":
+									script_execute_ext(method_get_index(self.setUniformFloat),
+													   _argument);
+								break;
+								
+								case "int":
+									script_execute_ext(method_get_index(self.setUniformInt),
+													   _argument);
+								break;
+								
+								case "matrix":
+									script_execute_ext(method_get_index(self.setUniformMatrix),
+													   _argument);
+								break;
+							}
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "updateUniforms()"], _exception);
+						}
 						
-						case "int":
-							script_execute_ext(method_get_index(self.setUniformInt), _argument);
-						break;
-						
-						case "matrix":
-							script_execute_ext(method_get_index(self.setUniformMatrix), _argument);
-						break;
+						++_i;
 					}
-					
-					++_i;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "updateUniforms()"], _exception);
 				}
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{bool} target
-			// @description			Set whether this Shader is currently applied.
+			/// @argument			target {bool}
+			/// @description		Set whether this Shader is currently applied.
 			static setActive = function(_target)
 			{
-				if (compiled)
+				try
 				{
-					switch (_target)
+					if ((is_real(ID)) and (shader_is_compiled(ID)))
 					{
-						case true:
-							if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
-							{
-								var _callback_isArray = is_array(event.beforeActivation.callback);
-								var _argument_isArray = is_array(event.beforeActivation.argument);
-								var _callback = ((_callback_isArray)
-												 ? event.beforeActivation.callback
-												 : [event.beforeActivation.callback]);
-								var _callback_count = array_length(_callback);
-								var _argument = ((_argument_isArray)
-												 ? event.beforeActivation.argument
-												 : array_create(_callback_count,
-																event.beforeActivation.argument));
-								
-								var _i = 0;
-								repeat (_callback_count)
-								{
-									if (is_method(_callback[_i]))
-									{
-										script_execute_ext(method_get_index(_callback[_i]),
-															(((!_callback_isArray)
-															  and (_argument_isArray))
-															 ? _argument : ((is_array(_argument[_i])
-															 ? _argument[_i] : [_argument[_i]]))));
-									}
-								
-									++_i;
-								}
-							}
-							
-							shader_set(ID);
-							
-							if ((is_struct(event)) and (event.afterActivation.callback != undefined))
-							{
-								var _callback_isArray = is_array(event.afterActivation.callback);
-								var _argument_isArray = is_array(event.afterActivation.argument);
-								var _callback = ((_callback_isArray)
-												 ? event.afterActivation.callback
-												 : [event.afterActivation.callback]);
-								var _callback_count = array_length(_callback);
-								var _argument = ((_argument_isArray)
-												 ? event.afterActivation.argument
-												 : array_create(_callback_count,
-																event.afterActivation.argument));
-								
-								var _i = 0;
-								repeat (_callback_count)
-								{
-									if (is_method(_callback[_i]))
-									{
-										script_execute_ext(method_get_index(_callback[_i]),
-															(((!_callback_isArray)
-															  and (_argument_isArray))
-															 ? _argument : ((is_array(_argument[_i])
-															 ? _argument[_i] : [_argument[_i]]))));
-									}
-								
-									++_i;
-								}
-							}
-						break;
-						
-						case false:
-							if (shader_current() == ID)
-							{
+						switch (_target)
+						{
+							case true:
 								if ((is_struct(event))
-								and (event.beforeDeactivation.callback != undefined))
+								and (event.beforeActivation.callback != undefined))
 								{
-									var _callback_isArray = is_array(event.beforeDeactivation
-																		  .callback);
-									var _argument_isArray = is_array(event.beforeDeactivation
-																		  .argument);
+									var _callback_isArray = is_array(event.beforeActivation.callback);
+									var _argument_isArray = is_array(event.beforeActivation.argument);
 									var _callback = ((_callback_isArray)
-													 ? event.beforeDeactivation.callback
-													 : [event.beforeDeactivation.callback]);
+													 ? event.beforeActivation.callback
+													 : [event.beforeActivation.callback]);
 									var _callback_count = array_length(_callback);
 									var _argument = ((_argument_isArray)
-													 ? event.beforeDeactivation.argument
+													 ? event.beforeActivation.argument
 													 : array_create(_callback_count,
-																	event.beforeDeactivation
-																		 .argument));
+																	event.beforeActivation.argument));
+									var _i = 0;
+									repeat (_callback_count)
+									{
+										if (is_method(_callback[_i]))
+										{
+											try
+											{
+												script_execute_ext(method_get_index(_callback[_i]),
+																   (((!_callback_isArray)
+																	 and (_argument_isArray))
+																	? _argument
+																	: ((is_array(_argument[_i])
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
+											}
+											catch (_exception)
+											{
+												new ErrorReport().report([other, self, "setActive()",
+																		  "event", "beforeActivation"],
+																		 _exception);
+											}
+										}
+									
+										++_i;
+									}
+								}
+								
+								shader_set(ID);
+								
+								if ((is_struct(event))
+								and (event.afterActivation.callback != undefined))
+								{
+									var _callback_isArray = is_array(event.afterActivation.callback);
+									var _argument_isArray = is_array(event.afterActivation.argument);
+									var _callback = ((_callback_isArray)
+													 ? event.afterActivation.callback
+													 : [event.afterActivation.callback]);
+									var _callback_count = array_length(_callback);
+									var _argument = ((_argument_isArray)
+													 ? event.afterActivation.argument
+													 : array_create(_callback_count,
+																	event.afterActivation.argument));
 									
 									var _i = 0;
 									repeat (_callback_count)
 									{
 										if (is_method(_callback[_i]))
 										{
-											script_execute_ext(method_get_index(_callback[_i]),
-																(((!_callback_isArray)
-																  and (_argument_isArray))
-																 ? _argument
-																 : ((is_array(_argument[_i])
-																	? _argument[_i]
-																	: [_argument[_i]]))));
+											try
+											{
+												script_execute_ext(method_get_index(_callback[_i]),
+																   (((!_callback_isArray)
+																	 and (_argument_isArray))
+																	? _argument
+																	: ((is_array(_argument[_i])
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
+											}
+											catch (_exception)
+											{
+												new ErrorReport().report([other, self, "setActive()",
+																		  "event", "afterActivation"],
+																		 _exception);
+											}
 										}
-								
-										++_i;
-									}
-								}
-								
-								shader_reset();
-								
-								if ((is_struct(event))
-								and (event.afterDeactivation.callback != undefined))
-								{
-									var _callback_isArray = is_array(event.afterDeactivation
-																		  .callback);
-									var _argument_isArray = is_array(event.afterDeactivation
-																		  .argument);
-									var _callback = ((_callback_isArray)
-													 ? event.afterDeactivation.callback
-													 : [event.afterDeactivation.callback]);
-									var _callback_count = array_length(_callback);
-									var _argument = ((_argument_isArray)
-													 ? event.afterDeactivation.argument
-													 : array_create(_callback_count,
-																	event.afterDeactivation
-																		 .argument));
 									
-									var _i = 0;
-									repeat (_callback_count)
-									{
-										if (is_method(_callback[_i]))
-										{
-											script_execute_ext(method_get_index(_callback[_i]),
-																(((!_callback_isArray)
-																  and (_argument_isArray))
-																 ? _argument
-																 : ((is_array(_argument[_i])
-																	? _argument[_i]
-																	: [_argument[_i]]))));
-										}
-								
 										++_i;
 									}
 								}
-							}
-						break;
+							break;
+							
+							case false:
+								if (shader_current() == ID)
+								{
+									if ((is_struct(event))
+									and (event.beforeDeactivation.callback != undefined))
+									{
+										var _callback_isArray = is_array(event.beforeDeactivation
+																			  .callback);
+										var _argument_isArray = is_array(event.beforeDeactivation
+																			  .argument);
+										var _callback = ((_callback_isArray)
+														 ? event.beforeDeactivation.callback
+														 : [event.beforeDeactivation.callback]);
+										var _callback_count = array_length(_callback);
+										var _argument = ((_argument_isArray)
+														 ? event.beforeDeactivation.argument
+														 : array_create(_callback_count,
+																		event.beforeDeactivation
+																			 .argument));
+										var _i = 0;
+										repeat (_callback_count)
+										{
+											if (is_method(_callback[_i]))
+											{
+												try
+												{
+													script_execute_ext(method_get_index(_callback[_i]),
+																	   (((!_callback_isArray)
+																		 and (_argument_isArray))
+																		? _argument
+																		: ((is_array(_argument[_i])
+																		   ? _argument[_i]
+																		   : [_argument[_i]]))));
+												}
+												catch (_exception)
+												{
+													new ErrorReport().report([other, self,
+																			  "setActive()", "event",
+																			  "beforeDeactivation"],
+																			  _exception);
+												}
+											}
+									
+											++_i;
+										}
+									}
+									
+									shader_reset();
+									
+									if ((is_struct(event))
+									and (event.afterDeactivation.callback != undefined))
+									{
+										var _callback_isArray = is_array(event.afterDeactivation
+																			  .callback);
+										var _argument_isArray = is_array(event.afterDeactivation
+																			  .argument);
+										var _callback = ((_callback_isArray)
+														 ? event.afterDeactivation.callback
+														 : [event.afterDeactivation.callback]);
+										var _callback_count = array_length(_callback);
+										var _argument = ((_argument_isArray)
+														 ? event.afterDeactivation.argument
+														 : array_create(_callback_count,
+																		event.afterDeactivation
+																			 .argument));
+										var _i = 0;
+										repeat (_callback_count)
+										{
+											if (is_method(_callback[_i]))
+											{
+												try
+												{
+													script_execute_ext(method_get_index(_callback[_i]),
+																	   (((!_callback_isArray)
+																		 and (_argument_isArray))
+																		? _argument
+																		: ((is_array(_argument[_i])
+																		   ? _argument[_i]
+																		   : [_argument[_i]]))));
+												}
+												catch (_exception)
+												{
+													new ErrorReport().report([other, self,
+																			  "setActive()", "event",
+																			  "beforeDeactivation"],
+																			  _exception);
+												}
+											}
+									
+											++_i;
+										}
+									}
+								}
+							break;
+						}
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setActive()"],
+												 ("Attempted to use a Shader that is not compiled: " +
+												  "{" + string(name) + "}"));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "set";
-					var _errorText = ("Attempted to use a Shader that is not compiled: " +
-									  "{" + string(name) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setActive()"], _exception);
 				}
 				
 				return self;
@@ -648,12 +710,12 @@ function Shader() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the name of this Shader.
-			//						If this Shader is not compiled, it will be marked as such.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the name of this Shader.
+			///						If this Shader is not compiled, it will be marked as such.
 			static toString = function(_multiline = false)
 			{
 				if (is_real(ID))

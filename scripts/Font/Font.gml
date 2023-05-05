@@ -3,21 +3,21 @@
 /// @description			Constructs a Font resource defining glyphs used in text rendering.
 ///							
 ///							Construction types:
-///							- Wrapper: {int:font} font
-///							- From file: {string:path} path, {int} size, {bool} bold, {bool} italic,
-///										 {Range} glyphs, {bool} antialiasing
-///							- Sprite (UTF-8): {Sprite} sprite, {int} first, {bool} proportional, 
-///											  {int} separation, {bool} antialiasing
-///							- Sprite (glyph map): {Sprite} sprite, {string} glyphs, 
-///												  {bool} proportional, {int} separation, 
-///												  {bool} antialiasing
-///							- Constructor copy: {Font} other
+///							- Wrapper: font {int:font}
+///							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
+///										 glyphs {Range}, antialiasing {bool}
+///							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool}, 
+///											  separation {int}, antialiasing {bool}
+///							- Sprite (glyph map): sprite {Sprite}, glyphs {string}, 
+///												  proportional {bool}, separation {int}, 
+///												  antialiasing {bool}
+///							- Constructor copy: other {Font}
 function Font() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				ID = undefined;
@@ -87,7 +87,6 @@ function Font() constructor
 						event = {};
 						
 						var _eventList = variable_struct_get_names(_other.event);
-						
 						var _i = [0, 0];
 						repeat (array_length(_eventList))
 						{
@@ -100,7 +99,6 @@ function Font() constructor
 							{
 								var _property = variable_struct_get(_other_event,
 																	_eventPropertyList[_i[1]]);
-								
 								var _value = _property;
 								
 								if (is_array(_property))
@@ -131,9 +129,7 @@ function Font() constructor
 					{
 						//|Construction type: Wrapper.
 						type = "asset";
-						
 						ID = argument[0];
-						
 						assetName = font_get_name(ID);
 						fontName = font_get_fontname(ID);
 						size = font_get_size(ID);
@@ -146,7 +142,6 @@ function Font() constructor
 						{
 							//|Construction type: From file.
 							type = "file";
-							
 							fontName = argument[0];
 							size = argument[1];
 							bold = argument[2];
@@ -174,7 +169,6 @@ function Font() constructor
 								{
 									//|Construction type: Sprite (UTF-8).
 									type = "sprite (UTF-8)";
-									
 									sprite = _sprite;
 									first = argument[1];
 									proportional = argument[2];
@@ -196,7 +190,6 @@ function Font() constructor
 								{
 									//|Construction type: Sprite (glyph map).
 									type = "sprite (glyph map)";
-									
 									sprite = _sprite;
 									glyphs = argument[1];
 									proportional = argument[2];
@@ -223,19 +216,19 @@ function Font() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (font_exists(ID)));
 			}
 			
-			// @argument			{bool} forceAssetDeletion
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory if this Font is
-			//						not an asset Font or if is and the asset deletion was forced.
-			//						A destroyed asset Font will be remain unusable until the
-			//						application is completely shut down and then restarted.
+			/// @argument			forceAssetDeletion {bool}
+			/// @returns			{undefined}
+			/// @description		Remove the internal information from the memory if this Font is
+			///						not an asset Font or if is and the asset deletion was forced.
+			///						A destroyed asset Font will be remain unusable until the
+			///						application is completely shut down and then restarted.
 			static destroy = function(_forceAssetDeletion = false)
 			{
 				if ((is_real(ID)) and (font_exists(ID)) and ((_forceAssetDeletion)
@@ -252,100 +245,80 @@ function Font() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{pointer}
-			// @description			Get the pointer to texture page of this Font.
+			/// @returns			{pointer}
+			/// @description		Get the pointer to texture page of this Font.
 			static getTexture = function()
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				try
 				{
 					return font_get_texture(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getTexture";
-					var _errorText = ("Attempted to get a property of an invalid Font: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return pointer_invalid;
+					new ErrorReport().report([other, self, "getTexture()"], _exception);
 				}
+				
+				return pointer_invalid;
 			}
 			
-			// @returns				{Vector2} | On error: {undefined}
-			// @description			Get the texel size of the texture page of this Font.
+			/// @returns			{Vector2} | On error: {undefined}
+			/// @description		Get the texel size of the texture page of this Font.
 			static getTexel = function()
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				try
 				{
 					var _texture = font_get_texture(ID);
 					
 					return new Vector2(texture_get_texel_width(_texture),
 									   texture_get_texel_height(_texture));
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getTexel";
-					var _errorText = ("Attempted to get a property of an invalid Font: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getTexel()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{Vector4} | On error: {undefined}
-			// @description			Get the UV coordinates for this location of this Font on its
-			//						texture page.
+			/// @returns			{Vector4} | On error: {undefined}
+			/// @description		Get the UV coordinates for this location of this Font on its
+			///						texture page.
 			static getUV = function()
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				try
 				{
 					var _array = font_get_uvs(ID);
 					
 					return new Vector4(_array[0], _array[1], _array[2], _array[3]);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getUV";
-					var _errorText = ("Attempted to get a property of an invalid Font: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getUV()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this Font is currently used for drawing.
+			/// @returns			{bool}
+			/// @description		Check if this Font is currently used for drawing.
 			static isActive = function()
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				try
 				{
 					return (draw_get_font() == ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "isActive";
-					var _errorText = ("Attempted to get a property of an invalid Font: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return false;
+					new ErrorReport().report([other, self, "isActive()"], _exception);
 				}
+				
+				return false;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @description			Use this Font for further text rendering.
+			/// @description		Use this Font for further text rendering.
 			static setActive = function()
 			{
 				if ((is_real(ID)) and (font_exists(ID)))
@@ -355,24 +328,27 @@ function Font() constructor
 						var _callback_isArray = is_array(event.beforeActivation.callback);
 						var _argument_isArray = is_array(event.beforeActivation.argument);
 						var _callback = ((_callback_isArray)
-											? event.beforeActivation.callback
-											: [event.beforeActivation.callback]);
+										 ? event.beforeActivation.callback
+										 : [event.beforeActivation.callback]);
 						var _callback_count = array_length(_callback);
 						var _argument = ((_argument_isArray)
-											? event.beforeActivation.argument
-											: array_create(_callback_count,
+										 ? event.beforeActivation.argument
+										 : array_create(_callback_count,
 														event.beforeActivation.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray)
-														and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "setActive()", "event",
+														 "beforeActivation"], _exception);
 							}
 							
 							++_i;
@@ -392,18 +368,21 @@ function Font() constructor
 						var _argument = ((_argument_isArray)
 											? event.afterActivation.argument
 											: array_create(_callback_count,
-														event.afterActivation.argument));
-						
+														   event.afterActivation.argument));
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray)
-														and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
+												   (((!_callback_isArray) and (_argument_isArray))
+													? _argument : ((is_array(_argument[_i])
+													? _argument[_i] : [_argument[_i]]))));
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "setActive()", "event",
+														 "afterActivation"], _exception);
 							}
 							
 							++_i;
@@ -412,12 +391,7 @@ function Font() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setActive";
-					var _errorText = ("Attempted to use an invalid Font: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setActive()"], _exception);
 				}
 				
 				return self;
@@ -426,12 +400,12 @@ function Font() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Font.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Font.
 			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (font_exists(ID)))

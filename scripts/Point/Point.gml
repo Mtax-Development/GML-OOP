@@ -1,7 +1,7 @@
 /// @function				Point()
-/// @argument				{Vector2} location
-/// @argument				{int:color} color?
-/// @argument				{real} alpha?
+/// @argument				location {Vector2}
+/// @argument				color? {int:color}
+/// @argument				alpha? {real}
 ///							
 /// @description			Constructs a Point Shape, which is a single pixel.
 ///							
@@ -14,7 +14,7 @@ function Point() constructor
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -54,7 +54,6 @@ function Point() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -62,19 +61,16 @@ function Point() constructor
 								var _other_event = variable_struct_get(_other.event,
 																	   _eventList[_i[0]]);
 								var _eventPropertyList = variable_struct_get_names(_other_event);
-								
 								_i[1] = 0;
 								repeat (array_length(_eventPropertyList))
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
 									{
 										_value = [];
-										
 										array_copy(_value, 0, _property, 0, array_length(_property));
 									}
 									
@@ -106,8 +102,8 @@ function Point() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((instanceof(location) == "Vector2") and (location.isFunctional()));
@@ -116,230 +112,283 @@ function Point() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{object} object
-			// @argument			{bool} precise?
-			// @argument			{int:instance} excludedInstance?
-			// @argument			{bool|List} list?
-			// @argument			{bool} listOrdered?
-			// @returns				{int|List}
-			// @description			Check for a collision within this Shape with instances of the
-			//						specified object.
-			//						Returns the ID of a single colliding instance or noone.
-			//						If List use is specified, a List will be returned instead, either
-			//						empty or containing IDs of the colliding instances.
-			//						If specified, the additions to that List can be ordered by 
-			//						distance from the center of the Shape.
+			/// @argument			object {int:object}
+			/// @argument			precise? {bool}
+			/// @argument			excludedInstance? {int:instance}
+			/// @argument			list? {bool|List}
+			/// @argument			listOrdered? {bool}
+			/// @returns			{int|List}
+			/// @description		Check for a collision within this Shape with instances of the
+			///						specified object.
+			///						Returns the ID of a single colliding instance or noone.
+			///						If List use is specified, a List will be returned instead, either
+			///						empty or containing IDs of the colliding instances.
+			///						If specified, the additions to that List can be ordered by 
+			///						distance from the center of the Shape.
 			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
 										_listOrdered = false)
 			{
-				if (_list)
+				var _list_created = false;
+				
+				try
 				{
-					if (instanceof(_list) != "List")
+					if (_list)
 					{
-						_list = new List();
-					}
-					
-					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{
-						with (_excludedInstance)
+						if (instanceof(_list) != "List")
 						{
-							collision_point_list(other.location.x, other.location.y, _object,
-												 _precise, true, _list.ID, _listOrdered);
+							_list = new List();
+							_list_created = true;
 						}
+						
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+						{
+							with (_excludedInstance)
+							{
+								collision_point_list(other.location.x, other.location.y, _object,
+													 _precise, true, _list.ID, _listOrdered);
+							}
+						}
+						else
+						{
+							collision_point_list(location.x, location.y, _object, _precise, false,
+												 _list.ID, _listOrdered);
+						}
+						
+						return _list;
 					}
 					else
 					{
-						collision_point_list(location.x, location.y, _object, _precise, false,
-											 _list.ID, _listOrdered);
-					}
-					
-					return _list;
-				}
-				else
-				{
-					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{
-						with (_excludedInstance)
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
 						{
-							return collision_point(other.location.x, other.location.y, _object,
-												   _precise, true);
+							with (_excludedInstance)
+							{
+								return collision_point(other.location.x, other.location.y, _object,
+													   _precise, true);
+							}
+						}
+						else
+						{
+							return collision_point(location.x, location.y, _object, _precise, false);
 						}
 					}
-					else
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "collision()"], _exception);
+					
+					if (_list_created)
 					{
-						return collision_point(location.x, location.y, _object, _precise, false);
+						_list.destroy();
 					}
 				}
+				
+				return noone;
 			}
 			
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the cursor is over this Shape.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the cursor is over this Shape.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorOver = function(_device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
 					}
+					
+					return ((_cursor_x == location.x) and (_cursor_y == location.y));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "cursorOver()"], _exception);
 				}
 				
-				return ((_cursor_x == location.x) and (_cursor_y == location.y));
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the cursor is over this Shape while its specified mouse
-			//						button is pressed or held.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the cursor is over this Shape while its specified mouse
+			///						button is pressed or held.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorHold = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if ((_cursor_x == location.x) and (_cursor_y == location.y))
+					{
+						return ((_device == undefined) ? mouse_check_button(_button)
+													   : device_mouse_check_button(_device, _button))
+					}
+					else
+					{
+						return false;
 					}
 				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "cursorHold()"], _exception);
+				}
 				
-				if ((_cursor_x == location.x) and (_cursor_y == location.y))
-				{
-					return ((_device == undefined) ? mouse_check_button(_button)
-												   : device_mouse_check_button(_device, _button))
-				}
-				else
-				{
-					return false;
-				}
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the cursor is over this Shape while its specified mouse
-			//						button was pressed in this frame.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the cursor is over this Shape while its specified mouse
+			///						button was pressed in this frame.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorPressed = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if ((_cursor_x == location.x) and (_cursor_y == location.y))
+					{	
+						return ((_device == undefined) ? mouse_check_button_pressed(_button)
+													   : device_mouse_check_button_pressed(_device,
+																						   _button))
+					}
+					else
+					{
+						return false;
 					}
 				}
-				
-				if ((_cursor_x == location.x) and (_cursor_y == location.y))
-				{	
-					return ((_device == undefined) ? mouse_check_button_pressed(_button)
-												   : device_mouse_check_button_pressed(_device,
-																					   _button))
-				}
-				else
+				catch (_exception)
 				{
-					return false;
+					new ErrorReport().report([other, self, "cursorPressed()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the cursor is over this Shape while the specified mouse
-			//						button was released in this frame.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the cursor is over this Shape while the specified mouse
+			///						button was released in this frame.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorReleased = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if ((_cursor_x == location.x) and (_cursor_y == location.y))
+					{	
+						return ((_device == undefined) ? mouse_check_button_released(_button)
+													   : device_mouse_check_button_released(_device,
+																							_button))
+					}
+					else
+					{
+						return false;
 					}
 				}
-				
-				if ((_cursor_x == location.x) and (_cursor_y == location.y))
-				{	
-					return ((_device == undefined) ? mouse_check_button_released(_button)
-												   : device_mouse_check_button_released(_device,
-																						_button))
-				}
-				else
+				catch (_exception)
 				{
-					return false;
+					new ErrorReport().report([other, self, "cursorReleased()"], _exception);
 				}
+				
+				return false;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector2} location?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw of this Shape as a sprite, using data of this
-			//						constructor or specified replaced parts of it for this call only.
+			/// @argument			location? {Vector2}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
+			/// @description		Execute the draw of this Shape as a sprite, using data of this
+			///						constructor or specified replaced parts of it for this call only.
 			static render = function(_location, _color, _alpha)
 			{
 				static __createPixelSprite = function()
@@ -370,83 +419,98 @@ function Point() constructor
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				
-				if (self.isFunctional())
+				try
 				{
-					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
+					if (self.isFunctional())
 					{
-						var _callback_isArray = is_array(event.beforeRender.callback);
-						var _argument_isArray = is_array(event.beforeRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.beforeRender.callback
-										 : [event.beforeRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.beforeRender.argument
-										 : array_create(_callback_count,
-														event.beforeRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
-							if (is_method(_callback[_i]))
-							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
-							}
+							var _callback_isArray = is_array(event.beforeRender.callback);
+							var _argument_isArray = is_array(event.beforeRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.beforeRender.callback
+											 : [event.beforeRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.beforeRender.argument
+											 : array_create(_callback_count,
+															event.beforeRender.argument));
 							
-							++_i;
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "beforeRender"], _exception);
+								}
+								
+								++_i;
+							}
+						}
+						
+						if (alpha > 0)
+						{
+							draw_sprite_ext(_pixelSprite, 0, location.x, location.y, 1, 1, 0, color,
+											alpha);
+						}
+						
+						if ((is_struct(event)) and (event.afterRender.callback != undefined))
+						{
+							var _callback_isArray = is_array(event.afterRender.callback);
+							var _argument_isArray = is_array(event.afterRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.afterRender.callback
+											 : [event.afterRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.afterRender.argument
+											 : array_create(_callback_count,
+															event.afterRender.argument));
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "afterRender"], _exception);
+								}
+								
+								++_i;
+							}
 						}
 					}
-					
-					if (alpha > 0)
+					else
 					{
-						draw_sprite_ext(_pixelSprite, 0, location.x, location.y, 1, 1, 0, color,
-										alpha);
-					}
-					
-					if ((is_struct(event)) and (event.afterRender.callback != undefined))
-					{
-						var _callback_isArray = is_array(event.afterRender.callback);
-						var _argument_isArray = is_array(event.afterRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.afterRender.callback
-										 : [event.afterRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.afterRender.argument
-										 : array_create(_callback_count,
-														event.afterRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
-						{
-							if (is_method(_callback[_i]))
-							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
-							}
-							
-							++_i;
-						}
+						new ErrorReport().report([other, self, "render()"],
+												 ("Attempted to render an invalid Shape: " +
+												  "{" + string(self) + "}"));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Shape: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "render()"], _exception);
 				}
-				
-				location = _location_original;
-				color = _color_original;
-				alpha = _alpha_original;
+				finally
+				{
+					location = _location_original;
+					color = _color_original;
+					alpha = _alpha_original;
+				}
 				
 				return self;
 			}
@@ -454,17 +518,16 @@ function Point() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Shape.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Shape.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
-				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				
 				if (!_full)

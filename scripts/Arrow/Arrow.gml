@@ -1,8 +1,8 @@
 /// @function				Arrow()
-/// @argument				{Vector4} location
-/// @argument				{real} size?
-/// @argument				{int:color} color?
-/// @argument				{real} alpha?
+/// @argument				location {Vector4}
+/// @argument				size? {real}
+/// @argument				color? {int:color}
+/// @argument				alpha? {real}
 ///							
 /// @description			Constructs an Arrow Shape, which is a Line starting at x1y1 with a
 ///							Triangle of the specified size at x2y2 pointing towards that location.
@@ -10,13 +10,13 @@
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void}
-///							- Constructor copy: {Arrow} other
+///							- Constructor copy: other {Arrow}
 function Arrow() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -58,7 +58,6 @@ function Arrow() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -72,13 +71,11 @@ function Arrow() constructor
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
 									{
 										_value = [];
-										
 										array_copy(_value, 0, _property, 0, array_length(_property));
 									}
 									
@@ -113,8 +110,8 @@ function Arrow() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(size)) and (is_real(color)) and (is_real(alpha)) and
@@ -124,15 +121,15 @@ function Arrow() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector4} location?
-			// @argument			{real} size?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw of this Shape as a form, using data of this
-			//						constructor or specified replaced parts of it for this call only.
-			//						NOTE: Form drawing produces inconsistent results across devices
-			//						and export targets due to their technical differences.
-			//						Sprite drawing should be used instead for accurate results.
+			/// @argument			location? {Vector4}
+			/// @argument			size? {real}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
+			/// @description		Execute the draw of this Shape as a form, using data of this
+			///						constructor or specified replaced parts of it for this call only.
+			///						NOTE: Form drawing produces inconsistent results across devices
+			///						and export targets due to their technical differences.
+			///						Sprite drawing should be used instead for accurate results.
 			static render = function(_location, _size, _color, _alpha)
 			{
 				var _location_original = location;
@@ -145,86 +142,99 @@ function Arrow() constructor
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				
-				if (self.isFunctional())
+				try
 				{
-					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
+					if (self.isFunctional())
 					{
-						var _callback_isArray = is_array(event.beforeRender.callback);
-						var _argument_isArray = is_array(event.beforeRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.beforeRender.callback
-										 : [event.beforeRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.beforeRender.argument
-										 : array_create(_callback_count,
-														event.beforeRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
-							if (is_method(_callback[_i]))
+							var _callback_isArray = is_array(event.beforeRender.callback);
+							var _argument_isArray = is_array(event.beforeRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.beforeRender.callback
+											 : [event.beforeRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.beforeRender.argument
+											 : array_create(_callback_count,
+															event.beforeRender.argument));
+							var _i = 0;
+							repeat (_callback_count)
 							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "beforeRender"], _exception);
+								}
+								
+								++_i;
 							}
-							
-							++_i;
+						}
+						
+						if (alpha > 0)
+						{
+							draw_set_alpha(alpha);
+							draw_set_color(color);
+							draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
+						}
+						
+						if ((is_struct(event)) and (event.afterRender.callback != undefined))
+						{
+							var _callback_isArray = is_array(event.afterRender.callback);
+							var _argument_isArray = is_array(event.afterRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.afterRender.callback
+											 : [event.afterRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.afterRender.argument
+											 : array_create(_callback_count,
+															event.afterRender.argument));
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "afterRender"], _exception);
+								}
+								
+								++_i;
+							}
 						}
 					}
-					
-					if (alpha > 0)
+					else
 					{
-						draw_set_alpha(alpha);
-						draw_set_color(color);
-						
-						draw_arrow(location.x1, location.y1, location.x2, location.y2, size);
-					}
-					
-					if ((is_struct(event)) and (event.afterRender.callback != undefined))
-					{
-						var _callback_isArray = is_array(event.afterRender.callback);
-						var _argument_isArray = is_array(event.afterRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.afterRender.callback
-										 : [event.afterRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.afterRender.argument
-										 : array_create(_callback_count,
-														event.afterRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
-						{
-							if (is_method(_callback[_i]))
-							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
-							}
-							
-							++_i;
-						}
+						new ErrorReport().report([other, self, "render()"],
+												 ("Attempted to render an invalid Shape: " +
+												  "{" + string(self) + "}"));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Shape: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "render()"], _exception);
 				}
-				
-				location = _location_original;
-				size = _size_original;
-				color = _color_original;
-				alpha = _alpha_original;
+				finally
+				{
+					location = _location_original;
+					size = _size_original;
+					color = _color_original;
+					alpha = _alpha_original;
+				}
 				
 				return self;
 			}
@@ -232,13 +242,13 @@ function Arrow() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Shape.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Shape.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";

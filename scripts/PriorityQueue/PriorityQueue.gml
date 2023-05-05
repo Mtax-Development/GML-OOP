@@ -5,15 +5,15 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Wrapper: {int:priorityQueue} priorityQueue
+///							- Wrapper: priorityQueue {int:priorityQueue}
 ///							- Empty: {undefined}
-///							- Constructor copy: {PriorityQueue} other
+///							- Constructor copy: other {PriorityQueue}
 function PriorityQueue() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -44,19 +44,19 @@ function PriorityQueue() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (ds_exists(ID, ds_type_priority)));
 			}
 			
-			// @argument			{bool} deepScan?
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory.
-			//						A deep scan can be performed before the removal, which will 
-			//						iterate through this and all other Data Structures contained
-			//						in it to destroy them as well.
+			/// @argument			deepScan? {bool}
+			/// @returns			{undefined}
+			/// @description		Remove the internal information from the memory.
+			///						A deep scan can be performed before the removal, which will 
+			///						iterate through this and all other Data Structures contained
+			///						in it to destroy them as well.
 			static destroy = function(_deepScan)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
@@ -93,7 +93,7 @@ function PriorityQueue() constructor
 				return undefined;
 			}
 			
-			// @description			Remove data from this Data Structure.
+			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
@@ -106,8 +106,8 @@ function PriorityQueue() constructor
 				return self;
 			}
 			
-			// @argument			{PriorityQueue} other
-			// @description			Replace data of this Priority Queue with data from another one.
+			/// @argument			other {PriorityQueue}
+			/// @description		Replace data of this Priority Queue with data from another one.
 			static copy = function(_other)
 			{
 				if ((instanceof(_other) == "PriorityQueue") and (is_real(_other.ID)) 
@@ -122,12 +122,9 @@ function PriorityQueue() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Data Structure: " +
-									  "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "copy()"],
+											 ("Attempted to copy from an invalid Data Structure: " + 
+											  "{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -136,13 +133,13 @@ function PriorityQueue() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any} value...
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure contains at least one of the
-			//						specified values.
+			/// @argument			value... {any}
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this Data Structure contains at least one of the
+			///						specified values.
 			static contains = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _size = ds_priority_size(ID);
 					
@@ -173,29 +170,23 @@ function PriorityQueue() constructor
 					
 					return false;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "contains()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{any} value...
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of times the specified values occur in this
-			//						Data Structure.
+			/// @argument			value... {any}
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Return the number of times the specified values occur in this
+			///						Data Structure.
 			static count = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _result = 0;
-					
 					var _size = ds_priority_size(ID);
 					
 					if (_size > 0)
@@ -206,7 +197,6 @@ function PriorityQueue() constructor
 						repeat (_size)
 						{
 							var _value = ds_priority_delete_max(_dataCopy);
-							
 							var _i = 0;
 							repeat (argument_count)
 							{
@@ -224,161 +214,130 @@ function PriorityQueue() constructor
 					
 					return _result;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "count";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "count()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return any value with the highest priority in this Priority Queue.
-			//						Returns {undefined} if this Priority Queue does not exists or is
-			//						empty.
+			/// @returns			{any|undefined}
+			/// @description		Return any value with the highest priority in this Priority Queue.
+			///						Returns {undefined} if this Priority Queue does not exists or is
+			///						empty.
 			static getFirst = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_find_max(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getFirst()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return any value with the lowest priority in this Priority Queue.
-			//						Returns {undefined} if this Priority Queue does not exists or is
-			//						empty.
+			/// @returns			{any|undefined}
+			/// @description		Return any value with the lowest priority in this Priority Queue.
+			///						Returns {undefined} if this Priority Queue does not exists or is
+			///						empty.
 			static getLast = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_find_min(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getLast()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{any} value
-			// @returns				{any|undefined}
-			// @description			Return the priority of a specified value.
-			//						Returns {undefined} if this Priority Queue or the value does not
-			//						exist.
+			/// @argument			value {any}
+			/// @returns			{any|undefined}
+			/// @description		Return the priority of a specified value.
+			///						Returns {undefined} if this Priority Queue or the value does not
+			///						exist.
 			static getPriority = function(_value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_find_priority(ID, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getPriority";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getPriority()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{int}
-			// @description			Return the number of values in this Data Structure.
+			/// @returns			{int}
+			/// @description		Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_size(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
+					new ErrorReport().report([other, self, "getSize()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure has no values in it.
-			//						Returns {undefined} if this Data Structure does not exists.
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this Data Structure has no values in it.
+			///						Returns {undefined} if this Data Structure does not exists.
 			static isEmpty = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_empty(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "isEmpty()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{function} function
-			// @argument			{any} argument?
-			// @argument			{bool} readOnly?
-			// @argument			{bool} orderAscending?
-			// @returns				{any[]}
-			// @description			Execute a function once for each element in this Data Structure.
-			//						It can be treated as read-only for this operation, in which case
-			//						it will be performed solely on its copy and the original will not
-			//						be modified in order to read the values.
-			//						The values will be iterated through starting from the ones with
-			//						the highest priority, unless ascending order is specified.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @argument			function {function}
+			/// @argument			argument? {any}
+			/// @argument			readOnly? {bool}
+			/// @argument			orderAscending? {bool}
+			/// @returns			{any[]}
+			/// @description		Execute a function once for each element in this Data Structure.
+			///						It can be treated as read-only for this operation, in which case
+			///						it will be performed solely on its copy and the original will not
+			///						be modified in order to read the values.
+			///						The values will be iterated through starting from the ones with
+			///						the highest priority, unless ascending order is specified.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument, _readOnly = false,
 									  _orderAscending = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
-					var _size = ds_priority_size(ID);
-					var _functionReturn = [];
 					var _dataCopy = ds_priority_create();
 					ds_priority_copy(_dataCopy, ID);
-					
+					var _size = ds_priority_size(ID);
+					var _functionReturn = [];
 					var __read = ((_orderAscending) ? ds_priority_delete_min
 													: ds_priority_delete_max);
 					var _removableData = ((_readOnly) ? [_dataCopy] : [_dataCopy, ID]);
@@ -397,7 +356,15 @@ function PriorityQueue() constructor
 						
 						var _value = _removedData[0];
 						
-						array_push(_functionReturn, __function(_i[0], _value, _argument));
+						try
+						{
+							array_push(_functionReturn, __function(_i[0], _value, _argument));
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "forEach()", "function()"],
+													 _exception);
+						}
 						
 						++_i[0];
 					}
@@ -406,25 +373,20 @@ function PriorityQueue() constructor
 					
 					return _functionReturn;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "forEach()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{any} priority...
-			// @argument			{any} value...
-			// @description			Add one or more value and priority pairs to this Priority Queue.
+			/// @argument			priority... {any}
+			/// @argument			value... {any}
+			/// @description		Add one or more value and priority pairs to this Priority Queue.
 			static add = function(_priority, _value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count div 2)
@@ -437,25 +399,20 @@ function PriorityQueue() constructor
 						_i += 2;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "add()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{any} priority...
-			// @argument			{any} value...
-			// @description			Set the priority of one or more existing values.
+			/// @argument			priority... {any}
+			/// @argument			value... {any}
+			/// @description		Set the priority of one or more existing values.
 			static setPriority = function(_priority, _value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count div 2)
@@ -468,24 +425,19 @@ function PriorityQueue() constructor
 						_i += 2;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "changePriority";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "changePriority()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{any} value...
-			// @description			Remove one or more specified values from this Priority Queue.
+			/// @argument			value... {any}
+			/// @description		Remove one or more specified values from this Priority Queue.
 			static remove = function(_value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _i = 0;
 					repeat (min(argument_count, ds_priority_size(ID)))
@@ -497,141 +449,116 @@ function PriorityQueue() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "remove()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} count?
-			// @returns				{any|any[]|undefined}
-			// @description			Remove one or more values with the highest priority in this
-			//						Priority Queue and return it.
-			//						If multiple values were removed, they will be returned in an
-			//						array. If no values were removed, {undefined} will be returned.
+			/// @argument			count? {int}
+			/// @returns			{any|any[]|undefined}
+			/// @description		Remove one or more values with the highest priority in this
+			///						Priority Queue and return it.
+			///						If multiple values were removed, they will be returned in an
+			///						array. If no values were removed, {undefined} will be returned.
 			static removeFirst = function(_count = 1)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _size = ds_priority_size(ID);
-					
 					_count = min(_count, _size);
 					
 					if ((!(_count >= 1)) or (_size < 1))
 					{
 						return undefined;
 					}
+					else if (_count == 1)
+					{
+						return ds_priority_delete_max(ID);
+					}
 					else
 					{
-						if (_count == 1)
+						var _result = array_create(_count, undefined);
+						var _i = 0;
+						repeat (_count)
 						{
-							return ds_priority_delete_max(ID);
-						}
-						else
-						{
-							var _result = array_create(_count, undefined);
+							_result[_i] = ds_priority_delete_max(ID);
 							
-							var _i = 0;
-							repeat (_count)
-							{
-								_result[_i] = ds_priority_delete_max(ID);
-								
-								++_i;
-							}
-							
-							return _result;
+							++_i;
 						}
+						
+						return _result;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removeFirst";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "removeFirst()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{int} count?
-			// @returns				{any|any[]|undefined}
-			// @description			Remove one or more values with the lowest priority in this
-			//						Priority Queue and return it.
-			//						If multiple values were removed, they will be returned in an
-			//						array. If no values were removed, {undefined} will be returned.
+			/// @argument			count? {int}
+			/// @returns			{any|any[]|undefined}
+			/// @description		Remove one or more values with the lowest priority in this
+			///						Priority Queue and return it.
+			///						If multiple values were removed, they will be returned in an
+			///						array. If no values were removed, {undefined} will be returned.
 			static removeLast = function(_count = 1)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _size = ds_priority_size(ID);
-					
 					_count = min(_count, _size);
 					
 					if ((!(_count >= 1)) or (_size < 1))
 					{
 						return undefined;
 					}
+					if (_count == 1)
+					{
+						return ds_priority_delete_min(ID);
+					}
 					else
 					{
-						if (_count == 1)
+						var _result = array_create(_count, undefined);
+						var _i = 0;
+						repeat (_count)
 						{
-							return ds_priority_delete_min(ID);
-						}
-						else
-						{
-							var _result = array_create(_count, undefined);
+							_result[_i] = ds_priority_delete_min(ID);
 							
-							var _i = 0;
-							repeat (_count)
-							{
-								_result[_i] = ds_priority_delete_min(ID);
-								
-								++_i;
-							}
-							
-							return _result;
+							++_i;
 						}
+						
+						return _result;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removeLast";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "removeLast()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{int|all} elementNumber?
-			// @argument			{int|all} elementLength?
-			// @argument			{string} mark_separator?
-			// @argument			{string} mark_cut?
-			// @argument			{string} mark_elementStart?
-			// @argument			{string} mark_elementEnd?
-			// @argument			{string} mark_section?
-			// @argument			{string} mark_sizeSeparator?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented by the data of this Data Structure.
+			/// @argument			multiline? {bool}
+			/// @argument			elementNumber? {int|all}
+			/// @argument			elementLength? {int|all}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @argument			mark_elementStart? {string}
+			/// @argument			mark_elementEnd? {string}
+			/// @argument			mark_section? {string}
+			/// @argument			mark_sizeSeparator? {string}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
 									   _mark_separator = ", ", _mark_cut = "...",
 									   _mark_elementStart = "", _mark_elementEnd = "",
@@ -651,7 +578,6 @@ function PriorityQueue() constructor
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					
 					var _string = "";
 					var _string_size = (string(_size));
 					
@@ -795,17 +721,16 @@ function PriorityQueue() constructor
 				}
 			}
 			
-			// @returns				{any[]}
-			// @description			Create an array with all priorities and values of this Priority
-			//						Queue.
-			//						The array will contain two arrays. The first one will contain all
-			//						priorities and second one will contain all values.
+			/// @returns			{any[]}
+			/// @description		Create an array with all priorities and values of this Priority
+			///						Queue.
+			///						The array will contain two arrays. The first one will contain all
+			///						priorities and second one will contain all values.
 			static toArray = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					var _size = ds_priority_size(ID);
-					
 					var _priority = array_create(_size, undefined);
 					var _value = array_create(_size, undefined);
 					
@@ -813,13 +738,11 @@ function PriorityQueue() constructor
 					{
 						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
-						
 						var _i = 0;
 						repeat (_size)
 						{
 							_priority[_i] = ds_priority_find_priority(_dataCopy,
-												 ds_priority_find_max(_dataCopy));
-							
+																	  ds_priority_find_max(_dataCopy));
 							_value[_i] = ds_priority_delete_max(_dataCopy);
 							
 							++_i;
@@ -830,24 +753,19 @@ function PriorityQueue() constructor
 					
 					return [_priority, _value];
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [[], []];
+					new ErrorReport().report([other, self, "toArray()"], _exception);
 				}
+				
+				return [[], []];
 			}
 			
-			// @argument			{any[]} array
-			// @description			Add priority and value pairs from the specified array to this
-			//						Priority Queue.
-			//						The first dimension of the array must contain priorities and the
-			//						second their values. Values that are not provided for a priority
+			/// @argument			array {any[]}
+			/// @description		Add priority and value pairs from the specified array to this
+			///						Priority Queue.
+			///						The first dimension of the array must contain priorities and the
+			///						second their values. Values that are not provided for a priority
 			///						will be set to {undefined}.
 			static fromArray = function(_array)
 			{
@@ -856,12 +774,11 @@ function PriorityQueue() constructor
 					ID = ds_priority_create();
 				}
 				
-				if ((is_array(_array)) and (array_length(_array) >= 2)
-				and (is_array(_array[0])) and (is_array(_array[1])))
+				if ((is_array(_array)) and (array_length(_array) >= 2) and (is_array(_array[0]))
+				and (is_array(_array[1])))
 				{
 					var _priorities = _array[0];
 					var _values = _array[1];
-						
 					var _priorities_length = array_length(_priorities);
 					var _values_length = array_length(_values);
 						
@@ -877,54 +794,53 @@ function PriorityQueue() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "fromArray";
-					var _errorText = ("Attempted to convert an invalid or incorrectly formatted " +
-									  "array to a Data Structure: " +
-									  "{" + string(_array) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "fromArray()"],
+											 ("Attempted to convert an invalid or incorrectly " +
+											  "formatted array to a Data Structure: " +
+											  "{" + string(_array) + "}"));
 				}
 				
 				return self;
 			}
 			
-			// @returns				{string}
-			// @description			Encode this Data Structure into a string, from which it can be
-			//						recreated.
+			/// @returns			{string}
+			/// @description		Encode this Data Structure into a string, from which it can be
+			///						recreated.
 			static toEncodedString = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				try
 				{
 					return ds_priority_write(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toEncodedString";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
-				}
-			}
-			
-			// @argument			{string} string
-			// @argument			{bool} legacy?
-			// @description			Decode a string to which a Data Structure of the same type was
-			//						previously encoded into this one.
-			//						Use the "legacy" argument if that string was created
-			//						in old versions of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy = false)
-			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
-				{
-					ID = ds_priority_create();
+					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
 				}
 				
-				ds_priority_read(ID, _string, _legacy);
+				return string(undefined);
+			}
+			
+			/// @argument			string {string}
+			/// @argument			legacy? {bool}
+			/// @description		Decode a string to which a Data Structure of the same type was
+			///						previously encoded into this one.
+			///						Use the "legacy" argument if that string was created
+			///						in old versions of GameMaker with different encoding.
+			static fromEncodedString = function(_string, _legacy = false)
+			{
+				try
+				{
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
+					{
+						ID = ds_priority_create();
+					}
+					
+					ds_priority_read(ID, _string, _legacy);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+				}
 				
 				return self;
 			}

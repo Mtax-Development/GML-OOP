@@ -1,19 +1,19 @@
 /// @function				Room()
-/// @argument				{Vector2} size?
-/// @argument				{bool} persistent?
+/// @argument				size? {Vector2}
+/// @argument				persistent? {bool}
 ///							
 /// @description			Constructs a Room resource, used to group all other resources.
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Wrapper: {int:room} other
-///							- Constructor copy: {Room} other
+///							- Wrapper: other {int:room}
+///							- Constructor copy: other {Room}
 function Room() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				ID = undefined;
@@ -35,7 +35,6 @@ function Room() constructor
 						persistent = _other.persistent;
 						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
 																	   : _other.size);
-						
 						ID = room_add();
 						room_set_width(ID, size.x);
 						room_set_height(ID, size.y);
@@ -73,7 +72,6 @@ function Room() constructor
 							? argument[0] : new Vector2(0, 0));
 					persistent = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																						: false);
-					
 					ID = room_add();
 					
 					room_set_width(ID, size.x);
@@ -84,19 +82,19 @@ function Room() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (room_exists(ID)));
 			}
 			
-			// @argument			{Room|int:room} other
-			// @description			Replace the contents and properties of this Room with the ones
-			//						from another one.
+			/// @argument			other {Room|int:room}
+			/// @description		Replace the contents and properties of this Room with the ones
+			///						from another one.
 			static copy = function(_other)
 			{
-				if (is_real(_other))
+				if (is_real(_other) and (room_exists(_other)))
 				{
 					room_assign(ID, _other);
 					
@@ -119,12 +117,9 @@ function Room() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Room: " +
-									  "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "copy()"],
+											 ("Attempted to copy from an invalid Room: " +
+											  "{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -133,8 +128,8 @@ function Room() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{bool}
-			// @description			Check if this Room is the one currently active.
+			/// @returns			{bool}
+			/// @description		Check if this Room is the one currently active.
 			static isActive = function()
 			{
 				return ((is_real(ID)) and (room_exists(ID)) and (room == ID));
@@ -143,47 +138,39 @@ function Room() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			{Vector2} size
-			// @description			Set the room size property for this Room if it is not in use.
+			/// @argument			size {Vector2}
+			/// @description		Set the room size property for this Room if it is not in use.
 			static setSize = function(_size)
 			{
-				if ((is_real(ID)) and (room_exists(ID)))
+				try
 				{
 					if (room != ID)
 					{
-						size = _size;
+						room_set_width(ID, _size.x);
+						room_set_height(ID, _size.y);
 						
-						room_set_width(ID, size.x);
-						room_set_height(ID, size.y);
+						size = ((instanceof(size) == "Vector2") ? size.set(_size)
+																: new Vector2(_size));
 					}
 					else
 					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "setSize";
-						var _errorText = ("Attempted to set a property of a Room in use: " +
-										  "{" + string(ID) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
+						new ErrorReport().report([other, self, "setSize()"],
+												 ("Attempted to set a property of a Room in use: " +
+												  "{" + room_get_name(room) + "}"));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSize";
-					var _errorText = ("Attempted to change a property of an invalid Room: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{bool} persistent
-			// @description			Toggle the persistence of this Room.
-			//						Cannot be used to free the memory if this Room was active while
-			//						persistent and is not currently active.
+			/// @argument			persistent {bool}
+			/// @description		Toggle the persistence of this Room.
+			///						Cannot be used to free the memory if this Room was active while
+			///						persistent and is not currently active.
 			static setPersistent = function(_persistent)
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -192,21 +179,17 @@ function Room() constructor
 					{
 						if ((_persistent) or (!persistenceOnVisit))
 						{
-							persistent = _persistent;
+							room_set_persistent(ID, _persistent);
 							
-							room_set_persistent(ID, persistent);
+							persistent = _persistent;
 						}
 						else
 						{
-							var _errorReport = new ErrorReport();
-							var _callstack = debug_get_callstack();
-							var _methodName = "setPersistent";
-							var _errorText = ("Attempted to disable persistency of a Room that was " +
-											  "visited while persistent and is not currently " +
-											  "active: " +
-											  "{" + string(ID) + "}");
-							_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-																 _errorText);
+							new ErrorReport().report([other, self, "setPersistent()"],
+													 ("Attempted to disable persistency of a Room " +
+													  "that was visited while persistent and is not " +
+													  "currently active: " +
+													  "{" + room_get_name(ID) + "}"));
 						}
 					}
 					else
@@ -218,12 +201,9 @@ function Room() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setPersistent";
-					var _errorText = ("Attempted to change a property of an invalid Room: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setPersistent()"],
+											 ("Attempted to change a property of an invalid Room: " +
+											  "{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -232,10 +212,10 @@ function Room() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{object} object
-			// @argument			{Vector2} location?
-			// @returns				{Room.AddedInstance} | On error: {noone}
-			// @description			Add an instance of an object to this inactive room.
+			/// @argument			object {int:object}
+			/// @argument			location? {Vector2}
+			/// @returns			{Room.AddedInstance} | On error: {noone}
+			/// @description		Add an instance of an object to this inactive room.
 			static createInstance = function(_object, _location)
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -246,31 +226,24 @@ function Room() constructor
 					}
 					else
 					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "createInstance";
-						var _errorText = ("Attempted to add an instance to a Room in use: " +
-										  "{" + string(ID) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
+						new ErrorReport().report([other, self, "createInstance()"],
+												 ("Attempted to add an instance to a Room in use: " +
+												  "{" + room_get_name(room) + "}"));
 						
 						return noone;
 					}
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "createInstance";
-					var _errorText = ("Attempted to add an Element to an invalid Room: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "createInstance()"],
+											 ("Attempted to add an instance to an invalid Room: " +
+											  "{" + string(ID) + "}"));
 					
 					return noone;
 				}
 			}
 			
-			// @description			Switch the active room to this one.
+			/// @description		Switch the active room to this one.
 			static setActive = function()
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -287,12 +260,9 @@ function Room() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "goto";
-					var _errorText = ("Attempted to switch to an invalid Room: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setActive()"],
+											 ("Attempted to switch to an invalid Room: " +
+											  "{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -301,12 +271,12 @@ function Room() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Room.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Room.
 			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (room_exists(ID)))
@@ -350,30 +320,29 @@ function Room() constructor
 	#region [Elements]
 		
 		// @function			Room.AddedInstance()
-		// @argument			{int:object} object
-		// @argument			{Vector2} location?
+		// @argument			object {int:object}
+		// @argument			location? {Vector2}
 		//						
 		// @description			A container constructor for properties of instances added to this Room
 		//						before its activation.
 		//						
 		//						Construction types:
 		//						- New element
-		//						- Constructor copy: {Room.AddedInstance} other
+		//						- Constructor copy: other {Room.AddedInstance}
 		function AddedInstance() constructor
 		{
 			#region [[Methods]]
 				#region <<Management>>
 					
-					// @description			Initialize the constructor.
+					/// @description		Initialize the constructor.
 					static construct = function()
 					{
 						parent = other;
-						array_push(parent.addedInstances, self);
-						
 						ID = undefined;
-						
 						object = undefined;
 						location = undefined;
+						
+						array_push(parent.addedInstances, self);
 						
 						if (string_copy(string(instanceof(argument[0])), 1, 13) == "AddedInstance")
 						{
@@ -383,7 +352,6 @@ function Room() constructor
 							object = _other.object;
 							location = ((instanceof(_other.location) == "Vector2")
 										? new Vector2(_other.location) : _other.location);
-							
 							ID = room_instance_add(parent.ID, location.x, location.y, object);
 						}
 						else
@@ -392,15 +360,14 @@ function Room() constructor
 							object = argument[0];
 							location = (((argument_count > 1) and (argument[1] != undefined))
 										? argument[1] : new Vector2(0, 0));
-							
 							ID = room_instance_add(parent.ID, location.x, location.y, object);
 						}
 						
 						return self;
 					}
 					
-					// @returns				{bool}
-					// @description			Check if this constructor is functional.
+					/// @returns			{bool}
+					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
 						return ((is_real(ID)) and (is_real(object))
@@ -411,12 +378,12 @@ function Room() constructor
 				#endregion
 				#region <<Conversion>>
 					
-					// @argument			{bool} multiline?
-					// @returns				{string}
-					// @description			Create a string representing this constructor.
-					//						Overrides the string() conversion.
-					//						Content will be represented with the properties of this
-					//						instance.
+					/// @argument			multiline? {bool}
+					/// @returns			{string}
+					/// @description		Create a string representing this constructor.
+					///						Overrides the string() conversion.
+					///						Content will be represented with the properties of this
+					///						instance.
 					static toString = function(_multiline = false)
 					{
 						var _constructorName = "Room.AddedInstance";
@@ -424,7 +391,6 @@ function Room() constructor
 						if (self.isFunctional())
 						{
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							
 							var _string = ("Object: " + object_get_name(object) + _mark_separator +
 										   "Location: " + string(location));
 							

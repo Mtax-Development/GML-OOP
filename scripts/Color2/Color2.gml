@@ -1,6 +1,6 @@
 /// @function				Color2()
-/// @argument				{real} color1?
-/// @argument				{int:color} color2?
+/// @argument				color1? {int:color}
+/// @argument				color2? {int:color}
 ///							
 /// @description			Constructs a container for two colors.
 ///							
@@ -8,14 +8,14 @@
 ///							- New constructor
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
-///							- One color for all values: {int:color} color
-///							- Constructor copy: {Color2} other
+///							- One color for all values: color {int:color}
+///							- Constructor copy: other {Color2}
 function Color2() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Default for all values.
@@ -48,8 +48,8 @@ function Color2() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(color1)) and (is_real(color2)));
@@ -58,7 +58,7 @@ function Color2() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Invert the order of colors.
+			/// @description		Invert the order of colors.
 			static reverse = function()
 			{
 				var _color1 = color1;
@@ -73,26 +73,23 @@ function Color2() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented as color names for built-in constants
-			//						or RGB value, unless use of HSV is specified.
-			//						NOTE: The constant for Silver is the same as for Light Gray. It
-			//						cannot be differentiated and will not be represented.
+			/// @argument			multiline? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented as color names for built-in constants
+			///						or RGB value, unless use of HSV is specified.
+			///						NOTE: The constant for Silver is the same as for Light Gray. It
+			///						cannot be differentiated and will not be represented.
 			static toString = function(_multiline = false, _colorHSV = false)
 			{
 				var _color = [color1, color2];
 				var _color_count = array_length(_color);
 				var _string_color = array_create(_color_count, "");
-				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
-				
 				var _string = "";
-				
 				var _i = 0;
 				repeat (_color_count)
 				{
@@ -162,8 +159,8 @@ function Color2() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{int[]}
-			// @description			Return an array containing all values of this Container.
+			/// @returns			{int[]:color}
+			/// @description		Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [color1, color2];

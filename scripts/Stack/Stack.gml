@@ -5,15 +5,15 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Wrapper: {int:stack} stack
+///							- Wrapper: stack {int:stack}
 ///							- Empty: {undefined}
-///							- Constructor copy: {Stack} other
+///							- Constructor copy: other {Stack}
 function Stack() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -44,19 +44,19 @@ function Stack() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (ds_exists(ID, ds_type_stack)));
 			}
 			
-			// @argument			{bool} deepScan?
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory.
-			//						A deep scan can be performed before the removal, which will 
-			//						iterate through this and all other Data Structures contained
-			//						in it to destroy them as well.
+			/// @argument			deepScan? {bool}
+			/// @returns			{undefined}
+			/// @description		Remove the internal information from the memory.
+			///						A deep scan can be performed before the removal, which will 
+			///						iterate through this and all other Data Structures contained
+			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
@@ -89,11 +89,11 @@ function Stack() constructor
 					
 					ID = undefined;
 				}
-		
+				
 				return undefined;
 			}
 			
-			// @description			Remove data from this Data Structure.
+			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
@@ -106,8 +106,8 @@ function Stack() constructor
 				return self;
 			}
 			
-			// @argument			{Stack} other
-			// @description			Replace data of this Stack with data from another one.
+			/// @argument			other {Stack}
+			/// @description		Replace data of this Stack with data from another one.
 			static copy = function(_other)
 			{
 				if ((instanceof(_other) == "Stack") and (is_real(_other.ID)) 
@@ -122,12 +122,9 @@ function Stack() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Data Structure: " +
-									  "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "copy()"],
+											 ("Attempted to copy from an invalid Data Structure: " + 
+											  "{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -136,13 +133,13 @@ function Stack() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any} value...
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure contains at least one of the
-			//						specified values.
+			/// @argument			value... {any}
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this Data Structure contains at least one of the
+			///						specified values.
 			static contains = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _size = ds_stack_size(ID);
 					
@@ -173,29 +170,23 @@ function Stack() constructor
 					
 					return false;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "contains()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{any} value...
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of times the specified values occur in this
-			//						Data Structure.
+			/// @argument			value... {any}
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Return the number of times the specified values occur in this
+			///						Data Structure.
 			static count = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _result = 0;
-					
 					var _size = ds_stack_size(ID);
 					
 					if (_size > 0)
@@ -206,7 +197,6 @@ function Stack() constructor
 						repeat (_size)
 						{
 							var _value = ds_stack_pop(_dataCopy);
-							
 							var _i = 0;
 							repeat (argument_count)
 							{
@@ -224,49 +214,39 @@ function Stack() constructor
 					
 					return _result;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "count";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "count()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the top value of this Stack, which is the one that would be
-			//						removed first.
-			//						Returns {undefined} if this Stack does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the top value of this Stack, which is the one that would be
+			///						removed first.
+			///						Returns {undefined} if this Stack does not exists or is empty.
 			static getFirst = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					return ds_stack_top(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getFirst()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the bottom value of this Stack, which is the one that would
-			//						be removed last.
-			//						Returns {undefined} if this Stack does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the bottom value of this Stack, which is the one that would
+			///						be removed last.
+			///						Returns {undefined} if this Stack does not exists or is empty.
 			static getLast = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _size = ds_stack_size(ID);
 					
@@ -291,80 +271,65 @@ function Stack() constructor
 						return _value;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getLast()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{int}
-			// @description			Return the number of values in this Data Structure.
+			/// @returns			{int}
+			/// @description		Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					return ds_stack_size(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
+					new ErrorReport().report([other, self, "getSize()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure has no values in it.
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this Data Structure has no values in it.
 			static isEmpty = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					return ds_stack_empty(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "isEmpty()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{function} function
-			// @argument			{any} argument?
-			// @argument			{bool} readOnly?
-			// @returns				{any[]}
-			// @description			Execute a function once for each element in this Data Structure.
-			//						It can be treated as read-only for this operation, in which case
-			//						it will be performed solely on its copy and the original will not
-			//						be modified in order to read the values.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @argument			function {function}
+			/// @argument			argument? {any}
+			/// @argument			readOnly? {bool}
+			/// @returns			{any[]}
+			/// @description		Execute a function once for each element in this Data Structure.
+			///						It can be treated as read-only for this operation, in which case
+			///						it will be performed solely on its copy and the original will not
+			///						be modified in order to read the values.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument, _readOnly = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _size = ds_stack_size(ID);
 					var _functionReturn = [];
@@ -387,7 +352,15 @@ function Stack() constructor
 						
 						var _value = _removedData[0];
 						
-						array_push(_functionReturn, __function(_i[0], _value, _argument));
+						try
+						{
+							array_push(_functionReturn, __function(_i[0], _value, _argument));
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "forEach()", "function()"],
+													 _exception);
+						}
 						
 						++_i[0];
 					}
@@ -396,24 +369,19 @@ function Stack() constructor
 					
 					return _functionReturn;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "forEach()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{any} value...
-			// @description			Add one or more values at the top of this Stack.
+			/// @argument			value... {any}
+			/// @description		Add one or more values at the top of this Stack.
 			static add = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count)
@@ -425,28 +393,23 @@ function Stack() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "add()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} count?
-			// @returns				{any|any[]|undefined}
-			// @description			Remove any number of values from this Stack and return them. If
-			//						more than one value were removed, they will be returned in an
-			//						array.
-			//						Returns {undefined} if this Stack does not exists or is empty.
+			/// @argument			count? {int}
+			/// @returns			{any|any[]|undefined}
+			/// @description		Remove any number of values from this Stack and return them. If
+			///						more than one value were removed, they will be returned in an
+			///						array.
+			///						Returns {undefined} if this Stack does not exists or is empty.
 			static remove = function(_count = 1)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _size = ds_stack_size(ID);
 					
@@ -465,7 +428,7 @@ function Stack() constructor
 							_count = min(_count, _size);
 							
 							var _result = array_create(_count, undefined);
-						
+							
 							var _i = 0;
 							repeat (_count)
 							{
@@ -473,39 +436,34 @@ function Stack() constructor
 								
 								++_i;
 							}
-						
+							
 							return _result;
 						}
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "remove";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "remove()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{int|all} elementNumber?
-			// @argument			{int|all} elementLength?
-			// @argument			{string} mark_separator?
-			// @argument			{string} mark_cut?
-			// @argument			{string} mark_elementStart?
-			// @argument			{string} mark_elementEnd?
-			// @argument			{string} mark_sizeSeparator?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented by the data of this Data Structure.
+			/// @argument			multiline? {bool}
+			/// @argument			elementNumber? {int|all}
+			/// @argument			elementLength? {int|all}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @argument			mark_elementStart? {string}
+			/// @argument			mark_elementEnd? {string}
+			/// @argument			mark_sizeSeparator? {string}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
 									   _mark_separator = ", ", _mark_cut = "...",
 									   _mark_elementStart = "", _mark_elementEnd = "",
@@ -525,7 +483,6 @@ function Stack() constructor
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					
 					var _string = "";
 					var _string_size = (string(_size));
 					
@@ -662,11 +619,11 @@ function Stack() constructor
 				}
 			}
 			
-			// @returns				{any[]}
-			// @description			Create an array with all values of this Data Structure.
+			/// @returns			{any[]}
+			/// @description		Create an array with all values of this Data Structure.
 			static toArray = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					var _size = ds_stack_size(ID);
 					var _array = array_create(_size, undefined);
@@ -675,7 +632,6 @@ function Stack() constructor
 					{
 						var _dataCopy = ds_stack_create();
 						ds_stack_copy(_dataCopy, ID);
-						
 						var _i = 0;
 						repeat (_size)
 						{
@@ -689,23 +645,18 @@ function Stack() constructor
 					
 					return _array;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "toArray()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{any[]} array
-			// @argument			{bool} startFromEnd?
-			// @description			Add values from the specified array to this Stack, starting from
-			//						either the start of the array or its end.
+			/// @argument			array {any[]}
+			/// @argument			startFromEnd? {bool}
+			/// @description		Add values from the specified array to this Stack, starting from
+			///						either the start of the array or its end.
 			static fromArray = function(_array, _startFromEnd = false)
 			{
 				if ((!is_real(ID)) and (!ds_exists(ID, ds_type_stack)))
@@ -740,53 +691,53 @@ function Stack() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "fromArray";
-					var _errorText = ("Attempted to convert an invalid array to a Data Structure: " +
-									  "{" + string(_array) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "fromArray()"],
+											 ("Attempted to convert an invalid array to a Data" +
+											  "Structure: " +
+											  "{" + string(_array) + "}"));
 				}
 				
 				return self;
 			}
 			
-			// @returns				{string}
-			// @description			Encode this Data Structure into a string, from which it can be
-			//						recreated.
+			/// @returns			{string}
+			/// @description		Encode this Data Structure into a string, from which it can be
+			///						recreated.
 			static toEncodedString = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				try
 				{
 					return ds_stack_write(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toEncodedString";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
-				}
-			}
-			
-			// @argument			{string} string
-			// @argument			{bool} legacy?
-			// @description			Decode a string to which a Data Structure of the same type was
-			//						previously encoded into this one.
-			//						Mark it as "legacy" if that string was created in the old version
-			//						of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy = false)
-			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
-				{
-					ID = ds_stack_create();
+					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
 				}
 				
-				ds_stack_read(ID, _string, _legacy);
+				return string(undefined);
+			}
+			
+			/// @argument			string {string}
+			/// @argument			legacy? {bool}
+			/// @description		Decode a string to which a Data Structure of the same type was
+			///						previously encoded into this one.
+			///						Mark it as "legacy" if that string was created in the old version
+			///						of GameMaker with different encoding.
+			static fromEncodedString = function(_string, _legacy = false)
+			{
+				try
+				{
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
+					{
+						ID = ds_stack_create();
+					}
+					
+					ds_stack_read(ID, _string, _legacy);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+				}
 				
 				return self;
 			}

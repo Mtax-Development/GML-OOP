@@ -1,6 +1,6 @@
 /// @function				RangedValue()
-/// @argument				{Range} range
-/// @argument				{real} value?
+/// @argument				range {Range}
+/// @argument				value? {real}
 ///							
 /// @description			Construct a container for a value closed in the specified Range.
 ///							
@@ -8,13 +8,13 @@
 ///							- New constructor
 ///							   Unspecified value will be set to the minimum value of the Range.
 ///							- Empty: {void|undefined}
-///							- Constructor copy: {Range} other
+///							- Constructor copy: other {Range}
 function RangedValue() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -38,7 +38,6 @@ function RangedValue() constructor
 					{
 						//|Construction type: New constructor.
 						range = argument[0];
-						
 						var _value = (((argument_count > 1) and (argument[1] != undefined))
 									  ? argument[1] : range.minimum);
 						value = clamp(_value, range.minimum, range.maximum);
@@ -49,8 +48,8 @@ function RangedValue() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(value)) and (instanceof(range) == "Range")
@@ -60,179 +59,278 @@ function RangedValue() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{bool}
-			// @description			Check if the value is equal to the value of another Ranged Value.
+			/// @argument			other {RangedValue}
+			/// @returns			{bool}
+			/// @description		Check if the value is equal to the value of another Ranged Value.
 			static equals = function(_other)
 			{
-				return (value == _other.value);
+				try
+				{
+					return (value == _other.value);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "equals()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @returns				{real}
-			// @description			Return the percentage value representing the value inside of the
-			//						Range as a numerical value in which one whole number is one full
-			//						percentage.
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return the percentage value representing the value inside of the
+			///						Range as a numerical value in which one whole number is one full
+			///						percentage.
 			static percent = function()
 			{
-				return ((value - range.minimum) / (range.maximum - range.minimum));
+				try
+				{
+					return ((value - range.minimum) / (range.maximum - range.minimum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "percent()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if the value is equal to either boundary of the Range.
+			/// @returns			{bool}
+			/// @description		Check if the value is equal to either boundary of the Range.
 			static isBoundary = function()
 			{
-				return ((value == range.minimum) or (value == range.maximum));
+				try
+				{
+					return ((value == range.minimum) or (value == range.maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "isBoundary()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if the value is equal to the minimum boundary of the Range.
+			/// @returns			{bool}
+			/// @description		Check if the value is equal to the minimum boundary of the Range.
 			static isMinimum = function()
 			{
-				return ((value == range.minimum));
+				try
+				{
+					return ((value == range.minimum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "isMinimum()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if the value is equal to the maximum boundary of the Range.
+			/// @returns			{bool}
+			/// @description		Check if the value is equal to the maximum boundary of the Range.
 			static isMaximum = function()
 			{
-				return ((value == range.maximum));
+				try
+				{
+					return ((value == range.maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "isMaximum()"], _exception);
+				}
+				
+				return false;
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @argument			{real} value
-			// @description			Modify the value by the specified number.
+			/// @argument			value {real}
+			/// @description		Modify the value by the specified number.
 			static modify = function(_value)
 			{
-				value = clamp((value + _value), range.minimum, range.maximum);
+				try
+				{
+					value = clamp((value + _value), range.minimum, range.maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "modify()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @argument			{real} value
-			// @argument			{bool} inclusive?
-			// @description			Modify the value by the specified number, then wrap it to the
-			//						furthest boundary if it is outside of the Range. The value will
-			//						also be wrapped if inclusive wrapping is specified and the value
-			//						equals the Range.
+			/// @argument			value {real}
+			/// @argument			inclusive? {bool}
+			/// @description		Modify the value by the specified number, then wrap it to the
+			///						furthest boundary if it is outside of the Range. The value will
+			///						also be wrapped if inclusive wrapping is specified and the value
+			///						equals the Range.
 			static modifyWrap = function(_value, _inclusive = false)
 			{
-				value += _value;
-				
-				var _rangeDifference = (range.maximum - range.minimum);
-				
-				value = (((((value - range.minimum) mod _rangeDifference) + _rangeDifference) 
-						 mod _rangeDifference) + range.minimum);
-				
-				if (_inclusive)
+				try
 				{
-					var _value_sign = sign(_value);
+					var _result = value;
+					_result += _value;
+					var _rangeDifference = (range.maximum - range.minimum);
+					_result = (((((value - range.minimum) mod _rangeDifference) + _rangeDifference) 
+							 mod _rangeDifference) + range.minimum);
 					
-					if (_value_sign > 0)
+					if (_inclusive)
 					{
-						if (value == range.minimum)
+						var _value_sign = sign(_value);
+						
+						if (_value_sign > 0)
 						{
-							value = range.maximum;
+							if (_result == range.minimum)
+							{
+								_result = range.maximum;
+							}
+						}
+						else if (_value_sign < 0)
+						{
+							if (_result == range.maximum)
+							{
+								_result = range.minimum;
+							}
 						}
 					}
-					else if (_value_sign < 0)
-					{
-						if (value == range.maximum)
-						{
-							value = range.minimum;
-						}
-					}
+					
+					value = _result;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "modifyWrap()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real} value
-			// @description			Modify the value by the specified number, then continously bounce
-			//						it back towards the Range if it would exceed its boundary.
+			/// @argument			value {real}
+			/// @description		Modify the value by the specified number, then continously bounce
+			///						it back towards the Range if it would exceed its boundary.
 			static modifyBounce = function(_value)
 			{
-				var _rangeDifference = abs(range.maximum - range.minimum);
-				var _modulo = (_value mod (_rangeDifference * 2));
-				
-				if (_modulo > 0)
+				try
 				{
-					var _distance = abs(value - range.maximum);
+					var _result = value;
+					var _rangeDifference = abs(range.maximum - range.minimum);
+					var _modulo = (_value mod (_rangeDifference * 2));
 					
-					if (_modulo <= _distance)
+					if (_modulo > 0)
 					{
-						value += _modulo;
+						var _distance = abs(value - range.maximum);
+						
+						if (_modulo <= _distance)
+						{
+							_result += _modulo;
+						}
+						else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
+						{
+							_result = (range.maximum - (_modulo - _distance));
+						}
+						else if (_modulo > (_rangeDifference + _distance))
+						{
+							_result = (range.minimum + (_modulo - (_distance + _rangeDifference)));
+						}
 					}
-					else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
+					else if (_modulo < 0)
 					{
-						value = (range.maximum - (_modulo - _distance));
+						_modulo = abs(_modulo);
+						
+						var _distance = abs(value - range.minimum);
+						
+						if (_modulo <= _distance)
+						{
+							_result -= _modulo;
+						}
+						else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
+						{
+							_result = (range.minimum + (_modulo - _distance));
+						}
+						else if (_modulo > (_rangeDifference + _distance))
+						{
+							_result = (range.maximum - (_modulo - (_distance + _rangeDifference)));
+						}
 					}
-					else if (_modulo > (_rangeDifference + _distance))
-					{
-						value = (range.minimum + (_modulo - (_distance + _rangeDifference)));
-					}
+					
+					value = _result;
 				}
-				else if (_modulo < 0)
+				catch (_exception)
 				{
-					_modulo = abs(_modulo);
-					
-					var _distance = abs(value - range.minimum);
-					
-					if (_modulo <= _distance)
-					{
-						value -= _modulo;
-					}
-					else if ((_modulo > _distance) and (_modulo <= (_rangeDifference + _distance)))
-					{
-						value = (range.minimum + (_modulo - _distance));
-					}
-					else if (_modulo > (_rangeDifference + _distance))
-					{
-						value = (range.maximum - (_modulo - (_distance + _rangeDifference)));
-					}
+					new ErrorReport().report([other, self, "modifyBounce()"], _exception);
 				}
 				
 				return self;
             }
 			
-			// @argument			{real} value
-			// @returns				{real}
-			// @description			Set the value to a position within the Range of the 
-			//						specified precentage.
+			/// @argument			value {real}
+			/// @returns			{real}
+			/// @description		Set the value to a position within the Range of the specified
+			///						precentage.
 			static interpolate = function(_value)
 			{
-				value = clamp(lerp(range.minimum, range.maximum, _value),
-							  range.minimum, range.maximum);
+				try
+				{
+					value = clamp(lerp(range.minimum, range.maximum, _value), range.minimum,
+								  range.maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "interpolate()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @argument			{real} value
-			// @description			Set the value to specified number, clamped to the Range.
+			/// @argument			value {real}
+			/// @description		Set the value to specified number, clamped to the Range.
 			static set = function(_value)
 			{
-				value = clamp(_value, range.minimum, range.maximum);
+				try
+				{
+					value = clamp(_value, range.minimum, range.maximum);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "set()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @description			Set the value to the minimum boundary of the Range.
+			/// @description		Set the value to the minimum boundary of the Range.
 			static setMinimum = function()
 			{
-				value = range.minimum;
+				try
+				{
+					value = range.minimum;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setMinimum()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @description			Set the value to the maximum boundary of the Range.
+			/// @description		Set the value to the maximum boundary of the Range.
 			static setMaximum = function()
 			{
-				value = range.maximum;
+				try
+				{
+					value = range.maximum;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setMaximum()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @description			Set the value to the state it had upon constructor creation.
+			/// @description		Set the value to the state it had upon construction.
 			static setOriginal = function()
 			{
 				value = value_original;
@@ -240,11 +338,18 @@ function RangedValue() constructor
 				return self;
 			}
 			
-			// @returns				{real}
-			// @description			Set the value the middle point of the Range.
+			/// @returns			{real}
+			/// @description		Set the value the middle point of the Range.
 			static setMiddle = function()
 			{
-				value = lerp(range.minimum, range.maximum, 0.5);
+				try
+				{
+					value = lerp(range.minimum, range.maximum, 0.5);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setMiddle()"], _exception);
+				}
 				
 				return self;
 			}
@@ -252,21 +357,20 @@ function RangedValue() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the values of this Container.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the values of this Container.
 			static toString = function(_multiline = false)
 			{
 				if (self.isFunctional())
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					var _mark_separator_inline = " - ";
-				
 					var _string = (string(value) + _mark_separator + string(range.minimum) +
 								   _mark_separator_inline + string(range.maximum));
-				
+					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
 				else

@@ -14,7 +14,7 @@ function List() constructor
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -46,19 +46,19 @@ function List() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (ds_exists(ID, ds_type_list)));
 			}
 			
-			// @argument			{bool} deepScan?
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory.
-			//						A deep scan can be performed before the removal, which will 
-			//						iterate through this and all other Data Structures contained
-			//						in it to destroy them as well.
+			/// @argument			deepScan? {bool}
+			/// @returns			{undefined}
+			/// @description		Remove the internal information from the memory.
+			///						A deep scan can be performed before the removal, which will 
+			///						iterate through this and all other Data Structures contained
+			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
 				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
@@ -66,7 +66,6 @@ function List() constructor
 					if (_deepScan)
 					{
 						var _i = 0;
-						
 						repeat (ds_list_size(ID))
 						{
 							var _value = ds_list_find_value(ID, _i);
@@ -99,7 +98,7 @@ function List() constructor
 				return undefined;
 			}
 			
-			// @description			Remove data from this Data Structure.
+			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
 				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
@@ -112,8 +111,8 @@ function List() constructor
 				return self;
 			}
 			
-			// @argument			{List} other
-			// @description			Replace data of this List with data from another one.
+			/// @argument			other {List}
+			/// @description		Replace data of this List with data from another one.
 			static copy = function(_other)
 			{
 				if ((instanceof(_other) == "List") and (is_real(_other.ID)) 
@@ -129,12 +128,9 @@ function List() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid Data Structure: " + 
-									  "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "copy()"],
+											 ("Attempted to copy from an invalid Data Structure: " + 
+											  "{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -143,16 +139,15 @@ function List() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any} value...
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure contains at least one of the
-			//						specified values.
+			/// @argument			value {any}
+			/// @returns			{bool}
+			/// @description		Check if this Data Structure contains at least one of the
+			///						specified values.
 			static contains = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _size = ds_list_size(ID);
-					
 					var _i = [0, 0];
 					repeat (_size)
 					{
@@ -172,31 +167,24 @@ function List() constructor
 					
 					return false;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "contains()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{any} value...
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of times the specified values occur in this
-			//						Data Structure.
+			/// @argument			value... {any}
+			/// @returns			{int}
+			/// @description		Return the number of times the specified values occur in this Data
+			///						Structure.
 			static count = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _result = 0;
-					
 					var _size = ds_list_size(ID);
-					
 					var _i = [0, 0];
 					repeat (_size)
 					{
@@ -218,118 +206,92 @@ function List() constructor
 					
 					return _result;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "count";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "count()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @argument			{int} position
-			// @returns				{any|undefined}
-			// @description			Return the value at the specified position.
-			//						Returns {undefined} if this List or the value does not exists.
+			/// @argument			position {int}
+			/// @returns			{any|undefined}
+			/// @description		Return the value at the specified position.
+			///						Returns {undefined} if this List or the value does not exists.
 			static getValue = function(_position)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_find_value(ID, _position);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getValue";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getValue()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the first value in this List.
-			//						Returns {undefined} if this List does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the first value in this List.
+			///						Returns {undefined} if this List does not exists or is empty.
 			static getFirst = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_find_value(ID, 0);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getFirst()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the last value in this List.
-			//						Returns {undefined} if this List does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the last value in this List.
+			///						Returns {undefined} if this List does not exists or is empty.
 			static getLast = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_find_value(ID, (ds_list_size(ID) - 1));
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getLast()"], _exception);
 				}
+				
+				return undefined
 			}
 			
-			// @argument			{any} value
-			// @returns				{int}
-			// @description			Return the first found position of the specified value or -1 if
-			//						the value does not exist.
+			/// @argument			value {any}
+			/// @returns			{int}
+			/// @description		Return the first found position of the specified value or -1 if
+			///						the value does not exist.
 			static getFirstPosition = function(_value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_find_index(ID, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirstPosition";
-					var _errorText = ("Attempted to read an invalid Data Structure: " + 
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return -1;
+					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
 				}
+				
+				return -1;
 			}
 			
-			// @argument			{any} value
-			// @returns				{int[]}
-			// @description			Return an array with all positions of the specified value.
+			/// @argument			value {any}
+			/// @returns			{int[]}
+			/// @description		Return an array with all positions of the specified value.
 			static getPositions = function(_value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _position = [];
-					
 					var _i = 0;
 					repeat (ds_list_size(ID))
 					{
@@ -343,115 +305,105 @@ function List() constructor
 					
 					return _position;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getPositions";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getPosition()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @returns				{int}
-			// @description			Return the number of values in this Data Structure.
+			/// @returns			{int}
+			/// @description		Return the number of values in this Data Structure.
 			static getSize = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_size(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
+					new ErrorReport().report([other, self, "getSize()"], _exception);
 				}
+				
+				return 0;
 			}
 			
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this Data Structure has no values in it.
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this Data Structure has no values in it.
 			static isEmpty = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_empty(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "isEmpty()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{function} function
-			// @argument			{any} argument?
-			// @returns				{any[]}
-			// @description			Execute a function once for each element in this Data Structure.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @argument			function {function}
+			/// @argument			argument? {any}
+			/// @returns			{any[]}
+			/// @description		Execute a function once for each element in this Data Structure.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: +i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				var _dataCopy = ds_list_create();
+				
+				try
 				{
-					var _size = ds_list_size(ID);
-					var _functionReturn = [];
-					var _dataCopy = ds_list_create();
 					ds_list_clear(_dataCopy);
 					ds_list_copy(_dataCopy, ID);
-					
+					var _size = ds_list_size(ID);
+					var _functionReturn = [];
 					var _i = 0;
 					repeat (_size)
 					{
 						var _value = ds_list_find_value(_dataCopy, _i);
-							
-						array_push(_functionReturn, __function(_i, _value, _argument));
+						
+						try
+						{
+							array_push(_functionReturn, __function(_i, _value, _argument));
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "forEach()", "function()"],
+													 _exception);
+						}
 						
 						++_i;
 					}
 					
-					ds_list_destroy(_dataCopy);
-					
 					return _functionReturn;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "forEach()"], _exception);
 				}
+				finally
+				{
+					ds_list_destroy(_dataCopy);
+				}
+				
+				return [];
 			}
 			
-			// @argument			{any} value...
-			// @description			Add one or more values to this List.
+			/// @argument			value... {any}
+			/// @description		Add one or more values to this List.
 			static add = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count)
@@ -463,93 +415,73 @@ function List() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "add()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position
-			// @argument			{any} value
-			// @description			Set a specified position of this List to the specified value and
-			//						any empty places before it to 0.
+			/// @argument			position {int}
+			/// @argument			value {any}
+			/// @description		Set a specified position of this List to the specified value and
+			///						any empty places before it to 0.
 			static set = function(_position, _value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_set(ID, _position, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "set";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "set()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position
-			// @argument			{any} value
-			// @description			Set a specified position of the List to the specified value, but
-			//						only if it already exists.
+			/// @argument			position {int}
+			/// @argument			value {any}
+			/// @description		Set a specified position of the List to the specified value, but
+			///						only if it already exists.
 			static replace = function(_position, _value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_replace(ID, _position, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "replace";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "replace()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position
-			// @description			Remove a value at a specified position from the List and push the
-			//						positions of all values after it back by one.
+			/// @argument			position {int}
+			/// @description		Remove a value at a specified position from the List and push the
+			///						positions of all values after it back by one.
 			static removePosition = function(_position)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_delete(ID, _position);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removePosition";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "removePosition()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{any} value
-			// @description			Remove the specified value from all positions in the List and push
-			//						the position of all values after them back by one.
+			/// @argument			value {any}
+			/// @description		Remove the specified value from all positions in the List and push
+			///						the position of all values after them back by one.
 			static removeValue = function(_value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _i = 0;
 					repeat (ds_list_size(ID))
@@ -564,79 +496,59 @@ function List() constructor
 						}
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removeValue";
-					var _errorText = ("Attempted to remove data from an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "removeValue()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position
-			// @argument			{any} value
-			// @description			Add a value at a specified position to the List and push
-			//						the position of all values after it forward by one.
+			/// @argument			position {int}
+			/// @argument			value {any}
+			/// @description		Add a value at a specified position to the List and push
+			///						the position of all values after it forward by one.
 			static insert = function(_position, _value)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_insert(ID, _position, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "insert";
-					var _errorText = ("Attempted to write to an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "insert()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{bool} orderAscending
-			// @description			Sort all values in the List in ascending or descending order.
-			//						Numbers will be placed before the strings.
+			/// @argument			orderAscending {bool}
+			/// @description		Sort all values in the List in ascending or descending order.
+			///						Numbers will be placed before the strings.
 			static sort = function(_orderAscending)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_sort(ID, _orderAscending);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "sort";
-					var _errorText = ("Attempted to sort an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "sort()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @description			Randomize the position of all values in the List.
+			/// @description		Randomize the position of all values in the List.
 			static shuffle = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					ds_list_shuffle(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "shuffle";
-					var _errorText = ("Attempted to shuffle an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "shuffle()"], _exception);
 				}
 				
 				return self;
@@ -645,18 +557,18 @@ function List() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{int|all} elementNumber?
-			// @argument			{int|all} elementLength?
-			// @argument			{string} mark_separator?
-			// @argument			{string} mark_cut?
-			// @argument			{string} mark_elementStart?
-			// @argument			{string} mark_elementEnd?
-			// @argument			{string} mark_sizeSeparator?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented by the data of this Data Structure.
+			/// @argument			multiline? {bool}
+			/// @argument			elementNumber? {int|all}
+			/// @argument			elementLength? {int|all}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @argument			mark_elementStart? {string}
+			/// @argument			mark_elementEnd? {string}
+			/// @argument			mark_sizeSeparator? {string}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented by the data of this Data Structure.
 			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
 									   _mark_separator = ", ", _mark_cut = "...",
 									   _mark_elementStart = "", _mark_elementEnd = "",
@@ -676,7 +588,6 @@ function List() constructor
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					
 					var _string = "";
 					var _string_size = (string(_size));
 					
@@ -806,16 +717,14 @@ function List() constructor
 				}
 			}
 			
-			// @returns				{any[]}
-			// @description			Create an array with all values of this List.
+			/// @returns			{any[]}
+			/// @description		Create an array with all values of this List.
 			static toArray = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					var _size = ds_list_size(ID);
-					
 					var _array = array_create(_size, undefined);
-					
 					var _i = 0;
 					repeat (_size)
 					{
@@ -826,85 +735,83 @@ function List() constructor
 					
 					return _array;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toArray";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "toArray()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{any[]} array
-			// @description			Add all values from the specified array dimension to this List.
+			/// @argument			array {any[]}
+			/// @description		Add all values from the specified array dimension to this List.
 			static fromArray = function(_array)
 			{
 				if (is_array(_array))
 				{
-					if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
 					{
-						var _i = 0;
-						repeat (array_length(_array))
-						{
-							ds_list_add(ID, _array[_i]);
-							
-							++_i;
-						}
+						ID = ds_list_create();
+						ds_list_clear(ID);
+					}
+					
+					var _i = 0;
+					repeat (array_length(_array))
+					{
+						ds_list_add(ID, _array[_i]);
+						
+						++_i;
 					}
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "fromArray";
-					var _errorText = ("Attempted to convert an invalid array: " +
-									  "{" + string(_array) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "fromArray()"],
+											 ("Attempted to read an invalid array: " +
+											  "{" + string(_array) + "}"));
 				}
 				
 				return self;
 			}
 			
-			// @returns				{string}
-			// @description			Encode this Data Structure into a string, from which it can be
-			//						recreated.
+			/// @returns			{string}
+			/// @description		Encode this Data Structure into a string, from which it can be
+			///						recreated.
 			static toEncodedString = function()
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				try
 				{
 					return ds_list_write(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "toEncodedString";
-					var _errorText = ("Attempted to convert an invalid Data Structure: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return string(undefined);
-				}
-			}
-			
-			// @argument			{string} string
-			// @argument			{bool} legacy?
-			// @description			Decode a string to which a Data Structure of the same type was
-			//						previously encoded into this one.
-			//						Use the "legacy" argument if that string was created in old
-			//						versions of GameMaker with different encoding.
-			static fromEncodedString = function(_string, _legacy = false)
-			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
-				{
-					ID = ds_list_create();
+					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
 				}
 				
-				ds_list_read(ID, _string, _legacy);
+				return string(undefined);
+			}
+			
+			/// @argument			string {string}
+			/// @argument			legacy? {bool}
+			/// @description		Decode a string to which a Data Structure of the same type was
+			///						previously encoded into this one.
+			///						Use the "legacy" argument if that string was created in old
+			///						versions of GameMaker with different encoding.
+			static fromEncodedString = function(_string, _legacy = false)
+			{
+				try
+				{
+					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+					{
+						ID = ds_list_create();
+						ds_list_clear(ID);
+					}
+					
+					ds_list_read(ID, _string, _legacy);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+				}
 				
 				return self;
 			}

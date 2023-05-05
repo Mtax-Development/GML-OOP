@@ -1,27 +1,27 @@
 /// @function				SpriteRenderer()
-/// @argument				{Sprite} sprite?
-/// @argument				{Vector2|Vector4} location?
-/// @argument				{int} frame?
-/// @argument				{Scale} scale?
-/// @argument				{Angle} angle?
-/// @argument				{int:color|Color4} color?
-/// @argument				{real} alpha?
-/// @argument				{Vector4} part?
-/// @argument				{Vector2} origin?
-/// @argument				{Surface|int:surface} target?
+/// @argument				sprite? {Sprite}
+/// @argument				location? {Vector2|Vector4}
+/// @argument				frame? {int}
+/// @argument				scale? {Scale}
+/// @argument				angle? {Angle}
+/// @argument				color? {int:color|Color4}
+/// @argument				alpha? {real}
+/// @argument				part? {Vector4}
+/// @argument				origin? {Vector2}
+/// @argument				target? {Surface|int:surface}
 ///							
 /// @description			Construct a handler storing information for Sprite rendering.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void}
-///							- Constructor copy: {SpriteRenderer} other
+///							- Constructor copy: other {SpriteRenderer}
 function SpriteRenderer() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -94,7 +94,6 @@ function SpriteRenderer() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -108,7 +107,6 @@ function SpriteRenderer() constructor
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
@@ -157,8 +155,8 @@ function SpriteRenderer() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((instanceof(sprite) == "Sprite") and (sprite.isFunctional())
@@ -178,18 +176,18 @@ function SpriteRenderer() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Sprite} sprite?
-			// @argument			{Vector2|Vector4} location?
-			// @argument			{int} frame?
-			// @argument			{Scale} scale?
-			// @argument			{Angle} angle?
-			// @argument			{int:color|Color4} color?
-			// @argument			{real} alpha?
-			// @argument			{Vector4} part?
-			// @argument			{Vector2} origin?
-			// @argument			{Surface|int:surface} target?
-			// @description			Execute the draw, using data of this constructor or specified
-			//						replaced parts of it for this call only.
+			/// @argument			sprite? {Sprite}
+			/// @argument			location? {Vector2|Vector4}
+			/// @argument			frame? {int}
+			/// @argument			scale? {Scale}
+			/// @argument			angle? {Angle}
+			/// @argument			color? {int:color|Color4}
+			/// @argument			alpha? {real}
+			/// @argument			part? {Vector4}
+			/// @argument			origin? {Vector2}
+			/// @argument			target? {Surface|int:surface}
+			/// @description		Execute the draw, using data of this constructor or specified
+			///						replaced parts of it for this call only.
 			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha,
 									 _part, _origin, _target)
 			{
@@ -229,16 +227,20 @@ function SpriteRenderer() constructor
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
 												   (((!_callback_isArray) and (_argument_isArray))
 													? _argument : ((is_array(_argument[_i])
 													? _argument[_i] : [_argument[_i]]))));
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "render()", "event",
+														  "beforeRender"], _exception);
 							}
 							
 							++_i;
@@ -259,16 +261,20 @@ function SpriteRenderer() constructor
 										 ? event.afterRender.argument
 										 : array_create(_callback_count,
 														event.afterRender.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
 												   (((!_callback_isArray) and (_argument_isArray))
 													? _argument : ((is_array(_argument[_i])
 													? _argument[_i] : [_argument[_i]]))));
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "render()", "event",
+														  "afterRender"], _exception);
 							}
 							
 							++_i;
@@ -277,12 +283,10 @@ function SpriteRenderer() constructor
 				}
 				else
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render through an invalid Sprite renderer: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "render()"],
+											 ("Attempted to render through an invalid Sprite " +
+											  "renderer: " +
+											  "{" + string(self) + "}"));
 				}
 				
 				sprite = _sprite_original;
@@ -302,14 +306,14 @@ function SpriteRenderer() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this
-			//						constructor.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this
+			///						constructor.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
@@ -393,10 +397,10 @@ function SpriteRenderer() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{real[+]}
-			// @description			Return an array containing the values of all properties of this
-			//						Renderer. If any of properties contain multiple values, they
-			//						be returned in a nested array.
+			/// @returns			{real[+]}
+			/// @description		Return an array containing the values of all properties of this
+			///						Renderer. If any of properties contain multiple values, they
+			///						be returned in a nested array.
 			static toArray = function()
 			{
 				var _sprite = ((instanceof(sprite) == "Sprite") ? sprite.ID : sprite);
@@ -439,4 +443,3 @@ function SpriteRenderer() constructor
 		
 	#endregion
 }
-

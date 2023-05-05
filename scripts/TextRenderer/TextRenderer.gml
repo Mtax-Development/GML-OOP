@@ -1,23 +1,23 @@
 /// @function				TextRenderer()
-/// @argument				{any:string} string
-/// @argument				{Font} font
-/// @argument				{Vector2} location
-/// @argument				{TextAlign} align?
-/// @argument				{int:color} color?
-/// @argument				{real} alpha?
+/// @argument				string {any:string}
+/// @argument				font {Font}
+/// @argument				location {Vector2}
+/// @argument				align? {TextAlign}
+/// @argument				color? {int:color}
+/// @argument				alpha? {real}
 ///							
 /// @description			Constructs a handler information for string rendering.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void|undefined}
-///							- Constructor copy: {TextRenderer} other
+///							- Constructor copy: other {TextRenderer}
 function TextRenderer() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -65,7 +65,6 @@ function TextRenderer() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -79,7 +78,6 @@ function TextRenderer() constructor
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
@@ -122,8 +120,8 @@ function TextRenderer() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(alpha)) and (instanceof(font) == "Font") and (font.isFunctional())
@@ -134,28 +132,24 @@ function TextRenderer() constructor
 		#endregion
 		#region <Getters>
 			
-			// @returns				{Vector4} | On error: {undefined}
-			// @description			Return a boundry for the space the text occupies in pixels, offset
-			//						from its origin.
+			/// @returns			{Vector4} | On error: {undefined}
+			/// @description		Return a boundry for the space the text occupies in pixels, offset
+			///						from its origin.
 			static getBoundaryOffset = function()
 			{
-				if ((instanceof(font) == "Font") and (font.isFunctional()))
+				var _font_original = draw_get_font();
+				
+				try
 				{
-					var _string = string(ID);
+					draw_set_font(font.ID);
 					
+					var _string = string(ID);
 					var _x1 = undefined;
 					var _y1 = undefined;
 					var _x2 = undefined;
 					var _y2 = undefined;
-					
-					var _font_previous = draw_get_font();
-					
-					draw_set_font(font.ID);
-					{
-						var _size_x = string_width(_string);
-						var _size_y = string_height(_string);
-					}
-					draw_set_font(_font_previous);
+					var _size_x = string_width(_string);
+					var _size_y = string_height(_string);
 					
 					switch (align.x)
 					{
@@ -166,7 +160,6 @@ function TextRenderer() constructor
 						
 						case fa_center:
 							var _size_x_half = (_size_x * 0.5);
-						
 							_x1 = (-_size_x_half);
 							_x2 = _size_x_half;
 						break;
@@ -186,7 +179,6 @@ function TextRenderer() constructor
 						
 						case fa_middle:
 							var _size_y_half = (_size_y * 0.5);
-						
 							_y1 = (-_size_y_half);
 							_y2 = _size_y_half;
 						break;
@@ -199,31 +191,29 @@ function TextRenderer() constructor
 					
 					return new Vector4(_x1, _y1, _x2, _y2);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getBoundaryOffset";
-					var _errorText = ("Attempted to get text size of a text renderer with an " +
-									  "invalid font: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getBoundaryOffset()"], _exception);
 				}
+				finally
+				{
+					draw_set_font(_font_original);
+				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{any:string} string?
-			// @argument			{Font} font?
-			// @argument			{Vector2} location?
-			// @argument			{TextAlign} align?
-			// @argument			{int:color} color?
-			// @argument			{real} alpha?
-			// @description			Execute the draw of the text, using data of this constructor or
-			//						specified replaced parts of it for this call only.
+			/// @argument			string? {any:string}
+			/// @argument			font? {Font}
+			/// @argument			location? {Vector2}
+			/// @argument			align? {TextAlign}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
+			/// @description		Execute the draw of the text, using data of this constructor or
+			///						specified replaced parts of it for this call only.
 			static render = function(_string, _font, _location, _align, _color, _alpha)
 			{
 				var _string_original = ID;
@@ -240,7 +230,7 @@ function TextRenderer() constructor
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				
-				if (self.isFunctional())
+				try
 				{
 					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 					{
@@ -258,12 +248,17 @@ function TextRenderer() constructor
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
 												   (((!_callback_isArray) and (_argument_isArray))
 													? _argument : ((is_array(_argument[_i])
 													? _argument[_i] : [_argument[_i]]))));
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "render()", "event",
+														  "beforeRender"], _exception);
 							}
 							
 							++_i;
@@ -277,7 +272,6 @@ function TextRenderer() constructor
 						draw_set_valign(align.y);
 						draw_set_color(color);
 						draw_set_alpha(alpha);
-						
 						draw_text(round(location.x), round(location.y), string(ID));
 					}
 					
@@ -297,34 +291,36 @@ function TextRenderer() constructor
 						var _i = 0;
 						repeat (_callback_count)
 						{
-							if (is_method(_callback[_i]))
+							try
 							{
 								script_execute_ext(method_get_index(_callback[_i]),
 												   (((!_callback_isArray) and (_argument_isArray))
 													? _argument : ((is_array(_argument[_i])
 													? _argument[_i] : [_argument[_i]]))));
 							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "render()", "event",
+														  "afterRender"], _exception);
+							}
 							
 							++_i;
 						}
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render through an invalid text renderer: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "render()"], _exception);
 				}
-				
-				ID = _string_original;
-				font = _font_original;
-				location = _location_original;
-				align = _align_original;
-				color = _color_original;
-				alpha = _alpha_original;
+				finally
+				{
+					ID = _string_original;
+					font = _font_original;
+					location = _location_original;
+					align = _align_original;
+					color = _color_original;
+					alpha = _alpha_original;
+				}
 				
 				return self;
 			}
@@ -332,28 +328,25 @@ function TextRenderer() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @argument			{bool} colorHSV?
-			// @argument			{int|all} elementLength?
-			// @argument			{string} mark_separator?
-			// @argument			{string} mark_cut?
-			// @argument			{string} mark_linebreak?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the text preview.
+			//? @argument			multiline? {bool}
+			//? @argument			full? {bool}
+			//? @argument			colorHSV? {bool}
+			//? @argument			elementLength? {int|all}
+			//? @argument			mark_separator? {string}
+			//? @argument			mark_cut? {string}
+			//? @argument			mark_linebreak? {string}
+			//? @returns			{string}
+			//? @description		Create a string representing this constructor.
+			//?						Overrides the string() conversion.
+			//?						Content will be represented with the text preview.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false,
 									   _elementLength = 30, _mark_cut = "...", _mark_linebreak = ", ")
 			{
 				var _string = "";
 				var _string_text = string(ID);
-				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
-				
 				var _cutMark = "...";
-				
 				var _lengthLimit = 30;
 				var _lengthLimit_cut = (_lengthLimit + string_length(_cutMark));
 				

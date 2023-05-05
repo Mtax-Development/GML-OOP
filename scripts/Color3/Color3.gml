@@ -1,7 +1,7 @@
 /// @function				Color3()
-/// @argument				{int:color} color1?
-/// @argument				{int:color} color2?
-/// @argument				{int:color} color3?
+/// @argument				color1? {int:color}
+/// @argument				color2? {int:color}
+/// @argument				color3? {int:color}
 ///							
 /// @description			Constructs a container for three colors.
 ///							
@@ -9,16 +9,16 @@
 ///							- New constructor
 ///							- Default for all values: {void}
 ///							   The color values will be set to white.
-///							- One color for all values: {int:color} color
-///							- Color2 + color: {Color2} other, {int:color} color 
+///							- One color for all values: color {int:color}
+///							- Color2 + color: other {Color2}, color {int:color}
 ///							   In any order, it will be reflected in the values of this constructor.
-///							- Constructor copy: {Color3} other
+///							- Constructor copy: other {Color3}
 function Color3() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Default for all values.
@@ -44,7 +44,7 @@ function Color3() constructor
 							case 1:
 								//|Construction type: One color for all values.
 								var _color = argument[0];
-							
+								
 								color1 = _color;
 								color2 = _color;
 								color3 = _color;
@@ -56,7 +56,7 @@ function Color3() constructor
 								{
 									var _other = argument[0];
 									var _color = argument[1];
-								
+									
 									color1 = _other.color1;
 									color2 = _other.color2;
 									color3 = _color;
@@ -65,7 +65,7 @@ function Color3() constructor
 								{
 									var _color = argument[0];
 									var _other = argument[1];
-								
+									
 									color1 = _color;
 									color2 = _other.color1;
 									color3 = _other.color2;
@@ -85,8 +85,8 @@ function Color3() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(color1)) and (is_real(color2)) and (is_real(color3)));
@@ -95,7 +95,7 @@ function Color3() constructor
 		#endregion
 		#region <Setters>
 			
-			// @description			Invert the order of colors.
+			/// @description		Invert the order of colors.
 			static reverse = function()
 			{
 				var _color1 = color1;
@@ -110,26 +110,23 @@ function Color3() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented as color names for built-in constants
-			//						or RGB value, unless use of HSV is specified.
-			//						NOTE: The constant for Silver is the same as for Light Gray. It
-			//						cannot be differentiated and will not be represented.
+			/// @argument			multiline? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented as color names for built-in constants
+			///						or RGB value, unless use of HSV is specified.
+			///						NOTE: The constant for Silver is the same as for Light Gray. It
+			///						cannot be differentiated and will not be represented.
 			static toString = function(_multiline = false, _colorHSV = false)
 			{
 				var _color = [color1, color2, color3];
 				var _color_count = array_length(_color);
 				var _string_color = array_create(_color_count, "");
-				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _mark_separator_inline = ", ";
-				
 				var _string = "";
-				
 				var _i = 0;
 				repeat (_color_count)
 				{
@@ -199,8 +196,8 @@ function Color3() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{int[]}
-			// @description			Return an array containing all values of this Container.
+			/// @returns			{int[]:color}
+			/// @description		Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [color1, color2, color3];

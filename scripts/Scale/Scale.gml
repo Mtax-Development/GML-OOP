@@ -1,26 +1,26 @@
 /// @function				Scale()
-/// @argument				{real} x?
-/// @argument				{real} y?
+/// @argument				x? {real}
+/// @argument				y? {real}
 ///							
 /// @description			Constructs a Scale container that can be used for drawing or
 ///							manipulated in other ways.
 ///							
 ///							Construction types:
-///							- Two values: {real} x, {real} y
-///							- One number for all values: {real} value
+///							- Two values: x {real}, y {real}
+///							- One number for all values: value {real}
 ///							- Default for all values: {void|undefined}
-///							- From array: {real[]} array
+///							- From array: array {real[]}
 ///							   Array positions will be applied depending on its size:
 ///								1: array[0] will be set to x and y.
 ///								2+: array[0] will be set to x, array[1] will be set to y.
-///							- From Vector2: {Vector2} other
-///							- Constructor copy: {Scale} other
+///							- From Vector2: other {Vector2}
+///							- Constructor copy: other {Scale}
 function Scale() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Default for all values.
@@ -36,7 +36,6 @@ function Scale() constructor
 							//|Construction type: Constructor copy.
 							//|Construction type: From Vector2.
 							var _other = argument[0];
-							
 							x = _other.x;
 							y = _other.y;
 						break;
@@ -86,8 +85,8 @@ function Scale() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(x)) and (is_real(y)) and (!is_nan(x)) and (!is_nan(y)));
@@ -96,9 +95,9 @@ function Scale() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any} value...
-			// @returns				{bool}
-			// @description			Check if this Scale contains at least one of the specified values.
+			/// @argument			value... {real}
+			/// @returns			{bool}
+			/// @description		Check if this Scale contains at least one of the specified values.
 			static contains = function()
 			{
 				var _i = 0;
@@ -117,149 +116,244 @@ function Scale() constructor
 				return false;
 			}
 			
-			// @argument			{Scale} other
-			// @returns				{bool}
-			// @description			Check if this and the specified Scale have the same values.
+			/// @argument			other {Scale}
+			/// @returns			{bool}
+			/// @description		Check if this and the specified Scale have the same values.
 			static equals = function(_other)
 			{
-				return ((x == _other.x) and (y == _other.y));
+				try
+				{
+					return ((x == _other.x) and (y == _other.y));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "equals()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @returns				{real}
-			// @description			Return the lowest of all values.
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return the lowest of all values.
 			static getMinimum = function()
 			{
-				return min(x, y);
+				try
+				{
+					return min(x, y);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getMinimum()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
-			// @returns				{real}
-			// @description			Return the highest of all values.
+			/// @returns			{real}
+			/// @description		Return the highest of all values.
 			static getMaximum = function()
 			{
-				return max(x, y);
+				try
+				{
+					return max(x, y);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getMaximum()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @argument			{Scale} target
-			// @argument			{Vector2} rate
-			// @description			Move the x and y values towards the specified target with the
-			//						specified rate without exceeding it.
+			/// @argument			target {Scale}
+			/// @argument			rate {Vector2}
+			/// @description		Move the x and y values towards the specified target with the
+			///						specified rate without exceeding it.
 			static approach = function(_target, _rate)
 			{
-				var _value_array = [x, y];
-				var _target_array = [_target.x, _target.y];
-				var _rate_array = [abs(_rate.x), abs(_rate.y)];
-				
-				var _i = 0;
-				repeat (array_length(_value_array))
+				try
 				{
-					if (_value_array[_i] > _target_array[_i])
+					var _value_array = [x, y];
+					var _target_array = [_target.x, _target.y];
+					var _rate_array = [abs(_rate.x), abs(_rate.y)];
+					var _i = 0;
+					repeat (array_length(_value_array))
 					{
-						_value_array[_i] -= _rate_array[_i];
-						
-						if (_value_array[_i] < _target_array[_i])
-						{
-							_value_array[_i] = _target_array[_i];
-						}
-					}
-					else if (_value_array[_i] < _target_array[_i])
-					{
-						_value_array[_i] += _rate_array[_i];
-						
 						if (_value_array[_i] > _target_array[_i])
 						{
-							_value_array[_i] = _target_array[_i];
+							_value_array[_i] -= _rate_array[_i];
+							
+							if (_value_array[_i] < _target_array[_i])
+							{
+								_value_array[_i] = _target_array[_i];
+							}
 						}
+						else if (_value_array[_i] < _target_array[_i])
+						{
+							_value_array[_i] += _rate_array[_i];
+							
+							if (_value_array[_i] > _target_array[_i])
+							{
+								_value_array[_i] = _target_array[_i];
+							}
+						}
+						
+						++_i;
 					}
-					
-					++_i;
-				}
 				
-				x = _value_array[0];
-				y = _value_array[1];
+					x = _value_array[0];
+					y = _value_array[1];
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "approach()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Scale} value
-			// @description			Perform a calculation with the specified value by adding it to
-			//						respective values with the same sign as the values of this Scale.
+			/// @argument			value {real|Scale}
+			/// @description		Perform a calculation with the specified value by adding it to
+			///						respective values with the same sign as the values of this Scale.
 			static grow = function(_value)
 			{
-				if (is_real(_value))
+				try
 				{
-					x += (abs(_value) * sign(x));
-					y += (abs(_value) * sign(y));
+					var _result_x = x;
+					var _result_y = y;
+					
+					if (is_real(_value))
+					{
+						_result_x += (abs(_value) * sign(x));
+						_result_y += (abs(_value) * sign(y));
+					}
+					else
+					{
+						_result_x += (abs(_value.x) * sign(x));
+						_result_y += (abs(_value.y) * sign(y));
+					}
+					
+					x = _result_x;
+					y = _result_y;
 				}
-				else
+				catch (_exception)
 				{
-					x += (abs(_value.x) * sign(x));
-					y += (abs(_value.y) * sign(y));
+					new ErrorReport().report([other, self, "grow()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Scale} value
-			// @description			Perform a calculation with the specified value by substracting it
-			//						from its respective values with the same sign as the values of
-			//						this Scale.
+			/// @argument			value {real|Scale}
+			/// @description		Perform a calculation with the specified value by substracting it
+			///						from its respective values with the same sign as the values of this
+			///						Scale.
 			static shrink = function(_value)
 			{
-				if (is_real(_value))
+				try
 				{
-					x -= (abs(_value) * sign(x));
-					y -= (abs(_value) * sign(y));
+					var _result_x = x;
+					var _result_y = y;
+					
+					if (is_real(_value))
+					{
+						_result_x -= (abs(_value) * sign(x));
+						_result_y -= (abs(_value) * sign(y));
+					}
+					else
+					{
+						_result_x -= (abs(_value.x) * sign(x));
+						_result_y -= (abs(_value.y) * sign(y));
+					}
+					
+					x = _result_x;
+					y = _result_y;
 				}
-				else
+				catch (_exception)
 				{
-					x -= (abs(_value.x) * sign(x));
-					y -= (abs(_value.y) * sign(y));
+					new ErrorReport().report([other, self, "shrink()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @description			Reverse the x and y values.
+			/// @description		Reverse the x and y values.
 			static mirror = function()
 			{
-				x = (-x);
-				y = (-y);
+				try
+				{
+					var _result_x = (-x);
+					var _result_y = (-y);
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "mirror()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @description			Reverse the x value.
+			/// @description		Reverse the x value.
 			static mirrorX = function()
 			{
-				x = (-x);
+				try
+				{
+					x = (-x);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "mirrorX()"], _exception);
+				}
 				
 				return self;
 			}
 
-			// @description			Reverse the y value.
+			/// @description		Reverse the y value.
 			static mirrorY = function()
 			{
-				y = (-y);
+				try
+				{
+					y = (-y);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "mirrorY()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Vector2|Scale} value
-			// @description			Set all of the values to one specified value.
+			/// @argument			value {real|Vector2|Scale}
+			/// @description		Set all of the values to one specified value.
 			static set = function(_value)
 			{
-				if (is_real(_value))
+				try
 				{
-					x = _value;
-					y = _value;
+					var _result_x, _result_y;
+					
+					if (is_real(_value))
+					{
+						_result_x = _value;
+						_result_y = _value;
+					}
+					else
+					{
+						_result_x = _value.x;
+						_result_y = _value.y;
+					}
+					
+					x = _result_x;
+					y = _result_y;
 				}
-				else
+				catch (_exception)
 				{
-					x = _value.x;
-					y = _value.y;
+					new ErrorReport().report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -268,11 +362,11 @@ function Scale() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the values of this Container.
+			/// @argument			multiline? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the values of this Container.
 			static toString = function(_multiline = false)
 			{
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -281,8 +375,8 @@ function Scale() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			// @returns				{real[]}
-			// @description			Return an array containing all values of this Container.
+			/// @returns			{real[]}
+			/// @description		Return an array containing all values of this Container.
 			static toArray = function()
 			{
 				return [x, y];

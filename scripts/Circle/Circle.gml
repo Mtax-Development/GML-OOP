@@ -1,23 +1,23 @@
 /// @function				Circle()
-/// @argument				{Vector2} location
-/// @argument				{real} radius
-/// @argument				{int:color|Color2} fill_color?
-/// @argument				{real} fill_alpha?
-/// @argument				{int:color} outline_color?
-/// @argument				{real} outline_alpha?
+/// @argument				location {Vector2}
+/// @argument				radius {real}
+/// @argument				fill_color? {int:color|Color2}
+/// @argument				fill_alpha? {real}
+/// @argument				outline_color? {int:color}
+/// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs a Circle Shape.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty: {void}
-///							- Constructor copy: {Circle} other
+///							- Constructor copy: other {Circle}
 function Circle() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty.
@@ -64,7 +64,6 @@ function Circle() constructor
 							event = {};
 							
 							var _eventList = variable_struct_get_names(_other.event);
-							
 							var _i = [0, 0];
 							repeat (array_length(_eventList))
 							{
@@ -72,19 +71,16 @@ function Circle() constructor
 								var _other_event = variable_struct_get(_other.event,
 																	   _eventList[_i[0]]);
 								var _eventPropertyList = variable_struct_get_names(_other_event);
-								
 								_i[1] = 0;
 								repeat (array_length(_eventPropertyList))
 								{
 									var _property = variable_struct_get(_other_event,
 																		_eventPropertyList[_i[1]]);
-									
 									var _value = _property;
 									
 									if (is_array(_property))
 									{
 										_value = [];
-										
 										array_copy(_value, 0, _property, 0, array_length(_property));
 									}
 									
@@ -120,8 +116,8 @@ function Circle() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((instanceof(location) == "Vector2") and (location.isFunctional())
@@ -131,247 +127,309 @@ function Circle() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{int:object|int:instance} object
-			// @argument			{bool} precise?
-			// @argument			{int:instance} excludedInstance?
-			// @argument			{bool|List} list?
-			// @argument			{bool} listOrdered?
-			// @returns				{int|noone|List}
-			// @description			Check for a collision within this Shape with instances of the
-			//						specified object.
-			//						Returns the ID of a single colliding instance or {noone}.
-			//						If List use is specified, a List will be returned instead, either
-			//						empty or containing IDs of the colliding instances.
-			//						The additions to that List can be ordered by distance from the
-			//						center of the Shape if specified.
+			/// @argument			object {int:object|int:instance}
+			/// @argument			precise? {bool}
+			/// @argument			excludedInstance? {int:instance}
+			/// @argument			list? {bool|List}
+			/// @argument			listOrdered? {bool}
+			/// @returns			{int|noone|List}
+			/// @description		Check for a collision within this Shape with instances of the
+			///						specified object.
+			///						Returns the ID of a single colliding instance or {noone}.
+			///						If List use is specified, a List will be returned instead, either
+			///						empty or containing IDs of the colliding instances.
+			///						The additions to that List can be ordered by distance from the
+			///						center of the Shape if specified.
 			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
 										_listOrdered = false)
 			{
-				if (_list)
-				{
-					if (instanceof(_list) != "List")
-					{
-						_list = new List();
-					}
-					
-					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-					{
-						with (_excludedInstance)
-						{
-							collision_circle_list(other.location.x, other.location.y, other.radius,
-												  _object, _precise, true, _list.ID, _listOrdered);
-						}
-					}
-					else
-					{
-						collision_circle_list(location.x, location.y, radius, _object, _precise,
-											  false, _list.ID, _listOrdered);
-					}
+				var _list_created = false;
 				
-					return _list;
-				}
-				else
+				try
 				{
-					if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+					if (_list)
 					{
-						with (_excludedInstance)
+						if (instanceof(_list) != "List")
 						{
-							return collision_circle(other.location.x, other.location.y, other.radius,
-													_object, _precise, true);
+							_list = new List();
+							_list_created = true;
 						}
+						
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+						{
+							with (_excludedInstance)
+							{
+								collision_circle_list(other.location.x, other.location.y, other.radius,
+													  _object, _precise, true, _list.ID, _listOrdered);
+							}
+						}
+						else
+						{
+							collision_circle_list(location.x, location.y, radius, _object, _precise,
+												  false, _list.ID, _listOrdered);
+						}
+						
+						return _list;
 					}
 					else
 					{
-						return collision_circle(location.x, location.y, radius, _object, _precise,
-												false);
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+						{
+							with (_excludedInstance)
+							{
+								return collision_circle(other.location.x, other.location.y,
+														other.radius, _object, _precise, true);
+							}
+						}
+						else
+						{
+							return collision_circle(location.x, location.y, radius, _object, _precise,
+													false);
+						}
 					}
 				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "collision()"], _exception);
+					
+					if (_list_created)
+					{
+						_list.destroy();
+					}
+				}
+				
+				return noone;
 			}
 			
-			// @argument			{Vector2} point
-			// @returns				{bool}
-			// @description			Check whether a point in space is within this Circle.
+			/// @argument			point {Vector2}
+			/// @returns			{bool}
+			/// @description		Check whether a point in space is within this Circle.
 			static containsPoint = function(_point)
 			{
-				return point_in_circle(_point.x, _point.y, location.x, location.y, radius);
+				try
+				{
+					return point_in_circle(_point.x, _point.y, location.x, location.y, radius);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "containsPoint()"], _exception);
+				}
+				
+				return false;
 			}
 			
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the system cursor is over this Shape.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the system cursor is over this Shape.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorOver = function(_device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
 					}
+					
+					return point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "cursorOver()"], _exception);
 				}
 				
-				return point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius);
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the system cursor is over this Shape while its specified
-			//						mouse button is pressed or held.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the system cursor is over this Shape while its specified
+			///						mouse button is pressed or held.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorHold = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					{	
+						return ((_device == undefined) ? mouse_check_button(_button)
+													   : device_mouse_check_button(_device, _button));
+					}
+					else
+					{
+						return false;
 					}
 				}
-				
-				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
-				{	
-					return ((_device == undefined) ? mouse_check_button(_button)
-												   : device_mouse_check_button(_device, _button));
-				}
-				else
+				catch (_exception)
 				{
-					return false;
+					new ErrorReport().report([other, self, "cursorHold()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the system cursor is over this Shape while its specified
-			//						mouse button was pressed in this frame.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the system cursor is over this Shape while its specified
+			///						mouse button was pressed in this frame.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorPressed = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					{	
+						return ((_device == undefined) ? mouse_check_button_pressed(_button)
+													   : device_mouse_check_button_pressed(_device,
+																						   _button));
+					}
+					else
+					{
+						return false;
 					}
 				}
-				
-				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
-				{	
-					return ((_device == undefined) ? mouse_check_button_pressed(_button)
-												   : device_mouse_check_button_pressed(_device,
-																					   _button));
-				}
-				else
+				catch (_exception)
 				{
-					return false;
+					new ErrorReport().report([other, self, "cursorPressed()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{constant:mb_*} button
-			// @argument			{int} device?
-			// @argument			{bool} GUI?
-			// @returns				{bool}
-			// @description			Check if the system cursor is over this Shape while the specified
-			//						mouse button was released in this frame.
-			//						If the device is specified, the position of the cursor on the GUI
-			//						layer can be used.
+			/// @argument			button {constant:mb_*}
+			/// @argument			device? {int}
+			/// @argument			GUI? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the system cursor is over this Shape while the specified
+			///						mouse button was released in this frame.
+			///						If the device is specified, the position of the cursor on the GUI
+			///						layer can be used.
 			static cursorReleased = function(_button, _device, _GUI = false)
 			{
-				var _cursor_x, _cursor_y;
-				
-				if (_device == undefined)
+				try
 				{
-					_cursor_x = mouse_x;
-					_cursor_y = mouse_y;
-				}
-				else
-				{
-					if (_GUI)
+					var _cursor_x, _cursor_y;
+					
+					if (_device == undefined)
 					{
-						_cursor_x = device_mouse_x_to_gui(_device);
-						_cursor_y = device_mouse_y_to_gui(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_cursor_x = device_mouse_x(_device);
-						_cursor_y = device_mouse_y(_device);
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
+					}
+					
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					{	
+						return ((_device == undefined) ? mouse_check_button_released(_button)
+													   : device_mouse_check_button_released(_device,
+																							_button));
+					}
+					else
+					{
+						return false;
 					}
 				}
-				
-				if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
-				{	
-					return ((_device == undefined) ? mouse_check_button_released(_button)
-												   : device_mouse_check_button_released(_device,
-																						_button));
-				}
-				else
+				catch (_exception)
 				{
-					return false;
+					new ErrorReport().report([other, self, "released()"], _exception);
 				}
+				
+				return false;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			// @argument			{Vector2} location?
-			// @argument			{real} radius?
-			// @argument			{int:color|Color2} fill_color?
-			// @argument			{real} fill_alpha?
-			// @argument			{int:color} outline_color?
-			// @argument			{real} outline_alpha?
-			// @description			Execute the draw of this Shape as a form, using data of this
-			//						constructor or specified replaced parts of it for this call only.
-			//						Form drawing of this Shape is dependant on the currently set
-			//						Circle precision.
-			//						NOTE: Form drawing produces inconsistent results across devices
-			//						and export targets due to their technical differences.
-			//						Sprite drawing should be used instead for accurate results.
+			/// @argument			location? {Vector2}
+			/// @argument			radius? {real}
+			/// @argument			fill_color? {int:color|Color2}
+			/// @argument			fill_alpha? {real}
+			/// @argument			outline_color? {int:color}
+			/// @argument			outline_alpha? {real}
+			/// @description		Execute the draw of this Shape as a form, using data of this
+			///						constructor or specified replaced parts of it for this call only.
+			///						Form drawing of this Shape is dependant on the currently set
+			///						Circle precision.
+			///						NOTE: Form drawing produces inconsistent results across devices
+			///						and export targets due to their technical differences.
+			///						Sprite drawing should be used instead for accurate results.
 			static render = function(_location, _radius, _fill_color, _fill_alpha, _outline_color,
 									 _outline_alpha)
 			{
@@ -389,108 +447,120 @@ function Circle() constructor
 				outline_color = (_outline_color ?? outline_color);
 				outline_alpha = (_outline_alpha ?? outline_alpha);
 				
-				if (self.isFunctional())
+				try
 				{
-					if ((is_struct(event)) and (event.beforeRender.callback != undefined))
+					if (self.isFunctional())
 					{
-						var _callback_isArray = is_array(event.beforeRender.callback);
-						var _argument_isArray = is_array(event.beforeRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.beforeRender.callback
-										 : [event.beforeRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.beforeRender.argument
-										 : array_create(_callback_count,
-														event.beforeRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
-							if (is_method(_callback[_i]))
+							var _callback_isArray = is_array(event.beforeRender.callback);
+							var _argument_isArray = is_array(event.beforeRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.beforeRender.callback
+											 : [event.beforeRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.beforeRender.argument
+											 : array_create(_callback_count,
+															event.beforeRender.argument));
+							var _i = 0;
+							repeat (_callback_count)
 							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "beforeRender"], _exception);
+								}
+								
+								++_i;
+							}
+						}
+						
+						if ((fill_color != undefined) and (fill_alpha > 0))
+						{
+							var _color1, _color2;
+							
+							if (instanceof(fill_color) == "Color2")
+							{
+								_color1 = fill_color.color1;
+								_color2 = fill_color.color2;
+							}
+							else
+							{
+								_color1 = fill_color;
+								_color2 = fill_color;
 							}
 							
-							++_i;
-						}
-					}
-					
-					if ((fill_color != undefined) and (fill_alpha > 0))
-					{
-						var _color1, _color2;
-						
-						if (instanceof(fill_color) == "Color2")
-						{
-							_color1 = fill_color.color1;
-							_color2 = fill_color.color2;
-						}
-						else
-						{
-							_color1 = fill_color;
-							_color2 = fill_color;
+							draw_set_alpha(fill_alpha);
+							draw_circle_color(location.x, location.y, radius, _color1, _color2, false);
 						}
 						
-						draw_set_alpha(fill_alpha);
-						
-						draw_circle_color(location.x, location.y, radius, _color1, _color2, false);
-					}
-					
-					if ((outline_color != undefined) and (outline_alpha > 0))
-					{
-						draw_set_alpha(outline_alpha);
-						
-						draw_circle_color(location.x, location.y, radius, outline_color,
-										  outline_color, true);
-					}
-					
-					if ((is_struct(event)) and (event.afterRender.callback != undefined))
-					{
-						var _callback_isArray = is_array(event.afterRender.callback);
-						var _argument_isArray = is_array(event.afterRender.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.afterRender.callback
-										 : [event.afterRender.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.afterRender.argument
-										 : array_create(_callback_count,
-														event.afterRender.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((outline_color != undefined) and (outline_alpha > 0))
 						{
-							if (is_method(_callback[_i]))
+							draw_set_alpha(outline_alpha);
+							draw_circle_color(location.x, location.y, radius, outline_color,
+											  outline_color, true);
+						}
+						
+						if ((is_struct(event)) and (event.afterRender.callback != undefined))
+						{
+							var _callback_isArray = is_array(event.afterRender.callback);
+							var _argument_isArray = is_array(event.afterRender.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.afterRender.callback
+											 : [event.afterRender.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.afterRender.argument
+											 : array_create(_callback_count,
+															event.afterRender.argument));
+							var _i = 0;
+							repeat (_callback_count)
 							{
-								script_execute_ext(method_get_index(_callback[_i]),
-												   (((!_callback_isArray) and (_argument_isArray))
-													? _argument : ((is_array(_argument[_i])
-													? _argument[_i] : [_argument[_i]]))));
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray) and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "render()", "event",
+															  "afterRender"], _exception);
+								}
+								
+								++_i;
 							}
-							
-							++_i;
 						}
 					}
+					else
+					{
+						new ErrorReport().report([other, self, "render()"],
+												 ("Attempted to render an invalid Shape: " +
+												  "{" + string(self) + "}"));
+					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "render";
-					var _errorText = ("Attempted to render an invalid Shape: " +
-									  "{" + string(self) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "render()"], _exception);
 				}
-				
-				location = _location_original;
-				radius = _radius_original;
-				fill_color = _fill_color_original;
-				fill_alpha = _fill_alpha_original;
-				outline_color = _outline_color_original;
-				outline_alpha = _outline_alpha_original;
+				finally
+				{
+					location = _location_original;
+					radius = _radius_original;
+					fill_color = _fill_color_original;
+					fill_alpha = _fill_alpha_original;
+					outline_color = _outline_color_original;
+					outline_alpha = _outline_alpha_original;
+				}
 				
 				return self;
 			}
@@ -498,13 +568,13 @@ function Circle() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @argument			{bool} colorHSV?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Shape.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Shape.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";

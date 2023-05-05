@@ -1,18 +1,18 @@
 /// @function				ArrayParser()
-/// @argument				{any:array} value?
+/// @argument				value? {any:array}
 ///							
 /// @description			Constructs a Handler for parsing arrays.
 ///							
 ///							Construction types:
 ///							- New constructor
 ///							- Empty array: {void|undefined}
-///							- Constructor copy: {ArrayParser} other
+///							- Constructor copy: other {ArrayParser}
 function ArrayParser() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty array.
@@ -39,17 +39,17 @@ function ArrayParser() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return (is_array(ID));
 			}
 			
-			// @argument			{int} size?
-			// @argument			{any} value?
-			// @description			Replace the array with a newly created array of the specified size
-			//						filled with the specified value.
+			/// @argument			size? {int}
+			/// @argument			value? {any}
+			/// @description		Replace the array with a newly created array of the specified size
+			///						filled with the specified value.
 			static create = function(_size = 0, _value)
 			{
 				ID = array_create(_size, _value);
@@ -57,7 +57,7 @@ function ArrayParser() constructor
 				return self;
 			}
 			
-			// @description			Remove all data from the array.
+			/// @description		Remove all data from the array.
 			static clear = function()
 			{
 				if (is_array(ID))
@@ -72,33 +72,37 @@ function ArrayParser() constructor
 				return self;
 			}
 			
-			// @argument			{any[]|ArrayParser} source
-			// @argument			{int} target_position?
-			// @argument			{int} source_position?
-			// @argument			{int} count?
-			// @argument			{function} condition_copy?
-			// @argument			{function} condition_execute?
-			// @description			Copy to the array the specfied number of elements or all of them
-			//						from the specified position in the source array to the specified
-			//						target position or the beginning of either array if unspecified.
-			//						If the specified target position is negative, the values will be
-			//						copied to that absolute position of the target backwards. If the
-			//						specified number of values to copy from the source is negative,
-			//						these values will be copied backwards from the end of source.
-			//						Values at already occupied positions will be overwritten.
-			//						Positions exceeding the target array size will have their value
-			//						set to {undefined} if values were not copied into them.
-			//						Condition functions can be specified and providen each candidate
-			//						value as the only argument. That candidate value will be copied
-			//						only if the specified functions return true. The execution stops
-			//						if the second condition function is specified and returns false.
+			/// @argument			source {any[]|ArrayParser}
+			/// @argument			target_position? {int}
+			/// @argument			source_position? {int}
+			/// @argument			count? {int}
+			/// @argument			condition_copy? {function}
+			/// @argument			condition_execute? {function}
+			/// @description		Copy to the array the specfied number of elements or all of them
+			///						from the specified position in the source array to the specified
+			///						target position or the beginning of either array if unspecified.
+			///						If the specified target position is negative, the values will be
+			///						copied to that absolute position of the target backwards. If the
+			///						specified number of values to copy from the source is negative,
+			///						these values will be copied backwards from the end of source.
+			///						Values at already occupied positions will be overwritten.
+			///						Positions exceeding the target array size will have their value
+			///						set to {undefined} if values were not copied into them.
+			///						Condition functions can be specified and provided each candidate
+			///						value as the only argument. That candidate value will be copied
+			///						only if the specified functions return true. The execution stops
+			///						if the second condition function is specified and returns false.
 			static copy = function(_source, _target_position = 0, _source_position = 0, _count,
 								   __condition_copy, __condition_execute)
 			{
-				if (instanceof(_source) == "ArrayParser") {_source = _source.ID;}
-				
-				if (is_array(_source))
+				try
 				{
+					if (instanceof(_source) == "ArrayParser")
+					{
+						_source = _source.ID;
+					}
+					
+					var _source_size = array_length(_source);
 					var _target_position_abs = abs(_target_position);
 					
 					if (!is_array(ID))
@@ -119,8 +123,6 @@ function ArrayParser() constructor
 									   _target_position_size_difference);
 						}
 					}
-					
-					var _source_size = array_length(_source);
 					
 					if ((_target_position < 0) or (_source_position < 0)
 					or (__condition_copy != undefined) or (__condition_execute != undefined))
@@ -152,17 +154,24 @@ function ArrayParser() constructor
 						repeat (min((_count_abs ?? _remaining_position_count),
 									_remaining_position_count))
 						{
-							var _value = array_get(_source, _source_position_current);
-							
-							if (!__condition_execute(_value))
+							try
 							{
-								break;
-							}
-							else if (__condition_copy(_value))
-							{
-								array_set(ID, _target_position_current, _value);
+								var _value = array_get(_source, _source_position_current);
 								
-								_target_position_current += _target_position_boolsign;
+								if (!__condition_execute(_value))
+								{
+									break;
+								}
+								else if (__condition_copy(_value))
+								{
+									array_set(ID, _target_position_current, _value);
+								
+									_target_position_current += _target_position_boolsign;
+								}
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "copy()"], _exception);
 							}
 							
 							_source_position_current += _count_boolsign;
@@ -174,25 +183,20 @@ function ArrayParser() constructor
 								   (_count ?? (_source_size - _source_position)));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "copy";
-					var _errorText = ("Attempted to copy from an invalid array: " +
-									  "{" + string(_source) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "copy()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{any|any[]|constructor:Parser|constructor:DataStructure} data...
-			// @description			Append to the array the specified values or all values of the
-			//						specified structures.
+			/// @argument			data... {any|any[]|constructor:Parser|constructor:DataStructure}
+			/// @description		Append to the array the specified values or all values of the
+			///						specified structures.
 			static merge = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count)
@@ -229,14 +233,22 @@ function ArrayParser() constructor
 								case "PriorityQueue":
 								case "Queue":
 								case "Stack":
-									var _structure_data = _data.forEach(function()
+									try
 									{
-										return argument[(argument_count - 2)];
-									},
-									undefined, true);
-									
-									array_copy(ID, array_length(ID), _structure_data, 0,
-											   array_length(_structure_data));
+										var _structure_data = _data.forEach(function()
+										{
+											return argument[(argument_count - 2)];
+										},
+										undefined, true);
+										
+										array_copy(ID, array_length(ID), _structure_data, 0,
+												   array_length(_structure_data));
+									}
+									catch (_exception)
+									{
+										new ErrorReport().report([other, self, "merge()"],
+																 _exception);
+									}
 								break;
 								
 								default:
@@ -252,14 +264,9 @@ function ArrayParser() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "merge";
-					var _errorText = ("Attempted to write to an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "merge()"], _exception);
 				}
 				
 				return self;
@@ -268,18 +275,17 @@ function ArrayParser() constructor
 		#endregion
 		#region <Getters>
 			
-			// @argument			{any} value...
-			// @returns				{bool}
-			// @description			Check if the array contains at least one of the specified values.
+			/// @argument			value... {any}
+			/// @returns			{bool}
+			/// @description		Check if the array contains at least one of the specified values.
 			static contains = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					var _i = [0, 0];
 					repeat (array_length(ID))
 					{
 						var _value = array_get(ID, _i[0]);
-						
 						_i[1] = 0;
 						repeat (argument_count)
 						{
@@ -296,25 +302,20 @@ function ArrayParser() constructor
 					
 					return false;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "contains";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "contains()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{any} value...
-			// @returns				{bool}
-			// @description			Check if the array contains all of the specified values.
+			/// @argument			value... {any}
+			/// @returns			{bool}
+			/// @description		Check if the array contains all of the specified values.
 			static containsAll = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					var _i = [0, 0];
@@ -345,44 +346,48 @@ function ArrayParser() constructor
 					
 					return true;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "containsAll";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "containsAll()"], _exception);
 				}
+				
+				return false;
 			}
 			
-			// @argument			{function} condition
-			// @argument			{any} argument?
-			// @argument			{bool} matchAll?
-			// @returns				{bool}
-			// @description			Check if the array contains a value fulfilling the specified
-			//						condition function by causing it to return true at least once or
-			//						for all cases as it is executed once for each value of the array.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @argument			condition {function}
+			/// @argument			argument? {any}
+			/// @argument			matchAll? {bool}
+			/// @returns			{bool}
+			/// @description		Check if the array contains a value fulfilling the specified
+			///						condition function by causing it to return true at least once or
+			///						for all cases as it is executed once for each value of the array.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static containsCondition = function(__condition, _argument, _matchAll = false)
 			{
-				if (is_array(ID))
+				try
 				{
 					if (_matchAll)
 					{
 						var _i = 0;
 						repeat (array_length(ID))
 						{
-							if (!__condition(_i, array_get(ID, _i), _argument))
+							try
 							{
-								return false;
+								if (!__condition(_i, array_get(ID, _i), _argument))
+								{
+									return false;
+								}
 							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "containsCondition()",
+														  "function()"], _exception);
+							}
+							
 							
 							++_i;
 						}
@@ -394,9 +399,17 @@ function ArrayParser() constructor
 						var _i = 0;
 						repeat (array_length(ID))
 						{
-							if (__condition(_i, array_get(ID, _i), _argument))
+							try
 							{
-								return true;
+								if (__condition(_i, array_get(ID, _i), _argument))
+								{
+									return true;
+								}
+							}
+							catch (_exception)
+							{
+								new ErrorReport().report([other, self, "containsCondition()",
+														  "function()"], _exception);
 							}
 							
 							++_i;
@@ -405,50 +418,37 @@ function ArrayParser() constructor
 						return false;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "containsCondition";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "containsCondition()"], _exception);
 				}
 			}
 			
-			// @argument			{any[]|ArrayParser} other
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if this and other array have the same content.
+			/// @argument			other {any[]|ArrayParser}
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if this and other array have the same content.
 			static equals = function(_other)
 			{
-				if (instanceof(_other) == "ArrayParser") {_other = _other.ID};
-				
-				if ((is_array(ID)) and (is_array(_other)))
+				try
 				{
+					if (instanceof(_other) == "ArrayParser") {_other = _other.ID};
+					
 					return array_equals(ID, _other);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "equals";
-					var _errorText = ("Attempted to compare invalid arrays:\n" +
-									  "Self: " + "{" + string(ID) + "}" + "\n" +
-									  "Other: " + "{" + string(_other) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "equals()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{int} position
-			// @returns				{any} | On error: {undefined}
-			// @description			Return the value at the specified position.
+			/// @argument			position {int}
+			/// @returns			{any} | On error: {undefined}
+			/// @description		Return the value at the specified position.
 			static getValue = function(_position)
 			{
-				if (is_array(ID))
+				try
 				{
 					if (_position < array_length(ID))
 					{
@@ -456,42 +456,35 @@ function ArrayParser() constructor
 					}
 					else
 					{
-						var _errorReport = new ErrorReport();
-						var _callstack = debug_get_callstack();
-						var _methodName = "getValue";
-						var _errorText = ("Attempted to read an array value outside its bounds:\n" +
-										  "Self: " + "{" + string(ID) + "}" + "\n" +
-										  "Position: " + "{" + string(_position) + "}");
-						_errorReport.reportConstructorMethod(self, _callstack, _methodName,
-															 _errorText);
-					
+						new ErrorReport().report([other, self, "getValue()"],
+												 ("Attempted to read an array value outside its" +
+												  "bounds:" + "\n" +
+												  "Self: " + "{" + string(ID) + "}" + "\n" +
+												  "Position: " + "{" + string(_position) + "}"));
+						
 						return undefined;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getValue";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getValue()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{any|any[]|ArrayParser} value?...
-			// @returns				{any[]}
-			// @description			Return all values among the array and specified values and arrays
-			//						in a new array that does not contain duplicate values.
+			/// @argument			value?... {any|any[]|ArrayParser}
+			/// @returns			{any[]}
+			/// @description		Return all values among the array and specified values and arrays
+			///						in a new array that does not contain duplicate values.
 			static getUniqueValues = function()
 			{
-				if (is_array(ID))
+				var _value_map = ds_map_create();
+				
+				try
 				{
 					var _position = 0;
 					var _size = array_length(ID);
-					var _value_map = ds_map_create();
 					
 					var _i = 0;
 					repeat (_size)
@@ -545,35 +538,33 @@ function ArrayParser() constructor
 						_key = ds_map_find_next(_value_map, _key);
 					}
 					
-					ds_map_destroy(_value_map);
-					
 					return _result;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getUniqueValues";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getUniqueValues()"], _exception);
 				}
+				finally
+				{
+					ds_map_destroy(_value_map);
+				}
+				
+				return [];
 			}
 			
-			// @argument			{any|any[]|ArrayParser} value?...
-			// @returns				{any[]}
-			// @description			Return all values among the array and specified values and arrays
-			//						in a new array that does not contain duplicate values and only
-			//						values present in all arguments.
+			/// @argument			value?... {any|any[]|ArrayParser}
+			/// @returns			{any[]}
+			/// @description		Return all values among the array and specified values and arrays
+			///						in a new array that does not contain duplicate values and only
+			///						values present in all arguments.
 			static getSharedValues = function()
 			{
-				if (is_array(ID))
+				var _value_map = ds_map_create();
+				var _order_queue = ds_priority_create();
+				
+				try
 				{
 					var _position = 0;
-					var _value_map = ds_map_create();
-					var _order_queue = ds_priority_create();
 					
 					var _i = 0;
 					repeat (array_length(ID))
@@ -639,95 +630,67 @@ function ArrayParser() constructor
 						++_i;
 					}
 					
-					ds_map_destroy(_value_map);
-					ds_priority_destroy(_order_queue);
-					
 					return _result;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSharedValues";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getSharedValues()"], _exception);
 				}
+				finally
+				{
+					ds_map_destroy(_value_map);
+					ds_priority_destroy(_order_queue);
+				}
+				
+				return [];
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the first value in the array.
-			//						Returns {undefined} if the array does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the first value in the array.
+			///						Returns {undefined} if the array does not exists or is empty.
 			static getFirst = function()
 			{
-				if (is_array(ID))
+				try
 				{
-					if (array_length(ID) > 0)
-					{
-						return array_get(ID, 0);
-					}
-					else
-					{
-						return undefined;
-					}
+					return ((array_length(ID) > 0) ? array_get(ID, 0) : undefined);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirst";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getFirst()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{any|undefined}
-			// @description			Return the last value in the array.
-			//						Returns {undefined} if the array does not exists or is empty.
+			/// @returns			{any|undefined}
+			/// @description		Return the last value in the array.
+			///						Returns {undefined} if the array does not exists or is empty.
 			static getLast = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					
-					if (_size > 0)
-					{
-						return array_get(ID, (_size - 1));
-					}
-					else
-					{
-						return undefined;
-					}
+					return ((_size > 0) ? array_get(ID, (_size - 1)) : undefined);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getLast";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getLast()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{any} value
-			// @returns				{int}
-			// @description			Return the first found position of the specified value or -1 if
-			//						the value does not exist.
+			/// @argument			value {any}
+			/// @returns			{int}
+			/// @description		Return the first found position of the specified value or -1 if
+			///						the value does not exist.
 			static getFirstPosition = function(_value)
 			{
-				if (is_array(ID))
+				try
 				{
-					var _size = array_length(ID);
 					var _i = 0;
-					repeat (_size)
+					repeat (array_length(ID))
 					{
 						if (array_get(ID, _i) == _value)
 						{
@@ -739,26 +702,21 @@ function ArrayParser() constructor
 					
 					return -1;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getFirstPosition";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return -1;
+					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
 				}
+				
+				return -1;
 			}
 			
-			// @argument			{any} value
-			// @returns				{int}
-			// @description			Return the last found position of the specified value or -1 if
-			//						the value does not exist.
+			/// @argument			value {any}
+			/// @returns			{int}
+			/// @description		Return the last found position of the specified value or -1 if the
+			///						value does not exist.
 			static getLastPosition = function(_value)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					var _i = (_size - 1);
@@ -774,30 +732,24 @@ function ArrayParser() constructor
 					
 					return -1;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getLastPosition";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return -1;
+					new ErrorReport().report([other, self, "getLastPosition()"], _exception);
 				}
+				
+				return -1;
 			}
 			
-			// @argument			{any} value
-			// @returns				{int[]}
-			// @description			Return an array with all positions of the specified value.
+			/// @argument			value {any}
+			/// @returns			{int[]}
+			/// @description		Return an array with all positions of the specified value.
 			static getPositions = function(_value)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _position = [];
-					var _size = array_length(ID);
 					var _i = 0;
-					repeat (_size)
+					repeat (array_length(ID))
 					{
 						if (array_get(ID, _i) == _value)
 						{
@@ -809,41 +761,43 @@ function ArrayParser() constructor
 					
 					return _position;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getPositions";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getPositions()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{function} condition
-			// @argument			{any} argument?
-			// @returns				{int[]}
-			// @description			Return an array with all positions of values fulfilling the
-			//						specified condition function by causing it to return true.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @argument			condition {function}
+			/// @argument			argument? {any}
+			/// @returns			{int[]}
+			/// @description		Return an array with all positions of values fulfilling the
+			///						specified condition function by causing it to return true.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static getPositionsCondition = function(__condition, _argument)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _position = [];
-					var _size = array_length(ID);
 					var _i = 0;
-					repeat (_size)
+					repeat (array_length(ID))
 					{
-						if (__condition(_i, array_get(ID, _i), _argument))
+						try
 						{
-							array_push(_position, _i);
+							if (__condition(_i, array_get(ID, _i), _argument))
+							{
+								array_push(_position, _i);
+							}
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "getPositionsCondition()"],
+													 _exception);
 						}
 						
 						++_i;
@@ -851,36 +805,31 @@ function ArrayParser() constructor
 					
 					return _position;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getPositionsCondition";
-					var _errorText = ("Attempted to read an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getPositionsCondition()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{function} reducer
-			// @argument			{any} initial_value?
-			// @argument			{any} argument?
-			// @returns				{any} | On error: {undefined}
-			// @description			Execute a function to compare each value in the array with the
-			//						previous return value and return the final of these values. The
-			//						comparison starts from either the specified initial value or the
-			//						first value of the array.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {any} _value_previous
-			//						- argument[1]: {any} _value_current
-			//						- argument[2]: {int} _i
-			//						- argument[3]: {any} _argument
+			/// @argument			reducer {function}
+			/// @argument			initial_value? {any}
+			/// @argument			argument? {any}
+			/// @returns			{any} | On error: {undefined}
+			/// @description		Execute a function to compare each value in the array with the
+			///						previous return value and return the final of these values. The
+			///						comparison starts from either the specified initial value or the
+			///						first value of the array.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _value_previous {any}
+			///						- argument[1]: _value_current {any}
+			///						- argument[2]: _i {int}
+			///						- argument[3]: _argument {any}
 			static getReduction = function(__reducer, _initial_value, _argument)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					
@@ -916,52 +865,42 @@ function ArrayParser() constructor
 					
 					return _value_previous;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getReduction";
-					var _errorText = ("Attempted to iterate through an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getReduction()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @returns				{int} | On error: {undefined}
-			// @description			Return the number of elements in the array.
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Return the number of elements in the array.
 			static getSize = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					return array_length(ID);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getSize";
-					var _errorText = ("Attempted to read a property of an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "getSize()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{int} position
-			// @returns				{any[]}
-			// @description			Return the values at the specified position in the nested arrays.
+			/// @argument			position {int}
+			/// @returns			{any[]}
+			/// @description		Return the values at the specified position in the nested arrays.
 			static getColumn = function(_position)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _column = [];
 					var _i = 0;
 					repeat (array_length(ID))
 					{
-						var _value = ID[_i];
+						var _value = array_get(ID, _i);
 						
 						if ((is_array(_value))
 						and (_position == clamp(_position, 0, (array_length(_value) - 1))))
@@ -974,68 +913,65 @@ function ArrayParser() constructor
 					
 					return _column;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "getColumn";
-					var _errorText = ("Attempted to read a property of an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "getColumn()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @returns				{bool} | On error: {undefined}
-			// @description			Check if the array has no values in it.
+			/// @returns			{bool} | On error: {undefined}
+			/// @description		Check if the array has no values in it.
 			static isEmpty = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					return (array_length(ID) <= 0);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "isEmpty";
-					var _errorText = ("Attempted to read a property of an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return undefined;
+					new ErrorReport().report([other, self, "isEmpty()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Setters>
 			
-			// @argument			{any:array|ArrayParser} value
-			// @description			Set the value of this parser to the specified value by ensuring it
-			//						is an array. If an {ArrayParser} is specified, its value will be
-			//						set as a reference, without copying or changing it. Changes in
-			//						either parser will be then reflected in the other one.
+			/// @argument			value {any:array|ArrayParser}
+			/// @description		Set the value of this parser to the specified value by ensuring it
+			///						is an array. If an {ArrayParser} is specified, its value will be
+			///						set as a reference, without copying or changing it. Changes in
+			///						either parser will be then reflected in the other one.
 			static set = function(_value)
 			{
-				ID = ((is_array(_value)) ? _value
-										 : ((instanceof(_value) == "ArrayParser")
-											? _value.ID
-											: [_value]));
+				try
+				{
+					ID = ((is_array(_value)) ? _value
+											 : ((instanceof(_value) == "ArrayParser")
+												? _value.ID
+												: [_value]));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "set()"], _exception);
+				}
 				
 				return self;
 			}
 			
-			// @argument			{int} size
-			// @argument			{any} value_default?
-			// @description			Set the number of elements in the array to the specified one.
-			//						If the specified size is lower than current, values from the end
-			//						will be removed. If the specified size is higher than current,
-			//						values in new positions will be set to the specified default value
-			//						or {undefined} if unspecified.
+			/// @argument			size {int}
+			/// @argument			value_default? {any}
+			/// @description		Set the number of elements in the array to the specified one.
+			///						If the specified size is lower than current, values from the end
+			///						will be removed. If the specified size is higher than current,
+			///						values in new positions will be set to the specified default value
+			///						or {undefined} if unspecified.
 			static setSize = function(_size, _value_default)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size_current = array_length(ID);
 					
@@ -1051,14 +987,9 @@ function ArrayParser() constructor
 						array_resize(ID, _size);
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSize";
-					var _errorText = ("Attempted to set a property an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
@@ -1067,54 +998,56 @@ function ArrayParser() constructor
 		#endregion
 		#region <Execution>
 			
-			// @returns				{function} function
-			// @argument			{any} argument?
-			// @returns				{any[]}
-			// @description			Execute a function once for each value in the array.
-			//						The following arguments will be provided to the function and can
-			//						be accessed in it by using their name or the argument array:
-			//						- argument[0]: {int} _i
-			//						- argument[1]: {any} _value
-			//						- argument[2]: {any} _argument
+			/// @returns			function {function}
+			/// @argument			argument? {any}
+			/// @returns			{any[]}
+			/// @description		Execute a function once for each value in the array.
+			///						The following arguments will be provided to the function and can
+			///						be accessed in it by using their name or the argument array:
+			///						- argument[0]: _i {int}
+			///						- argument[1]: _value {any}
+			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					var _dataCopy = [];
 					array_copy(_dataCopy, 0, ID, 0, _size);
-					
 					var _functionReturn = [];
 					var _i = 0;
 					repeat (_size)
 					{
 						var _value = array_get(_dataCopy, _i);
 						
-						array_push(_functionReturn, __function(_i, _value, _argument));
+						try
+						{
+							array_push(_functionReturn, __function(_i, _value, _argument));
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "forEach()", "function()"],
+													 _exception);
+						}
 						
 						++_i;
 					}
 					
 					return _functionReturn;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "forEach";
-					var _errorText = ("Attempted to iterate through an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return [];
+					new ErrorReport().report([other, self, "forEach()"], _exception);
 				}
+				
+				return [];
 			}
 			
-			// @argument			{any} value...
-			// @description			Add one or more values to the array.
+			/// @argument			value... {any}
+			/// @description		Add one or more values to the array.
 			static add = function()
 			{
-				if (is_array(ID))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count)
@@ -1124,51 +1057,41 @@ function ArrayParser() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "add";
-					var _errorText = ("Attempted to write to an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "add()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{any} value
-			// @argument			{int} position
-			// @description			Set a specified position of the array to specified value and any
-			//						empty places before it to 0.
+			/// @argument			value {any}
+			/// @argument			position {int}
+			/// @description		Set a specified position of the array to specified value and any
+			///						empty places before it to 0.
 			static setValue = function(_value, _position)
 			{
-				if (is_array(ID))
+				try
 				{
 					array_set(ID, _position, _value);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setValue";
-					var _errorText = ("Attempted to write to an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setValue()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position
-			// @argument			{any} value...
-			// @description			Add one or more values to the specified positions of the array and
-			//						push values on that position and after it forward by the number of
-			//						added values. Empty positions before the specified position will
-			//						be set to 0.
+			/// @argument			position {int}
+			/// @argument			value... {any}
+			/// @description		Add one or more values to the specified positions of the array and
+			///						push values on that position and after it forward by the number of
+			///						added values. Empty positions before the specified position will
+			///						be set to 0.
 			static insert = function(_position)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _i = 0;
 					repeat (argument_count - 1)
@@ -1178,29 +1101,24 @@ function ArrayParser() constructor
 						++_i;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "insert";
-					var _errorText = ("Attempted to write to an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "insert()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int} position?
-			// @argument			{int} count?
-			// @returns				{any|any[]|undefined}
-			// @description			Return one or more values starting from the specified position and
-			//						return them.
-			//						If multiple values were removed, they will be returned in an
-			//						array. If no values were removed, {undefined} will be returned.
+			/// @argument			position? {int}
+			/// @argument			count? {int}
+			/// @returns			{any|any[]|undefined}
+			/// @description		Remove any number of values from the arraystarting from the
+			///						specified position and return them. If multiple values were
+			///						successfully removed, they will be returned in an array. If no
+			///						values were removed, {undefined} will be returned.
 			static removePosition = function(_position = 0, _count = 1)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _size = array_length(ID);
 					
@@ -1221,7 +1139,6 @@ function ArrayParser() constructor
 					else
 					{
 						var _result = array_create(_count, undefined);
-						
 						var _i = 0;
 						repeat (_count)
 						{
@@ -1235,26 +1152,22 @@ function ArrayParser() constructor
 						return _result;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removePosition";
-					var _errorText = ("Attempted to remove data from an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "removePosition()"], _exception);
 				}
+				
+				return undefined;
 			}
 			
-			// @argument			{any|ArrayParser} value
-			// @returns				{int}
-			// @description			Remove all occurences of the specified value. If an ArrayParser is
-			//						specified as the value, all occurences of its the values of its
-			//						array will be removed. The number of removed values will be
-			//						returned.
+			/// @argument			value {any|ArrayParser}
+			/// @returns			{int}
+			/// @description		Remove all occurences of the specified value and return the number
+			///						of removed values. If an ArrayParser is specified as the value,
+			///						all occurences of its shared values will be removed.
 			static removeValue = function(_value)
 			{
-				if (is_array(ID))
+				try
 				{
 					var _result = 0;
 					
@@ -1306,44 +1219,34 @@ function ArrayParser() constructor
 						return _result;
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "removeValue";
-					var _errorText = ("Attempted to remove data from an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-					
-					return 0;
+					new ErrorReport().report([other, self, "removeValue()"], _exception);
 				}
+				
+				return _result;
 			}
 			
-			// @argument			{bool|function} order
-			// @description			Sort the values in the array in the specified order.
-			//						The order can be specified as {bool} for ascending order or as a
-			//						sorting {function}.
-			//						If ordering is specified as {bool}, the sorting will work properly
-			//						only when all array values are either numbers or strings.
-			//						If ordering is specified as a {function}, it has to accept two
-			//						arguments, which are to be used to comapre every element of the
-			//						array with each other in pairs, then return a number, which is
-			//						0 for equality and negative or positive value for such respective
-			//						comparison result.
+			/// @argument			order {bool|function}
+			/// @description		Sort the values in the array in the specified order.
+			///						The order can be specified as {bool} for ascending order or as a
+			///						sorting {function}.
+			///						If ordering is specified as {bool}, the sorting will work properly
+			///						only when all array values are either numbers or strings.
+			///						If ordering is specified as a {function}, it has to accept two
+			///						arguments, which are to be used to comapre every element of the
+			///						array with each other in pairs, then return a number, which is 0
+			///						for equality and negative or positive value for such respective
+			///						comparison result.
 			static sort = function(_order)
 			{
-				if (is_array(ID))
+				try
 				{
 					array_sort(ID, _order);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "sort";
-					var _errorText = ("Attempted to sort an invalid array: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "sort()"], _exception);
 				}
 				
 				return self;
@@ -1352,18 +1255,18 @@ function ArrayParser() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{int|all} elementNumber?
-			// @argument			{int|all} elementLength?
-			// @argument			{string} mark_separator?
-			// @argument			{string} mark_cut?
-			// @argument			{string} mark_elementStart?
-			// @argument			{string} mark_elementEnd?
-			// @argument			{string} mark_sizeSeparator?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented by the data of the array.
+			/// @argument			multiline? {bool}
+			/// @argument			elementNumber? {int|all}
+			/// @argument			elementLength? {int|all}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @argument			mark_elementStart? {string}
+			/// @argument			mark_elementEnd? {string}
+			/// @argument			mark_sizeSeparator? {string}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented by the data of the array.
 			static toString = function(_multiline = false, _elementNumber = 10, _elementLength = 30,
 									   _mark_separator = ", ", _mark_cut = "...",
 									   _mark_elementStart = "", _mark_elementEnd = "",
@@ -1383,7 +1286,6 @@ function ArrayParser() constructor
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					
 					var _string = "";
 					var _string_size = (string(_size));
 					

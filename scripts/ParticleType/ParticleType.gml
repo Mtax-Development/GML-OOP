@@ -5,58 +5,44 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Constructor copy: {ParticleType} other
+///							- Constructor copy: other {ParticleType}
 function ParticleType() constructor
 {
 	#region [Methods]
 		#region <Management>
 			
-			// @description			Initialize the constructor.
+			/// @description		Initialize the constructor.
 			static construct = function()
 			{
 				ID = undefined;
-				
 				shape = undefined;
-				
 				sprite = undefined;
 				sprite_animate = undefined;
 				sprite_matchAnimation = undefined;
 				sprite_randomize = undefined;
-				
 				scale = undefined;
-				
 				size = undefined;
 				size_increase = undefined;
 				size_wiggle = undefined;
-				
 				speed = undefined;
 				speed_increase = undefined;
 				speed_wiggle = undefined;
-				
 				direction = undefined;
 				direction_increase = undefined;
 				direction_wiggle = undefined;
-				
 				angle = undefined;
 				angle_increase = undefined;
 				angle_wiggle = undefined;
 				angle_relative = undefined;
-				
 				gravity = undefined;
 				gravity_direction = undefined;
-				
 				color = undefined;
 				color_type = undefined;
-				
 				blend_additive = undefined;
-				
 				alpha = [];
-				
 				life = undefined;
-				
 				step_type = undefined;
 				step_number = undefined;
-				
 				death_type = undefined;
 				death_number = undefined;
 				
@@ -81,19 +67,14 @@ function ParticleType() constructor
 					var _other = argument[0];
 					
 					ID = part_type_create();
-					
 					shape = _other.shape;
-					
 					sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.sprite.ID)
 																	  : _other.sprite);
 					sprite_animate = _other.sprite_animate;
 					sprite_matchAnimation = _other.sprite_matchAnimation;
-					
 					scale = new Scale(_other.scale);
-					
 					size = ((instanceof(_other.sprite) == "Range") ? new Range(_other.size)
 																   : _other.size);
-					
 					speed = ((instanceof(_other.speed) == "Range") ? new Range(_other.speed)
 																   : _other.speed);
 					switch (instanceof(_other.direction))
@@ -166,7 +147,6 @@ function ParticleType() constructor
 					}
 					
 					color_type = _other.color_type;
-					
 					blend_additive = _other.blend_additive;
 					
 					if (is_array(_other.alpha))
@@ -179,10 +159,8 @@ function ParticleType() constructor
 					}
 					
 					life = _other.life;
-					
 					step_type = _other.step_type;
 					step_number = _other.step_number;
-					
 					death_type = _other.death_type;
 					death_number = _other.death_number
 					
@@ -256,20 +234,17 @@ function ParticleType() constructor
 						event = {};
 						
 						var _eventList = variable_struct_get_names(_other.event);
-						
 						var _i = [0, 0];
 						repeat (array_length(_eventList))
 						{
 							var _event = {};
 							var _other_event = variable_struct_get(_other.event, _eventList[_i[0]]);
 							var _eventPropertyList = variable_struct_get_names(_other_event);
-							
 							_i[1] = 0;
 							repeat (array_length(_eventPropertyList))
 							{
 								var _property = variable_struct_get(_other_event,
 																	_eventPropertyList[_i[1]]);
-								
 								var _value = _property;
 								
 								if (is_array(_property))
@@ -298,48 +273,34 @@ function ParticleType() constructor
 				{
 					//|Construction type: New constructor.
 					ID = part_type_create();
-					
 					shape = pt_shape_pixel;
-					
 					sprite = undefined;
 					sprite_animate = false;
 					sprite_matchAnimation = false;
 					sprite_randomize = false;
-					
 					scale = new Scale(1, 1);
-					
 					size = 1;
 					size_increase = 0;
 					size_wiggle = 0;
-					
 					speed = 1;
 					speed_increase = 0;
 					speed_wiggle = 0;
-					
 					direction = new Angle(0);
 					direction_increase = 0;
 					direction_wiggle = 0;
-					
 					angle = new Angle(0);
 					angle_increase = 0;
 					angle_wiggle = 0;
 					angle_relative = false;
-					
 					gravity = 0;
 					gravity_direction = undefined;
-					
 					life = 100;
-					
 					blend_additive = false;
-					
 					color = c_white;
 					color_type = "color";
-					
 					alpha = [1, undefined, undefined];	
-					
 					step_type = undefined;
 					step_number = 0;
-					
 					death_type = undefined;
 					death_number = 0;
 				}
@@ -347,15 +308,15 @@ function ParticleType() constructor
 				return self;
 			}
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return ((is_real(ID)) and (part_type_exists(ID)));
 			}
 			
-			// @returns				{undefined}
-			// @description			Remove the internal information from the memory.
+			/// @returns			{undefined}
+			/// @description		Remove the internal information from the memory.
 			static destroy = function()
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
@@ -368,7 +329,7 @@ function ParticleType() constructor
 				return undefined;
 			}
 			
-			// @description			Reset all properties to default.
+			/// @description		Reset all properties to default.
 			static clear = function()
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))
@@ -381,46 +342,33 @@ function ParticleType() constructor
 				}
 				
 				shape = pt_shape_pixel;
-				
 				sprite = undefined;
 				sprite_animate = false;
 				sprite_matchAnimation = false;
 				sprite_randomize = false;
-				
 				scale = new Scale(1, 1);
-				
 				size = 1;
 				size_increase = 0;
 				size_wiggle = 0;
-				
 				speed = 1;
 				speed_increase = 0;
 				speed_wiggle = 0;
-				
 				direction = 0;
 				direction_increase = 0;
 				direction_wiggle = 0;
-				
 				angle = 0;
 				angle_increase = 0;
 				angle_wiggle = 0;
 				angle_relative = false;
-				
 				gravity = 0;
 				gravity_direction = undefined;
-				
 				life = 100;
-				
 				blend_additive = false;
-				
 				color = c_white;
 				color_type = "color";
-				
 				alpha = [1, undefined, undefined];
-				
 				step_type = undefined;
 				step_number = 0;
-				
 				death_type = undefined;
 				death_number = 0;
 				
@@ -430,665 +378,595 @@ function ParticleType() constructor
 		#endregion
 		#region <Setters>
 			
-			// @argument			{constant:pt_shape_*} shape
-			// @description			Set the shape property of this Particle Type, which replaces its
-			//						Sprite if it is set.
+			/// @argument			shape {constant:pt_shape_*}
+			/// @description		Set the shape property of this Particle Type, which replaces its
+			///						Sprite if it is set.
 			static setShape = function(_shape)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					shape = _shape;
+					part_type_shape(ID, _shape);
 					
+					shape = _shape;
 					sprite = undefined;
 					sprite_animate = false;
 					sprite_matchAnimation = false;
 					sprite_randomize = false;
-					
-					part_type_shape(ID, shape);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setShape";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setShape()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{Sprite} sprite
-			// @argument			{bool} animate?
-			// @argument			{bool} matchAnimation?
-			// @argument			{bool} random?
-			// @description			Set the Sprite properties of particles of this Particle Type,
-			//						which replaces its shape is it is set.
-			//						The Sprite can be animated using its own animation speed, unless
-			//						it is set to match the life time of this Particle Type. The
-			//						animation will play from either the start to finish or randomized
-			//						frames if specified.
+			/// @argument			sprite {Sprite}
+			/// @argument			animate? {bool}
+			/// @argument			matchAnimation? {bool}
+			/// @argument			random? {bool}
+			/// @description		Set the Sprite properties of particles of this Particle Type,
+			///						which replaces its shape is it is set.
+			///						The Sprite can be animated using its own animation speed, unless
+			///						it is set to match the life time of this Particle Type. The
+			///						animation will play from either the start to finish or randomized
+			///						frames if specified.
 			static setSprite = function(_sprite, _animate = false, _matchAnimation = false,
 										_randomize = false)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
+					part_type_sprite(ID, _sprite.ID, _animate, _matchAnimation, _randomize);
+					
 					sprite = _sprite;
 					sprite_animate = _animate;
 					sprite_matchAnimation = _matchAnimation;
 					sprite_randomize = _randomize;
-					
 					shape = undefined;
-					
-					part_type_sprite(ID, sprite.ID, sprite_animate, sprite_matchAnimation,
-									 sprite_randomize);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSprite";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setSprite()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{Scale} scale
-			// @description			Set the Scale of particles of this Particle Type, which stretches
-			//						them on the x and y axes.
+			/// @argument			scale {Scale}
+			/// @description		Set the Scale of particles of this Particle Type, which stretches
+			///						them on the x and y axes.
 			static setScale = function(_scale)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					scale = _scale;
+					part_type_scale(ID, _scale.x, _scale.y);
 					
-					part_type_scale(ID, scale.x, scale.y);
+					scale = ((instanceof(_scale) == "Scale") ? scale.set(_scale) : new Scale(_scale));
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setScale";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setScale()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Range} size
-			// @argument			{real} increase?
-			// @argument			{real} wiggle?
-			// @description			Set the size properties of this Particle Type, which multiplies
-			//						the Scale of the particles.
+			/// @argument			size {real|Range}
+			/// @argument			increase? {real}
+			/// @argument			wiggle? {real}
+			/// @description		Set the size properties of this Particle Type, which multiplies
+			///						the Scale of the particles.
 			static setSize = function(_size, _increase = 0, _wiggle = 0)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
+					var _size_minimum, _size_maximum;
+					
+					if (is_real(_size))
+					{
+						_size_minimum = _size;
+						_size_maximum = _size;
+					}
+					else
+					{
+						_size_minimum = _size.minimum;
+						_size_maximum = _size.maximum;
+					}
+					
+					part_type_size(ID, _size_minimum, _size_maximum, _increase, _wiggle);
+					
 					size = _size;
 					size_increase = _increase;
 					size_wiggle = _wiggle;
-					
-					var _size_minimum, _size_maximum;
-					
-					if (instanceof(size) == "Range")
-					{
-						_size_minimum = size.minimum;
-						_size_maximum = size.maximum;
-					}
-					else
-					{
-						_size_minimum = size;
-						_size_maximum = size;
-					}
-					
-					part_type_size(ID, _size_minimum, _size_maximum, size_increase, size_wiggle);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSize";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Range} speed
-			// @argument			{real} speed_increase?
-			// @argument			{real} speed_wiggle?
-			// @description			Set the movement speed properties of particles of this Particle
-			//						Type, indicating how fast each will move towards its direction.
+			/// @argument			speed {real|Range}
+			/// @argument			speed_increase? {real}
+			/// @argument			speed_wiggle? {real}
+			/// @description		Set the movement speed properties of particles of this Particle
+			///						Type, indicating how fast each will move towards its direction.
 			static setSpeed = function(_speed, _increase = 0, _wiggle = 0)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					speed = _speed;
-					speed_increase = _increase;
-					speed_wiggle = _wiggle;
-					
 					var _speed_minimum, _speed_maximum;
 					
-					if (instanceof(speed) == "Range")
-					{
-						_speed_minimum = speed.minimum;
-						_speed_maximum = speed.maximum;
-					}
-					else
+					if (is_real(_speed))
 					{
 						_speed_minimum = speed;
 						_speed_maximum = speed;
 					}
+					else
+					{
+						_speed_minimum = speed.minimum;
+						_speed_maximum = speed.maximum;
+					}
 					
-					part_type_speed(ID, _speed_minimum, _speed_maximum, speed_increase,
-									speed_wiggle);
+					part_type_speed(ID, _speed_minimum, _speed_maximum, _increase, _wiggle);
+					
+					speed = _speed;
+					speed_increase = _increase;
+					speed_wiggle = _wiggle;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setSpeed";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setSpeed()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{Angle|Range} direction
-			// @argument			{real} increase?
-			// @argument			{real} wiggle?
-			// @description			Set the movemement direction properties of particle of this
-			//						Particle Type, which is applied only while the partices have
-			//						any speed, otherwise equaling 0.
+			/// @argument			direction {Angle|Range}
+			/// @argument			increase? {real}
+			/// @argument			wiggle? {real}
+			/// @description		Set the movemement direction properties of particle of this
+			///						Particle Type, which is applied only while the partices have
+			///						any speed, otherwise equaling 0.
 			static setDirection = function(_direction, _increase = 0, _wiggle = 0)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
-				{					
-					direction = _direction;
-					direction_increase = _increase;
-					direction_wiggle = _wiggle;
-					
+				try
+				{
 					var _direction_minimum, _direction_maximum;
 					
-					switch (instanceof(direction))
+					switch (instanceof(_direction))
 					{
 						case "Range":
-							_direction_minimum = direction.minimum;
-							_direction_maximum = direction.maximum;
+							_direction_minimum = _direction.minimum;
+							_direction_maximum = _direction.maximum;
 						break;
 						
 						case "Angle":
-							_direction_minimum = direction.value;
-							_direction_maximum = direction.value;
+							_direction_minimum = _direction.value;
+							_direction_maximum = _direction.value;
 						break;
 					}
 					
-					part_type_direction(ID, _direction_minimum, _direction_maximum,
-										direction_increase, direction_wiggle);
+					part_type_direction(ID, _direction_minimum, _direction_maximum, _increase,
+										_wiggle);
+					
+					direction = _direction;
+					direction_increase = _increase;
+					direction_wiggle = _wiggle;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setDirection";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setDirection()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{Angle|Range} angle
-			// @argument			{real} increase?
-			// @argument			{real} wiggle?
-			// @argument			{bool} relative?
-			// @description			Set the Angle propierties of the particle of this Particle Type,
-			//						which rotates their visual representation.
-			//						The Angle can be specified to be relative to the direction that
-			//						is applied only if the particle currently has any speed.
+			/// @argument			angle {Angle|Range}
+			/// @argument			increase? {real}
+			/// @argument			wiggle? {real}
+			/// @argument			relative? {bool}
+			/// @description		Set the Angle propierties of the particle of this Particle Type,
+			///						which rotates their visual representation.
+			///						The Angle can be specified to be relative to the direction that
+			///						is applied only if the particle currently has any speed.
 			static setAngle = function(_angle, _increase = 0, _wiggle = 0, _relative = false)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
+					var _angle_minimum, _angle_maximum;
+					
+					switch (instanceof(_angle))
+					{
+						case "Range":
+							_angle_minimum = _angle.minimum;
+							_angle_maximum = _angle.maximum;
+						break;
+						
+						case "Angle":
+							_angle_minimum = _angle.value;
+							_angle_maximum = _angle.value;
+						break;
+					}
+					
+					part_type_orientation(ID, _angle_minimum, _angle_maximum, _increase, _wiggle,
+										  _relative);
+					
 					angle = _angle;
 					angle_increase = _increase;
 					angle_wiggle = _wiggle;
 					angle_relative = _relative;
-					
-					var _angle_minimum, _angle_maximum;
-					
-					switch (instanceof(angle))
-					{
-						case "Range":
-							_angle_minimum = angle.minimum;
-							_angle_maximum = angle.maximum;
-						break;
-						
-						case "Angle":
-							_angle_minimum = angle.value;
-							_angle_maximum = angle.value;
-						break;
-					}
-					
-					part_type_orientation(ID, _angle_minimum, _angle_maximum, angle_increase,
-										  angle_wiggle, angle_relative);
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setAngle";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setAngle()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real} value
-			// @argument			{Angle} direction?
-			// @description			Set the gravity properties of the particles of this Particle
-			//						Type, which will move particles towards the specified direction,
-			//						in addition to its own speed.
+			/// @argument			value {real}
+			/// @argument			direction? {Angle}
+			/// @description		Set the gravity properties of the particles of this Particle
+			///						Type, which will move particles towards the specified direction,
+			///						in addition to its own speed.
 			static setGravity = function(_value, _direction)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					gravity = _value;
+					var _gravity_direction = gravity_direction;
 					
 					if (instanceof(_direction) == "Angle")
 					{
-						gravity_direction = _direction
+						_gravity_direction = _direction;
 					}
 					else if (instanceof(gravity_direction) != "Angle")
 					{
-						gravity_direction = new Angle(270);
+						_gravity_direction = new Angle(270);
 					}
 					
-					part_type_gravity(ID, gravity, gravity_direction.value);
+					part_type_gravity(ID, _value, _gravity_direction.value);
+					
+					gravity = _value;
+					gravity_direction = _gravity_direction;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setGravity";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setGravity()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int|Range} life
-			// @description			Set the life length property of particles of this Particle Type,
-			//						which is the amount of steps after which they are destroyed.
+			/// @argument			life {int|Range}
+			/// @description		Set the life length property of particles of this Particle Type,
+			///						which is the amount of steps after which they are destroyed.
 			static setLife = function(_life)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					life = _life;
-					
 					var _life_minimum, _life_maximum;
 					
-					if (instanceof(life) == "Range")
+					if (instanceof(_life) == "Range")
 					{
-						_life_minimum = life.minimum;
-						_life_maximum = life.maximum;
+						_life_minimum = _life.minimum;
+						_life_maximum = _life.maximum;
 					}
 					else
 					{
-						_life_minimum = life;
-						_life_maximum = life;
+						_life_minimum = _life;
+						_life_maximum = _life;
 					}
 					
 					part_type_life(ID, _life_minimum, _life_maximum);
+					
+					life = _life;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setLife";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setLife()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{int:color|Color2|Color3} color
-			// @description			Set the color property of this particles of this Particle Type to
-			//						either one static color or a gradual gradient color change over
-			//						the life time of each particle.
+			/// @argument			color {int:color|Color2|Color3}
+			/// @description		Set the color property of this particles of this Particle Type to
+			///						either one static color or a gradual gradient color change over
+			///						the life time of each particle.
 			static setColor = function(_color)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					color = _color;
-					
-					switch (instanceof(color))
+					switch (instanceof(_color))
 					{
 						case "Color3":
+							part_type_color3(ID, _color.color1, _color.color2, _color.color3);
+							
 							color_type = "Color3";
-						
-							part_type_color3(ID, color.color1, color.color2, color.color3);
 						break;
 						
 						case "Color2":
+							part_type_color2(ID, _color.color1, _color.color2);
+							
 							color_type = "Color2";
-					
-							part_type_color2(ID, color.color1, color.color2);
 						break;
 						
 						default:
+							part_type_color1(ID, _color);
+							
 							color_type = "color";
-						
-							part_type_color1(ID, color);
 						break;
 					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setColor";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
-				}
-				
-				return self;
-			}
-			
-			// @argument			{Color2} colors
-			// @description			Set the color property of this Particle Type to a random static
-			//						value between two colors.
-			static setColorMix = function(_colors)
-			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
-				{
-					color = _colors;
-					color_type = "mix";
 					
-					part_type_color_mix(ID, color.color1, color.color2);
+					color = _color;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setColorMix";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setColor()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Range} red
-			// @argument			{real|Range} green
-			// @argument			{real|Range} blue
-			// @description			Set the color property of the particles of this Particle Type to
-			//						a static value made from a set of three RGB values, each being
-			//						either a static value or randomized from a 0-255 Range.
+			/// @argument			color {Color2}
+			/// @description		Set the color property of this Particle Type to a random static
+			///						value between two colors.
+			static setColorMix = function(_color)
+			{
+				try
+				{
+					part_type_color_mix(ID, _color.color1, _color.color2);
+					
+					color = _color;
+					color_type = "mix";
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setColorMix()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			red {real|Range}
+			/// @argument			green {real|Range}
+			/// @argument			blue {real|Range}
+			/// @description		Set the color property of the particles of this Particle Type to
+			///						a static value made from a set of three RGB values, each being
+			///						either a static value or randomized from a 0-255 Range.
 			static setColorRGB = function(_red, _green, _blue)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					color = [_red, _green, _blue];
-					color_type = "RGB";
-					
 					var _red_minimum, _red_maximum, _green_minimum, _green_maximum, _blue_minimum,
 						_blue_maximum;
 					
-					if (instanceof(_red) == "Range")
-					{
-						_red_minimum = _red.minimum;
-						_red_maximum = _red.maximum;
-					}
-					else
+					if (is_real(_red))
 					{
 						_red_minimum = _red;
 						_red_maximum = _red;
 					}
-					
-					if (instanceof(_green) == "Range")
-					{
-						_green_minimum = _green.minimum;
-						_green_maximum = _green.maximum;
-					}
 					else
+					{
+						_red_minimum = _red.minimum;
+						_red_maximum = _red.maximum;
+					}
+					
+					if (is_real(_green))
 					{
 						_green_minimum = _green;
 						_green_maximum = _green;
 					}
-					
-					if (instanceof(_blue) == "Range")
-					{
-						_blue_minimum = _blue.minimum;
-						_blue_maximum = _blue.maximum;
-					}
 					else
+					{
+						_green_minimum = _green.minimum;
+						_green_maximum = _green.maximum;
+					}
+					
+					if (is_real(_blue))
 					{
 						_blue_minimum = _blue;
 						_blue_maximum = _blue;
 					}
+					else
+					{
+						_blue_minimum = _blue.minimum;
+						_blue_maximum = _blue.maximum;
+					}
 					
 					part_type_color_rgb(ID, _red_minimum, _red_maximum, _green_minimum,
 										_green_maximum, _blue_minimum, _blue_maximum);
+					
+					color = [_red, _green, _blue];
+					color_type = "RGB";
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setColorRGB";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setColorRGB()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real|Range} hue
-			// @argument			{real|Range} saturation
-			// @argument			{real|Range} value
-			// @description			Set the color property of the particles of this Particle Type to
-			//						a static value made from a set of three HSV values, each being
-			//						either a static value or randomized from a 0-255 Range.
+			/// @argument			hue {real|Range}
+			/// @argument			saturation {real|Range}
+			/// @argument			value {real|Range}
+			/// @description		Set the color property of the particles of this Particle Type to
+			///						a static value made from a set of three HSV values, each being
+			///						either a static value or randomized from a 0-255 Range.
 			static setColorHSV = function(_hue, _saturation, _value)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					color = [_hue, _saturation, _value];
-					color_type = "HSV";
-					
 					var _hue_minimum, _hue_maximum, _saturation_minimum, _saturation_maximum,
 						_value_minimum, _value_maximum;
 					
-					if (instanceof(_hue) == "Range")
-					{
-						_hue_minimum = _hue.minimum;
-						_hue_maximum = _hue.maximum;
-					}
-					else
+					if (is_real(_hue))
 					{
 						_hue_minimum = _hue;
 						_hue_maximum = _hue;
 					}
-					
-					if (instanceof(_saturation) == "Range")
-					{
-						_saturation_minimum = _saturation.minimum;
-						_saturation_maximum = _saturation.maximum;
-					}
 					else
+					{
+						_hue_minimum = _hue.minimum;
+						_hue_maximum = _hue.maximum;
+					}
+					
+					if (is_real(_saturation))
 					{
 						_saturation_minimum = _saturation;
 						_saturation_maximum = _saturation;
 					}
-					
-					if (instanceof(_value) == "Range")
-					{
-						_value_minimum = _value.minimum;
-						_value_maximum = _value.maximum;
-					}
 					else
+					{
+						_saturation_minimum = _saturation.minimum;
+						_saturation_maximum = _saturation.maximum;
+					}
+					
+					if (is_real(_value))
 					{
 						_value_minimum = _value;
 						_value_maximum = _value;
 					}
+					else
+					{
+						_value_minimum = _value.minimum;
+						_value_maximum = _value.maximum;
+					}
 					
 					part_type_color_hsv(ID, _hue_minimum, _hue_maximum, _saturation_minimum,
 										_saturation_maximum, _value_minimum, _value_maximum);
+					
+					color = [_hue, _saturation, _value];
+					color_type = "HSV";
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setColorHSV";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setColorHSV()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{bool} blend_additive
-			// @description			Set the additive blending property of particles of this Particle
-			//						Type, which alters their rendering when their locations overlap.
+			/// @argument			blend_additive {bool}
+			/// @description		Set the additive blending property of particles of this Particle
+			///						Type, which alters their rendering when their locations overlap.
 			static setBlend = function(_blend_additive)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					blend_additive = _blend_additive;
+					part_type_blend(ID, _blend_additive);
 					
-					part_type_blend(ID, blend_additive);
+					blend_additive = _blend_additive;
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setBlend";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setBlend()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{real} value1
-			// @argument			{real} value2?
-			// @argument			{real} value3?
-			// @description			Set the alpha property of particle of this Particle Type to
-			//						either one static value or a gradual change over the life time
-			//						of each particle.
-			static setAlpha = function()
+			/// @argument			value1 {real}
+			/// @argument			value2? {real}
+			/// @argument			value3? {real}
+			/// @description		Set the alpha property of particle of this Particle Type to
+			///						either one static value or a gradual change over the life time
+			///						of each particle.
+			static setAlpha = function(_value1, _value2, _value3)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				try
 				{
-					switch (argument_count)
+					if (is_real(_value3))
 					{
-						case 1:
-							alpha = [argument[0], undefined, undefined];
-							
-							part_type_alpha1(ID, alpha[0]);
-						break;
+						part_type_alpha3(ID, alpha[0], alpha[1], alpha[2]);
 						
-						case 2:
-							alpha = [argument[0], argument[1], undefined];
+						alpha = [argument[0], argument[1], argument[2]];
+					}
+					else if (is_real(_value2))
+					{
+						part_type_alpha2(ID, alpha[0], alpha[1]);
 							
-							part_type_alpha2(ID, alpha[0], alpha[1]);
-						break;
-						
-						case 3:
-							alpha = [argument[0], argument[1], argument[2]];
+						alpha = [argument[0], argument[1], undefined];
+					}
+					else
+					{
+						part_type_alpha1(ID, alpha[0]);
 							
-							part_type_alpha3(ID, alpha[0], alpha[1], alpha[2]);
-						break;
+						alpha = [argument[0], undefined, undefined];
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setAlpha";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setAlpha()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{ParticleType} type
-			// @argument			{int} number
-			// @description			Set the step stream properties of particles of this Particle
-			//						Type, which will cause them to stream the particles of other
-			//						Particle Type each step.
-			static setStep = function(_step_type, _step_number)
+			/// @argument			type {ParticleType}
+			/// @argument			number {int}
+			/// @description		Set the step stream properties of particles of this Particle
+			///						Type, which will cause them to stream the particles of other
+			///						Particle Type each step.
+			static setStep = function(_type, _number)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID))
-				and (instanceof(_step_type) == "ParticleType") and (is_real(_step_type.ID))
-				and (ID != _step_type.ID) and (part_type_exists(_step_type.ID)))
+				try
 				{
-					step_type = _step_type;
-					step_number = _step_number;
-					
-					part_type_step(ID, step_number, step_type.ID);
+					if (_type.ID != ID)
+					{
+						part_type_step(ID, _number, _type.ID);
+						
+						step_type = _type;
+						step_number = _number;
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setStep()"],
+												 ("Attempted to set a property causing a Particle " +
+												  "Type to spawn particles of it own type, causing " +
+												  "an infinite loop: " +
+												  "{" + string(ID) + "}"));
+					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setStep";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setDeath()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{ParticleType} type
-			// @argument			{int} number
-			// @description			Set the death stream properties of particles of this Particle
-			//						Type, which will cause them to stream the particles of other
-			//						Particle Type once when their life time ends.
-			static setDeath = function(_death_type, _death_number)
+			/// @argument			type {ParticleType}
+			/// @argument			number {int}
+			/// @description		Set the death stream properties of particles of this Particle
+			///						Type, which will cause them to stream the particles of other
+			///						Particle Type once when their life time ends.
+			static setDeath = function(_type, _number)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)) and (_death_type != undefined)
-				and (is_real(_death_type.ID)) and (ID != _death_type.ID) 
-				and (part_type_exists(_death_type.ID)))
+				try
 				{
-					death_type = _death_type;
-					death_number = _death_number;
-					
-					part_type_death(ID, death_number, death_type.ID);
+					if (_type.ID != ID)
+					{
+						part_type_death(ID, _number, _type.ID);
+						
+						death_type = _type;
+						death_number = _number;
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setDeath()"],
+												 ("Attempted to set a property causing a Particle " +
+												  "Type to spawn particles of it own type, causing " +
+												  "an infinite loop: " +
+												  "{" + string(ID) + "}"));
+					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "setDeath";
-					var _errorText = ("Attempted to set a property of an invalid Particle Type: " +
-									  "{" + string(ID) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "setDeath()"], _exception);
 				}
 				
 				return self;
@@ -1097,406 +975,421 @@ function ParticleType() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{ParticleSystem} particleSystem
-			// @argument			{Vector2} location
-			// @argument			{int} number?
-			// @argument			{int:color} color?
-			// @description			Directly create any number of Particles of this type in the
-			//						specified location.
+			/// @argument			particleSystem {ParticleSystem}
+			/// @argument			location {Vector2}
+			/// @argument			number? {int}
+			/// @argument			color? {int:color}
+			/// @description		Directly create any number of Particles of this type in the
+			///						specified location.
 			static create = function(_particleSystem, _location, _number = 1, _color)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
-				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
+				try
 				{
-					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
+					if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
+					and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 					{
-						var _callback_isArray = is_array(event.beforeCreation.callback);
-						var _argument_isArray = is_array(event.beforeCreation.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.beforeCreation.callback
-										 : [event.beforeCreation.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.beforeCreation.argument
-										 : array_create(_callback_count,
-														event.beforeCreation.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 						{
-							if (is_method(_callback[_i]))
+							var _callback_isArray = is_array(event.beforeCreation.callback);
+							var _argument_isArray = is_array(event.beforeCreation.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.beforeCreation.callback
+											 : [event.beforeCreation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.beforeCreation.argument
+											 : array_create(_callback_count,
+															event.beforeCreation.argument));
+							var _i = 0;
+							repeat (_callback_count)
 							{
-								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray) and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray)
+														and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "create()", "event",
+															  "beforeCreation"], _exception);
+								}
+								
+								++_i;
 							}
-							
-							++_i;
 						}
-					}
-					
-					if (_color != undefined)
-					{
-						part_particles_create_color(_particleSystem.ID, _location.x, _location.y, ID,
-													_color, _number);
+						
+						if (_color != undefined)
+						{
+							part_particles_create_color(_particleSystem.ID, _location.x, _location.y,
+														ID, _color, _number);
+						}
+						else
+						{
+							part_particles_create(_particleSystem.ID, _location.x, _location.y, ID,
+												  _number);
+						}
+						
+						if ((is_struct(event)) and (event.afterCreation.callback != undefined))
+						{
+							var _callback_isArray = is_array(event.afterCreation.callback);
+							var _argument_isArray = is_array(event.afterCreation.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.afterCreation.callback
+											 : [event.afterCreation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.afterCreation.argument
+											 : array_create(_callback_count,
+															event.afterCreation.argument));
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray)
+														and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "create()", "event",
+															  "beforeCreation"], _exception);
+								}
+								
+								++_i;
+							}
+						}
 					}
 					else
 					{
-						part_particles_create(_particleSystem.ID, _location.x, _location.y, ID,
-											  _number);
-					}
-					
-					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
-					{
-						var _callback_isArray = is_array(event.afterCreation.callback);
-						var _argument_isArray = is_array(event.afterCreation.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.afterCreation.callback
-										 : [event.afterCreation.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.afterCreation.argument
-										 : array_create(_callback_count,
-														event.afterCreation.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
-						{
-							if (is_method(_callback[_i]))
-							{
-								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray) and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
-							}
-							
-							++_i;
-						}
+						new ErrorReport().report([other, self, "create()"],
+												 ("Attempted to create particles using an " +
+												  "invalid Particle Type or Particle System:" + "\n" +
+												  "Self: " + "{" + string(self) + "}" + "\n" +
+												  "Target: " + "{" + string(_particleSystem) + "}"));
 					}
 				}
-				else
+				catch (_exception)
 				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "create";
-					var _errorText = ("Attempted to create particles using an invalid Particle " +
-									  "Type or Particle System:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Target: " + "{" + string(_particleSystem) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
+					new ErrorReport().report([other, self, "create()"], _exception);
 				}
 				
 				return self;
 			}
 			
-			// @argument			{ParticleSystem} particleSystem
-			// @argument			{Circle|Ellipse|Line|Rectangle|Triangle} shape
-			// @argument			{int} number?
-			// @argument			{int:color} color?
-			// @description			Directly create any number of Particles of this type in random
-			//						locations within the specified Shape.
+			/// @argument			particleSystem {ParticleSystem}
+			/// @argument			shape {Circle|Ellipse|Line|Rectangle|Triangle}
+			/// @argument			number? {int}
+			/// @argument			color? {int:color}
+			/// @description		Directly create any number of Particles of this type in random
+			///						locations within the specified Shape.
 			static createShape = function(_particleSystem, _shape, _number = 1, _color)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
-				and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
+				try
 				{
-					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
+					if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
+					and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
 					{
-						var _callback_isArray = is_array(event.beforeCreation.callback);
-						var _argument_isArray = is_array(event.beforeCreation.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.beforeCreation.callback
-										 : [event.beforeCreation.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.beforeCreation.argument
-										 : array_create(_callback_count,
-														event.beforeCreation.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
+						if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 						{
-							if (is_method(_callback[_i]))
+							var _callback_isArray = is_array(event.beforeCreation.callback);
+							var _argument_isArray = is_array(event.beforeCreation.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.beforeCreation.callback
+											 : [event.beforeCreation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.beforeCreation.argument
+											 : array_create(_callback_count,
+															event.beforeCreation.argument));
+							var _i = 0;
+							repeat (_callback_count)
 							{
-								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray) and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray)
+														and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "createShape()", "event",
+															  "beforeCreation"], _exception);
+								}
+								
+								++_i;
 							}
+						}
+						
+						switch (instanceof(_shape))
+						{	
+							case "Rectangle":
+								if (is_real(_color))
+								{
+									repeat (_number)
+									{
+										var _location_x = irandom_range(_shape.location.x1,
+																		_shape.location.x2);
+										var _location_y = irandom_range(_shape.location.y1,
+																		_shape.location.y2);
+										
+										part_particles_create_color(_particleSystem.ID, _location_x,
+																	_location_y, ID, _color, 1);
+									}
+								}
+								else
+								{
+									repeat (_number)
+									{
+										part_particles_create(_particleSystem.ID, 
+															  irandom_range(_shape.location.x1,
+																			_shape.location.x2),
+															  irandom_range(_shape.location.y1,
+																			_shape.location.y2),
+															  ID, 1);
+									}
+								}
+							break;
 							
-							++_i;
+							case "Triangle":
+								if (is_real(_color))
+								{
+									repeat (_number)
+									{
+										var _random = random(1);
+										var _sqrt = sqrt(random(1));
+										var _location_x = ((1 - _sqrt) * _shape.location1.x) 
+														   + ((_sqrt * (1 - _random))
+														   * _shape.location2.x) + ((_sqrt * _random)
+														   * _shape.location3.x);
+										var _location_y = ((1 - _sqrt) * _shape.location1.y) 
+														   + ((_sqrt * (1 - _random))
+														   * _shape.location2.y) + ((_sqrt * _random)
+														   * _shape.location3.y);
+										
+										part_particles_create_color(_particleSystem.ID, _location_x,
+																	_location_y, ID, _color, 1);
+									}
+								}
+								else
+								{
+									repeat (_number)
+									{
+										var _random = random(1);
+										var _sqrt = sqrt(random(1));
+										var _location_x = ((1 - _sqrt) * _shape.location1.x) 
+														   + ((_sqrt * (1 - _random))
+														   * _shape.location2.x) + ((_sqrt * _random)
+														   * _shape.location3.x);
+										var _location_y = ((1 - _sqrt) * _shape.location1.y) 
+														   + ((_sqrt * (1 - _random))
+														   * _shape.location2.y) 
+														   + ((_sqrt * _random) * _shape.location3.y);
+										
+										part_particles_create(_particleSystem.ID, _location_x,
+															  _location_y, ID, 1);
+									}
+								}
+							break;
+							
+							case "Line":
+								if (is_real(_color))
+								{
+									var _distance = point_distance(_shape.location.x1,
+																   _shape.location.y1,
+																   _shape.location.x2,
+																   _shape.location.y2);
+									var _angle = point_direction(_shape.location.x1,
+																 _shape.location.y1,
+																 _shape.location.x2,
+																 _shape.location.y2);
+									var _side_angle = (_angle + 90);
+									var _side_length = (_shape.size * 0.5);
+									
+									repeat (_number)
+									{
+										var _length = irandom_range(0, _distance);
+										var _location_x = (_shape.location.x1 
+														   + lengthdir_x(_length, _angle));
+										var _location_y = (_shape.location.y1 
+														   + lengthdir_y(_length, _angle));
+										var _side_position = irandom_range((-_side_length),
+																		   _side_length);
+										_location_x += lengthdir_x(_side_position, _side_angle);
+										_location_y += lengthdir_y(_side_position, _side_angle);
+	 									
+										part_particles_create_color(_particleSystem.ID, _location_x,
+																	_location_y, ID, _color, 1);
+									}
+								}
+								else
+								{
+									var _distance = point_distance(_shape.location.x1,
+																   _shape.location.y1,
+																   _shape.location.x2,
+																   _shape.location.y2);
+									var _angle = point_direction(_shape.location.x1,
+																 _shape.location.y1,
+																 _shape.location.x2,
+																 _shape.location.y2);
+									var _side_angle = (_angle + 90);
+									var _side_length = (_shape.size * 0.5);
+									
+									repeat (_number)
+									{
+										var _length = irandom_range(0, _distance);
+										var _location_x = (_shape.location.x1 
+														   + lengthdir_x(_length, _angle));
+										var _location_y = (_shape.location.y1 
+														   + lengthdir_y(_length, _angle));
+										var _side_position = irandom_range((-_side_length),
+																		   _side_length);
+										_location_x += lengthdir_x(_side_position, _side_angle);
+										_location_y += lengthdir_y(_side_position, _side_angle);
+	 									
+										part_particles_create(_particleSystem.ID, _location_x,
+															  _location_y, ID, 1);
+									}
+								}
+							break;
+							
+							case "Circle":
+								if (is_real(_color))
+								{
+									repeat (_number)
+									{
+										var _r = (_shape.radius * sqrt(random(1)));
+										var _theta = (random(1) * 2 * pi);
+										var _location_x = ceil((_shape.location.x
+															   + (_r * cos(_theta))));
+										var _location_y = ceil((_shape.location.y
+															   + (_r * sin(_theta))));
+										
+										part_particles_create_color(_particleSystem.ID, _location_x,
+																	_location_y, ID, _color, 1);
+									}
+								}
+								else
+								{
+									repeat (_number)
+									{
+										var _r = (_shape.radius * sqrt(random(1)));
+										var _theta = (random(1) * 2 * pi);
+										var _location_x = ceil((_shape.location.x
+															   + (_r * cos(_theta))));
+										var _location_y = ceil((_shape.location.y
+															   + (_r * sin(_theta))));
+										
+										part_particles_create(_particleSystem.ID, _location_x,
+															  _location_y, ID, 1);
+									}
+								}
+							break;
+							
+							case "Ellipse":
+								if (is_real(_color))
+								{
+									var _size_x = ((max(_shape.location.x1, _shape.location.x2)
+													- min(_shape.location.x1, _shape.location.x2))
+												   * 0.5);
+									var _size_y = ((max(_shape.location.y1, _shape.location.y2)
+													- min(_shape.location.y1, _shape.location.y2))
+												   * 0.5);
+									
+									repeat (_number)
+									{
+										var _angle = random((2 * pi));
+										var _point = random(1);
+										var _location_x = (mean(_shape.location.x1,
+																_shape.location.x2)
+														   + ((sqrt(_point) * cos(_angle))
+														      * _size_x));
+										var _location_y = (mean(_shape.location.y1,
+																_shape.location.y2)
+														   + ((sqrt(_point) * sin(_angle))
+															  * _size_y));
+										
+										part_particles_create_color(_particleSystem.ID, _location_x,
+																	_location_y, ID, _color, 1);
+									}
+								}
+								else
+								{
+									var _size_x = ((max(_shape.location.x1, _shape.location.x2)
+													- min(_shape.location.x1, _shape.location.x2))
+												   * 0.5);
+									var _size_y = ((max(_shape.location.y1, _shape.location.y2)
+													- min(_shape.location.y1, _shape.location.y2))
+												   * 0.5);
+									
+									repeat (_number)
+									{
+										var _angle = random((2 * pi));
+										var _point = random(1);
+										var _location_x = (mean(_shape.location.x1,
+																_shape.location.x2)
+														   + ((sqrt(_point) * cos(_angle))
+														      * _size_x));
+										var _location_y = (mean(_shape.location.y1,
+																_shape.location.y2)
+														   + ((sqrt(_point) * sin(_angle))
+															  * _size_y));
+										
+										part_particles_create(_particleSystem.ID, _location_x,
+															  _location_y, ID, 1);
+									}
+								}
+							break;
+						}
+						
+						if ((is_struct(event)) and (event.afterCreation.callback != undefined))
+						{
+							var _callback_isArray = is_array(event.afterCreation.callback);
+							var _argument_isArray = is_array(event.afterCreation.argument);
+							var _callback = ((_callback_isArray)
+											 ? event.afterCreation.callback
+											 : [event.afterCreation.callback]);
+							var _callback_count = array_length(_callback);
+							var _argument = ((_argument_isArray)
+											 ? event.afterCreation.argument
+											 : array_create(_callback_count,
+															event.afterCreation.argument));
+							var _i = 0;
+							repeat (_callback_count)
+							{
+								try
+								{
+									script_execute_ext(method_get_index(_callback[_i]),
+													   (((!_callback_isArray)
+														and (_argument_isArray))
+														? _argument : ((is_array(_argument[_i])
+														? _argument[_i] : [_argument[_i]]))));
+								}
+								catch (_exception)
+								{
+									new ErrorReport().report([other, self, "createShape()", "event",
+															  "beforeCreation"], _exception);
+								}
+								
+								++_i;
+							}
 						}
 					}
-					
-					switch (instanceof(_shape))
-					{	
-						case "Rectangle":
-							if (is_real(_color))
-							{
-								repeat (_number)
-								{
-									var _location_x = irandom_range(_shape.location.x1,
-																	_shape.location.x2);
-									
-									var _location_y = irandom_range(_shape.location.y1,
-																	_shape.location.y2);
-									
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								repeat (_number)
-								{
-									part_particles_create(_particleSystem.ID, 
-														  irandom_range(_shape.location.x1,
-																		_shape.location.x2),
-														  irandom_range(_shape.location.y1,
-																		_shape.location.y2),
-														  ID, 1);
-								}
-							}
-						break;
-						
-						case "Triangle":
-							if (is_real(_color))
-							{
-								repeat (_number)
-								{
-									var _random = random(1);
-									var _sqrt = sqrt(random(1));
-									
-									var _location_x = ((1 - _sqrt) * _shape.location1.x) 
-													   + ((_sqrt * (1 - _random))
-													   * _shape.location2.x) + ((_sqrt * _random)
-													   * _shape.location3.x);
-									
-									var _location_y = ((1 - _sqrt) * _shape.location1.y) 
-													   + ((_sqrt * (1 - _random))
-													   * _shape.location2.y) + ((_sqrt * _random)
-													   * _shape.location3.y);
-									
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								repeat (_number)
-								{
-									var _random = random(1);
-									var _sqrt = sqrt(random(1));
-									
-									var _location_x = ((1 - _sqrt) * _shape.location1.x) 
-													   + ((_sqrt * (1 - _random))
-													   * _shape.location2.x) + ((_sqrt * _random)
-													   * _shape.location3.x);
-									
-									var _location_y = ((1 - _sqrt) * _shape.location1.y) 
-													   + ((_sqrt * (1 - _random))
-													   * _shape.location2.y) 
-													   + ((_sqrt * _random) * _shape.location3.y);
-									
-									part_particles_create(_particleSystem.ID, _location_x,
-														  _location_y, ID, 1);
-								}
-							}
-						break;
-						
-						case "Line":
-							if (is_real(_color))
-							{
-								var _distance = point_distance(_shape.location.x1,
-															   _shape.location.y1,
-															   _shape.location.x2,
-															   _shape.location.y2);
-								var _angle = point_direction(_shape.location.x1, _shape.location.y1,
-															 _shape.location.x2, _shape.location.y2);
-								var _side_angle = (_angle + 90);
-								var _side_length = (_shape.size * 0.5);
-								
-								repeat (_number)
-								{
-									var _length = irandom_range(0, _distance);
-									
-									var _location_x = (_shape.location.x1 
-													   + lengthdir_x(_length, _angle));
-									
-									var _location_y = (_shape.location.y1 
-													   + lengthdir_y(_length, _angle));
-									
-									var _side_position = irandom_range(-_side_length, _side_length);
-									
-									_location_x += lengthdir_x(_side_position, _side_angle);
-									_location_y += lengthdir_y(_side_position, _side_angle);
-	 								
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								var _distance = point_distance(_shape.location.x1,
-															   _shape.location.y1,
-															   _shape.location.x2,
-															   _shape.location.y2);
-								var _angle = point_direction(_shape.location.x1, _shape.location.y1,
-															 _shape.location.x2, _shape.location.y2);
-								var _side_angle = (_angle + 90);
-								var _side_length = (_shape.size * 0.5);
-								
-								repeat (_number)
-								{
-									var _length = irandom_range(0, _distance);
-									
-									var _location_x = (_shape.location.x1 
-													   + lengthdir_x(_length, _angle));
-									
-									var _location_y = (_shape.location.y1 
-													   + lengthdir_y(_length, _angle));
-									
-									var _side_position = irandom_range(-_side_length, _side_length);
-									
-									_location_x += lengthdir_x(_side_position, _side_angle);
-									_location_y += lengthdir_y(_side_position, _side_angle);
-	 								
-									part_particles_create(_particleSystem.ID, _location_x,
-														  _location_y, ID, 1);
-								}
-							}
-						break;
-						
-						case "Circle":
-							if (is_real(_color))
-							{
-								repeat (_number)
-								{
-									var _r = (_shape.radius * sqrt(random(1)));
-									var _theta = (random(1) * 2 * pi);
-									
-									var _location_x = ceil((_shape.location.x
-														   + (_r * cos(_theta))));
-									
-									var _location_y = ceil((_shape.location.y
-														   + (_r * sin(_theta))));
-									
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								repeat (_number)
-								{
-									var _r = (_shape.radius * sqrt(random(1)));
-									var _theta = (random(1) * 2 * pi);
-									
-									var _location_x = ceil((_shape.location.x
-														   + (_r * cos(_theta))));
-									
-									var _location_y = ceil((_shape.location.y
-														   + (_r * sin(_theta))));
-									
-									part_particles_create(_particleSystem.ID, _location_x,
-														  _location_y, ID, 1);
-								}
-							}
-						break;
-						
-						case "Ellipse":
-							if (is_real(_color))
-							{
-								var _size_x = ((max(_shape.location.x1, _shape.location.x2)
-												- min(_shape.location.x1, _shape.location.x2))
-											   * 0.5);
-								
-								var _size_y = ((max(_shape.location.y1, _shape.location.y2)
-												- min(_shape.location.y1, _shape.location.y2))
-											   * 0.5);
-								
-								repeat (_number)
-								{
-									var _angle = random((2 * pi));
-									var _point = random(1);
-									
-									var _location_x = (mean(_shape.location.x1, _shape.location.x2)
-													   + ((sqrt(_point) * cos(_angle)) * _size_x));
-									
-									var _location_y = (mean(_shape.location.y1, _shape.location.y2)
-													   + ((sqrt(_point) * sin(_angle)) * _size_y));
-									
-									part_particles_create_color(_particleSystem.ID, _location_x,
-																_location_y, ID, _color, 1);
-								}
-							}
-							else
-							{
-								var _size_x = ((max(_shape.location.x1, _shape.location.x2)
-												- min(_shape.location.x1, _shape.location.x2))
-											   * 0.5);
-								
-								var _size_y = ((max(_shape.location.y1, _shape.location.y2)
-												- min(_shape.location.y1, _shape.location.y2))
-											   * 0.5);
-								
-								repeat (_number)
-								{
-									var _angle = random((2 * pi));
-									var _point = random(1);
-									
-									var _location_x = (mean(_shape.location.x1, _shape.location.x2)
-													   + ((sqrt(_point) * cos(_angle)) * _size_x));
-									
-									var _location_y = (mean(_shape.location.y1, _shape.location.y2)
-													   + ((sqrt(_point) * sin(_angle)) * _size_y));
-									
-									part_particles_create(_particleSystem.ID, _location_x,
-														  _location_y, ID, 1);
-								}
-							}
-						break;
-					}
-					
-					if ((is_struct(event)) and (event.afterCreation.callback != undefined))
+					else
 					{
-						var _callback_isArray = is_array(event.afterCreation.callback);
-						var _argument_isArray = is_array(event.afterCreation.argument);
-						var _callback = ((_callback_isArray)
-										 ? event.afterCreation.callback
-										 : [event.afterCreation.callback]);
-						var _callback_count = array_length(_callback);
-						var _argument = ((_argument_isArray)
-										 ? event.afterCreation.argument
-										 : array_create(_callback_count,
-														event.afterCreation.argument));
-						
-						var _i = 0;
-						repeat (_callback_count)
-						{
-							if (is_method(_callback[_i]))
-							{
-								script_execute_ext(method_get_index(_callback[_i]),
-													(((!_callback_isArray) and (_argument_isArray))
-													 ? _argument : ((is_array(_argument[_i])
-													 ? _argument[_i] : [_argument[_i]]))));
-							}
-							
-							++_i;
-						}
+						new ErrorReport().report([other, self, "createShape()"],
+												 ("Attempted to create particles using an " +
+												  "invalid Particle Type or Particle System:" + "\n" +
+												  "Self: " + "{" + string(self) + "}" + "\n" +
+												  "Target: " + "{" + string(_particleSystem) + "}"));
 					}
-				}
-				else
-				{
-					var _errorReport = new ErrorReport();
-					var _callstack = debug_get_callstack();
-					var _methodName = "createShape";
-					var _errorText = ("Attempted to create particles using an invalid Particle " +
-									  "Type or Particle System:\n" +
-									  "Self: " + "{" + string(self) + "}" + "\n" +
-									  "Target: " + "{" + string(_particleSystem) + "}");
-					_errorReport.reportConstructorMethod(self, _callstack, _methodName, _errorText);
 				}
 				
 				return self;
@@ -1505,13 +1398,13 @@ function ParticleType() constructor
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the properties of this Particle
-			//						Type.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the properties of this Particle
+			///						Type.
 			static toString = function(_multiline = false, _full = false)
 			{
 				if ((is_real(ID)) and (part_type_exists(ID)))

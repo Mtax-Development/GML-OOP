@@ -9,26 +9,27 @@ function ErrorReport() constructor
 	#region [Static variables]
 		#region [[Configurable variables - General]]
 			
-			// @type			{function}
-			// @description		The function called upon a report, called with its description as a
-			//					string in an argument.
+			/// @type			{function}
+			/// @description	The function called upon a report, called with its description as a
+			///					string in only argument.
 			static reportFunction = show_debug_message;
 			
-			// @type			{int|undefined}
-			// @description		Maximum number of times the reporting function will be called.
+			/// @type			{int|undefined}
+			/// @description	Maximum number of times the raporting function will be called,
+			///					compared to the number of saved error data structs.
 			static maximumReports = undefined;
 			
-			// @type			{void[]}
-			// @description		An array holding the details of the reports.
+			/// @type			{struct[]}
+			/// @description	An array holding the details of the reports.
 			static errorData = [];
 			
 		#endregion
 		#region [[Configurable variables - Specific]]
 			
-			// @type			{string[]}
-			// @example			{["Constructor.method()"]}
-			// @description		An array holding strings with names of methods that will not be
-			//					reported upon error.
+			/// @type			{string[]}
+			/// @example		{["Constructor.method()"]}
+			/// @description	An array holding strings with names of methods that will not be
+			///					reported upon error.
 			static ignoredError_constructorMethod = undefined;
 			
 		#endregion
@@ -36,8 +37,8 @@ function ErrorReport() constructor
 	#region [Methods]
 		#region <Management>
 			
-			// @returns				{bool}
-			// @description			Check if this constructor is functional.
+			/// @returns			{bool}
+			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
 				return (((maximumReports == undefined) or (maximumReports > 0))
@@ -47,159 +48,200 @@ function ErrorReport() constructor
 		#endregion
 		#region <Execution>
 			
-			// @argument			{any[]} callstack
-			// @argument			{string} errorLocation
-			// @argument			{string} errorText
-			// @description			Create an error report, collect its data and log it with the
-			//						function that is assigned to the appropriate constructor variable.
-			static reportError = function(_callstack, _errorLocation, _errorText)
+			/// @argument			error_location? {int:instance|struct|string|[]}
+			/// @argument			error_text? {struct:exception|string}
+			/// @description		Create an error report, collect its data and log it with the
+			///						function that is assigned to appropriate constructor variable.
+			static report = function(_error_location = other, _error_detail = "Unexpected Error")
 			{
-				var _string_reportType = "Error";
-				
-				if (is_array(errorData))
+				if (!is_array(_error_location))
 				{
-					var _reportData = [_string_reportType, _errorLocation, _errorText, _callstack];
-					
-					array_push(errorData, _reportData);
-					
-					var _string_callstack = "";
-					
-					var _i = 0;
-					repeat (array_length(_callstack))
-					{
-						_string_callstack += (string(_callstack[_i]) + "\n");
-						
-						++_i;
-					}
-					
-					var _string_separator = string_repeat("#", 92);
-					
-					var _string = (_string_separator + "\n" +
-								   _string_reportType + " @ " + string(_errorLocation) + ": " + "\n" +
-								   string(_errorText) + "\n\n" +
-								   "Callstack: " + "\n" +
-								   _string_callstack +
-								   _string_separator);
-					
-					if ((reportFunction != undefined) and ((maximumReports == undefined) 
-					or (is_array(errorData)) and (array_length(errorData) < maximumReports)))
-					{
-						reportFunction(_string);
-					}
-				}
-			}
-			
-			// @argument			{struct|struct[]} constructor
-			// @argument			{any[]} callstack
-			// @argument			{string} methodName
-			// @argument			{string} errorText
-			// @description			Create a report of a constructor method error, collect its data
-			//						and log it with the function that is assigned to in the
-			//						appropriate constructor variable.
-			static reportConstructorMethod = function(_constructor, _callstack, _methodName,
-													  _errorText)
-			{
-				var _string_reportType = "Constructor Method Error";
-				var _string_constructorName = "";
-				
-				if (is_array(_constructor))
-				{
-					var _constructor_length = array_length(_constructor);
-					
-					var _i = 0;
-					repeat (_constructor_length)
-					{
-						_string_constructorName += instanceof(_constructor[_i]);
-						
-						++_i;
-						
-						if (_i < _constructor_length)
-						{
-							_string_constructorName += ".";
-						}
-					}
-				}
-				else
-				{
-					_string_constructorName = instanceof(_constructor);
+					_error_location = [_error_location];
 				}
 				
-				_methodName += "()";
-				
-				if (is_array(ignoredError_constructorMethod))
-				{
-					var _methodPath = (_string_constructorName + "." + _methodName);
-					
-					var _i = 0;
-					repeat (array_length(ignoredError_constructorMethod))
-					{
-						if (_methodPath == ignoredError_constructorMethod[_i])
-						{
-							exit;
-						}
-						
-						++_i;
-					}
-				}
-				
-				if (is_array(errorData))
-				{
-					var _reportData = [_string_reportType, _string_constructorName, _methodName, 
-									   _errorText, _callstack];
-					
-					array_push(errorData, _reportData);
-				}
-				
-				var _string_callstack = "";
-				
+				var _text_location = "";
+				var _error_location_count = array_length(_error_location);
 				var _i = 0;
-				repeat (array_length(_callstack))
+				repeat (_error_location_count)
 				{
-					_string_callstack += (string(_callstack[_i]) + "\n");
+					var _location_part = _error_location[_i];
+					var _location_object_name;
+					
+					if (_location_part == noone)
+					{
+						_location_object_name = "noone";
+					}
+					else if (is_struct(_location_part))
+					{
+						_location_object_name = instanceof(_location_part);
+					}
+					else if (instanceof(_location_part) == "instance")
+					{
+						//|Instance or room {self} reference. Will exist as pseudo-struct even if
+						// destroyed.
+						_location_object_name = ((_location_part.id == 0)
+												 ? room_get_name(room)
+												 : object_get_name(_location_part.object_index));
+					}
+					else if (typeof(_location_part) == "ref")
+					{
+						//|Instance or room id reference.
+						_location_object_name = ((_location_part == 0)
+												 ? room_get_name(room)
+												 : ((instance_exists(_location_part))
+													? object_get_name(_location_part.object_index)
+													: ("<" + "destroyed instance: " +
+													   string(_location_part) + ">")));
+					}
+					else
+					{
+						_location_object_name = string(_location_part);
+					}
+					
+					if (string_count((_location_object_name + "."), _text_location) <= 0)
+					{
+						_text_location += (_location_object_name + (((_i + 1) < _error_location_count)
+																	? "." : ""));
+					}
 					
 					++_i;
 				}
 				
-				var _string_separator = string_repeat("#", 92);
+				var _text_reportType = "Error";
+				var _tabulation = string_repeat(" ", 4);
+				var _callstack_raw = debug_get_callstack();
+				var _callstack = [];
+				array_copy(_callstack, 0, _callstack_raw, 1, (array_length(_callstack_raw) - 2)); 
+				var _reportData = {type: _text_reportType, location: _error_location,
+								   detail: _error_detail, callstack: _callstack};
+				//+TODO: Make this a constructor
 				
-				var _string = (_string_separator + "\n" +
-							   _string_reportType + " @ " + _string_constructorName + "." +
-							  string(_methodName) + ": " + "\n" +
-							  string(_errorText) + "\n\n" +
-							  "Callstack: " + "\n" +
-							  _string_callstack +
-							  _string_separator);
+				var _errorData_isArray, _errorData_count;
 				
-				if ((reportFunction != undefined) and ((maximumReports == undefined) 
-				or (is_array(errorData)) and (array_length(errorData) < maximumReports)))
+				if (is_array(errorData))
 				{
-					reportFunction(_string);
+					array_push(errorData, _reportData);
+					
+					_errorData_isArray = true;
+					_errorData_count = array_length(errorData);
+				}
+				
+				var _text_callstack = "";
+				var _i = 0;
+				repeat (array_length(_callstack))
+				{
+					_text_callstack += (_tabulation + string(_callstack[_i]) + "\n");
+					
+					++_i;
+				}
+				
+				var _text_detail = undefined;
+				
+				if (is_struct(_error_detail))
+				{
+					if (is_string(variable_struct_get(_error_detail, "message")))
+					{
+						var _error_message_length_original = string_length(_error_detail.message);
+						
+						if (_error_message_length_original > 1)
+						{
+							_text_detail = _error_detail.message;
+							
+							var _position_space_first = string_pos(" ", _text_detail);
+							var _position_space_second = string_pos_ext(" ", _text_detail,
+																		_position_space_first);
+							
+							if ((_position_space_first > 0)
+							and (_position_space_second > _position_space_first))
+							{
+								var _word_second = string_copy(_text_detail,
+															   (_position_space_first + 1),
+															   (_position_space_second -
+															    _position_space_first - 1));
+								
+								if (_word_second != "argument")
+								{
+									//|Capitalize the first letter if it is not in a message which
+									// might start with a function name.
+									_text_detail = (string_upper(string_char_at(_text_detail, 1)) +
+													string_copy(_text_detail, 2,
+																(_error_message_length_original - 1)));
+								}
+							}
+							
+							if ((_error_message_length_original > 9)
+							and (string_copy(string_lower(_text_detail), 1, 9) == "variable "))
+							{
+								var _position_bracket_open = string_pos("(", _text_detail);
+								var _position_bracket_close = string_pos(")", _text_detail);
+								
+								if ((_position_bracket_open > 0) and (_position_bracket_close > 0)
+								and ((_position_bracket_close - _position_bracket_open) > 0))
+								{
+									var _gibberish = string_copy(_text_detail, _position_bracket_open,
+																 (_position_bracket_close -
+																  _position_bracket_open + 1));
+									_text_detail = string_replace(_text_detail, _gibberish, "");
+								}
+							}
+							
+							var _char_last = string_char_at(_text_detail, string_length(_text_detail));
+							
+							if ((_char_last != "") and (_char_last != "."))
+							{
+								_text_detail += ".";
+							}
+						}
+					}
+				}
+				
+				_text_detail ??= string(_error_detail);
+				_text_detail = string_replace_all(_text_detail, "\n", ("\n" + _tabulation));
+				var _text_time = date_time_string(date_current_datetime());
+				var _text_separator = string_repeat("#", 92);
+				var _report = (_text_separator + "\n" +
+							   _text_reportType + " @ " + _text_location + " @ " + "[" +
+							   _text_time + "]:" + "\n" +
+							   _tabulation + _text_detail + "\n\n" +
+							   "Callstack: " + "\n" +
+							   _text_callstack +
+							   _text_separator);
+				
+				if ((is_real(reportFunction) or (is_method(reportFunction)))
+				and ((maximumReports == undefined) or ((_errorData_isArray)
+				and (_errorData_count <= maximumReports))))
+				{
+					if (!((_errorData_isArray) and (_errorData_count > 1)
+					and (errorData[(_errorData_count - 1)].callstack[0] == _callstack[0])))
+					{
+						//+TODO: Constructor-based instance check once it's a constructor.
+						//|Call the report function, unless the last report happened due to an error
+						// at the same line of code as this one.
+						self.reportFunction(_report);
+					}
 				}
 			}
 			
 		#endregion
 		#region <Conversion>
 			
-			// @argument			{bool} multiline?
-			// @argument			{bool} full?
-			// @returns				{string}
-			// @description			Create a string representing this constructor.
-			//						Overrides the string() conversion.
-			//						Content will be represented with the error and configuration data.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the error and configuration data.
 			static toString = function(_multiline = false, _full = false)
 			{
 				if (_full)
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					
 					var _string_reportFunction = ((reportFunction != undefined)
 												  ? (script_get_name(reportFunction) + "()")
 												  : string(reportFunction));
-					
 					var _string_errorData_length = ((is_array(errorData))
 													? string(array_length(errorData))
 													: string(undefined));
-					
 					var _string = ("Report Function: " + _string_reportFunction + _mark_separator +
 								   "Error Count: " + _string_errorData_length + _mark_separator +
 								   "Maximum Reports: " + string(maximumReports));
