@@ -8,7 +8,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Empty: {void|undefined}
+///							- Empty: {void}
 ///							- Constructor copy: other {Line}
 function Line() constructor
 {

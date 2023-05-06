@@ -5,6 +5,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor
+///							- Empty: {undefined}
 ///							- Constructor copy: other {ParticleType}
 function ParticleType() constructor
 {
@@ -14,6 +15,7 @@ function ParticleType() constructor
 			/// @description		Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction type: Empty.
 				ID = undefined;
 				shape = undefined;
 				sprite = undefined;
@@ -61,212 +63,216 @@ function ParticleType() constructor
 					}
 				};
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "ParticleType"))
+				if (argument_count > 0)
 				{
-					//|Construction type: Constructor copy.
-					var _other = argument[0];
-					
-					ID = part_type_create();
-					shape = _other.shape;
-					sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.sprite.ID)
-																	  : _other.sprite);
-					sprite_animate = _other.sprite_animate;
-					sprite_matchAnimation = _other.sprite_matchAnimation;
-					scale = new Scale(_other.scale);
-					size = ((instanceof(_other.sprite) == "Range") ? new Range(_other.size)
-																   : _other.size);
-					speed = ((instanceof(_other.speed) == "Range") ? new Range(_other.speed)
-																   : _other.speed);
-					switch (instanceof(_other.direction))
+					if (instanceof(argument[0]) == "ParticleType")
 					{
-						case "Range":
-							direction = new Range(_other.direction);
-						break;
+						//|Construction type: Constructor copy.
+						var _other = argument[0];
 						
-						case "Angle":
-							direction = new Angle(_other.direction);
-						break;
-						
-						default:
-							direction = _other.direction;
-						break;
-					}
-					
-					direction_increase = _other.direction_increase;
-					direction_wiggle = _other.direction_wiggle;
-					
-					switch (instanceof(_other.angle))
-					{
-						case "Range":
-							angle = new Range(_other.angle);
-						break;
-						
-						case "Angle":
-							angle = new Angle(_other.angle);
-						break;
-						
-						default:
-							angle = _other.angle;
-						break;
-					}
-					
-					angle_increase = _other.angle_increase;
-					angle_wiggle = _other.angle_wiggle;
-					angle_relative = _other.angle_relative;
-					
-					switch (instanceof(_other.gravity))
-					{
-						case "Range":
-							gravity = new Range(_other.gravity);
-						break;
-						
-						case "Angle":
-							gravity = new Angle(_other.gravity);
-						break;
-						
-						default:
-							gravity = _other.gravity;
-						break;
-					}
-					
-					gravity_direction = _other.gravity_direction;
-					
-					switch (instanceof(_other.color))
-					{
-						case "Color2":
-							color = new Color2(_other.color);
-						break;
-						
-						case "Color3":
-							color = new Color3(_other.color);
-						break;
-						
-						default:
-							color = _other.color;
-						break
-					}
-					
-					color_type = _other.color_type;
-					blend_additive = _other.blend_additive;
-					
-					if (is_array(_other.alpha))
-					{
-						array_copy(alpha, 0, _other.alpha, 0, array_length(_other.alpha));
-					}
-					else
-					{
-						alpha = _other.alpha;
-					}
-					
-					life = _other.life;
-					step_type = _other.step_type;
-					step_number = _other.step_number;
-					death_type = _other.death_type;
-					death_number = _other.death_number
-					
-					if (sprite != undefined)
-					{
-						self.setSprite(sprite, sprite_animate, sprite_matchAnimation,
-									   sprite_randomize);
-					}
-					else if (shape != undefined)
-					{
-						self.setShape(shape);
-					}
-					
-					self.setScale(scale);
-					self.setSize(size, size_increase, size_wiggle);
-					self.setSpeed(speed, speed_increase, speed_wiggle);
-					self.setDirection(direction, direction_increase, direction_wiggle);
-					self.setAngle(angle, angle_increase, angle_wiggle, angle_relative);
-					self.setGravity(gravity, gravity_direction);
-					
-					switch (color_type)
-					{
-						case "color":
-						case "Color2":
-						case "Color3":
-							self.setColor(color);
-						break;
-						
-						case "mix":
-							self.setColorMix(color);
-						break;
-						
-						case "RGB":
-							self.setColorRGB(color[0], color[1], color[2]);
-						break;
-						
-						case "HSV":
-							self.setColorHSV(color[0], color[1], color[2]);
-						break;
-					}
-					
-					self.setBlend(blend_additive);
-					
-					if (alpha[2] != undefined)
-					{
-						self.setAlpha(_other.alpha[0], _other.alpha[1], _other.alpha[2]);
-					}
-					else if (alpha[1] != undefined)
-					{
-						self.setAlpha(_other.alpha[0], _other.alpha[1]);
-					}
-					else
-					{
-						self.setAlpha(_other.alpha[0]);
-					}
-					
-					self.setLife(life);
-					
-					if (step_type != undefined)
-					{
-						self.setStep(step_type, step_number);
-					}
-					
-					if (death_type != undefined)
-					{
-						self.setDeath(death_type, death_number);
-					}
-					
-					if (is_struct(_other.event))
-					{
-						event = {};
-						
-						var _eventList = variable_struct_get_names(_other.event);
-						var _i = [0, 0];
-						repeat (array_length(_eventList))
+						ID = part_type_create();
+						shape = _other.shape;
+						sprite = ((instanceof(_other.sprite) == "Sprite")
+								  ? new Sprite(_other.sprite.ID) : _other.sprite);
+						sprite_animate = _other.sprite_animate;
+						sprite_matchAnimation = _other.sprite_matchAnimation;
+						scale = new Scale(_other.scale);
+						size = ((instanceof(_other.sprite) == "Range") ? new Range(_other.size)
+																	   : _other.size);
+						speed = ((instanceof(_other.speed) == "Range") ? new Range(_other.speed)
+																	   : _other.speed);
+						switch (instanceof(_other.direction))
 						{
-							var _event = {};
-							var _other_event = variable_struct_get(_other.event, _eventList[_i[0]]);
-							var _eventPropertyList = variable_struct_get_names(_other_event);
-							_i[1] = 0;
-							repeat (array_length(_eventPropertyList))
+							case "Range":
+								direction = new Range(_other.direction);
+							break;
+							
+							case "Angle":
+								direction = new Angle(_other.direction);
+							break;
+							
+							default:
+								direction = _other.direction;
+							break;
+						}
+						
+						direction_increase = _other.direction_increase;
+						direction_wiggle = _other.direction_wiggle;
+						
+						switch (instanceof(_other.angle))
+						{
+							case "Range":
+								angle = new Range(_other.angle);
+							break;
+							
+							case "Angle":
+								angle = new Angle(_other.angle);
+							break;
+							
+							default:
+								angle = _other.angle;
+							break;
+						}
+						
+						angle_increase = _other.angle_increase;
+						angle_wiggle = _other.angle_wiggle;
+						angle_relative = _other.angle_relative;
+						
+						switch (instanceof(_other.gravity))
+						{
+							case "Range":
+								gravity = new Range(_other.gravity);
+							break;
+							
+							case "Angle":
+								gravity = new Angle(_other.gravity);
+							break;
+							
+							default:
+								gravity = _other.gravity;
+							break;
+						}
+						
+						gravity_direction = _other.gravity_direction;
+						
+						switch (instanceof(_other.color))
+						{
+							case "Color2":
+								color = new Color2(_other.color);
+							break;
+							
+							case "Color3":
+								color = new Color3(_other.color);
+							break;
+							
+							default:
+								color = _other.color;
+							break
+						}
+						
+						color_type = _other.color_type;
+						blend_additive = _other.blend_additive;
+						
+						if (is_array(_other.alpha))
+						{
+							array_copy(alpha, 0, _other.alpha, 0, array_length(_other.alpha));
+						}
+						else
+						{
+							alpha = _other.alpha;
+						}
+						
+						life = _other.life;
+						step_type = _other.step_type;
+						step_number = _other.step_number;
+						death_type = _other.death_type;
+						death_number = _other.death_number
+						
+						if (sprite != undefined)
+						{
+							self.setSprite(sprite, sprite_animate, sprite_matchAnimation,
+										   sprite_randomize);
+						}
+						else if (shape != undefined)
+						{
+							self.setShape(shape);
+						}
+						
+						self.setScale(scale);
+						self.setSize(size, size_increase, size_wiggle);
+						self.setSpeed(speed, speed_increase, speed_wiggle);
+						self.setDirection(direction, direction_increase, direction_wiggle);
+						self.setAngle(angle, angle_increase, angle_wiggle, angle_relative);
+						self.setGravity(gravity, gravity_direction);
+						
+						switch (color_type)
+						{
+							case "color":
+							case "Color2":
+							case "Color3":
+								self.setColor(color);
+							break;
+							
+							case "mix":
+								self.setColorMix(color);
+							break;
+							
+							case "RGB":
+								self.setColorRGB(color[0], color[1], color[2]);
+							break;
+							
+							case "HSV":
+								self.setColorHSV(color[0], color[1], color[2]);
+							break;
+						}
+						
+						self.setBlend(blend_additive);
+						
+						if (alpha[2] != undefined)
+						{
+							self.setAlpha(_other.alpha[0], _other.alpha[1], _other.alpha[2]);
+						}
+						else if (alpha[1] != undefined)
+						{
+							self.setAlpha(_other.alpha[0], _other.alpha[1]);
+						}
+						else
+						{
+							self.setAlpha(_other.alpha[0]);
+						}
+						
+						self.setLife(life);
+						
+						if (step_type != undefined)
+						{
+							self.setStep(step_type, step_number);
+						}
+						
+						if (death_type != undefined)
+						{
+							self.setDeath(death_type, death_number);
+						}
+						
+						if (is_struct(_other.event))
+						{
+							event = {};
+							
+							var _eventList = variable_struct_get_names(_other.event);
+							var _i = [0, 0];
+							repeat (array_length(_eventList))
 							{
-								var _property = variable_struct_get(_other_event,
-																	_eventPropertyList[_i[1]]);
-								var _value = _property;
-								
-								if (is_array(_property))
+								var _event = {};
+								var _other_event = variable_struct_get(_other.event,
+																	   _eventList[_i[0]]);
+								var _eventPropertyList = variable_struct_get_names(_other_event);
+								_i[1] = 0;
+								repeat (array_length(_eventPropertyList))
 								{
-									_value = [];
+									var _property = variable_struct_get(_other_event,
+																		_eventPropertyList[_i[1]]);
+									var _value = _property;
 									
-									array_copy(_value, 0, _property, 0, array_length(_property));
+									if (is_array(_property))
+									{
+										_value = [];
+										
+										array_copy(_value, 0, _property, 0, array_length(_property));
+									}
+									
+									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
+										
+									++_i[1];
 								}
 								
-								variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
-									
-								++_i[1];
+								variable_struct_set(event, _eventList[_i[0]], _event);
+								
+								++_i[0];
 							}
-							
-							variable_struct_set(event, _eventList[_i[0]], _event);
-							
-							++_i[0];
 						}
-					}
-					else
-					{
-						event = _other.event;
+						else
+						{
+							event = _other.event;
+						}
 					}
 				}
 				else

@@ -7,6 +7,7 @@
 ///							Construction types:
 ///							- New constructor
 ///							- Wrapper: other {int:room}
+///							- Empty: {undefined}
 ///							- Constructor copy: other {Room}
 function Room() constructor
 {
@@ -16,6 +17,7 @@ function Room() constructor
 			/// @description		Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction type: Empty.
 				ID = undefined;
 				name = string(undefined);
 				persistent = undefined;
@@ -25,45 +27,48 @@ function Room() constructor
 				persistenceOnVisit = undefined;
 				previousRoom = undefined;
 				
-				if ((argument_count > 0) and (instanceof(argument[0]) == "Room"))
+				if (argument_count > 0)
 				{
-					var _other = argument[0];
-					
-					if (_other.isFunctional())
+					if (instanceof(argument[0]) == "Room")
 					{
-						//|Construction type: Constructor copy.
-						persistent = _other.persistent;
-						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
-																	   : _other.size);
-						ID = room_add();
-						room_set_width(ID, size.x);
-						room_set_height(ID, size.y);
+						var _other = argument[0];
 						
-						if (persistent)
+						if (_other.isFunctional())
 						{
-							room_set_persistent(ID, persistent);
-						}
-						
-						room_assign(ID, _other.ID);
-						
-						var _addedInstancesCount = array_length(_other.addedInstances);
-						
-						addedInstances = array_create(_addedInstancesCount);
-						
-						var _i = 0;
-						repeat (_addedInstancesCount)
-						{
-							addedInstances[_i] = new AddedInstance(_other.addedInstances[_i]);
+							//|Construction type: Constructor copy.
+							persistent = _other.persistent;
+							size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
+																		   : _other.size);
+							ID = room_add();
+							room_set_width(ID, size.x);
+							room_set_height(ID, size.y);
 							
-							++_i;
+							if (persistent)
+							{
+								room_set_persistent(ID, persistent);
+							}
+							
+							room_assign(ID, _other.ID);
+							
+							var _addedInstancesCount = array_length(_other.addedInstances);
+							
+							addedInstances = array_create(_addedInstancesCount);
+							
+							var _i = 0;
+							repeat (_addedInstancesCount)
+							{
+								addedInstances[_i] = new AddedInstance(_other.addedInstances[_i]);
+								
+								++_i;
+							}
 						}
 					}
-				}
-				else if ((argument_count > 0) and (is_real(argument[0])))
-				{
-					//|Construction type: Wrapper.
-					ID = argument[0];
-					name = room_get_name(ID);
+					else if (is_real(argument[0]))
+					{
+						//|Construction type: Wrapper.
+						ID = argument[0];
+						name = room_get_name(ID);
+					}
 				}
 				else
 				{

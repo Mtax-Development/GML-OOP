@@ -11,7 +11,7 @@
 ///							
 ///							Construction types:
 ///							- New constructor
-///							- Empty: {void|undefined}
+///							- Empty: {void}
 ///							- Constructor copy: other {Triangle}
 function Triangle() constructor
 {
@@ -109,8 +109,8 @@ function Triangle() constructor
 					{
 						//|Construction type: New constructor.
 						location1 = argument[0];
-						location2 = argument[1];
-						location3 = argument[2];
+						location2 = ((argument_count > 1) ? argument[1] : undefined);
+						location3 = ((argument_count > 2) ? argument[2] : undefined);
 						fill_color = ((argument_count > 3) ? argument[3] : undefined);
 						fill_alpha = (((argument_count > 4) and (argument[4] != undefined))
 									  ? argument[4] : 1);

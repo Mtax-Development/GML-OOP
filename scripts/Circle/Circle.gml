@@ -1,6 +1,6 @@
 /// @function				Circle()
 /// @argument				location {Vector2}
-/// @argument				radius {real}
+/// @argument				radius? {real}
 /// @argument				fill_color? {int:color|Color2}
 /// @argument				fill_alpha? {real}
 /// @argument				outline_color? {int:color}
@@ -103,7 +103,8 @@ function Circle() constructor
 					{
 						//|Construction type: New constructor.
 						location = argument[0];
-						radius = argument[1];
+						radius = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
+																						: 0);
 						fill_color = ((argument_count > 2) ? argument[2] : undefined);
 						fill_alpha = (((argument_count > 3) and (argument[3] != undefined))
 									  ? argument[3] : 1);

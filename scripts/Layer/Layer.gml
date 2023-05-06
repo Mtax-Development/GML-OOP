@@ -19,7 +19,7 @@ function Layer() constructor
 			/// @description		Initialize the constructor.
 			static construct = function()
 			{
-				//|Construction type: Empty
+				//|Construction type: Empty.
 				ID = undefined;
 				name = undefined;
 				depth = undefined;
@@ -765,6 +765,7 @@ function Layer() constructor
 		//						Construction types:
 		//						- New element
 		//						- Wrapper: spriteElement {int:spriteElement}
+		//						- Empty: {void|undefined}
 		//						- Constructor copy: other {Layer.SpriteElement}
 		function SpriteElement() constructor
 		{
@@ -774,6 +775,7 @@ function Layer() constructor
 					/// @description		Initialize the constructor.
 					static construct = function()
 					{
+						//|Construction type: Empty.
 						parent = other;
 						ID = undefined;
 						sprite = undefined;
@@ -785,66 +787,69 @@ function Layer() constructor
 						frame = undefined;
 						speed = undefined;
 						
-						var _instanceof_self = instanceof(self);
-						var _instanceof_other = instanceof(argument[0]);
-						
-						switch (_instanceof_other)
+						if ((argument_count > 0) and (argument[0] != undefined))
 						{
-							case _instanceof_self:
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								sprite = new Sprite(_other.sprite.ID);
-								location = new Vector2(_other.location);
-								ID = layer_sprite_create(parent.ID, location.x, location.y,
-														 sprite.ID);
-								scale = new Scale(_other.scale);
-								angle = new Angle(_other.angle);
-								color = _other.color;
-								alpha = _other.alpha;
-								frame = _other.frame;
-								speed = _other.speed;
-								
-								layer_sprite_xscale(ID, scale.x);
-								layer_sprite_yscale(ID, scale.y);
-								layer_sprite_angle(ID, angle.value);
-								layer_sprite_blend(ID, color);
-								layer_sprite_alpha(ID, alpha);
-								layer_sprite_index(ID, frame);
-								layer_sprite_speed(ID, speed);
-							break;
+							var _instanceof_self = instanceof(self);
+							var _instanceof_other = instanceof(argument[0]);
 							
-							case "Sprite":
-								//|Construction type: New element.
-								sprite = argument[0];
-								location = argument[1];
-								ID = layer_sprite_create(parent.ID, location.x, location.y,
-														 sprite.ID);
-								angle = new Angle(0);
-								scale = new Scale(1, 1);
-								color = c_white;
-								alpha = 1;
-								frame = 0;
-								speed = 0;
-							break;
+							switch (_instanceof_other)
+							{
+								case _instanceof_self:
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									sprite = new Sprite(_other.sprite.ID);
+									location = new Vector2(_other.location);
+									ID = layer_sprite_create(parent.ID, location.x, location.y,
+															 sprite.ID);
+									scale = new Scale(_other.scale);
+									angle = new Angle(_other.angle);
+									color = _other.color;
+									alpha = _other.alpha;
+									frame = _other.frame;
+									speed = _other.speed;
+									
+									layer_sprite_xscale(ID, scale.x);
+									layer_sprite_yscale(ID, scale.y);
+									layer_sprite_angle(ID, angle.value);
+									layer_sprite_blend(ID, color);
+									layer_sprite_alpha(ID, alpha);
+									layer_sprite_index(ID, frame);
+									layer_sprite_speed(ID, speed);
+								break;
+								
+								case "Sprite":
+									//|Construction type: New element.
+									sprite = argument[0];
+									location = argument[1];
+									ID = layer_sprite_create(parent.ID, location.x, location.y,
+															 sprite.ID);
+									angle = new Angle(0);
+									scale = new Scale(1, 1);
+									color = c_white;
+									alpha = 1;
+									frame = 0;
+									speed = 0;
+								break;
+								
+								default:
+									//|Construction type: Wrapper.
+									ID = argument[0];
+									sprite = layer_sprite_get_sprite(ID);
+									location = new Vector2(layer_sprite_get_x(ID),
+														   layer_sprite_get_y(ID));
+									angle = new Angle(layer_sprite_get_angle(ID));
+									scale = new Scale(layer_sprite_get_xscale(ID),
+													  layer_sprite_get_yscale(ID));
+									color = layer_sprite_get_blend(ID)
+									alpha = layer_sprite_get_alpha(ID)
+									frame = layer_sprite_get_index(ID)
+									speed = layer_sprite_get_speed(ID)
+								break;
+							}
 							
-							default:
-								//|Construction type: Wrapper.
-								ID = argument[0];
-								sprite = layer_sprite_get_sprite(ID);
-								location = new Vector2(layer_sprite_get_x(ID),
-													   layer_sprite_get_y(ID));
-								angle = new Angle(layer_sprite_get_angle(ID));
-								scale = new Scale(layer_sprite_get_xscale(ID),
-												  layer_sprite_get_yscale(ID));
-								color = layer_sprite_get_blend(ID)
-								alpha = layer_sprite_get_alpha(ID)
-								frame = layer_sprite_get_index(ID)
-								speed = layer_sprite_get_speed(ID)
-							break;
+							parent.spriteList.add(self);
 						}
-						
-						parent.spriteList.add(self);
 						
 						return self;
 					}
@@ -1138,6 +1143,7 @@ function Layer() constructor
 		//						Construction types:
 		//						- New element
 		//						- Wrapper: backgroundElement {int:backgroundElement}
+		//						- Empty: {void|undefined}
 		//						- Constructor copy: other {Layer.BackgroundElement}
 		function BackgroundElement() constructor
 		{
@@ -1147,6 +1153,7 @@ function Layer() constructor
 					/// @description		Initialize the constructor.
 					static construct = function()
 					{
+						//|Construction type: Empty.
 						parent = other;
 						ID = undefined;
 						sprite = undefined;
@@ -1160,73 +1167,76 @@ function Layer() constructor
 						frame = undefined;
 						speed = undefined;
 						
-						var _instanceof_self = instanceof(self);
-						var _instanceof_other = instanceof(argument[0]);
-						
-						switch (_instanceof_other)
+						if ((argument_count > 0) and (argument[0] != undefined))
 						{
-							case _instanceof_self:
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								sprite = new Sprite(_other.sprite.ID);
-								ID = layer_background_create(parent.ID, sprite.ID);
-								visible = _other.visible;
-								stretch = _other.stretch;
-								tiled_x = _other.tiled_x;
-								tiled_y = _other.tiled_y;
-								scale = ((instanceof(_other.sprite) == "Scale")
-										 ? new Scale(_other.scale) : _other.scale);
-								color = _other.color;
-								alpha = _other.alpha;
-								frame = _other.frame;
-								speed = _other.speed;
-								
-								layer_background_visible(ID, visible);
-								layer_background_stretch(ID, stretch);
-								layer_background_htiled(ID, tiled_x);
-								layer_background_vtiled(ID, tiled_y);
-								layer_background_xscale(ID, scale.x);
-								layer_background_yscale(ID, scale.y);
-								layer_background_blend(ID, color);
-								layer_background_alpha(ID, alpha);
-								layer_background_index(ID, frame);
-								layer_background_speed(ID, speed);
-							break;
+							var _instanceof_self = instanceof(self);
+							var _instanceof_other = instanceof(argument[0]);
 							
-							case "Sprite":
-								//|Construction type: New element.
-								sprite = argument[0];
-								ID = layer_background_create(parent.ID, sprite.ID);
-								visible = true;
-								stretch = false;
-								tiled_x = false;
-								tiled_y = false;
-								scale = new Scale(1, 1);
-								color = c_white;
-								alpha = 1;
-								frame = 0;
-								speed = 0;
-							break;
+							switch (_instanceof_other)
+							{
+								case _instanceof_self:
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									sprite = new Sprite(_other.sprite.ID);
+									ID = layer_background_create(parent.ID, sprite.ID);
+									visible = _other.visible;
+									stretch = _other.stretch;
+									tiled_x = _other.tiled_x;
+									tiled_y = _other.tiled_y;
+									scale = ((instanceof(_other.sprite) == "Scale")
+											 ? new Scale(_other.scale) : _other.scale);
+									color = _other.color;
+									alpha = _other.alpha;
+									frame = _other.frame;
+									speed = _other.speed;
+									
+									layer_background_visible(ID, visible);
+									layer_background_stretch(ID, stretch);
+									layer_background_htiled(ID, tiled_x);
+									layer_background_vtiled(ID, tiled_y);
+									layer_background_xscale(ID, scale.x);
+									layer_background_yscale(ID, scale.y);
+									layer_background_blend(ID, color);
+									layer_background_alpha(ID, alpha);
+									layer_background_index(ID, frame);
+									layer_background_speed(ID, speed);
+								break;
+								
+								case "Sprite":
+									//|Construction type: New element.
+									sprite = argument[0];
+									ID = layer_background_create(parent.ID, sprite.ID);
+									visible = true;
+									stretch = false;
+									tiled_x = false;
+									tiled_y = false;
+									scale = new Scale(1, 1);
+									color = c_white;
+									alpha = 1;
+									frame = 0;
+									speed = 0;
+								break;
+								
+								default:
+									//|Construction type: Wrapper.
+									ID = argument[0];
+									sprite = new Sprite(layer_background_get_sprite(ID));
+									visible = layer_background_get_visible(ID);
+									stretch = layer_background_get_stretch(ID);
+									tiled_x = layer_background_get_htiled(ID);
+									tiled_y = layer_background_get_vtiled(ID);
+									scale = new Scale(layer_background_get_xscale(ID),
+													  layer_background_get_yscale(ID));
+									color = layer_background_get_blend(ID)
+									alpha = layer_background_get_alpha(ID)
+									frame = layer_background_get_index(ID)
+									speed = layer_background_get_speed(ID)
+								break;
+							}
 							
-							default:
-								//|Construction type: Wrapper.
-								ID = argument[0];
-								sprite = new Sprite(layer_background_get_sprite(ID));
-								visible = layer_background_get_visible(ID);
-								stretch = layer_background_get_stretch(ID);
-								tiled_x = layer_background_get_htiled(ID);
-								tiled_y = layer_background_get_vtiled(ID);
-								scale = new Scale(layer_background_get_xscale(ID),
-												  layer_background_get_yscale(ID));
-								color = layer_background_get_blend(ID)
-								alpha = layer_background_get_alpha(ID)
-								frame = layer_background_get_index(ID)
-								speed = layer_background_get_speed(ID)
-							break;
+							parent.backgroundList.add(self);
 						}
-						
-						parent.backgroundList.add(self);
 						
 						return self;
 					}
@@ -1592,6 +1602,7 @@ function Layer() constructor
 		//						Construction types:
 		//						- New element
 		//						- Wrapper: tilemapElement {int:tilemapElement}
+		//						- Empty: {void|undefined}
 		//						- Constructor copy: other {Layer.TilemapElement}
 		function TilemapElement() constructor
 		{
@@ -1601,29 +1612,30 @@ function Layer() constructor
 					/// @description		Initialize the constructor.
 					static construct = function()
 					{
+						//|Construction type: Empty.
 						parent = other;
 						ID = undefined;
 						tileset = undefined;
 						location = undefined;
 						size = undefined;
 						
-						var _instanceof_self = instanceof(self);
-						var _instanceof_other = instanceof(argument[0]);
-						
-						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
+						if ((argument_count > 0) and (argument[0] != undefined))
 						{
-							//|Construction type: Constructor copy.
-							var _other = argument[0];
+							var _instanceof_self = instanceof(self);
+							var _instanceof_other = instanceof(argument[0]);
 							
-							tileset = _other.tileset;
-							location = _other.location;
-							size = _other.size;
-							ID = layer_tilemap_create(parent.ID, location.x, location.y, tileset,
-													  size.x, size.y);
-						}
-						else
-						{
-							if (argument_count > 2)
+							if (_instanceof_other == _instanceof_self)
+							{
+								//|Construction type: Constructor copy.
+								var _other = argument[0];
+								
+								tileset = _other.tileset;
+								location = _other.location;
+								size = _other.size;
+								ID = layer_tilemap_create(parent.ID, location.x, location.y, tileset,
+														  size.x, size.y);
+							}
+							else if (argument_count > 2)
 							{
 								//|Construction type: New element.
 								tileset = argument[0];
@@ -1640,9 +1652,9 @@ function Layer() constructor
 								location = new Vector2(tilemap_get_x(ID), tilemap_get_y(ID));
 								size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
 							}
+							
+							parent.tilemapList.add(self);
 						}
-						
-						parent.tilemapList.add(self);
 						
 						return self;
 					}
@@ -2026,7 +2038,7 @@ function Layer() constructor
 				//						
 				//						Construction types:
 				//						- New element
-				//						- Empty: {void}
+				//						- Empty: {void|undefined}
 				//						- Constructor copy: other {Layer.TilemapElement.TileData}
 				function TileData() constructor
 				{
@@ -2040,7 +2052,7 @@ function Layer() constructor
 								parent = other;
 								ID = 0;
 								
-								if (argument_count > 0)
+								if ((argument_count > 0) and (argument[0] != undefined))
 								{
 									var _instanceof_self = instanceof(self);
 									var _instanceof_other = instanceof(argument[0]);
@@ -2478,6 +2490,7 @@ function Layer() constructor
 		//						
 		//						Construction types:
 		//						- New element
+		//						- Empty: {void|undefined}
 		//						- Constructor copy: other {Layer.ParticleSystem}
 		function ParticleSystem() constructor
 		{
@@ -2487,6 +2500,7 @@ function Layer() constructor
 					/// @description		Initialize the constructor.
 					static construct = function()
 					{
+						//|Construction type: Empty.
 						parent = other;
 						ID = undefined;
 						persistent = undefined;
@@ -2496,46 +2510,49 @@ function Layer() constructor
 						drawOrder_newerOnTop = undefined;
 						emitterList = undefined;
 						
-						var _instanceof_self = instanceof(self);
-						var _instanceof_other = ((argument_count > 0) ? instanceof(argument[0])
-																	  : undefined);
-						
-						if ((argument_count > 0) and (_instanceof_other == _instanceof_self))
+						if ((argument_count > 0) and (argument[0] != undefined))
 						{
-							//|Construction type: Constructor copy.
-							var _other = argument[0];
+							var _instanceof_self = instanceof(self);
+							var _instanceof_other = ((argument_count > 0) ? instanceof(argument[0])
+																		  : undefined);
 							
-							persistent = _other.persistent;
-							ID = part_system_create_layer(parent.ID, persistent);
-							self.setLocation(_other.location);
-							self.setAutomaticUpdate(_other.automaticUpdate);
-							self.setAutomaticRender(_other.automaticRender);
-							self.setDrawOrder(_other.drawOrder_newerOnTop);
-							emitterList = new List();
-							
-							var _i = 0;
-							repeat (_other.emitterList.getSize())
+							if (_instanceof_other == _instanceof_self)
 							{
-								var _ = new ParticleEmitter(emitterList.getValue(_i));
-								_ = undefined;
+								//|Construction type: Constructor copy.
+								var _other = argument[0];
 								
-								++_i;
+								persistent = _other.persistent;
+								ID = part_system_create_layer(parent.ID, persistent);
+								self.setLocation(_other.location);
+								self.setAutomaticUpdate(_other.automaticUpdate);
+								self.setAutomaticRender(_other.automaticRender);
+								self.setDrawOrder(_other.drawOrder_newerOnTop);
+								emitterList = new List();
+								
+								var _i = 0;
+								repeat (_other.emitterList.getSize())
+								{
+									var _ = new ParticleEmitter(emitterList.getValue(_i));
+									_ = undefined;
+									
+									++_i;
+								}
 							}
+							else
+							{
+								//|Construction type: New constructor.
+								persistent = (((argument_count > 0) and (argument[0] != undefined))
+											  ? argument[0] : false);
+								location = new Vector2(0, 0);
+								automaticUpdate = true;
+								automaticRender = true;
+								drawOrder_newerOnTop = true;
+								emitterList = new List();
+								ID = part_system_create_layer(parent.ID, persistent);
+							}
+							
+							parent.particleSystemList.add(self);
 						}
-						else
-						{
-							//|Construction type: New constructor.
-							persistent = (((argument_count > 0) and (argument[0] != undefined))
-										  ? argument[0] : false);
-							location = new Vector2(0, 0);
-							automaticUpdate = true;
-							automaticRender = true;
-							drawOrder_newerOnTop = true;
-							emitterList = new List();
-							ID = part_system_create_layer(parent.ID, persistent);
-						}
-						
-						parent.particleSystemList.add(self);
 						
 						return self;
 					}
@@ -2864,6 +2881,7 @@ function Layer() constructor
 				//						
 				//						Construction types:
 				//						- New element
+				//						- Empty: {undefined}
 				//						- Constructor copy: other
 				//											{Layer.ParticleSystem.ParticleEmitter}
 				function ParticleEmitter() constructor
@@ -2874,41 +2892,54 @@ function Layer() constructor
 							/// @description		Initialize the constructor.
 							static construct = function()
 							{
+								//|Construction type: Empty.
 								parent = other;
+								ID = undefined;
 								particleType = undefined;
 								location = undefined;
 								shape = undefined;
 								distribution = undefined;
 								streamEnabled = true;
 								streamCount = 0;
-								ID = part_emitter_create(parent.ID);
 								
 								if (argument_count > 0)
 								{
-									if (string_copy(string(instanceof(argument[0])), 1, 15)
-										== "ParticleEmitter")
+									if (argument[0] != undefined)
 									{
-										//|Construction type: Constructor copy.
-										var _other = argument[0];
+										ID = part_emitter_create(parent.ID);
 										
-										particleType = _other.particleType;
-										
-										if ((_other.location != undefined)
-										and (_other.shape != undefined)
-										and (_other.distribution != undefined))
+										if (string_copy(string(instanceof(argument[0])), 1, 15)
+											== "ParticleEmitter")
 										{
-											self.setRegion(_other.location, _other.shape,
-														   _other.distribution);
+											//|Construction type: Constructor copy.
+											var _other = argument[0];
+											
+											particleType = _other.particleType;
+											
+											if ((_other.location != undefined)
+											and (_other.shape != undefined)
+											and (_other.distribution != undefined))
+											{
+												self.setRegion(_other.location, _other.shape,
+															   _other.distribution);
+											}
+										}
+										else
+										{
+											//|Construction type: New constructor.
+											particleType = argument[0];
 										}
 									}
-									else
-									{
-										//|Construction type: New constructor.
-										particleType = argument[0];
-									}
+								}
+								else
+								{
+									ID = part_emitter_create(parent.ID);
 								}
 								
-								parent.emitterList.add(self);
+								if (ID != undefined)
+								{
+									parent.emitterList.add(self);
+								}
 								
 								return self;
 							}

@@ -9,6 +9,7 @@
 ///							Construction types:
 ///							- New constructor
 ///							- Wrapper: other {int:buffer}
+///							- Empty: {void|undefined}
 ///							- Constructor copy: other {Buffer}
 function Buffer() constructor
 {
@@ -18,9 +19,10 @@ function Buffer() constructor
 			/// @description		Initialize the constructor.
 			static construct = function()
 			{
+				//|Construction type: Empty.
 				ID = undefined;
 				
-				if (argument_count > 0)
+				if ((argument_count > 0) and (argument[0] != undefined))
 				{
 					if (instanceof(argument[0]) == "Buffer")
 					{
