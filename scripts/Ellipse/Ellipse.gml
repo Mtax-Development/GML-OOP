@@ -1,4 +1,4 @@
-/// @function				Ellipse()
+//  @function				Ellipse()
 /// @argument				location {Vector4}
 /// @argument				fill_color? {int:color|Color2}
 /// @argument				fill_alpha? {real}
@@ -6,11 +6,11 @@
 /// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs an Ellipse Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Ellipse}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Ellipse}
 function Ellipse() constructor
 {
 	#region [Methods]

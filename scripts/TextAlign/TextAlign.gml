@@ -1,19 +1,19 @@
-/// @function				TextAlign()
+//  @function				TextAlign()
 /// @argument				x? {constant:fa_[halign]}
 /// @argument				y? {constant:fa_[valign]}
 ///							
 /// @description			Constructs a container for two Text Alignment contants, intended for use
 ///							in text drawing.
-///							
-///							Construction types:
-///							- New constructor
-///							   Unspecified values will be set to the following:
-///							   x: fa_left
-///							   y: fa_top
-///							- From array: array {constant:textalign[]}
-///							   The first array position will be set to the x property and the second
-///							   array position will be set to y property.
-///							- Constructor copy: other {TextAlign}
+//							
+//							Construction types:
+//							- New constructor
+//							   Unspecified values will be set to the following:
+//							   x: fa_left
+//							   y: fa_top
+//							- From array: array {constant:textalign[]}
+//							   The first array position will be set to the x property and the second
+//							   array position will be set to y property.
+//							- Constructor copy: other {TextAlign}
 function TextAlign() constructor
 {
 	#region [Methods]

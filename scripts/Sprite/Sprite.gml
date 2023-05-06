@@ -1,16 +1,16 @@
-/// @function				Sprite()
+//  @function				Sprite()
 ///							
 /// @description			Constructs a Sprite resource used to render its frames.
-///							
-///							Construction types:
-///							- Wrapper: sprite {int:sprite}
-///							- From file: path {string:path}, frameCount? {int}, origin? {Vector2},
-///										 removeBackground? {bool}, smoothRemovedBackground? {bool}
-///							- From Surface: surface {int:surface|Surface}, part {Vector4|all},
-///											origin? {Vector2}, removeBackground? {bool},
-///											smoothRemovedBackground? {bool}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Sprite}
+//							
+//							Construction types:
+//							- Wrapper: sprite {int:sprite}
+//							- From file: path {string:path}, frameCount? {int}, origin? {Vector2},
+//										 removeBackground? {bool}, smoothRemovedBackground? {bool}
+//							- From Surface: surface {int:surface|Surface}, part {Vector4|all},
+//											origin? {Vector2}, removeBackground? {bool},
+//											smoothRemovedBackground? {bool}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Sprite}
 function Sprite() constructor
 {
 	#region [Methods]

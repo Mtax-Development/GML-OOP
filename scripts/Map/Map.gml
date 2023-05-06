@@ -1,15 +1,15 @@
-/// @function				Map()
+//  @function				Map()
 ///							
 /// @description			Constructs a Map Data Structure, which stores data by creating key and
 ///							value pairs. The contained data is not sorted and values are accessed
 ///							either by providing a specific existing key or by iterating through the
 ///							the entire Map.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: map {int:map}
-///							- Empty: {undefined}
-///							- Constructor copy: other {Map}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: map {int:map}
+//							- Empty: {undefined}
+//							- Constructor copy: other {Map}
 function Map() constructor
 {
 	#region [Methods]

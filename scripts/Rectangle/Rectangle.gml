@@ -1,4 +1,4 @@
-/// @function				Rectangle()
+//  @function				Rectangle()
 /// @argument				location {Vector4}
 /// @argument				fill_color? {int:color|Color4}
 /// @argument				fill_alpha? {real}
@@ -7,11 +7,11 @@
 /// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs a Rectangle Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Rectangle}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Rectangle}
 function Rectangle() constructor
 {
 	#region [Methods]

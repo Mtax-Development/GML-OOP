@@ -1,14 +1,14 @@
-/// @function				Point()
+//  @function				Point()
 /// @argument				location {Vector2}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
 ///							
 /// @description			Constructs a Point Shape, which is a single pixel.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: {Point} other
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: {Point} other
 function Point() constructor
 {
 	#region [Methods]

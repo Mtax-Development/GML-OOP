@@ -1,4 +1,4 @@
-/// @function				Arrow()
+//  @function				Arrow()
 /// @argument				location {Vector4}
 /// @argument				size? {real}
 /// @argument				color? {int:color}
@@ -6,11 +6,11 @@
 ///							
 /// @description			Constructs an Arrow Shape, which is a Line starting at x1y1 with a
 ///							Triangle of the specified size at x2y2 pointing towards that location.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Arrow}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Arrow}
 function Arrow() constructor
 {
 	#region [Methods]

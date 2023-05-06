@@ -1,4 +1,4 @@
-/// @function				SurfaceRenderer()
+//  @function				SurfaceRenderer()
 /// @argument				surface? {Surface}
 /// @argument				location? {Vector2|Vector4}
 /// @argument				scale? {Scale}
@@ -10,11 +10,11 @@
 /// @argument				target? {Surface|int:surface}
 ///							
 /// @description			Construct a handler storing information for Surface rendering.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {SurfaceRenderer}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {SurfaceRenderer}
 function SurfaceRenderer() constructor
 {
 	#region [Methods]

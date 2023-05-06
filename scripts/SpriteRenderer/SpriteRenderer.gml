@@ -1,4 +1,4 @@
-/// @function				SpriteRenderer()
+//  @function				SpriteRenderer()
 /// @argument				sprite? {Sprite}
 /// @argument				location? {Vector2|Vector4}
 /// @argument				frame? {int}
@@ -11,11 +11,11 @@
 /// @argument				target? {Surface|int:surface}
 ///							
 /// @description			Construct a handler storing information for Sprite rendering.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {SpriteRenderer}
+// 							
+// 							Construction types:
+// 							- New constructor
+// 							- Empty: {void}
+// 							- Constructor copy: other {SpriteRenderer}
 function SpriteRenderer() constructor
 {
 	#region [Methods]

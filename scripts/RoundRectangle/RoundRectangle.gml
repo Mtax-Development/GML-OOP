@@ -1,4 +1,4 @@
-/// @function				RoundRectangle()
+//  @function				RoundRectangle()
 /// @argument				location {Vector4}
 /// @argument				radius? {Vector2}
 /// @argument				fill_color? {int:color|Color2}
@@ -7,11 +7,11 @@
 /// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs a Round Rectangle Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {RoundRectangle}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {RoundRectangle}
 function RoundRectangle() constructor
 {
 	#region [Methods]

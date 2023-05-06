@@ -1,14 +1,14 @@
-/// @function				RangedValue()
+//  @function				RangedValue()
 /// @argument				range {Range}
 /// @argument				value? {real}
 ///							
 /// @description			Construct a container for a value closed in the specified Range.
-///							
-///							Construction types:
-///							- New constructor
-///							   Unspecified value will be set to the minimum value of the Range.
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Range}
+//							
+//							Construction types:
+//							- New constructor
+//							   Unspecified value will be set to the minimum value of the Range.
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Range}
 function RangedValue() constructor
 {
 	#region [Methods]

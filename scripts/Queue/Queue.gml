@@ -1,13 +1,13 @@
-/// @function				Queue()
+//  @function				Queue()
 ///							
 /// @description			Constructs a Queue Data Structure, which stores data in a linear,
 ///							first-in-first-out model that disallows order manipulation.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: queue {int:queue}
-///							- Empty: {undefined}
-///							- Constructor copy: other {Queue}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: queue {int:queue}
+//							- Empty: {undefined}
+//							- Constructor copy: other {Queue}
 function Queue() constructor
 {
 	#region [Methods]

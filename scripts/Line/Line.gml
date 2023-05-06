@@ -1,15 +1,15 @@
-/// @function				Line()
+//  @function				Line()
 /// @argument				location {Vector4}
 /// @argument				size? {real}
 /// @argument				color? {int:color|Color2|Color4}
 /// @argument				alpha? {real}
 ///							
 /// @description			Construct a Line Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Line}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Line}
 function Line() constructor
 {
 	#region [Methods]

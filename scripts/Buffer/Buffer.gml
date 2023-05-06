@@ -1,16 +1,16 @@
-/// @function				Buffer()
+//  @function				Buffer()
 /// @argument				size {int}
 /// @argument				type {constant:buffer_[bufferType]}
 /// @argument				aligment? {int}
 ///							
 /// @description			Constructs a Buffer, which is a region of memory, primarly used while
 ///							moving data between places, such as through network or to files.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: other {int:buffer}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Buffer}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: other {int:buffer}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Buffer}
 function Buffer() constructor
 {
 	#region [Methods]

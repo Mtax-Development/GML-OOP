@@ -1,13 +1,13 @@
-/// @function				Stack()
+//  @function				Stack()
 ///							
 /// @description			Constructs a Stack Data Structure, which stores data in a linear,
 ///							last-in-first-out model that disallows order manipulation.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: stack {int:stack}
-///							- Empty: {undefined}
-///							- Constructor copy: other {Stack}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: stack {int:stack}
+//							- Empty: {undefined}
+//							- Constructor copy: other {Stack}
 function Stack() constructor
 {
 	#region [Methods]

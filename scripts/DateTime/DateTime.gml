@@ -1,4 +1,4 @@
-/// @function				DateTime()
+//  @function				DateTime()
 /// @argument				year {int}
 /// @argument				month {int}
 /// @argument				day {int}
@@ -7,18 +7,18 @@
 /// @argument				second? {int}
 ///							
 /// @description			Constructs a container for a DateTime.
-///							
-///							Construction types:
-///							- New constructor
-///							- From one array: array {int[]}
-///							   Array elements will be applied in the following order:
-///							   [year, month?, day?, hour?, minute?, second?]
-///							- From two arrays: date {int[]}, time {int[]}
-///								Array elements will be applied in the following order:
-///								[year, month, day], [hour, minute, second?]
-///							- Wrapper: datetime {real:datetime}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {DateTime}
+//							
+//							Construction types:
+//							- New constructor
+//							- From one array: array {int[]}
+//							   Array elements will be applied in the following order:
+//							   [year, month?, day?, hour?, minute?, second?]
+//							- From two arrays: date {int[]}, time {int[]}
+//								Array elements will be applied in the following order:
+//								[year, month, day], [hour, minute, second?]
+//							- Wrapper: datetime {real:datetime}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {DateTime}
 function DateTime() constructor
 {
 	#region [Methods]

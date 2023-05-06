@@ -1,28 +1,28 @@
-/// @function				Vector4()
+//  @function				Vector4()
 /// @argument				x1? {real}
 /// @argument				y1? {real}
 /// @argument				x2? {real}
 /// @argument				y2? {real}
 ///							
 /// @description			Construct a Vector container for two x and y coordinate pairs.
-///							
-///							Construction types:
-///							- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}
-///							- One number for all values: {real} value
-///							- Number pair: first {real}, second {real}
-///							   First number will be set to x1 and y1.
-///							   Second number will be set to x2 and y2.
-///							- From array: array {real[]}
-///							   Array positions will be applied depending on its size:
-///								1: array[0] will be set to all values.
-///								2: array[0] will be set to x1 and y1, array[1] will be set to 
-///								   x2 and y2.
-///								4+: array[0] will be set to x1, array[1] will be set to y1,
-///									array[2] will be set to x2, array[3] will be set to y2.
-///							- From Scale or Vector2: other {Scale|Vector2}
-///							- Vector2 pair: first {Vector2}, second {Vector2}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Vector4}
+//							
+//							Construction types:
+//							- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}
+//							- One number for all values: {real} value
+//							- Number pair: first {real}, second {real}
+//							   First number will be set to x1 and y1.
+//							   Second number will be set to x2 and y2.
+//							- From array: array {real[]}
+//							   Array positions will be applied depending on its size:
+//								1: array[0] will be set to all values.
+//								2: array[0] will be set to x1 and y1, array[1] will be set to 
+//								   x2 and y2.
+//								4+: array[0] will be set to x1, array[1] will be set to y1,
+//									array[2] will be set to x2, array[3] will be set to y2.
+//							- From Scale or Vector2: other {Scale|Vector2}
+//							- Vector2 pair: first {Vector2}, second {Vector2}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Vector4}
 function Vector4() constructor
 {
 	#region [Methods]

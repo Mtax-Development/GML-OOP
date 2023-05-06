@@ -1,29 +1,29 @@
-/// @function				Color4()
+//  @function				Color4()
 /// @argument				color1? {int:color}
 /// @argument				color2? {int:color}
 /// @argument				color3? {int:color}
 /// @argument				color4? {int:color}
 ///							
 /// @description			Constructs a container for four colors.
-///							For rectangular shapes, these colors are organized by the following 
-///							coordinates:
-///							- color1: X1 Y1
-///							- color2: X2 Y1
-///							- color3: X2 Y2
-///							- color4: X1 Y2
-///							
-///							Construction types:
-///							- New constructor
-///							- Default for all values: {void|undefined}
-///							   The color values will be set to white.
-///							- One color for all values: color {int:color}
-///							- Color2 + color + color: other {Color2}, color {int:color},
-///													  color {int:color}
-///							   In any order, it will be reflected in the values of this constructor.
-///							- Color2 pair: first {Color2}, second {Color2}
-///							- Color3 + color: other {Color3}, color {int:color}
-///							   In any order, it will be reflected in the values of this constructor.
-///							- Constructor copy: other {Color4}
+//							For rectangular shapes, these colors are organized by the following 
+//							coordinates:
+//							- color1: X1 Y1
+//							- color2: X2 Y1
+//							- color3: X2 Y2
+//							- color4: X1 Y2
+//							
+//							Construction types:
+//							- New constructor
+//							- Default for all values: {void|undefined}
+//							   The color values will be set to white.
+//							- One color for all values: color {int:color}
+//							- Color2 + color + color: other {Color2}, color {int:color},
+//													  color {int:color}
+//							   In any order, it will be reflected in the values of this constructor.
+//							- Color2 pair: first {Color2}, second {Color2}
+//							- Color3 + color: other {Color3}, color {int:color}
+//							   In any order, it will be reflected in the values of this constructor.
+//							- Constructor copy: other {Color4}
 function Color4() constructor
 {
 	#region [Methods]

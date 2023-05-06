@@ -1,18 +1,18 @@
-/// @function				Font()
+//  @function				Font()
 ///							
 /// @description			Constructs a Font resource defining glyphs used in text rendering.
-///							
-///							Construction types:
-///							- Wrapper: font {int:font}
-///							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
-///										 glyphs {Range}, antialiasing {bool}
-///							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool}, 
-///											  separation {int}, antialiasing {bool}
-///							- Sprite (glyph map): sprite {Sprite}, glyphs {string}, 
-///												  proportional {bool}, separation {int}, 
-///												  antialiasing {bool}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Font}
+//							
+//							Construction types:
+//							- Wrapper: font {int:font}
+//							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
+//										 glyphs {Range}, antialiasing {bool}
+//							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool}, 
+//											  separation {int}, antialiasing {bool}
+//							- Sprite (glyph map): sprite {Sprite}, glyphs {string}, 
+//												  proportional {bool}, separation {int}, 
+//												  antialiasing {bool}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Font}
 function Font() constructor
 {
 	#region [Methods]

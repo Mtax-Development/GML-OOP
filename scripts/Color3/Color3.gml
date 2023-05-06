@@ -1,18 +1,18 @@
-/// @function				Color3()
+//  @function				Color3()
 /// @argument				color1? {int:color}
 /// @argument				color2? {int:color}
 /// @argument				color3? {int:color}
 ///							
 /// @description			Constructs a container for three colors.
-///							
-///							Construction types:
-///							- New constructor
-///							- Default for all values: {void}
-///							   The color values will be set to white.
-///							- One color for all values: color {int:color}
-///							- Color2 + color: other {Color2}, color {int:color}
-///							   In any order, it will be reflected in the values of this constructor.
-///							- Constructor copy: other {Color3}
+//							
+//							Construction types:
+//							- New constructor
+//							- Default for all values: {void}
+//							   The color values will be set to white.
+//							- One color for all values: color {int:color}
+//							- Color2 + color: other {Color2}, color {int:color}
+//							   In any order, it will be reflected in the values of this constructor.
+//							- Constructor copy: other {Color3}
 function Color3() constructor
 {
 	#region [Methods]

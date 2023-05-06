@@ -1,20 +1,20 @@
-/// @function				Scale()
+//  @function				Scale()
 /// @argument				x? {real}
 /// @argument				y? {real}
 ///							
 /// @description			Constructs a Scale container that can be used for drawing or
 ///							manipulated in other ways.
-///							
-///							Construction types:
-///							- Two values: x {real}, y {real}
-///							- One number for all values: value {real}
-///							- Default for all values: {void|undefined}
-///							- From array: array {real[]}
-///							   Array positions will be applied depending on its size:
-///								1: array[0] will be set to x and y.
-///								2+: array[0] will be set to x, array[1] will be set to y.
-///							- From Vector2: other {Vector2}
-///							- Constructor copy: other {Scale}
+//							
+//							Construction types:
+//							- Two values: x {real}, y {real}
+//							- One number for all values: value {real}
+//							- Default for all values: {void|undefined}
+//							- From array: array {real[]}
+//							   Array positions will be applied depending on its size:
+//								1: array[0] will be set to x and y.
+//								2+: array[0] will be set to x, array[1] will be set to y.
+//							- From Vector2: other {Vector2}
+//							- Constructor copy: other {Scale}
 function Scale() constructor
 {
 	#region [Methods]

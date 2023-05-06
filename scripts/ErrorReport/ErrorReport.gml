@@ -1,9 +1,9 @@
-/// @function				ErrorReport()
+//  @function				ErrorReport()
 ///							
 /// @description			Contains static variables and methods of the error reporting system.
-///							
-///							Construction types:
-///							- New constructor
+//							
+//							Construction types:
+//							- New constructor
 function ErrorReport() constructor
 {
 	#region [Static variables]

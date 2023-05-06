@@ -1,14 +1,14 @@
-/// @function				Room()
+//  @function				Room()
 /// @argument				size? {Vector2}
 /// @argument				persistent? {bool}
 ///							
 /// @description			Constructs a Room resource, used to group all other resources.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: other {int:room}
-///							- Empty: {undefined}
-///							- Constructor copy: other {Room}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: other {int:room}
+//							- Empty: {undefined}
+//							- Constructor copy: other {Room}
 function Room() constructor
 {
 	#region [Methods]
@@ -324,12 +324,12 @@ function Room() constructor
 	#endregion
 	#region [Elements]
 		
-		// @function			Room.AddedInstance()
-		// @argument			object {int:object}
-		// @argument			location? {Vector2}
-		//						
-		// @description			A container constructor for properties of instances added to this Room
-		//						before its activation.
+		//  @function			Room.AddedInstance()
+		/// @argument			object {int:object}
+		/// @argument			location? {Vector2}
+		///						
+		/// @description		A container constructor for properties of instances added to this Room
+		///						before its activation.
 		//						
 		//						Construction types:
 		//						- New element

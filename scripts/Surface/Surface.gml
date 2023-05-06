@@ -1,13 +1,13 @@
-/// @function				Surface()
+//  @function				Surface()
 /// @argument				size {Vector2}
 ///							
 /// @description			Constructs a Surface resource, a separate canvas for graphics rendering.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: surface {int:surface}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Surface}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: surface {int:surface}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Surface}
 function Surface() constructor
 {
 	#region [Methods]

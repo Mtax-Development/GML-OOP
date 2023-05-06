@@ -1,15 +1,15 @@
-/// @function				Color2()
+//  @function				Color2()
 /// @argument				color1? {int:color}
 /// @argument				color2? {int:color}
 ///							
 /// @description			Constructs a container for two colors.
 ///							
-///							Construction types:
-///							- New constructor
-///							- Default for all values: {void}
-///							   The color values will be set to white.
-///							- One color for all values: color {int:color}
-///							- Constructor copy: other {Color2}
+//							Construction types:
+//							- New constructor
+//							- Default for all values: {void}
+//							   The color values will be set to white.
+//							- One color for all values: color {int:color}
+//							- Constructor copy: other {Color2}
 function Color2() constructor
 {
 	#region [Methods]

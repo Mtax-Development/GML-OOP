@@ -1,4 +1,4 @@
-/// @function				TextRenderer()
+//  @function				TextRenderer()
 /// @argument				string {any:string}
 /// @argument				font {Font}
 /// @argument				location {Vector2}
@@ -7,11 +7,11 @@
 /// @argument				alpha? {real}
 ///							
 /// @description			Constructs a handler information for string rendering.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {TextRenderer}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {TextRenderer}
 function TextRenderer() constructor
 {
 	#region [Methods]

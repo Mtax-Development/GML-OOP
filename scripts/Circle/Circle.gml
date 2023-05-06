@@ -1,4 +1,4 @@
-/// @function				Circle()
+//  @function				Circle()
 /// @argument				location {Vector2}
 /// @argument				radius? {real}
 /// @argument				fill_color? {int:color|Color2}
@@ -7,11 +7,11 @@
 /// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs a Circle Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Circle}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Circle}
 function Circle() constructor
 {
 	#region [Methods]

@@ -1,12 +1,12 @@
-/// @function				ParticleType()
+//  @function				ParticleType()
 ///							
 /// @description			Construct a Particle Type resource, a particle configuration for creation
 ///							within Particle Systems.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {undefined}
-///							- Constructor copy: other {ParticleType}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {undefined}
+//							- Constructor copy: other {ParticleType}
 function ParticleType() constructor
 {
 	#region [Methods]

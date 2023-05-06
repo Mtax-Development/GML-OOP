@@ -1,13 +1,13 @@
-/// @function				PriorityQueue()
+//  @function				PriorityQueue()
 ///							
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
 ///							a linear model that orders values based on their assigned priority.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: priorityQueue {int:priorityQueue}
-///							- Empty: {undefined}
-///							- Constructor copy: other {PriorityQueue}
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: priorityQueue {int:priorityQueue}
+//							- Empty: {undefined}
+//							- Constructor copy: other {PriorityQueue}
 function PriorityQueue() constructor
 {
 	#region [Methods]

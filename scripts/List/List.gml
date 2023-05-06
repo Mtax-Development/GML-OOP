@@ -1,14 +1,14 @@
-/// @function				List()
+//  @function				List()
 ///							
 /// @description			Constructs a List Data Structure, which stores data in a linear
 ///							model, offering flexibility while doing so. It easily resized,
 ///							sorted and manipulated in other ways.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: {int:list} list
-///							- Empty: {undefined}
-///							- Constructor copy: {List} other
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: {int:list} list
+//							- Empty: {undefined}
+//							- Constructor copy: {List} other
 function List() constructor
 {
 	#region [Methods]

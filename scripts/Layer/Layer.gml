@@ -1,15 +1,15 @@
-/// @function				Layer()
+//  @function				Layer()
 /// @argument				depth {int}
 /// @argument				name? {string}
 ///							
 /// @description			Construct a Layer resource, used to group graphical elements and sort 
-///							their rendering depth.
-///							
-///							Construction types:
-///							- New constructor
-///							- Wrapper: name {string}
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {Layer}, name? {string}
+//							their rendering depth.
+//							
+//							Construction types:
+//							- New constructor
+//							- Wrapper: name {string}
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {Layer}, name? {string}
 ///							   Information about object instances will not be copied.
 function Layer() constructor
 {
@@ -757,10 +757,10 @@ function Layer() constructor
 	#endregion
 	#region [Elements]
 		
-		// @function			Layer.SpriteElement()
-		// @argument			sprite {Sprite}
-		//						
-		// @description			Construct a Sprite Element used to draw a Sprite on this Layer.
+		//  @function			Layer.SpriteElement()
+		/// @argument			sprite {Sprite}
+		///						
+		/// @description		Construct a Sprite Element used to draw a Sprite on this Layer.
 		//						
 		//						Construction types:
 		//						- New element
@@ -1134,11 +1134,11 @@ function Layer() constructor
 			#endregion
 		}
 		
-		// @function			Layer.BackgroundElement()
-		// @argument			sprite {Sprite}
-		//						
-		// @description			Construct a Background Element used to draw a Background on this
-		//						Layer.
+		//  @function			Layer.BackgroundElement()
+		/// @argument			sprite {Sprite}
+		///						
+		/// @description		Construct a Background Element used to draw a Background on this
+		///						Layer.
 		//						
 		//						Construction types:
 		//						- New element
@@ -1591,13 +1591,13 @@ function Layer() constructor
 			#endregion
 		}
 		
-		// @function			Layer.TilemapElement()
-		// @argument			tileset {int:tileset}
-		// @argument			location {Vector2}
-		// @argument			size {Vector2}
-		//						
-		// @description			Construct a Tilemap Element used to draw Tiles from a Tileset on
-		//						this Layer.
+		//  @function			Layer.TilemapElement()
+		/// @argument			tileset {int:tileset}
+		/// @argument			location {Vector2}
+		/// @argument			size {Vector2}
+		///						
+		/// @description		Construct a Tilemap Element used to draw Tiles from a Tileset on
+		///						this Layer.
 		//						
 		//						Construction types:
 		//						- New element
@@ -2030,11 +2030,11 @@ function Layer() constructor
 			#endregion
 			#region [[Elements]]
 				
-				// @function			Layer.TilemapElement.TileData()
-				// @argument			id? {int}
-				//						
-				// @description			Constructs a TileData Element, which refers to a Tile in this
-				//						Tilemap.
+				//  @function			Layer.TilemapElement.TileData()
+				/// @argument			id? {int}
+				///						
+				/// @description		Constructs a TileData Element, which refers to a Tile in this
+				///						Tilemap.
 				//						
 				//						Construction types:
 				//						- New element
@@ -2482,11 +2482,11 @@ function Layer() constructor
 			#endregion
 		}
 		
-		// @function			Layer.ParticleSystem()
-		// @argument			persistent? {bool}
-		//						
-		// @description			Construct a Particle System Element used to create Particles of
-		//						any Particle Type on this Layer.
+		//  @function			Layer.ParticleSystem()
+		/// @argument			persistent? {bool}
+		///						
+		/// @description		Construct a Particle System Element used to create Particles of
+		///						any Particle Type on this Layer.
 		//						
 		//						Construction types:
 		//						- New element
@@ -2872,12 +2872,12 @@ function Layer() constructor
 			#endregion
 			#region [[Element]]
 				
-				// @function			Layer.ParticleSystem.ParticleEmitter()
-				// @argument			particleType {ParticleType}
-				//						
-				// @description			Construct a Particle Emitter resource in this Particle
-				//						System, used to create particles of a Particles Type in
-				//						a region.
+				//  @function			Layer.ParticleSystem.ParticleEmitter()
+				/// @argument			particleType {ParticleType}
+				///						
+				/// @description		Construct a Particle Emitter resource in this Particle
+				///						System, used to create particles of a Particles Type in
+				///						a region.
 				//						
 				//						Construction types:
 				//						- New element

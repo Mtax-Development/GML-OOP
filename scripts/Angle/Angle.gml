@@ -1,13 +1,13 @@
-/// @function				Angle()
+//  @function				Angle()
 /// @argument				value? {real}
 ///							
 /// @description			Construct a container for a 360-degree Angle, wrapped from 0 to 359.
 ///							
-///							Construction types:
-///							- New constructor
-///							- Default value: {void}
-///							- Empty: {undefined}
-///							- Constructor copy: other {Angle}
+//							Construction types:
+//							- New constructor
+//							- Default value: {void}
+//							- Empty: {undefined}
+//							- Constructor copy: other {Angle}
 function Angle() constructor
 {
 	#region [Methods]

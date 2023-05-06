@@ -1,12 +1,12 @@
-/// @function				ArrayParser()
+//  @function				ArrayParser()
 /// @argument				value? {any:array}
 ///							
 /// @description			Constructs a Handler for parsing arrays.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty array: {void|undefined}
-///							- Constructor copy: other {ArrayParser}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty array: {void|undefined}
+//							- Constructor copy: other {ArrayParser}
 function ArrayParser() constructor
 {
 	#region [Methods]

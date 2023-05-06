@@ -1,4 +1,4 @@
-/// @function				Triangle()
+//  @function				Triangle()
 /// @argument				location1 {Vector2}
 /// @argument				location2 {Vector2}
 /// @argument				location3 {Vector2}
@@ -8,11 +8,11 @@
 /// @argument				outline_alpha? {real}
 ///							
 /// @description			Constructs a Triangle Shape.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void}
-///							- Constructor copy: other {Triangle}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void}
+//							- Constructor copy: other {Triangle}
 function Triangle() constructor
 {
 	#region [Methods]

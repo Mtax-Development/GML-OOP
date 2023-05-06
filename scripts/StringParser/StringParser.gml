@@ -1,12 +1,12 @@
-/// @function				StringParser()
+//  @function				StringParser()
 /// @argument				string {any:string}
 ///							
 /// @description			Constructs a Handler for parsing strings.
-///							
-///							Construction types:
-///							- New constructor
-///							- Empty: {void|undefined}
-///							- Constructor copy: other {StringParser}
+//							
+//							Construction types:
+//							- New constructor
+//							- Empty: {void|undefined}
+//							- Constructor copy: other {StringParser}
 function StringParser() constructor
 {
 	#region [Methods]
