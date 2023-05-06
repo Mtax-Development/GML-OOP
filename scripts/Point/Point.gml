@@ -10,6 +10,7 @@
 //							- Empty: {void}
 //							- Constructor copy: {Point} other
 function Point() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

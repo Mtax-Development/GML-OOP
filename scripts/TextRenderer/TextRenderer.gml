@@ -13,6 +13,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {TextRenderer}
 function TextRenderer() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

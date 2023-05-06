@@ -10,6 +10,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {Room}
 function Room() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

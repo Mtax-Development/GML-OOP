@@ -8,6 +8,7 @@
 //							- Empty array: {void|undefined}
 //							- Constructor copy: other {ArrayParser}
 function ArrayParser() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

@@ -25,6 +25,7 @@
 //							   In any order, it will be reflected in the values of this constructor.
 //							- Constructor copy: other {Color4}
 function Color4() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

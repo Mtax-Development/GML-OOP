@@ -9,6 +9,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {Stack}
 function Stack() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

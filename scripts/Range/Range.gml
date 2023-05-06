@@ -9,6 +9,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Range}
 function Range() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

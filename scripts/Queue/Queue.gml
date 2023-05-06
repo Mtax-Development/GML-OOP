@@ -9,6 +9,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {Queue}
 function Queue() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

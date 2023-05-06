@@ -14,6 +14,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Font}
 function Font() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

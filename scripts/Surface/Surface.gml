@@ -9,6 +9,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Surface}
 function Surface() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

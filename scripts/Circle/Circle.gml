@@ -13,6 +13,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {Circle}
 function Circle() constructor
+/// @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>
