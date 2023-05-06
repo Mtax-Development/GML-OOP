@@ -1101,8 +1101,21 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				argument_original = array_create(argument_count, undefined);
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _property[_i]);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
 				
+				argument_original = array_create(argument_count, undefined);
 				var _i = 0;
 				repeat (argument_count)
 				{
@@ -1540,8 +1553,21 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				argument_original = array_create(argument_count, undefined);
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _property[_i]);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
 				
+				argument_original = array_create(argument_count, undefined);
 				var _i = 0;
 				repeat (argument_count)
 				{
@@ -2385,8 +2411,21 @@ function Layer() constructor
 					#endregion
 					#region [[[Constructor]]]
 						
-						argument_original = array_create(argument_count, undefined);
+						static prototype = {};
+						var _property = variable_struct_get_names(prototype);
+						var _i = 0;
+						repeat (array_length(_property))
+						{
+							var _name = _property[_i];
+							var _value = variable_struct_get(prototype, _property[_i]);
+							
+							variable_struct_set(self, _name, ((is_method(_value))
+															  ? method(self, _value) : _value));
+							
+							++_i;
+						}
 						
+						argument_original = array_create(argument_count, undefined);
 						var _i = 0;
 						repeat (argument_count)
 						{
@@ -2403,8 +2442,21 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				argument_original = array_create(argument_count, undefined);
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _property[_i]);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
 				
+				argument_original = array_create(argument_count, undefined);
 				var _i = 0;
 				repeat (argument_count)
 				{
@@ -3143,8 +3195,21 @@ function Layer() constructor
 					#endregion
 					#region [[[Constructor]]]
 						
-						argument_original = array_create(argument_count, undefined);
+						static prototype = {};
+						var _property = variable_struct_get_names(prototype);
+						var _i = 0;
+						repeat (array_length(_property))
+						{
+							var _name = _property[_i];
+							var _value = variable_struct_get(prototype, _property[_i]);
+							
+							variable_struct_set(self, _name, ((is_method(_value))
+															  ? method(self, _value) : _value));
+							
+							++_i;
+						}
 						
+						argument_original = array_create(argument_count, undefined);
 						var _i = 0;
 						repeat (argument_count)
 						{
@@ -3161,8 +3226,21 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				argument_original = array_create(argument_count, undefined);
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _property[_i]);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
 				
+				argument_original = array_create(argument_count, undefined);
 				var _i = 0;
 				repeat (argument_count)
 				{
@@ -3179,8 +3257,20 @@ function Layer() constructor
 	#endregion
 	#region [Constructor]
 		
-		argument_original = array_create(argument_count, undefined);
+		static prototype = {};
+		var _property = variable_struct_get_names(prototype);
+		var _i = 0;
+		repeat (array_length(_property))
+		{
+			var _name = _property[_i];
+			var _value = variable_struct_get(prototype, _property[_i]);
+			
+			variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
+			
+			++_i;
+		}
 		
+		argument_original = array_create(argument_count, undefined);
 		var _i = 0;
 		repeat (argument_count)
 		{
