@@ -390,7 +390,7 @@ function Vector2() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorRepogrt().report([other, self, "getMaximum()"], _exception);
+					new ErrorReport().report([other, self, "getMaximum()"], _exception);
 				}
 				
 				return undefined;
