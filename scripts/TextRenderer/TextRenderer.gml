@@ -458,4 +458,3 @@ function TextRenderer() constructor
 		
 	#endregion
 }
-

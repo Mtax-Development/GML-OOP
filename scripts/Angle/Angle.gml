@@ -196,4 +196,3 @@ function Angle() constructor
 		
 	#endregion
 }
-

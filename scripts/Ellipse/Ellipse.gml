@@ -480,4 +480,3 @@ function Ellipse() constructor
 		
 	#endregion
 }
-

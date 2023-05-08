@@ -773,4 +773,3 @@ function Stack() constructor
 		
 	#endregion
 }
-

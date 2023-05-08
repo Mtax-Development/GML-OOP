@@ -505,4 +505,3 @@ function Line() constructor
 		
 	#endregion
 }
-

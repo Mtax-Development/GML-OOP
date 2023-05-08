@@ -876,4 +876,3 @@ function PriorityQueue() constructor
 		
 	#endregion
 }
-

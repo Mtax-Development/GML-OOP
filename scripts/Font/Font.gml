@@ -510,4 +510,3 @@ function Font() constructor
 		
 	#endregion
 }
-

@@ -413,4 +413,3 @@ function Scale() constructor
 		
 	#endregion
 }
-

@@ -630,4 +630,3 @@ function Point() constructor
 		
 	#endregion
 }
-

@@ -417,4 +417,3 @@ function SurfaceRenderer() constructor
 		
 	#endregion
 }
-

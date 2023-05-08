@@ -701,4 +701,3 @@ function Circle() constructor
 		
 	#endregion
 }
-

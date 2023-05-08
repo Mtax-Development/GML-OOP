@@ -471,4 +471,3 @@ function Room() constructor
 		
 	#endregion
 }
-

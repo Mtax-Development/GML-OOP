@@ -1588,4 +1588,3 @@ function Vector4() constructor
 		
 	#endregion
 }
-

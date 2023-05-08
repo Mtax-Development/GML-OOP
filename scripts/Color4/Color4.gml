@@ -305,4 +305,3 @@ function Color4() constructor
 		
 	#endregion
 }
-

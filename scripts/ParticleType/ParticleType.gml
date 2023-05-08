@@ -1563,4 +1563,3 @@ function ParticleType() constructor
 		
 	#endregion
 }
-
