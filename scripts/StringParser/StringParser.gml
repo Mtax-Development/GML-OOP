@@ -58,44 +58,56 @@ function StringParser() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			filter... {string|all}
+			/// @argument			value... {any:string|StringParser}
 			/// @returns			{bool}
 			/// @description		Check if at least one occurence of any of the specified filter
-			///						substrings is contained in the string. If the specified filter is
-			///						{all}, check if the string contains every of substrings specified
-			///						after it.
+			///						substrings is contained in the string.
 			static contains = function()
 			{
 				var _string = string(ID);
-				var _i = [0, 0];
+				var _i = 0;
 				repeat (argument_count)
 				{
-					if ((argument[_i[0]] == all) and (argument_count > (_i[0] + 1)))
-					{
-						_i[1] = (_i[0] + 1);
-						repeat (argument_count - _i[1])
-						{
-							if (!((is_string(argument[_i[1]]))
-							and (string_count(argument[_i[1]], _string) > 0)))
-							{
-								return false;
-							}
-							
-							++_i[1];
-						}
-						
-						return true;
-					}
-					else if ((is_string(argument[_i[0]]))
-					and (string_count(argument[_i[0]], _string) > 0))
+					var _value = argument[_i];
+					var _part = ((is_string(_value)) ? _value
+													 : ((instanceof(_value) == "StringParser")
+														? _value.ID : string(_value)));
+					
+					if (string_count(_part, _string) > 0)
 					{
 						return true;
 					}
 					
-					++_i[0];
+					++_i;
 				}
 				
 				return false;
+			}
+			
+			/// @argument			value... {any:string|StringParser}
+			/// @returns			{bool}
+			/// @description		Check if at least one occurrence of every of the specified
+			///						substrings are contained in the string.
+			static containsAll = function()
+			{
+				var _string = string(ID);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					var _value = argument[_i];
+					var _part = ((is_string(_value)) ? _value
+													 : ((instanceof(_value) == "StringParser")
+														? _value.ID : string(_value)));
+					
+					if (!(string_count(_part, _string) > 0))
+					{
+						return false;
+					}
+					
+					++_i;
+				}
+				
+				return true;
 			}
 			
 			/// @argument			substring... {any:string}
