@@ -45,6 +45,16 @@ function StringParser() constructor
 				return (is_string(ID));
 			}
 			
+			/// @argument			value {any:string|StringParser}
+			/// @description		Set the value operated by this parser to the specified value or
+			///						the value of the specified parser by ensuring it is a string.
+			static setParser = function(_value)
+			{
+				ID = ((instanceof(_value) == "StringParser") ? string(_value.ID) : string(_value));
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Getters>
 			
@@ -868,16 +878,6 @@ function StringParser() constructor
 					
 					new ErrorReport().report([other, self, "trim()"], _exception);
 				}
-				
-				return self;
-			}
-			
-			/// @argument			value {any:string|StringParser}
-			/// @description		Stringify and set the specified value or the value of other parser
-			///						as the value of this parser.
-			static set = function(_value)
-			{
-				ID = ((instanceof(_value) == "StringParser") ? string(_value.ID) : string(_value));
 				
 				return self;
 			}

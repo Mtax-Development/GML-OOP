@@ -47,6 +47,29 @@ function ArrayParser() constructor
 				return (is_array(ID));
 			}
 			
+			/// @argument			value {any:array|ArrayParser}
+			/// @description		Set the value operated by this parser to the specified value or
+			///						the value of the specified parser by ensuring it is an array. An
+			///						already existing array will be set as a reference, not as a copy,
+			///						meaning changes in the array will be reflected in any variable or
+			///						parser which has that array assigned.
+			static setParser = function(_value)
+			{
+				try
+				{
+					var _reference = ((instanceof(_value) == "ArrayParser") ? _value.ID : _value);
+					
+					ID = ((is_array(_reference)) ? _reference : [_reference]);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setParser()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			
 			/// @argument			size? {int}
 			/// @argument			value? {any}
 			/// @description		Replace the array with a newly created array of the specified size
@@ -941,28 +964,6 @@ function ArrayParser() constructor
 		#endregion
 		#region <Setters>
 			
-			/// @argument			value {any:array|ArrayParser}
-			/// @description		Set the value of this parser to the specified value by ensuring it
-			///						is an array. If an {ArrayParser} is specified, its value will be
-			///						set as a reference, without copying or changing it. Changes in
-			///						either parser will be then reflected in the other one.
-			static set = function(_value)
-			{
-				try
-				{
-					ID = ((is_array(_value)) ? _value
-											 : ((instanceof(_value) == "ArrayParser")
-												? _value.ID
-												: [_value]));
-				}
-				catch (_exception)
-				{
-					new ErrorReport().report([other, self, "set()"], _exception);
-				}
-				
-				return self;
-			}
-			
 			/// @argument			size {int}
 			/// @argument			value_default? {any}
 			/// @description		Set the number of elements in the array to the specified one.
@@ -1070,7 +1071,7 @@ function ArrayParser() constructor
 			/// @argument			position {int}
 			/// @description		Set a specified position of the array to specified value and any
 			///						empty places before it to 0.
-			static setValue = function(_value, _position)
+			static set = function(_value, _position)
 			{
 				try
 				{
@@ -1078,7 +1079,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setValue()"], _exception);
+					new ErrorReport().report([other, self, "set()"], _exception);
 				}
 				
 				return self;

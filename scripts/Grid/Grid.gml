@@ -759,7 +759,7 @@ function Grid() constructor
 			/// @argument			location... {Vector2}
 			/// @description		Replace any number of values in the specified cells in this Grid
 			///						by the specified values.
-			static setValue = function()
+			static set = function()
 			{
 				var _i = 0;
 				repeat (argument_count div 2)
@@ -773,7 +773,7 @@ function Grid() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "setValue()"], _exception);
+						new ErrorReport().report([other, self, "set()"], _exception);
 					}
 					
 					_i += 2;
