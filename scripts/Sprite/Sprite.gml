@@ -1042,34 +1042,22 @@ function Sprite() constructor
 				return -1;
 			}
 			
-			/// @argument			other {Sprite}
+			/// @argument			other {Sprite|int:sprite}
 			/// @returns			{Sprite} | On error: {noone}
 			/// @description		Multiply the value and saturation of the colors of this Sprite by
-			///						the alpha values of other one and return it as a new Sprite.
+			///						the alpha values of other one and return it as a separate Sprite.
 			static generateAlphaMap = function(_other)
 			{
 				try
 				{
-					if (instanceof(_other) == "Sprite") and (_other.isFunctional())
-					{
-						var _copy_self = new Sprite(ID);
-						var _copy_other = sprite_duplicate(_other.ID);
-						
-						sprite_set_alpha_from_sprite(_copy_self.ID, _copy_other);
-						sprite_delete(_copy_other);
-						
-						return _copy_self;
-					}
-					else
-					{
-						new ErrorReport().report([other, self, "generateAlphaMap()"],
-												 ("Attempted to alter a Sprite using an invalid " +
-												  "one:" + "\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Other: " + "{" + string(_other) + "}"));
-						
-						return noone;
-					}
+					var _sprite_other = ((instanceof(_other) == "Sprite") ? _other.ID : _other);
+					var _copy_self = sprite_duplicate(ID);
+					var _copy_other = sprite_duplicate(_sprite_other);
+					
+					sprite_set_alpha_from_sprite(_copy_self, _copy_other);
+					sprite_delete(_copy_other);
+					
+					return new Sprite(_copy_self);
 				}
 				catch (_exception)
 				{
