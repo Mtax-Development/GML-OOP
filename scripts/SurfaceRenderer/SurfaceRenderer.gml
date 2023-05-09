@@ -189,7 +189,7 @@ function SurfaceRenderer() constructor
 				var _location_original = location;
 				var _scale_original = scale;
 				var _angle_original = angle;
-				var _color_original = color;	
+				var _color_original = color;
 				var _alpha_original = alpha;
 				var _part_original = part;
 				var _origin_original = origin;

@@ -305,7 +305,7 @@ function ParticleType() constructor
 					blend_additive = false;
 					color = c_white;
 					color_type = "color";
-					alpha = [1, undefined, undefined];	
+					alpha = [1, undefined, undefined];
 					step_type = undefined;
 					step_number = 0;
 					death_type = undefined;

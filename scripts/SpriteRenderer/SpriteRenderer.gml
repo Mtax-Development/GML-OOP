@@ -197,7 +197,7 @@ function SpriteRenderer() constructor
 				var _frame_original = frame;
 				var _scale_original = scale;
 				var _angle_original = angle;
-				var _color_original = color;	
+				var _color_original = color;
 				var _alpha_original = alpha;
 				var _part_original = part;
 				var _origin_original = origin;
