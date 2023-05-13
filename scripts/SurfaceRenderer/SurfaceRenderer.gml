@@ -397,7 +397,7 @@ function SurfaceRenderer() constructor
 		repeat (array_length(_property))
 		{
 			var _name = _property[_i];
-			var _value = variable_struct_get(prototype, _property[_i]);
+			var _value = variable_struct_get(prototype, _name);
 			
 			variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
 			
