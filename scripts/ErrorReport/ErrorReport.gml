@@ -11,8 +11,8 @@ function ErrorReport() constructor
 		#region [[Configurable variables - General]]
 			
 			/// @type			{function}
-			/// @description	The function called upon a report, called with its description as a
-			///					string in only argument.
+			/// @description	The function called upon a report, called with {string} description
+			///					of the error as the only argument.
 			static reportFunction = show_debug_message;
 			
 			/// @type			{int|undefined}
@@ -20,7 +20,7 @@ function ErrorReport() constructor
 			///					compared to the number of saved error data structs.
 			static maximumReports = undefined;
 			
-			/// @type			{struct[]}
+			/// @type			{struct[]|undefined}
 			/// @description	An array holding the details of the reports.
 			static errorData = [];
 			
@@ -50,162 +50,38 @@ function ErrorReport() constructor
 		#region <Execution>
 			
 			/// @argument			error_location? {int:instance|struct|string|[]}
-			/// @argument			error_text? {struct:exception|string}
+			/// @argument			error_detail? {struct:exception|string}
 			/// @description		Create an error report, collect its data and log it with the
 			///						function that is assigned to appropriate constructor variable.
 			static report = function(_error_location = other, _error_detail = "Unexpected Error")
 			{
-				if (!is_array(_error_location))
-				{
-					_error_location = [_error_location];
-				}
-				
-				var _text_location = "";
-				var _error_location_count = array_length(_error_location);
-				var _i = 0;
-				repeat (_error_location_count)
-				{
-					var _location_part = _error_location[_i];
-					var _location_object_name;
-					
-					if (_location_part == noone)
-					{
-						_location_object_name = "noone";
-					}
-					else if (is_struct(_location_part))
-					{
-						_location_object_name = instanceof(_location_part);
-					}
-					else if (instanceof(_location_part) == "instance")
-					{
-						//|Instance or room {self} reference. Will exist as pseudo-struct even if
-						// destroyed.
-						_location_object_name = ((_location_part.id == 0)
-												 ? room_get_name(room)
-												 : object_get_name(_location_part.object_index));
-					}
-					else if (typeof(_location_part) == "ref")
-					{
-						//|Instance or room id reference.
-						_location_object_name = ((_location_part == 0)
-												 ? room_get_name(room)
-												 : ((instance_exists(_location_part))
-													? object_get_name(_location_part.object_index)
-													: ("<" + "destroyed instance: " +
-													   string(_location_part) + ">")));
-					}
-					else
-					{
-						_location_object_name = string(_location_part);
-					}
-					
-					if (string_count((_location_object_name + "."), _text_location) <= 0)
-					{
-						_text_location += (_location_object_name + (((_i + 1) < _error_location_count)
-																	? "." : ""));
-					}
-					
-					++_i;
-				}
-				
-				var _text_reportType = "Error";
-				var _tabulation = string_repeat(" ", 4);
 				var _callstack_raw = debug_get_callstack();
 				var _callstack = [];
 				array_copy(_callstack, 0, _callstack_raw, 1, (array_length(_callstack_raw) - 2)); 
-				var _reportData = {type: _text_reportType, location: _error_location,
-								   detail: _error_detail, callstack: _callstack};
-				//+TODO: Make this a constructor
+				var _reportData = new ReportData(_error_location, _error_detail, _callstack,
+												 new DateTime(date_current_datetime()));
+				var _errorData_isArray = is_array(errorData);
+				var _errorData_count = 0;
 				
-				var _errorData_isArray, _errorData_count;
-				
-				if (is_array(errorData))
+				if (_errorData_isArray)
 				{
 					array_push(errorData, _reportData);
-					
-					_errorData_isArray = true;
 					_errorData_count = array_length(errorData);
 				}
 				
-				var _text_callstack = "";
-				var _i = 0;
-				repeat (array_length(_callstack))
-				{
-					_text_callstack += (_tabulation + string(_callstack[_i]) + "\n");
-					
-					++_i;
-				}
-				
-				var _text_detail = undefined;
-				
-				if (is_struct(_error_detail))
-				{
-					if (is_string(variable_struct_get(_error_detail, "message")))
-					{
-						var _error_message_length_original = string_length(_error_detail.message);
-						
-						if (_error_message_length_original > 1)
-						{
-							_text_detail = _error_detail.message;
-							
-							var _position_space_first = string_pos(" ", _text_detail);
-							var _position_space_second = string_pos_ext(" ", _text_detail,
-																		_position_space_first);
-							
-							if ((_position_space_first > 0)
-							and (_position_space_second > _position_space_first))
-							{
-								var _word_second = string_copy(_text_detail,
-															   (_position_space_first + 1),
-															   (_position_space_second -
-															    _position_space_first - 1));
-								
-								if (_word_second != "argument")
-								{
-									//|Capitalize the first letter if it is not in a message which
-									// might start with a function name.
-									_text_detail = (string_upper(string_char_at(_text_detail, 1)) +
-													string_copy(_text_detail, 2,
-																(_error_message_length_original - 1)));
-								}
-							}
-							
-							if ((_error_message_length_original > 9)
-							and (string_copy(string_lower(_text_detail), 1, 9) == "variable "))
-							{
-								var _position_bracket_open = string_pos("(", _text_detail);
-								var _position_bracket_close = string_pos(")", _text_detail);
-								
-								if ((_position_bracket_open > 0) and (_position_bracket_close > 0)
-								and ((_position_bracket_close - _position_bracket_open) > 0))
-								{
-									var _gibberish = string_copy(_text_detail, _position_bracket_open,
-																 (_position_bracket_close -
-																  _position_bracket_open + 1));
-									_text_detail = string_replace(_text_detail, _gibberish, "");
-								}
-							}
-							
-							var _char_last = string_char_at(_text_detail, string_length(_text_detail));
-							
-							if ((_char_last != "") and (_char_last != "."))
-							{
-								_text_detail += ".";
-							}
-						}
-					}
-				}
-				
-				_text_detail ??= string(_error_detail);
-				_text_detail = string_replace_all(_text_detail, "\n", ("\n" + _tabulation));
-				var _text_time = date_time_string(date_current_datetime());
+				var _tabulation = string_repeat(" ", 4);
+				var _text_location = string_replace_all(_reportData.formatLocation(), "\n", " ");
+				var _text_detail = string_replace_all(_reportData.formatDetail(), "\n",
+													  ("\n" + _tabulation));
+				var _text_callstack = (_tabulation + string_replace_all(_reportData.formatCallstack(),
+																		"\n", ("\n" + _tabulation)));
+				var _text_time = _reportData.formatTime();
 				var _text_separator = string_repeat("#", 92);
 				var _report = (_text_separator + "\n" +
-							   _text_reportType + " @ " + _text_location + " @ " + "[" +
-							   _text_time + "]:" + "\n" +
+							   "Error" + " @ " + _text_location + " @ " +  _text_time + ":" + "\n" +
 							   _tabulation + _text_detail + "\n\n" +
 							   "Callstack: " + "\n" +
-							   _text_callstack +
+							   _text_callstack + "\n" +
 							   _text_separator);
 				
 				if ((is_real(reportFunction) or (is_method(reportFunction)))
@@ -213,9 +89,10 @@ function ErrorReport() constructor
 				and (_errorData_count <= maximumReports))))
 				{
 					if (!((_errorData_isArray) and (_errorData_count > 1)
+					and (is_array(errorData[$ "callstack"]))
+					and (array_length(errorData.callstack) > 0)
 					and (errorData[(_errorData_count - 1)].callstack[0] == _callstack[0])))
 					{
-						//+TODO: Constructor-based instance check once it's a constructor.
 						//|Call the report function, unless the last report happened due to an error
 						// at the same line of code as this one.
 						self.reportFunction(_report);
@@ -270,6 +147,328 @@ function ErrorReport() constructor
 			}
 			
 		#endregion
+	#endregion
+	#region [Elements]
+		
+		//  @function			ErrorReport.ReportData()
+		/// @argument			location {int:instance|struct|string|[]}
+		/// @argument			detail {struct:exception|string}
+		/// @argument			callstack {string[]}
+		/// @argument			time? {DateTime|string}
+		///						
+		/// @description		A container constructor storing information about a reported error.
+		//						
+		//						Construction types:
+		//						- New element
+		function ReportData() constructor
+		{
+			#region [[Methods]]
+				#region <<Management>>
+					
+					/// @description		Initialize the constructor.
+					static construct = function()
+					{
+						//|Construction type: New element.
+						location = argument[0];
+						detail = argument[1];
+						callstack = argument[2];
+						time = ((argument_count > 3) ? argument[3] : undefined);
+						
+						return self;
+					}
+					
+					/// @returns			{bool}
+					/// @description		Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((location != undefined) and (((is_struct(detail))
+								and (is_string(detail[$ "message"]))
+								and (is_string(detail[$ "longMessage"]))
+								and (is_string(detail[$ "script"]))
+								and (is_array(detail[$ "stacktrace"]))
+								and (array_length(detail.stacktrace) > 0)) or (is_string(detail)))
+								and (is_array(callstack)) and (array_length(callstack) > 0));
+					}
+					
+				#endregion
+				#region <<Getters>>
+					
+					/// @returns			{string}
+					/// @description		Create a string representing readable location in code
+					///						where the error occurred.
+					static formatLocation = function()
+					{
+						var _text_location = "";
+						var _error_location = ((is_array(location)) ? location : [location]);
+						var _error_location_count = array_length(_error_location);
+						var _i = 0;
+						repeat (_error_location_count)
+						{
+							var _location_part = _error_location[_i];
+							var _location_object_name;
+							
+							if (_location_part == noone)
+							{
+								_location_object_name = "noone";
+							}
+							else if (is_struct(_location_part))
+							{
+								_location_object_name = instanceof(_location_part);
+							}
+							else if (instanceof(_location_part) == "instance")
+							{
+								//|Instance or room {self} reference. Will exist as pseudo-struct even
+								// if destroyed.
+								_location_object_name = ((_location_part.id == 0)
+														 ? room_get_name(room)
+														 : object_get_name(_location_part
+																			.object_index));
+							}
+							else if (typeof(_location_part) == "ref")
+							{
+								//|Instance or room id reference.
+								_location_object_name = ((_location_part == 0)
+														 ? room_get_name(room)
+														 : ((instance_exists(_location_part))
+															? object_get_name(_location_part
+																			   .object_index)
+															: ("<" + "destroyed instance: " +
+															   string(_location_part) + ">")));
+							}
+							else if (is_string(_location_part))
+							{
+								_location_object_name = _location_part;
+							}
+							else
+							{
+								_location_object_name = string(_location_part);
+							}
+							
+							if (string_count((_location_object_name + "."), _text_location) <= 0)
+							{
+								_text_location += (_location_object_name +
+												   (((_i + 1) < _error_location_count) ? "." : ""));
+							}
+							
+							++_i;
+						}
+						
+						return (((location != undefined) and (string_length(_text_location) > 0))
+								? _text_location : "Unknown location");
+					}
+					
+					/// @returns			{string}
+					/// @description		Return the string describing the detail of the error or
+					///						parsed error message if it is an exception struct.
+					static formatDetail = function()
+					{
+						var _text_detail = undefined;
+						
+						if ((is_struct(detail))
+						and (is_string(variable_struct_get(detail, "message"))))
+						{
+							var _error_message_length_original = string_length(detail.message);
+							
+							if (_error_message_length_original > 1)
+							{
+								_text_detail = detail.message;
+								
+								var _position_space_first = string_pos(" ", _text_detail);
+								var _position_space_second = string_pos_ext(" ", _text_detail,
+																			_position_space_first);
+								
+								if ((_position_space_first > 0)
+								and (_position_space_second > _position_space_first))
+								{
+									var _word_second = string_copy(_text_detail,
+																	(_position_space_first + 1),
+																	(_position_space_second -
+																	_position_space_first - 1));
+									
+									if (_word_second != "argument")
+									{
+										//|Capitalize the first letter if it is not in a message which
+										// might start with a function name.
+										_text_detail = (string_upper(string_char_at(_text_detail, 1)) +
+														string_copy(_text_detail, 2,
+																	(_error_message_length_original -
+																	 1)));
+									}
+								}
+							
+								if ((_error_message_length_original > 9)
+								and (string_copy(string_lower(_text_detail), 1, 9) == "variable "))
+								{
+									var _position_bracket_open = string_pos("(", _text_detail);
+									var _position_bracket_close = string_pos(")", _text_detail);
+									
+									if ((_position_bracket_open > 0)and (_position_bracket_close > 0)
+									and ((_position_bracket_close - _position_bracket_open) > 0))
+									{
+										var _gibberish = string_copy(_text_detail,
+																	  _position_bracket_open,
+																	 (_position_bracket_close -
+																	  _position_bracket_open + 1));
+										_text_detail = string_replace(_text_detail, _gibberish, "");
+									}
+								}
+								
+								var _char_last = string_char_at(_text_detail,
+																string_length(_text_detail));
+								
+								if ((_char_last != "") and (_char_last != "."))
+								{
+									_text_detail += ".";
+								}
+							}
+						}
+						
+						return (_text_detail ?? ((detail != undefined)
+												 ? string(detail) : "Unexpected Error"));
+					}
+					
+					/// @argument			lengthLimit? {int|all}
+					/// @returns			{string}
+					/// @description		Return the string representing entire or part of the error
+					///						callstack, containing each call in a separate line.
+					static formatCallstack = function(_lengthLimit = all)
+					{
+						var _text_callstack = "";
+						var _callstack_size = ((is_array(callstack)) ? array_length(callstack) : 0);
+						var _count = ((_lengthLimit == all) ? _callstack_size : min(_lengthLimit,
+																					_callstack_size));
+						var _i = 0;
+						repeat (_count)
+						{
+							_text_callstack += (((_i != 0) ? "\n" : "") + string(callstack[_i]));
+							
+							++_i;
+						}
+						
+						if (string_length(_text_callstack) > 0)
+						{
+							if (_callstack_size > _count)
+							{
+								_text_callstack += ("\n" + "...");
+							}
+							
+							return _text_callstack;
+						}
+						else
+						{
+							return "Unknown callstack";
+						}
+					}
+					
+					/// @returns			{string}
+					/// @description		Return the string representing the time at which the error
+					///						occurred, separated for readability.
+					static formatTime = function()
+					{
+						return ("[" + (((instanceof(time) == "DateTime") and (time.isFunctional()))
+									  ?  time.toStringTime()
+									  : ((is_string(time)) ? time : "Unknown time")) +
+								"]");
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					/// @argument			multiline? {bool}
+					/// @argument			detailLength? {int|all}
+					/// @argument			callstackLength? {int|all}
+					/// @argument			mark_separator? {string}
+					/// @argument			mark_cut? {string}
+					/// @argument			mark_timeSeparator? {string}
+					/// @returns			{string}
+					/// @description		Create a string representing this constructor.
+					///						Overrides the string() conversion.
+					///						Content will be represented with error information.
+					static toString = function(_multiline = false, _detailLength = 30,
+											   _callstackLength = 10, _mark_separator = " @ ",
+											   _mark_cut = "...", _mark_timeSeparator = ": ")
+					{
+						var _constructorName = "ErrorReport.ReportData";
+						
+						if (self.isFunctional())
+						{
+							var _text_location = self.formatLocation();
+							var _text_detail = self.formatDetail();
+							var _text_time = ((time != undefined) ? self.formatTime()
+																  : "Unknown time");
+							
+							if (_detailLength != all)
+							{
+								var _mark_cut_length = string_length(_mark_cut);
+								var _detail_lengthLimit_cut = (_detailLength + _mark_cut_length);
+								
+								if (string_length(_text_detail) > _detail_lengthLimit_cut)
+								{
+									_text_detail = (string_copy(_text_detail, 1, _detailLength) +
+													_mark_cut);
+								}
+							}
+							
+							if (_multiline)
+							{
+								var _mark_linebreak = "\n";
+								
+								return  ("Location: " + _text_location + _mark_linebreak +
+										 "Detail: " + _text_detail + _mark_linebreak +
+										 "Time: " + ((time != undefined) ? self.formatTime()
+																		 : "Unknown") +
+													_mark_linebreak +
+										 "Callstack: " + self.formatCallstack(_callstackLength));
+							}
+							else
+							{
+								return (_constructorName + "(" +
+										string_replace_all(_text_location, "\n", " ") +
+										_mark_separator +
+										((time != undefined) ? (self.formatTime() +
+																_mark_timeSeparator)
+															 : "") +
+										+ _text_detail + ")");
+							}
+						}
+						else
+						{
+							return (_constructorName + "<>");
+						}
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _name);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
+				
+				argument_original = array_create(argument_count, undefined);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					argument_original[_i] = argument[_i];
+					
+					++_i;
+				}
+				
+				script_execute_ext(method_get_index(self.construct), argument_original);
+				
+			#endregion
+		}
+		
 	#endregion
 	#region [Constructor]
 		
