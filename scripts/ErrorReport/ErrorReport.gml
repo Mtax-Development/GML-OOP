@@ -16,12 +16,12 @@ function ErrorReport() constructor
 			static reportFunction = show_debug_message;
 			
 			/// @type			{int|undefined}
-			/// @description	Maximum number of times the raporting function will be called,
-			///					compared to the number of saved error data structs.
+			/// @description	Maximum number of times the reporting function will be called,
+			///					compared to the number of saved report data.
 			static maximumReports = undefined;
 			
-			/// @type			{struct[]|undefined}
-			/// @description	An array holding the details of the reports.
+			/// @type			{ErrorReport.ReportData[]|undefined}
+			/// @description	Array containing details of all reports.
 			static errorData = [];
 			
 		#endregion
