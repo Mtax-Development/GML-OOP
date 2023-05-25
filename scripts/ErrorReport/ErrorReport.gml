@@ -20,6 +20,11 @@ function ErrorReport() constructor
 			///					compared to the number of saved report data.
 			static maximumReports = undefined;
 			
+			/// @type			{bool}
+			/// @description	Whether unique reports are enforced by first checking if a report with
+			///					the same description was already created in the same location.
+			static ignoreDuplicateReports = true;
+			
 			/// @type			{ErrorReport.ReportData[]|undefined}
 			/// @description	Array containing details of all reports.
 			static errorData = [];
@@ -89,15 +94,21 @@ function ErrorReport() constructor
 				and ((maximumReports == undefined) or ((_errorData_isArray)
 				and (_errorData_count <= maximumReports))))
 				{
-					if (!((_errorData_isArray) and (_errorData_count > 1)
-					and (is_array(errorData[$ "callstack"]))
-					and (array_length(errorData.callstack) > 0)
-					and (errorData[(_errorData_count - 1)].callstack[0] == _callstack[0])))
+					if ((ignoreDuplicateReports) and (_errorData_isArray) and (_errorData_count > 1))
 					{
-						//|Call the report function, unless the last report happened due to an error
-						// at the same line of code as this one.
-						self.reportFunction(_report);
+						var _i = (_errorData_count - 2);
+						repeat (_i)
+						{
+							if (_reportData.equals(errorData[_i]))
+							{
+								return _reportData;
+							}
+							
+							--_i;
+						}
 					}
+					
+					self.reportFunction(_report);
 				}
 				
 				return _reportData;
@@ -195,6 +206,40 @@ function ErrorReport() constructor
 					
 				#endregion
 				#region <<Getters>>
+					
+					/// @argument			{ErrorReport.ReportData} other
+					/// @returns			{bool}
+					/// @description		Check if description and callstack of this error are the
+					///						same as of the specified one.
+					static equals = function(_other)
+					{
+						if ((string_copy(instanceof(_other), 1, 10) == "ReportData")
+						and (detail == _other.detail))
+						{
+							if ((is_array(callstack)) and (is_array(_other.callstack)))
+							{
+								var _callstack_size = array_length(callstack);
+								
+								if (_callstack_size == array_length(_other.callstack))
+								{
+									var _i = 0;
+									repeat (_callstack_size)
+									{
+										if (callstack[_i] != _other.callstack[_i])
+										{
+											return false;
+										}
+										
+										++_i;
+									}
+								}
+							}
+							
+							return true;
+						}
+						
+						return false;
+					}
 					
 					/// @returns			{string}
 					/// @description		Create a string representing readable location in code
