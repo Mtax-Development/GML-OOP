@@ -51,8 +51,9 @@ function ErrorReport() constructor
 			
 			/// @argument			error_location? {int:instance|struct|string|[]}
 			/// @argument			error_detail? {struct:exception|string}
-			/// @description		Create an error report, collect its data and log it with the
-			///						function that is assigned to appropriate constructor variable.
+			/// @returns			{ErrorReport.ReportData}
+			/// @description		Create an error report, log its data with the function assigned to
+			///						the appropriate static constructor variable and return that data.
 			static report = function(_error_location = other, _error_detail = "Unexpected Error")
 			{
 				var _callstack_raw = debug_get_callstack();
@@ -98,6 +99,8 @@ function ErrorReport() constructor
 						self.reportFunction(_report);
 					}
 				}
+				
+				return _reportData;
 			}
 			
 		#endregion
