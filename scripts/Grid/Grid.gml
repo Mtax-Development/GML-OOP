@@ -682,7 +682,7 @@ function Grid() constructor
 			{
 				try
 				{
-					ds_grid_resize(ID, size.x, size.y);
+					ds_grid_resize(ID, _size.x, _size.y);
 					
 					size = ((instanceof(size) == "Vector2") ? size.set(_size) : new Vector2(_size));
 				}
