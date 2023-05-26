@@ -172,11 +172,10 @@ function RangedValue() constructor
 			{
 				try
 				{
-					var _result = value;
-					_result += _value;
+					var _result = (value + _value);
 					var _rangeDifference = (range.maximum - range.minimum);
-					_result = (((((value - range.minimum) mod _rangeDifference) + _rangeDifference) 
-							 mod _rangeDifference) + range.minimum);
+					_result = (((((_result - range.minimum) mod _rangeDifference) + _rangeDifference) 
+								mod _rangeDifference) + range.minimum);
 					
 					if (_inclusive)
 					{
