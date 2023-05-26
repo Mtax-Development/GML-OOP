@@ -1080,24 +1080,24 @@ function Vector4() constructor
 					switch (instanceof(_value))
 					{
 						case "Vector4":
-							x1 -= _value.x1;
-							y1 -= _value.y1;
-							x2 += _value.x2;
-							y2 += _value.y2;
+							_result_x1 -= _value.x1;
+							_result_y1 -= _value.y1;
+							_result_x2 += _value.x2;
+							_result_y2 += _value.y2;
 						break;
 						
 						case "Vector2":
-							x1 -= _value.x;
-							y1 -= _value.y;
-							x2 += _value.x;
-							y2 += _value.y;
+							_result_x1 -= _value.x;
+							_result_y1 -= _value.y;
+							_result_x2 += _value.x;
+							_result_y2 += _value.y;
 						break;
 						
 						default:
-							x1 -= _value;
-							y1 -= _value;
-							x2 += _value;
-							y2 += _value;
+							_result_x1 -= _value;
+							_result_y1 -= _value;
+							_result_x2 += _value;
+							_result_y2 += _value;
 						break;
 					}
 					
