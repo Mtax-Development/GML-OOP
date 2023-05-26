@@ -10,33 +10,38 @@ function ErrorReport() constructor
 	#region [Static variables]
 		#region [[Configurable variables - General]]
 			
-			/// @type			{function}
+			/// @type			{function}?
 			/// @description	The function called upon a report, called with {string} description
 			///					of the error as the only argument.
 			static reportFunction = show_debug_message;
 			
-			/// @type			{int|undefined}
-			/// @description	Maximum number of times the reporting function will be called,
-			///					compared to the number of saved report data.
-			static maximumReports = undefined;
-			
-			/// @type			{bool}
-			/// @description	Whether unique reports are enforced by first checking if a report with
-			///					the same description was already created in the same location.
-			static ignoreDuplicateReports = true;
-			
-			/// @type			{ErrorReport.ReportData[]|undefined}
-			/// @description	Array containing details of all reports.
+			/// @type			{ErrorReport.ReportData[]}?
+			/// @description	Details of all previously created reports.
 			static errorData = [];
+			
+			/// @type			{int}?
+			/// @description	Maximum number of times the reporting function will be called, compared
+			///					to the number of saved report data.
+			static reportFunctionLimit = undefined;
+			
+			/// @type			{int}?
+			/// @description	Number of collected error entries after which error data will not be
+			///					automatically saved or reported to prevent memory leaks.
+			static errorDataLimit = 250;
+			
+			/// @type			{bool}?
+			/// @description	Whether unique report function calls are enforced by first checking if
+			///					a report with the same description and callstack was already created.
+			static allowDuplicateReporting = false;
 			
 		#endregion
 		#region [[Configurable variables - Specific]]
 			
-			/// @type			{string[]}
-			/// @example		{["Constructor.method()"]}
-			/// @description	An array holding strings with names of methods that will not be
-			///					reported upon error.
-			static ignoredError_constructorMethod = undefined;
+			/// @type			{string[]}?
+			/// @example		["ConstructorName.methodName()"]
+			/// @description	Contains strings of locations after formatting, for which the report
+			///					function will not be called upon an error.
+			static ignoredErrorLocation = undefined;
 			
 		#endregion
 	#endregion
@@ -47,7 +52,7 @@ function ErrorReport() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((maximumReports == undefined) or (maximumReports > 0))
+				return (((reportFunctionLimit == undefined) or (reportFunctionLimit > 0))
 						and (is_array(errorData)));
 			}
 			
@@ -71,12 +76,37 @@ function ErrorReport() constructor
 				
 				if (_errorData_isArray)
 				{
-					array_push(errorData, _reportData);
-					_errorData_count = array_length(errorData);
+					var _errorData_count = array_length(errorData);
+					
+					if ((is_real(errorDataLimit)) and (_errorData_count >= errorDataLimit))
+					{
+						return _reportData;
+					}
+					else
+					{
+						array_push(errorData, _reportData);
+						++_errorData_count;
+					}
+				}
+				
+				var _location_formatted = _reportData.formatLocation();
+				
+				if (is_array(ignoredErrorLocation))
+				{
+					var _i = 0;
+					repeat (array_length(ignoredErrorLocation))
+					{
+						if (ignoredErrorLocation[_i] == _location_formatted)
+						{
+							return _reportData;
+						}
+						
+						++_i;
+					}
 				}
 				
 				var _tabulation = string_repeat(" ", 4);
-				var _text_location = string_replace_all(_reportData.formatLocation(), "\n", " ");
+				var _text_location = string_replace_all(_location_formatted, "\n", " ");
 				var _text_detail = string_replace_all(_reportData.formatDetail(), "\n",
 													  ("\n" + _tabulation));
 				var _text_callstack = (_tabulation + string_replace_all(_reportData.formatCallstack(),
@@ -91,10 +121,10 @@ function ErrorReport() constructor
 							   _text_separator);
 				
 				if ((is_real(reportFunction) or (is_method(reportFunction)))
-				and ((maximumReports == undefined) or ((_errorData_isArray)
-				and (_errorData_count <= maximumReports))))
+				and ((reportFunctionLimit == undefined) or ((_errorData_isArray)
+				and (_errorData_count <= reportFunctionLimit))))
 				{
-					if ((ignoreDuplicateReports) and (_errorData_isArray) and (_errorData_count > 1))
+					if ((!allowDuplicateReporting) and (_errorData_isArray) and (_errorData_count > 1))
 					{
 						var _i = (_errorData_count - 2);
 						repeat (_i)
@@ -128,15 +158,25 @@ function ErrorReport() constructor
 				if (_full)
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					var _string_reportFunction = ((reportFunction != undefined)
-												  ? (script_get_name(reportFunction) + "()")
-												  : string(reportFunction));
-					var _string_errorData_length = ((is_array(errorData))
-													? string(array_length(errorData))
-													: string(undefined));
-					var _string = ("Report Function: " + _string_reportFunction + _mark_separator +
-								   "Error Count: " + _string_errorData_length + _mark_separator +
-								   "Maximum Reports: " + string(maximumReports));
+					var _text_reportFunction = ((reportFunction != undefined)
+												? (script_get_name(reportFunction) + "()")
+												: string(reportFunction));
+					var _text_errorData_length = ((is_array(errorData))
+												  ? string(array_length(errorData))
+												  : string(undefined));
+					var _text_ignoredErrorLocationCount = ((is_array(ignoredErrorLocation))
+														   ? string(array_length(ignoredErrorLocation))
+														   : string(ignoredErrorLocation));
+					var _text_errorDataLimit = ((is_real(errorDataLimit)) ?
+												(" / " + string(errorDataLimit)) : "");
+					var _string = ("Report Function: " + _text_reportFunction + _mark_separator +
+								   "Error Data Saved: " + _text_errorData_length +
+														  _text_errorDataLimit + _mark_separator +
+								   "Report Function Limit: " + string(reportFunctionLimit) +
+															   _mark_separator +
+								   "Allow Duplicate Reporting: " + string(allowDuplicateReporting) +
+																   _mark_separator +
+								   "Ignored Error Location Count: " + _text_ignoredErrorLocationCount);
 					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 				}
