@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMLinuxOptions",
+  "resourceVersion": "1.0",
+  "name": "Linux",
   "option_linux_display_name": "GML-OOP",
   "option_linux_version": "0.0.0",
   "option_linux_maintainer_email": "https://github.com/Mtax-Development",
@@ -18,8 +21,4 @@
   "option_linux_texture_page": "2048x2048",
   "option_linux_enable_steam": false,
   "option_linux_disable_sandbox": false,
-  "resourceVersion": "1.0",
-  "name": "Linux",
-  "tags": [],
-  "resourceType": "GMLinuxOptions",
 }

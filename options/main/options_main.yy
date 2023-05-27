@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMMainOptions",
+  "resourceVersion": "1.4",
+  "name": "Main",
   "option_gameguid": "cc6f6905-b342-42ec-b12c-b258b8020fcc",
   "option_gameid": "0",
   "option_game_speed": 60,
@@ -9,14 +12,9 @@
   "option_sci_usesci": false,
   "option_author": "https://github.com/Mtax-Development/GML-OOP",
   "option_collision_compatibility": false,
-  "option_lastchanged": "",
   "option_copy_on_write_enabled": false,
   "option_spine_licence": false,
   "option_template_image": "${base_options_dir}/main/template_image.png",
   "option_template_icon": "${base_options_dir}/main/template_icon.png",
   "option_template_description": "",
-  "resourceVersion": "1.4",
-  "name": "Main",
-  "tags": [],
-  "resourceType": "GMMainOptions",
 }

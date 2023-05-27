@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMAmazonFireOptions",
+  "resourceVersion": "1.0",
+  "name": "Amazon Fire",
   "option_amazonfire_sync_android": false,
   "option_amazonfire_display_name": "GML-OOP",
   "option_amazonfire_version": "0.0.0.0",
@@ -42,8 +45,4 @@
   "option_amazonfire_permission_bluetooth": false,
   "option_amazonfire_permission_record_audio": false,
   "option_amazonfire_application_tag_inject": "",
-  "resourceVersion": "1.0",
-  "name": "Amazon Fire",
-  "tags": [],
-  "resourceType": "GMAmazonFireOptions",
 }
