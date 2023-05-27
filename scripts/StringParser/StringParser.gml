@@ -829,7 +829,7 @@ function StringParser() constructor
 			///						string until a different character is detected. If no characters
 			///						are specified, whitespace will be removed instead. Either side of
 			///						the string can be specified to not be affected.
-			static trim = function(_trimmedChar, _keep_start = false, _keep_end = false)
+			static trim = function(_trimmedChar, _keep_left = false, _keep_right = false)
 			{
 				try
 				{
@@ -842,8 +842,8 @@ function StringParser() constructor
 																   : self.charIsWhitespace);
 					var _string_new_start = 1;
 					var _string_new_end = (_string_length + 1);
-					var _start_set = _keep_start;
-					var _end_set = _keep_end;
+					var _start_set = _keep_left;
+					var _end_set = _keep_right;
 					var _position_forward = 1;
 					repeat (_string_length)
 					{
@@ -866,22 +866,22 @@ function StringParser() constructor
 							ID = string_copy(ID, _string_new_start,
 											 (_string_new_end - _string_new_start));
 							
-							return self;
+							break;
 						}
 						else if (_position_forward >= _string_new_end)
 						{
 							ID = string_copy(ID, _position_forward,
 											 (_string_new_end - _string_new_start));
 							
-							if ((string_length(ID) == 1) and (__charCheck(1, _trimmedChar)))
-							{
-								ID = "";
-							}
-							
-							return self;
+							break;
 						}
 						
 						++_position_forward;
+					}
+					
+					if ((string_length(ID) == 1) and (__charCheck(1, _trimmedChar)))
+					{
+						ID = "";
 					}
 				}
 				catch (_exception)
