@@ -1028,13 +1028,44 @@ function StringParser() constructor
 				}
 			}
 			
+			/// @argument			decimalDotCount? {int|noone}
 			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the string as a number if it contains any numbers.
-			static toNumber = function()
+			/// @description		Return the string as a number if it contains numerical characters.
+			///						A counter for the dot character can be specified to treat all
+			///						remaining number characters as decimal places after that many dot
+			///						characters were found in the string. Specifying it as 0 will treat
+			///						the entire number as decimal. Specifying it as {noone} will treat
+			///						the entire number as integer.
+			static toNumber = function(_decimalDotCount = 1)
 			{
 				try
 				{
-					return real(string_digits(string(ID)));
+					var _string = string(ID);
+					var _string_number = ((_decimalDotCount == 0) ? "." : "");
+					var _dotCount_current = 0;
+					var _i = 1;
+					repeat (string_length(_string))
+					{
+						var _char = string_char_at(_string, _i);
+						
+						if (string_length(string_digits(_char)) > 0)
+						{
+							_string_number += _char;
+						}
+						else if (_char == ".")
+						{
+							++_dotCount_current;
+							
+							if (_dotCount_current == _decimalDotCount)
+							{
+								_string_number += ".";
+							}
+						}
+						
+						++_i;
+					}
+					
+					return real(_string_number);
 				}
 				catch (_exception)
 				{
