@@ -403,14 +403,14 @@
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeCreation.argument = [[_result, _value[0]]];
+	constructor.event.beforeCreation.argument = [_result, _value[0]];
 	
 	constructor.event.afterCreation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterCreation.argument = [[_result, _value[1]]];
+	constructor.event.afterCreation.argument = [_result, _value[1]];
 	
 	constructor.destroy();
 	constructor.create();
@@ -436,28 +436,28 @@
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeActivation.argument = [[_result, _value[0]]];
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
 	
 	constructor.event.afterActivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterActivation.argument = [[_result, _value[1]]];
+	constructor.event.afterActivation.argument = [_result, _value[1]];
 	
 	constructor.event.beforeDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.beforeDeactivation.argument = [[_result, _value[2]]];
+	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
 	
 	constructor.event.afterDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterDeactivation.argument = [[_result, _value[3]]];
+	constructor.event.afterDeactivation.argument = [_result, _value[3]];
 	
 	constructor.setActive(true).setActive(false);
 	
@@ -483,14 +483,14 @@
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeRender.argument = [[_result, _value[0]]];
+	constructor.event.beforeRender.argument = [_result, _value[0]];
 	
 	constructor.event.afterRender.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterRender.argument = [[_result, _value[1]]];
+	constructor.event.afterRender.argument = [_result, _value[1]];
 	
 	constructor.render();
 	

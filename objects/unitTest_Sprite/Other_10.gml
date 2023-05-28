@@ -484,14 +484,14 @@ asset = [TestSprite];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeRender.argument = [[_result, _value[0]]];
+	constructor.event.beforeRender.argument = [_result, _value[0]];
 	
 	constructor.event.afterRender.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterRender.argument = [[_result, _value[1]]];
+	constructor.event.afterRender.argument = [_result, _value[1]];
 	
 	constructor.render(_element[1]);
 	

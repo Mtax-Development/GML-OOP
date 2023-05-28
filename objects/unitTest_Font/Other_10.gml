@@ -218,14 +218,14 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeActivation.argument = [[_result, _value[0]]];
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
 	
 	constructor.event.afterActivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterActivation.argument = [[_result, _value[1]]];
+	constructor.event.afterActivation.argument = [_result, _value[1]];
 	
 	constructor.setActive();
 	

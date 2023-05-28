@@ -621,14 +621,14 @@ asset = [TestSprite];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeCreation.argument = [[_result, _value[0]]];
+	constructor.event.beforeCreation.argument = [_result, _value[0]];
 	
 	constructor.event.afterCreation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterCreation.argument = [[_result, _value[1]]];
+	constructor.event.afterCreation.argument = [_result, _value[1]];
 	
 	constructor.create(_element[1][1], _element[0][0]);
 	

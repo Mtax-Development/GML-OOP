@@ -201,28 +201,28 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 		array_push(argument[0], argument[1]);
 	}
 	
-	constructor.event.beforeActivation.argument = [[_result, _value[0]]];
+	constructor.event.beforeActivation.argument = [_result, _value[0]];
 	
 	constructor.event.afterActivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterActivation.argument = [[_result, _value[1]]];
+	constructor.event.afterActivation.argument = [_result, _value[1]];
 	
 	constructor.event.beforeDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.beforeDeactivation.argument = [[_result, _value[2]]];
+	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
 	
 	constructor.event.afterDeactivation.callback = function()
 	{
 		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
 	}
 	
-	constructor.event.afterDeactivation.argument = [[_result, _value[3]]];
+	constructor.event.afterDeactivation.argument = [_result, _value[3]];
 	
 	constructor.setActive(true).setActive(false);
 	
