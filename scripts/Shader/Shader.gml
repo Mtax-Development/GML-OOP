@@ -8,7 +8,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Shader}
 function Shader() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

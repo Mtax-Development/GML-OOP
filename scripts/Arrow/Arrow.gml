@@ -12,7 +12,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {Arrow}
 function Arrow() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

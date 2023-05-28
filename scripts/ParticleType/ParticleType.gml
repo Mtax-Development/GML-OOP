@@ -8,7 +8,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {ParticleType}
 function ParticleType() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

@@ -11,7 +11,7 @@
 //							- One color for all values: color {int:color}
 //							- Constructor copy: other {Color2}
 function Color2() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

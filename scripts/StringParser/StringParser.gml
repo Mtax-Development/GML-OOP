@@ -8,7 +8,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {StringParser}
 function StringParser() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

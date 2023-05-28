@@ -16,7 +16,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {SurfaceRenderer}
 function SurfaceRenderer() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

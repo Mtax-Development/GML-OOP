@@ -13,7 +13,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {Rectangle}
 function Rectangle() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

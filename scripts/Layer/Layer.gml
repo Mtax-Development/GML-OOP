@@ -12,7 +12,7 @@
 //							- Constructor copy: other {Layer}, name? {string}
 ///							   Information about object instances will not be copied.
 function Layer() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

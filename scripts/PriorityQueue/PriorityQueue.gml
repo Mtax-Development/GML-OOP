@@ -9,7 +9,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {PriorityQueue}
 function PriorityQueue() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

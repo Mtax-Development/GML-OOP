@@ -15,7 +15,7 @@
 //							   array position will be set to y property.
 //							- Constructor copy: other {TextAlign}
 function TextAlign() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

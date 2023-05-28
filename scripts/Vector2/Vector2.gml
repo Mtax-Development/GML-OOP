@@ -15,7 +15,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Vector2}
 function Vector2() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

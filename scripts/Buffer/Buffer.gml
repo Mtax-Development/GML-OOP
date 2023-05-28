@@ -12,7 +12,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Buffer}
 function Buffer() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

@@ -14,7 +14,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {Triangle}
 function Triangle() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

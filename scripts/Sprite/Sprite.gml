@@ -12,7 +12,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Sprite}
 function Sprite() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

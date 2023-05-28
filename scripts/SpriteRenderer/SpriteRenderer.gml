@@ -17,7 +17,7 @@
 // 							- Empty: {void}
 // 							- Constructor copy: other {SpriteRenderer}
 function SpriteRenderer() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

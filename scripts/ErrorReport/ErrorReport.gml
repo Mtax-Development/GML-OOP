@@ -5,7 +5,7 @@
 //							Construction types:
 //							- New constructor
 function ErrorReport() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Static variables]
 		#region [[Configurable variables - General]]

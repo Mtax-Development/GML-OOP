@@ -11,7 +11,7 @@
 //							- Empty: {void}
 //							- Constructor copy: other {Line}
 function Line() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

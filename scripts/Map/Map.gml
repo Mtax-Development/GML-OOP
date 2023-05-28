@@ -11,7 +11,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: other {Map}
 function Map() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

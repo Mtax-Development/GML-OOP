@@ -10,7 +10,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Range}
 function RangedValue() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

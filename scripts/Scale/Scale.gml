@@ -16,7 +16,7 @@
 //							- From Vector2: other {Vector2}
 //							- Constructor copy: other {Scale}
 function Scale() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

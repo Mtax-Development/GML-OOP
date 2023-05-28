@@ -20,7 +20,7 @@
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {DateTime}
 function DateTime() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>

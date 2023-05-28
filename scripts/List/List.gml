@@ -10,7 +10,7 @@
 //							- Empty: {undefined}
 //							- Constructor copy: {List} other
 function List() constructor
-/// @feather	ignore all
+//  @feather	ignore all
 {
 	#region [Methods]
 		#region <Management>
