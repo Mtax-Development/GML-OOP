@@ -778,6 +778,7 @@ function Layer() constructor
 					{
 						//|Construction type: Empty.
 						parent = other;
+						parent.spriteList.add(self);
 						ID = undefined;
 						sprite = undefined;
 						location = undefined;
@@ -848,8 +849,6 @@ function Layer() constructor
 									speed = layer_sprite_get_speed(ID)
 								break;
 							}
-							
-							parent.spriteList.add(self);
 						}
 						
 						return self;
@@ -1156,6 +1155,7 @@ function Layer() constructor
 					{
 						//|Construction type: Empty.
 						parent = other;
+						parent.backgroundList.add(self);
 						ID = undefined;
 						sprite = undefined;
 						visible = undefined;
@@ -1235,8 +1235,6 @@ function Layer() constructor
 									speed = layer_background_get_speed(ID)
 								break;
 							}
-							
-							parent.backgroundList.add(self);
 						}
 						
 						return self;
@@ -1615,6 +1613,7 @@ function Layer() constructor
 					{
 						//|Construction type: Empty.
 						parent = other;
+						parent.tilemapList.add(self);
 						ID = undefined;
 						tileset = undefined;
 						location = undefined;
@@ -1653,8 +1652,6 @@ function Layer() constructor
 								location = new Vector2(tilemap_get_x(ID), tilemap_get_y(ID));
 								size = new Vector2(tilemap_get_width(ID), tilemap_get_height(ID));
 							}
-							
-							parent.tilemapList.add(self);
 						}
 						
 						return self;
@@ -2503,6 +2500,7 @@ function Layer() constructor
 					{
 						//|Construction type: Empty.
 						parent = other;
+						parent.particleSystemList.add(self);
 						ID = undefined;
 						persistent = undefined;
 						location = undefined;
@@ -2534,7 +2532,6 @@ function Layer() constructor
 								repeat (_other.emitterList.getSize())
 								{
 									var _ = new ParticleEmitter(emitterList.getValue(_i));
-									_ = undefined;
 									
 									++_i;
 								}
@@ -2551,8 +2548,6 @@ function Layer() constructor
 								emitterList = new List();
 								ID = part_system_create_layer(parent.ID, persistent);
 							}
-							
-							parent.particleSystemList.add(self);
 						}
 						
 						return self;
@@ -2895,6 +2890,7 @@ function Layer() constructor
 							{
 								//|Construction type: Empty.
 								parent = other;
+								parent.emitterList.add(self);
 								ID = undefined;
 								particleType = undefined;
 								location = undefined;
@@ -2909,8 +2905,8 @@ function Layer() constructor
 									{
 										ID = part_emitter_create(parent.ID);
 										
-										if (string_copy(string(instanceof(argument[0])), 1, 15)
-											== "ParticleEmitter")
+										if (string_copy(string(instanceof(argument[0])), 1, 15) ==
+											"ParticleEmitter")
 										{
 											//|Construction type: Constructor copy.
 											var _other = argument[0];
@@ -2935,11 +2931,6 @@ function Layer() constructor
 								else
 								{
 									ID = part_emitter_create(parent.ID);
-								}
-								
-								if (ID != undefined)
-								{
-									parent.emitterList.add(self);
 								}
 								
 								return self;
