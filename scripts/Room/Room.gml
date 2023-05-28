@@ -375,7 +375,7 @@ function Room() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (is_real(object))
+						return (((typeof(ID) == "ref") or (is_real(ID))) and (is_real(object))
 								and (instanceof(location) == "Vector2")
 								and (location.isFunctional()));
 					}
