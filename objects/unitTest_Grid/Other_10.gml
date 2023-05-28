@@ -374,19 +374,27 @@
 #region [Test: Method: setSize(size reduction)]
 	
 	var _base = new Vector2(30, 25);
-	var _element = [new Vector2(15), new Vector2(14)];
-	var _value = -255.68;
+	var _element = [new Vector2(15), new Vector2(14), new Vector2(20)];
+	var _value = [-255.68, 77];
 	
 	constructor = new Grid(_base);
-	constructor.set(_value, _element[1])
+	constructor.set(_value[0], _element[1]);
+	constructor.set(_value[1], _element[2]);
+	
+	var _result = [constructor.contains(_value[1])];
+	var _expectedValue = [true];
+	
 	constructor.setSize(_element[0]);
 	
-	var _result = [constructor.size, constructor.contains(_value)];
-	var _expectedValue = [_element[0], true];
+	array_push(_result, constructor.size, constructor.contains(_value[0]),
+			   constructor.contains(_value[1]));
+	array_push(_expectedValue, _element[0], true, false);
 	
 	unitTest.assert_equal("Method: setSize(size reduction)",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
 	
 	constructor.destroy();
 	
