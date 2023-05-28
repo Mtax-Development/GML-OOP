@@ -507,13 +507,13 @@ function ParticleType() constructor
 					
 					if (is_real(_speed))
 					{
-						_speed_minimum = speed;
-						_speed_maximum = speed;
+						_speed_minimum = _speed;
+						_speed_maximum = _speed;
 					}
 					else
 					{
-						_speed_minimum = speed.minimum;
-						_speed_maximum = speed.maximum;
+						_speed_minimum = _speed.minimum;
+						_speed_maximum = _speed.maximum;
 					}
 					
 					part_type_speed(ID, _speed_minimum, _speed_maximum, _increase, _wiggle);
@@ -888,19 +888,19 @@ function ParticleType() constructor
 				{
 					if (is_real(_value3))
 					{
-						part_type_alpha3(ID, alpha[0], alpha[1], alpha[2]);
+						part_type_alpha3(ID, _value1, _value2, _value3);
 						
 						alpha = [argument[0], argument[1], argument[2]];
 					}
 					else if (is_real(_value2))
 					{
-						part_type_alpha2(ID, alpha[0], alpha[1]);
+						part_type_alpha2(ID, _value1, _value2);
 							
 						alpha = [argument[0], argument[1], undefined];
 					}
 					else
 					{
-						part_type_alpha1(ID, alpha[0]);
+						part_type_alpha1(ID, _value1);
 							
 						alpha = [argument[0], undefined, undefined];
 					}
