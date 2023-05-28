@@ -1924,7 +1924,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	var _element = [[constructor.createParticleSystem(), new ParticleType()],
 					[new Vector4(25, 25, 75, 75), ps_shape_rectangle, ps_distr_linear], [65],
 					[false]];
-	_element[0][2] = _element[0][0].createEmitter();
+	_element[0][2] = _element[0][0].createEmitter(_element[0][1]);
 	
 	_element[0][2].setRegion(_element[1][0], _element[1][1], _element[1][2]);
 	_element[0][2].setStreamCount(_element[2][0]);
@@ -2027,13 +2027,13 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 #region [Test: ParticleSystem.ParticleEmitter - Method: toString(multiline?, full)]
 	
 	var _base = 75;
-	var _element = [["ParticleSystem", "ParticleEmitter"], ["\n", ", "],
+	var _element = [["ParticleSystem", "ParticleEmitter", new ParticleType()], ["\n", ", "],
 					[new Vector4(25, 25, 30, 30), ps_shape_ellipse, ps_distr_gaussian],
 					["Ellipse", "Gaussian"]];
 	
 	constructor = new Layer(_base);
 	_element[4][0] = constructor.createParticleSystem();
-	_element[4][1] = _element[4][0].createEmitter();
+	_element[4][1] = _element[4][0].createEmitter(_element[0][2]);
 	_element[4][1].setRegion(_element[2][0], _element[2][1], _element[2][2]);
 	
 	var _result = [_element[4][1].toString(true, true), _element[4][1].toString(false, true)];
@@ -2044,7 +2044,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	{
 		array_push(_expectedValue,
 				   ("ID: " + string(_element[4][1].ID) + _element[1][_i] +
-					"Particle Type: " + string(undefined) + _element[1][_i] +
+					"Particle Type: " + string(_element[0][2]) + _element[1][_i] +
 					"Location: " + string(_element[2][0]) + _element[1][_i] +
 					"Shape: " + _element[3][0] + _element[1][_i] +
 					"Distribution: " + _element[3][1] + _element[1][_i] +
@@ -2061,6 +2061,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
+	_element[0][2].destroy();
 	constructor.destroy();
 	
 #endregion
