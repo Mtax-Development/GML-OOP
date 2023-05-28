@@ -379,17 +379,16 @@
 #region [Test: Method: trim()]
 	
 	var _value = [["  ", "$", "AB", "$$ "], [" ", "~!", "  "], ["  ", "XX", " "], [" "], ["A"]];
-	var _element = _value[0][1];
+	var _element = [_value[0][1], ""];
 	
-	constructor = [new StringParser((_value[0][0] + _value[0][1] + _value[0][2] +
-									_value[0][3])),
+	constructor = [new StringParser((_value[0][0] + _value[0][1] + _value[0][2] + _value[0][3])),
 				   new StringParser((_value[1][0] + _value[1][1] + _value[1][2])),
 				   new StringParser((_value[2][0] + _value[2][1] + _value[2][2])),
 				   new StringParser(_value[3][0]),
 				   new StringParser(_value[4][0])];
 	
 	constructor[0].trim();
-	constructor[0].trim(_element);
+	constructor[0].trim(_element[0]);
 	constructor[1].trim();
 	constructor[2].trim();
 	constructor[3].trim();
@@ -397,7 +396,7 @@
 	
 	var _result = [constructor[0].ID, constructor[1].ID, constructor[2].ID, constructor[3].ID,
 				   constructor[4].ID];
-	var _expectedValue = [_value[0][2], _value[1][1], _value[2][1], "", _value[4][0]];
+	var _expectedValue = [_value[0][2], _value[1][1], _value[2][1], _element[1], _value[4][0]];
 	
 	unitTest.assert_equal("Method: trim()",
 						  _result[0], _expectedValue[0],
@@ -515,7 +514,7 @@
 #endregion
 #region [Test: Method: toNumber()]
 	
-	var _value = ["33.02", 33.02];
+	var _value = ["33.x0.2", 33.02];
 	
 	constructor = new StringParser(_value[0]);
 	
