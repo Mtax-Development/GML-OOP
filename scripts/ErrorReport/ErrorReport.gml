@@ -305,8 +305,8 @@ function ErrorReport() constructor
 							}
 							else if (instanceof(_location_part) == "instance")
 							{
-								//|Instance or room {self} reference. Will exist as pseudo-struct even
-								// if destroyed.
+								//|Instance or room {self} reference. Will exist as a pseudo-struct
+								// even if destroyed.
 								_location_object_name = ((_location_part.id == 0)
 														 ? room_get_name(room)
 														 : object_get_name(_location_part
