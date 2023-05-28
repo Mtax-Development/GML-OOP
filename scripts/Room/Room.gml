@@ -344,11 +344,10 @@ function Room() constructor
 					static construct = function()
 					{
 						parent = other;
+						array_push(parent.addedInstances, self);
 						ID = undefined;
 						object = undefined;
 						location = undefined;
-						
-						array_push(parent.addedInstances, self);
 						
 						if (string_copy(string(instanceof(argument[0])), 1, 13) == "AddedInstance")
 						{
