@@ -589,7 +589,6 @@ function ArrayParser() constructor
 				try
 				{
 					var _position = 0;
-					
 					var _i = 0;
 					repeat (array_length(ID))
 					{
@@ -617,6 +616,7 @@ function ArrayParser() constructor
 								{
 									var _key_value = ds_map_find_value(_value_map, _value[_i[1]]);
 									++_key_value[1];
+									ds_map_set(_value_map, _value[_i[1]], _key_value);
 								}
 								
 								++_i[1];
