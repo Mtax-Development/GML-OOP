@@ -252,23 +252,57 @@ function Sprite() constructor
 			{
 				try
 				{
-					if (instanceof(_other) == "Sprite")
+					sprite_assign(ID, ((instanceof(_other) == "Sprite") ? _other.ID : _other));
+					
+					var _size_x = sprite_get_width(ID);
+					var _size_y = sprite_get_height(ID);
+					
+					if (instanceof(size) == "Vector2")
 					{
-						sprite_assign(ID, _other.ID);
-						
-						size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
-						frameCount = sprite_get_number(ID);
-						origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
-						boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
-											   sprite_get_bbox_right(ID), sprite_get_bbox_bottom(ID));
-						boundary_mode = sprite_get_bbox_mode(ID);
-						speed = sprite_get_speed(ID);
-						speed_type = sprite_get_speed_type(ID);
+						size.x = _size_x;
+						size.y = _size_y;
 					}
 					else
 					{
-						sprite_assign(ID, _other);
+						size = new Vector2(_size_x, _size_y);
 					}
+					
+					frameCount = sprite_get_number(ID);
+					
+					var _origin_x = sprite_get_xoffset(ID);
+					var _origin_y = sprite_get_yoffset(ID);
+					
+					if (instanceof(origin) == "Vector2")
+					{
+						origin.x = _origin_x;
+						origin.y = _origin_y;
+					}
+					else
+					{
+						origin = new Vector2(_origin_x, _origin_y);
+					}
+					
+					var _boundary_x1 = sprite_get_bbox_left(ID);
+					var _boundary_y1 = sprite_get_bbox_top(ID);
+					var _boundary_x2 = sprite_get_bbox_right(ID);
+					var _boundary_y2 = sprite_get_bbox_bottom(ID);
+					
+					if (instanceof(boundary) == "Vector4")
+					{
+						boundary.x1 = _boundary_x1;
+						boundary.y1 = _boundary_y1;
+						boundary.x2 = _boundary_x2;
+						boundary.y2 = _boundary_y2;
+					}
+					else
+					{
+						boundary = new Vector4(_boundary_x1, _boundary_y1, _boundary_x2,
+											   _boundary_y2);
+					}
+					
+					boundary_mode = sprite_get_bbox_mode(ID);
+					speed = sprite_get_speed(ID);
+					speed_type = sprite_get_speed_type(ID);
 				}
 				catch (_exception)
 				{
@@ -311,6 +345,8 @@ function Sprite() constructor
 					else if ((is_real(_other)) and (sprite_exists(_other)))
 					{
 						sprite_merge(ID, _other);
+						
+						frameCount = sprite_get_number(ID);
 					}
 					else
 					{
