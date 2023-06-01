@@ -777,7 +777,7 @@ function ArrayParser() constructor
 					{
 						if (array_get(ID, _i) == _value)
 						{
-							array_push(_position, _value);
+							array_push(_position, _i);
 						}
 						
 						++_i;
