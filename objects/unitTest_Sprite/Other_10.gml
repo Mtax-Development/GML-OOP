@@ -130,11 +130,21 @@ asset = [TestSprite];
 	constructor = [new Sprite(_element[1][0]), new Sprite(_element[1][1])];
 	constructor[1].replace(constructor[0]);
 	
-	var _result = constructor[1].size;
-	var _expectedValue = constructor[0].size;
+	var _result = [constructor[1].size, constructor[1].frameCount, constructor[1].origin,
+				   constructor[1].boundary, constructor[1].boundary_mode, constructor[1].speed,
+				   constructor[1].speed_type];
+	var _expectedValue = [constructor[0].size, constructor[0].frameCount, constructor[0].origin,
+						  constructor[0].boundary, constructor[0].boundary_mode, constructor[0].speed,
+						  constructor[0].speed_type];
 	
 	unitTest.assert_equal("Method: replace()",
-						  _result, _expectedValue);
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6]);
 	
 	_element[0][0].destroy();
 	constructor[0].destroy();

@@ -54,6 +54,22 @@
 						  _result[1], _expectedValue[1]);
 	
 #endregion
+#region [Test: Method: setParser()]
+	
+	var _value = ["StringToReplace", "NewString", "ParserString"];
+	
+	constructor = [new StringParser(), new StringParser(_value[0]), new StringParser(_value[2])];
+	constructor[0].setParser(constructor[2]);
+	constructor[1].setParser(_value[1]);
+	
+	var _result = [constructor[0].ID, constructor[1].ID];
+	var _expectedValue = [_value[2], _value[1]];
+	
+	unitTest.assert_equal("Method: setParser()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: contains()]
 	
 	var _value = ["ABC", "A", "X"];
@@ -68,6 +84,45 @@
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2]);
+	
+#endregion
+#region [Test: Method: containsAll()]
+	
+	var _value = [["A", "B", "C"], "E"];
+	
+	constructor = new StringParser((_value[0][0] + _value[0][1] + _value[0][2]));
+	
+	var _result = [constructor.containsAll(_value[0][0]),
+				   constructor.containsAll(_value[0][0], _value[0][1]),
+				   constructor.containsAll(_value[0][0], _value[0][1], _value[0][2]),
+				   constructor.containsAll(_value[0][0], _value[0][1], _value[0][2], _value[1])];
+	var _expectedValue = [true, true, true, false];
+	
+	unitTest.assert_equal("Method: containsAll()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Methods: startsWith() / endsWith()]
+	
+	var _value = ["GM", "L-O", "OP"];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
+	
+	var _result = [constructor.startsWith(_value[0]), constructor.startsWith(_value[1]),
+				   constructor.startsWith(_value[2]), constructor.endsWith(_value[0]),
+				   constructor.endsWith(_value[1]), constructor.endsWith(_value[2])];
+	var _expectedValue = [true, false, false, false, false, true];
+	
+	unitTest.assert_equal("Methods: startsWith() / endsWith()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
 	
 #endregion
 #region [Test: Method: charIsWhitespace()]
@@ -113,6 +168,37 @@
 	
 	unitTest.assert_equal("Method: split()",
 						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Methods: getFirst() / getLast()]
+	
+	var _value = ["G", "ML-OO", "P"];
+	
+	constructor = new StringParser((_value[0] + _value[1] + _value[2]));
+	
+	var _result = [constructor.getFirst(), constructor.getLast()];
+	var _expectedValue = [_value[0], _value[2]];
+	
+	unitTest.assert_equal("Methods: getFirst() / getLast()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: getBetween()]
+	
+	var _value = ["[", "]", "xa", "xb", "xc"];
+	var _base = (_value[0] + _value[2] + _value[1] + _value[0] + _value[3] + _value[1] + _value[0] +
+				 _value[4] + _value[1]);
+	
+	constructor = new StringParser(_base);
+	
+	var _result = [constructor.getBetween("[", "]", "b"), constructor.getBetween("[", "]", "c", true)];
+	var _expectedValue = [[_value[2], _value[4]], [(_value[0] + _value[2] + _value[1]),
+						  (_value[0] + _value[3] + _value[1])]];
+	
+	unitTest.assert_equal("Methods: getBetween()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Methods: setByte() / getByte()]

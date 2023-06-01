@@ -209,4 +209,34 @@ asset = [TestSprite];
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: toArray()]
+	
+	var _element = [new Sprite(asset[0]), new Vector2(95, 95), new Scale(0.95, 0.85), new Angle(2),
+					new Vector4(0.1, 0.1, 0.925, 0.915), new Vector2(1, 2),
+					new Surface(new Vector2(1, 1))];
+	var _base = [_element[0], _element[1], 0, _element[2], _element[3], c_red, 0.75, _element[4],
+				 _element[5], _element[6]];
+	
+	constructor = new SpriteRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+									 _base[6], _base[7], _base[8], _base[9]);
+	
+	var _result = constructor.toArray();
+	var _expectedValue = [_base[0].ID, [_base[1].x, _base[1].y], _base[2], [_base[3].x, _base[3].y],
+						  _base[4].value, _base[5], _base[6],
+						  [_base[7].x1, _base[7].y1, _base[7].x2, _base[7].y2],
+						  [_base[8].x, _base[8].y], _base[9].ID];
+	
+	unitTest.assert_equal("Method: toArray()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7],
+						  _result[8], _expectedValue[8],
+						  _result[9], _expectedValue[9]);
+	
+#endregion
 

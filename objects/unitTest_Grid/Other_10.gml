@@ -251,6 +251,38 @@
 	constructor.destroy();
 	
 #endregion
+#region [Test: Methods: getRow() / getColumn()]
+	
+	var _base = new Vector2(3);
+	var _element = [[new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(0, 1),
+					 new Vector2(1, 1), new Vector2(2, 1), new Vector2(0, 2), new Vector2(1, 2),
+					 new Vector2(2, 2)], 1];
+	var _value = [[1, 2, 3],
+				  [4, 5, 6],
+				  [7, 8, 9]];
+	
+	constructor = new Grid(_base);
+	constructor.set(_value[0][0], _element[0][0],
+					_value[0][1], _element[0][1],
+					_value[0][2], _element[0][2],
+					_value[1][0], _element[0][3],
+					_value[1][1], _element[0][4],
+					_value[1][2], _element[0][5],
+					_value[2][0], _element[0][6],
+					_value[2][1], _element[0][7],
+					_value[2][2], _element[0][8]);
+	
+	var _result = [constructor.getRow(_element[1]), constructor.getColumn(_element[1])];
+	var _expectedValue = [_value[_element[1]], [_value[0][_element[1]], _value[1][_element[1]],
+						  _value[2][_element[1]]]];
+	
+	unitTest.assert_equal("Methods: getRow() / getColumn()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Methods: getMinimum() / getMaximum()]
 	
 	var _base = new Vector2(3);

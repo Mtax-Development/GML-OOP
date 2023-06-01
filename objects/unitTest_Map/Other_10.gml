@@ -575,6 +575,61 @@
 	constructor[1].destroy();
 	
 #endregion
+#region [Test: Methods: fromStruct() / toStruct()]
+	
+	var _value = [["KeyAndProperty1", c_red], ["KeyAndProperty2", "GML-OOP"],
+				  ["KeyAndProperty3", undefined], ["KeyAndProperty4", {nestedProperty: 5}]];
+	var _element = {};
+	
+	var _i = 0;
+	repeat (array_length(_value))
+	{
+		variable_struct_set(_element, _value[_i][0], _value[_i][1]);
+		
+		++_i;
+	}
+	
+	constructor = new Map();
+	constructor.fromStruct(_element);
+	
+	var _result = [[constructor.getValue(_value[0][0]), constructor.getValue(_value[1][0]),
+					constructor.getValue(_value[2][0]),
+					constructor.getValue(_value[3][0], variable_struct_get_names(_value[3][1])[0])]];
+	var _expectedValue = [[_value[0][1], _value[1][1], _value[2][1],
+						   variable_struct_get(_value[3][1],
+											   variable_struct_get_names(_value[3][1])[0])]];
+	
+	array_push(_result, constructor.toStruct(), [], []);
+	_expectedValue[1] = _element;
+	
+	_result[2] = variable_struct_get_names(_result[1]);
+	array_sort(_result[2], true);
+	_expectedValue[2] = [_value[0][0], _value[1][0], _value[2][0], _value[3][0]];
+	
+	var _i = 0;
+	repeat (variable_struct_names_count(_result[1]))
+	{
+		var _struct_value = variable_struct_get(_result[1], _result[2][_i]);
+		
+		array_push(_result[3], ((is_struct(_struct_value))
+								? variable_struct_get(_struct_value,
+													  variable_struct_get_names(_struct_value)[0])
+								: _struct_value));
+		
+		++_i;
+	}
+	
+	unitTest.assert_equal("Methods: fromStruct() / toStruct()",
+						  _result[0][0], _expectedValue[0][0],
+						  _result[0][1], _expectedValue[0][1],
+						  _result[0][2], _expectedValue[0][2],
+						  _result[0][3], _expectedValue[0][3],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[0]);
+	
+	constructor.destroy();
+	
+#endregion
 #region [Test: Methods: fromEncodedString() / toEncodedString()]
 	
 	var _value = [["Key1", -2], ["Key2", 0.2], ["Key3", "X"]];

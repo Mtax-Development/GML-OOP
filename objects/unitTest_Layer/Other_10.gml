@@ -159,8 +159,6 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 #endregion
 #region [Test: Method: hasInstance()]
 	
-	//|The built-in layer_has_instance() function is currently broken.
-	// It returns -1 instead of false if the instance does not exist.
 	var _element = [[asset[1], new Vector2(0, 0)]];
 	var _base = 8;
 	
@@ -172,7 +170,7 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	var _result = [constructor.hasInstance(_element[1][0]), constructor.hasInstance(_element[1][1])];
 	var _expectedValue = [true, false];
 	
-	unitTest.assert_equal("Method: hasInstance(BROKEN IN ENGINE)",
+	unitTest.assert_equal("Method: hasInstance()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	

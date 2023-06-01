@@ -52,6 +52,22 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: setParser()]
+	
+	var _value = [["ArrayToReplace"], "NewArrayValue", ["ParserArray"]];
+	
+	constructor = [new ArrayParser(), new ArrayParser(_value[0]), new ArrayParser(_value[2])];
+	constructor[0].setParser(constructor[2]);
+	constructor[1].setParser(_value[1]);
+	
+	var _result = [constructor[0].ID, constructor[1].ID];
+	var _expectedValue = [_value[2], [_value[1]]];
+	
+	unitTest.assert_equal("Method: setParser()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Method: create()]
 	
 	var _value = 5;
@@ -125,16 +141,72 @@
 						  _result[2], _expectedValue[2]);
 	
 #endregion
+#region [Test: method: merge()]
+	
+	var _element = new List();
+	var _value = [["GML"], "-", "O", ["O", "P"]];
+	_element.add(_value[2]);
+	
+	constructor = [new ArrayParser(_value[0][0]), new ArrayParser(_value[3])];
+	constructor[0].merge(_value[1], _element, constructor[1]);
+	
+	var _result = constructor[0].ID;
+	var _expectedValue = [_value[0][0], _value[1], _value[2], _value[3][0], _value[3][1]];
+	
+	unitTest.assert_equal("Method: merge()",
+						  _result, _expectedValue);
+	
+	_element.destroy();
+	
+#endregion
 #region [Test: Method: contains()]
 	
-	var _value = [[2, 6, 8], [-1]];
+	var _value = [[2, 6, 8], -1];
 	
 	constructor = new ArrayParser([_value[0][0], _value[0][1], _value[0][2]]);
 	
-	var _result = [constructor.contains(_value[0][0]), constructor.contains(_value[1][0])];
+	var _result = [constructor.contains(_value[0][0]), constructor.contains(_value[1])];
 	var _expectedValue = [true, false];
 	
 	unitTest.assert_equal("Method: contains()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: containsAll()]
+	
+	var _value = [[1, 2, 3], 5];
+	
+	constructor = new ArrayParser(_value[0]);
+	
+	var _result = [constructor.containsAll(_value[0][0]),
+				   constructor.containsAll(_value[0][0], _value[0][1]),
+				   constructor.containsAll(_value[0][0], _value[0][1], _value[0][2]),
+				   constructor.containsAll(_value[0][0], _value[0][1], _value[0][2], _value[1])];
+	var _expectedValue = [true, true, true, false];
+	
+	unitTest.assert_equal("Method: containsAll()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Method: containsCondition()]
+	
+	var _value = [[1, 2, 3, 4, 5, 6, 7, 8], 5];
+	var _element = function(_i, _value, _argument)
+	{
+		return (_value < _argument);
+	}
+	
+	constructor = new ArrayParser(_value[0]);
+	
+	var _result = [constructor.containsCondition(_element, _value[1], false),
+				   constructor.containsCondition(_element, _value[1], true)];
+	var _expectedValue = [true, false];
+	
+	unitTest.assert_equal("Method: containsCondition()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
@@ -168,6 +240,22 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Methods: getUniqueValues() / getSharedValues()]
+	
+	var _value = [[1, 2, 3, 5], [5, 6, 7], 8];
+	
+	constructor = [new ArrayParser(_value[0]), new ArrayParser(_value[1])];
+	
+	var _result = [constructor[0].getUniqueValues(constructor[1], _value[2]),
+				   constructor[0].getSharedValues(constructor[1])];
+	var _expectedValue = [[_value[0][0], _value[0][1], _value[0][2], _value[0][3], _value[1][1],
+						   _value[1][2], _value[2]], [_value[0][3]]];
+	
+	unitTest.assert_equal("Methods: getUniqueValues() / getSharedValues()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
 #region [Test: Methods: getFirst() / getLast()]
 	
 	var _value = [10, 20, 30];
@@ -180,6 +268,78 @@
 	unitTest.assert_equal("Methods: getFirst() / getLast()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Methods: getFirstPosition() / getLastPosition() / getPositions()]
+	
+	var _value = [[1, 2], 3, [1, 3, 4]];
+	var _base = [];
+	
+	var _i = [0, 0];
+	repeat (array_length(_value[0]) * _value[1])
+	{
+		_i[1] = 0;
+		repeat (array_length(_value[2]))
+		{
+			if (_i[0] == _value[2][_i[1]])
+			{
+				array_push(_base, _value[0][1]);
+				
+				break;
+			}
+			
+			++_i[1];
+		}
+		
+		if (_i[1] == array_length(_value[2]))
+		{
+			array_push(_base, _value[0][0]);
+		}
+		
+		++_i[0];
+	}
+	
+	constructor = new ArrayParser(_base);
+	
+	var _result = [constructor.getFirstPosition(_value[0][1]),
+				   constructor.getLastPosition(_value[0][1]), constructor.getPositions(_value[0][1])];
+	var _expectedValue = [_value[2][0], _value[2][(array_length(_value[2]) - 1)], _value[2]];
+	
+	unitTest.assert_equal("Methods: getFirstPosition() / getLastPosition() / getPositions()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2]);
+	
+#endregion
+#region [Test: Method: getPositionsCondition()]
+	
+	var _value = [[1, 2, 3, 4, 5, 6, 7, 8], 5, [0, 1, 2, 3]];
+	var _element = function(_i, _value, _argument)
+	{
+		return (_value < _argument);
+	}
+	
+	constructor = new ArrayParser(_value[0]);
+	
+	var _result = constructor.getPositionsCondition(_element, _value[1]);
+	var _expectedValue = _value[2];
+	
+	unitTest.assert_equal("Method: getPositionsCondition()",
+						  _result, _expectedValue);
+	
+#endregion
+#region [Test: Method: getColumn()]
+	
+	var _value = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+	var _element = 1;
+	
+	constructor = new ArrayParser(_value);
+	
+	var _result = constructor.getColumn(_element);
+	var _expectedValue = [_value[0][_element], _value[1][_element], _value[2][_element]];
+	
+	unitTest.assert_equal("Method: getColumn()",
+						  _result, _expectedValue);
 	
 #endregion
 #region [Test: Method: getSize()]
