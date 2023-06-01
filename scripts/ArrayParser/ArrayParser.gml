@@ -897,22 +897,6 @@ function ArrayParser() constructor
 				return undefined;
 			}
 			
-			/// @returns			{int} | On error: {undefined}
-			/// @description		Return the number of elements in the array.
-			static getSize = function()
-			{
-				try
-				{
-					return array_length(ID);
-				}
-				catch (_exception)
-				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
 			/// @argument			position {int}
 			/// @returns			{any[]}
 			/// @description		Return the values at the specified position in the nested arrays.
@@ -943,6 +927,22 @@ function ArrayParser() constructor
 				}
 				
 				return [];
+			}
+			
+			/// @returns			{int} | On error: {undefined}
+			/// @description		Return the number of elements in the array.
+			static getSize = function()
+			{
+				try
+				{
+					return array_length(ID);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getSize()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
 			/// @returns			{bool} | On error: {undefined}
