@@ -86,8 +86,8 @@ function SpriteRenderer() constructor
 						alpha = _other.alpha;
 						part = ((instanceof(_other.part) == "Vector4") ? new Vector4(_other.part)
 																	   : _other.part);
-						origin = ((instanceof(_other.origin) == "Vector2")
-								  ? new Vector2(_other.origin) : _other.origin);
+						origin = ((instanceof(_other.origin) == "Vector2") ? new Vector2(_other.origin)
+																		   : _other.origin);
 						target = _other.target;
 						
 						if (is_struct(_other.event))
