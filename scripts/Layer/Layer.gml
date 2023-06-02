@@ -500,9 +500,10 @@ function Layer() constructor
 			
 			/// @argument			object {int:object}
 			/// @argument			location? {Vector2}
+			/// @argument			added_data? {struct}
 			/// @returns			{int:instance} | On error: {noone}
 			/// @description		Create an instance on this Layer and return its internal ID.
-			static createInstance = function(_object, _location)
+			static createInstance = function(_object, _location, _added_data)
 			{
 				try
 				{
@@ -515,7 +516,10 @@ function Layer() constructor
 						_location_y = _location.y;
 					}
 					
-					var _instance = instance_create_layer(_location_x, _location_y, ID, _object);
+					var _instance = ((is_struct(_added_data))
+									 ? instance_create_layer(_location_x, _location_y, ID, _object,
+															 _added_data)
+									 : instance_create_layer(_location_x, _location_y, ID, _object));
 					
 					instanceList.add(_instance);
 					
