@@ -131,32 +131,32 @@ function Layer() constructor
 							tilemapList = new List();
 							particleSystemList = new List();
 							
-							var _elements = layer_get_all_elements(ID);
+							var _element = layer_get_all_elements(ID);
 							var _i = 0;
-							repeat (array_length(_elements))
+							repeat (array_length(_element))
 							{
-								var _type = layer_get_element_type(_elements[_i]);
+								var _type = layer_get_element_type(_element[_i]);
 								
 								switch (_type)
 								{
 									case layerelementtype_instance:
-										instanceList.add(layer_instance_get_instance(_elements[_i]));
+										instanceList.add(layer_instance_get_instance(_element[_i]));
 									break;
 									
 									case layerelementtype_sprite:
-										var _ = new SpriteElement(_elements[_i]);
+										var _ = new SpriteElement(_element[_i]);
 									break;
 									
 									case layerelementtype_background:
-										var _ = new BackgroundElement(_elements[_i]);
+										var _ = new BackgroundElement(_element[_i]);
 									break;
 									
 									case layerelementtype_tilemap:
-										var _ = new TilemapElement(_elements[_i]);
+										var _ = new TilemapElement(_element[_i]);
 									break;
 									
 									case layerelementtype_particlesystem:
-										var _ = new ParticleSystem(_elements[_i]);
+										var _ = new ParticleSystem(_element[_i]);
 									break;
 								}
 								
