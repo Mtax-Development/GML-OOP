@@ -862,8 +862,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
-								and (layer_sprite_exists(parent.ID, ID));
+						return ((is_real(ID)) and (instanceof(parent) == "Layer")
+								and (parent.isFunctional())) and (layer_sprite_exists(parent.ID, ID));
 					}
 					
 					/// @argument			other {Layer|int:layer|string:layer}
@@ -1248,7 +1248,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
+						return ((is_real(ID)) and (instanceof(parent) == "Layer")
+								and (parent.isFunctional()))
 								and (layer_background_exists(parent.ID, ID));
 					}
 					
@@ -1665,7 +1666,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((instanceof(parent) == "Layer") and (parent.isFunctional()))
+						return ((is_real(ID)) and (instanceof(parent) == "Layer")
+								and (parent.isFunctional()))
 								and (layer_tilemap_exists(parent.ID, ID));
 					}
 					
