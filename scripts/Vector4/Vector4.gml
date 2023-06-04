@@ -1571,6 +1571,31 @@ function Vector4() constructor
 				return [new Vector2(x1, y1), new Vector2(x2, y2)];
 			}
 			
+			/// @argument			value1 {Vector2}
+			/// @argument			value2 {Vector2}
+			/// @description		Set pairs of values of two Vector2 to the values of this Vector4.
+			static combine = function(_value1, _value2)
+			{
+				try
+				{
+					var _x1 = _value1.x;
+					var _y1 = _value1.y;
+					var _x2 = _value2.x;
+					var _y2 = _value2.y;
+					
+					x1 = _x1;
+					y1 = _y1;
+					x2 = _x2;
+					y2 = _y2;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "combine()"], _exception);
+				}
+				
+				return self;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
