@@ -773,9 +773,18 @@ function Vector2() constructor
 				return self;
 			}
 			
+			/// @argument			x? {real}
+			/// @argument			y? {real}
+			/// @description		Set each value of this Vector2.
+			static set = function(_x = x, _y = y)
+			{
+				x = _x;
+				y = _y;
+			}
+			
 			/// @argument			value {real|Vector2|Scale}
 			/// @description		Set all of the values to one specified value.
-			static set = function(_value)
+			static setAll = function(_value)
 			{
 				try
 				{
@@ -797,7 +806,7 @@ function Vector2() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					new ErrorReport().report([other, self, "setAll()"], _exception);
 				}
 				
 				return self;

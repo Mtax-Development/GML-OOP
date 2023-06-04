@@ -1280,9 +1280,22 @@ function Vector4() constructor
 				return self;
 			}
 			
+			/// @argument			x1? {real}
+			/// @argument			y1? {real}
+			/// @argument			x2? {real}
+			/// @argument			y2? {real}
+			/// @description		Set each value of this Vector4.
+			static set = function(_x1 = x1, _y1 = y1, _x2 = x2, _y2 = y2)
+			{
+				x1 = _x1;
+				y1 = _y1;
+				x2 = _x2;
+				y2 = _y2;
+			}
+			
 			/// @argument			value {real|Vector2|Vector4|Scale}
 			/// @description		Set all of values to the ones of the specified value.
-			static set = function(_value)
+			static setAll = function(_value)
 			{
 				try
 				{
@@ -1317,7 +1330,7 @@ function Vector4() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					new ErrorReport().report([other, self, "setAll()"], _exception);
 				}
 				
 				return self;

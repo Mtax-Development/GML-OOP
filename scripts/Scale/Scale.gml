@@ -332,7 +332,7 @@ function Scale() constructor
 			
 			/// @argument			value {real|Vector2|Scale}
 			/// @description		Set all of the values to one specified value.
-			static set = function(_value)
+			static setAll = function(_value)
 			{
 				try
 				{

@@ -419,7 +419,8 @@ function Surface() constructor
 			{
 				if (instanceof(_size) == "Vector2") and (_size.isFunctional())
 				{
-					size = ((instanceof(size) == "Vector2") ? size.set(_size) : new Vector2(_size));
+					size = ((instanceof(size) == "Vector2") ? size.setAll(_size)
+															: new Vector2(_size));
 					
 					if ((!is_real(ID)) or (!surface_exists(ID)))
 					{

@@ -155,7 +155,7 @@ function Room() constructor
 						room_set_width(ID, _size.x);
 						room_set_height(ID, _size.y);
 						
-						size = ((instanceof(size) == "Vector2") ? size.set(_size)
+						size = ((instanceof(size) == "Vector2") ? size.setAll(_size)
 																: new Vector2(_size));
 					}
 					else

@@ -448,7 +448,8 @@ function ParticleType() constructor
 				{
 					part_type_scale(ID, _scale.x, _scale.y);
 					
-					scale = ((instanceof(_scale) == "Scale") ? scale.set(_scale) : new Scale(_scale));
+					scale = ((instanceof(_scale) == "Scale") ? scale.setAll(_scale)
+															 : new Scale(_scale));
 				}
 				catch (_exception)
 				{
