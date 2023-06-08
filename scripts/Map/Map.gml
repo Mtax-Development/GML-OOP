@@ -1,5 +1,5 @@
 //  @function				Map()
-///							
+//							
 /// @description			Constructs a Map Data Structure, which stores data by creating key and
 ///							value pairs. The contained data is not sorted and values are accessed
 ///							either by providing a specific existing key or by iterating through the

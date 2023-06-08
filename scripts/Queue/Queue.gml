@@ -1,5 +1,5 @@
 //  @function				Queue()
-///							
+//							
 /// @description			Constructs a Queue Data Structure, which stores data in a linear,
 ///							first-in-first-out model that disallows order manipulation.
 //							

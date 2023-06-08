@@ -1,5 +1,5 @@
 //  @function				ErrorReport()
-///							
+//							
 /// @description			Contains static variables and methods of the error reporting system.
 //							
 //							Construction types:
