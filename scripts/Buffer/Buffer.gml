@@ -4,7 +4,7 @@
 /// @argument				aligment? {int}
 ///							
 /// @description			Constructs a Buffer, which is a region of memory, primarly used while
-///							moving data between places, such as through network or to files.
+///							moving data between places, such as through network or into files.
 //							
 //							Construction types:
 //							- New constructor
