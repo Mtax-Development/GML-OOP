@@ -310,32 +310,32 @@ function Buffer() constructor
 			}
 			
 			/// @argument			type... {constant:buffer_[dataType]}
+			/// @returns			{real|string[]} | On error: {undefined}
 			/// @returns			{real|real[]|string|string[]|bool|bool[]} | On error: {undefined}
-			/// @description		Return the data of the specified type from the Buffer, then
-			///						advance the seek position by the number of bytes read.
-			///						If multiple values are to be read, they will be returned in
-			///						an array.
+			/// @description		Return the data of the specified type from this Buffer, then
+			///						advance its seek position by the number of bytes read.
+			///						If multiple values are read, they will be returned in an array.
+			///						All numbers are standardized to the {real} type, instead of types
+			///						unique to buffers.
 			static read = function()
 			{
 				try
 				{
+					var _result = array_create(argument_count, undefined);
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value = buffer_read(ID, argument[_i]);
+						_result[_i] = ((is_numeric(_value)) ? real(_value) : _value);
+						
+						++_i;
+					}
+					
 					switch (argument_count)
 					{
 						case 0: return undefined; break;
-						case 1: return buffer_read(ID, argument[0]); break;
-						default:
-							var _result = array_create(argument_count, undefined);
-							
-							var _i = 0;
-							repeat (argument_count)
-							{
-								_result[_i] = buffer_read(ID, argument[_i]);
-						
-								++_i;
-							}
-							
-							return _result;
-						break;
+						case 1: return _result[0]; break;
+						default: return _result; break;
 					}
 				}
 				catch (_exception)
