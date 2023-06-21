@@ -1293,8 +1293,9 @@ function Vector4() constructor
 				y2 = _y2;
 			}
 			
-			/// @argument			value {real|Vector2|Vector4|Scale}
-			/// @description		Set all of values to the ones of the specified value.
+			/// @argument			value {real|real[]|Vector2|Vector4|Scale}
+			/// @description		Set all of values to the ones of the specified value or first four
+			///						values of the specified array.
 			static setAll = function(_value)
 			{
 				try
@@ -1307,6 +1308,13 @@ function Vector4() constructor
 						_result_y1 = _value;
 						_result_x2 = _value;
 						_result_y2 = _value;
+					}
+					else if (is_array(_value))
+					{
+						_result_x1 = _value[0];
+						_result_y1 = _value[1];
+						_result_x2 = _value[2];
+						_result_y2 = _value[3];
 					}
 					else if (instanceof(_value) == "Vector4")
 					{

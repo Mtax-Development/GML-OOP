@@ -108,6 +108,57 @@ function Color3() constructor
 				return self;
 			}
 			
+			/// @argument			color1? {int:color}
+			/// @argument			color2? {int:color}
+			/// @argument			color3? {int:color}
+			/// @description		Set each color value.
+			static set = function(_color1 = color1, _color2 = color2, _color3 = color3)
+			{
+				color1 = _color1;
+				color2 = _color2;
+				color3 = _color3;
+			}
+			
+			/// @argument			value {int:color|int:color[]|Color3}
+			/// @description		Set all of color values to the ones of the specified value or first
+			///						three values of the specified array.
+			static setAll = function(_value)
+			{
+				try
+				{
+					var _result_color1, _result_color2, _result_color3;
+					
+					if (is_real(_value))
+					{
+						_result_color1 = _value;
+						_result_color2 = _value;
+						_result_color3 = _value;
+					}
+					else if (is_array(_value))
+					{
+						_result_color1 = _value[0];
+						_result_color2 = _value[1];
+						_result_color3 = _value[2];
+					}
+					else
+					{
+						_result_color1 = _value.color1;
+						_result_color2 = _value.color2;
+						_result_color3 = _value.color3;
+					}
+					
+					color1 = _result_color1;
+					color2 = _result_color2;
+					color3 = _result_color3;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setAll()"], _exception);
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Conversion>
 			

@@ -782,8 +782,9 @@ function Vector2() constructor
 				y = _y;
 			}
 			
-			/// @argument			value {real|Vector2|Scale}
-			/// @description		Set all of the values to one specified value.
+			/// @argument			value {real|real[]|Vector2|Scale}
+			/// @description		Set all of the values to one specified value or first two values
+			///						of the specified array.
 			static setAll = function(_value)
 			{
 				try
@@ -794,6 +795,11 @@ function Vector2() constructor
 					{
 						_result_x = _value;
 						_result_y = _value;
+					}
+					else if (is_array(_value))
+					{
+						_result_x = _value[0];
+						_result_y = _value[1];
 					}
 					else
 					{

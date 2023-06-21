@@ -71,6 +71,51 @@ function Color2() constructor
 				return self;
 			}
 			
+			/// @argument			color1? {int:color}
+			/// @argument			color2? {int:color}
+			/// @description		Set each color value.
+			static set = function(_color1 = color1, _color2 = color2)
+			{
+				color1 = _color1;
+				color2 = _color2;
+			}
+			
+			/// @argument			value {int:color|int:color[]|Color2}
+			/// @description		Set all of color values to the ones of the specified value or first
+			///						two values of the specified array.
+			static setAll = function(_value)
+			{
+				try
+				{
+					var _result_color1, _result_color2;
+					
+					if (is_real(_value))
+					{
+						_result_color1 = _value;
+						_result_color2 = _value;
+					}
+					else if (is_array(_value))
+					{
+						_result_color1 = _value[0];
+						_result_color2 = _value[1];
+					}
+					else
+					{
+						_result_color1 = _value.color1;
+						_result_color2 = _value.color2;
+					}
+					
+					color1 = _result_color1;
+					color2 = _result_color2;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setAll()"], _exception);
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Conversion>
 			
