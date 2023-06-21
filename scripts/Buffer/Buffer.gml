@@ -3,7 +3,7 @@
 /// @argument				type {constant:buffer_[bufferType]}
 /// @argument				aligment? {int}
 ///							
-/// @description			Constructs a Buffer, which is a region of memory, primarly used while
+/// @description			Constructs a Buffer, which is a region of memory. Primarly used while
 ///							moving data between places, such as through network or into files.
 //							
 //							Construction types:
@@ -310,8 +310,7 @@ function Buffer() constructor
 			}
 			
 			/// @argument			type... {constant:buffer_[dataType]}
-			/// @returns			{real|string[]} | On error: {undefined}
-			/// @returns			{real|real[]|string|string[]|bool|bool[]} | On error: {undefined}
+			/// @returns			{real|string|[]} | On error: {undefined}
 			/// @description		Return the data of the specified type from this Buffer, then
 			///						advance its seek position by the number of bytes read.
 			///						If multiple values are read, they will be returned in an array.
