@@ -3,7 +3,7 @@
 /// @argument				y1? {real}
 /// @argument				x2? {real}
 /// @argument				y2? {real}
-/// @description			Construct a Vector container for two x and y coordinate pairs.
+/// @description			Constructs a Vector container for two x and y coordinate pairs.
 //							
 //							Construction types:
 //							- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}

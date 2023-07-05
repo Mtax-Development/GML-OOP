@@ -1,6 +1,6 @@
 //  @function				StringParser()
 /// @argument				string {any:string}
-/// @description			Constructs a Handler for parsing strings.
+/// @description			Constructs a handler for parsing strings.
 //							
 //							Construction types:
 //							- New constructor

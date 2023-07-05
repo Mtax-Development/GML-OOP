@@ -5,7 +5,7 @@
 /// @argument				hour? {int}
 /// @argument				minute? {int}
 /// @argument				second? {int}
-/// @description			Constructs a container for a DateTime.
+/// @description			Constructs a container representing date and time.
 //							
 //							Construction types:
 //							- New constructor

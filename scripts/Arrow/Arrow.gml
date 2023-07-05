@@ -3,8 +3,8 @@
 /// @argument				size? {real}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs an Arrow Shape, which is a Line starting at x1y1 with a
-///							Triangle of the specified size at x2y2 pointing towards that location.
+/// @description			Constructs an Arrow Shape, which is a line starting at x1y1 with a triangle
+///							of the specified size at x2y2 pointing towards that location.
 //							
 //							Construction types:
 //							- New constructor

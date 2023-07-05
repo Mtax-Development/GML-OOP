@@ -1,6 +1,6 @@
 //  @function				ParticleType()
-/// @description			Construct a Particle Type resource, a particle configuration for creation
-///							within Particle Systems.
+/// @description			Constructs a Particle Type resource storing particle configuration for
+///							creation within Particle Systems.
 //							
 //							Construction types:
 //							- New constructor

@@ -1,8 +1,8 @@
 //  @function				Scale()
 /// @argument				x? {real}
 /// @argument				y? {real}
-/// @description			Constructs a Scale container that can be used for drawing or
-///							manipulated in other ways.
+/// @description			Constructs a Scale container that can be used for drawing or manipulated in
+///							other ways.
 //							
 //							Construction types:
 //							- Two values: x {real}, y {real}

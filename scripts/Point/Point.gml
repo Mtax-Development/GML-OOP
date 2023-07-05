@@ -2,7 +2,7 @@
 /// @argument				location {Vector2}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs a Point Shape, which is a single pixel.
+/// @description			Constructs a Point shape, which is a single pixel.
 //							
 //							Construction types:
 //							- New constructor

@@ -5,7 +5,7 @@
 /// @argument				fill_alpha? {real}
 /// @argument				outline_color? {int:color}
 /// @argument				outline_alpha? {real}
-/// @description			Constructs a Round Rectangle Shape.
+/// @description			Constructs a Round Rectangle shape.
 //							
 //							Construction types:
 //							- New constructor

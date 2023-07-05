@@ -5,7 +5,7 @@
 /// @argument				align? {TextAlign}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs a handler information for string rendering.
+/// @description			Constructs a handler containing information for string rendering.
 //							
 //							Construction types:
 //							- New constructor

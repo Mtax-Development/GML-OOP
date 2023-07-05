@@ -1,8 +1,8 @@
 //  @function				TextAlign()
 /// @argument				x? {constant:fa_[halign]}
 /// @argument				y? {constant:fa_[valign]}
-/// @description			Constructs a container for two Text Alignment contants, intended for use
-///							in text drawing.
+/// @description			Constructs a container for two text alignment constants, used in text
+///							rendering.
 //							
 //							Construction types:
 //							- New constructor

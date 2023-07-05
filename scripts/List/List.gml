@@ -1,7 +1,7 @@
 //  @function				List()
-/// @description			Constructs a List Data Structure, which stores data in a linear
-///							model, offering flexibility while doing so. It easily resized,
-///							sorted and manipulated in other ways.
+/// @description			Constructs a List Data Structure, which stores data in a linear model,
+///							offering flexibility while doing so. It is easily resized, sorted and
+///							manipulated in other ways.
 //							
 //							Construction types:
 //							- New constructor

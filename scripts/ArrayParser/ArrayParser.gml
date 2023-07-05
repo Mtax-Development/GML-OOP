@@ -1,6 +1,6 @@
 //  @function				ArrayParser()
 /// @argument				value? {any:array}
-/// @description			Constructs a Handler for parsing arrays.
+/// @description			Constructs a handler for parsing arrays.
 //							
 //							Construction types:
 //							- New constructor

@@ -3,7 +3,7 @@
 /// @argument				size? {real}
 /// @argument				color? {int:color|Color2|Color4}
 /// @argument				alpha? {real}
-/// @description			Construct a Line Shape.
+/// @description			Constructs a Line shape.
 //							
 //							Construction types:
 //							- New constructor
