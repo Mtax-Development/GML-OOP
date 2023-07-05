@@ -70,7 +70,7 @@ function ErrorReport() constructor
 				var _callstack = [];
 				array_copy(_callstack, 0, _callstack_raw, 1, (array_length(_callstack_raw) - 2)); 
 				var _reportData = new ReportData(_error_location, _error_detail, _callstack,
-												 new DateTime(date_current_datetime()));
+												 date_datetime_string(date_current_datetime()));
 				var _errorData_isArray = is_array(errorData);
 				var _errorData_count = 0;
 				
