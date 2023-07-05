@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Resources",
-    "path": "folders/GML-OOP/Resources.yy",
+    "name": "Resource",
+    "path": "folders/GML-OOP/Resource.yy",
   },
 }

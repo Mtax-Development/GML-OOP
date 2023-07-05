@@ -66,12 +66,12 @@
   "RoomOrderNodes": [],
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GML-OOP","folderPath":"folders/GML-OOP.yy","order":1,},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Containers","folderPath":"folders/GML-OOP/Containers.yy","order":1,},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Data Structures","folderPath":"folders/GML-OOP/Data Structures.yy","order":2,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Container","folderPath":"folders/GML-OOP/Container.yy","order":1,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Data Structure","folderPath":"folders/GML-OOP/Data Structure.yy","order":2,},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Debug","folderPath":"folders/GML-OOP/Debug.yy","order":3,},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Handlers","folderPath":"folders/GML-OOP/Handlers.yy","order":4,},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Resources","folderPath":"folders/GML-OOP/Resources.yy","order":5,},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Shapes","folderPath":"folders/GML-OOP/Shapes.yy","order":6,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Handler","folderPath":"folders/GML-OOP/Handler.yy","order":4,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Resource","folderPath":"folders/GML-OOP/Resource.yy","order":5,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Shape","folderPath":"folders/GML-OOP/Shape.yy","order":6,},
   ],
   "AudioGroups": [
     {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},

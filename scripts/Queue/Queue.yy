@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Data Structures",
-    "path": "folders/GML-OOP/Data Structures.yy",
+    "name": "Data Structure",
+    "path": "folders/GML-OOP/Data Structure.yy",
   },
 }

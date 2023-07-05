@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Handlers",
-    "path": "folders/GML-OOP/Handlers.yy",
+    "name": "Handler",
+    "path": "folders/GML-OOP/Handler.yy",
   },
 }

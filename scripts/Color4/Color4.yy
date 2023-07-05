@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Containers",
-    "path": "folders/GML-OOP/Containers.yy",
+    "name": "Container",
+    "path": "folders/GML-OOP/Container.yy",
   },
 }
