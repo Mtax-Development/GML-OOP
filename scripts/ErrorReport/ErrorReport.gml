@@ -454,8 +454,8 @@ function ErrorReport() constructor
 					static formatTime = function()
 					{
 						return ("[" + (((instanceof(time) == "DateTime") and (time.isFunctional()))
-									  ?  time.toStringTime()
-									  : ((is_string(time)) ? time : "Unknown time")) +
+									   ? time.toStringTime()
+									   : ((is_string(time)) ? time : "Unknown time")) +
 								"]");
 					}
 					
@@ -504,7 +504,7 @@ function ErrorReport() constructor
 								return  ("Location: " + _text_location + _mark_linebreak +
 										 "Detail: " + _text_detail + _mark_linebreak +
 										 "Time: " + ((time != undefined) ? self.formatTime()
-																		 : "Unknown") +
+																		 : "Unknown time") +
 													_mark_linebreak +
 										 "Callstack: " + self.formatCallstack(_callstackLength));
 							}
