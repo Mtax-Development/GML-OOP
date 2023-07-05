@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/LRJeisD.png" alt="GML-OOP Logo" width="65%"/>
+  <img src="https://i.imgur.com/18BlQJR.png" alt="GML-OOP Logo" width="65%"/>
 </p>
 
 **GameMaker Language Object Overlay Project** is a library created in GameMaker Language used to operate primary functionalities of GameMaker through a set of constructors.
