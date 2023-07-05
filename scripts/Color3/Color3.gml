@@ -2,7 +2,6 @@
 /// @argument				color1? {int:color}
 /// @argument				color2? {int:color}
 /// @argument				color3? {int:color}
-///							
 /// @description			Constructs a container for three colors.
 //							
 //							Construction types:

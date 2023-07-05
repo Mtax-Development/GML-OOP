@@ -3,7 +3,6 @@
 /// @argument				color2? {int:color}
 /// @argument				color3? {int:color}
 /// @argument				color4? {int:color}
-///							
 /// @description			Constructs a container for four colors.
 //							For rectangular shapes, these colors are organized by the following 
 //							coordinates:

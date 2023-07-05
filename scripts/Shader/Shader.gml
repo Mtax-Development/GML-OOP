@@ -1,6 +1,5 @@
 //  @function				Shader()
 /// @argument				shader {int:shader}
-///							
 /// @description			Construct a Shader resource used to alter drawing.
 //							
 //							Construction types:

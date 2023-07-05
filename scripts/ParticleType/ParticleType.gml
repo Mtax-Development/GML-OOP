@@ -1,5 +1,4 @@
 //  @function				ParticleType()
-//							
 /// @description			Construct a Particle Type resource, a particle configuration for creation
 ///							within Particle Systems.
 //							

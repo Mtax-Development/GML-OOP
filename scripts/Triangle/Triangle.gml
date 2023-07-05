@@ -6,7 +6,6 @@
 /// @argument				fill_alpha? {real}
 /// @argument				outline_color? {int:color|Color3}
 /// @argument				outline_alpha? {real}
-///							
 /// @description			Constructs a Triangle Shape.
 //							
 //							Construction types:

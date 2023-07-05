@@ -1,6 +1,5 @@
 //  @function				Grid()
 /// @argument				size {Vector2}
-///							
 /// @description			Constructs a Grid Data Structure, which stores data in a model similar to
 ///							a two-dimensional array. Each value is stored in its own cell and where it
 ///							can be read or modified invidually or by operating multiple cells at once

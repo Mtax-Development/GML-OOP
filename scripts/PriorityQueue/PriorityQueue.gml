@@ -1,5 +1,4 @@
 //  @function				PriorityQueue()
-//							
 /// @description			Constructs a Priority Queue Data Structure, which stores data in
 ///							a linear model that orders values based on their assigned priority.
 //							

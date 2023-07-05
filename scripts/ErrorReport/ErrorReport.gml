@@ -1,5 +1,4 @@
 //  @function				ErrorReport()
-//							
 /// @description			Contains static variables and methods of the error reporting system.
 //							
 //							Construction types:
@@ -209,7 +208,6 @@ function ErrorReport() constructor
 		/// @argument			detail {struct:exception|string}
 		/// @argument			callstack {string[]}
 		/// @argument			time? {DateTime|string}
-		///						
 		/// @description		A container constructor storing information about a reported error.
 		//						
 		//						Construction types:

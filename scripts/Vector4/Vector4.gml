@@ -3,7 +3,6 @@
 /// @argument				y1? {real}
 /// @argument				x2? {real}
 /// @argument				y2? {real}
-///							
 /// @description			Construct a Vector container for two x and y coordinate pairs.
 //							
 //							Construction types:

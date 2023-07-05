@@ -1,5 +1,4 @@
 //  @function				List()
-//							
 /// @description			Constructs a List Data Structure, which stores data in a linear
 ///							model, offering flexibility while doing so. It easily resized,
 ///							sorted and manipulated in other ways.

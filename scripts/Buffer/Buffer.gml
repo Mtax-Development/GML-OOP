@@ -2,7 +2,6 @@
 /// @argument				size {int}
 /// @argument				type {constant:buffer_[bufferType]}
 /// @argument				aligment? {int}
-///							
 /// @description			Constructs a Buffer, which is a region of memory. Primarly used while
 ///							moving data between places, such as through network or into files.
 //							

@@ -5,7 +5,6 @@
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_size? {int}
 /// @argument				outline_alpha? {real}
-///							
 /// @description			Constructs a Rectangle Shape.
 //							
 //							Construction types:

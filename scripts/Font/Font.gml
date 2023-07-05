@@ -1,5 +1,4 @@
 //  @function				Font()
-//							
 /// @description			Constructs a Font resource defining glyphs used in text rendering.
 //							
 //							Construction types:

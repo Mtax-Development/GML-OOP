@@ -1,7 +1,6 @@
 //  @function				RangedValue()
 /// @argument				range {Range}
 /// @argument				value? {real}
-///							
 /// @description			Construct a container for a value closed in the specified Range.
 //							
 //							Construction types:

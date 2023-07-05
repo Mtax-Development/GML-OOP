@@ -1,6 +1,5 @@
 //  @function				Surface()
 /// @argument				size {Vector2}
-///							
 /// @description			Constructs a Surface resource, a separate canvas for graphics rendering.
 //							
 //							Construction types:

@@ -1,5 +1,4 @@
 //  @function				Sprite()
-//							
 /// @description			Constructs a Sprite resource used to render its frames.
 //							
 //							Construction types:

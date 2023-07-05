@@ -1,5 +1,4 @@
 //  @function				Stack()
-//							
 /// @description			Constructs a Stack Data Structure, which stores data in a linear,
 ///							last-in-first-out model that disallows order manipulation.
 //							
