@@ -1,0 +1,76 @@
+## General
+animcurves/
+datafiles/
+extensions/
+fonts/
+options/
+paths/
+sequences/
+shaders/
+sprites/
+tilesets/
+timelines/
+sounds/
+README.md
+LICENSE
+.gitattributes
+
+##GML Development Toolbox
+scripts/msg/
+scripts/out/
+scripts/array/
+scripts/file_to_string/
+scripts/string_to_file/
+scripts/json_to_struct/
+
+## GML-OOP (Release 1)
+# Containers
+scripts/Angle/
+scripts/Color2/
+scripts/Color3/
+scripts/Color4/
+scripts/DateTime/
+scripts/Range/
+scripts/RangedValue/
+scripts/Scale/
+scripts/TextAlign/
+scripts/Vector2/
+scripts/Vector4/
+
+# Data Structures
+scripts/Grid/
+scripts/List/
+scripts/Map/
+scripts/PriorityQueue/
+scripts/Queue/
+scripts/Stack/
+
+# Debug
+scripts/ErrorReport/
+
+# Handlers
+scripts/ArrayParser/
+scripts/SpriteRenderer/
+scripts/StringParser/
+scripts/TextRenderer/
+scripts/SurfaceRenderer/
+
+# Resources
+scripts/Buffer/
+scripts/Font/
+scripts/Layer/
+scripts/ParticleType/
+scripts/Room/
+scripts/Shader/
+scripts/Sprite/
+scripts/Surface/
+
+# Shapes
+scripts/Arrow/
+scripts/Circle/
+scripts/Ellipse/
+scripts/Line/
+scripts/Point/
+scripts/Rectangle/
+scripts/RoundRectangle/
+scripts/Triangle/
