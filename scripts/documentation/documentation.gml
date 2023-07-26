@@ -5,6 +5,12 @@ var _ROOT = self;
 path = {} with (path)
 {
 	project = @"";
+	
+	if ((is_string(project)) and (string_char_at(project, string_length(project)) != @"\"))
+	{
+		project += @"\";
+	}
+	
 	scripts = (project + @"scripts\");
 	supplement = @"Supplement\";
 	output = @"Output\";
@@ -31,7 +37,7 @@ path = {} with (path)
 	}
 }
 
-if (!((is_string(path.project)) and (string_length(path.project) > 0)))
+if (!((is_string(path.project)) and (string_length(path.project) > 1)))
 {
 	var _error = "ERROR: Path to the project to document not set. Unable to continue.";
 	
