@@ -13,16 +13,18 @@ function field_create_code_example(_supplement_example, _constructor_name, _cons
 	
 	if (is_string(_supplement_example.code))
 	{
+		var _text_code = format_links(_supplement_example.code, _constructor_name,
+									  _constructor_property, true, true);
+		_text_code = string_replace_all(_text_code, (_method_name + "("),
+										("<b>" + _method_name + "</b>" + "("))
+		
 		_result = ("<hr>" + "\n\n" +
 				   "<details><summary><b>Example</b></summary>" + "\n" +
 				   "<blockquote>" + "\n" +
 				   "<b>Code</b>" + "\n" +
 				   "<pre>" + "\n" +
-				   format_links(_supplement_example.code, _constructor_name,
-								_constructor_property, false, true) +
+				   _text_code+
 				   "</pre>" + "\n");
-		
-		_result = string_replace_all(_result, _method_name, ("<b>" + _method_name + "</b>"));
 		
 		if (is_string(_supplement_example.result))
 		{
@@ -67,7 +69,7 @@ function field_create_code_example(_supplement_example, _constructor_name, _cons
 			
 			_result += ("\n" + "<hr>" + "\n\n" +
 						"<b>Explanation</b>" +
-						_text_explanation + "\n");
+						format_type_brackets(_text_explanation) + "\n");
 		}
 		
 		_result += ("</blockquote>" + "\n" + "</details>");

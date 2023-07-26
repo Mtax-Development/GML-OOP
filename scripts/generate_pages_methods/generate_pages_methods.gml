@@ -170,7 +170,7 @@ function generate_pages_methods(_path, _element)
 			_method_description = format_type_brackets(
 								   format_links(format_specific_descriptions(_method_description),
 												_constructor_name, _constructor_property, true,
-												true, true, _ignoredLinks.ID));
+												true, true, undefined, _ignoredLinks.ID));
 			
 			_result = ("<h3>Argument" + ((_method_argument_count == 1) ? "" : "s") + "</h3>" + "\n" +
 					   ((_method_argument_count <= 0)

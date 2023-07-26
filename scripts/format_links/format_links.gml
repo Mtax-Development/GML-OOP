@@ -5,6 +5,7 @@
 /// @argument				link_constructor_name? {bool}
 /// @argument				skip_midwords? {bool}
 /// @argument				encloseLanguageFeature? {bool|string|noone}
+/// @argument				wrapInCodeBlocks? {bool}
 /// @argument				ignoredProperties? {string[]}
 /// @returns				{string}
 /// @description			Format hyperlinks to pages of documentation in relevant parts of the
@@ -17,9 +18,11 @@
 ///							 - Language features can be specified to be either enclosed in grave accent
 ///							   character to be turned into a link or specified as {noone} to not be
 ///							   affected by formatting.
+///							 - Constructors and data types can be wrapped in code blocks.
 ///							 - Property names can be specified to be ignored in formatting.
 function format_links(_text, _constructor_name, _constructor_property, _link_constructor_name = false,
-					  _skip_midwords = false, _encloseLanguageFeature = false, _ignoredProperties = [])
+					  _skip_midwords = false, _encloseLanguageFeature = false,
+					  _wrapInCodeBlocks = false, _ignoredProperties = [])
 {
 	static _stringParser = new StringParser();
 	static _stringParser_element_chain = new StringParser();
@@ -152,7 +155,7 @@ function format_links(_text, _constructor_name, _constructor_property, _link_con
 	if (is_array(_constructor_element_chain))
 	{
 		_constructor_element_chain_last =
-			_constructor_element_chain[(array_length(_constructor_element_chain) - 1)];
+		 _constructor_element_chain[(array_length(_constructor_element_chain) - 1)];
 	}
 	else
 	{
@@ -330,11 +333,6 @@ function format_links(_text, _constructor_name, _constructor_property, _link_con
 		++_i;
 	}
 	
-	//array_sort(_inner_link, function(_value1, _value2)
-	//{
-	//	return (string_length(_value1) > string_length(_value2) ? -1 : 1);
-	//});
-	
 	var _i = 0;
 	repeat (array_length(_inner_link))
 	{
@@ -420,19 +418,29 @@ function format_links(_text, _constructor_name, _constructor_property, _link_con
 	if (is_array(_constructor_property))
 	{
 		var _midword_filter = ((_skip_midwords) ? [" ", "(", ")", "}", "|", "."] : [""]);
-		var _i = [0, 0];
+		var _midword_filter_count = array_length(_midword_filter);
+		var _i = [0, 0, 0];
 		repeat (array_length(_constructor_property))
 		{
 			if (!_arrayParser_ignoredProperties.contains(_constructor_property[_i[0]][0]))
 			{
 				_i[1] = 0;
-				repeat (array_length(_midword_filter))
+				repeat (_midword_filter_count)
 				{
-					_stringParser.replace((_constructor_property[_i[0]][0] + _midword_filter[_i[1]]),
-										  ("<code><a href=\"" +
-										   _constructor_name + "#properties\">" +
-										   _constructor_property[_i[0]][0] + "</a></code>" +
-										   _midword_filter[_i[1]]));
+					_i[2] = 0;
+					repeat (_midword_filter_count)
+					{
+						_stringParser.replace((_midword_filter[_i[1]] +
+											   _constructor_property[_i[0]][0] +
+											   _midword_filter[_i[2]]),
+											  (_midword_filter[_i[1]] +
+											   "<code><a href=\"" +
+											    _constructor_name + "#properties\">" +
+											    _constructor_property[_i[0]][0] + "</a></code>" +
+											    _midword_filter[_i[2]]));
+						
+						++_i[2];
+					}
 					
 					++_i[1];
 				}
@@ -460,6 +468,16 @@ function format_links(_text, _constructor_name, _constructor_property, _link_con
 							   _filter_overview[_i][0] + "</a>"));
 		
 		++_i;
+	}
+	
+	if (!_wrapInCodeBlocks)
+	{
+		var _constructor_default_hyperlink = ("<a href=\"" + _constructor_name + "\">" +
+											  _constructor_name + "</a>");
+		
+		_stringParser.replace((" " + _constructor_default_hyperlink),
+							  (" <code>" + _constructor_default_hyperlink + "</code>"));
+		
 	}
 	
 	return _stringParser.ID;
