@@ -1,0 +1,25 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": ["Values related to angles are automatically treated as wrapped into the 360° range when used by built-in functions, but the actual number provided to them is able to remain outside of that range. This constructor manages that value through its set() and modify() methods. With them, the value is set to its equivalent in the 360° range, where 0 and 360 are treated as the same number, with 0 being prioritized. This improves the readability of the value, as it otherwise can be hard to recognize when the value operates on high numbers, especially if it was continously modified.",
+		"2D images will become tilted if rendered at value other than 0. Generally, adding to the value will tilt the image left and substracting from it will tilt the image right."]
+	},
+
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{real}"],
+		"defaultValue": [0],
+		"modifiable": [false]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

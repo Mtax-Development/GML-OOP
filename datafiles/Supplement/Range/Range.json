@@ -1,0 +1,25 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": ["This container assists in operations on two numbers related to each other and provided values contained within or scaled by their difference. Usually, the minimum number is expected to be lower than the maximum number, and they are not meant equal each other, as using a single number instead of a constructor is sufficient. The boundary created by two numbers of the range is inclusive, meaning numbers equal to either of them are treated as being within that range, unless it is possible to specify otherwise.",
+		"RangedValue is a similar container, which manages its value around a range of two numbers."]
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": "{real}",
+		"defaultValue": "None",
+		"modifiable": true
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

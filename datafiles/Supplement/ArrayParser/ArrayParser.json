@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": "While this constructor is not intended to be constructed for every string in a project, it provides additional functionalities when advanced array manipulation is necessary."
+	},
+
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{any[]}"],
+		"defaultValue": [],
+		"modifiable": [true]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

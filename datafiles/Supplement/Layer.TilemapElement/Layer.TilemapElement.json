@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:tilemapElement}", "{int:tileset}", "Vector2", "Vector2"],
+		"defaultValue": ["None", "None", null, null],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

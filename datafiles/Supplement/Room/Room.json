@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:room}", "{string}", "{bool}", "Vector2", "{Room.AddedInstance[]}", "{bool}", "{bool}", "{int:room}"],
+		"defaultValue": ["None", "string(undefined)", "false", "Vector2(0, 0)", "[]", "false", null, null],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

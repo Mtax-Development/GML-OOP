@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:stack}"],
+		"defaultValue": ["None"],
+		"modifiable": [false]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

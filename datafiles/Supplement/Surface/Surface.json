@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": "This is a volatile graphical resource with numerous reasons due to which it can be automatically cleared from the memory. This constructor applies several mechanisms attempting to reduce the impact of that. The application will not crash and a replacement will be created and cleared. In such case, an ErrorReport will be created and depending on the setup, an incorrect render might occur. It is ideal to render the Surface during the frame it was created or setup it in a way which minimizes the chance of invalid operations occurring, such as through the use of the Event system to prepare render anew immediately after recreation."
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:surface}", "{Vector2}"],
+		"defaultValue": "None",
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

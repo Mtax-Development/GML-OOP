@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:instance}", "{int:object}", "{Vector2}"],
+		"defaultValue": ["None", "None", "Vector2(0, 0)"],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

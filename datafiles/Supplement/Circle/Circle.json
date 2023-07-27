@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{Vector2}", "{real}", "{int:color|Color2}", "{real}", "{int:color}", "{real}"],
+		"defaultValue": [null, 0, null, 1, null, 1],
+		"modifiable": true
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

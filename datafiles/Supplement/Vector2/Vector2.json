@@ -1,0 +1,25 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": ["It is a universal constructor containing two values that can be expressed on a two-dimensional plane, horizontal as x and vertical as y. Examples of what these values represent include positioning, speed, or graphical and mathematical values.",
+		"Scale is a similar constructor with the same properties, but for a more specific purpose.<br>Vector4 is a similar constructor with two sets of such values."]
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": "{real}",
+		"defaultValue": null,
+		"modifiable": true
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

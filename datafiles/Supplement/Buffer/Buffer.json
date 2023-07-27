@@ -1,0 +1,26 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": ["It contains data without consistent structure, where bytes of separate data pieces are lined up after another. To write or read them individually, the amount of bytes for each piece of data needs to be expressed by {constant:buffer_[dataType]}. These constants can be known on the reading end or expected to be included inside the Buffer itself, to be read and then used to read data with that type.",
+		"The size of a data piece marks its end and the start usually does not need to be known, as each Buffer keeps track of its seek position when writing and reading data. That position is automatically advanced by the size of data that has been passed through, to be ready to work with the next piece of data. That position can be read and changed using respective methods, getSeekPosition() and setSeekPosition() methods, respectively. To set that position, {constant:buffer_seek_*} is used to set it either to the start of the data, the end or relative to current position. This position is set to start by default. If data was placed in the Buffer by means not requiring data types to be specified, that position will not be changed. Otherwise, writing data in such way will modify the seek position and it will need to be set before data when reading it.",
+		"Creating a Buffer is done by specifying {constant:buffer_[bufferType]}, which can put a limit to its size in physical memory and how it can be used. Grow type is universal, as it does have a limit of size and data types. This information can be obtained using getSize() and getType().<br>Alignment of the data can also be declared upon creation, obtained with getAlignment(). This is the amount of bytes the seek position travels through while writing and reading data, allowing space to be left in between of data pieces. This is generally not required within GameMaker Language itself and is used mostly while working with external systems. If not needed, it can remain at the default of 1."]
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:buffer}"],
+		"defaultValue": ["None"],
+		"modifiable": [false]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

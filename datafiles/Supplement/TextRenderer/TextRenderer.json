@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{any:string}", "{Font}", "{Vector2}", "{TextAlign}", "{int:color}", "{real}"],
+		"defaultValue": ["None", null, null, "TextAlign()", "c_white", 1],
+		"modifiable": true
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

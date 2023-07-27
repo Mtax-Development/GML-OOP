@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": "As Shader programs are written in their own languages, GameMaker Language makes use of several systems to communicate with them. Example of such are ones used to communicate with variables within the Shader code to manage uniforms and samplers. After being read, last received information will be added to an appropriate {struct} in this constructor for later reading, each in a newly created property named with the exact name of the variable inside the Shader code."
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:shader}", "{string}", "{bool}", "{struct}", "{struct}"],
+		"defaultValue": ["None", "None", "None", "{}", "{}"],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

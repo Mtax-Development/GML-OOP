@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:particleType}", "{constant:pt_shape_*}", "{Sprite}", "{bool}", "{bool}", "{bool}", "{Scale}", "{real|Range}", "{real}", "{real}", "{real|Range}", "{real}", "{real}", "{Angle|Range}", "{real}", "{real}", "{Angle}", "{real}", "{real}", "{bool}", "{real}", "{Angle}", "{int:color|Color2|Color3}", "{string}", "{bool}", "{real[]}", "{int|Range}", "{ParticleType}", "{int}", "{ParticleType}", "{int}"],
+		"defaultValue": ["None", "pt_shape_pixel", null, "false", "false", "false", "Scale(1, 1)", 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, "false", 0, null, 100, "false", "c_white", "color", "[1, undefined, undefined]", null, 0, null, 0],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

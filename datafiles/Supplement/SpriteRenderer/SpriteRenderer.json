@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{Sprite}", "{Vector2|Vector4}", "{int}", "{Scale}", "{Angle}", "{int:color|Color4}", "{real}", "{Vector4}", "{Vector2}", "{Surface|int:surface}"],
+		"defaultValue": ["None", null, 0, "Scale(1, 1)", "Angle(0)", "c_white", 1, null, null, null],
+		"modifiable": true
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

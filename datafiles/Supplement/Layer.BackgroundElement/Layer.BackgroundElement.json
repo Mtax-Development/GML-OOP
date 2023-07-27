@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{int:backgroundElement}", "{Sprite|int:-1}", "{bool}", "{bool}", "{bool}", "{bool}", "{Scale}", "{int:color}", "{real}", "{int}", "{real}"],
+		"defaultValue": ["None", null, "true", "false", "false", "false", "Scale(1, 1)", "c_white", 1, 0, 0],
+		"modifiable": false
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

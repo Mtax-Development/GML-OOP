@@ -1,0 +1,25 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": ["While this constructor is not intended to be constructed for every string in a project, it provides additional functionalities when advanced string manipulation is necessary.",
+		"Like with other constructors, toString() method will return a string representation of this constructor and not solely the string that is being parsed, otherwise accessible through the property of this constructor."]
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{any:string}"],
+		"defaultValue": [],
+		"modifiable": [true]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}
