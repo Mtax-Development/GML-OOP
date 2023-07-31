@@ -4,7 +4,7 @@ This branch contains Unit Tests for **GML-OOP**. Their purpose is to ensure and 
 The following GameMaker Language dependencies are required:
 
 * [GML-OOP](https://github.com/Mtax-Development/GML-OOP) itself.
-* [UnitTest](https://raw.githubusercontent.com/Mtax-Development/GML-Development-Toolbox/master/scripts/UnitTest/UnitTest.gml) constructor from [GML Development Toolbox](https://github.com/Git-Mtax/GML-Development-Toolbox).
+* [UnitTest](https://raw.githubusercontent.com/Mtax-Development/GML-Development-Toolbox/master/scripts/UnitTest/UnitTest.gml) constructor from [GML Development Toolbox](https://github.com/Mtax-Development/GML-Development-Toolbox).
 
 Include them in the project found in this branch. The preferred way to include several scripts at once is to use Local Packages. In the GameMaker IDE, this can be done from the `Tools` toolbar menu, from which you can use the option `Create Local Package` on open projects of the above dependencies to then load them into the Unit Test project using the `Import Local Package` option. Single scripts can be created in the `Asset Browser` to have their content copied from above links.
 
