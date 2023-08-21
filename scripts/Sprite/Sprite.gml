@@ -26,6 +26,7 @@ function Sprite() constructor
 				frameCount = undefined;
 				origin = undefined;
 				boundary = undefined;
+				boundary_mode = undefined;
 				speed = undefined;
 				speed_type = undefined;
 				
