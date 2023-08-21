@@ -328,17 +328,17 @@ function TextRenderer() constructor
 		#endregion
 		#region <Conversion>
 			
-			//? @argument			multiline? {bool}
-			//? @argument			full? {bool}
-			//? @argument			colorHSV? {bool}
-			//? @argument			elementLength? {int|all}
-			//? @argument			mark_separator? {string}
-			//? @argument			mark_cut? {string}
-			//? @argument			mark_linebreak? {string}
-			//? @returns			{string}
-			//? @description		Create a string representing this constructor.
-			//?						Overrides the string() conversion.
-			//?						Content will be represented with the text preview.
+			/// @argument			multiline? {bool}
+			/// @argument			full? {bool}
+			/// @argument			colorHSV? {bool}
+			/// @argument			elementLength? {int|all}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @argument			mark_linebreak? {string}
+			/// @returns			{string}
+			/// @description		Create a string representing this constructor.
+			///						Overrides the string() conversion.
+			///						Content will be represented with the text preview.
 			static toString = function(_multiline = false, _full = false, _colorHSV = false,
 									   _elementLength = 30, _mark_cut = "...", _mark_linebreak = ", ")
 			{

@@ -566,9 +566,9 @@ function Vector2() constructor
 				return self;
 			}
 			
-			//? @argument			value {real|Vector2}
-			//? @description		Divide the values of this Vector2 by specified value or the values
-			//?						of other specified Vector2. Attempts of division by 0 are ignored.
+			/// @argument			value {real|Vector2}
+			/// @description		Divide the values of this Vector2 by specified value or the values
+			///						of other specified Vector2. Attempts of division by 0 are ignored.
 			static divide = function(_value)
 			{
 				try
