@@ -69,7 +69,7 @@ function generate_pages_methods(_path, _element)
 			{
 				var _method_name = _stringParser.setParser(_method).trim().split(" ")[1];
 				
-				if (_method_name != "construct")
+				if ((_method_name != "construct") and (string_count("__", _method_name) <= 0))
 				{
 					array_push(method_listing.getValue(_constructor_name, _region), _method_name);
 					var _supplement = format_method_supplement(load_supplement(_constructor_name,
