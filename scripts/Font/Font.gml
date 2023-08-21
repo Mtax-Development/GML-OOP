@@ -5,10 +5,10 @@
 //							- Wrapper: font {int:font}
 //							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
 //										 glyphs {Range}, antialiasing {bool}
-//							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool}, 
+//							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool},
 //											  separation {int}, antialiasing {bool}
-//							- Sprite (glyph map): sprite {Sprite}, glyphs {string}, 
-//												  proportional {bool}, separation {int}, 
+//							- Sprite (glyph map): sprite {Sprite}, glyphs {string},
+//												  proportional {bool}, separation {int},
 //												  antialiasing {bool}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Font}

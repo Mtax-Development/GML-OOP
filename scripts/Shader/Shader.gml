@@ -65,7 +65,6 @@ function Shader() constructor
 							uniform = {};
 							
 							var _uniform = variable_struct_get_names(_other.uniform);
-							
 							var _i = 0;
 							repeat (array_length(_uniform))
 							{

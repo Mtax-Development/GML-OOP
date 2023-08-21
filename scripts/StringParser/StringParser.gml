@@ -264,9 +264,9 @@ function StringParser() constructor
 					if (_separator_length > 0)
 					{
 						var _separator_count = ((_string_length -
-											     string_length(string_replace_all(_string, _separator,
+												 string_length(string_replace_all(_string, _separator,
 																				  "")))
-											    / _separator_length);
+												/ _separator_length);
 						
 						if ((_separator_count > 0)
 						and (_string_length != (_separator_length * _separator_count)))

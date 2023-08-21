@@ -54,8 +54,10 @@ function Buffer() constructor
 						var _type = argument[1];
 						var _aligment = ((argument_count > 2) ? argument[2] : 1);
 						
-						if (!(_size > 0)) {_size = 1;} //|Size of less than 0 is not allowed.
-													   // Size of 0 can crash the application.
+						if (!(_size > 0))
+						{
+							_size = 1;
+						}
 						
 						ID = buffer_create(_size, _type, _aligment);
 					}

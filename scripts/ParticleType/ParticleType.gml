@@ -1317,7 +1317,7 @@ function ParticleType() constructor
 										var _location_x = (mean(_shape.location.x1,
 																_shape.location.x2)
 														   + ((sqrt(_point) * cos(_angle))
-														      * _size_x));
+															  * _size_x));
 										var _location_y = (mean(_shape.location.y1,
 																_shape.location.y2)
 														   + ((sqrt(_point) * sin(_angle))
@@ -1343,7 +1343,7 @@ function ParticleType() constructor
 										var _location_x = (mean(_shape.location.x1,
 																_shape.location.x2)
 														   + ((sqrt(_point) * cos(_angle))
-														      * _size_x));
+															  * _size_x));
 										var _location_y = (mean(_shape.location.y1,
 																_shape.location.y2)
 														   + ((sqrt(_point) * sin(_angle))

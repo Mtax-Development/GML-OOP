@@ -1230,10 +1230,10 @@ function Layer() constructor
 									tiled_y = layer_background_get_vtiled(ID);
 									scale = new Scale(layer_background_get_xscale(ID),
 													  layer_background_get_yscale(ID));
-									color = layer_background_get_blend(ID)
-									alpha = layer_background_get_alpha(ID)
-									frame = layer_background_get_index(ID)
-									speed = layer_background_get_speed(ID)
+									color = layer_background_get_blend(ID);
+									alpha = layer_background_get_alpha(ID);
+									frame = layer_background_get_index(ID);
+									speed = layer_background_get_speed(ID);
 								break;
 							}
 						}

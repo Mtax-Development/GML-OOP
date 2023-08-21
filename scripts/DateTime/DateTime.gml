@@ -13,8 +13,8 @@
 //							   Array elements will be applied in the following order:
 //							   [year, month?, day?, hour?, minute?, second?]
 //							- From two arrays: date {int[]}, time {int[]}
-//								Array elements will be applied in the following order:
-//								[year, month, day], [hour, minute, second?]
+//							   Array elements will be applied in the following order:
+//							   [year, month, day], [hour, minute, second?]
 //							- Wrapper: datetime {real:datetime}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {DateTime}

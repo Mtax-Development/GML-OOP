@@ -262,7 +262,7 @@ function RangedValue() constructor
 				}
 				
 				return self;
-            }
+			}
 			
 			/// @argument			value {real}
 			/// @returns			{real}
