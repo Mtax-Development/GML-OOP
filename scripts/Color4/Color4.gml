@@ -183,6 +183,8 @@ function Color4() constructor
 				color2 = _color2;
 				color3 = _color3;
 				color4 = _color4;
+				
+				return self;
 			}
 			
 			/// @argument			value {int:color|int:color[]|Color4}

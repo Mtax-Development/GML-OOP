@@ -116,6 +116,8 @@ function Color3() constructor
 				color1 = _color1;
 				color2 = _color2;
 				color3 = _color3;
+				
+				return self;
 			}
 			
 			/// @argument			value {int:color|int:color[]|Color3}

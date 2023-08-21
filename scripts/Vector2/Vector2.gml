@@ -779,6 +779,8 @@ function Vector2() constructor
 			{
 				x = _x;
 				y = _y;
+				
+				return self;
 			}
 			
 			/// @argument			value {real|real[]|Vector2|Scale}

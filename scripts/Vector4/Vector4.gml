@@ -1290,6 +1290,8 @@ function Vector4() constructor
 				y1 = _y1;
 				x2 = _x2;
 				y2 = _y2;
+				
+				return self;
 			}
 			
 			/// @argument			value {real|real[]|Vector2|Vector4|Scale}
