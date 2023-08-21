@@ -329,15 +329,6 @@ function Scale() constructor
 				return self;
 			}
 			
-			/// @argument			x? {real}
-			/// @argument			y? {real}
-			/// @description		Set each value of this Scale.
-			static setAll = function(_x = x, _y = y)
-			{
-				x = _x;
-				y = _y;
-			}
-			
 			/// @argument			value {real|real[]|Vector2|Scale}
 			/// @description		Set all of the values to one specified value or first two values of
 			///						the specified array.
