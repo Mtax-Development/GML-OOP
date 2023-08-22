@@ -204,6 +204,101 @@ function TextRenderer() constructor
 			}
 			
 		#endregion
+		#region <Setters>
+			
+			/// @argument			boundary {Vector2}
+			/// @argument			mark_separator? {string}
+			/// @argument			mark_cut? {string}
+			/// @description		Attempt to fit the text into the specified boundary by adding line
+			///						breaks between words split by the specified separator if they would
+			///						exceed the boundary horizontally upon render. The text will be cut
+			///						short if it would then exceed the vertical boundary.
+			static wrapText = function(_boundary, _mark_separator = " ", _mark_cut = "...")
+			{
+				var _string_original = ID;
+				
+				try
+				{
+					var _parser = new StringParser(ID);
+					
+					if ((location.x + _parser.getPixelSize(font).x +
+						 self.getBoundaryOffset().x1) > _boundary.x)
+					{
+						var _text_target = "";
+						var _newLine = "\n";
+						var _newLine_length = string_length(_newLine);
+						var _word = _parser.split(_mark_separator);
+						_parser.ID = "";
+						
+						if (!is_array(_word))
+						{
+							_word = [_word];
+						}
+						
+						var _word_count = array_length(_word);
+						var _i = 0;
+						repeat (_word_count)
+						{
+							//|Add separator before the word unless it is the first one or previous
+							// ended with a line break.
+							var _word_target = (((_i > 0)
+												and (!((string_count(_newLine, _word[(_i - 1)]) > 0)
+												and (string_last_pos(_newLine, _word[_i - 1]) ==
+												(string_length(_word[_i - 1]) - _newLine_length -
+												 1)))))
+												? (_mark_separator + _word[_i]) : _word[_i]);
+							_parser.ID += _word_target;
+							ID = _parser.ID;
+							
+							if ((location.x + _parser.getPixelSize(font).x +
+								 self.getBoundaryOffset().x1) > _boundary.x)
+							{
+								_parser.ID = (_text_target + _newLine + _word[_i]);
+								
+								if ((location.y + _parser.getPixelSize(font).y +
+									 self.getBoundaryOffset().y1) > _boundary.y)
+								{
+									ID = (_text_target + _mark_cut);
+									
+									return self;
+								}
+								else
+								{
+									_text_target += (_newLine + _word[_i]);
+								}
+							}
+							else
+							{
+								if ((location.y + _parser.getPixelSize(font).y +
+									 self.getBoundaryOffset().y1) > _boundary.y)
+								{
+									ID = (_text_target + _mark_cut);
+									
+									return self;
+								}
+								
+								_text_target += _word_target;
+							}
+							
+							_parser.ID = _text_target;
+							
+							++_i;
+						}
+					}
+					
+					ID = _parser.ID;
+				}
+				catch (_exception)
+				{
+					ID = _string_original;
+					
+					new ErrorReport().report([other, self, "wrapText()"], _exception);
+				}
+				
+				return self;
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			/// @argument			string? {any:string}
