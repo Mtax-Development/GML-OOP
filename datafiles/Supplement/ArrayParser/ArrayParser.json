@@ -2,7 +2,7 @@
 	"description":
 	{
 		"replacement": null,
-		"addendum": "While this constructor is not intended to be constructed for every string in a project, it provides additional functionalities when advanced array manipulation is necessary."
+		"addendum": "While this constructor is not intended to be constructed for every array in a project, it provides additional functionalities when advanced array manipulation is necessary."
 	},
 
 	"specification":
