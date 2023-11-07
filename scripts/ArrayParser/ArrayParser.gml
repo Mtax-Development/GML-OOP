@@ -126,6 +126,12 @@ function ArrayParser() constructor
 					}
 					
 					var _source_size = array_length(_source);
+					
+					if (_source_size <= 0)
+					{
+						return self;
+					}
+					
 					var _target_position_abs = abs(_target_position);
 					
 					if (!is_array(ID))
