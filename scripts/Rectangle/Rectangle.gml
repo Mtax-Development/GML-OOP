@@ -741,6 +741,21 @@ function Rectangle() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @returns			{real[+]}
+			/// @description		Return an array containing values of all properties of this Shape.
+			///						Properties with multiple values will be returned in nested arrays.
+			static toArray = function()
+			{
+				var _location = ((instanceof(location) == "Vector4") ? location.toArray() : location);
+				var _fill_color = ((instanceof(fill_color) == "Color4") ? fill_color.toArray()
+																		: fill_color);
+				var _outline_color = ((instanceof(outline_color) == "Color4")
+									  ? outline_color.toArray() : outline_color);
+				
+				return [_location, _fill_color, fill_alpha, _outline_color, outline_size,
+						outline_alpha];
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
