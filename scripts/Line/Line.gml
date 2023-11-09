@@ -267,16 +267,20 @@ function Line() constructor
 											 ? event.beforeRender.argument
 											 : array_create(_callback_count,
 															event.beforeRender.argument));
-							
 							var _i = 0;
 							repeat (_callback_count)
 							{
+								var _callback_index = ((is_method(_callback[_i]))
+													   ? method_get_index(_callback[_i])
+													   : _callback[_i]);
+								
 								try
 								{
-									script_execute_ext(method_get_index(_callback[_i]),
+									script_execute_ext(_callback_index,
 													   (((!_callback_isArray) and (_argument_isArray))
 														? _argument : ((is_array(_argument[_i])
-														? _argument[_i] : [_argument[_i]]))));
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
 								}
 								catch (_exception)
 								{
@@ -343,12 +347,17 @@ function Line() constructor
 							var _i = 0;
 							repeat (_callback_count)
 							{
+								var _callback_index = ((is_method(_callback[_i]))
+													   ? method_get_index(_callback[_i])
+													   : _callback[_i]);
+								
 								try
 								{
-									script_execute_ext(method_get_index(_callback[_i]),
+									script_execute_ext(_callback_index,
 													   (((!_callback_isArray) and (_argument_isArray))
 														? _argument : ((is_array(_argument[_i])
-														? _argument[_i] : [_argument[_i]]))));
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
 								}
 								catch (_exception)
 								{

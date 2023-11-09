@@ -527,27 +527,27 @@ function Shader() constructor
 									var _i = 0;
 									repeat (_callback_count)
 									{
-										if (is_method(_callback[_i]))
+										var _callback_index = ((is_method(_callback[_i]))
+															   ? method_get_index(_callback[_i])
+															   : _callback[_i]);
+										
+										try
 										{
-											try
-											{
-												script_execute_ext(method_get_index(_callback[_i]),
-																   (((!_callback_isArray)
-																	 and (_argument_isArray))
-																	? _argument
-																	: ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-											}
-											catch (_exception)
-											{
-												new ErrorReport().report([other, self, "setActive()",
-																		  "event", "beforeActivation"],
-																		 _exception);
-											}
+											script_execute_ext(_callback_index,
+															   (((!_callback_isArray)
+																 and (_argument_isArray))
+																? _argument : ((is_array(_argument[_i])
+																			   ? _argument[_i]
+																			   : [_argument[_i]]))));
+										}
+										catch (_exception)
+										{
+											new ErrorReport().report([other, self, "setActive()",
+																	  "event", "beforeActivation"],
+																	 _exception);
 										}
 									
-										++_i;
+									++_i;
 									}
 								}
 								
@@ -566,28 +566,27 @@ function Shader() constructor
 													 ? event.afterActivation.argument
 													 : array_create(_callback_count,
 																	event.afterActivation.argument));
-									
 									var _i = 0;
 									repeat (_callback_count)
 									{
-										if (is_method(_callback[_i]))
+										var _callback_index = ((is_method(_callback[_i]))
+															   ? method_get_index(_callback[_i])
+															   : _callback[_i]);
+										
+										try
 										{
-											try
-											{
-												script_execute_ext(method_get_index(_callback[_i]),
-																   (((!_callback_isArray)
-																	 and (_argument_isArray))
-																	? _argument
-																	: ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-											}
-											catch (_exception)
-											{
-												new ErrorReport().report([other, self, "setActive()",
-																		  "event", "afterActivation"],
-																		 _exception);
-											}
+											script_execute_ext(_callback_index,
+															   (((!_callback_isArray)
+																 and (_argument_isArray))
+																? _argument : ((is_array(_argument[_i])
+																			   ? _argument[_i]
+																			   : [_argument[_i]]))));
+										}
+										catch (_exception)
+										{
+											new ErrorReport().report([other, self, "setActive()",
+																	  "event", "afterActivation"],
+																	 _exception);
 										}
 									
 										++_i;
@@ -617,25 +616,26 @@ function Shader() constructor
 										var _i = 0;
 										repeat (_callback_count)
 										{
-											if (is_method(_callback[_i]))
+											var _callback_index = ((is_method(_callback[_i]))
+																   ? method_get_index(_callback[_i])
+																   : _callback[_i]);
+											
+											try
 											{
-												try
-												{
-													script_execute_ext(method_get_index(_callback[_i]),
-																	   (((!_callback_isArray)
-																		 and (_argument_isArray))
-																		? _argument
-																		: ((is_array(_argument[_i])
-																		   ? _argument[_i]
-																		   : [_argument[_i]]))));
-												}
-												catch (_exception)
-												{
-													new ErrorReport().report([other, self,
-																			  "setActive()", "event",
-																			  "beforeDeactivation"],
-																			  _exception);
-												}
+												script_execute_ext(_callback_index,
+																   (((!_callback_isArray)
+																	 and (_argument_isArray))
+																	? _argument
+																	: ((is_array(_argument[_i])
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
+											}
+											catch (_exception)
+											{
+												new ErrorReport().report([other, self,
+																		  "setActive()", "event",
+																		  "beforeDeactivation"],
+																		  _exception);
 											}
 									
 											++_i;
@@ -663,25 +663,26 @@ function Shader() constructor
 										var _i = 0;
 										repeat (_callback_count)
 										{
-											if (is_method(_callback[_i]))
+											var _callback_index = ((is_method(_callback[_i]))
+																   ? method_get_index(_callback[_i])
+																   : _callback[_i]);
+											
+											try
 											{
-												try
-												{
-													script_execute_ext(method_get_index(_callback[_i]),
-																	   (((!_callback_isArray)
-																		 and (_argument_isArray))
-																		? _argument
-																		: ((is_array(_argument[_i])
-																		   ? _argument[_i]
-																		   : [_argument[_i]]))));
-												}
-												catch (_exception)
-												{
-													new ErrorReport().report([other, self,
-																			  "setActive()", "event",
-																			  "beforeDeactivation"],
-																			  _exception);
-												}
+												script_execute_ext(_callback_index,
+																   (((!_callback_isArray)
+																	 and (_argument_isArray))
+																	? _argument
+																	: ((is_array(_argument[_i])
+																	   ? _argument[_i]
+																	   : [_argument[_i]]))));
+											}
+											catch (_exception)
+											{
+												new ErrorReport().report([other, self,
+																		  "setActive()", "event",
+																		  "beforeDeactivation"],
+																		  _exception);
 											}
 									
 											++_i;
