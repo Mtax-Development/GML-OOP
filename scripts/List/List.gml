@@ -354,7 +354,7 @@ function List() constructor
 			/// @description		Execute a function once for each element in this Data Structure.
 			///						The following arguments will be provided to the function and can
 			///						be accessed in it by using their name or the argument array:
-			///						- argument[0]: +i {int}
+			///						- argument[0]: _i {int}
 			///						- argument[1]: _value {any}
 			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument)
