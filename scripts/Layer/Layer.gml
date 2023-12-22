@@ -1692,7 +1692,7 @@ function Layer() constructor
 					{
 						try
 						{
-							if (string_copy(instanceof(_tiledata), 1, 8) == "TileData")
+							if (string_copy(string(instanceof(_tiledata)), 1, 8) == "TileData")
 							{
 								tilemap_clear(ID, _tiledata.ID);
 							}

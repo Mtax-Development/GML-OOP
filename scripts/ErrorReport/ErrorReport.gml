@@ -251,7 +251,7 @@ function ErrorReport() constructor
 					///						same as of the specified one.
 					static equals = function(_other)
 					{
-						if ((string_copy(instanceof(_other), 1, 10) == "ReportData")
+						if ((string_copy(string(instanceof(_other)), 1, 10) == "ReportData")
 						and (detail == _other.detail))
 						{
 							if ((is_array(callstack)) and (is_array(_other.callstack)))
