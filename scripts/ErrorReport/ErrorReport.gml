@@ -65,9 +65,18 @@ function ErrorReport() constructor
 			///						the appropriate static constructor variable and return that data.
 			static report = function(_error_location = other, _error_detail = "Unexpected Error")
 			{
-				var _callstack_raw = debug_get_callstack();
 				var _callstack = [];
-				array_copy(_callstack, 0, _callstack_raw, 1, (array_length(_callstack_raw) - 2)); 
+				
+				if ((is_struct(_error_detail)) and (is_array(_error_detail[$ "stacktrace"])))
+				{
+					_callstack = _error_detail.stacktrace;
+				}
+				else
+				{
+					var _callstack_raw = debug_get_callstack();
+					array_copy(_callstack, 0, _callstack_raw, 1, (array_length(_callstack_raw) - 2)); 
+				}
+				
 				var _reportData = new ReportData(_error_location, _error_detail, _callstack,
 												 date_datetime_string(date_current_datetime()));
 				var _errorData_isArray = is_array(errorData);
