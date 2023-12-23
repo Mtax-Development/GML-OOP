@@ -1146,34 +1146,57 @@ function Sprite() constructor
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					var _string_name = sprite_get_name(ID);
 					
 					if (_full)
 					{
-						var _string_speed_type = "";
+						var _string_size = string(new Vector2(sprite_get_width(ID),
+															  sprite_get_height(ID)));
+						var _string_frameCount = string(sprite_get_number(ID));
+						var _string_origin = string(new Vector2(sprite_get_xoffset(ID),
+																sprite_get_yoffset(ID)));
 						
-						if (is_real(speed))
+						var _string_boundary = string(new Vector4(sprite_get_bbox_left(ID),
+																  sprite_get_bbox_top(ID),
+																  sprite_get_bbox_right(ID),
+																  sprite_get_bbox_bottom(ID)));
+						var _string_boundary_mode = "";
+						switch (sprite_get_bbox_mode(ID))
 						{
-							switch (speed_type)
-							{
-								case spritespeed_framespersecond:
-									_string_speed_type = " Frames Per Second";
-								break;
-								
-								case spritespeed_framespergameframe:
-									_string_speed_type = " Frames Per Application Frame";
-								break;
-							}
+							case bboxmode_automatic:
+								_string_boundary_mode = "Automatic - ";
+							break;
+							case bboxmode_fullimage:
+								_string_boundary_mode = "Full Image - ";
+							break;
+							case bboxmode_manual:
+								_string_boundary_mode = "Manual - ";
+							break;
 						}
 						
-						_string = ("Name: " + string(name) + _mark_separator +
-								   "Size: " + string(size) + _mark_separator +
-								   "Frame Count: " + string(frameCount) + _mark_separator +
-								   "Origin: " + string(origin) + _mark_separator +
-								   "Speed: " + string(speed) + _string_speed_type);
+						var _string_speed = string(sprite_get_speed(ID));
+						var _string_speed_type = "";
+						switch (sprite_get_speed_type(ID))
+						{
+							case spritespeed_framespersecond:
+								_string_speed_type = " Frames Per Second";
+							break;
+							case spritespeed_framespergameframe:
+								_string_speed_type = " Frames Per Application Frame";
+							break;
+						}
+						
+						_string = ("Name: " + _string_name + _mark_separator +
+								   "Size: " + _string_size + _mark_separator +
+								   "Frame Count: " + _string_frameCount + _mark_separator +
+								   "Origin: " + _string_origin + _mark_separator +
+								   "Boundary: " + _string_boundary_mode + _string_boundary
+												+ _mark_separator +
+								   "Speed: " + _string_speed + _string_speed_type);
 					}
 					else
 					{
-						_string = string(name);
+						_string = _string_name;
 					}
 					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
