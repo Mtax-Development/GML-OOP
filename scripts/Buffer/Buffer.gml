@@ -39,7 +39,7 @@ function Buffer() constructor
 							buffer_copy(_other.ID, 0, _size, ID, 0);
 						}
 					}
-					else  if (argument_count == 1)
+					else if (argument_count == 1)
 					{
 						if ((is_real(argument[0])) and (buffer_exists(argument[0])))
 						{
