@@ -236,16 +236,16 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getCellNumber()]
+#region [Test: Method: getCellCount()]
 	
 	var _base = new Vector2(59, 95);
 	
 	constructor = new Grid(_base);
 	
-	var _result = constructor.getCellNumber();
+	var _result = constructor.getCellCount();
 	var _expectedValue = (_base.x * _base.y);
 	
-	unitTest.assert_equal("Method: getCellNumber()",
+	unitTest.assert_equal("Method: getCellCount()",
 						  _result, _expectedValue);
 	
 	constructor.destroy();
