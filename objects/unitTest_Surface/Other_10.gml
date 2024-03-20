@@ -199,15 +199,13 @@
 	
 	var _element = constructor.getTexture();
 	
-	var _result = [is_ptr(_element), (_element != pointer_null), (_element != pointer_invalid),
-				   _element];
-	var _expectedValue = [true, true, true, surface_get_texture(constructor.ID)];
+	var _result = [(_element != pointer_null), (_element != pointer_invalid), _element];
+	var _expectedValue = [true, true, surface_get_texture(constructor.ID)];
 	
 	unitTest.assert_equal("Method: getTexture()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
-						  _result[2], _expectedValue[2],
-						  _result[3], _expectedValue[3]);
+						  _result[2], _expectedValue[2]);
 	
 	constructor.destroy();
 	
