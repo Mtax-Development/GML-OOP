@@ -47,7 +47,7 @@ function Sprite() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Sprite")
+					if (is_instanceof(argument[0], Sprite))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -121,7 +121,7 @@ function Sprite() constructor
 															? argument[3] : false);
 							var _origin_x, _origin_y;
 							
-							if ((argument_count > 4) and (instanceof(argument[4]) == "Vector2"))
+							if ((argument_count > 4) and (is_instanceof(argument[4], Vector2)))
 							{
 								var _origin = argument[4];
 								
@@ -148,11 +148,11 @@ function Sprite() constructor
 							speed_type = sprite_get_speed_type(ID);
 						}
 						else if ((argument_count > 1) and ((argument[1] == all)
-						or (instanceof(argument[1]) == "Vector4")))
+						or (is_instanceof(argument[1], Vector4))))
 						{
 							//|Construction type: From Surface.
-							var _surface = ((instanceof(argument[0]) == "Surface") ? argument[0].ID
-																				   : argument[0]);
+							var _surface = ((is_instanceof(argument[0], Surface)) ? argument[0].ID
+																				  : argument[0]);
 							var _part_x1, _part_y1, _part_x2, _part_y2;
 							
 							if (argument[1] == all)
@@ -177,7 +177,7 @@ function Sprite() constructor
 							
 							var _origin_x, _origin_y;
 							
-							if ((argument_count > 2) and (instanceof(argument[2]) == "Vector2"))
+							if ((argument_count > 2) and (is_instanceof(argument[2], Vector2)))
 							{
 								var _origin = argument[2];
 								
@@ -235,7 +235,7 @@ function Sprite() constructor
 			///						Applicable only if this Sprite was created during the runtime.
 			static destroy = function()
 			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
+				if (self.isFunctional())
 				{
 					sprite_delete(ID);
 					
@@ -252,12 +252,12 @@ function Sprite() constructor
 			{
 				try
 				{
-					sprite_assign(ID, ((instanceof(_other) == "Sprite") ? _other.ID : _other));
+					sprite_assign(ID, ((is_instanceof(_other, Sprite)) ? _other.ID : _other));
 					
 					var _size_x = sprite_get_width(ID);
 					var _size_y = sprite_get_height(ID);
 					
-					if (instanceof(size) == "Vector2")
+					if (is_instanceof(size, Vector2))
 					{
 						size.x = _size_x;
 						size.y = _size_y;
@@ -272,7 +272,7 @@ function Sprite() constructor
 					var _origin_x = sprite_get_xoffset(ID);
 					var _origin_y = sprite_get_yoffset(ID);
 					
-					if (instanceof(origin) == "Vector2")
+					if (is_instanceof(origin, Vector2))
 					{
 						origin.x = _origin_x;
 						origin.y = _origin_y;
@@ -287,7 +287,7 @@ function Sprite() constructor
 					var _boundary_x2 = sprite_get_bbox_right(ID);
 					var _boundary_y2 = sprite_get_bbox_bottom(ID);
 					
-					if (instanceof(boundary) == "Vector4")
+					if (is_instanceof(boundary, Vector4))
 					{
 						boundary.x1 = _boundary_x1;
 						boundary.y1 = _boundary_y1;
@@ -317,9 +317,9 @@ function Sprite() constructor
 			///						The added frames will be resized to the size of this Sprite.
 			static merge = function(_other)
 			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
+				if (self.isFunctional())
 				{
-					if (instanceof(_other) == "Sprite")
+					if (is_instanceof(_other, Sprite))
 					{
 						if (_other.isFunctional())
 						{
@@ -342,7 +342,7 @@ function Sprite() constructor
 													  "Other: " + "{" + string(_other) + "}"));
 						}
 					}
-					else if ((is_real(_other)) and (sprite_exists(_other)))
+					else if ((is_handle(_other)) and (sprite_exists(_other)))
 					{
 						sprite_merge(ID, _other);
 						
@@ -601,7 +601,7 @@ function Sprite() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (sprite_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
@@ -644,10 +644,10 @@ function Sprite() constructor
 						
 						if (_target != undefined)
 						{
-							var _target_value = ((instanceof(_target) == "Surface") ? _target.ID
-																					: _target);
+							var _target_value = ((is_instanceof(_target, Surface)) ? _target.ID
+																				   : _target);
 							
-							if ((is_real(_target_value)) and (surface_exists(_target_value)))
+							if ((is_handle(_target_value)) and (surface_exists(_target_value)))
 							{
 								_targetStack = ds_stack_create();
 								var _currentTarget = surface_get_target();
@@ -700,7 +700,7 @@ function Sprite() constructor
 						
 						var _location_x, _location_y;
 						
-						if ((instanceof(_location) == "Vector4"))
+						if ((is_instanceof(_location, Vector4)))
 						{
 							_scale_x = (((_location.x2 - _location.x1) / _size_x) * _scale_x);
 							_scale_y = (((_location.y2 - _location.y1) / _size_y) * _scale_y);
@@ -1114,7 +1114,7 @@ function Sprite() constructor
 			{
 				try
 				{
-					var _sprite_other = ((instanceof(_other) == "Sprite") ? _other.ID : _other);
+					var _sprite_other = ((is_instanceof(_other, Sprite)) ? _other.ID : _other);
 					var _copy_self = sprite_duplicate(ID);
 					var _copy_other = sprite_duplicate(_sprite_other);
 					

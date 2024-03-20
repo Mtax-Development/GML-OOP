@@ -22,7 +22,7 @@ function Range() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Range")
+					if (is_instanceof(argument[0], Range))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

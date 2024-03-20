@@ -29,7 +29,7 @@ function Room() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Room")
+					if (is_instanceof(argument[0], Room))
 					{
 						var _other = argument[0];
 						
@@ -37,8 +37,8 @@ function Room() constructor
 						{
 							//|Construction type: Constructor copy.
 							persistent = _other.persistent;
-							size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
-																		   : _other.size);
+							size = ((is_instanceof(_other.size, Vector2)) ? new Vector2(_other.size)
+																		  : _other.size);
 							ID = room_add();
 							room_set_width(ID, size.x);
 							room_set_height(ID, size.y);
@@ -106,7 +106,7 @@ function Room() constructor
 					size = undefined;
 					addedInstances = [];
 				}
-				else if ((instanceof(_other) == "Room") and (_other.isFunctional()))
+				else if ((is_instanceof(_other, Room)) and (_other.isFunctional()))
 				{
 					room_assign(ID, _other.ID);
 					
@@ -251,7 +251,7 @@ function Room() constructor
 			/// @description		Switch the active room to this one.
 			static setActive = function()
 			{
-				if ((is_real(ID)) and (room_exists(ID)))
+				if (self.isFunctional())
 				{
 					if (room != ID)
 					{
@@ -347,13 +347,13 @@ function Room() constructor
 						object = undefined;
 						location = undefined;
 						
-						if (string_copy(string(instanceof(argument[0])), 1, 13) == "AddedInstance")
+						if (is_instanceof(argument[0], parent.AddedInstance))
 						{
 							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
 							object = _other.object;
-							location = ((instanceof(_other.location) == "Vector2")
+							location = ((is_instanceof(_other.location, Vector2))
 										? new Vector2(_other.location) : _other.location);
 							ID = room_instance_add(parent.ID, location.x, location.y, object);
 						}

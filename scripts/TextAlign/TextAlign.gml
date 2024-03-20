@@ -27,7 +27,7 @@ function TextAlign() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "TextAlign")
+					if (is_instanceof(argument[0], TextAlign))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

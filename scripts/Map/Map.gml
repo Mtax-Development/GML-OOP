@@ -25,7 +25,7 @@ function Map() constructor
 				{
 					if (argument[0] != undefined)
 					{
-						if (instanceof(argument[0]) == "Map")
+						if (is_instanceof(argument[0], Map))
 						{
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
@@ -587,7 +587,7 @@ function Map() constructor
 							_key = argument[_i];
 							_value = argument[(_i + 1)];
 							
-							if (instanceof(_value) == "List")
+							if (is_instanceof(_value, List))
 							{
 								ds_map_add_list(ID, _key, _value.ID);
 							}
@@ -632,7 +632,7 @@ function Map() constructor
 							_key = argument[_i];
 							_value = argument[(_i + 1)];
 						
-							if (instanceof(_value) == "Map")
+							if (is_instanceof(_value, Map))
 							{
 								ds_map_add_map(ID, _key, _value.ID);
 							} 
@@ -703,7 +703,7 @@ function Map() constructor
 							{
 								if (ds_map_is_map(ID, _key))
 								{
-									if (instanceof(_value) == "Map")
+									if (is_instanceof(_value, Map))
 									{
 										ds_map_replace_map(ID, _key, _value.ID);
 									}
@@ -714,7 +714,7 @@ function Map() constructor
 								}
 								else if (ds_map_is_list(ID, _key))
 								{
-									if (instanceof(_value) == "List")
+									if (is_instanceof(_value, List))
 									{
 										ds_map_replace_list(ID, _key, _value.ID);
 									}
@@ -1034,7 +1034,7 @@ function Map() constructor
 						var _key = ds_map_find_first(ID);
 						var _value = ds_map_find_value(ID, _key);
 						
-						if (instanceof(_value) == "Map")
+						if (is_instanceof(_value, Map))
 						{
 							_value = _value.toStruct();
 						}
@@ -1047,7 +1047,7 @@ function Map() constructor
 							_key = ds_map_find_next(ID, _key);
 							_value = ds_map_find_value(ID, _key);
 							
-							if (instanceof(_value) == "Map")
+							if (is_instanceof(_value, Map))
 							{
 								_value = _value.toStruct();
 							}
@@ -1076,7 +1076,7 @@ function Map() constructor
 			{
 				if (is_struct(_struct))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+					if (!self.isFunctional())
 					{
 						ID = ds_map_create();
 					}
@@ -1139,7 +1139,7 @@ function Map() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+					if (!self.isFunctional())
 					{
 						ID = ds_map_create();
 					}

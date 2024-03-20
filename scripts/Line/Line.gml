@@ -41,12 +41,12 @@ function Line() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Line")
+					if (is_instanceof(argument[0], Line))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector4")
+						location = ((is_instanceof(_other.location, Vector4))
 									? new Vector4(_other.location) : _other.location);
 						size = _other.size;
 						
@@ -127,7 +127,7 @@ function Line() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(location) == "Vector4") and (location.isFunctional())
+				return ((is_instanceof(location, Vector4)) and (location.isFunctional())
 						and (is_real(size)));
 			}
 			
@@ -156,7 +156,7 @@ function Line() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;
@@ -464,7 +464,7 @@ function Line() constructor
 					}
 					else
 					{
-						if (instanceof(color) == "Color2")
+						if (is_instanceof(color, Color2))
 						{
 							_string_color = color.toString(false, _colorHSV);
 						}

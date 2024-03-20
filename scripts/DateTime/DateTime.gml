@@ -39,7 +39,7 @@ function DateTime() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "DateTime")
+					if (is_instanceof(argument[0], DateTime))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

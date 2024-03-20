@@ -45,16 +45,16 @@ function RoundRectangle() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "RoundRectangle")
+					if (is_instanceof(argument[0], RoundRectangle))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector4")
+						location = ((is_instanceof(_other.location, Vector4))
 									? new Vector4(_other.location) : _other.location);
-						radius = ((instanceof(_other.radius) == "Vector2")
+						radius = ((is_instanceof(_other.radius, Vector2))
 								  ? new Vector2(_other.radius) : _other.radius);
-						fill_color = ((instanceof(_other.fill_color) == "Color2")
+						fill_color = ((is_instanceof(_other.fill_color, Color2))
 									  ? new Color2(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
 						outline_color = _other.outline_color;
@@ -120,8 +120,8 @@ function RoundRectangle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((instanceof(location) == "Vector4") and (location.isFunctional()))
-						and ((instanceof(radius) == "Vector2") and (radius.isFunctional())));
+				return (((is_instanceof(location, Vector4)) and (location.isFunctional()))
+						and ((is_instanceof(radius, Vector2)) and (radius.isFunctional())));
 			}
 			
 		#endregion
@@ -149,7 +149,7 @@ function RoundRectangle() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;
@@ -504,7 +504,7 @@ function RoundRectangle() constructor
 						{
 							var _color1, _color2;
 							
-							if (instanceof(fill_color) == "Color2")
+							if (is_instanceof(fill_color, Color2))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -515,7 +515,7 @@ function RoundRectangle() constructor
 								_color2 = fill_color;
 							}
 							
-							if (instanceof(fill_color) == "Color2")
+							if (is_instanceof(fill_color, Color2))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -677,7 +677,7 @@ function RoundRectangle() constructor
 						}
 						else
 						{
-							if (instanceof(_color[_i]) == "Color2")
+							if (is_instanceof(_color[_i], Color2))
 							{
 								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}

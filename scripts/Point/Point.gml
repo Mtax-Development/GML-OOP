@@ -39,12 +39,12 @@ function Point() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Point")
+					if (is_instanceof(argument[0], Point))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector2")
+						location = ((is_instanceof(_other.location, Vector2))
 									? new Vector2(_other.location) : _other.location);
 						color = _other.color;
 						alpha = _other.alpha;
@@ -106,7 +106,7 @@ function Point() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(location) == "Vector2") and (location.isFunctional()));
+				return ((is_instanceof(location, Vector2)) and (location.isFunctional()));
 			}
 			
 		#endregion
@@ -134,7 +134,7 @@ function Point() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;

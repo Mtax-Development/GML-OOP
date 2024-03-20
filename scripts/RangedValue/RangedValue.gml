@@ -24,13 +24,13 @@ function RangedValue() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "RangedValue")
+					if (is_instanceof(argument[0], RangedValue))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						range = ((instanceof(_other.range) == "Range") ? new Range(_other.range)
-																	   : _other.range);
+						range = ((is_instanceof(_other.range, Range)) ? new Range(_other.range)
+																	  : _other.range);
 						value = _other.value;
 						value_original = _other.value_original;
 					}
@@ -52,8 +52,7 @@ function RangedValue() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(value)) and (instanceof(range) == "Range")
-						and (range.isFunctional()));
+				return ((is_real(value)) and (is_instanceof(range, Range)) and (range.isFunctional()));
 			}
 			
 		#endregion

@@ -39,7 +39,7 @@ function Vector4() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Vector4")
+					if (is_instanceof(argument[0], Vector4))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -86,8 +86,8 @@ function Vector4() constructor
 										break;
 									}
 								}
-								else if ((_argument_instanceof == "Vector2")
-								or (_argument_instanceof == "Scale"))
+								else if (is_instanceof(argument[0], Vector2))
+								or (is_instanceof(argument[0], Scale))
 								{
 									//|Construction type: From Scale or Vector2.
 									var _other = argument[0];
@@ -108,8 +108,8 @@ function Vector4() constructor
 							break;
 							
 							case 2:
-								if ((instanceof(argument[0]) == "Vector2") 
-								and (instanceof(argument[1]) == "Vector2"))
+								if ((is_instanceof(argument[0], Vector2))
+								and (is_instanceof(argument[1], Vector2)))
 								{
 									//|Construction type: Vector2 pair.
 									var _first = argument[0];
@@ -194,7 +194,7 @@ function Vector4() constructor
 						return ((x1 == _value) and (y1 == _value) and (x2 == _value)
 								and (y2 == _value));
 					}
-					else if (instanceof(_value) == "Vector2")
+					else if (is_instanceof(_value, Vector2))
 					{
 						return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x)
 								and (y2 == _value.y));
@@ -1317,7 +1317,7 @@ function Vector4() constructor
 						_result_x2 = _value[2];
 						_result_y2 = _value[3];
 					}
-					else if (instanceof(_value) == "Vector4")
+					else if (is_instanceof(_value, Vector4))
 					{
 						_result_x1 = _value.x1;
 						_result_y1 = _value.y1;
@@ -1369,7 +1369,7 @@ function Vector4() constructor
 						_result_x2 = _value_floor;
 						_result_y2 = _value_floor;
 					}
-					else if (instanceof(_value) == "Vector4")
+					else if (is_instanceof(_value, Vector4))
 					{
 						_result_x1 = floor(_value.x1);
 						_result_y1 = floor(_value.y1);
@@ -1423,7 +1423,7 @@ function Vector4() constructor
 						_result_x2 = _value_round;
 						_result_y2 = _value_round;
 					}
-					else if (instanceof(_value) == "Vector4")
+					else if (is_instanceof(_value, Vector4))
 					{
 						_result_x1 = round(_value.x1);
 						_result_y1 = round(_value.y1);
@@ -1477,7 +1477,7 @@ function Vector4() constructor
 						_result_x2 = _value_ceil;
 						_result_y2 = _value_ceil;
 					}
-					else if (instanceof(_value) == "Vector4")
+					else if (is_instanceof(_value, Vector4))
 					{
 						_result_x1 = ceil(_value.x1);
 						_result_y1 = ceil(_value.y1);

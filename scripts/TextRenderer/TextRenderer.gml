@@ -45,18 +45,18 @@ function TextRenderer() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "TextRenderer")
+					if (is_instanceof(argument[0], TextRenderer))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						ID = _other.ID;
-						font = ((instanceof(_other.font) == "Font") ? new Font(_other.font.ID)
-																	: _other.font);
-						location = ((instanceof(_other.location) == "Vector2")
+						font = ((is_instanceof(_other.font, Font)) ? new Font(_other.font.ID)
+																   : _other.font);
+						location = ((is_instanceof(_other.location, Vector2))
 									? new Vector2(_other.location) : _other.location);
-						align = ((instanceof(_other.align) == "TextAlign")
-								 ? new TextAlign(_other.align) : _other.align);
+						align = ((is_instanceof(_other.align, TextAlign)) ? new TextAlign(_other.align)
+																		  : _other.align);
 						color = _other.color;
 						alpha = _other.alpha;
 						

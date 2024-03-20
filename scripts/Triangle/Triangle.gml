@@ -47,22 +47,22 @@ function Triangle() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Triangle")
+					if (is_instanceof(argument[0], Triangle))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location1 = ((instanceof(_other.location1) == "Vector2")
+						location1 = ((is_instanceof(_other.location1, Vector2))
 									 ? new Vector2(_other.location1) : _other.location1);
-						location2 = ((instanceof(_other.location2) == "Vector2")
+						location2 = ((is_instanceof(_other.location2, Vector2))
 									 ? new Vector2(_other.location2) : _other.location2);
-						location3 = ((instanceof(_other.location3) == "Vector2")
+						location3 = ((is_instanceof(_other.location3, Vector2))
 									 ? new Vector2(_other.location3) : _other.location3);
-						fill_color = ((instanceof(_other.fill_color) == "Color3")
+						fill_color = ((is_instanceof(_other.fill_color, Color3))
 									  ? new Color3(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
-						outline_color = ((instanceof(_other.outline_color) == "Color3")
-									  ? new Color3(_other.outline_color) : _other.outline_color);
+						outline_color = ((is_instanceof(_other.outline_color, Color3))
+										 ? new Color3(_other.outline_color) : _other.outline_color);
 						outline_alpha = _other.outline_alpha;
 						
 						if (is_struct(_other.event))
@@ -127,9 +127,9 @@ function Triangle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((instanceof(location1) == "Vector2") and (location1.isFunctional()))
-						and ((instanceof(location2) == "Vector2") and (location2.isFunctional()))
-						and ((instanceof(location3) == "Vector2") and (location3.isFunctional())));
+				return (((is_instanceof(location1, Vector2)) and (location1.isFunctional()))
+						and ((is_instanceof(location2, Vector2)) and (location2.isFunctional()))
+						and ((is_instanceof(location3, Vector2)) and (location3.isFunctional())));
 			}
 			
 		#endregion
@@ -431,7 +431,7 @@ function Triangle() constructor
 						{
 							var _color1, _color2, _color3;
 							
-							if (instanceof(fill_color) == "Color3")
+							if (is_instanceof(fill_color, Color3))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -455,7 +455,7 @@ function Triangle() constructor
 						{
 							var _color1, _color2, _color3;
 							
-							if (instanceof(outline_color) == "Color3")
+							if (is_instanceof(outline_color, Color3))
 							{
 								_color1 = outline_color.color1;
 								_color2 = outline_color.color2;
@@ -618,7 +618,7 @@ function Triangle() constructor
 						}
 						else
 						{
-							if (instanceof(_color[_i]) == "Color3")
+							if (is_instanceof(_color[_i], Color3))
 							{
 								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}

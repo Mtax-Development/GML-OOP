@@ -28,7 +28,7 @@ function Color3() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Color3")
+					if (is_instanceof(argument[0], Color3))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -52,7 +52,7 @@ function Color3() constructor
 							
 							case 2:
 								//|Construction type: Color2 + color.
-								if (instanceof(argument[0]) == "Color2")
+								if (is_instanceof(argument[0], Color2))
 								{
 									var _other = argument[0];
 									var _color = argument[1];
@@ -61,7 +61,7 @@ function Color3() constructor
 									color2 = _other.color2;
 									color3 = _color;
 								}
-								else if (instanceof(argument[1]) == "Color2")
+								else if (is_instanceof(argument[1], Color2))
 								{
 									var _color = argument[0];
 									var _other = argument[1];

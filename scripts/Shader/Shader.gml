@@ -51,7 +51,7 @@ function Shader() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Shader")
+					if (is_instanceof(argument[0], Shader))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -248,7 +248,7 @@ function Shader() constructor
 								{
 									shader_set_uniform_f_array(_handle, _value);
 								}
-								else if (instanceof(_value) == "Vector2")
+								else if (is_instanceof(_value, Vector2))
 								{
 									shader_set_uniform_f(_handle, _value.x, _value.y);
 								}
@@ -340,7 +340,7 @@ function Shader() constructor
 								{
 									shader_set_uniform_i_array(_handle, _value);
 								}
-								else if (instanceof(_value) == "Vector2")
+								else if (is_instanceof(_value, Vector2))
 								{
 									shader_set_uniform_i(_handle, _value.x, _value.y);
 								}
@@ -506,7 +506,7 @@ function Shader() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					if (self.isFunctional())
 					{
 						switch (_target)
 						{

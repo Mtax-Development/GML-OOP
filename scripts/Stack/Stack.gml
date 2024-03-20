@@ -23,12 +23,12 @@ function Stack() constructor
 				{
 					if (argument[0] != undefined)
 					{
-						if (instanceof(argument[0]) == "Stack")
+						if (is_instanceof(argument[0], Stack))
 						{
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
-						else if ((is_real(argument[0])))
+						else if (is_handle(argument[0]))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -110,8 +110,7 @@ function Stack() constructor
 			/// @description		Replace data of this Stack with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "Stack") and (is_real(_other.ID)) 
-				and (ds_exists(_other.ID, ds_type_stack)))
+				if ((is_instanceof(_other, Stack)) and (_other.isFunctional()))
 				{
 					if (!self.isFunctional())
 					{
@@ -329,11 +328,12 @@ function Stack() constructor
 			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument, _readOnly = false)
 			{
+				var _dataCopy = ds_stack_create();
+				
 				try
 				{
 					var _size = ds_stack_size(ID);
 					var _functionReturn = [];
-					var _dataCopy = ds_stack_create();
 					ds_stack_copy(_dataCopy, ID);
 					
 					var _removableData = ((_readOnly) ? [_dataCopy] : [_dataCopy, ID]);

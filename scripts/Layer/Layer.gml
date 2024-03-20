@@ -38,7 +38,7 @@ function Layer() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Layer")
+					if (is_instanceof(argument[0], Layer))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -63,8 +63,8 @@ function Layer() constructor
 						visible = _other.visible;
 						setVisible(visible);
 						instancesPaused = false;
-						shader = ((instanceof(_other.shader) == "Shader") ? new Shader(_other.shader)
-																		  : _other.shader);
+						shader = ((is_instanceof(_other.shader, Shader)) ? new Shader(_other.shader)
+																		 : _other.shader);
 						function_drawBegin = _other.function_drawBegin;
 						function_drawEnd = _other.function_drawEnd;
 						
@@ -78,7 +78,7 @@ function Layer() constructor
 							self.setFunctionDrawEnd(function_drawEnd);
 						}
 						
-						if (instanceof(shader) == "Shader")
+						if (is_instanceof(shader, Shader))
 						{
 							self.setShader(shader);
 						}
@@ -213,7 +213,7 @@ function Layer() constructor
 			{
 				var _persistentElementExists = false;
 				
-				if (instanceof(instanceList) == "List")
+				if (is_instanceof(instanceList, List))
 				{
 					if (!_forceDestruction)
 					{
@@ -235,22 +235,22 @@ function Layer() constructor
 					instanceList = instanceList.destroy();
 				}
 				
-				if (instanceof(spriteList) == "List")
+				if (is_instanceof(spriteList, List))
 				{
 					spriteList = spriteList.destroy();
 				}
 				
-				if (instanceof(backgroundList) == "List")
+				if (is_instanceof(backgroundList, List))
 				{
 					backgroundList = backgroundList.destroy();
 				}
 				
-				if (instanceof(tilemapList) == "List")
+				if (is_instanceof(tilemapList, List))
 				{
 					tilemapList = tilemapList.destroy();
 				}
 				
-				if (instanceof(particleSystemList) == "List")
+				if (is_instanceof(particleSystemList, List))
 				{
 					var _i = 0;
 					repeat (particleSystemList.getSize())
@@ -870,7 +870,7 @@ function Layer() constructor
 					{
 						if (self.isFunctional())
 						{
-							if ((instanceof(_other) == "Layer") and (_other.isFunctional()))
+							if ((is_instanceof(_other, Layer)) and (_other.isFunctional()))
 							{
 								parent.spriteList.removeValue(self);
 								parent = _other;
@@ -915,8 +915,8 @@ function Layer() constructor
 					/// @description		Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if (instanceof(parent) == "Layer")
-						and (instanceof(parent.spriteList) == "List")
+						if ((is_instanceof(parent, Layer))
+						and (is_instanceof(parent.spriteList, List)))
 						{
 							parent.spriteList.removeValue(self);
 						}
@@ -1186,7 +1186,7 @@ function Layer() constructor
 									stretch = _other.stretch;
 									tiled_x = _other.tiled_x;
 									tiled_y = _other.tiled_y;
-									scale = ((instanceof(_other.sprite) == "Scale")
+									scale = ((is_instanceof(_other.sprite, Scale))
 											 ? new Scale(_other.scale) : _other.scale);
 									color = _other.color;
 									alpha = _other.alpha;
@@ -1256,7 +1256,7 @@ function Layer() constructor
 					{
 						if (self.isFunctional())
 						{
-							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
+							if ((is_instanceof(_other, Layer)) and (_other.isFunctional()))
 							{
 								parent.backgroundList.removeValue(self);
 								parent = _other;
@@ -1301,8 +1301,8 @@ function Layer() constructor
 					/// @description		Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((instanceof(parent) == "Layer")
-						and (instanceof(parent.backgroundList) == "List"))
+						if ((is_instanceof(parent, Layer))
+						and (is_instanceof(parent.backgroundList, List)))
 						{
 							parent.backgroundList.removeValue(self);
 						}
@@ -1671,8 +1671,8 @@ function Layer() constructor
 					/// @description		Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if ((instanceof(parent) == "Layer")
-						and (instanceof(parent.tilemapList) == "List"))
+						if ((is_instanceof(parent, Layer))
+						and (is_instanceof(parent.tilemapList, List)))
 						{
 							parent.tilemapList.removeValue(self);
 						}
@@ -1692,7 +1692,7 @@ function Layer() constructor
 					{
 						try
 						{
-							if (string_copy(string(instanceof(_tiledata)), 1, 8) == "TileData")
+							if (is_instanceof(_tiledata, TileData))
 							{
 								tilemap_clear(ID, _tiledata.ID);
 							}
@@ -1716,7 +1716,7 @@ function Layer() constructor
 					{
 						if (self.isFunctional())
 						{
-							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
+							if ((is_instanceof(_other, Layer)) and (layer_exists(_other.ID)))
 							{
 								parent.tilemapList.removeValue(self);
 								parent = _other;
@@ -1948,7 +1948,7 @@ function Layer() constructor
 					{
 						try
 						{
-							if (instanceof(_tiledata) == "TileData")
+							if (is_instanceof(_tiledata, TileData))
 							{
 								_tiledata = _tiledata.ID;
 							}
@@ -1977,7 +1977,7 @@ function Layer() constructor
 					{
 						try
 						{
-							if (instanceof(_tiledata) == "TileData")
+							if (is_instanceof(_tiledata, TileData))
 							{
 								_tiledata = _tiledata.ID;
 							}
@@ -2565,12 +2565,12 @@ function Layer() constructor
 					/// @description		Remove the internal information from the memory.
 					static destroy = function()
 					{
-						if (instanceof(emitterList) == "List")
+						if (is_instanceof(emitterList, List))
 						{
 							emitterList = emitterList.destroy();
 						}
 						
-						if ((is_real(ID)) and (part_system_exists(ID)))
+						if (self.isFunctional())
 						{
 							part_system_destroy(ID);
 							
@@ -2603,7 +2603,7 @@ function Layer() constructor
 					{
 						if (self.isFunctional())
 						{
-							if ((instanceof(_other) == "Layer") and (layer_exists(_other.ID)))
+							if ((is_instanceof(_other, Layer)) and (_other.isFunctional()))
 							{
 								parent.particleSystemList.removeValue(self);
 								parent = _other;
@@ -2823,7 +2823,7 @@ function Layer() constructor
 							var _string = "";
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							
-							var _string_emitterNumber = (((instanceof(emitterList) == "List")
+							var _string_emitterNumber = (((is_instanceof(emitterList, List))
 														   and (emitterList.isFunctional()))
 														 ? string(emitterList.getSize())
 														 : string(undefined));
@@ -2904,8 +2904,12 @@ function Layer() constructor
 									{
 										ID = part_emitter_create(parent.ID);
 										
-										if (string_copy(string(instanceof(argument[0])), 1, 15) ==
-											"ParticleEmitter")
+										var _instanceof_self = instanceof(self);
+										var _instanceof_other = ((argument_count > 0)
+																 ? instanceof(argument[0])
+																 : undefined);
+										
+										if (_instanceof_other == _instanceof_self)
 										{
 											//|Construction type: Constructor copy.
 											var _other = argument[0];

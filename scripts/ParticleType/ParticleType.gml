@@ -65,22 +65,22 @@ function ParticleType() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "ParticleType")
+					if (is_instanceof(argument[0], ParticleType))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						ID = part_type_create();
 						shape = _other.shape;
-						sprite = ((instanceof(_other.sprite) == "Sprite")
+						sprite = ((is_instanceof(_other.sprite, Sprite))
 								  ? new Sprite(_other.sprite.ID) : _other.sprite);
 						sprite_animate = _other.sprite_animate;
 						sprite_matchAnimation = _other.sprite_matchAnimation;
 						scale = new Scale(_other.scale);
-						size = ((instanceof(_other.sprite) == "Range") ? new Range(_other.size)
-																	   : _other.size);
-						speed = ((instanceof(_other.speed) == "Range") ? new Range(_other.speed)
-																	   : _other.speed);
+						size = ((is_instanceof(_other.size, Range)) ? new Range(_other.size)
+																	: _other.size);
+						speed = ((is_instanceof(_other.speed, Range)) ? new Range(_other.speed)
+																	  : _other.speed);
 						switch (instanceof(_other.direction))
 						{
 							case "Range":
@@ -624,11 +624,11 @@ function ParticleType() constructor
 				{
 					var _gravity_direction = gravity_direction;
 					
-					if (instanceof(_direction) == "Angle")
+					if (is_instanceof(_direction, Angle))
 					{
 						_gravity_direction = _direction;
 					}
-					else if (instanceof(gravity_direction) != "Angle")
+					else if (!is_instanceof(gravity_direction, Angle))
 					{
 						_gravity_direction = new Angle(270);
 					}
@@ -655,7 +655,7 @@ function ParticleType() constructor
 				{
 					var _life_minimum, _life_maximum;
 					
-					if (instanceof(_life) == "Range")
+					if (is_instanceof(_life, Range))
 					{
 						_life_minimum = _life.minimum;
 						_life_maximum = _life.maximum;
@@ -1529,7 +1529,7 @@ function ParticleType() constructor
 					{
 						var _string_visualType = "";
 						
-						if (instanceof(sprite) == "Sprite")
+						if (is_instanceof(sprite, Sprite))
 						{
 							_string_visualType = (_mark_separator + "Sprite: " + string(sprite));
 						}

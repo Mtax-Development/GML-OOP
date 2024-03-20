@@ -43,14 +43,14 @@ function Ellipse() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Ellipse")
+					if (is_instanceof(argument[0], Ellipse))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector4")
+						location = ((is_instanceof(_other.location, Vector4))
 									? new Vector4(_other.location) : _other.location);
-						fill_color = ((instanceof(_other.fill_color) == "Color2")
+						fill_color = ((is_instanceof(_other.fill_color, Color2))
 									  ? new Color2(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
 						outline_color = _other.outline_color;
@@ -114,7 +114,7 @@ function Ellipse() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(location) == "Vector4") and (location.isFunctional()));
+				return ((is_instanceof(location, Vector4)) and (location.isFunctional()));
 			}
 			
 		#endregion
@@ -142,7 +142,7 @@ function Ellipse() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;
@@ -272,7 +272,7 @@ function Ellipse() constructor
 						{
 							var _color1, _color2;
 						
-							if (instanceof(fill_color) == "Color2")
+							if (is_instanceof(fill_color, Color2))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -436,7 +436,7 @@ function Ellipse() constructor
 						}
 						else
 						{
-							if (instanceof(_color[_i]) == "Color2")
+							if (is_instanceof(_color[_i], Color2))
 							{
 								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}

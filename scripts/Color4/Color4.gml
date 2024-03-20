@@ -40,7 +40,7 @@ function Color4() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Color4")
+					if (is_instanceof(argument[0], Color4))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -63,8 +63,8 @@ function Color4() constructor
 							break;
 							
 							case 2:
-								if ((instanceof(argument[0]) == "Color2") 
-								and (instanceof(argument[1]) == "Color2"))
+								if ((is_instanceof(argument[0], Color2)) 
+								and (is_instanceof(argument[1], Color2)))
 								{
 									//|Construction type: Color2 pair.
 									var _first = argument[0];
@@ -78,7 +78,7 @@ function Color4() constructor
 								else
 								{
 									//|Construction type: Color3 + color.
-									if (instanceof(argument[0]) == "Color3")
+									if (is_instanceof(argument[0], Color3))
 									{
 										var _color3 = argument[0];
 										
@@ -87,7 +87,7 @@ function Color4() constructor
 										color3 = _color3.color3;
 										color4 = argument[1];
 									}
-									else if (instanceof(argument[1]) == "Color3")
+									else if (is_instanceof(argument[1], Color3))
 									{
 										var _color3 = argument[1];
 									
@@ -101,7 +101,7 @@ function Color4() constructor
 							
 							case 3:
 								//|Construction type: Color2 + color + color.
-								if (instanceof(argument[0]) == "Color2")
+								if (is_instanceof(argument[0], Color2))
 								{
 									var _color2 = argument[0];
 								
@@ -110,7 +110,7 @@ function Color4() constructor
 									color3 = argument[1];
 									color4 = argument[2];
 								}
-								else if (instanceof(argument[1]) == "Color2")
+								else if (is_instanceof(argument[1], Color2))
 								{
 									var _color2 = argument[1];
 								
@@ -119,7 +119,7 @@ function Color4() constructor
 									color3 = _color2.color2;
 									color4 = argument[2];
 								}
-								else if (instanceof(argument[2]) == "Color2")
+								else if (is_instanceof(argument[2], Color2))
 								{
 									var _color2 = argument[2];
 								

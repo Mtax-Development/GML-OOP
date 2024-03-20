@@ -24,7 +24,7 @@ function List() constructor
 				{
 					if (argument[0] != undefined)
 					{
-						if (instanceof(argument[0]) == "List")
+						if (is_instanceof(argument[0], List))
 						{
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);

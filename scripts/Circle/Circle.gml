@@ -45,15 +45,15 @@ function Circle() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Circle")
+					if (is_instanceof(argument[0], Circle))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector2")
+						location = ((is_instanceof(_other.location, Vector2))
 									? new Vector2(_other.location) : _other.location);
 						radius = _other.radius;
-						fill_color = ((instanceof(_other.fill_color) == "Color2")
+						fill_color = ((is_instanceof(_other.fill_color, Color2))
 									  ? new Color2(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
 						outline_color = _other.outline_color;
@@ -121,7 +121,7 @@ function Circle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(location) == "Vector2") and (location.isFunctional())
+				return ((is_instanceof(location, Vector2)) and (location.isFunctional())
 						and (is_real(radius)));
 			}
 			
@@ -150,7 +150,7 @@ function Circle() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;
@@ -493,7 +493,7 @@ function Circle() constructor
 						{
 							var _color1, _color2;
 							
-							if (instanceof(fill_color) == "Color2")
+							if (is_instanceof(fill_color, Color2))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -656,7 +656,7 @@ function Circle() constructor
 						}
 						else
 						{
-							if (instanceof(_color[_i]) == "Color2")
+							if (is_instanceof(_color[_i], Color2))
 							{
 								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}

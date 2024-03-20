@@ -42,12 +42,12 @@ function Arrow() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Arrow")
+					if (is_instanceof(argument[0], Arrow))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector4")
+						location = ((is_instanceof(_other.location, Vector4))
 									? new Vector4(_other.location) : _other.location);
 						size = _other.size;
 						color = _other.color;
@@ -115,7 +115,7 @@ function Arrow() constructor
 			static isFunctional = function()
 			{
 				return ((is_real(size)) and (is_real(color)) and (is_real(alpha)) and
-						((instanceof(location) == "Vector4") and (location.isFunctional())));
+						((is_instanceof(location, Vector4)) and (location.isFunctional())));
 			}
 			
 		#endregion

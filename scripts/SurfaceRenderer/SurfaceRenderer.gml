@@ -51,12 +51,12 @@ function SurfaceRenderer() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "SurfaceRenderer")
+					if (is_instanceof(argument[0], SurfaceRenderer))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						surface = ((instanceof(_other.surface) == "Surface")
+						surface = ((is_instanceof(_other.surface, Surface))
 								   ? new Surface(_other.surface) : _other.surface);
 						
 						switch (instanceof(_other.location))
@@ -74,16 +74,16 @@ function SurfaceRenderer() constructor
 							break;
 						}
 						
-						scale = ((instanceof(_other.scale) == "Scale") ? new Scale(_other.scale)
-																	   : _other.scale);
-						angle = ((instanceof(_other.angle) == "Angle") ? new Angle(_other.angle)
-																	   : _other.angle);
+						scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
+																	  : _other.scale);
+						angle = ((is_instanceof(_other.angle, Angle)) ? new Angle(_other.angle)
+																	  : _other.angle);
 						color = _other.color;
 						alpha = _other.alpha;
-						part = ((instanceof(_other.part) == "Vector4") ? new Vector4(_other.part)
-																	   : _other.part);
-						origin = ((instanceof(_other.origin) == "Vector2")
-								  ? new Vector2(_other.origin) : _other.origin);
+						part = ((is_instanceof(_other.part, Vector4)) ? new Vector4(_other.part)
+																	  : _other.part);
+						origin = ((is_instanceof(_other.origin, Vector2)) ? new Vector2(_other.origin)
+																		  : _other.origin);
 						target = _other.target;
 						
 						if (is_struct(_other.event))
@@ -322,7 +322,7 @@ function SurfaceRenderer() constructor
 					var _mark_separator_inline = ", ";
 					var _string_color;
 					
-					if (instanceof(color) == "Color4")
+					if (is_instanceof(color, Color4))
 					{
 						_string_color = string(color);
 					}

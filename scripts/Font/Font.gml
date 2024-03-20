@@ -53,7 +53,7 @@ function Font() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Font")
+					if (is_instanceof(argument[0], Font))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -70,16 +70,16 @@ function Font() constructor
 							break;
 							
 							case "sprite (UTF-8)":
-								sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.ID)
-																				  : _other.sprite);
+								sprite = ((is_instanceof(_other.sprite, Sprite))
+										  ? new Sprite(_other.ID) : _other.sprite);
 								
 								self.construct(sprite, _other.first, _other.proportional,
 											   _other.separation, _other.antialiasing);
 							break;
 							
 							case "sprite (glyph map)":
-								sprite = ((instanceof(_other.sprite) == "Sprite") ? new Sprite(_other.ID)
-																				  : _other.sprite);
+								sprite = ((is_instanceof(_other.sprite, Sprite))
+										  ? new Sprite(_other.ID) : _other.sprite);
 								
 								self.construct(sprite, _other.glyphs, _other.proportional,
 											   _other.separation, _other.antialiasing);

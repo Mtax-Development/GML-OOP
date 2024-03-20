@@ -21,7 +21,7 @@ function Angle() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Angle")
+					if (is_instanceof(argument[0], Angle))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

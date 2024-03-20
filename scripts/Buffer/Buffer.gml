@@ -24,7 +24,7 @@ function Buffer() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Buffer")
+					if (is_instanceof(argument[0], Buffer))
 					{
 						var _other = argument[0];
 						

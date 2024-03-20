@@ -45,17 +45,17 @@ function Rectangle() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "Rectangle")
+					if (is_instanceof(argument[0], Rectangle))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						location = ((instanceof(_other.location) == "Vector4")
+						location = ((is_instanceof(_other.location, Vector4))
 									? new Vector4(_other.location) : _other.location);
-						fill_color = ((instanceof(_other.fill_color) == "Color4")
+						fill_color = ((is_instanceof(_other.fill_color, Color4))
 									  ? new Color4(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
-						outline_color = ((instanceof(_other.outline_color) == "Color4")
+						outline_color = ((is_instanceof(_other.outline_color, Color4))
 										 ? new Color4(_other.outline_color) : _other.outline_color);
 						outline_size = _other.outline_size;
 						outline_alpha = _other.outline_alpha;
@@ -122,7 +122,7 @@ function Rectangle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(location) == "Vector4") and (location.isFunctional()));
+				return ((is_instanceof(location, Vector4)) and (location.isFunctional()));
 			}
 			
 		#endregion
@@ -150,7 +150,7 @@ function Rectangle() constructor
 				{
 					if (_list)
 					{
-						if (instanceof(_list) != "List")
+						if (!is_instanceof(_list, List))
 						{
 							_list = new List();
 							_list_created = true;
@@ -524,7 +524,7 @@ function Rectangle() constructor
 						{
 							var _color1, _color2, _color3, _color4;
 							
-							if (instanceof(fill_color) == "Color4")
+							if (is_instanceof(fill_color, Color4))
 							{
 								_color1 = fill_color.color1;
 								_color2 = fill_color.color2;
@@ -548,7 +548,7 @@ function Rectangle() constructor
 						{
 							var _color1, _color2, _color3, _color4;
 							
-							if (instanceof(outline_color) == "Color4")
+							if (is_instanceof(outline_color, Color4))
 							{
 								_color1 = outline_color.color1;
 								_color2 = outline_color.color2;
@@ -727,7 +727,7 @@ function Rectangle() constructor
 						}
 						else
 						{
-							if (instanceof(_color[_i]) == "Color4")
+							if (is_instanceof(_color[_i], Color4))
 							{
 								_string_color[_i] = _color[_i].toString(false, _colorHSV);
 							}
@@ -756,10 +756,10 @@ function Rectangle() constructor
 			///						Properties with multiple values will be returned in nested arrays.
 			static toArray = function()
 			{
-				var _location = ((instanceof(location) == "Vector4") ? location.toArray() : location);
-				var _fill_color = ((instanceof(fill_color) == "Color4") ? fill_color.toArray()
+				var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
+				var _fill_color = ((is_instanceof(fill_color, Color4)) ? fill_color.toArray()
 																		: fill_color);
-				var _outline_color = ((instanceof(outline_color) == "Color4")
+				var _outline_color = ((is_instanceof(outline_color, Color4))
 									  ? outline_color.toArray() : outline_color);
 				
 				return [_location, _fill_color, fill_alpha, _outline_color, outline_size,

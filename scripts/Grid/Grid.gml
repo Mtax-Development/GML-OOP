@@ -31,8 +31,8 @@ function Grid() constructor
 							//|Construction type: Constructor copy.
 							var _other = argument[0];
 							
-							size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
-																		   : _other.size);
+							size = ((is_instanceof(_other.size, Vector2)) ? new Vector2(_other.size)
+																		  : _other.size);
 							ID = ds_grid_create(size.x, size.y);
 							ds_grid_copy(ID, _other.ID);
 						break;
@@ -148,7 +148,7 @@ function Grid() constructor
 					
 					ds_grid_copy(ID, _other.ID);
 					
-					if (instanceof(size) == "Vector2")
+					if (is_instanceof(size, Vector2))
 					{
 						size.x = ds_grid_width(ID);
 						size.y = ds_grid_height(ID);
@@ -328,8 +328,8 @@ function Grid() constructor
 			}
 			
 			/// @returns			{int}
-			/// @description		Return the number of cells in this Grid.
-			static getCellNumber = function()
+			/// @description		Return the amount of cells in this Grid.
+			static getCellCount = function()
 			{
 				try
 				{
@@ -1149,7 +1149,7 @@ function Grid() constructor
 					
 					ds_grid_copy(ID, _target);
 					
-					if (instanceof(size) == "Vector2")
+					if (is_instanceof(size, Vector2))
 					{
 						size.x = _size_y;
 						size.y = _size_x;

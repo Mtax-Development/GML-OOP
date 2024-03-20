@@ -20,7 +20,7 @@ function StringParser() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "StringParser")
+					if (is_instanceof(argument[0], StringParser))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -49,7 +49,7 @@ function StringParser() constructor
 			///						the value of the specified parser by ensuring it is a string.
 			static setParser = function(_value)
 			{
-				ID = ((instanceof(_value) == "StringParser") ? string(_value.ID) : string(_value));
+				ID = ((is_instanceof(_value, StringParser)) ? string(_value.ID) : string(_value));
 				
 				return self;
 			}
@@ -69,7 +69,7 @@ function StringParser() constructor
 				{
 					var _value = argument[_i];
 					var _part = ((is_string(_value)) ? _value
-													 : ((instanceof(_value) == "StringParser")
+													 : ((is_instanceof(_value, StringParser))
 														? _value.ID : string(_value)));
 					
 					if (string_count(_part, _string) > 0)
@@ -95,7 +95,7 @@ function StringParser() constructor
 				{
 					var _value = argument[_i];
 					var _part = ((is_string(_value)) ? _value
-													 : ((instanceof(_value) == "StringParser")
+													 : ((is_instanceof(_value, StringParser))
 														? _value.ID : string(_value)));
 					
 					if (!(string_count(_part, _string) > 0))
@@ -629,7 +629,7 @@ function StringParser() constructor
 					
 					if (_font != undefined)
 					{
-						draw_set_font((instanceof(_font) == "Font") ? _font.ID : _font);
+						draw_set_font((is_instanceof(_font, Font)) ? _font.ID : _font);
 					}
 					
 					if ((_separation != undefined) and (_width != undefined))

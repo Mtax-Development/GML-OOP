@@ -23,7 +23,7 @@ function PriorityQueue() constructor
 				{
 					if (argument[0] != undefined)
 					{
-						if (instanceof(argument[0]) == "PriorityQueue")
+						if (is_instanceof(argument[0], PriorityQueue))
 						{
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
@@ -563,7 +563,7 @@ function PriorityQueue() constructor
 									   _mark_elementStart = "", _mark_elementEnd = "",
 									   _mark_section = ": ", _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size = ds_priority_size(ID);

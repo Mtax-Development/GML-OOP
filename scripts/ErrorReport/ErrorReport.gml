@@ -460,7 +460,7 @@ function ErrorReport() constructor
 					///						occurred, separated for readability.
 					static formatTime = function()
 					{
-						return ("[" + (((instanceof(time) == "DateTime") and (time.isFunctional()))
+						return ("[" + (((is_instanceof(time, DateTime)) and (time.isFunctional()))
 									   ? time.toStringTime()
 									   : ((is_string(time)) ? time : "Unknown time")) +
 								"]");

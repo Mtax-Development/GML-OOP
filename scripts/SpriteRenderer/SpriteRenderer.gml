@@ -53,12 +53,12 @@ function SpriteRenderer() constructor
 				
 				if (argument_count > 0)
 				{
-					if (instanceof(argument[0]) == "SpriteRenderer")
+					if (is_instanceof(argument[0], SpriteRenderer))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						sprite = ((instanceof(_other.sprite) == "Sprite")
+						sprite = ((is_instanceof(_other.sprite, Sprite))
 								  ? new Sprite(_other.sprite.ID) : _other.sprite);
 						
 						switch (instanceof(_other.location))
@@ -77,16 +77,16 @@ function SpriteRenderer() constructor
 						}
 						
 						frame = _other.frame;
-						scale = ((instanceof(_other.scale) == "Scale") ? new Scale(_other.scale)
-																	   : _other.scale);
-						angle = ((instanceof(_other.angle) == "Angle") ? new Angle(_other.angle)
-																	   : _other.angle);
+						scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
+																	  : _other.scale);
+						angle = ((is_instanceof(_other.angle, Angle)) ? new Angle(_other.angle)
+																	  : _other.angle);
 						color = _other.color;
 						alpha = _other.alpha;
-						part = ((instanceof(_other.part) == "Vector4") ? new Vector4(_other.part)
-																	   : _other.part);
-						origin = ((instanceof(_other.origin) == "Vector2") ? new Vector2(_other.origin)
-																		   : _other.origin);
+						part = ((is_instanceof(_other.part, Vector4)) ? new Vector4(_other.part)
+																	  : _other.part);
+						origin = ((is_instanceof(_other.origin, Vector2)) ? new Vector2(_other.origin)
+																		  : _other.origin);
 						target = _other.target;
 						
 						if (is_struct(_other.event))
@@ -332,7 +332,7 @@ function SpriteRenderer() constructor
 					var _mark_separator_inline = ", ";
 					var _string_color;
 					
-					if (instanceof(color) == "Color4")
+					if (is_instanceof(color, Color4))
 					{
 						_string_color = string(color);
 					}
@@ -411,7 +411,7 @@ function SpriteRenderer() constructor
 			///						be returned in a nested array.
 			static toArray = function()
 			{
-				var _sprite = ((instanceof(sprite) == "Sprite") ? sprite.ID : sprite);
+				var _sprite = ((is_instanceof(sprite, Sprite)) ? sprite.ID : sprite);
 				
 				var _location = location;
 				switch (instanceof(location))
@@ -422,12 +422,12 @@ function SpriteRenderer() constructor
 					break;
 				}
 				
-				var _scale = ((instanceof(scale) == "Scale") ? scale.toArray() : scale);
-				var _angle = ((instanceof(angle) == "Angle") ? angle.value : angle);
-				var _color = ((instanceof(color) == "Color4") ? color.toArray() : color);
-				var _part = ((instanceof(part) == "Vector4") ? part.toArray() : part);
-				var _origin = ((instanceof(origin) == "Vector2") ? origin.toArray() : origin);
-				var _target = ((instanceof(target) == "Surface") ? target.ID : target);
+				var _scale = ((is_instanceof(scale, Scale)) ? scale.toArray() : scale);
+				var _angle = ((is_instanceof(angle, Angle)) ? angle.value : angle);
+				var _color = ((is_instanceof(color, Color4)) ? color.toArray() : color);
+				var _part = ((is_instanceof(part, Vector4)) ? part.toArray() : part);
+				var _origin = ((is_instanceof(origin, Vector2)) ? origin.toArray() : origin);
+				var _target = ((is_instanceof(target, Surface)) ? target.ID : target);
 				
 				return [_sprite, _location, frame, _scale, _angle, _color, alpha, _part,
 						_origin, _target];

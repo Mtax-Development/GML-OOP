@@ -35,7 +35,7 @@ function Color2() constructor
 						color1 = argument[0];
 						color2 = argument[0];
 					}
-					else if (instanceof(argument[0]) == "Color2")
+					else if (is_instanceof(argument[0], Color2))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];

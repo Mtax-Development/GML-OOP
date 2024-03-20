@@ -20,7 +20,7 @@ function ArrayParser() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "ArrayParser")
+					if (is_instanceof(argument[0], ArrayParser))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
@@ -56,7 +56,7 @@ function ArrayParser() constructor
 			{
 				try
 				{
-					var _reference = ((instanceof(_value) == "ArrayParser") ? _value.ID : _value);
+					var _reference = ((is_instanceof(_value, ArrayParser)) ? _value.ID : _value);
 					
 					ID = ((is_array(_reference)) ? _reference : [_reference]);
 				}
@@ -120,7 +120,7 @@ function ArrayParser() constructor
 			{
 				try
 				{
-					if (instanceof(_source) == "ArrayParser")
+					if (is_instanceof(_source, ArrayParser))
 					{
 						_source = _source.ID;
 					}
@@ -460,7 +460,10 @@ function ArrayParser() constructor
 			{
 				try
 				{
-					if (instanceof(_other) == "ArrayParser") {_other = _other.ID};
+					if (is_instanceof(_other, ArrayParser))
+					{
+						_other = _other.ID;
+					};
 					
 					return array_equals(ID, _other);
 				}
@@ -530,8 +533,8 @@ function ArrayParser() constructor
 					repeat (argument_count)
 					{
 						var _argument = argument[_i[0]];
-						var _value = ((instanceof(_argument) == "ArrayParser") ? _argument.ID
-																			   : _argument);
+						var _value = ((is_instanceof(_argument, ArrayParser)) ? _argument.ID
+																			  : _argument);
 						
 						if (is_array(_value))
 						{
@@ -609,8 +612,8 @@ function ArrayParser() constructor
 					repeat (argument_count)
 					{
 						var _argument = argument[_i[0]];
-						var _value = ((instanceof(_argument) == "ArrayParser") ? _argument.ID
-																			   : _argument);
+						var _value = ((is_instanceof(_argument, ArrayParser)) ? _argument.ID
+																			  : _argument);
 						
 						if (is_array(_value))
 						{
@@ -1178,7 +1181,7 @@ function ArrayParser() constructor
 				{
 					var _result = 0;
 					
-					if (instanceof(_value) == "ArrayParser")
+					if (is_instanceof(_value, ArrayParser))
 					{
 						var _i = [0, 0];
 						repeat (array_length(ID))

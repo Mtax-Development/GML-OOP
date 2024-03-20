@@ -23,12 +23,12 @@ function Queue() constructor
 				{
 					if (argument[0] != undefined)
 					{
-						if (instanceof(argument[0]) == "Queue")
+						if (is_instanceof(argument[0], Queue))
 						{
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
-						else if ((is_real(argument[0])))
+						else if (is_handle(argument[0]))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];

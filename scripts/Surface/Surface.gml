@@ -73,13 +73,13 @@ function Surface() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					if (instanceof(argument[0]) == "Surface")
+					if (is_instanceof(argument[0], Surface))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						size = ((instanceof(_other.size) == "Vector2") ? new Vector2(_other.size)
-																	   : _other.size);
+						size = ((is_instanceof(_other.size, Vector2)) ? new Vector2(_other.size)
+																	  : _other.size);
 						
 						if (is_struct(_other.event))
 						{
@@ -305,7 +305,7 @@ function Surface() constructor
 			{
 				try
 				{
-					var _other_value = ((instanceof(_other) == "Surface") ? _other.ID : _other);
+					var _other_value = ((is_instanceof(_other, Surface)) ? _other.ID : _other);
 						
 					if ((is_handle(_other_value)) and (surface_exists(_other_value)))
 					{
@@ -423,12 +423,12 @@ function Surface() constructor
 			/// @description		Set the size of the Surface.
 			static setSize = function(_size)
 			{
-				if (instanceof(_size) == "Vector2") and (_size.isFunctional())
+				if ((is_instanceof(_size, Vector2)) and (_size.isFunctional()))
 				{
-					size = ((instanceof(size) == "Vector2") ? size.setAll(_size)
-															: new Vector2(_size));
+					var _size_x = max(1, _size.x);
+					var _size_y = max(1, _size.y);
 					
-					if ((!is_real(ID)) or (!surface_exists(ID)))
+					if (!self.isFunctional())
 					{
 						new ErrorReport().report([other, self, "setSize()"],
 												 ("Attempted to change size of an invalid " +
@@ -515,10 +515,10 @@ function Surface() constructor
 						
 						if (_target != undefined)
 						{
-							var _target_value = ((instanceof(_target) == "Surface") ? _target.ID
-																					: _target);
+							var _target_value = ((is_instanceof(_target, Surface)) ? _target.ID
+																				   : _target);
 							
-							if ((is_real(_target_value)) and (surface_exists(_target_value))
+							if ((is_handle(_target_value)) and (surface_exists(_target_value))
 							and (_target_value != ID))
 							{
 								_targetStack = ds_stack_create();
@@ -572,7 +572,7 @@ function Surface() constructor
 						
 						if (_location != undefined)
 						{
-							if (instanceof(_location) == "Vector4")
+							if (is_instanceof(_location, Vector4))
 							{
 								_scale_x = (((_location.x2 - _location.x1) / _size_x) * _scale_x);
 								_scale_y = (((_location.y2 - _location.y1) / _size_y) * _scale_y);
@@ -1095,7 +1095,7 @@ function Surface() constructor
 					
 					if (self.isFunctional())
 					{
-						if ((instanceof(_buffer) == "Buffer") and (_buffer.isFunctional()))
+						if ((is_instanceof(_buffer, Buffer)) and (_buffer.isFunctional()))
 						{
 							buffer_set_surface(_buffer.ID, ID, _offset);
 						}
