@@ -132,7 +132,7 @@ asset = [TestFont1, TestFont2, "TestIncludedFont.ttf", TestFontImage];
 	constructor = new Font(_base);
 	var _element = constructor.getUV();
 	
-	var _result = ((instanceof(_element) == "Vector4") and ((_element.x1 > 0) or (_element.y1 > 0)
+	var _result = ((is_instanceof(_element, Vector4)) and ((_element.x1 > 0) or (_element.y1 > 0)
 				   or (_element.x2 > 0) or (_element.y2 > 0)));
 	var _expectedValue = true;
 	

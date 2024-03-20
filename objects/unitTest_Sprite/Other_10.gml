@@ -222,14 +222,14 @@ asset = [TestSprite];
 #endregion
 #region [Test: Method: getUV()]
 	
-	var _element = [[asset[0]], ["Vector4"]];
+	var _element = [[asset[0]], [Vector4]];
 	
 	constructor = new Sprite(_element[0][0]);
 	
 	_element[2][0] = constructor.getUV(0, false);
 	_element[2][1] = constructor.getUV(0, true);
 	
-	var _result = [(instanceof(_element[2][0]) == _element[1][0]), is_array(_element[2][1])];
+	var _result = [(is_instanceof(_element[2][0], _element[1][0])), is_array(_element[2][1])];
 	var _expectedValue = [true, true];
 	
 	unitTest.assert_equal("Method: getUV()",
