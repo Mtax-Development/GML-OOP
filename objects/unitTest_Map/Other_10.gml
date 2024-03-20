@@ -709,7 +709,7 @@
 	var _result = constructor[1].getValue(_value[0]);
 	var _expectedValue = _value[1];
 	
-	unitTest.assert_equal("Methods: secureToBuffer() / secureFromBuffer()",
+	unitTest.assert_equal("Methods: secureFromBuffer()",
 						  _result, _expectedValue);
 	
 	constructor[0].destroy();

@@ -175,10 +175,10 @@
 	constructor = new Surface(_base);
 	
 	constructor.setActive(_element[0]);
-	
-	var _result = [constructor.isActive()];
-	var _expectedValue = [_element[0]];
-	
+	{
+		var _result = [constructor.isActive()];
+		var _expectedValue = [_element[0]];
+	}
 	constructor.setActive(_element[1]);
 	
 	array_push(_result, constructor.isActive());
@@ -196,6 +196,7 @@
 	var _base = new Vector2(6, 6);
 	
 	constructor = new Surface(_base);
+	
 	var _element = constructor.getTexture();
 	
 	var _result = [is_ptr(_element), (_element != pointer_null), (_element != pointer_invalid),
@@ -259,13 +260,14 @@
 	constructor[3].clear(_element[0]);
 	constructor[0].setActive(true);
 	constructor[1].setActive(true);
-	constructor[3].render(undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-						  constructor[2]);
-	
-	var _result = [constructor[2].getPixel(_element[1]), constructor[3].isActive(),
-				   constructor[2].isActive(), constructor[1].isActive()];
-	var _expectedValue = [_element[0], false, false, true];
-	
+	{
+		constructor[3].render(undefined, undefined, undefined, undefined, undefined, undefined,
+							  undefined, constructor[2]);
+		
+		var _result = [constructor[2].getPixel(_element[1]), constructor[3].isActive(),
+					   constructor[2].isActive(), constructor[1].isActive()];
+		var _expectedValue = [_element[0], false, false, true];
+	}
 	constructor[1].setActive(false);
 	constructor[0].setActive(false);
 	
@@ -289,8 +291,10 @@
 	constructor = [new Surface(_base[0]), new Surface(_base[1])];
 	constructor[0].clear(_element[0]);
 	constructor[1].setActive(true);
-	constructor[1].clear(_element[1]);
-	constructor[0].renderTiled();
+	{
+		constructor[1].clear(_element[1]);
+		constructor[0].renderTiled();
+	}
 	constructor[1].setActive(false);
 	
 	var _result = constructor[1].getPixel(_element[2]);
@@ -347,9 +351,12 @@
 	constructor[0].clear(_element[1]);
 	constructor[0].toFile(_element[0]);
 	_element[4] = new Sprite(_element[0]);
+	
 	constructor[1].setActive(true);
-	constructor[1].clear(_element[2]);
-	_element[4].render(_element[3]);
+	{
+		constructor[1].clear(_element[2]);
+		_element[4].render(_element[3]);
+	}
 	constructor[1].setActive(false);
 	
 	var _result = constructor[1].getPixel(_element[3]);

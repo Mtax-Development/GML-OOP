@@ -290,38 +290,50 @@ asset = [TestSprite];
 #endregion
 #region [Test: Method: setColorRGB()]
 	
-	var _element = [[0, 255, 175]];
+	var _element = [[3, 242, 175]];
 	_element[1] = [new Range(_element[0][0], _element[0][1])];
 	_element[2] = ["RGB"];
 	
 	constructor = new ParticleType();
 	constructor.setColorRGB(_element[1][0], _element[0][2], _element[1][0]);
 	
-	var _result = [constructor.color, constructor.color_type];
-	var _expectedValue = [[_element[1][0], _element[0][2], _element[1][0]], _element[2][0]];
+	var _result = [constructor.color[0].minimum, constructor.color[0].maximum, constructor.color[1],
+				   constructor.color[2].minimum, constructor.color[2].maximum, constructor.color_type];
+	var _expectedValue = [_element[0][0], _element[0][1], _element[0][2], _element[0][0],
+						  _element[0][1], _element[2][0]];
 	
 	unitTest.assert_equal("Method: setColorRGB()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
 	
 	constructor.destroy();
 	
 #endregion
 #region [Test: Method: setColorHSV()]
 	
-	var _element = [[0, 255, 125]];
+	var _element = [[1, 234, 125]];
 	_element[1] = [new Range(_element[0][0], _element[0][1])];
 	_element[2] = ["HSV"];
 	
 	constructor = new ParticleType();
 	constructor.setColorHSV(_element[1][0], _element[0][2], _element[1][0]);
 	
-	var _result = [constructor.color, constructor.color_type];
-	var _expectedValue = [[_element[1][0], _element[0][2], _element[1][0]], _element[2][0]];
+	var _result = [constructor.color[0].minimum, constructor.color[0].maximum, constructor.color[1],
+				   constructor.color[2].minimum, constructor.color[2].maximum, constructor.color_type];
+	var _expectedValue = [_element[0][0], _element[0][1], _element[0][2], _element[0][0],
+						  _element[0][1], _element[2][0]];
 	
 	unitTest.assert_equal("Method: setColorHSV()",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
 	
 	constructor.destroy();
 	
