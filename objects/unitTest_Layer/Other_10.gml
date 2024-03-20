@@ -1705,18 +1705,19 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 #region [Test: ParticleSystem - Methods: clear() / getParticleCount()]
 	
 	var _base = 63;
-	var _element = [[false], [new ParticleType(), new Vector2(75, 75)], [3]];
+	var _element = [false, [new ParticleType(), new Vector2(75, 75)], 3];
 	
 	constructor = new Layer(_base);
-	_element[3][0] = constructor.createParticleSystem(_element[0][0]);
-	_element[1][0].create(_element[3][0], _element[1][1], _element[2][0]);
+	_element[3] = constructor.createParticleSystem(_element[0]);
 	
-	var _result = [_element[3][0].getParticleCount()];
-	var _expectedValue = [_element[2][0]];
+	_element[1][0].create(_element[3], _element[1][1], _element[2]);
 	
-	_element[3][0].clear();
+	var _result = [_element[3].getParticleCount()];
+	var _expectedValue = [_element[2]];
 	
-	array_push(_result, _element[3][0].getParticleCount());
+	_element[3].clear();
+	
+	array_push(_result, _element[3].getParticleCount());
 	array_push(_expectedValue, 0);
 	
 	unitTest.assert_equal("ParticleSystem - Methods: clear() / getParticleCount()",

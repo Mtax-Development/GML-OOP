@@ -1076,33 +1076,51 @@
 #endregion
 #region [Test: Method: set()]
 	
+	var _base = [15, 30, 45, 60];
+	var _value = [99, 98, 97, 96];
+	
+	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
+	constructor.set(_value[0], _value[1], _value[2], _value[3]);
+	
+	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
+	var _expectedValue = [_value[0], _value[1], _value[2], _value[3]];
+	
+	unitTest.assert_equal("Method: set()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3]);
+	
+#endregion
+#region [Test: Method: setAll()]
+	
 	var _base = [5, 15, 0.2, 0.7];
 	var _value = -4;
 	var _element = [new Vector4(_base[0], _base[1], _base[2], _base[3]),
 					new Vector2(_base[0], _base[1]), new Scale(_base[2], _base[3])];
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	constructor.set(_value);
+	constructor.setAll(_value);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
 	var _expectedValue = [_value, _value, _value, _value];
 	
-	constructor.set(_element[0]);
+	constructor.setAll(_element[0]);
 	
 	array_push(_result, constructor.x1, constructor.y1, constructor.x2, constructor.y2);
 	array_push(_expectedValue, _base[0], _base[1], _base[2], _base[3]);
 	
-	constructor.set(_element[1]);
+	constructor.setAll(_element[1]);
 	
 	array_push(_result, constructor.x1, constructor.y1, constructor.x2, constructor.y2);
 	array_push(_expectedValue, _base[0], _base[1], _base[0], _base[1]);
 	
-	constructor.set(_element[2]);
+	constructor.setAll(_element[2]);
 	
 	array_push(_result, constructor.x1, constructor.y1, constructor.x2, constructor.y2);
 	array_push(_expectedValue, _base[2], _base[3], _base[2], _base[3]);
 	
-	unitTest.assert_equal("Method: set()",
+	unitTest.assert_equal("Method: setAll()",
 						  _result, _expectedValue);
 	
 #endregion

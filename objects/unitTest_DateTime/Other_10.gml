@@ -186,8 +186,7 @@
 	var _result = [constructor.year, constructor.month, constructor.day, constructor.hour,
 				   constructor.minute, constructor.second];
 	var _expectedValue = [(_base[0] + _value[0]), (_base[1] + _value[1]), (_base[2] + _value[2]),
-						  ((_base[3] + _value[3]) + 1), (_base[4] + _value[4]),
-						  (_base[5] + _value[5])];
+						  (_base[3] + _value[3]), (_base[4] + _value[4]), (_base[5] + _value[5])];
 	
 	unitTest.assert_equal("Method: modify()",
 						  _result[0], _expectedValue[0],

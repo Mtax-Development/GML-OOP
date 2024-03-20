@@ -261,19 +261,35 @@
 #endregion
 #region [Test: Method: set()]
 	
+	var _base = [2, 3];
+	var _value = [1, -0.5];
+	
+	constructor = new Scale(_base[0], _base[1]);
+	constructor.set(_value[0], _value[1]);
+	
+	var _result = [constructor.x, constructor.y];
+	var _expectedValue = [_value[0], _value[1]];
+	
+	unitTest.assert_equal("Method: set()",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1]);
+	
+#endregion
+#region [Test: Method: setAll()]
+	
 	var _value = [5, 7];
 	var _element = new Vector2(_value[0], _value[1]);
 	
 	constructor = [new Scale(), new Scale(), new Scale()];
-	constructor[0].set(_value[0]);
-	constructor[1].set(_element);
-	constructor[2].set(constructor[1]);
+	constructor[0].setAll(_value[0]);
+	constructor[1].setAll(_element);
+	constructor[2].setAll(constructor[1]);
 	
 	var _result = [constructor[0].x, constructor[0].y, constructor[1].x, constructor[1].y,
 				   constructor[2].x, constructor[2].y];
 	var _expectedValue = [_value[0], _value[0], _value[0], _value[1], _value[0], _value[1]];
 	
-	unitTest.assert_equal("Method: set()",
+	unitTest.assert_equal("Method: setAll()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],

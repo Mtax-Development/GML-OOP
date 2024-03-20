@@ -271,20 +271,6 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: getSubstringCount()]
-	
-	var _value = "ABCABC";
-	var _element = "A";
-	
-	constructor = new StringParser(_value);
-	
-	var _result = constructor.getSubstringCount(_element);
-	var _expectedValue = 2;
-	
-	unitTest.assert_equal("Method: getSubstringCount",
-						  _result, _expectedValue);
-	
-#endregion
 #region [Test: Method: getDigits()]
 	
 	var _value = ["A", "111", "BC"];
@@ -324,6 +310,20 @@
 						  _result, _expectedValue);
 	
 #endregion
+#region [Test: Method: getSubstringCount()]
+	
+	var _value = "ABCABC";
+	var _element = "A";
+	
+	constructor = new StringParser(_value);
+	
+	var _result = constructor.getSubstringCount(_element);
+	var _expectedValue = 2;
+	
+	unitTest.assert_equal("Method: getSubstringCount",
+						  _result, _expectedValue);
+	
+#endregion
 #region [Test: Method: getSubstringPosition()]
 	
 	var _value = ["A", "~ ", "!A~", "~ ", "1.1"];
@@ -333,7 +333,8 @@
 	
 	var _result = [constructor.getSubstringPosition(_element, false),
 				   constructor.getSubstringPosition(_element, true),
-				   constructor.getSubstringPosition(_element, false, string_length(_element))];
+				   constructor.getSubstringPosition(_element, false, (string_length(_value[0]) +
+																	  string_length(_value[1])))];
 	var _expectedValue = [2, 7, 7];
 	
 	unitTest.assert_equal("Method: getSubstringPosition()",

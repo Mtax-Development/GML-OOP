@@ -449,10 +449,12 @@ asset = [TestSprite];
 					[new Vector2(5, 5), new Vector2(0, 0)]];
 	_element[3] = [sprite_create_from_surface(_element[1][0].ID, 0, 0, _element[2][0].x,
 											  _element[2][0].y, false, false, 0, 0)];
-	_element[4] = [4, spritespeed_framespergameframe, " Frames Per Application Frame"];
+	_element[4] = [new Vector4((_element[2][0].x - 1), (_element[2][0].y - 1), _element[2][1].x,
+							   _element[2][1].y), "Automatic - "];
+	_element[5] = [4, spritespeed_framespergameframe, " Frames Per Application Frame"];
 	
 	constructor = new Sprite(_element[3][0]);
-	constructor.setSpeed(_element[4][0], _element[4][1]);
+	constructor.setSpeed(_element[5][0], _element[5][1]);
 	
 	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
 	var _expectedValue = [];
@@ -465,7 +467,8 @@ asset = [TestSprite];
 				    "Size: " + string(_element[2][0]) + _element[0][_i] +
 					"Frame Count: " + string(1) + _element[0][_i] +
 					"Origin: " + string(_element[2][1]) + _element[0][_i] +
-					"Speed: " + string(_element[4][0]) + _element[4][2]));
+					"Boundary: " + _element[4][1] + string(_element[4][0]) + _element[0][_i] +
+					"Speed: " + string(_element[5][0]) + _element[5][2]));
 		
 		++_i;
 	}
