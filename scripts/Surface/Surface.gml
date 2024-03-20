@@ -469,6 +469,8 @@ function Surface() constructor
 			static render = function(_location, _scale, _angle, _color = c_white, _alpha = 1, _part,
 									 _origin, _target)
 			{
+				var _targetStack = undefined;
+				
 				try
 				{
 					if (self.isFunctional())
@@ -509,8 +511,6 @@ function Surface() constructor
 								++_i;
 							}
 						}
-						
-						var _targetStack = undefined;
 						
 						if (_target != undefined)
 						{
@@ -575,7 +575,6 @@ function Surface() constructor
 							{
 								_scale_x = (((_location.x2 - _location.x1) / _size_x) * _scale_x);
 								_scale_y = (((_location.y2 - _location.y1) / _size_y) * _scale_y);
-							
 								_location_x = _location.x1 + (_origin_x * _scale_x);
 								_location_y = _location.y1 + (_origin_y * _scale_y);
 							}
@@ -653,8 +652,6 @@ function Surface() constructor
 							{
 								surface_set_target(ds_stack_pop(_targetStack));
 							}
-							
-							ds_stack_destroy(_targetStack);
 						}
 						
 						if ((is_struct(event)) and (event.afterRender.callback != undefined))
@@ -704,6 +701,13 @@ function Surface() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "render()"], _exception);
+				}
+				finally
+				{
+					if (is_handle(_targetStack))
+					{
+						ds_stack_destroy(_targetStack);
+					}
 				}
 				
 				return self;

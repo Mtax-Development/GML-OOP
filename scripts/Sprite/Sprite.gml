@@ -599,6 +599,8 @@ function Sprite() constructor
 			static render = function(_location, _frame = 0, _scale, _angle, _color = c_white,
 									 _alpha = 1, _part, _origin, _target)
 			{
+				var _targetStack = undefined;
+				
 				try
 				{
 					if (self.isFunctional())
@@ -639,8 +641,6 @@ function Sprite() constructor
 								++_i;
 							}
 						}
-						
-						var _targetStack = undefined;
 						
 						if (_target != undefined)
 						{
@@ -780,8 +780,6 @@ function Sprite() constructor
 							{
 								surface_set_target(ds_stack_pop(_targetStack));
 							}
-							
-							ds_stack_destroy(_targetStack);
 						}
 						
 						if ((is_struct(event)) and (event.afterRender.callback != undefined))
@@ -826,6 +824,17 @@ function Sprite() constructor
 						new ErrorReport().report([other, self, "render()"],
 												 ("Attempted to render an invalid Sprite: " +
 												  "{" + string(ID) + "}"));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "render()"], _exception);
+				}
+				finally
+				{
+					if (is_handle(_targetStack))
+					{
+						ds_stack_destroy(_targetStack);
 					}
 				}
 				

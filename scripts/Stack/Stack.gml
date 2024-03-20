@@ -138,25 +138,24 @@ function Stack() constructor
 			///						specified values.
 			static contains = function()
 			{
+				var _dataCopy = ds_stack_create();
+				
 				try
 				{
 					var _size = ds_stack_size(ID);
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_stack_create();
 						ds_stack_copy(_dataCopy, ID);
 						
 						repeat (_size)
 						{
 							var _value = ds_stack_pop(_dataCopy);
-							
 							var _i = 0;
 							repeat (argument_count)
 							{
 								if (_value == argument[_i])
 								{
-									ds_stack_destroy(_dataCopy);
 									return true;
 								}
 								
@@ -164,7 +163,6 @@ function Stack() constructor
 							}
 						}
 						
-						ds_stack_destroy(_dataCopy);
 					}
 					
 					return false;
@@ -172,6 +170,10 @@ function Stack() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "contains()"], _exception);
+				}
+				finally
+				{
+					ds_stack_destroy(_dataCopy);
 				}
 				
 				return false;
@@ -183,6 +185,8 @@ function Stack() constructor
 			///						Data Structure.
 			static count = function()
 			{
+				var _dataCopy = ds_stack_create();
+				
 				try
 				{
 					var _result = 0;
@@ -190,7 +194,6 @@ function Stack() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_stack_create();
 						ds_stack_copy(_dataCopy, ID);
 						
 						repeat (_size)
@@ -207,8 +210,6 @@ function Stack() constructor
 								++_i;
 							}
 						}
-						
-						ds_stack_destroy(_dataCopy);
 					}
 					
 					return _result;
@@ -216,6 +217,10 @@ function Stack() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "count()"], _exception);
+				}
+				finally
+				{
+					ds_stack_destroy(_dataCopy);
 				}
 				
 				return 0;
@@ -245,6 +250,8 @@ function Stack() constructor
 			///						Returns {undefined} if this Stack does not exists or is empty.
 			static getLast = function()
 			{
+				var _dataCopy = ds_stack_create();
+				
 				try
 				{
 					var _size = ds_stack_size(ID);
@@ -255,7 +262,6 @@ function Stack() constructor
 					}
 					else
 					{
-						var _dataCopy = ds_stack_create();
 						ds_stack_copy(_dataCopy, ID);
 						
 						repeat (_size - 1)
@@ -265,14 +271,16 @@ function Stack() constructor
 						
 						var _value = ds_stack_pop(_dataCopy);
 						
-						ds_stack_destroy(_dataCopy);
-						
 						return _value;
 					}
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getLast()"], _exception);
+				}
+				finally
+				{
+					ds_stack_destroy(_dataCopy);
 				}
 				
 				return undefined;
@@ -365,13 +373,15 @@ function Stack() constructor
 						++_i[0];
 					}
 					
-					ds_stack_destroy(_dataCopy);
-					
 					return _functionReturn;
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "forEach()"], _exception);
+				}
+				finally
+				{
+					ds_stack_destroy(_dataCopy);
 				}
 				
 				return [];
@@ -621,6 +631,8 @@ function Stack() constructor
 			/// @description		Create an array with all values of this Data Structure.
 			static toArray = function()
 			{
+				var _dataCopy = ds_stack_create();
+				
 				try
 				{
 					var _size = ds_stack_size(ID);
@@ -628,7 +640,6 @@ function Stack() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_stack_create();
 						ds_stack_copy(_dataCopy, ID);
 						var _i = 0;
 						repeat (_size)
@@ -637,8 +648,6 @@ function Stack() constructor
 							
 							++_i;
 						}
-						
-						ds_stack_destroy(_dataCopy);
 					}
 					
 					return _array;
@@ -646,6 +655,10 @@ function Stack() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "toArray()"], _exception);
+				}
+				finally
+				{
+					ds_stack_destroy(_dataCopy);
 				}
 				
 				return [];

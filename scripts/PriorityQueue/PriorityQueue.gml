@@ -138,25 +138,24 @@ function PriorityQueue() constructor
 			///						specified values.
 			static contains = function()
 			{
+				var _dataCopy = ds_priority_create();
+				
 				try
 				{
 					var _size = ds_priority_size(ID);
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
 						
 						repeat (_size)
 						{
 							var _value = ds_priority_delete_max(_dataCopy);
-							
 							var _i = 0;
 							repeat (argument_count)
 							{
 								if (_value == argument[_i])
 								{
-									ds_priority_destroy(_dataCopy);
 									return true;
 								}
 								
@@ -164,7 +163,6 @@ function PriorityQueue() constructor
 							}
 						}
 						
-						ds_priority_destroy(_dataCopy);
 					}
 					
 					return false;
@@ -172,6 +170,10 @@ function PriorityQueue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "contains()"], _exception);
+				}
+				finally
+				{
+					ds_priority_destroy(_dataCopy);
 				}
 				
 				return false;
@@ -183,6 +185,8 @@ function PriorityQueue() constructor
 			///						Data Structure.
 			static count = function()
 			{
+				var _dataCopy = ds_priority_create();
+				
 				try
 				{
 					var _result = 0;
@@ -190,7 +194,6 @@ function PriorityQueue() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
 						repeat (_size)
 						{
@@ -207,7 +210,6 @@ function PriorityQueue() constructor
 							}
 						}
 						
-						ds_priority_destroy(_dataCopy);
 					}
 					
 					return _result;
@@ -215,6 +217,10 @@ function PriorityQueue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "count()"], _exception);
+				}
+				finally
+				{
+					ds_priority_destroy(_dataCopy);
 				}
 				
 				return 0;
@@ -330,9 +336,10 @@ function PriorityQueue() constructor
 			static forEach = function(__function, _argument, _readOnly = false,
 									  _orderAscending = false)
 			{
+				var _dataCopy = ds_priority_create();
+				
 				try
 				{
-					var _dataCopy = ds_priority_create();
 					ds_priority_copy(_dataCopy, ID);
 					var _size = ds_priority_size(ID);
 					var _functionReturn = [];
@@ -367,13 +374,15 @@ function PriorityQueue() constructor
 						++_i[0];
 					}
 					
-					ds_priority_destroy(_dataCopy);
-					
 					return _functionReturn;
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "forEach()"], _exception);
+				}
+				finally
+				{
+					ds_priority_destroy(_dataCopy);
 				}
 				
 				return [];
@@ -726,6 +735,8 @@ function PriorityQueue() constructor
 			///						priorities and second one will contain all values.
 			static toArray = function()
 			{
+				var _dataCopy = ds_priority_create();
+				
 				try
 				{
 					var _size = ds_priority_size(ID);
@@ -734,7 +745,6 @@ function PriorityQueue() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
 						var _i = 0;
 						repeat (_size)
@@ -745,8 +755,6 @@ function PriorityQueue() constructor
 							
 							++_i;
 						}
-						
-						ds_priority_destroy(_dataCopy);
 					}
 					
 					return [_priority, _value];
@@ -754,6 +762,10 @@ function PriorityQueue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "toArray()"], _exception);
+				}
+				finally
+				{
+					ds_priority_destroy(_dataCopy);
 				}
 				
 				return [[], []];

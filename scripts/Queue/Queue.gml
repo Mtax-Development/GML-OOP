@@ -138,33 +138,30 @@ function Queue() constructor
 			///						specified values.
 			static contains = function()
 			{
+				var _dataCopy = ds_queue_create();
+				
 				try
 				{
 					var _size = ds_queue_size(ID);
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_queue_create();
 						ds_queue_copy(_dataCopy, ID);
 						
 						repeat (_size)
 						{
 							var _value = ds_queue_dequeue(_dataCopy);
-							
 							var _i = 0;
 							repeat (argument_count)
 							{
 								if (_value == argument[_i])
 								{
-									ds_queue_destroy(_dataCopy);
 									return true;
 								}
 								
 								++_i;
 							}
 						}
-						
-						ds_queue_destroy(_dataCopy);
 					}
 					
 					return false;
@@ -172,6 +169,10 @@ function Queue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "contains()"], _exception);
+				}
+				finally
+				{
+					ds_queue_destroy(_dataCopy);
 				}
 				
 				return false;
@@ -183,6 +184,8 @@ function Queue() constructor
 			///						Data Structure.
 			static count = function()
 			{
+				var _dataCopy = ds_queue_create();
+				
 				try
 				{
 					var _result = 0;
@@ -190,7 +193,6 @@ function Queue() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_queue_create();
 						ds_queue_copy(_dataCopy, ID);
 						
 						repeat (_size)
@@ -207,8 +209,6 @@ function Queue() constructor
 								++_i;
 							}
 						}
-						
-						ds_queue_destroy(_dataCopy);
 					}
 					
 					return _result;
@@ -216,6 +216,10 @@ function Queue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "count()"], _exception);
+				}
+				finally
+				{
+					ds_queue_destroy(_dataCopy);
 				}
 				
 				return 0;
@@ -307,9 +311,10 @@ function Queue() constructor
 			///						- argument[2]: _argument {any}
 			static forEach = function(__function, _argument, _readOnly = false)
 			{
+				var _dataCopy = ds_queue_create();
+				
 				try
 				{
-					var _dataCopy = ds_queue_create();
 					ds_queue_copy(_dataCopy, ID);
 					var _size = ds_queue_size(ID);
 					var _functionReturn = [];
@@ -342,13 +347,15 @@ function Queue() constructor
 						++_i[0];
 					}
 					
-					ds_queue_destroy(_dataCopy);
-					
 					return _functionReturn;
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "forEach()"], _exception);
+				}
+				finally
+				{
+					ds_queue_destroy(_dataCopy);
 				}
 				
 				return [];
@@ -403,7 +410,6 @@ function Queue() constructor
 						else
 						{
 							_count = min(_count, _size);
-							
 							var _result = array_create(_count, undefined);
 							var _i = 0;
 							repeat (_count)
@@ -599,6 +605,8 @@ function Queue() constructor
 			/// @description		Create an array with all values of this Data Structure.
 			static toArray = function()
 			{
+				var _dataCopy = ds_queue_create();
+				
 				try
 				{
 					var _size = ds_queue_size(ID);
@@ -606,7 +614,6 @@ function Queue() constructor
 					
 					if (_size > 0)
 					{
-						var _dataCopy = ds_queue_create();
 						ds_queue_copy(_dataCopy, ID);
 						var _i = 0;
 						repeat (_size)
@@ -615,8 +622,6 @@ function Queue() constructor
 							
 							++_i;
 						}
-						
-						ds_queue_destroy(_dataCopy);
 					}
 					
 					return _array;
@@ -624,6 +629,10 @@ function Queue() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "toArray()"], _exception);
+				}
+				finally
+				{
+					ds_queue_destroy(_dataCopy);
 				}
 				
 				return [];
