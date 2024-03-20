@@ -1,5 +1,5 @@
 /// @description Unit Testing
-asset = [TestFont];
+asset = [TestFont1];
 
 #region [Test: Construction: New constructor / Method: isFunctional()]
 	

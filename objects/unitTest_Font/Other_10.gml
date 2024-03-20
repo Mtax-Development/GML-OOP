@@ -1,5 +1,5 @@
 /// @description Unit Testing
-asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
+asset = [TestFont1, TestFont2, "TestIncludedFont.ttf", TestFontImage];
 
 #region [Test: Construction: Wrapper / Method: isFunctional()]
 	
@@ -18,7 +18,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #endregion
 #region [Test: Construction: Resource / Destruction]
 	
-	var _base = [asset[1], 24, false, false, new Range(32, 128), true];
+	var _base = [asset[2], 24, false, false, new Range(32, 128), true];
 	
 	constructor = new Font(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
 	
@@ -37,7 +37,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #endregion
 #region [Test: Construction: Sprite (UTF-8)]
 	
-	var _base = [new Sprite(asset[2]), ord("A"), true, 3, true];
+	var _base = [new Sprite(asset[3]), ord("A"), true, 3, true];
 	
 	constructor = new Font(_base[0], _base[1], _base[2], _base[3], _base[4]);
 	
@@ -52,7 +52,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #endregion
 #region [Test: Construction: Sprite (glyph map)]
 	
-	var _base = [new Sprite(asset[2]), "ABC", true, 3, true];
+	var _base = [new Sprite(asset[3]), "ABC", true, 3, true];
 	
 	constructor = new Font(_base[0], _base[1], _base[2], _base[3], _base[4]);
 	
@@ -142,21 +142,27 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #endregion
 #region [Test: Methods: setActive() / isActive()]
 	
+	var _previous = draw_get_font();
 	var _base = asset[0];
+	var _element = asset[1];
 	
-	constructor = new Font(_base);
-	
-	var _result = [constructor.isActive()];
-	var _expectedValue = [false];
-	
-	constructor.setActive();
-	
-	array_push(_result, constructor.isActive());
-	array_push(_expectedValue, true);
-	
-	unitTest.assert_equal("Methods: setActive() / isActive()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+	draw_set_font(asset[1]);
+	{
+		constructor = new Font(_base);
+		
+		var _result = [constructor.isActive()];
+		var _expectedValue = [false];
+		
+		constructor.setActive();
+		
+		array_push(_result, constructor.isActive());
+		array_push(_expectedValue, true);
+		
+		unitTest.assert_equal("Methods: setActive() / isActive()",
+							  _result[0], _expectedValue[0],
+							  _result[1], _expectedValue[1]);
+	}
+	draw_set_font(_previous);
 	
 #endregion
 #region [Test: Method: toString()]
@@ -175,7 +181,7 @@ asset = [TestFont, "TestIncludedFont.ttf", TestFontImage];
 #region [Test: Method: toString(multiline, full)]
 	
 	var _element = ["\n", ", "];
-	var _base = [new Sprite(asset[2]), ord("A"), true, 3, true];
+	var _base = [new Sprite(asset[3]), ord("A"), true, 3, true];
 	
 	constructor = new Font(_base[0], _base[1], _base[2], _base[3], _base[4]);
 	
