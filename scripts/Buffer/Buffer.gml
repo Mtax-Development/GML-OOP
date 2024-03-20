@@ -298,7 +298,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					buffer_fill(ID, _offset, _type, _value, _size);
 				}
@@ -360,7 +363,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					var _new = buffer_compress(ID, _offset, _size);
 					
@@ -509,7 +515,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					return buffer_md5(ID, _offset, _size);
 				}
@@ -533,7 +542,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					return buffer_sha1(ID, _offset, _size);
 				}
@@ -557,7 +569,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					return buffer_crc32(ID, _offset, _size);
 				}
@@ -581,7 +596,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (_size == all) {_size = buffer_get_size(ID);}
+					if (_size == all)
+					{
+						_size = buffer_get_size(ID);
+					}
 					
 					return buffer_base64_encode(ID, _offset, _size);
 				}
@@ -644,7 +662,10 @@ function Buffer() constructor
 			{
 				try
 				{
-					if (instanceof(_surface) == "Surface") {_surface = _surface.ID;}
+					if (is_instanceof(_surface, Surface))
+					{
+						_surface = _surface.ID;
+					}
 					
 					if ((is_handle(_surface)) and (surface_exists(_surface)))
 					{

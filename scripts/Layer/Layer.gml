@@ -143,19 +143,19 @@ function Layer() constructor
 									break;
 									
 									case layerelementtype_sprite:
-										var _ = new SpriteElement(_element[_i]);
+										new SpriteElement(_element[_i]);
 									break;
 									
 									case layerelementtype_background:
-										var _ = new BackgroundElement(_element[_i]);
+										new BackgroundElement(_element[_i]);
 									break;
 									
 									case layerelementtype_tilemap:
-										var _ = new TilemapElement(_element[_i]);
+										new TilemapElement(_element[_i]);
 									break;
 									
 									case layerelementtype_particlesystem:
-										var _ = new ParticleSystem(_element[_i]);
+										new ParticleSystem(_element[_i]);
 									break;
 								}
 								
@@ -225,6 +225,7 @@ function Layer() constructor
 							if ((instance_exists(_instance)) and (_instance.persistent))
 							{
 								_persistentElementExists = true;
+								
 								break;
 							}
 							

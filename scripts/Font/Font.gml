@@ -95,7 +95,8 @@ function Font() constructor
 							repeat (array_length(_eventList))
 							{
 								var _event = {};
-								var _other_event = variable_struct_get(_other.event, _eventList[_i[0]]);
+								var _other_event = variable_struct_get(_other.event,
+																	   _eventList[_i[0]]);
 								var _eventPropertyList = variable_struct_get_names(_other_event);
 								
 								_i[1] = 0;

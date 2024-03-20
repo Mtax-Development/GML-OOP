@@ -339,7 +339,6 @@ function TextRenderer() constructor
 										 ? event.beforeRender.argument
 										 : array_create(_callback_count,
 														event.beforeRender.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{
@@ -386,7 +385,6 @@ function TextRenderer() constructor
 										 ? event.afterRender.argument
 										 : array_create(_callback_count,
 														event.afterRender.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{

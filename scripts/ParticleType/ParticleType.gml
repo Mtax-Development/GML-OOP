@@ -447,8 +447,15 @@ function ParticleType() constructor
 				{
 					part_type_scale(ID, _scale.x, _scale.y);
 					
-					scale = ((instanceof(_scale) == "Scale") ? scale.setAll(_scale)
-															 : new Scale(_scale));
+					if (is_instanceof(_scale, Scale))
+					{
+						scale.x = _scale.x;
+						scale.y = _scale.y;
+					}
+					else
+					{
+						scale = new Scale(_scale);
+					}
 				}
 				catch (_exception)
 				{
@@ -541,7 +548,6 @@ function ParticleType() constructor
 				try
 				{
 					var _direction_minimum, _direction_maximum;
-					
 					switch (instanceof(_direction))
 					{
 						case "Range":
@@ -1097,7 +1103,7 @@ function ParticleType() constructor
 				return self;
 			}
 			
-			/// @argument			particleSystem {ParticleSystem}
+			/// @argument			particleSystem {Layer.ParticleSystem}
 			/// @argument			shape {Circle|Ellipse|Line|Rectangle|Triangle}
 			/// @argument			number? {int}
 			/// @argument			color? {int:color}

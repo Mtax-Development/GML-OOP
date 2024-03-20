@@ -802,7 +802,6 @@ function Map() constructor
 					var _mark_cut_length = string_length(_mark_cut);
 					var _mark_elementStart_length = string_length(_mark_elementStart);
 					var _mark_elementEnd_length = string_length(_mark_elementEnd);
-					
 					var _string = "";
 					var _string_size = (string(_size));
 					

@@ -161,7 +161,6 @@ function ArrayParser() constructor
 													 and (_target_position_boolsign == -1));
 						var _count_abs = ((is_real(_count)) ? abs(_count) : _count);
 						var __passthrough = function() {return true;};
-						
 						var _remaining_position_count, _count_boolsign;
 						
 						if ((_count < 0) or (_force_count_backward))
@@ -624,6 +623,7 @@ function ArrayParser() constructor
 								{
 									var _key_value = ds_map_find_value(_value_map, _value[_i[1]]);
 									++_key_value[1];
+									
 									ds_map_set(_value_map, _value[_i[1]], _key_value);
 								}
 								

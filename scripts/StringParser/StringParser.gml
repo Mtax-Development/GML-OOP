@@ -535,15 +535,6 @@ function StringParser() constructor
 				return string_copy(_string, _position, (_count ?? string_length(_string)));
 			}
 			
-			/// @argument			substring {any:string}
-			/// @returns			{int}
-			/// @description		Return a number of instances of the specified substring appearing
-			///						in the string.
-			static getSubstringCount = function(_substring)
-			{
-				return string_count(string(_substring), string(ID));
-			}
-			
 			/// @returns			{string}
 			/// @description		Return a version of the string containing only its letters from
 			///						the English alphabet.
@@ -565,6 +556,15 @@ function StringParser() constructor
 			static getLettersAndDigits = function()
 			{
 				return string_lettersdigits(string(ID));
+			}
+			
+			/// @argument			substring {any:string}
+			/// @returns			{int}
+			/// @description		Return a number of instances of the specified substring appearing
+			///						in the string.
+			static getSubstringCount = function(_substring)
+			{
+				return string_count(string(_substring), string(ID));
 			}
 			
 			/// @argument			substring {any:string}

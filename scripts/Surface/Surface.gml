@@ -172,7 +172,6 @@ function Surface() constructor
 										 ? event.beforeCreation.argument
 										 : array_create(_callback_count,
 														event.beforeCreation.argument));
-						
 						var _i = 0;
 						repeat (_callback_count)
 						{
@@ -934,7 +933,6 @@ function Surface() constructor
 							}
 						}
 					break;
-					
 					case false:
 						if (surface_get_target() == ID)
 						{
@@ -951,7 +949,6 @@ function Surface() constructor
 												 ? event.beforeDeactivation.argument
 												 : array_create(_callback_count,
 																event.beforeDeactivation.argument));
-								
 								var _i = 0;
 								repeat (_callback_count)
 								{
@@ -993,7 +990,6 @@ function Surface() constructor
 												 ? event.afterDeactivation.argument
 												 : array_create(_callback_count,
 																event.afterDeactivation.argument));
-								
 								var _i = 0;
 								repeat (_callback_count)
 								{
@@ -1040,7 +1036,6 @@ function Surface() constructor
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					
 					var _text_nonexistent = ((surface_exists(ID)) ? "" : " (nonexistent)");
 					
 					_string = ("ID: " + string(ID) + _text_nonexistent + _mark_separator +

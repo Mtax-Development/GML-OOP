@@ -1257,7 +1257,6 @@ function Vector4() constructor
 							_result_x2 = min(x1, x2);
 							_result_y2 = min(y1, y2);
 						break;
-						
 						case true:
 							_result_x1 = min(x1, x2);
 							_result_y1 = min(y1, y2);

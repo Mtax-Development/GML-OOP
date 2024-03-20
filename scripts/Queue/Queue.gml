@@ -643,7 +643,6 @@ function Queue() constructor
 				if (is_array(_array))
 				{
 					var _size = array_length(_array);
-						
 					var _i = ((_startFromEnd) ? (_size - 1) : 0);
 					
 					if (_startFromEnd)
@@ -652,6 +651,7 @@ function Queue() constructor
 						repeat (_size)
 						{
 							ds_queue_enqueue(ID, _array[_i]);
+							
 							--_i;
 						}
 					}
@@ -661,6 +661,7 @@ function Queue() constructor
 						repeat (_size)
 						{
 							ds_queue_enqueue(ID, _array[_i]);
+							
 							++_i;
 						}
 					}

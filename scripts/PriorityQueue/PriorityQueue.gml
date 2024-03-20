@@ -192,7 +192,6 @@ function PriorityQueue() constructor
 					{
 						var _dataCopy = ds_priority_create();
 						ds_priority_copy(_dataCopy, ID);
-						
 						repeat (_size)
 						{
 							var _value = ds_priority_delete_max(_dataCopy);

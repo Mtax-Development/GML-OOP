@@ -262,7 +262,7 @@ function List() constructor
 					new ErrorReport().report([other, self, "getLast()"], _exception);
 				}
 				
-				return undefined
+				return undefined;
 			}
 			
 			/// @argument			value {any}

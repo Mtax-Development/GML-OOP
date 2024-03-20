@@ -31,6 +31,7 @@ function TextAlign() constructor
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
+						
 						x = _other.x;
 						y = _other.y;
 					}
@@ -38,6 +39,7 @@ function TextAlign() constructor
 					{
 						//|Construction type: From array.
 						var _array = argument[0];
+						
 						x = _array[0];
 						y = _array[1];
 					}

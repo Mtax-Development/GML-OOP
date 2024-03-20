@@ -435,7 +435,6 @@ function Point() constructor
 											 ? event.beforeRender.argument
 											 : array_create(_callback_count,
 															event.beforeRender.argument));
-							
 							var _i = 0;
 							repeat (_callback_count)
 							{

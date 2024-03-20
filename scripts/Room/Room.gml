@@ -77,8 +77,8 @@ function Room() constructor
 							? argument[0] : new Vector2(0, 0));
 					persistent = (((argument_count > 1) and (argument[1] != undefined)) ? argument[1]
 																						: false);
-					ID = room_add();
 					
+					ID = room_add();
 					room_set_width(ID, size.x);
 					room_set_height(ID, size.y);
 					room_set_persistent(ID, persistent);

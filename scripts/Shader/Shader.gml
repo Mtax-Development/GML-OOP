@@ -593,7 +593,6 @@ function Shader() constructor
 									}
 								}
 							break;
-							
 							case false:
 								if (shader_current() == ID)
 								{

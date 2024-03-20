@@ -242,7 +242,6 @@ function Ellipse() constructor
 											 ? event.beforeRender.argument
 											 : array_create(_callback_count,
 															event.beforeRender.argument));
-							
 							var _i = 0;
 							repeat (_callback_count)
 							{
@@ -307,7 +306,6 @@ function Ellipse() constructor
 											 ? event.afterRender.argument
 											 : array_create(_callback_count,
 															event.afterRender.argument));
-							
 							var _i = 0;
 							repeat (_callback_count)
 							{
@@ -369,7 +367,6 @@ function Ellipse() constructor
 			static toString = function(_multiline = false, _full = false, _colorHSV = false)
 			{
 				var _string = "";
-				
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				
 				if (!_full)

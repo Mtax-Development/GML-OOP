@@ -426,9 +426,7 @@ function Stack() constructor
 						else
 						{
 							_count = min(_count, _size);
-							
 							var _result = array_create(_count, undefined);
-							
 							var _i = 0;
 							repeat (_count)
 							{
@@ -667,7 +665,6 @@ function Stack() constructor
 				if (is_array(_array))
 				{
 					var _size = array_length(_array);
-						
 					var _i = ((_startFromEnd) ? (_size - 1) : 0);
 					
 					if (_startFromEnd)
@@ -676,6 +673,7 @@ function Stack() constructor
 						repeat (_size)
 						{
 							ds_stack_push(ID, _array[_i]);
+							
 							--_i;
 						}
 					}
@@ -685,6 +683,7 @@ function Stack() constructor
 						repeat (_size)
 						{
 							ds_stack_push(ID, _array[_i]);
+							
 							++_i;
 						}
 					}

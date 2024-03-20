@@ -90,7 +90,7 @@ function Color4() constructor
 									else if (is_instanceof(argument[1], Color3))
 									{
 										var _color3 = argument[1];
-									
+										
 										color1 = argument[0];
 										color2 = _color3.color1;
 										color3 = _color3.color2;
@@ -104,7 +104,7 @@ function Color4() constructor
 								if (is_instanceof(argument[0], Color2))
 								{
 									var _color2 = argument[0];
-								
+									
 									color1 = _color2.color1;
 									color2 = _color2.color2;
 									color3 = argument[1];
@@ -113,7 +113,7 @@ function Color4() constructor
 								else if (is_instanceof(argument[1], Color2))
 								{
 									var _color2 = argument[1];
-								
+									
 									color1 = argument[0];
 									color2 = _color2.color1;
 									color3 = _color2.color2;
@@ -122,7 +122,7 @@ function Color4() constructor
 								else if (is_instanceof(argument[2], Color2))
 								{
 									var _color2 = argument[2];
-								
+									
 									color1 = argument[0];
 									color2 = argument[1];
 									color3 = _color2.color1;
