@@ -318,14 +318,14 @@ function ParticleType() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (part_type_exists(ID)));
+				return ((is_handle(ID)) and (part_type_exists(ID)));
 			}
 			
 			/// @returns			{undefined}
 			/// @description		Remove the internal information from the memory.
 			static destroy = function()
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				if (self.isFunctional())
 				{
 					part_type_destroy(ID);
 					
@@ -338,7 +338,7 @@ function ParticleType() constructor
 			/// @description		Reset all properties to default.
 			static clear = function()
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				if (self.isFunctional())
 				{
 					part_type_clear(ID);
 				}
@@ -992,8 +992,8 @@ function ParticleType() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
-					and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
+					if ((self.isFunctional()) and (is_struct(_particleSystem))
+					and (_particleSystem.isFunctional()))
 					{
 						if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 						{
@@ -1107,8 +1107,8 @@ function ParticleType() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (part_type_exists(ID)) and (_particleSystem != undefined)
-					and (is_real(_particleSystem.ID)) and (part_system_exists(_particleSystem.ID)))
+					if ((self.isFunctional()) and (is_struct(_particleSystem))
+					and (_particleSystem.isFunctional()))
 					{
 						if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 						{
@@ -1430,7 +1430,7 @@ function ParticleType() constructor
 			///						Type.
 			static toString = function(_multiline = false, _full = false)
 			{
-				if ((is_real(ID)) and (part_type_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");

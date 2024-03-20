@@ -154,17 +154,17 @@ function SurfaceRenderer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((instanceof(surface) == "Surface") and (surface.isFunctional())
-						and ((instanceof(location) == "Vector2")
-						or (instanceof(location) == "Vector4")) and (location.isFunctional())
-						and (instanceof(scale) == "Scale") and (scale.isFunctional())
-						and (instanceof(angle) == "Angle") and (angle.isFunctional())
-						and ((is_real(color)) or (instanceof(color) == "Color4")) and (is_real(alpha))
-						and ((part == undefined) or ((instanceof(part) == "Vector4")
+				return ((is_instanceof(surface, Surface)) and (surface.isFunctional())
+						and ((is_instanceof(location, Vector2))
+						or (is_instanceof(location, Vector4))) and (location.isFunctional())
+						and (is_instanceof(scale, Scale)) and (scale.isFunctional())
+						and (is_instanceof(angle, Angle)) and (angle.isFunctional())
+						and ((is_real(color)) or (is_instanceof(color, Color4))) and (is_real(alpha))
+						and ((part == undefined) or ((is_instanceof(part, Vector4))
 						and (part.isFunctional()))) and ((origin == undefined)
-						or ((instanceof(origin) == "Vector2") and (origin.isFunctional())))
+						or ((is_instanceof(origin, Vector2)) and (origin.isFunctional())))
 						and ((target == undefined) or ((is_real(target))
-						or ((instanceof(target) == "Surface") and (target.isFunctional())))));
+						or ((is_instanceof(target, Surface)) and (target.isFunctional())))));
 			}
 			
 		#endregion

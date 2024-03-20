@@ -58,7 +58,7 @@ function Grid() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_grid)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_grid)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -69,7 +69,7 @@ function Grid() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -139,10 +139,9 @@ function Grid() constructor
 			///						resizing this Grid to match its size.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "Grid") and (is_real(_other.ID)) 
-				and (ds_exists(_other.ID, ds_type_grid)))
+				if ((is_instanceof(_other, Grid)) and (_other.isFunctional()))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
+					if (!self.isFunctional())
 					{
 						ID = ds_grid_create(0, 0);
 					}
@@ -1226,7 +1225,7 @@ function Grid() constructor
 									   _mark_elementStart = "[", _mark_elementEnd = "]",
 									   _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size_x = ds_grid_width(ID);
@@ -1529,7 +1528,7 @@ function Grid() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_grid)))
+					if (!self.isFunctional())
 					{
 						ID = ds_grid_create(0, 0);
 					}

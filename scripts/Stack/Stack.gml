@@ -48,7 +48,7 @@ function Stack() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_stack)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_stack)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -59,7 +59,7 @@ function Stack() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -96,7 +96,7 @@ function Stack() constructor
 			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
+				if (!self.isFunctional())
 				{
 					ID = ds_stack_create();
 				}
@@ -113,7 +113,7 @@ function Stack() constructor
 				if ((instanceof(_other) == "Stack") and (is_real(_other.ID)) 
 				and (ds_exists(_other.ID, ds_type_stack)))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
+					if (!self.isFunctional())
 					{
 						ID = ds_stack_create();
 					}
@@ -469,7 +469,7 @@ function Stack() constructor
 									   _mark_elementStart = "", _mark_elementEnd = "",
 									   _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_stack)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size = ds_stack_size(ID);
@@ -659,7 +659,7 @@ function Stack() constructor
 			///						either the start of the array or its end.
 			static fromArray = function(_array, _startFromEnd = false)
 			{
-				if ((!is_real(ID)) and (!ds_exists(ID, ds_type_stack)))
+				if (!self.isFunctional())
 				{
 					ID = ds_stack_create();
 				}
@@ -727,7 +727,7 @@ function Stack() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_stack)))
+					if (!self.isFunctional())
 					{
 						ID = ds_stack_create();
 					}

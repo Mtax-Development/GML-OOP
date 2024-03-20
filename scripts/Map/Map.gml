@@ -30,7 +30,7 @@ function Map() constructor
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
-						else if ((is_real(argument[0])))
+						else if (is_handle(argument[0]))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -50,7 +50,7 @@ function Map() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_map)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_map)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -61,7 +61,7 @@ function Map() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -106,7 +106,7 @@ function Map() constructor
 			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+				if (!self.isFunctional())
 				{
 					ID = ds_map_create();
 				}
@@ -120,8 +120,7 @@ function Map() constructor
 			/// @description		Replace data of this Map with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "Map") and (is_real(_other.ID)) 
-				and (ds_exists(_other.ID, ds_type_map)))
+				if ((is_instanceof(_other, Map)) and (_other.isFunctional()))
 				{
 					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
 					{
@@ -637,7 +636,7 @@ function Map() constructor
 							{
 								ds_map_add_map(ID, _key, _value.ID);
 							} 
-							else if ((is_real(_value)) and (ds_exists(_value, ds_type_map)))
+							else if ((is_handle(_value)) and (ds_exists(_value, ds_type_map)))
 							{
 								ds_map_add_map(ID, _key, _value);
 							}
@@ -789,7 +788,7 @@ function Map() constructor
 									   _mark_elementStart = "", _mark_elementEnd = "",
 									   _mark_section = ": ", _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size = ds_map_size(ID);
@@ -984,7 +983,7 @@ function Map() constructor
 			///						Values not provided for a key will be set to {undefined}.
 			static fromArray = function(_array)
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+				if (!self.isFunctional())
 				{
 					ID = ds_map_create();
 				}
@@ -1183,11 +1182,8 @@ function Map() constructor
 			{
 				if (file_exists(_path))
 				{
-					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
-					{
-						ds_map_destroy(ID);
-					}
-				
+					self.destroy();
+					
 					ID = ds_map_secure_load(_path);
 				
 					return ID;
@@ -1207,13 +1203,9 @@ function Map() constructor
 			///						replace this Map with it.
 			static secureFromBuffer = function(_buffer)
 			{
-				if ((instanceof(_buffer) == "Buffer") and (is_real(_buffer.ID))
-				and (buffer_exists(_buffer.ID)))
+				if ((is_instanceof(_buffer, Buffer)) and (_buffer.isFunctional()))
 				{
-					if ((is_real(ID)) and (ds_exists(ID, ds_type_map)))
-					{
-						ds_map_destroy(ID);
-					}
+					self.destroy();
 					
 					ID = ds_map_secure_load_buffer(_buffer.ID);
 				}

@@ -29,7 +29,7 @@ function List() constructor
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
-						else if ((is_real(argument[0])))
+						else if (is_handle(argument[0]))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -50,7 +50,7 @@ function List() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_list)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_list)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -61,7 +61,7 @@ function List() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -101,7 +101,7 @@ function List() constructor
 			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+				if (!self.isFunctional())
 				{
 					ID = ds_list_create();
 				}
@@ -115,10 +115,9 @@ function List() constructor
 			/// @description		Replace data of this List with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "List") and (is_real(_other.ID)) 
-				and (ds_exists(_other.ID, ds_type_list)))
+				if ((is_instanceof(_other, List)) and (_other.isFunctional()))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+					if (!self.isFunctional())
 					{
 						ID = ds_list_create();
 						ds_list_clear(ID);
@@ -574,7 +573,7 @@ function List() constructor
 									   _mark_elementStart = "", _mark_elementEnd = "",
 									   _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_list)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size = ds_list_size(ID);
@@ -749,7 +748,7 @@ function List() constructor
 			{
 				if (is_array(_array))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+					if (!self.isFunctional())
 					{
 						ID = ds_list_create();
 						ds_list_clear(ID);
@@ -800,7 +799,7 @@ function List() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_list)))
+					if (!self.isFunctional())
 					{
 						ID = ds_list_create();
 						ds_list_clear(ID);

@@ -28,7 +28,7 @@ function Buffer() constructor
 					{
 						var _other = argument[0];
 						
-						if ((is_real(_other.ID)) and (buffer_exists(_other.ID)))
+						if (_other.isFunctional())
 						{
 							//|Construction type: Constructor copy.
 							var _size = buffer_get_size(_other.ID);
@@ -41,7 +41,7 @@ function Buffer() constructor
 					}
 					else if (argument_count == 1)
 					{
-						if ((is_real(argument[0])) and (buffer_exists(argument[0])))
+						if ((is_handle(argument[0])) and (buffer_exists(argument[0])))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -70,14 +70,14 @@ function Buffer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (buffer_exists(ID)));
+				return ((is_handle(ID)) and (buffer_exists(ID)));
 			}
 			
 			/// @returns			{undefined}
 			/// @description		Remove the internal information from the memory.
 			static destroy = function()
 			{
-				if ((is_real(ID)) and (buffer_exists(ID)))
+				if (self.isFunctional())
 				{
 					buffer_delete(ID);
 					
@@ -99,7 +99,7 @@ function Buffer() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!buffer_exists(ID)))
+					if (!self.isFunctional())
 					{
 						ID = buffer_create(buffer_get_size(_other.ID),
 										   buffer_get_type(_other.ID),
@@ -467,7 +467,7 @@ function Buffer() constructor
 			///						Content will be represented with the properties of this Buffer.
 			static toString = function(_multiline = false)
 			{
-				if ((is_real(ID)) and (buffer_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					var _size = buffer_get_size(ID);
@@ -646,7 +646,7 @@ function Buffer() constructor
 				{
 					if (instanceof(_surface) == "Surface") {_surface = _surface.ID;}
 					
-					if ((is_real(_surface)) and (surface_exists(_surface)))
+					if ((is_handle(_surface)) and (surface_exists(_surface)))
 					{
 						buffer_get_surface(ID, _surface, _offset);
 					}

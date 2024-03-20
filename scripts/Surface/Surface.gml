@@ -125,7 +125,7 @@ function Surface() constructor
 						ID = surface_create(max(1, size.x), max(1, size.y));
 						surface_copy(ID, 0, 0, _other.ID);
 					}
-					else if (is_real(argument[0]))
+					else if (is_handle(argument[0]))
 					{
 						//|Construction type: Wrapper.
 						ID = argument[0];
@@ -152,13 +152,13 @@ function Surface() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (surface_exists(ID)));
+				return ((is_handle(ID)) and (surface_exists(ID)));
 			}
 			
 			/// @description		Create this Surface if it does not exists.
 			static create = function()
 			{
-				if ((!is_real(ID)) or (!surface_exists(ID)))
+				if (!self.isFunctional())
 				{
 					if ((is_struct(event)) and (event.beforeCreation.callback != undefined))
 					{
@@ -250,7 +250,7 @@ function Surface() constructor
 			/// @description		Remove the internal information from the memory.
 			static destroy = function()
 			{
-				if ((is_real(ID)) and (surface_exists(ID)))
+				if (self.isFunctional())
 				{
 					surface_free(ID);
 				}
@@ -307,11 +307,11 @@ function Surface() constructor
 				{
 					var _other_value = ((instanceof(_other) == "Surface") ? _other.ID : _other);
 						
-					if ((is_real(_other_value)) and (surface_exists(_other_value)))
+					if ((is_handle(_other_value)) and (surface_exists(_other_value)))
 					{
 						if (_other_part != undefined)
 						{
-							if ((!is_real(ID)) or (!surface_exists(ID)))
+							if (!self.isFunctional())
 							{
 								new ErrorReport().report([other, self, "copy()"],
 														 ("Attempted to copy part of a Surface to " +
@@ -376,7 +376,7 @@ function Surface() constructor
 			/// @description		Get the pointer to texture page of this Surface.
 			static getTexture = function()
 			{
-				if ((!is_real(ID)) or (!surface_exists(ID)))
+				if (!self.isFunctional())
 				{
 					new ErrorReport().report([other, self, "getTexture()"],
 											 ("Attempted to get texture of an invalid Surface: " +
@@ -393,7 +393,7 @@ function Surface() constructor
 			/// @description		Get the texel size of the texture page of this Surface.
 			static getTexel = function()
 			{
-				if ((!is_real(ID)) or (!surface_exists(ID)))
+				if (!self.isFunctional())
 				{
 					new ErrorReport().report([other, self, "getTexel()"],
 											 ("Attempted to get texture of an invalid Surface: " +
@@ -413,8 +413,7 @@ function Surface() constructor
 			/// @description		Check whether this Surface is the current draw target.
 			static isActive = function()
 			{
-				return (((is_real(ID)) and (surface_exists(ID))) ? (surface_get_target() == ID)
-																 : false);
+				return ((self.isFunctional()) ? (surface_get_target() == ID) : false);
 			}
 			
 		#endregion
@@ -473,7 +472,7 @@ function Surface() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (surface_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
@@ -647,7 +646,7 @@ function Surface() constructor
 											 _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
 											 _alpha);
 						
-						if (is_real(_targetStack))
+						if (is_handle(_targetStack))
 						{
 							surface_reset_target();
 							
@@ -721,7 +720,7 @@ function Surface() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (surface_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
@@ -848,7 +847,7 @@ function Surface() constructor
 				switch (_target)
 				{
 					case true:
-						if ((!is_real(ID)) or (!surface_exists(ID)))
+						if (!self.isFunctional())
 						{
 							new ErrorReport().report([other, self, "setActive()"],
 													 ("Attempted to set an invalid Surface as the " +
@@ -1037,7 +1036,7 @@ function Surface() constructor
 			///						Content will be represented with the properties of this Surface.
 			static toString = function(_multiline = false)
 			{
-				if (is_real(ID))
+				if (is_handle(ID))
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -1063,7 +1062,7 @@ function Surface() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (surface_exists(ID)))
+					if (self.isFunctional())
 					{
 						if (_part != undefined)
 						{
@@ -1094,7 +1093,7 @@ function Surface() constructor
 				{
 					self.create();
 					
-					if ((is_real(ID)) and (surface_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((instanceof(_buffer) == "Buffer") and (_buffer.isFunctional()))
 						{

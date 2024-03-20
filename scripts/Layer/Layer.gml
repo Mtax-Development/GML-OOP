@@ -473,7 +473,7 @@ function Layer() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (layer_exists(ID)))
+					if (self.isFunctional())
 					{
 						var _element = new BackgroundElement(_sprite);
 						
@@ -542,7 +542,7 @@ function Layer() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (layer_exists(ID)))
+					if (self.isFunctional())
 					{
 						var _element = new TilemapElement(_tileset, _location, _size);
 						
@@ -572,7 +572,7 @@ function Layer() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (layer_exists(ID)))
+					if (self.isFunctional())
 					{
 						var _element = new SpriteElement(_sprite, _location);
 						
@@ -601,7 +601,7 @@ function Layer() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (layer_exists(ID)))
+					if (self.isFunctional())
 					{
 						var _element = new ParticleSystem(_persistent);
 						
@@ -712,7 +712,7 @@ function Layer() constructor
 			///						Layer.
 			static toString = function(_multiline = false, _full = false)
 			{
-				if ((is_real(ID)) and (layer_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -860,8 +860,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (instanceof(parent) == "Layer")
-								and (parent.isFunctional())) and (layer_sprite_exists(parent.ID, ID));
+						return ((is_real(ID)) and (is_instanceof(parent, Layer))
+								and (parent.isFunctional()) and (layer_sprite_exists(parent.ID, ID)));
 					}
 					
 					/// @argument			other {Layer|int:layer|string:layer}
@@ -1245,9 +1245,9 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (instanceof(parent) == "Layer")
-								and (parent.isFunctional()))
-								and (layer_background_exists(parent.ID, ID));
+						return ((is_real(ID)) and (is_instanceof(parent, Layer))
+								and (parent.isFunctional())
+								and (layer_background_exists(parent.ID, ID)));
 					}
 					
 					/// @argument			other {Layer|int:layer|string:layer}
@@ -1662,9 +1662,9 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (instanceof(parent) == "Layer")
-								and (parent.isFunctional()))
-								and (layer_tilemap_exists(parent.ID, ID));
+						return ((is_handle(ID)) and (is_instanceof(parent, Layer))
+								and (parent.isFunctional())
+								and (layer_tilemap_exists(parent.ID, ID)));
 					}
 					
 					/// @returns			{undefined}
@@ -2078,13 +2078,13 @@ function Layer() constructor
 							/// @description		Check if this constructor is functional.
 							static isFunctional = function()
 							{
-								return ((ID >= 0));
+								return (ID >= 0);
 							}
 							
 							/// @description		Empty the Tile this Tile Data refers to.
 							static clear = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "clear()"],
@@ -2111,7 +2111,7 @@ function Layer() constructor
 							///						to on its tileset.
 							static getTilesetIndex = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "getTilesetIndex()"],
@@ -2132,7 +2132,7 @@ function Layer() constructor
 							/// @description		Check if this Tile Data refers to an empty Tile.
 							static isEmpty = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "isEmpty()"],
@@ -2154,7 +2154,7 @@ function Layer() constructor
 							///						mirrored horizontally.
 							static isMirroredX = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "isMirroredX()"],
@@ -2176,7 +2176,7 @@ function Layer() constructor
 							///						mirrored vertically.
 							static isMirroredY = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "isMirroredY()"],
@@ -2198,7 +2198,7 @@ function Layer() constructor
 							///						rotated by 90 degrees.
 							static isRotated = function()
 							{
-								if (!(ID >= 0))
+								if (!self.isFunctional())
 								{
 									new ErrorReport().report([other, "Layer", "TilemapElement",
 															  "TileData", "isRotated()"],
@@ -2225,7 +2225,7 @@ function Layer() constructor
 							{
 								try
 								{
-									if (!(ID >= 0))
+									if (!self.isFunctional())
 									{
 										new ErrorReport().report([other, "Layer", "TilemapElement",
 																 "TileData", "setTilesetIndex()"],
@@ -2259,7 +2259,7 @@ function Layer() constructor
 							{
 								try
 								{
-									if (!(ID >= 0))
+									if (!self.isFunctional())
 									{
 										new ErrorReport().report([other, "Layer", "TilemapElement",
 																 "TileData", "setMirrorX()"],
@@ -2293,7 +2293,7 @@ function Layer() constructor
 							{
 								try
 								{
-									if (!(ID >= 0))
+									if (!self.isFunctional())
 									{
 										new ErrorReport().report([other, "Layer", "TilemapElement",
 																  "TileData", "setMirrorY()"],
@@ -2327,7 +2327,7 @@ function Layer() constructor
 							{
 								try
 								{
-									if (!(ID >= 0))
+									if (!self.isFunctional())
 									{
 										new ErrorReport().report([other, "Layer", "TilemapElement",
 																  "TileData", "setRotate()"],
@@ -2366,7 +2366,7 @@ function Layer() constructor
 							{
 								try
 								{
-									if (!(ID >= 0))
+									if (!self.isFunctional())
 									{
 										new ErrorReport().report([other, "Layer", "TilemapElement",
 																  "TileData", "render()"],
@@ -2406,7 +2406,7 @@ function Layer() constructor
 							{
 								var _constructorName = "Layer.TilemapElement.TileData";
 								
-								if (ID >= 0)
+								if (self.isFunctional())
 								{
 									var _string = string(ID);
 									
@@ -2558,7 +2558,7 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (part_system_exists(ID)));
+						return ((is_handle(ID)) and (part_system_exists(ID)));
 					}
 					
 					/// @returns			{undefined}
@@ -2818,7 +2818,7 @@ function Layer() constructor
 					{
 						var _constructorName = "Layer.ParticleSystem";
 						
-						if ((is_real(ID)) and (part_system_exists(ID)))
+						if (self.isFunctional())
 						{
 							var _string = "";
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -2939,7 +2939,7 @@ function Layer() constructor
 							/// @description		Check if this constructor is functional.
 							static isFunctional = function()
 							{
-								return ((is_real(ID))
+								return ((is_handle(ID))
 										 and (string_copy(string(instanceof(parent)), 1, 14)
 											  == "ParticleSystem") and (parent.isFunctional())
 										 and (part_emitter_exists(parent.ID, ID)))
@@ -2949,10 +2949,7 @@ function Layer() constructor
 							/// @description		Remove the internal information from the memory.
 							static destroy = function()
 							{
-								if ((is_real(ID))
-								and (string_copy(string(instanceof(parent)), 1, 14)
-									 == "ParticleSystem") and (parent.isFunctional())
-								and (part_emitter_exists(parent.ID, ID)))
+								if (self.isFunctional())
 								{
 									parent.emitterList.removeValue(self);
 									

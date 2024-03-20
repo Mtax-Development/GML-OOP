@@ -63,7 +63,7 @@ function Room() constructor
 							}
 						}
 					}
-					else if (is_real(argument[0]))
+					else if ((is_handle(argument[0])) or (is_real(argument[0])))
 					{
 						//|Construction type: Wrapper.
 						ID = argument[0];
@@ -91,7 +91,7 @@ function Room() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (room_exists(ID)));
+				return (((is_handle(ID)) or (is_real(ID))) and (room_exists(ID)));
 			}
 			
 			/// @argument			other {Room|int:room}
@@ -99,7 +99,7 @@ function Room() constructor
 			///						from another one.
 			static copy = function(_other)
 			{
-				if (is_real(_other) and (room_exists(_other)))
+				if (((is_handle(_other)) or (is_real(_other))) and (room_exists(_other)))
 				{
 					room_assign(ID, _other);
 					
@@ -137,7 +137,7 @@ function Room() constructor
 			/// @description		Check if this Room is the one currently active.
 			static isActive = function()
 			{
-				return ((is_real(ID)) and (room_exists(ID)) and (room == ID));
+				return ((self.isFunctional()) and (room == ID));
 			}
 			
 		#endregion
@@ -178,7 +178,7 @@ function Room() constructor
 			///						persistent and is not currently active.
 			static setPersistent = function(_persistent)
 			{
-				if ((is_real(ID)) and (room_exists(ID)))
+				if (self.isFunctional())
 				{
 					if (room != ID)
 					{
@@ -223,7 +223,7 @@ function Room() constructor
 			/// @description		Add an instance of an object to this inactive room.
 			static createInstance = function(_object, _location)
 			{
-				if ((is_real(ID)) and (room_exists(ID)))
+				if (self.isFunctional())
 				{
 					if (room != ID)
 					{
@@ -284,7 +284,7 @@ function Room() constructor
 			///						Content will be represented with the properties of this Room.
 			static toString = function(_multiline = false, _full = false)
 			{
-				if ((is_real(ID)) and (room_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
@@ -373,9 +373,8 @@ function Room() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return (((typeof(ID) == "ref") or (is_real(ID))) and (is_real(object))
-								and (instanceof(location) == "Vector2")
-								and (location.isFunctional()));
+						return (((is_handle(ID)) or (is_real(ID))) and (is_handle(object))
+								and (is_instanceof(location, Vector2)) and (location.isFunctional()));
 					}
 					
 				#endregion

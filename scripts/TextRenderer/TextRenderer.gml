@@ -124,9 +124,9 @@ function TextRenderer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(alpha)) and (instanceof(font) == "Font") and (font.isFunctional())
-						and (instanceof(location) == "Vector2") and (location.isFunctional())
-						and (instanceof(align) == "TextAlign") and (align.isFunctional()));
+				return ((is_real(alpha)) and (is_instanceof(font, Font)) and (font.isFunctional())
+						and (is_instanceof(location, Vector2)) and (location.isFunctional())
+						and (is_instanceof(align, TextAlign)) and (align.isFunctional()));
 			}
 			
 		#endregion

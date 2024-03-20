@@ -174,7 +174,7 @@ function Shader() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (shader_is_compiled(ID)));
+				return ((is_handle(ID)) and (shader_is_compiled(ID)));
 			}
 			
 		#endregion
@@ -185,7 +185,7 @@ function Shader() constructor
 			/// @description		Get a sampler index of a uniform from this Shader
 			static getSampler = function(_uniform)
 			{
-				if ((is_real(ID)) and (shader_is_compiled(ID)))
+				if (self.isFunctional())
 				{
 					var _sampler = shader_get_sampler_index(ID, _uniform);
 					var _handle = ((_sampler != -1) ? _sampler : undefined)
@@ -230,7 +230,7 @@ function Shader() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					if (self.isFunctional())
 					{
 						var _value = undefined;
 						var _handle = shader_get_uniform(ID, _uniform);
@@ -322,7 +322,7 @@ function Shader() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					if (self.isFunctional())
 					{
 						var _value = undefined;
 						var _handle = shader_get_uniform(ID, _uniform);
@@ -410,7 +410,7 @@ function Shader() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (shader_is_compiled(ID)))
+					if (self.isFunctional())
 					{
 						var _handle = shader_get_uniform(ID, _uniform);
 						
@@ -718,7 +718,7 @@ function Shader() constructor
 			///						If this Shader is not compiled, it will be marked as such.
 			static toString = function(_multiline = false)
 			{
-				if (is_real(ID))
+				if (is_handle(ID))
 				{
 					var _string = "";
 					

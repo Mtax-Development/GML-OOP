@@ -127,7 +127,7 @@ function Font() constructor
 							event = _other.event;
 						}
 					}
-					else if ((is_real(argument[0])) and (font_exists(argument[0])))
+					else if ((is_handle(argument[0])) and (font_exists(argument[0])))
 					{
 						//|Construction type: Wrapper.
 						type = "asset";
@@ -154,7 +154,7 @@ function Font() constructor
 						ID = font_add(fontName, size, bold, italic, glyphs.minimum, 
 									  glyphs.maximum);
 						
-						if ((is_real(ID)) and (font_exists(ID)))
+						if (self.isFunctional())
 						{
 							assetName = font_get_name(ID);
 						}
@@ -179,7 +179,7 @@ function Font() constructor
 								
 								ID = font_add_sprite(sprite.ID, first, proportional, separation);
 								
-								if ((is_real(ID)) and (font_exists(ID)))
+								if (self.isFunctional())
 								{
 									assetName = font_get_name(ID);
 									fontName = font_get_fontname(ID);
@@ -201,7 +201,7 @@ function Font() constructor
 								ID = font_add_sprite_ext(sprite.ID, glyphs, proportional,
 														 separation);
 								
-								if ((is_real(ID)) and (font_exists(ID)))
+								if (self.isFunctional())
 								{
 									assetName = font_get_name(ID);
 									fontName = font_get_fontname(ID);
@@ -219,7 +219,7 @@ function Font() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (font_exists(ID)));
+				return ((is_handle(ID)) and (font_exists(ID)));
 			}
 			
 			/// @argument			forceAssetDeletion {bool}
@@ -230,8 +230,7 @@ function Font() constructor
 			///						application is completely shut down and then restarted.
 			static destroy = function(_forceAssetDeletion = false)
 			{
-				if ((is_real(ID)) and (font_exists(ID)) and ((_forceAssetDeletion)
-				or (type != "asset")))
+				if ((self.isFunctional()) and ((_forceAssetDeletion) or (type != "asset")))
 				{
 					font_delete(ID);
 					
@@ -320,7 +319,7 @@ function Font() constructor
 			/// @description		Use this Font for further text rendering.
 			static setActive = function()
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				if (self.isFunctional())
 				{
 					if ((is_struct(event)) and (event.beforeActivation.callback != undefined))
 					{
@@ -415,7 +414,7 @@ function Font() constructor
 			///						Content will be represented with the properties of this Font.
 			static toString = function(_multiline = false, _full = false)
 			{
-				if ((is_real(ID)) and (font_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");

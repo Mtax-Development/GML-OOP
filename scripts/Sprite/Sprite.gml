@@ -202,7 +202,7 @@ function Sprite() constructor
 															_smoothRemovedBackground, _origin_x,
 															_origin_y);
 						}
-						else if (is_real(argument[0]))
+						else if ((is_handle(argument[0])) or (is_real(argument[0])))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -227,7 +227,7 @@ function Sprite() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (sprite_exists(ID)));
+				return (((is_handle(ID)) or (is_real(ID))) and (sprite_exists(ID)));
 			}
 			
 			/// @returns			{undefined}
@@ -772,7 +772,7 @@ function Sprite() constructor
 											_angle_value, _color_x1y1, _color_x2y1, _color_x2y2,
 											_color_x1y2, _alpha);
 						
-						if (is_real(_targetStack))
+						if (is_handle(_targetStack))
 						{
 							surface_reset_target();
 							
@@ -844,7 +844,7 @@ function Sprite() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (sprite_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
@@ -990,7 +990,7 @@ function Sprite() constructor
 			{
 				try
 				{
-					if ((is_real(ID)) and (sprite_exists(ID)))
+					if (self.isFunctional())
 					{
 						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
 						{
@@ -1142,7 +1142,7 @@ function Sprite() constructor
 			///						Content will be represented with the details of this Sprite.
 			static toString = function(_multiline = false, _full = false)
 			{
-				if ((is_real(ID)) and (sprite_exists(ID)))
+				if (self.isFunctional())
 				{
 					var _string = "";
 					var _mark_separator = ((_multiline) ? "\n" : ", ");

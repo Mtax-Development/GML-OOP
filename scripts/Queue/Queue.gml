@@ -48,7 +48,7 @@ function Queue() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_queue)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_queue)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -59,7 +59,7 @@ function Queue() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan = false)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -96,7 +96,7 @@ function Queue() constructor
 			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
+				if (!self.isFunctional())
 				{
 					ID = ds_queue_create();
 				}
@@ -110,10 +110,9 @@ function Queue() constructor
 			/// @description		Replace data of this Queue with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "Queue") and (is_real(_other.ID))
-				and (ds_exists(_other.ID, ds_type_queue)))
+				if ((is_instanceof(_other, Queue)) and (_other.isFunctional()))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
+					if (!self.isFunctional())
 					{
 						ID = ds_queue_create();
 					}
@@ -446,7 +445,7 @@ function Queue() constructor
 									   _mark_elementStart = "", _mark_elementEnd = "",
 									   _mark_sizeSeparator = " - ")
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_queue)))
+				if (self.isFunctional())
 				{
 					//|General initialization.
 					var _size = ds_queue_size(ID);
@@ -636,7 +635,7 @@ function Queue() constructor
 			///						either its beginning or end.
 			static fromArray = function(_array, _startFromEnd = false)
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
+				if (!self.isFunctional())
 				{
 					ID = ds_queue_create();
 				}
@@ -704,7 +703,7 @@ function Queue() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_queue)))
+					if (!self.isFunctional())
 					{
 						ID = ds_queue_create();
 					}

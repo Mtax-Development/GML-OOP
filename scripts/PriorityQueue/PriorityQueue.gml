@@ -28,7 +28,7 @@ function PriorityQueue() constructor
 							//|Construction type: Constructor copy.
 							self.copy(argument[0]);
 						}
-						else if ((is_real(argument[0])))
+						else if (is_handle(argument[0]))
 						{
 							//|Construction type: Wrapper.
 							ID = argument[0];
@@ -48,7 +48,7 @@ function PriorityQueue() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (ds_exists(ID, ds_type_priority)));
+				return ((is_handle(ID)) and (ds_exists(ID, ds_type_priority)));
 			}
 			
 			/// @argument			deepScan? {bool}
@@ -59,7 +59,7 @@ function PriorityQueue() constructor
 			///						in it to destroy them as well.
 			static destroy = function(_deepScan)
 			{
-				if ((is_real(ID)) and (ds_exists(ID, ds_type_priority)))
+				if (self.isFunctional())
 				{
 					if (_deepScan)
 					{
@@ -96,7 +96,7 @@ function PriorityQueue() constructor
 			/// @description		Remove data from this Data Structure.
 			static clear = function()
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
+				if (!self.isFunctional())
 				{
 					ID = ds_priority_create();
 				}
@@ -110,10 +110,9 @@ function PriorityQueue() constructor
 			/// @description		Replace data of this Priority Queue with data from another one.
 			static copy = function(_other)
 			{
-				if ((instanceof(_other) == "PriorityQueue") and (is_real(_other.ID)) 
-				and (ds_exists(_other.ID, ds_type_priority)))
+				if ((is_instanceof(_other, PriorityQueue)) and (_other.isFunctional()))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
+					if (!self.isFunctional())
 					{
 						ID = ds_priority_create();
 					}
@@ -769,7 +768,7 @@ function PriorityQueue() constructor
 			///						will be set to {undefined}.
 			static fromArray = function(_array)
 			{
-				if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
+				if (!self.isFunctional())
 				{
 					ID = ds_priority_create();
 				}
@@ -830,7 +829,7 @@ function PriorityQueue() constructor
 			{
 				try
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_priority)))
+					if (!self.isFunctional())
 					{
 						ID = ds_priority_create();
 					}
