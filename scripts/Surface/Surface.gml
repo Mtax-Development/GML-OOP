@@ -434,12 +434,32 @@ function Surface() constructor
 												  "Surface: " +
 												  "{" + string(ID) + "}" + "\n" +
 												  "Recreating the Surface with the target size."));
-							
+						
+						if (is_instanceof(size, Vector2))
+						{
+							size.x = _size_x;
+							size.y = _size_y;
+						}
+						else
+						{
+							size = new Vector2(_size_x, _size_y);
+						}
+						
 						self.create();
 					}
 					else
 					{
-						surface_resize(ID, max(1, size.x), max(1, size.y));
+						surface_resize(ID, _size_x, _size_y);
+						
+						if (is_instanceof(size, Vector2))
+						{
+							size.x = _size_x;
+							size.y = _size_y;
+						}
+						else
+						{
+							size = new Vector2(_size_x, _size_y);
+						}
 					}
 				}
 				else
