@@ -14,3 +14,4 @@ timelines/
 sounds/
 README.md
 .gitattributes
+*.resource_order
