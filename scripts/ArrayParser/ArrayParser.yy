@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "ArrayParser",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Handler",
-    "path": "folders/GML-OOP/Handler.yy",
+  "$GMScript":"",
+  "%Name":"ArrayParser",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ArrayParser",
+  "parent":{
+    "name":"Handler",
+    "path":"folders/GML-OOP/Handler.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Point",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/GML-OOP/Shape.yy",
+  "$GMScript":"",
+  "%Name":"Point",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Point",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/GML-OOP/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

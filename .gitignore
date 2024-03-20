@@ -13,3 +13,4 @@ tilesets/
 timelines/
 sounds/
 README.md
+*.resource_order

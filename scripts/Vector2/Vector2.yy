@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Vector2",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Container",
-    "path": "folders/GML-OOP/Container.yy",
+  "$GMScript":"",
+  "%Name":"Vector2",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Vector2",
+  "parent":{
+    "name":"Container",
+    "path":"folders/GML-OOP/Container.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Buffer",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Resource",
-    "path": "folders/GML-OOP/Resource.yy",
+  "$GMScript":"",
+  "%Name":"Buffer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Buffer",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/GML-OOP/Resource.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

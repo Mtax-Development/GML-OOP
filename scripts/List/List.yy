@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "List",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Data Structure",
-    "path": "folders/GML-OOP/Data Structure.yy",
+  "$GMScript":"",
+  "%Name":"List",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"List",
+  "parent":{
+    "name":"Data Structure",
+    "path":"folders/GML-OOP/Data Structure.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

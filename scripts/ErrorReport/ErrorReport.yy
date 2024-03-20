@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "ErrorReport",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Debug",
-    "path": "folders/GML-OOP/Debug.yy",
+  "$GMScript":"",
+  "%Name":"ErrorReport",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ErrorReport",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/GML-OOP/Debug.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

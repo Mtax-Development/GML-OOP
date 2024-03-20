@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Angle",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Container",
-    "path": "folders/GML-OOP/Container.yy",
+  "$GMScript":"",
+  "%Name":"Angle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Angle",
+  "parent":{
+    "name":"Container",
+    "path":"folders/GML-OOP/Container.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

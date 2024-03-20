@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "SurfaceRenderer",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Handler",
-    "path": "folders/GML-OOP/Handler.yy",
+  "$GMScript":"",
+  "%Name":"SurfaceRenderer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SurfaceRenderer",
+  "parent":{
+    "name":"Handler",
+    "path":"folders/GML-OOP/Handler.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

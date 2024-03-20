@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "SpriteRenderer",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Handler",
-    "path": "folders/GML-OOP/Handler.yy",
+  "$GMScript":"",
+  "%Name":"SpriteRenderer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SpriteRenderer",
+  "parent":{
+    "name":"Handler",
+    "path":"folders/GML-OOP/Handler.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

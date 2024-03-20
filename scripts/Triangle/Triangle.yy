@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Triangle",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/GML-OOP/Shape.yy",
+  "$GMScript":"",
+  "%Name":"Triangle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Triangle",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/GML-OOP/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

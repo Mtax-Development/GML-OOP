@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Font",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Resource",
-    "path": "folders/GML-OOP/Resource.yy",
+  "$GMScript":"",
+  "%Name":"Font",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Font",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/GML-OOP/Resource.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
