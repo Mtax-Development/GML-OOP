@@ -480,15 +480,15 @@ function Vector2() constructor
 					var _result_x = x;
 					var _result_y = y;
 					
-					if (instanceof(_value) == "Vector2")
-					{
-						_result_x += _value.x;
-						_result_y += _value.y;
-					}
-					else
+					if (is_real(_value))
 					{
 						_result_x += _value;
 						_result_y += _value;
+					}
+					else
+					{
+						_result_x += _value.x;
+						_result_y += _value.y;
 					}
 					
 					x = _result_x;
@@ -512,15 +512,15 @@ function Vector2() constructor
 					var _result_x = x;
 					var _result_y = y;
 					
-					if (instanceof(argument[0]) == "Vector2")
-					{
-						_result_x -= _value.x;
-						_result_y -= _value.y;
-					}
-					else
+					if (is_real(_value))
 					{
 						_result_x -= _value;
 						_result_y -= _value;
+					}
+					else
+					{
+						_result_x -= _value.x;
+						_result_y -= _value.y;
 					}
 					
 					x = _result_x;
@@ -544,15 +544,15 @@ function Vector2() constructor
 					var _result_x = x;
 					var _result_y = y;
 					
-					if (instanceof(_value) == "Vector2")
-					{
-						_result_x *= _value.x;
-						_result_y *= _value.y;
-					}
-					else
+					if (is_real(_value))
 					{
 						_result_x *= _value;
 						_result_y *= _value;
+					}
+					else
+					{
+						_result_x *= _value.x;
+						_result_y *= _value.y;
 					}
 					
 					x = _result_x;
@@ -573,7 +573,15 @@ function Vector2() constructor
 			{
 				try
 				{
-					if (instanceof(_value) == "Vector2")
+					if (is_real(_value))
+					{
+						if (_value != 0)
+						{
+							x /= _value;
+							y /= _value;
+						}
+					}
+					else
 					{
 						if (_value.x != 0)
 						{
@@ -583,14 +591,6 @@ function Vector2() constructor
 						if (_value.y != 0)
 						{
 							y /= _value.y;
-						}
-					}
-					else
-					{
-						if (_value != 0)
-						{
-							x /= _value;
-							y /= _value;
 						}
 					}
 				}
