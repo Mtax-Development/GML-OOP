@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"VertexFormat",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"VertexFormat",
+  "parent":{
+    "name":"Container",
+    "path":"folders/GML-OOP/Container.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
