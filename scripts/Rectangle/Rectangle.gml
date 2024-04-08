@@ -766,6 +766,118 @@ function Rectangle() constructor
 						outline_alpha];
 			}
 			
+			/// @argument			outline? {bool|all}
+			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {undefined}
+			/// @description		Create a Vertex Buffer with a format specific to this constructor,
+			///						with its data ready for rendering through the default passthrough
+			///						Shader.	Returns an array starting with Vertex Format of a number of
+			///						Vertex Buffers contained after it, depending which were specified:
+			///						- fill: Vertex Buffer formatted for {constant:pr_trianglestrip}.
+			///						- outline: Vertex Buffer formatted for {constant:pr_linestrip}.
+			///						- all: both Vertex Buffers will be included in above order.
+			///						Every returned value must be functional for a successful rendering
+			///						and destroyed after they are no longer used.
+			static toVertexBuffer = function(_outline = false)
+			{
+				if (self.isFunctional())
+				{
+					var _format = new VertexFormat
+					(
+						vertex_format_add_position,
+						vertex_format_add_color,
+						vertex_format_add_texcoord
+					);
+					
+					var _result = [_format];
+					var _location = new Vector2();
+					
+					if ((!_outline) or (_outline == all))
+					{
+						var _fill_color = (fill_color ?? c_white);
+						var _fill_alpha = (fill_alpha ?? 0);
+						
+						array_push(_result, new VertexBuffer()
+						 .setActive(_format)
+							.setLocation(_location.set(location.x1, location.y1))
+							.setColor(_fill_color, _fill_alpha)
+							.setUV()
+							
+							.setLocation(_location.set(location.x2, location.y1))
+							.setColor(_fill_color, _fill_alpha)
+							.setUV()
+							
+							.setLocation(_location.set(location.x1, location.y2))
+							.setColor(_fill_color, _fill_alpha)
+							.setUV()
+							
+							.setLocation(_location.set(location.x2, location.y2))
+							.setColor(_fill_color, _fill_alpha)
+							.setUV()
+						 .setActive(false));
+					}
+					
+					if (((_outline) or (_outline == all)) and (outline_size >= 1))
+					{
+						var _outline_color = ((is_real(outline_color)) ? outline_color : c_white);
+						var _outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
+						var _point = [[[(location.x2 + outline_size), (location.y1 - outline_size)],
+									   [(location.x1 - outline_size), (location.y1 - outline_size)],
+									   [(location.x2 + outline_size), location.y1],
+									   [(location.x1 - outline_size), location.y1]],
+									  [[(location.x1 - outline_size), location.y1],
+									   [(location.x1 - outline_size), (location.y2 + outline_size)],
+									   [location.x1, location.y1],
+									   [location.x1, (location.y2 + outline_size)]],
+									  [[location.x1, (location.y2 + outline_size)],
+									   [(location.x2 + outline_size), (location.y2 + outline_size)],
+									   [location.x1, location.y2],
+									   [(location.x2 + outline_size), location.y2]],
+									  [[(location.x2 + outline_size), location.y2],
+									   [(location.x2 + outline_size), location.y1],
+									   [location.x2, location.y2], [location.x2, location.y1]]];
+						var _vertexBuffer_outline = new VertexBuffer();
+						
+						with (_vertexBuffer_outline)
+						{
+							setActive(_format);
+							{
+								var _i = [0, 0];
+								repeat (array_length(_point))
+								{
+									_i[1] = 0;
+									repeat (array_length(_point[_i[0]]))
+									{
+										var _point_current = _point[_i[0]][_i[1]];
+										
+										setLocation(_location.set(_point_current[0],
+																  _point_current[1]));
+										setColor(_outline_color, _outline_alpha);
+										setUV();
+										
+										++_i[1];
+									}
+									
+									++_i[0];
+								}
+							}
+							setActive(false);
+						}
+						
+						array_push(_result, _vertexBuffer_outline);
+					}
+					
+					return _result;
+				}
+				else
+				{
+					new ErrorReport().report([other, self, "toVertexBuffer()"],
+											 ("Attempted to convert an invalid Shape into a Vertex " +
+											  "Buffer: " + "{" + string(self) + "}"));
+				}
+				
+				return undefined;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
