@@ -489,7 +489,23 @@ function ParticleType() constructor
 					
 					part_type_size(ID, _size_minimum, _size_maximum, _increase, _wiggle);
 					
-					size = _size;
+					if (is_instanceof(_size, Range))
+					{
+						if (is_instanceof(size, Range))
+						{
+							size.minimum = _size.minimum;
+							size.maximum = _size.maximum;
+						}
+						else
+						{
+							size = new Range(_size);
+						}
+					}
+					else
+					{
+						size = _size;
+					}
+					
 					size_increase = _increase;
 					size_wiggle = _wiggle;
 				}
@@ -525,7 +541,23 @@ function ParticleType() constructor
 					
 					part_type_speed(ID, _speed_minimum, _speed_maximum, _increase, _wiggle);
 					
-					speed = _speed;
+					if (is_instanceof(_speed, Range))
+					{
+						if (is_instanceof(speed, Range))
+						{
+							speed.minimum = _speed.minimum;
+							speed.maximum = _speed.maximum;
+						}
+						else
+						{
+							speed = new Range(_speed);
+						}
+					}
+					else
+					{
+						speed = _speed;
+					}
+					
 					speed_increase = _increase;
 					speed_wiggle = _wiggle;
 				}
@@ -564,7 +596,32 @@ function ParticleType() constructor
 					part_type_direction(ID, _direction_minimum, _direction_maximum, _increase,
 										_wiggle);
 					
-					direction = _direction;
+					switch (instanceof(_direction))
+					{
+						case "Range":
+							if (is_instanceof(direction, Range))
+							{
+								direction.minimum = _direction.minimum;
+								direction.maximum = _direction.maximum;
+							}
+							else
+							{
+								direction = new Range(_direction);
+							}
+						break;
+						
+						case "Angle":
+							if (is_instanceof(direction, Angle))
+							{
+								direction.value = _direction.value;
+							}
+							else
+							{
+								direction = new Angle(_direction);
+							}
+						break;
+					}
+					
 					direction_increase = _increase;
 					direction_wiggle = _wiggle;
 				}
@@ -606,7 +663,32 @@ function ParticleType() constructor
 					part_type_orientation(ID, _angle_minimum, _angle_maximum, _increase, _wiggle,
 										  _relative);
 					
-					angle = _angle;
+					switch (instanceof(_angle))
+					{
+						case "Range":
+							if (is_instanceof(angle, Range))
+							{
+								angle.minimum = _angle.minimum;
+								angle.maximum = _angle.maximum;
+							}
+							else
+							{
+								angle = new Range(_angle);
+							}
+						break;
+						
+						case "Angle":
+							if (is_instanceof(angle, Angle))
+							{
+								angle.value = _angle.value;
+							}
+							else
+							{
+								angle = new Angle(_angle);
+							}
+						break;
+					}
+					
 					angle_increase = _increase;
 					angle_wiggle = _wiggle;
 					angle_relative = _relative;
@@ -642,7 +724,15 @@ function ParticleType() constructor
 					part_type_gravity(ID, _value, _gravity_direction.value);
 					
 					gravity = _value;
-					gravity_direction = _gravity_direction;
+					
+					if (is_instanceof(gravity_direction, Angle))
+					{
+						gravity_direction.value = _gravity_direction.value;
+					}
+					else
+					{
+						gravity_direction = new Angle(_gravity_direction);
+					}
 				}
 				catch (_exception)
 				{
@@ -674,7 +764,22 @@ function ParticleType() constructor
 					
 					part_type_life(ID, _life_minimum, _life_maximum);
 					
-					life = _life;
+					if (is_instanceof(_life, Range))
+					{
+						if (is_instanceof(life, Range))
+						{
+							life.minimum = _life.minimum;
+							life.maximum = _life.maximum;
+						}
+						else
+						{
+							life = new Range(_life);
+						}
+					}
+					else
+					{
+						life = _life;
+					}
 				}
 				catch (_exception)
 				{
@@ -697,11 +802,32 @@ function ParticleType() constructor
 						case "Color3":
 							part_type_color3(ID, _color.color1, _color.color2, _color.color3);
 							
+							if (is_instanceof(color, Color3))
+							{
+								color.color1 = _color.color1;
+								color.color2 = _color.color2;
+								color.color3 = _color.color3;
+							}
+							else
+							{
+								color = new Color3(_color);
+							}
+							
 							color_type = "Color3";
 						break;
 						
 						case "Color2":
 							part_type_color2(ID, _color.color1, _color.color2);
+							
+							if (is_instanceof(color, Color2))
+							{
+								color.color1 = _color.color1;
+								color.color2 = _color.color2;
+							}
+							else
+							{
+								color = new Color2(_color);
+							}
 							
 							color_type = "Color2";
 						break;
@@ -709,11 +835,11 @@ function ParticleType() constructor
 						default:
 							part_type_color1(ID, _color);
 							
+							color = _color;
 							color_type = "color";
 						break;
 					}
 					
-					color = _color;
 				}
 				catch (_exception)
 				{
@@ -732,7 +858,16 @@ function ParticleType() constructor
 				{
 					part_type_color_mix(ID, _color.color1, _color.color2);
 					
-					color = _color;
+					if (is_instanceof(color, Color2))
+					{
+						color.color1 = _color.color1;
+						color.color2 = _color.color2;
+					}
+					else
+					{
+						color = new Color2(_color);
+					}
+					
 					color_type = "mix";
 				}
 				catch (_exception)
@@ -792,7 +927,41 @@ function ParticleType() constructor
 					part_type_color_rgb(ID, _red_minimum, _red_maximum, _green_minimum,
 										_green_maximum, _blue_minimum, _blue_maximum);
 					
-					color = [_red, _green, _blue];
+					if (array_length(color) == 3)
+					{
+						var _i = 0;
+						var _array_content = [_red, _green, _blue];
+						repeat (3)
+						{
+							var _color_current = _array_content[_i]
+							
+							if (is_instanceof(_color_current, Range))
+							{
+								if (is_instanceof(color[_i], Range))
+								{
+									color[_i].minimum = _color_current.minimum;
+									color[_i].maximum = _color_current.maximum;
+								}
+								else
+								{
+									color[_i] = new Range(_color_current);
+								}
+							}
+							else
+							{
+								color[_i] = _color_current;
+							}
+							
+							++_i;
+						}
+					}
+					else
+					{
+						color = [((is_instanceof(_red, Range)) ? new Range(_red) : _red),
+								 ((is_instanceof(_green, Range)) ? new Range(_green) : _green),
+								 ((is_instanceof(_blue, Range)) ? new Range(_blue) : _blue)];
+					}
+					
 					color_type = "RGB";
 				}
 				catch (_exception)
@@ -852,7 +1021,42 @@ function ParticleType() constructor
 					part_type_color_hsv(ID, _hue_minimum, _hue_maximum, _saturation_minimum,
 										_saturation_maximum, _value_minimum, _value_maximum);
 					
-					color = [_hue, _saturation, _value];
+					if (array_length(color) == 3)
+					{
+						var _i = 0;
+						var _array_content = [_hue, _saturation, _value];
+						repeat (3)
+						{
+							var _color_current = _array_content[_i]
+							
+							if (is_instanceof(_color_current, Range))
+							{
+								if (is_instanceof(color[_i], Range))
+								{
+									color[_i].minimum = _color_current.minimum;
+									color[_i].maximum = _color_current.maximum;
+								}
+								else
+								{
+									color[_i] = new Range(_color_current);
+								}
+							}
+							else
+							{
+								color[_i] = _color_current;
+							}
+							
+							++_i;
+						}
+					}
+					else
+					{
+						color = [((is_instanceof(_hue, Range)) ? new Range(_hue) : _hue),
+								 ((is_instanceof(_saturation, Range)) ? new Range(_saturation)
+																	  : _saturation),
+								 ((is_instanceof(_value, Range)) ? new Range(_value) : _value)];
+					}
+					
 					color_type = "HSV";
 				}
 				catch (_exception)
