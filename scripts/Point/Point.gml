@@ -608,24 +608,21 @@ function Point() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {undefined}
+			/// @argument			format? {VertexFormat:toVertexBuffer()[0]}
+			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {VertexFormat[]}
 			/// @description		Create a Vertex Buffer with a format specific to this constructor,
 			///						with its data ready for rendering through the default passthrough
 			///						Shader.	Returns an array starting with Vertex Format and the Vertex
 			///						Buffer formatted for {constant:pr_pointlist} after it.
-			///						Every returned value must be functional for a successful rendering
-			///						and destroyed after they are no longer used.
-			static toVertexBuffer = function()
+			///						Returned Vertex Format can be reused as an argument for repeated
+			///						calls, also every returned value must be functional for successful
+			///						rendering and destroyed after they are no longer used.
+			static toVertexBuffer = function(_format = new VertexFormat(vertex_format_add_position,
+																		vertex_format_add_color,
+																		vertex_format_add_texcoord))
 			{
 				if (self.isFunctional())
 				{
-					var _format = new VertexFormat
-					(
-						vertex_format_add_position,
-						vertex_format_add_color,
-						vertex_format_add_texcoord
-					);
-					
 					var _color = ((is_real(color)) ? color : c_white);
 					var _alpha = ((alpha > 0) ? alpha : 0);
 					var _vertexBuffer = new VertexBuffer()
@@ -644,7 +641,7 @@ function Point() constructor
 											  "Buffer: " + "{" + string(self) + "}"));
 				}
 				
-				return undefined;
+				return [_format];
 			}
 			
 		#endregion

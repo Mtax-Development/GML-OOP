@@ -766,8 +766,9 @@ function Rectangle() constructor
 						outline_alpha];
 			}
 			
+			/// @argument			format? {VertexFormat:toVertexBuffer()[0]}
 			/// @argument			outline? {bool|all}
-			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {undefined}
+			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {VertexFormat[]}
 			/// @description		Create a Vertex Buffer with a format specific to this constructor,
 			///						with its data ready for rendering through the default passthrough
 			///						Shader.	Returns an array starting with Vertex Format of a number of
@@ -775,19 +776,16 @@ function Rectangle() constructor
 			///						- fill: Vertex Buffer formatted for {constant:pr_trianglestrip}.
 			///						- outline: Vertex Buffer formatted for {constant:pr_linestrip}.
 			///						- all: both Vertex Buffers will be included in above order.
-			///						Every returned value must be functional for a successful rendering
-			///						and destroyed after they are no longer used.
-			static toVertexBuffer = function(_outline = false)
+			///						Returned Vertex Format can be reused as an argument for repeated
+			///						calls, also every returned value must be functional for successful
+			///						rendering and destroyed after they are no longer used.
+			static toVertexBuffer = function(_format = new VertexFormat(vertex_format_add_position,
+																		vertex_format_add_color,
+																		vertex_format_add_texcoord),
+											 _outline = false)
 			{
 				if (self.isFunctional())
 				{
-					var _format = new VertexFormat
-					(
-						vertex_format_add_position,
-						vertex_format_add_color,
-						vertex_format_add_texcoord
-					);
-					
 					var _result = [_format];
 					var _location = new Vector2();
 					
@@ -875,7 +873,7 @@ function Rectangle() constructor
 											  "Buffer: " + "{" + string(self) + "}"));
 				}
 				
-				return undefined;
+				return [_format];
 			}
 			
 		#endregion
