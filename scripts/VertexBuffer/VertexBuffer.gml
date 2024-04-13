@@ -8,9 +8,10 @@ function VertexBuffer() constructor
 	#region [Methods]
 		#region <Management>
 			
-			/// @description		Initialize the constructor.
+			/// @description		Initialize this constructor.
 			static construct = function()
 			{
+				//+TODO: Support for other types of construction.
 				ID = vertex_create_buffer();
 				active = false;
 				readOnly = false;

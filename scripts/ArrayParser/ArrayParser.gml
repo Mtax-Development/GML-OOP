@@ -12,7 +12,7 @@ function ArrayParser() constructor
 	#region [Methods]
 		#region <Management>
 			
-			/// @description		Initialize the constructor.
+			/// @description		Initialize this constructor.
 			static construct = function()
 			{
 				//|Construction type: Empty array.
