@@ -1,5 +1,5 @@
 //  @function				VertexFormat()
-/// @description			Constructs a container designating types of data used in rendering
+/// @description			Constructs a resource designating types of data used in rendering
 ///							primitives through a Vertex Buffer and a Shader.
 ///							
 ///							Construction types:

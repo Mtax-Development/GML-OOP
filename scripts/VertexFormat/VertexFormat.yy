@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"VertexFormat",
   "parent":{
-    "name":"Container",
-    "path":"folders/GML-OOP/Container.yy",
+    "name":"Resource",
+    "path":"folders/GML-OOP/Resource.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
