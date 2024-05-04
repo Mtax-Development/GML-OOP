@@ -430,7 +430,7 @@ function Sprite() constructor
 			///						of this Sprite on its texture page.
 			///						It will be returned as an Vector4 if the full information is not
 			///						requested. Otherwise, an array with 8 elements will be returned
-			///						with the following data at respective positions:
+			///						with the following data at its respective positions:
 			///						- array[0]: UV left {real}
 			///						- array[1]: UV top {real}
 			///						- array[2]: UV right {real}
@@ -762,10 +762,11 @@ function Sprite() constructor
 																	  _size_y)));
 						var _angle_dcos = dcos(_angle_value);
 						var _angle_dsin = dsin(_angle_value);
+						
 						_location_x = (_location_x + (_origin_transformed_x * _angle_dcos) +
-										(_origin_transformed_y * _angle_dsin));
+									   (_origin_transformed_y * _angle_dsin));
 						_location_y = (_location_y - (_origin_transformed_x * _angle_dsin) +
-										(_origin_transformed_y * _angle_dcos));
+									   (_origin_transformed_y * _angle_dcos));
 						
 						draw_sprite_general(ID, _frame, _part_x1, _part_y1, _part_x2, _part_y2,
 											_location_x, _location_y, _scale_x, _scale_y,
