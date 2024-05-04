@@ -483,59 +483,61 @@ function Line() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			/// @argument			{VertexFormat:toVertexBuffer()[0]} format?
-			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {VertexFormat[]}
-			/// @description		Create a Vertex Buffer with a format specific to this constructor,
-			///						with its data ready for rendering through the default passthrough
-			///						Shader.	Returns an array starting with Vertex Format and the Vertex
-			///						Buffer formatted for {constant:pr_trianglestrip} after it.
-			///						Returned Vertex Format can be reused as an argument for repeated
-			///						calls, also every returned value must be functional for successful
-			///						rendering and destroyed after they are no longer used.
-			static toVertexBuffer = function(_format = new VertexFormat(vertex_format_add_position,
-																		vertex_format_add_color,
-																		vertex_format_add_texcoord))
+			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
+			/// @description		Return data formatted for rendering this Shape through a Vertex
+			///						Buffer and the default passthrough Shader.
+			static toVertexBuffer = function()
 			{
-				if (self.isFunctional())
+				var _vertexBuffer = undefined;
+				
+				try
 				{
-					var _location = new Vector2();
+					var _vertex = new Vector2();
 					var _size = ((size > 0) ? (size * 0.5) : 0.5);
 					var _color = ((is_real(color)) ? color : c_white);
 					var _alpha = ((alpha > 0) ? alpha : 0);
 					var _angle = point_direction(location.x1, location.y1, location.x2, location.y2);
-					var _vertexBuffer = new VertexBuffer()
-					 .setActive(_format)
-						.setLocation(_location.set(location.x1 + lengthdir_x(_size, (_angle + 90)),
-												   location.y1 + lengthdir_y(_size, (_angle + 90))))
+					var _angle_left = (_angle - 90);
+					var _angle_right = (_angle + 90);
+					_vertexBuffer = new VertexBuffer();
+					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip);
+					
+					_vertexBuffer
+					 .setActive(_renderData.passthroughFormat)
+						.setLocation(_vertex.set((location.x1 + lengthdir_x(_size, _angle_right)),
+												 (location.y1 + lengthdir_y(_size, _angle_right))))
 						.setColor(_color, _alpha)
 						.setUV()
 						
-						.setLocation(_location.set(location.x2 + lengthdir_x(_size, (_angle + 90)),
-												   location.y2 + lengthdir_y(_size, (_angle + 90))))
+						.setLocation(_vertex.set((location.x2 + lengthdir_x(_size, _angle_right)),
+												 (location.y2 + lengthdir_y(_size, _angle_right))))
 						.setColor(_color, _alpha)
 						.setUV()
 						
-						.setLocation(_location.set(location.x1 + lengthdir_x(_size, (_angle - 90)),
-												   location.y1 + lengthdir_y(_size, (_angle - 90))))
+						.setLocation(_vertex.set((location.x1 + lengthdir_x(_size, _angle_left)),
+												 (location.y1 + lengthdir_y(_size, _angle_left))))
 						.setColor(_color, _alpha)
 						.setUV()
 						
-						.setLocation(_location.set(location.x2 + lengthdir_x(_size, (_angle - 90)),
-												   location.y2 + lengthdir_y(_size, (_angle - 90))))
+						.setLocation(_vertex.set((location.x2 + lengthdir_x(_size, _angle_left)),
+												 (location.y2 + lengthdir_y(_size, _angle_left))))
 						.setColor(_color, _alpha)
 						.setUV()
 					 .setActive(false);
 					
-					return [_format, _vertexBuffer];
+					return _renderData;
 				}	
-				else
+				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toVertexBuffer()"],
-											 ("Attempted to convert an invalid Shape into a Vertex " +
-											  "Buffer: " + "{" + string(self) + "}"));
+					if (_vertexBuffer != undefined)
+					{
+						_vertexBuffer.destroy();
+					}
+					
+					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				return [_format];
+				return undefined;
 			}
 			
 		#endregion

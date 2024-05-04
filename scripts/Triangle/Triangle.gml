@@ -643,35 +643,32 @@ function Triangle() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			/// @argument			format? {VertexFormat:toVertexBuffer()[0]}
 			/// @argument			outline? {bool|all}
-			/// @returns			{VertexFormat+VertexBuffer[]} | On error: {VertexFormat[]}
-			/// @description		Create a Vertex Buffer with a format specific to this constructor,
-			///						with its data ready for rendering through the default passthrough
-			///						Shader.	Returns an array starting with Vertex Format of a number of
-			///						Vertex Buffers contained after it, depending which were specified:
-			///						- fill: Vertex Buffer formatted for {constant:pr_trianglestrip}.
-			///						- outline: Vertex Buffer formatted for {constant:pr_linestrip}.
-			///						- all: both Vertex Buffers will be included in above order.
-			///						Returned Vertex Format can be reused as an argument for repeated
-			///						calls, also every returned value must be functional for successful
-			///						rendering and destroyed after they are no longer used.
-			static toVertexBuffer = function(_format = new VertexFormat(vertex_format_add_position,
-																		vertex_format_add_color,
-																		vertex_format_add_texcoord),
-											 _outline = false)
+			/// @returns			{VertexBuffer.PrimitiveRenderData|
+			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
+			/// @description		Return data formatted for rendering this Shape through a Vertex
+			///						Buffer and the default passthrough Shader, either as a single value
+			///						or an array of two, depending on whether the outline or fill were
+			///						specified as the only returned value or as {all} for both.
+			static toVertexBuffer = function(_outline = false)
 			{
-				if (self.isFunctional())
+				var _vertexBuffer_fill = undefined;
+				var _vertexBuffer_outline = undefined;
+				
+				try
 				{
-					var _result = [_format];
+					var _result = [];
 					
 					if ((!_outline) or (_outline == all))
 					{
 						var _fill_color = ((is_real(fill_color)) ? fill_color : c_white);
 						var _fill_alpha = ((fill_alpha > 0) ? fill_alpha : 0);
+						_vertexBuffer_fill = new VertexBuffer();
+						var _renderData_fill = _vertexBuffer_fill
+												.createPrimitiveRenderData(pr_trianglestrip);
 						
-						array_push(_result, new VertexBuffer()
-						 .setActive(_format)
+						_vertexBuffer_fill
+						 .setActive(_renderData_fill.passthroughFormat)
 							.setLocation(location1)
 							.setColor(_fill_color, _fill_alpha)
 							.setUV()
@@ -683,16 +680,21 @@ function Triangle() constructor
 							.setLocation(location3)
 							.setColor(_fill_color, _fill_alpha)
 							.setUV()
-						 .setActive(false));
+						 .setActive(false);
+						
+						array_push(_result, _renderData_fill);
 					}
 					
 					if ((_outline) or (_outline == all))
 					{
 						var _outline_color = ((is_real(outline_color)) ? outline_color : c_white);
 						var _outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
+						_vertexBuffer_outline = new VertexBuffer();
+						var _renderData_outline = _vertexBuffer_outline
+												   .createPrimitiveRenderData(pr_linestrip);
 						
-						array_push(_result, new VertexBuffer()
-						 .setActive(_format)
+						_vertexBuffer_outline
+						 .setActive(_renderData_outline.passthroughFormat)
 							.setLocation(location1)
 							.setColor(_outline_color, _outline_alpha)
 							.setUV()
@@ -708,19 +710,29 @@ function Triangle() constructor
 							.setLocation(location1)
 							.setColor(_outline_color, _outline_alpha)
 							.setUV()
-						 .setActive(false));
+						 .setActive(false);
+						 
+						 array_push(_result, _renderData_outline);
 					}
 					
-					return _result;
+					return ((array_length(_result) == 1) ? _result[0] : _result);
 				}
-				else
+				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toVertexBuffer()"],
-											 ("Attempted to convert an invalid Shape into a Vertex " +
-											  "Buffer: " + "{" + string(self) + "}"));
+					if (_vertexBuffer_fill != undefined)
+					{
+						_vertexBuffer_fill.destroy();
+					}
+					
+					if (_vertexBuffer_outline != undefined)
+					{
+						_vertexBuffer_outline.destroy();
+					}
+					
+					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				return [_format];
+				return undefined;
 			}
 			
 		#endregion

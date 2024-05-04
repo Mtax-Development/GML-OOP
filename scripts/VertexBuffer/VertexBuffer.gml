@@ -106,11 +106,12 @@ function VertexBuffer() constructor
 			/// @description		Draw vertices contained in this Vertex Buffer to the currently
 			///						active Surface, using the specified primitive type and either the
 			///						specified or no texture, provided following requirements are met:
-			///						 - At least three vertices are contained in this Vertex Buffer.
+			///						 - A number of vertices appropriate for the specified primitive
+			///						   type is contained in this Vertex Buffer.
 			///						 - Vertices were added to this Vertex Buffer with the same number
-			///						   and order of types of primitive data as used Vertex Format.
-			///						 - A Shader is currently active to operate exact number and types
-			///						   of primitive data used in Vertex Format.
+			///						   and order of types of primitive data as in used Vertex Format.
+			///						 - A Shader is currently active to operate exact the number and
+			///						   types of primitive data used in Vertex Format.
 			static render = function(_primitive_type, _texture = -1)
 			{
 				try
@@ -152,6 +153,28 @@ function VertexBuffer() constructor
 				}
 				
 				return self;
+			}
+			
+			/// @argument			primitiveType {constant:pr_*}
+			/// @argument			vertexFormat? {VertexFormat}
+			/// @argument			texture? {pointer|int:-1}
+			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {noone}
+			/// @description		Return a constructor containing the specified rendering information
+			///						of this Vertex Buffer.
+			static createPrimitiveRenderData = function(_primitiveType, _format, _texture)
+			{
+				if (self.isFunctional())
+				{
+					return new PrimitiveRenderData(_primitiveType, _format, _texture);
+				}
+				else
+				{
+					new ErrorReport().report([other, self, "createPrimitiveRenderData()"],
+											 ("Attempted to create render data of an invalid Vertex" +
+											  "Buffer: " + "{" + string(ID) + "}"));
+					
+					return noone;
+				}
 			}
 			
 			/// @description		Move the contents of this Vertex Buffer to VRAM for faster access
@@ -202,6 +225,81 @@ function VertexBuffer() constructor
 			}
 			
 		#endregion
+	#endregion
+	#region [Elements]
+		
+		//  @function			VertexBuffer.PrimitiveRenderData()
+		/// @argument			primitiveType {constant:pr_*}
+		/// @argument			vertexFormat? {VertexFormat}
+		/// @argument			texture? {pointer|int:-1}
+		/// @description		Constructs an element storing Vertex Buffer rendering information.
+		//						
+		//						Construction types:
+		//						- New element
+		function PrimitiveRenderData() constructor
+		{
+			#region [[Static Variables]]
+				
+				static passthroughFormat = new VertexFormat(vertex_format_add_position,
+															vertex_format_add_color,
+															vertex_format_add_texcoord);
+				
+			#endregion
+			#region [[Methods]]
+				#region <<Management>>
+					
+					/// @description		Initialize this constructor.
+					static construct = function()
+					{
+						//+TODO: Constructor copy, empty construction types.
+						vertexBuffer = other;
+						primitiveType = argument[0];
+						vertexFormat = ((argument_count > 1) ? argument[1] : passthroughFormat);
+						texture = ((argument_count > 2) ? argument[2] : -1);
+					}
+					
+				#endregion
+				#region <<Execution>>
+					
+					/// @description		Draw the contents of the Vertex Buffer to the currently
+					///						active Surface through the currently active Shader.
+					static render = function()
+					{
+						vertexBuffer.render(primitiveType, texture);
+					}
+					
+				#endregion
+			#endregion
+			#region [[Constructor]]
+				
+				static prototype = {};
+				var _property = variable_struct_get_names(prototype);
+				var _i = 0;
+				repeat (array_length(_property))
+				{
+					var _name = _property[_i];
+					var _value = variable_struct_get(prototype, _name);
+					
+					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
+																		  : _value));
+					
+					++_i;
+				}
+				
+				argument_original = array_create(argument_count, undefined);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					argument_original[_i] = argument[_i];
+					
+					++_i;
+				}
+				
+				script_execute_ext(method_get_index(self.construct), argument_original);
+				
+			#endregion
+		}
+		
 	#endregion
 	#region [Constructor]
 		
