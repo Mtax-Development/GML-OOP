@@ -64,6 +64,36 @@ function TextAlign() constructor
 			}
 			
 		#endregion
+		#region <Getter>
+			
+			/// @returns			{Vector2} | On error: {undefined}
+			/// @description		Return the multiplications of locations this alignment occupies
+			///						within its possible area.
+			static getMultiplier = function()
+			{
+				var _multiplier_x = undefined;
+				var _multiplier_y = undefined;
+				
+				switch (x)
+				{
+					case fa_left: _multiplier_x = 0; break;
+					case fa_center: _multiplier_x = 0.5; break;
+					case fa_right: _multiplier_x = 1; break;
+					default: return undefined; break;
+				}
+				
+				switch (y)
+				{
+					case fa_top: _multiplier_y = 0; break;
+					case fa_middle: _multiplier_y = 0.5; break;
+					case fa_bottom: _multiplier_y = 1; break;
+					default: return undefined; break;
+				}
+				
+				return new Vector2(_multiplier_x, _multiplier_y);
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			/// @description		Mirror the non-centered x and y values of the alignment.
