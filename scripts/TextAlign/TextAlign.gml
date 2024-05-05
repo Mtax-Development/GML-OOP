@@ -200,7 +200,8 @@ function TextAlign() constructor
 				else
 				{
 					new ErrorReport().report([other, self, "setActive"],
-											 ("Attempted to use invalid text align for rendering: " +
+											 ("Attempted to use invalid text alignment for " +
+											  "rendering: " +
 											  "{" + string(self) + "}"));
 				}
 				
