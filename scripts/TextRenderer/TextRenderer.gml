@@ -132,6 +132,32 @@ function TextRenderer() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @returns			{Vector2} | On error: {undefined}
+			/// @description		Return the number of pixels the text would occupy after rendering.
+			static getPixelSize = function()
+			{
+				var _font_original = draw_get_font();
+				
+				try
+				{
+					draw_set_font(font.ID);
+					
+					var _string = string(ID);
+					
+					return new Vector2(string_width(_string), string_height(_string));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getPixelSize()"], _exception);
+				}
+				finally
+				{
+					draw_set_font(_font_original);
+				}
+				
+				return undefined;
+			}
+			
 			/// @returns			{Vector4} | On error: {undefined}
 			/// @description		Return a boundry for the space the text occupies in pixels, offset
 			///						from its origin.
