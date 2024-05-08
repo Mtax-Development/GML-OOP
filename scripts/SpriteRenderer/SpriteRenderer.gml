@@ -558,7 +558,7 @@ function SpriteRenderer() constructor
 					var _angle_rotated = (angle.value - 90);
 					var _location_x1y1 = [(_location_x + (_origin_transformed_x * _angle_dcos) +
 										  (_origin_transformed_y * _angle_dsin)),
-										  (_location_y - (_origin_transformed_y * _angle_dsin) +
+										  (_location_y - (_origin_transformed_x * _angle_dsin) +
 										  (_origin_transformed_y * _angle_dcos))];
 					var _location_x2y1 = [_location_x1y1[0] + lengthdir_x(_size_x_part_scaled,
 																		  angle.value),
