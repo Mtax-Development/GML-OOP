@@ -122,7 +122,7 @@ function Map() constructor
 			{
 				if ((is_instanceof(_other, Map)) and (_other.isFunctional()))
 				{
-					if ((!is_real(ID)) or (!ds_exists(ID, ds_type_map)))
+					if (!self.isFunctional())
 					{
 						ID = ds_map_create();
 					}

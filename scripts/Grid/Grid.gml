@@ -1465,7 +1465,7 @@ function Grid() constructor
 						
 						var _size_y = max(_array_y_max, 1);
 						
-						if ((is_real(ID)) and (ds_exists(ID, ds_type_grid)))
+						if (self.isFunctional())
 						{
 							ds_grid_resize(ID, _size_x, _size_y);
 						}
