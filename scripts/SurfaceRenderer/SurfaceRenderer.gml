@@ -394,6 +394,190 @@ function SurfaceRenderer() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @argument			surface? {Surface}
+			/// @argument			location? {Vector2|Vector4}
+			/// @argument			scale? {Scale}
+			/// @argument			angle? {Angle}
+			/// @argument			color? {int:color|Color4}
+			/// @argument			alpha? {real}
+			/// @argument			part? {Vector4}
+			/// @argument			origin? {Vector2}
+			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
+			/// @description		Return data formatted for rendering this constructor through a
+			///						Vertex Buffer and the default passthrough Shader, using the data
+			///						of this constructor or specified replaced parts of it for this
+			///						call only.
+			static toVertexBuffer = function(_surface, _location, _scale, _angle, _color, _alpha,
+											 _part, _origin)
+			{
+				var _vertexBuffer = undefined;
+				var _renderData = undefined;
+				var _surface_original = surface;
+				var _location_original = location;
+				var _scale_original = scale;
+				var _angle_original = angle;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				var _part_original = part;
+				var _origin_original = origin;
+				
+				surface = (_surface ?? surface);
+				location = (_location ?? location);
+				scale = (_scale ?? scale);
+				angle = (_angle ?? angle);
+				color = (_color ?? color);
+				alpha = (_alpha ?? ((alpha > 0) ? alpha : 0));
+				part = (_part ?? part);
+				origin = (_origin ?? origin);
+				
+				try
+				{
+					var _size_x = surface_get_width(surface.ID);
+					var _size_y = surface_get_height(surface.ID);
+					var _scale_x = scale.x;
+					var _scale_y = scale.y;
+					
+					var _origin_x = 0;
+					var _origin_y = 0;
+					
+					if (origin != undefined)
+					{
+						_origin_x = origin.x;
+						_origin_y = origin.y;
+					}
+					
+					var _location_x, _location_y;
+					
+					if ((is_instanceof(location, Vector4)))
+					{
+						_scale_x = (((location.x2 - location.x1) / _size_x) * _scale_x);
+						_scale_y = (((location.y2 - location.y1) / _size_y) * _scale_y);
+						_location_x = location.x1 + (_origin_x * _scale_x);
+						_location_y = location.y1 + (_origin_y * _scale_y);
+					}
+					else
+					{
+						_location_x = location.x;
+						_location_y = location.y;
+					}
+					
+					var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
+					
+					if (is_real(color))
+					{
+						_color_x1y1 = color;
+						_color_x2y1 = color;
+						_color_x2y2 = color;
+						_color_x1y2 = color;
+					}
+					else
+					{
+						_color_x1y1 = color.color1;
+						_color_x2y1 = color.color2;
+						_color_x2y2 = color.color3;
+						_color_x1y2 = color.color4;
+					}
+					
+					var _part_x1, _part_y1, _part_x2, _part_y2;
+					
+					if (part != undefined)
+					{
+						_part_x1 = clamp(part.x1, 0, _size_x);
+						_part_y1 = clamp(part.y1, 0, _size_y);
+						_part_x2 = clamp(part.x2, 0, (_size_x - _part_x1));
+						_part_y2 = clamp(part.y2, 0, (_size_y - _part_y1));
+					}
+					else
+					{
+						_part_x1 = 0;
+						_part_y1 = 0;
+						_part_x2 = _size_x;
+						_part_y2 = _size_y;
+					}
+					
+					var _size_x_part = (_size_x - (_size_x - _part_x2));
+					var _size_y_part = (_size_y - (_size_y - _part_y2));
+					var _size_x_part_scaled = (_size_x_part * _scale_x);
+					var _size_y_part_scaled = (_size_y_part * _scale_y);
+					
+					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _part_x2),
+																 ((_origin_x * _scale_x) / _size_x)));
+					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _part_y2),
+																 ((_origin_y * _scale_y) / _size_y)));
+					
+					var _angle_dcos = dcos(angle.value);
+					var _angle_dsin = dsin(angle.value);
+					var _angle_rotated = (angle.value - 90);
+					var _location_x1y1 = [(_location_x + (_origin_transformed_x * _angle_dcos) +
+										  (_origin_transformed_y * _angle_dsin)),
+										  (_location_y - (_origin_transformed_x * _angle_dsin) +
+										  (_origin_transformed_y * _angle_dcos))];
+					var _location_x2y1 = [_location_x1y1[0] + lengthdir_x(_size_x_part_scaled,
+																		  angle.value),
+										  _location_x1y1[1] + lengthdir_y(_size_x_part_scaled,
+																		  angle.value)];
+					var _location_x2y2 = [_location_x2y1[0] + lengthdir_x(_size_y_part_scaled,
+																		  _angle_rotated),
+										  _location_x2y1[1] + lengthdir_y(_size_y_part_scaled,
+																		  _angle_rotated)];
+					var _location_x1y2 = [_location_x2y2[0] - lengthdir_x(_size_x_part_scaled,
+																		  angle.value),
+										  _location_x2y2[1] - lengthdir_y(_size_x_part_scaled,
+																		  angle.value)];
+					
+					var _vertex = new Vector2();
+					var _texture = surface_get_texture(surface.ID);
+					var _texelSize_x = texture_get_texel_width(_texture);
+					var _texelSize_y = texture_get_texel_height(_texture);
+					var _uv = texture_get_uvs(_texture);
+					var _uv_x1 = (_uv[0] + (_part_x1 * _texelSize_x));
+					var _uv_y1 = (_uv[1] + (_part_y1 * _texelSize_y));
+					var _uv_x2 = (_uv_x1 + (_size_x_part * _texelSize_x));
+					var _uv_y2 = (_uv_y1 + (_size_y_part * _texelSize_y));
+					var _vertexBuffer = new VertexBuffer();
+					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip,
+																			  undefined, _texture);
+					_vertexBuffer
+					 .setActive(_renderData.passthroughFormat)
+						.setLocation(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
+						.setColor(_color_x2y1, alpha)
+						.setUV(_uv_x2, _uv_y1)
+						
+						.setLocation(_vertex.set(_location_x2y2[0], _location_x2y2[1]))
+						.setColor(_color_x2y2, alpha)
+						.setUV(_uv_x2, _uv_y2)
+						
+						.setLocation(_vertex.set(_location_x1y1[0], _location_x1y1[1]))
+						.setColor(_color_x1y1, alpha)
+						.setUV(_uv_x1, _uv_y1)
+						
+						.setLocation(_vertex.set(_location_x1y2[0], _location_x1y2[1]))
+						.setColor(_color_x1y2, alpha)
+						.setUV(_uv_x1, _uv_y2)
+					 .setActive(false);
+				}
+				catch (_exception)
+				{
+					if (_vertexBuffer != undefined)
+					{
+						_vertexBuffer.destroy();
+					}
+					
+					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				
+				surface = _surface_original;
+				location = _location_original;
+				scale = _scale_original;
+				angle = _angle_original;
+				color = _color_original;
+				alpha = _alpha_original;
+				part = _part_original;
+				origin = _origin_original;
+				
+				return _renderData;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
