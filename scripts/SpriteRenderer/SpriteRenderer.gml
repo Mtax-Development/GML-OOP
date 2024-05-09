@@ -547,11 +547,9 @@ function SpriteRenderer() constructor
 					var _size_y_part_scaled = (_size_y_part * _scale_y);
 					
 					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _part_x2),
-																 ((_origin_x * _scale_x) /
-																  _size_x)));
+																 ((_origin_x * _scale_x) / _size_x)));
 					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _part_y2),
-																 ((_origin_y * _scale_y) /
-																  _size_y)));
+																 ((_origin_y * _scale_y) / _size_y)));
 					
 					var _angle_dcos = dcos(angle.value);
 					var _angle_dsin = dsin(angle.value);
@@ -586,7 +584,7 @@ function SpriteRenderer() constructor
 					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip,
 																			  undefined, _texture);
 					_vertexBuffer
-					.setActive(_renderData.passthroughFormat)
+					 .setActive(_renderData.passthroughFormat)
 						.setLocation(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
 						.setColor(_color_x2y1, alpha)
 						.setUV(_uv_x2, _uv_y1)
