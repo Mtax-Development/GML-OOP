@@ -198,7 +198,21 @@ function Surface() constructor
 						}
 					}
 					
-					ID = surface_create(max(1, size.x), max(1, size.y));
+					if ((is_instanceof(size, Vector2)) and (size.isFunctional()))
+					{
+						ID = surface_create(max(1, size.x), max(1, size.y));
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "create()"],
+												 ("Attempted to create a Surface of invalid size: " +
+												  "\n" + "Self: " + "{" + string(self) + "}" + "\n" +
+												  "Size: " + "{" + string(size) + "}" + "\n" +
+												  "Replacing the size property with a single pixel " +
+												  "size and creating the Surface with it."));
+						
+						ID = surface_create(1, 1);
+					}
 					
 					surface_set_target(ID);
 					{
@@ -429,6 +443,16 @@ function Surface() constructor
 					var _size_x = max(1, _size.x);
 					var _size_y = max(1, _size.y);
 					
+					if (is_instanceof(size, Vector2))
+					{
+						size.x = _size_x;
+						size.y = _size_y;
+					}
+					else
+					{
+						size = new Vector2(_size_x, _size_y);
+					}
+					
 					if (!self.isFunctional())
 					{
 						new ErrorReport().report([other, self, "setSize()"],
@@ -437,31 +461,11 @@ function Surface() constructor
 												  "{" + string(ID) + "}" + "\n" +
 												  "Recreating the Surface with the target size."));
 						
-						if (is_instanceof(size, Vector2))
-						{
-							size.x = _size_x;
-							size.y = _size_y;
-						}
-						else
-						{
-							size = new Vector2(_size_x, _size_y);
-						}
-						
 						self.create();
 					}
 					else
 					{
 						surface_resize(ID, _size_x, _size_y);
-						
-						if (is_instanceof(size, Vector2))
-						{
-							size.x = _size_x;
-							size.y = _size_y;
-						}
-						else
-						{
-							size = new Vector2(_size_x, _size_y);
-						}
 					}
 				}
 				else
