@@ -50,19 +50,26 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Construction: Constructor copy]
+#region [Test: Construction: Constructor copy / Method: createSprite()]
 	
 	var _base = [3, "LayerToCopy", "CopiedLayer"];
+	var _element = [new Sprite(asset[4]), new Vector2(0, 0)];
 	
 	constructor = [new Layer(_base[0], _base[1])];
+	_element[2] = constructor[0].createSprite(_element[0], _element[1]);
 	constructor[1] = new Layer(constructor[0], _base[2]);
 	
-	var _result = [constructor[1].isFunctional(), constructor[1].name];
-	var _expectedValue = [true, _base[2]];
+	var _result = [constructor[1].isFunctional(), constructor[1].name,
+				   constructor[0].spriteList.getValue(0), constructor[1].spriteList.getSize(),
+				   constructor[1].spriteList.getValue(0).sprite.ID];
+	var _expectedValue = [true, _base[2], _element[2], 1, _element[0].ID];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4]);
 	
 	constructor[0].destroy();
 	constructor[1].destroy();
@@ -116,24 +123,6 @@ asset = [TestBackgroundSprite, TestObject, TestTileset1, TestTileset2, TestSprit
 	var _expectedValue = [true, _element[3]];
 	
 	unitTest.assert_equal("Method: createTilemap()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-	constructor.destroy();
-	
-#endregion
-#region [Test: Method: createSprite()]
-
-	var _element = [new Sprite(asset[4]), new Vector2(0, 0)];
-	var _base = 7;
-	
-	constructor = new Layer(_base);
-	_element[2] = constructor.createSprite(_element[0], _element[1]);
-	
-	var _result = [_element[2].isFunctional(), constructor.spriteList.getValue(0)];
-	var _expectedValue = [true, _element[2]];
-	
-	unitTest.assert_equal("Method: createSprite()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
