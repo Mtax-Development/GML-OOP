@@ -668,7 +668,7 @@ function Sprite() constructor
 							{
 								new ErrorReport().report([other, self, "render()"],
 														 ("Attempted to render to an invalid " +
-														  "Surface: " +
+														  "Surface: " + "\n" +
 														  "Self: " + "{" + string(self) + "}" + "\n" +
 														  "Other: " + "{" + string(_target) + "}"));
 							}

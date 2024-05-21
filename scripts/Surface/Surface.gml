@@ -330,11 +330,11 @@ function Surface() constructor
 							{
 								new ErrorReport().report([other, self, "copy()"],
 														 ("Attempted to copy part of a Surface to " +
-														  "an invalid Surface: " +
+														  "an invalid Surface: " + "\n" +
 														  "Self: " + "{" + string(self) + "}" + "\n" +
 														  "Other: " + "{" + string(_other) + "}" +
 														  "\n" + "Writing it to a recreated " +
-														  "surface."));
+														  "Surface."));
 								
 								self.create();
 							}
@@ -354,7 +354,7 @@ function Surface() constructor
 					{
 						new ErrorReport().report([other, self, "copy()"],
 												 ("Attempted to copy data from an invalid Surface: " +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
+												  "\n" + "Self: " + "{" + string(self) + "}" + "\n" +
 												  "Other: " + "{" + string(_other) + "}"));
 					}
 				}
@@ -471,7 +471,7 @@ function Surface() constructor
 				else
 				{
 					new ErrorReport().report([other, self, "setSize()"],
-											 ("Attempted to set invalid size of a Surface: " +
+											 ("Attempted to set invalid size of a Surface: " + "\n" +
 											  "Surface: " + "{" + string(self) + "}" + "\n" +
 											  "Size: " + "{" + string(_size) + "}"));
 				}
