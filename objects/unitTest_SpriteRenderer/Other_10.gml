@@ -239,4 +239,3 @@ asset = [TestSprite];
 						  _result[9], _expectedValue[9]);
 	
 #endregion
-

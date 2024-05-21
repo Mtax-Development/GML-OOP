@@ -225,4 +225,3 @@ asset = [TestObject];
 						  _result, _expectedValue);
 	
 #endregion
-

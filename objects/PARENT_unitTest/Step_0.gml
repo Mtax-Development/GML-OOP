@@ -28,4 +28,3 @@ if (order_display)
 	
 	order_display = false;
 }
-

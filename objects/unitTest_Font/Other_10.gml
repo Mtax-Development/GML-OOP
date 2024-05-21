@@ -241,4 +241,3 @@ asset = [TestFont1, TestFont2, "TestIncludedFont.ttf", TestFontImage];
 						  _result, _expectedValue);
 	
 #endregion
-

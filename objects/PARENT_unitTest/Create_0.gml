@@ -24,4 +24,3 @@ if (exception == undefined)
 					   (string(unitTest.testID - unitTest.getFailedTestCount()) + "/" +
 					    string(unitTest.testID)) + " tests passed.");
 }
-
