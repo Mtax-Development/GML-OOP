@@ -16,8 +16,6 @@ function Surface() constructor
 			/// @description		Initialize this constructor.
 			static construct = function()
 			{
-				//+TODO: Surface formats support.
-				
 				//|Construction type: Empty.
 				ID = undefined;
 				size = undefined;

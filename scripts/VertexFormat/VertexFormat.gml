@@ -19,7 +19,6 @@ function VertexFormat() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					//+TODO: Constructor copy based on source.
 					source = array_create(argument_count, undefined);
 					
 					vertex_format_begin();

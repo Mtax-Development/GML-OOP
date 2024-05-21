@@ -11,7 +11,6 @@ function VertexBuffer() constructor
 			/// @description		Initialize this constructor.
 			static construct = function()
 			{
-				//+TODO: Support for other types of construction.
 				ID = vertex_create_buffer();
 				active = false;
 				readOnly = false;
@@ -251,7 +250,6 @@ function VertexBuffer() constructor
 					/// @description		Initialize this constructor.
 					static construct = function()
 					{
-						//+TODO: Constructor copy, empty construction types.
 						vertexBuffer = other;
 						primitiveType = argument[0];
 						vertexFormat = ((argument_count > 1) ? argument[1] : passthroughFormat);
