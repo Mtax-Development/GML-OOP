@@ -99,7 +99,7 @@ function Layer() constructor
 							_i[1] = 0;
 							repeat (_elementList[_i[0]].getSize())
 							{
-								var _ = new _elementType[_i[0]](_elementList[_i[0]].getValue(_i[1]));
+								new _elementType[_i[0]](_elementList[_i[0]].getValue(_i[1]));
 								
 								++_i[1];
 							}
@@ -476,9 +476,7 @@ function Layer() constructor
 				{
 					if (self.isFunctional())
 					{
-						var _element = new BackgroundElement(_sprite);
-						
-						return _element;
+						return new BackgroundElement(_sprite);
 					}
 					else
 					{
@@ -545,9 +543,7 @@ function Layer() constructor
 				{
 					if (self.isFunctional())
 					{
-						var _element = new TilemapElement(_tileset, _location, _size);
-						
-						return _element;
+						return new TilemapElement(_tileset, _location, _size);
 					}
 					else
 					{
@@ -575,9 +571,7 @@ function Layer() constructor
 				{
 					if (self.isFunctional())
 					{
-						var _element = new SpriteElement(_sprite, _location);
-						
-						return _element;
+						return new SpriteElement(_sprite, _location);
 					}
 					else
 					{
@@ -604,9 +598,7 @@ function Layer() constructor
 				{
 					if (self.isFunctional())
 					{
-						var _element = new ParticleSystem(_persistent);
-						
-						return _element;
+						return new ParticleSystem(_persistent);
 					}
 					else
 					{
@@ -2533,7 +2525,7 @@ function Layer() constructor
 								var _i = 0;
 								repeat (_other.emitterList.getSize())
 								{
-									var _ = new ParticleEmitter(emitterList.getValue(_i));
+									new ParticleEmitter(emitterList.getValue(_i));
 									
 									++_i;
 								}
