@@ -254,7 +254,7 @@ function ErrorReport() constructor
 				#endregion
 				#region <<Getters>>
 					
-					/// @argument			{ErrorReport.ReportData} other
+					/// @argument			other {ErrorReport.ReportData}
 					/// @returns			{bool}
 					/// @description		Check if description and callstack of this error are the
 					///						same as of the specified one.
