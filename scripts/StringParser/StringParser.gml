@@ -1094,7 +1094,7 @@ function StringParser() constructor
 			
 			/// @argument			array {any[]:string}
 			/// @argument			connector? {any:string}
-			/// @description		Set the string into one created from connecting all values of the
+			/// @description		Set the string to one created from connecting all values of the
 			///						specified array. A specified connector string can be included in
 			///						between parts of the string.
 			static fromArray = function(_array, _connector = "")

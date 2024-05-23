@@ -1080,7 +1080,7 @@ function Surface() constructor
 			/// @argument			path {string:path}
 			/// @argument			part? {Vector4}
 			/// @description		Save the content of this Surface or a rectangular part of it to
-			///						the specified .png file.
+			///						the specified PNG file.
 			static toFile = function(_path, _part)
 			{
 				try

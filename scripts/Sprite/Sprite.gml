@@ -1219,7 +1219,7 @@ function Sprite() constructor
 			
 			/// @argument			path {string:path}
 			/// @argument			frame? {int}
-			/// @description		Save this Sprite to the specified .png file, either only its one
+			/// @description		Save this Sprite to the specified PNG file, either only its one
 			///						specified frame or all of them in one file in a horizontal strip.
 			///						Applicable only if this Sprite was created during the runtime.
 			static toFile = function(_path, _frame)
