@@ -1123,6 +1123,114 @@ function StringParser() constructor
 				return self;
 			}
 			
+			/// @argument			path {string:path}
+			/// @description		Save the string by creating or fully overwriting a text file at
+			///						the specified path. 
+			static toFile = function(_path)
+			{
+				if (is_string(_path))
+				{
+					try
+					{
+						var _stream = file_text_open_write(_path);
+						
+						if (_stream >= 0)
+						{
+							file_text_write_string(_stream, string(ID));
+							file_text_close(_stream);
+						}
+					}
+					catch (_exception)
+					{
+						new ErrorReport().report([other, self, "toFile()"], _exception);
+					}
+				}
+				else
+				{
+					new ErrorReport().report([other, self, "toFile()"],
+											 ("Attempted to write to a file at invalid path: " +
+											  "{" + string(_path) + "}"));
+				}
+				
+				return self;
+			}
+			
+			/// @argument			path {string:path}
+			/// @description		Set the string to the contents of a file at the specified path.
+			static fromFile = function(_path)
+			{
+				var _buffer = undefined;
+				
+				try
+				{
+					_buffer = buffer_load(_path);
+					
+					ID = buffer_read(_buffer, buffer_string);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "fromFile()"],
+											 ("Attempted to parse a nonexistent or inacessible " +
+											  "file at path: " +
+											  "{" + string(_path) + "}"));
+				}
+				finally
+				{
+					if ((is_handle(_buffer)) and (buffer_exists(_buffer)))
+					{
+						buffer_delete(_buffer);
+					}
+				}
+				
+				return self;
+			}
+			
+			/// @argument			path {string:path}
+			/// @returns			{struct} | On error: {undefined}
+			/// @description		Set the string to the contents of a file with JSON formatting at
+			///						the specified path and return contents of that file as a struct.
+			static fromJSON = function(_path)
+			{
+				var _buffer = undefined;
+				
+				try
+				{
+					_buffer = buffer_load(_path);
+					
+					try
+					{
+						var _JSON = buffer_read(_buffer, buffer_string);
+						var _struct = json_parse(_JSON);
+						ID = _JSON;
+						
+						return _struct;
+					}
+					catch (_exception)
+					{
+						new ErrorReport().report([other, self, "fromJSON()"],
+												 ("Attempted to parse a file with invalid JSON " +
+												  "formatting at path: " +
+												  "{" + string(_path) + "}"));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "fromJSON()"],
+											 ("Attempted to parse a nonexistent or inacessible " +
+											  "file at path: " +
+											  "{" + string(_path) + "}"));
+				}
+				finally
+				{
+					if ((is_handle(_buffer)) and (buffer_exists(_buffer)))
+					{
+						buffer_delete(_buffer);
+					}
+				}
+				
+				return undefined;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
