@@ -930,6 +930,16 @@ function StringParser() constructor
 				return self;
 			}
 			
+			/// @description		Set the first character of the string to uppercase if it is a
+			///						letter of the English alphabet.
+			static capitalize = function()
+			{
+				ID = string(ID);
+				ID = (string_upper(string_char_at(ID, 1)) + string_delete(ID, 1, 1));
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Execution>
 			
