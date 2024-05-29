@@ -3,6 +3,8 @@
 /// @argument				font {Font}
 /// @argument				location {Vector2}
 /// @argument				align? {TextAlign}
+/// @argument				scale? {Scale}
+/// @argument				angle? {Angle}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
 /// @description			Constructs a handler containing information for string rendering.
@@ -25,6 +27,8 @@ function TextRenderer() constructor
 				font = undefined;
 				location = undefined;
 				align = undefined;
+				scale = undefined;
+				angle = undefined;
 				color = undefined;
 				alpha = undefined;
 				
@@ -55,6 +59,10 @@ function TextRenderer() constructor
 																   : _other.font);
 						location = ((is_instanceof(_other.location, Vector2))
 									? new Vector2(_other.location) : _other.location);
+						scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
+																	  : _other.scale);
+						angle = ((is_instanceof(_other.angle, Angle)) ? new Angle(_other.angle)
+																	  : _other.angle);
 						align = ((is_instanceof(_other.align, TextAlign)) ? new TextAlign(_other.align)
 																		  : _other.align);
 						color = _other.color;
@@ -110,10 +118,14 @@ function TextRenderer() constructor
 						location = ((argument_count > 2) ? argument[2] : undefined);
 						align = (((argument_count > 3) and (argument[3] != undefined))
 								 ? argument[3] : new TextAlign());
-						color = (((argument_count > 4) and (argument[4] != undefined))
-								 ? argument[4] : c_white);
-						alpha = (((argument_count > 5) and (argument[5] != undefined))
-								 ? argument[5] : 1);
+						scale = (((argument_count > 4) and (argument[4] != undefined))
+								 ? argument[4] : new Scale(1, 1));
+						angle = (((argument_count > 5) and (argument[5] != undefined))
+								 ? argument[5] : new Angle(0));
+						color = (((argument_count > 6) and (argument[6] != undefined))
+								 ? argument[6] : c_white);
+						alpha = (((argument_count > 7) and (argument[7] != undefined))
+								 ? argument[7] : 1);
 					}
 				}
 				
@@ -331,16 +343,20 @@ function TextRenderer() constructor
 			/// @argument			font? {Font}
 			/// @argument			location? {Vector2}
 			/// @argument			align? {TextAlign}
+			/// @argument			scale? {Scale}
+			/// @argument			angle? {Angle}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of the text, using data of this constructor or
 			///						specified replaced parts of it for this call only.
-			static render = function(_string, _font, _location, _align, _color, _alpha)
+			static render = function(_string, _font, _location, _align, _scale, _angle, _color, _alpha)
 			{
 				var _string_original = ID;
 				var _font_original = font;
 				var _location_original = location;
 				var _align_original = align;
+				var _scale_original = scale;
+				var _angle_original = angle;
 				var _color_original = color;
 				var _alpha_original = alpha;
 				
@@ -348,6 +364,8 @@ function TextRenderer() constructor
 				font = (_font ?? font);
 				location = (_location ?? location);
 				align = (_align ?? align);
+				scale = (_scale ?? scale);
+				angle = (_angle ?? angle);
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				
@@ -394,9 +412,55 @@ function TextRenderer() constructor
 						draw_set_font(font.ID);
 						draw_set_halign(align.x);
 						draw_set_valign(align.y);
-						draw_set_color(color);
-						draw_set_alpha(alpha);
-						draw_text(round(location.x), round(location.y), string(ID));
+						
+						var _location_x = round(location.x);
+						var _location_y = round(location.y);
+						var _scale_x = 1;
+						var _scale_y = 1;
+						var _angle_value = 0;
+						
+						if (is_instanceof(scale, Scale))
+						{
+							_scale_x = scale.x;
+							_scale_y = scale.y;
+						}
+						
+						if (is_instanceof(angle, Angle))
+						{
+							_angle_value = angle.value;
+						}
+						
+						if ((_scale_x != 1) or (_scale_y != 1) or (_angle_value != 0))
+						{
+							if (is_instanceof(color, Color4))
+							{
+								draw_text_transformed_color(_location_x, _location_y, string(ID),
+															_scale_x, _scale_y, _angle_value,
+															color.color1, color.color2, color.color3,
+															color.color4, alpha);
+							}
+							else
+							{
+								draw_set_color(color);
+								draw_set_alpha(alpha);
+								draw_text_transformed(_location_x, _location_y, string(ID), _scale_x,
+													  _scale_y, _angle_value);
+							}
+						}
+						else
+						{
+							if (is_instanceof(color, Color4))
+							{
+								draw_text_color(_location_x, _location_y, string(ID), color.color1,
+												color.color2, color.color3, color.color4, alpha);
+							}
+							else
+							{
+								draw_set_color(color);
+								draw_set_alpha(alpha);
+								draw_text(_location_x, _location_y, string(ID));
+							}
+						}
 					}
 					
 					if ((is_struct(event)) and (event.afterRender.callback != undefined))
@@ -445,6 +509,8 @@ function TextRenderer() constructor
 					font = _font_original;
 					location = _location_original;
 					align = _align_original;
+					scale = _scale_original;
+					angle = _angle_original;
 					color = _color_original;
 					alpha = _alpha_original;
 				}
@@ -543,6 +609,8 @@ function TextRenderer() constructor
 							   "Font: " + string(font) + _mark_separator +
 							   "Location: " + string(location) + _mark_separator +
 							   "Align: " + string(align) + _mark_separator +
+							   "Scale: " + string(scale) + _mark_separator +
+							   "Angle: " + string(angle) + _mark_separator +
 							   "Color: " + string(_string_color) + _mark_separator +
 							   "Alpha: " + string(alpha));
 				}
