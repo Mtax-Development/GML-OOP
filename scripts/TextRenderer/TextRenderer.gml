@@ -3,7 +3,7 @@
 /// @argument				font {Font}
 /// @argument				location {Vector2}
 /// @argument				align? {TextAlign}
-/// @argument				scale? {Scale}
+/// @argument				scale? {Scale|int}
 /// @argument				angle? {Angle}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
@@ -146,7 +146,7 @@ function TextRenderer() constructor
 			
 			/// @returns			{Vector2} | On error: {undefined}
 			/// @description		Return the number of pixels the text would occupy after rendering.
-			static getPixelSize = function()
+			static getPixelSize = function(_scale = scale)
 			{
 				var _font_original = draw_get_font();
 				
@@ -155,8 +155,25 @@ function TextRenderer() constructor
 					draw_set_font(font.ID);
 					
 					var _string = string(ID);
+					var _scale_x = 1;
+					var _scale_y = 1;
 					
-					return new Vector2(string_width(_string), string_height(_string));
+					if (is_instanceof(_scale, Scale))
+					{
+						_scale_x = _scale.x;
+						_scale_y = _scale.y;
+					}
+					else if (is_real(_scale))
+					{
+						var _font_point_size_multiplier = (_scale / font_get_size(font.ID));
+						_scale_x = _font_point_size_multiplier;
+						_scale_y = _font_point_size_multiplier;
+					}
+					
+					var _pixelSize_x = (string_width(_string) * _scale_x);
+					var _pixelSize_y = (string_height(_string) * _scale_y);
+					
+					return new Vector2(_pixelSize_x, _pixelSize_y);
 				}
 				catch (_exception)
 				{
@@ -423,6 +440,12 @@ function TextRenderer() constructor
 						{
 							_scale_x = scale.x;
 							_scale_y = scale.y;
+						}
+						else if (is_real(scale))
+						{
+							var _font_point_size_multiplier = (scale / font_get_size(font.ID));
+							_scale_x = _font_point_size_multiplier;
+							_scale_y = _font_point_size_multiplier;
 						}
 						
 						if (is_instanceof(angle, Angle))
