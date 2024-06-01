@@ -260,6 +260,8 @@ function Color3() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Color3;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

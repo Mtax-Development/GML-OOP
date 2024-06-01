@@ -536,6 +536,8 @@ function ErrorReport() constructor
 			#endregion
 			#region [[Constructor]]
 				
+				static constructor = function() {with (other) {return ReportData;}}();
+				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
 				var _i = 0;
@@ -566,6 +568,8 @@ function ErrorReport() constructor
 		
 	#endregion
 	#region [Constructor]
+		
+		static constructor = ErrorReport;
 		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);

@@ -1136,6 +1136,8 @@ function Surface() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Surface;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

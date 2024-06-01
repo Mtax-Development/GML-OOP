@@ -1608,6 +1608,8 @@ function Vector4() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Vector4;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

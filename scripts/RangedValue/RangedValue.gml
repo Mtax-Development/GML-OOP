@@ -381,6 +381,8 @@ function RangedValue() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = RangedValue;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

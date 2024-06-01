@@ -417,6 +417,8 @@ function Room() constructor
 			#endregion
 			#region [[Constructor]]
 				
+				static constructor = function() {with (other) {return AddedInstance;}}();
+				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
 				var _i = 0;
@@ -447,6 +449,8 @@ function Room() constructor
 		
 	#endregion
 	#region [Constructor]
+		
+		static constructor = Room;
 		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);

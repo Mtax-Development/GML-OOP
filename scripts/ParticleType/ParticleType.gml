@@ -1763,6 +1763,8 @@ function ParticleType() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = ParticleType;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

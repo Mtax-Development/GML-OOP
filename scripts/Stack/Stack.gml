@@ -758,6 +758,8 @@ function Stack() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Stack;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

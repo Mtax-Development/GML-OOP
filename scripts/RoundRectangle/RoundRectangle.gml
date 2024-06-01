@@ -705,6 +705,8 @@ function RoundRectangle() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = RoundRectangle;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

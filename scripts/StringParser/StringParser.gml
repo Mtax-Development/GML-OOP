@@ -1245,6 +1245,8 @@ function StringParser() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = StringParser;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

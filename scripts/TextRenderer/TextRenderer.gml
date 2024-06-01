@@ -649,6 +649,8 @@ function TextRenderer() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = TextRenderer;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

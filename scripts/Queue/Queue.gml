@@ -732,6 +732,8 @@ function Queue() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Queue;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

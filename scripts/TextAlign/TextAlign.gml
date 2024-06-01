@@ -253,6 +253,8 @@ function TextAlign() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = TextAlign;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

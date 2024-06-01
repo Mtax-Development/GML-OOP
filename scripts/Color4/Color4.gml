@@ -338,6 +338,8 @@ function Color4() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Color4;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

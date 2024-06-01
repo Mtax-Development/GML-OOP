@@ -169,6 +169,8 @@ function Angle() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Angle;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;

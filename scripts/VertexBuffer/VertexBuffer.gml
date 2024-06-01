@@ -270,6 +270,8 @@ function VertexBuffer() constructor
 			#endregion
 			#region [[Constructor]]
 				
+				static constructor = function() {with (other) {return PrimitiveRenderData;}}();
+				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
 				var _i = 0;
@@ -300,6 +302,8 @@ function VertexBuffer() constructor
 		
 	#endregion
 	#region [Constructor]
+		
+		static constructor = VertexBuffer;
 		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);

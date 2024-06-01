@@ -837,6 +837,8 @@ function Buffer() constructor
 	#endregion
 	#region [Constructor]
 		
+		static constructor = Buffer;
+		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
 		var _i = 0;
