@@ -391,25 +391,20 @@ function Point() constructor
 			///						constructor or specified replaced parts of it for this call only.
 			static render = function(_location, _color, _alpha)
 			{
-				static __createPixelSprite = function()
+				static _pixel = function()
 				{
 					var _surface = surface_create(1, 1);
-					
 					surface_set_target(_surface);
 					{
 						draw_clear(c_white);
 					}
 					surface_reset_target();
 					
-					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0,
-															 0);
-					
+					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0, 0);
 					surface_free(_surface);
 					
 					return _sprite;
-				}
-				
-				static _pixelSprite = __createPixelSprite();
+				}();
 				
 				var _location_original = location;
 				var _color_original = color;
@@ -462,7 +457,7 @@ function Point() constructor
 						
 						if (alpha > 0)
 						{
-							draw_sprite_ext(_pixelSprite, 0, location.x, location.y, -1, -1, 0, color,
+							draw_sprite_ext(_pixel, 0, location.x, location.y, -1, -1, 0, color,
 											alpha);
 						}
 						

@@ -221,25 +221,20 @@ function Line() constructor
 			///						constructor or specified replaced parts of it for this call only.
 			static render = function(_location, _size, _color, _alpha)
 			{
-				static __createPixelSprite = function()
+				static _pixel = function()
 				{
 					var _surface = surface_create(1, 1);
-					
 					surface_set_target(_surface);
 					{
 						draw_clear(c_white);
 					}
 					surface_reset_target();
 					
-					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0,
-															 0);
-					
+					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0, 0);
 					surface_free(_surface);
 					
 					return _sprite;
-				}
-				
-				static _pixelSprite = __createPixelSprite();
+				}();
 				
 				var _location_original = location;
 				var _size_original = size;
@@ -328,7 +323,7 @@ function Line() constructor
 							var _x1 = (location.x1 + lengthdir_x(_sizeOffset, (_angle + 90)));
 							var _y1 = (location.y1 + lengthdir_y(_sizeOffset, (_angle + 90)));
 							
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _distance, size,
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, _x1, _y1, _distance, size,
 												_angle, _color1, _color2, _color3, _color4, alpha);
 						}
 						

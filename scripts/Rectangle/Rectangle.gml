@@ -438,25 +438,20 @@ function Rectangle() constructor
 			static render = function(_location, _fill_color, _fill_alpha, _outline_color,
 									 _outline_size, _outline_alpha)
 			{
-				static __createPixelSprite = function()
+				static _pixel = function()
 				{
 					var _surface = surface_create(1, 1);
-					
 					surface_set_target(_surface);
 					{
 						draw_clear(c_white);
 					}
 					surface_reset_target();
 					
-					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0,
-															 0);
-					
+					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0, 0);
 					surface_free(_surface);
 					
 					return _sprite;
-				}
-				
-				static _pixelSprite = __createPixelSprite();
+				}();
 				
 				var _location_original = location;
 				var _fill_color_original = fill_color;
@@ -539,8 +534,8 @@ function Rectangle() constructor
 								_color4 = fill_color;
 							}
 							
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, _x1, _y1, _width, _height,
-												0, _color1, _color2, _color3, _color4, fill_alpha);
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, _x1, _y1, _width, _height, 0,
+												_color1, _color2, _color3, _color4, fill_alpha);
 						}
 						
 						if ((outline_color != undefined) and (outline_size != 0)
@@ -564,24 +559,24 @@ function Rectangle() constructor
 							}
 							
 							//|Top.
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1 - outline_size),
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, (_x1 - outline_size),
 												(_y1 - outline_size), (_width + outline_size),
 												outline_size, 0, _color1, _color2, _color2, _color1,
 												outline_alpha);
 							
 							//|Left.
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1 - outline_size), _y1,
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, (_x1 - outline_size), _y1,
 												outline_size, (_height + outline_size), 0, _color1,
 												_color1, _color4, _color4, outline_alpha);
 							
 							//|Bottom.
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x1),
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, (_x1),
 												(_y2 + outline_size), ((_width + outline_size)),
 												(-outline_size), 0, _color4, _color3, _color3, _color4,
 												outline_alpha);
 							
 							//|Right.
-							draw_sprite_general(_pixelSprite, 0, 0, 0, 1, 1, (_x2 + outline_size),
+							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, (_x2 + outline_size),
 												(_y1 - outline_size), (-outline_size),
 												(_height + outline_size), 0, _color2, _color2, _color3,
 												_color3, outline_alpha);
