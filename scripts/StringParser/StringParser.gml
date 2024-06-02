@@ -1207,6 +1207,12 @@ function StringParser() constructor
 				{
 					_buffer = buffer_load(_path);
 					
+					if (!((is_handle(_buffer)) and (buffer_exists(_buffer))))
+					{
+						//+TODO: Better error checking, also applied to other methods.
+						throw "";
+					}
+					
 					try
 					{
 						var _JSON = buffer_read(_buffer, buffer_string);

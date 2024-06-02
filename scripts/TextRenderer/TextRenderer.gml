@@ -27,7 +27,7 @@ function TextRenderer() constructor
 				font = undefined;
 				location = undefined;
 				align = undefined;
-				scale = undefined;
+				scale = undefined; //+TODO: Document on wiki this can refer to font size points.
 				angle = undefined;
 				color = undefined;
 				alpha = undefined;
@@ -136,6 +136,7 @@ function TextRenderer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
+				//+TODO: Scale, Angle checks.
 				return ((is_real(alpha)) and (is_instanceof(font, Font)) and (font.isFunctional())
 						and (is_instanceof(location, Vector2)) and (location.isFunctional())
 						and (is_instanceof(align, TextAlign)) and (align.isFunctional()));
@@ -149,6 +150,8 @@ function TextRenderer() constructor
 			static getPixelSize = function(_scale = scale)
 			{
 				var _font_original = draw_get_font();
+				
+				//+TODO: Document _scale argument.
 				
 				try
 				{
@@ -192,6 +195,7 @@ function TextRenderer() constructor
 			///						from its origin.
 			static getBoundaryOffset = function()
 			{
+				//+TODO: _scale argument support.
 				var _font_original = draw_get_font();
 				
 				try

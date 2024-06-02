@@ -829,7 +829,7 @@ function Rectangle() constructor
 									   [location.x2, location.y2], [location.x2, location.y1]]];
 						_vertexBuffer_outline = new VertexBuffer();
 						var _renderData_outline = _vertexBuffer_outline
-												   .createPrimitiveRenderData(pr_linestrip);
+												   .createPrimitiveRenderData(pr_trianglestrip);
 						
 						with (_vertexBuffer_outline)
 						{
