@@ -746,7 +746,7 @@ function Vector4() constructor
 			
 			/// @argument			location {Vector2}
 			/// @returns			{bool} | On error: {undefined}
-			/// @description		Check if a point in space is within this Vector4.
+			/// @description		Check if the specified point is within the area of this Vector4.
 			static isBetween = function(_location)
 			{
 				try
@@ -758,6 +758,13 @@ function Vector4() constructor
 				{
 					new ErrorReport().report([other, self, "isBetween()"], _exception);
 				}
+			}
+			
+			/// @returns			{bool}
+			/// @description		Check if values of this Vector4 create no area.
+			static isDegenerate = function()
+			{
+				return ((x1 == x2) or (y1 == y2));
 			}
 			
 		#endregion
