@@ -603,24 +603,38 @@ function Point() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @argument			location? {Vector2}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
-			/// @description		Return data formatted for rendering this Shape through a Vertex
-			///						Buffer and the default passthrough Shader.
-			static toVertexBuffer = function()
+			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
+			///						its current data or specified parts replaced for this call only.
+			///						Either a single value or an array of two values will be returned,
+			///						depending on whether the fill or outline were specified as the only
+			///						returned value or both as {all}.
+			static toVertexBuffer = function(_location, _color, _alpha)
 			{
+				var _location_original = location;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				location = (_location ?? location);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
+				
 				var _vertexBuffer = undefined;
 				
 				try
 				{
-					var _color = ((is_real(color)) ? color : c_white);
-					var _alpha = ((alpha > 0) ? alpha : 0);
+					color = ((is_real(color)) ? color : c_white);
+					alpha = ((alpha > 0) ? alpha : 0);
 					_vertexBuffer = new VertexBuffer();
 					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_pointlist);
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
 						.setLocation(location)
-						.setColor(_color, _alpha)
+						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);
 					
@@ -634,6 +648,12 @@ function Point() constructor
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				finally
+				{
+					location = _location_original;
+					color = _color_original;
+					alpha = _alpha_original;
 				}
 				
 				return undefined;

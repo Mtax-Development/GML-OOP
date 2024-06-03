@@ -478,19 +478,36 @@ function Line() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @argument			location? {Vector4}
+			/// @argument			size? {real}
+			/// @argument			color? {int:color|Color2|Color4}
+			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
-			/// @description		Return data formatted for rendering this Shape through a Vertex
-			///						Buffer and the default passthrough Shader.
-			static toVertexBuffer = function()
+			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
+			///						its current data or specified parts replaced for this call only.
+			///						Either a single value or an array of two values will be returned,
+			///						depending on whether the fill or outline were specified as the only
+			///						returned value or both as {all}.
+			static toVertexBuffer = function(_location, _size, _color, _alpha)
 			{
+				var _location_original = location;
+				var _size_original = size;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				location = (_location ?? location);
+				size = (_size ?? size);
+				color = (_color ?? color);
+				alpha = (_alpha ?? alpha);
+				
 				var _vertexBuffer = undefined;
 				
 				try
 				{
 					var _vertex = new Vector2();
-					var _size = ((size > 0) ? (size * 0.5) : 0.5);
-					var _color = ((is_real(color)) ? color : c_white);
-					var _alpha = ((alpha > 0) ? alpha : 0);
+					size = ((size > 0) ? (size * 0.5) : 0.5);
+					color = ((is_real(color)) ? color : c_white);
+					alpha = ((alpha > 0) ? alpha : 0);
 					var _angle = point_direction(location.x1, location.y1, location.x2, location.y2);
 					var _angle_left = (_angle - 90);
 					var _angle_right = (_angle + 90);
@@ -499,24 +516,24 @@ function Line() constructor
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
-						.setLocation(_vertex.set((location.x1 + lengthdir_x(_size, _angle_right)),
-												 (location.y1 + lengthdir_y(_size, _angle_right))))
-						.setColor(_color, _alpha)
+						.setLocation(_vertex.set((location.x1 + lengthdir_x(size, _angle_right)),
+												 (location.y1 + lengthdir_y(size, _angle_right))))
+						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x2 + lengthdir_x(_size, _angle_right)),
-												 (location.y2 + lengthdir_y(_size, _angle_right))))
-						.setColor(_color, _alpha)
+						.setLocation(_vertex.set((location.x2 + lengthdir_x(size, _angle_right)),
+												 (location.y2 + lengthdir_y(size, _angle_right))))
+						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x1 + lengthdir_x(_size, _angle_left)),
-												 (location.y1 + lengthdir_y(_size, _angle_left))))
-						.setColor(_color, _alpha)
+						.setLocation(_vertex.set((location.x1 + lengthdir_x(size, _angle_left)),
+												 (location.y1 + lengthdir_y(size, _angle_left))))
+						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x2 + lengthdir_x(_size, _angle_left)),
-												 (location.y2 + lengthdir_y(_size, _angle_left))))
-						.setColor(_color, _alpha)
+						.setLocation(_vertex.set((location.x2 + lengthdir_x(size, _angle_left)),
+												 (location.y2 + lengthdir_y(size, _angle_left))))
+						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);
 					
@@ -530,6 +547,13 @@ function Line() constructor
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				finally
+				{
+					location = _location_original;
+					size = _size_original;
+					color = _color_original;
+					alpha = _alpha_original;
 				}
 				
 				return undefined;

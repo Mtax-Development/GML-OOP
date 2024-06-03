@@ -762,14 +762,36 @@ function Rectangle() constructor
 			}
 			
 			/// @argument			outline? {bool|all}
+			/// @argument			location? {Vector4}
+			/// @argument			fill_color? {int:color|Color4}
+			/// @argument			fill_alpha? {real}
+			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_size? {int}
+			/// @argument			outline_alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData|
 			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
-			/// @description		Return data formatted for rendering this Shape through a Vertex
-			///						Buffer and the default passthrough Shader, either as a single value
-			///						or an array of two, depending on whether the outline or fill were
-			///						specified as the only returned value or as {all} for both.
-			static toVertexBuffer = function(_outline = false)
+			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
+			///						its current data or specified parts replaced for this call only.
+			///						Either a single value or an array of two values will be returned,
+			///						depending on whether the fill or outline were specified as the only
+			///						returned value or both as {all}.
+			static toVertexBuffer = function(_outline = false, _location, _fill_color, _fill_alpha,
+											 _outline_color, _outline_size, _outline_alpha)
 			{
+				var _location_original = location;
+				var _fill_color_original = fill_color;
+				var _fill_alpha_original = fill_alpha;
+				var _outline_color_original = outline_color;
+				var _outline_size_original = outline_size;
+				var _outline_alpha_original = outline_alpha;
+				
+				location = (_location ?? location);
+				fill_color = (_fill_color ?? fill_color);
+				fill_alpha = (_fill_alpha ?? fill_alpha);
+				outline_color = (_outline_color ?? outline_color);
+				outline_size = (_outline_size ?? outline_size);
+				outline_alpha = (_outline_alpha ?? outline_alpha);
+				
 				var _vertexBuffer_fill = undefined;
 				var _vertexBuffer_outline = undefined;
 				
@@ -780,8 +802,8 @@ function Rectangle() constructor
 					
 					if ((!_outline) or (_outline == all))
 					{
-						var _fill_color = (fill_color ?? c_white);
-						var _fill_alpha = (fill_alpha ?? 0);
+						fill_color = ((is_real(fill_color)) ? fill_color : c_white);
+						fill_alpha = ((fill_alpha > 0) ? fill_alpha : 0);
 						_vertexBuffer_fill = new VertexBuffer();
 						var _renderData_fill = _vertexBuffer_fill
 												.createPrimitiveRenderData(pr_trianglestrip);
@@ -789,19 +811,19 @@ function Rectangle() constructor
 						_vertexBuffer_fill
 						 .setActive(_renderData_fill.passthroughFormat)
 							.setLocation(_vertex.set(location.x1, location.y1))
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
 							.setLocation(_vertex.set(location.x2, location.y1))
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
 							.setLocation(_vertex.set(location.x1, location.y2))
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
 							.setLocation(_vertex.set(location.x2, location.y2))
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 						 .setActive(false);
 						
@@ -810,8 +832,8 @@ function Rectangle() constructor
 					
 					if (((_outline) or (_outline == all)) and (outline_size >= 1))
 					{
-						var _outline_color = ((is_real(outline_color)) ? outline_color : c_white);
-						var _outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
+						outline_color = ((is_real(outline_color)) ? outline_color : c_white);
+						outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
 						var _point = [[[(location.x2 + outline_size), (location.y1 - outline_size)],
 									   [(location.x1 - outline_size), (location.y1 - outline_size)],
 									   [(location.x2 + outline_size), location.y1],
@@ -843,9 +865,8 @@ function Rectangle() constructor
 									{
 										var _point_current = _point[_i[0]][_i[1]];
 										
-										setLocation(_location.set(_point_current[0],
-																  _point_current[1]));
-										setColor(_outline_color, _outline_alpha);
+										setLocation(_vertex.set(_point_current[0], _point_current[1]));
+										setColor(other.outline_color, other.outline_alpha);
 										setUV();
 										
 										++_i[1];
@@ -875,6 +896,15 @@ function Rectangle() constructor
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				finally
+				{
+					location = _location_original;
+					fill_color = _fill_color_original;
+					fill_alpha = _fill_alpha_original;
+					outline_color = _outline_color_original;
+					outline_size = _outline_size_original;
+					outline_alpha = _outline_alpha_original;
 				}
 				
 				return undefined;

@@ -644,14 +644,39 @@ function Triangle() constructor
 			}
 			
 			/// @argument			outline? {bool|all}
+			/// @argument			location1? {Vector2}
+			/// @argument			location2? {Vector2}
+			/// @argument			location3? {Vector2}
+			/// @argument			fill_color? {int:color|Color3}
+			/// @argument			fill_alpha? {real}
+			/// @argument			outline_color? {int:color|Color3}
+			/// @argument			outline_alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData|
 			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
-			/// @description		Return data formatted for rendering this Shape through a Vertex
-			///						Buffer and the default passthrough Shader, either as a single value
-			///						or an array of two, depending on whether the outline or fill were
-			///						specified as the only returned value or as {all} for both.
-			static toVertexBuffer = function(_outline = false)
+			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
+			///						its current data or specified parts replaced for this call only.
+			///						Either a single value or an array of two values will be returned,
+			///						depending on whether the fill or outline were specified as the only
+			///						returned value or both as {all}.
+			static toVertexBuffer = function(_outline = false, _location1, _location2, _location3,
+											 _fill_color, _fill_alpha, _outline_color, _outline_alpha)
 			{
+				var _location1_original = location1;
+				var _location2_original = location2;
+				var _location3_original = location3;
+				var _fill_color_original = fill_color;
+				var _fill_alpha_original = fill_alpha;
+				var _outline_color_original = outline_color;
+				var _outline_alpha_original = outline_alpha;
+				
+				location1 = (_location1 ?? location1);
+				location2 = (_location2 ?? location2);
+				location3 = (_location3 ?? location3);
+				fill_color = (_fill_color ?? fill_color);
+				fill_alpha = (_fill_alpha ?? fill_alpha);
+				outline_color = (_outline_color ?? outline_color);
+				outline_alpha = (_outline_alpha ?? outline_alpha);
+				
 				var _vertexBuffer_fill = undefined;
 				var _vertexBuffer_outline = undefined;
 				
@@ -661,8 +686,8 @@ function Triangle() constructor
 					
 					if ((!_outline) or (_outline == all))
 					{
-						var _fill_color = ((is_real(fill_color)) ? fill_color : c_white);
-						var _fill_alpha = ((fill_alpha > 0) ? fill_alpha : 0);
+						fill_color = ((is_real(fill_color)) ? fill_color : c_white);
+						fill_alpha = ((fill_alpha > 0) ? fill_alpha : 0);
 						_vertexBuffer_fill = new VertexBuffer();
 						var _renderData_fill = _vertexBuffer_fill
 												.createPrimitiveRenderData(pr_trianglestrip);
@@ -670,15 +695,15 @@ function Triangle() constructor
 						_vertexBuffer_fill
 						 .setActive(_renderData_fill.passthroughFormat)
 							.setLocation(location1)
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
 							.setLocation(location2)
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
 							.setLocation(location3)
-							.setColor(_fill_color, _fill_alpha)
+							.setColor(fill_color, fill_alpha)
 							.setUV()
 						 .setActive(false);
 						
@@ -687,8 +712,8 @@ function Triangle() constructor
 					
 					if ((_outline) or (_outline == all))
 					{
-						var _outline_color = ((is_real(outline_color)) ? outline_color : c_white);
-						var _outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
+						outline_color = ((is_real(outline_color)) ? outline_color : c_white);
+						outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
 						_vertexBuffer_outline = new VertexBuffer();
 						var _renderData_outline = _vertexBuffer_outline
 												   .createPrimitiveRenderData(pr_linestrip);
@@ -696,19 +721,19 @@ function Triangle() constructor
 						_vertexBuffer_outline
 						 .setActive(_renderData_outline.passthroughFormat)
 							.setLocation(location1)
-							.setColor(_outline_color, _outline_alpha)
+							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
 							.setLocation(location2)
-							.setColor(_outline_color, _outline_alpha)
+							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
 							.setLocation(location3)
-							.setColor(_outline_color, _outline_alpha)
+							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
 							.setLocation(location1)
-							.setColor(_outline_color, _outline_alpha)
+							.setColor(outline_color, outline_alpha)
 							.setUV()
 						 .setActive(false);
 						 
@@ -730,6 +755,16 @@ function Triangle() constructor
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				finally
+				{
+					location1 = _location1_original;
+					location2 = _location2_original;
+					location3 = _location3_original;
+					fill_color = _fill_color_original;
+					fill_alpha = _fill_alpha_original;
+					outline_color = _outline_color_original;
+					outline_alpha = _outline_alpha_original;
 				}
 				
 				return undefined;
