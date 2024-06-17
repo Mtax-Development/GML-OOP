@@ -71,7 +71,7 @@ function Font() constructor
 							
 							case "sprite (UTF-8)":
 								sprite = ((is_instanceof(_other.sprite, Sprite))
-										  ? new Sprite(_other.ID) : _other.sprite);
+										  ? new Sprite(_other.sprite) : _other.sprite);
 								
 								self.construct(sprite, _other.first, _other.proportional,
 											   _other.separation, _other.antialiasing);
@@ -79,7 +79,7 @@ function Font() constructor
 							
 							case "sprite (glyph map)":
 								sprite = ((is_instanceof(_other.sprite, Sprite))
-										  ? new Sprite(_other.ID) : _other.sprite);
+										  ? new Sprite(_other.sprite) : _other.sprite);
 								
 								self.construct(sprite, _other.glyphs, _other.proportional,
 											   _other.separation, _other.antialiasing);
