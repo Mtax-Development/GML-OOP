@@ -152,8 +152,7 @@ function Font() constructor
 						
 						font_add_enable_aa(antialiasing);
 						
-						ID = font_add(fontName, size, bold, italic, glyphs.minimum, 
-									  glyphs.maximum);
+						ID = font_add(fontName, size, bold, italic, glyphs.minimum, glyphs.maximum);
 						
 						if (self.isFunctional())
 						{
