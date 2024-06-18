@@ -649,6 +649,230 @@ function TextRenderer() constructor
 				return ((_multiline) ? _string : instanceof(self) + "(" + _string + ")");
 			}
 			
+			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
+			/// @description		Return rendering data of this constructor in a Vertex Buffer.
+			///						If used with a SDF Font, rendering data will be returned with event
+			///						setup to resolve SDF rendering through a built-in Shader.
+			static toVertexBuffer = function()
+			{
+				var _vertexBuffer = undefined;
+				var _renderData = undefined;
+				var _font_original = draw_get_font();
+				
+				try
+				{
+					draw_set_font(font.ID);
+					
+					var _string = string(ID);
+					var _align_multiplier = align.getMultiplier();
+					var _font_data = font_get_info(font.ID);
+					var _font_size = _font_data.size;
+					var _origin_x = (round(location.x) - _font_data.sdfSpread);
+					var _location_x = _origin_x;
+					var _location_y = (round(location.y) - _font_data.sdfSpread);
+					var _char_count = string_length(_string);
+					var _char_isLinebreak = false;
+					var _line_vertexData = [[]];
+					var _line_index = 0;
+					var _line_text = [""];
+					var _linebreak_offset = string_height("\n");
+					var _linebreak_chain = 0;
+					var _vertex = new Vector2();
+					var _texture = font_get_texture(font.ID);
+					var _texelSize_x = texture_get_texel_width(_texture);
+					var _texelSize_y = texture_get_texel_height(_texture);
+					var _vertex_order = [[0, 1, 2, 3], [2, 3, 0, 1]];
+					var _vertex_order_index = 0;
+					var _vertex_count = array_length(_vertex_order[0]);
+					var _uv_x = undefined;
+					var _uv_y = undefined;
+					var _i = [1, 0, 0];
+					repeat (_char_count)
+					{
+						if (_i[0] > _char_count)
+						{
+							break;
+						}
+						
+						var _char = string_char_at(_string, _i[0]);
+						
+						if ((_char == "\n") or (_char == "\r"))
+						{
+							_char_isLinebreak = true;
+							var _char_next = string_char_at(_string, (_i[0] + 1));
+							
+							if (((_char == "\n") and (_char_next == "\r"))
+							or  ((_char == "\r") and (_char_next == "\n")))
+							{
+								//|Two different line-breaks after each other produce a single offset.
+								++_i[0];
+							}
+							
+							++_linebreak_chain;
+						}
+						else
+						{
+							if (_linebreak_chain > 0)
+							{
+								_location_x = _origin_x;
+								_location_y += (_linebreak_offset * _linebreak_chain);
+								_vertex_order_index = 0;
+								
+								if (_uv_x != undefined)
+								{
+									var _linebreak_vertexData = [_location_x, _location_y, _uv_x,
+																 _uv_y, 0, _char_isLinebreak];
+									array_push(_line_vertexData[_line_index], _linebreak_vertexData,
+											   _linebreak_vertexData);
+									++_line_index;
+									_line_vertexData[_line_index] = [];
+									_line_text[_line_index] = "";
+								}
+								
+								_linebreak_chain = 0;
+							}
+							
+							var _char_data = (struct_get(_font_data.glyphs, _char)
+											  ?? struct_get(_font_data.glyphs, "▯"));
+							
+							if (_char_data != undefined)
+							{
+								_line_text[_line_index] += _char;
+								_char_isLinebreak = false;
+								var _offset_x = (struct_get(_char_data, "offset") ?? 0);
+								var _location_x_offset = round(_location_x + _offset_x);
+								var _char_uv_x1 = (_char_data.x * _texelSize_x);
+								var _char_uv_y1 = (_char_data.y * _texelSize_y);
+								var _char_uv_x2 = (_char_uv_x1 + (_char_data.w * _texelSize_x));
+								var _char_uv_y2 = (_char_uv_y1 + (_char_data.h * _texelSize_y));
+								
+								//|Vertex ordering is swapped after each character, as their building
+								// finishes at different vertical level each time.
+								var _vertex_order_current = _vertex_order[_vertex_order_index];
+								var _vertex_location = [[_location_x_offset, _location_y],
+														[(_location_x_offset + _char_data.w),
+														 _location_y],
+														[_location_x_offset,
+														 (_location_y + _char_data.h)],
+														[(_location_x_offset + _char_data.w),
+														 (_location_y + _char_data.h)]];
+								var _vertex_uv = [[_char_uv_x1, _char_uv_y1],
+												  [_char_uv_x2, _char_uv_y1],
+												  [_char_uv_x1, _char_uv_y2],
+												  [_char_uv_x2, _char_uv_y2]];
+								_i[2] = 0;
+								repeat (_vertex_count)
+								{
+									var _vertex_index = _vertex_order_current[_i[2]];
+									_uv_x = _vertex_uv[_vertex_index][0];
+									_uv_y = _vertex_uv[_vertex_index][1];
+									
+									array_push(_line_vertexData[_line_index],
+											   [_vertex_location[_vertex_index][0],
+												_vertex_location[_vertex_index][1], _uv_x, _uv_y,
+												_offset_x, _char_isLinebreak]);
+									
+									++_i[2];
+								}
+								
+								_vertex_order_index = ((_vertex_order_index + 1) mod 2);
+								
+								if (_i[0] < _char_count)
+								{
+									_location_x += _char_data.shift;
+									
+									var _char_kerning = struct_get(_char_data, "kerning");
+									
+									if (is_array(_char_kerning))
+									{
+										var _ord_next = string_ord_at(_string, (_i[0] + 1));
+										_i[1] = 0;
+										repeat (array_length(_char_kerning) div 2)
+										{
+											if (_char_kerning[_i[1]] == _ord_next)
+											{
+												_location_x += _char_kerning[(_i[1] + 1)];
+												
+												break;
+											}
+											
+											_i[1] += 2;
+										}
+									}
+								}
+							}
+						}
+						
+						++_i[0];
+					}
+					
+					_vertexBuffer = new VertexBuffer();
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
+																		  _texture);
+					
+					if (_font_data.sdfEnabled)
+				{
+					_renderData.event.beforeRender.callback = shader_set;
+					array_push(_renderData.event.beforeRender.argument, __yy_sdf_shader);
+					_renderData.event.afterRender.callback = shader_reset;
+				}
+					
+					_vertexBuffer.setActive(_renderData.passthroughFormat);
+					{
+						var _line_size_x_affect = sign(_align_multiplier.x);
+						var _align_offset_y = round(string_height(_string) * _align_multiplier.y);
+						var _i = [0, 0];
+						repeat (array_length(_line_vertexData))
+						{
+							var _lineData_current = _line_vertexData[_i[0]];
+							var _lineData_count = array_length(_lineData_current);
+							
+							if (_lineData_count > 0)
+							{
+								//|If final vertices are a linebreak, ones before them are calculated
+								// when applicable.
+								var _vertex_final = ((_lineData_current[(_lineData_count - 1)][5])
+													 ? max((_lineData_count - 3), 0)
+													 : (_lineData_count - 1));
+								var _align_offset_x = round(string_width(_line_text[_i[0]]) *
+															_align_multiplier.x);
+								_i[1] = 0;
+								repeat (_lineData_count)
+								{
+									var _glyphData_current = _line_vertexData[_i[0]][_i[1]];
+									
+									_vertexBuffer
+									 .setLocation(_vertex.set((_glyphData_current[0] -
+															   _align_offset_x),
+															  (_glyphData_current[1] - 
+															   _align_offset_y)))
+									 .setColor(color, alpha)
+									 .setUV(_glyphData_current[2], _glyphData_current[3]);
+									
+									++_i[1];
+								}
+							}
+							
+							++_i[0];
+						}
+					}
+					_vertexBuffer.setActive(false);
+				}
+				catch (_exception)
+				{
+					if (_vertexBuffer != undefined)
+					{
+						_vertexBuffer.destroy();
+					}
+					
+					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+				}
+				
+				draw_set_font(_font_original);
+				
+				return _renderData;
+			}
+			
 		#endregion
 	#endregion
 	#region [Constructor]
