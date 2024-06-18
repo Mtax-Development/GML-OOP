@@ -778,6 +778,8 @@ function Rectangle() constructor
 			static toVertexBuffer = function(_outline = false, _location, _fill_color, _fill_alpha,
 											 _outline_color, _outline_size, _outline_alpha)
 			{
+				var _vertexBuffer_fill = undefined;
+				var _vertexBuffer_outline = undefined;
 				var _location_original = location;
 				var _fill_color_original = fill_color;
 				var _fill_alpha_original = fill_alpha;
@@ -791,9 +793,6 @@ function Rectangle() constructor
 				outline_color = (_outline_color ?? outline_color);
 				outline_size = (_outline_size ?? outline_size);
 				outline_alpha = (_outline_alpha ?? outline_alpha);
-				
-				var _vertexBuffer_fill = undefined;
-				var _vertexBuffer_outline = undefined;
 				
 				try
 				{

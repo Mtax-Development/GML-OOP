@@ -614,6 +614,8 @@ function Point() constructor
 			///						returned value or both as {all}.
 			static toVertexBuffer = function(_location, _color, _alpha)
 			{
+				var _vertexBuffer = undefined;
+				var _renderData = undefined;
 				var _location_original = location;
 				var _color_original = color;
 				var _alpha_original = alpha;
@@ -622,14 +624,12 @@ function Point() constructor
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
 				
-				var _vertexBuffer = undefined;
-				
 				try
 				{
 					color = ((is_real(color)) ? color : c_white);
 					alpha = ((alpha > 0) ? alpha : 0);
 					_vertexBuffer = new VertexBuffer();
-					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_pointlist);
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_pointlist);
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
@@ -637,8 +637,6 @@ function Point() constructor
 						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);
-					
-					return _renderData;
 				}	
 				catch (_exception)
 				{
@@ -649,14 +647,12 @@ function Point() constructor
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
-				finally
-				{
-					location = _location_original;
-					color = _color_original;
-					alpha = _alpha_original;
-				}
 				
-				return undefined;
+				location = _location_original;
+				color = _color_original;
+				alpha = _alpha_original;
+				
+				return _renderData;
 			}
 			
 		#endregion

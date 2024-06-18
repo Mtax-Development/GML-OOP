@@ -661,6 +661,8 @@ function Triangle() constructor
 			static toVertexBuffer = function(_outline = false, _location1, _location2, _location3,
 											 _fill_color, _fill_alpha, _outline_color, _outline_alpha)
 			{
+				var _vertexBuffer_fill = undefined;
+				var _vertexBuffer_outline = undefined;
 				var _location1_original = location1;
 				var _location2_original = location2;
 				var _location3_original = location3;
@@ -676,9 +678,6 @@ function Triangle() constructor
 				fill_alpha = (_fill_alpha ?? fill_alpha);
 				outline_color = (_outline_color ?? outline_color);
 				outline_alpha = (_outline_alpha ?? outline_alpha);
-				
-				var _vertexBuffer_fill = undefined;
-				var _vertexBuffer_outline = undefined;
 				
 				try
 				{

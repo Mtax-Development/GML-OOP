@@ -490,6 +490,8 @@ function Line() constructor
 			///						returned value or both as {all}.
 			static toVertexBuffer = function(_location, _size, _color, _alpha)
 			{
+				var _vertexBuffer = undefined;
+				var _renderData = undefined;
 				var _location_original = location;
 				var _size_original = size;
 				var _color_original = color;
@@ -499,8 +501,6 @@ function Line() constructor
 				size = (_size ?? size);
 				color = (_color ?? color);
 				alpha = (_alpha ?? alpha);
-				
-				var _vertexBuffer = undefined;
 				
 				try
 				{
@@ -512,7 +512,7 @@ function Line() constructor
 					var _angle_left = (_angle - 90);
 					var _angle_right = (_angle + 90);
 					_vertexBuffer = new VertexBuffer();
-					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip);
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip);
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
@@ -536,8 +536,6 @@ function Line() constructor
 						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);
-					
-					return _renderData;
 				}	
 				catch (_exception)
 				{
@@ -548,15 +546,13 @@ function Line() constructor
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
-				finally
-				{
-					location = _location_original;
-					size = _size_original;
-					color = _color_original;
-					alpha = _alpha_original;
-				}
 				
-				return undefined;
+				location = _location_original;
+				size = _size_original;
+				color = _color_original;
+				alpha = _alpha_original;
+				
+				return _renderData;
 			}
 			
 		#endregion

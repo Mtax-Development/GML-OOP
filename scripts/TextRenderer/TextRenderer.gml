@@ -27,7 +27,7 @@ function TextRenderer() constructor
 				font = undefined;
 				location = undefined;
 				align = undefined;
-				scale = undefined; //+TODO: Document on wiki this can refer to font size points.
+				scale = undefined;
 				angle = undefined;
 				color = undefined;
 				alpha = undefined;

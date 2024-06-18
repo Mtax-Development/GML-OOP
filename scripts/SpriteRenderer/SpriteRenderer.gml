@@ -578,9 +578,9 @@ function SpriteRenderer() constructor
 					var _uv_y1 = (_uv[1] + (_part_y1 * _texelSize_y));
 					var _uv_x2 = (_uv_x1 + (_size_x_part * _texelSize_x));
 					var _uv_y2 = (_uv_y1 + (_size_y_part * _texelSize_y));
-					var _vertexBuffer = new VertexBuffer();
-					var _renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip,
-																			  undefined, _texture);
+					_vertexBuffer = new VertexBuffer();
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
+																		  _texture);
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
 						.setLocation(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
