@@ -250,20 +250,39 @@ function VertexBuffer() constructor
 					/// @description		Initialize this constructor.
 					static construct = function()
 					{
+						static emptyMethodIndex = method_get_index(function() {});
+						
 						vertexBuffer = other;
 						primitiveType = argument[0];
 						vertexFormat = ((argument_count > 1) ? argument[1] : passthroughFormat);
 						texture = ((argument_count > 2) ? argument[2] : -1);
+						
+						event =
+						{
+							beforeRender:
+							{
+								callback: emptyMethodIndex,
+								argument: []
+							},
+							
+							afterRender:
+							{
+								callback: emptyMethodIndex,
+								argument: []
+							}
+						};
 					}
 					
 				#endregion
 				#region <<Execution>>
 					
 					/// @description		Draw the contents of the Vertex Buffer to the currently
-					///						active Surface through the currently active Shader.
+					///						active Surface.
 					static render = function()
 					{
+						script_execute_ext(event.beforeRender.callback, event.beforeRender.argument);
 						vertexBuffer.render(primitiveType, texture);
+						script_execute_ext(event.afterRender.callback, event.afterRender.argument);
 					}
 					
 				#endregion
