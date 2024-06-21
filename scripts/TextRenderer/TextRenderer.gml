@@ -713,7 +713,6 @@ function TextRenderer() constructor
 					
 					ID = string(ID);
 					var _font_data = font_get_info(font.ID);
-					var _font_size = _font_data.size;
 					var _align_multiplier = align.getMultiplier();
 					var _origin_absolute_x = round(location.x);
 					var _origin_absolute_y = round(location.y);
@@ -726,7 +725,6 @@ function TextRenderer() constructor
 					var _align_offset_x = (string_width(ID) * _scale_x * _align_multiplier.x);
 					var _align_offset_y = (string_height(ID) * _scale_y * _align_multiplier.y);
 					var _char_count = string_length(ID);
-					var _char_isLinebreak = false;
 					var _line_vertexData = [[]];
 					var _line_index = 0;
 					var _line_text = [""];
@@ -753,7 +751,6 @@ function TextRenderer() constructor
 						
 						if ((_char == "\n") or (_char == "\r"))
 						{
-							_char_isLinebreak = true;
 							var _char_next = string_char_at(ID, (_i[0] + 1));
 							
 							if (((_char == "\n") and (_char_next == "\r"))
@@ -771,20 +768,19 @@ function TextRenderer() constructor
 							{
 								_location_x = _origin_x;
 								_location_y += (_linebreak_offset * _linebreak_chain);
+								_linebreak_chain = 0;
 								_vertex_order_index = 0;
 								
 								if (_uv_x != undefined)
 								{
 									var _linebreak_vertexData = [_location_x, _location_y, _uv_x,
-																 _uv_y, 0, _char_isLinebreak];
+																 _uv_y, 0];
 									array_push(_line_vertexData[_line_index], _linebreak_vertexData,
 											   _linebreak_vertexData);
 									++_line_index;
 									_line_vertexData[_line_index] = [];
 									_line_text[_line_index] = "";
 								}
-								
-								_linebreak_chain = 0;
 							}
 							
 							var _char_data = (struct_get(_font_data.glyphs, _char)
@@ -793,9 +789,8 @@ function TextRenderer() constructor
 							if (_char_data != undefined)
 							{
 								_line_text[_line_index] += _char;
-								_char_isLinebreak = false;
-								var _offset_x = (struct_get(_char_data, "offset") ?? 0);
-								var _location_x_offset = round(_location_x + _offset_x);
+								var _offset_x = ((struct_get(_char_data, "offset") * _scale_x) ?? 0);
+								var _location_x_offset = (_location_x + _offset_x);
 								var _char_uv_x1 = (_char_data.x * _texelSize_x);
 								var _char_uv_y1 = (_char_data.y * _texelSize_y);
 								var _char_uv_x2 = (_char_uv_x1 + (_char_data.w * _texelSize_x));
@@ -827,7 +822,7 @@ function TextRenderer() constructor
 									array_push(_line_vertexData[_line_index],
 											   [_vertex_location[_vertex_index][0],
 												_vertex_location[_vertex_index][1], _uv_x, _uv_y,
-												_offset_x, _char_isLinebreak]);
+												_offset_x]);
 									
 									++_i[2];
 								}
@@ -877,8 +872,7 @@ function TextRenderer() constructor
 					_vertexBuffer.setActive(_renderData.passthroughFormat);
 					{
 						var _line_size_x_affect = sign(_align_multiplier.x);
-						var _align_offset_y = round(string_height(ID) * _scale_y *
-													_align_multiplier.y);
+						var _align_offset_y = (string_height(ID) * _scale_y * _align_multiplier.y);
 						var _i = [0, 0];
 						repeat (array_length(_line_vertexData))
 						{
