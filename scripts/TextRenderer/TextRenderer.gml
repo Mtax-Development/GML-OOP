@@ -168,7 +168,7 @@ function TextRenderer() constructor
 					}
 					else if (is_real(_scale))
 					{
-						var _font_point_size_multiplier = (_scale / font_get_size(font.ID));
+						var _font_point_size_multiplier = (round(_scale) / font_get_size(font.ID));
 						_scale_x = _font_point_size_multiplier;
 						_scale_y = _font_point_size_multiplier;
 					}
@@ -364,7 +364,7 @@ function TextRenderer() constructor
 			/// @argument			font? {Font}
 			/// @argument			location? {Vector2}
 			/// @argument			align? {TextAlign}
-			/// @argument			scale? {Scale}
+			/// @argument			scale? {Scale|int}
 			/// @argument			angle? {Angle}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
@@ -447,7 +447,7 @@ function TextRenderer() constructor
 						}
 						else if (is_real(scale))
 						{
-							var _font_point_size_multiplier = (scale / font_get_size(font.ID));
+							var _font_point_size_multiplier = (round(scale) / font_get_size(font.ID));
 							_scale_x = _font_point_size_multiplier;
 							_scale_y = _font_point_size_multiplier;
 						}
