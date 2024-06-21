@@ -649,33 +649,88 @@ function TextRenderer() constructor
 				return ((_multiline) ? _string : instanceof(self) + "(" + _string + ")");
 			}
 			
+			/// @argument			string? {any:string}
+			/// @argument			font? {Font}
+			/// @argument			location? {Vector2}
+			/// @argument			align? {TextAlign}
+			/// @argument			scale? {Scale|int}
+			/// @argument			angle? {Angle}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
-			/// @description		Return rendering data of this constructor in a Vertex Buffer.
-			///						If used with a SDF Font, rendering data will be returned with event
+			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
+			///						its current data or specified parts replaced for this call only.
+			///						If a SDF Font is used, rendering data will be returned with event
 			///						setup to resolve SDF rendering through a built-in Shader.
-			static toVertexBuffer = function()
+			static toVertexBuffer = function(_string, _font, _location, _align, _scale, _angle, _color,
+											 _alpha)
 			{
 				var _vertexBuffer = undefined;
 				var _renderData = undefined;
-				var _font_original = draw_get_font();
+				var _font_previous = draw_get_font();
+				var _string_original = ID;
+				var _font_original = font;
+				var _location_original = location;
+				var _align_original = align;
+				var _scale_original = scale;
+				var _angle_original = angle;
+				var _color_original = color;
+				var _alpha_original = alpha;
+				
+				ID = (_string ?? ID);
+				font = (_font ?? font);
+				location = (_location ?? location);
+				align = (_align ?? align);
+				scale = (_scale ?? scale);
+				angle = (_angle ?? angle);
+				color = (_color ?? color);
+				alpha = (_alpha ?? ((alpha > 0) ? alpha : 0));
 				
 				try
 				{
 					draw_set_font(font.ID);
 					
-					var _string = string(ID);
-					var _align_multiplier = align.getMultiplier();
+					var _angle_value = 0;
+					var _scale_x = 1;
+					var _scale_y = 1;
+					
+					if (is_instanceof(scale, Scale))
+					{
+						_scale_x = scale.x;
+						_scale_y = scale.y;
+					}
+					else if (is_real(scale))
+					{
+						var _font_point_size_multiplier = (round(scale) / font_get_size(font.ID));
+						_scale_x = _font_point_size_multiplier;
+						_scale_y = _font_point_size_multiplier;
+					}
+					
+					if (is_instanceof(angle, Angle))
+					{
+						_angle_value = angle.value;
+					}
+					
+					ID = string(ID);
 					var _font_data = font_get_info(font.ID);
 					var _font_size = _font_data.size;
-					var _origin_x = (round(location.x) - _font_data.sdfSpread);
+					var _align_multiplier = align.getMultiplier();
+					var _origin_absolute_x = round(location.x);
+					var _origin_absolute_y = round(location.y);
+					var _origin_x = (_origin_absolute_x - (_font_data.sdfSpread * _scale_x));
+					var _origin_y = (_origin_absolute_y - (_font_data.sdfSpread * _scale_y));
 					var _location_x = _origin_x;
-					var _location_y = (round(location.y) - _font_data.sdfSpread);
-					var _char_count = string_length(_string);
+					var _location_y = _origin_y;
+					var _angle_dcos = dcos(_angle_value);
+					var _angle_dsin = dsin(_angle_value);
+					var _align_offset_x = (string_width(ID) * _scale_x * _align_multiplier.x);
+					var _align_offset_y = (string_height(ID) * _scale_y * _align_multiplier.y);
+					var _char_count = string_length(ID);
 					var _char_isLinebreak = false;
 					var _line_vertexData = [[]];
 					var _line_index = 0;
 					var _line_text = [""];
-					var _linebreak_offset = string_height("\n");
+					var _linebreak_offset = (string_height("\n") * _scale_y);
 					var _linebreak_chain = 0;
 					var _vertex = new Vector2();
 					var _texture = font_get_texture(font.ID);
@@ -694,12 +749,12 @@ function TextRenderer() constructor
 							break;
 						}
 						
-						var _char = string_char_at(_string, _i[0]);
+						var _char = string_char_at(ID, _i[0]);
 						
 						if ((_char == "\n") or (_char == "\r"))
 						{
 							_char_isLinebreak = true;
-							var _char_next = string_char_at(_string, (_i[0] + 1));
+							var _char_next = string_char_at(ID, (_i[0] + 1));
 							
 							if (((_char == "\n") and (_char_next == "\r"))
 							or  ((_char == "\r") and (_char_next == "\n")))
@@ -745,17 +800,19 @@ function TextRenderer() constructor
 								var _char_uv_y1 = (_char_data.y * _texelSize_y);
 								var _char_uv_x2 = (_char_uv_x1 + (_char_data.w * _texelSize_x));
 								var _char_uv_y2 = (_char_uv_y1 + (_char_data.h * _texelSize_y));
+								var _char_size_x = (_char_data.w * _scale_x);
+								var _char_size_y = (_char_data.h * _scale_y);
 								
 								//|Vertex ordering is swapped after each character, as their building
 								// finishes at different vertical level each time.
 								var _vertex_order_current = _vertex_order[_vertex_order_index];
 								var _vertex_location = [[_location_x_offset, _location_y],
-														[(_location_x_offset + _char_data.w),
+														[(_location_x_offset + _char_size_x),
 														 _location_y],
 														[_location_x_offset,
-														 (_location_y + _char_data.h)],
-														[(_location_x_offset + _char_data.w),
-														 (_location_y + _char_data.h)]];
+														 (_location_y + _char_size_y)],
+														[(_location_x_offset + _char_size_x),
+														 (_location_y + _char_size_y)]];
 								var _vertex_uv = [[_char_uv_x1, _char_uv_y1],
 												  [_char_uv_x2, _char_uv_y1],
 												  [_char_uv_x1, _char_uv_y2],
@@ -779,19 +836,19 @@ function TextRenderer() constructor
 								
 								if (_i[0] < _char_count)
 								{
-									_location_x += _char_data.shift;
+									_location_x += (_char_data.shift * _scale_x);
 									
 									var _char_kerning = struct_get(_char_data, "kerning");
 									
 									if (is_array(_char_kerning))
 									{
-										var _ord_next = string_ord_at(_string, (_i[0] + 1));
+										var _ord_next = string_ord_at(ID, (_i[0] + 1));
 										_i[1] = 0;
 										repeat (array_length(_char_kerning) div 2)
 										{
 											if (_char_kerning[_i[1]] == _ord_next)
 											{
-												_location_x += _char_kerning[(_i[1] + 1)];
+												_location_x += (_char_kerning[(_i[1] + 1)] * _scale_x);
 												
 												break;
 											}
@@ -811,16 +868,17 @@ function TextRenderer() constructor
 																		  _texture);
 					
 					if (_font_data.sdfEnabled)
-				{
-					_renderData.event.beforeRender.callback = shader_set;
-					array_push(_renderData.event.beforeRender.argument, __yy_sdf_shader);
-					_renderData.event.afterRender.callback = shader_reset;
-				}
+					{
+						_renderData.event.beforeRender.callback = shader_set;
+						array_push(_renderData.event.beforeRender.argument, __yy_sdf_shader);
+						_renderData.event.afterRender.callback = shader_reset;
+					}
 					
 					_vertexBuffer.setActive(_renderData.passthroughFormat);
 					{
 						var _line_size_x_affect = sign(_align_multiplier.x);
-						var _align_offset_y = round(string_height(_string) * _align_multiplier.y);
+						var _align_offset_y = round(string_height(ID) * _scale_y *
+													_align_multiplier.y);
 						var _i = [0, 0];
 						repeat (array_length(_line_vertexData))
 						{
@@ -829,23 +887,24 @@ function TextRenderer() constructor
 							
 							if (_lineData_count > 0)
 							{
-								//|If final vertices are a linebreak, ones before them are calculated
-								// when applicable.
-								var _vertex_final = ((_lineData_current[(_lineData_count - 1)][5])
-													 ? max((_lineData_count - 3), 0)
-													 : (_lineData_count - 1));
-								var _align_offset_x = round(string_width(_line_text[_i[0]]) *
-															_align_multiplier.x);
 								_i[1] = 0;
 								repeat (_lineData_count)
 								{
 									var _glyphData_current = _line_vertexData[_i[0]][_i[1]];
+									var _origin_transformed_x = (_glyphData_current[0] -
+																 _align_offset_x - _origin_absolute_x);
+									var _origin_transformed_y = (_glyphData_current[1] -
+																 _align_offset_y - _origin_absolute_y);
+									var _glyph_location_x = (_origin_absolute_x +
+															 (_origin_transformed_x * _angle_dcos) +
+															 (_origin_transformed_y * _angle_dsin));
+									var _glyph_location_y = (_origin_absolute_y -
+															 (_origin_transformed_x * _angle_dsin) +
+															 (_origin_transformed_y * _angle_dcos));
 									
 									_vertexBuffer
-									 .setLocation(_vertex.set((_glyphData_current[0] -
-															   _align_offset_x),
-															  (_glyphData_current[1] - 
-															   _align_offset_y)))
+									 .setLocation(_vertex.set(_glyph_location_x,
+															  _glyph_location_y))
 									 .setColor(color, alpha)
 									 .setUV(_glyphData_current[2], _glyphData_current[3]);
 									
@@ -868,7 +927,16 @@ function TextRenderer() constructor
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				draw_set_font(_font_original);
+				draw_set_font(_font_previous);
+				
+				ID = _string_original;
+				font = _font_original;
+				location = _location_original;
+				align = _align_original;
+				scale = _scale_original;
+				angle = _angle_original;
+				color = _color_original;
+				alpha = _alpha_original;
 				
 				return _renderData;
 			}
