@@ -369,7 +369,7 @@ function TextRenderer() constructor
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of the text, using data of this constructor or
-			///						specified replaced parts of it for this call only.
+			///						its specified temporarily replaced parts.
 			static render = function(_string, _font, _location, _align, _scale, _angle, _color, _alpha)
 			{
 				var _string_original = ID;
@@ -659,7 +659,7 @@ function TextRenderer() constructor
 			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified parts replaced for this call only.
+			///						its current data or its specified temporarily replaced parts.
 			///						If a SDF Font is used, rendering data will be returned with event
 			///						setup to resolve SDF rendering through a built-in Shader.
 			static toVertexBuffer = function(_string, _font, _location, _align, _scale, _angle, _color,

@@ -126,7 +126,7 @@ function Arrow() constructor
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of this Shape as a form, using data of this
-			///						constructor or specified replaced parts of it for this call only.
+			///						constructor or its specified temporarily replaced parts.
 			///						NOTE: Form drawing produces inconsistent results across devices
 			///						and export targets due to their technical differences.
 			///						Sprite drawing should be used instead for accurate results.

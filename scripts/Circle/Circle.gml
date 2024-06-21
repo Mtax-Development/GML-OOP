@@ -425,7 +425,7 @@ function Circle() constructor
 			/// @argument			outline_color? {int:color}
 			/// @argument			outline_alpha? {real}
 			/// @description		Execute the draw of this Shape as a form, using data of this
-			///						constructor or specified replaced parts of it for this call only.
+			///						constructor or its specified temporarily replaced parts.
 			///						Form drawing of this Shape is dependant on the currently set
 			///						Circle precision.
 			///						NOTE: Form drawing produces inconsistent results across devices

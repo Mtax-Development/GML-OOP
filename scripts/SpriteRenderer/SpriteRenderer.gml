@@ -186,8 +186,8 @@ function SpriteRenderer() constructor
 			/// @argument			part? {Vector4}
 			/// @argument			origin? {Vector2}
 			/// @argument			target? {Surface|int:surface}
-			/// @description		Execute the draw, using data of this constructor or specified
-			///						replaced parts of it for this call only.
+			/// @description		Execute the draw, using data of this constructor or its specified
+			///						temporarily replaced parts.
 			static render = function(_sprite, _location, _frame, _scale, _angle, _color, _alpha,
 									 _part, _origin, _target)
 			{
@@ -444,7 +444,7 @@ function SpriteRenderer() constructor
 			/// @argument			origin? {Vector2}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified parts replaced for this call only.
+			///						its current data or its specified temporarily replaced parts.
 			static toVertexBuffer = function(_sprite, _location, _frame, _scale, _angle, _color,
 											 _alpha, _part, _origin)
 			{

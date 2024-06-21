@@ -388,7 +388,7 @@ function Point() constructor
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of this Shape as a sprite, using data of this
-			///						constructor or specified replaced parts of it for this call only.
+			///						constructor or its specified temporarily replaced parts.
 			static render = function(_location, _color, _alpha)
 			{
 				static _pixel = function()
@@ -608,7 +608,7 @@ function Point() constructor
 			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified parts replaced for this call only.
+			///						its current data or its specified temporarily replaced parts.
 			///						Either a single value or an array of two values will be returned,
 			///						depending on whether the fill or outline were specified as the only
 			///						returned value or both as {all}.
