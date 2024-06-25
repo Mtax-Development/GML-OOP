@@ -184,7 +184,8 @@ function Vector4() constructor
 			
 			/// @argument			other {real|Vector2|Vector4}
 			/// @returns			{bool}
-			/// @description		Check if the respective values are equal to the specified value.
+			/// @description		Check if all values of this Vector4 are the same as the specified
+			///						value or respective values of the specified Vector2 or Vector4.
 			static equals = function(_value)
 			{
 				try
@@ -208,6 +209,68 @@ function Vector4() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "equals()"], _exception);
+				}
+				
+				return false;
+			}
+			
+			/// @argument			other {real|Vector2|Vector4}
+			/// @returns			{bool}
+			/// @description		Check if all values of this Vector4 are higher than the specified
+			///						value or respective values of the specified Vector2 or Vector4.
+			static exceeds = function(_value)
+			{
+				try
+				{
+					if (is_real(_value))
+					{
+						return ((x1 > _value) and (y1 > _value) and (x2 > _value) and (y2 > _value));
+					}
+					else if (is_instanceof(_value, Vector2))
+					{
+						return ((x1 > _value.x) and (y1 > _value.y) and (x2 > _value.x)
+								and (y2 > _value.y));
+					}
+					else
+					{
+						return ((x1 > _value.x1) and (y1 > _value.y1) and (x2 > _value.x2)
+								and (y2 > _value.y2));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "exceeds()"], _exception);
+				}
+				
+				return false;
+			}
+			
+			/// @argument			other {real|Vector2|Vector4}
+			/// @returns			{bool}
+			/// @description		Check if all values of this Vector4 are lower than the specified
+			///						value or respective values of the specified Vector2 or Vector4.
+			static subceeds = function(_value)
+			{
+				try
+				{
+					if (is_real(_value))
+					{
+						return ((x1 < _value) and (y1 < _value) and (x2 < _value) and (y2 < _value));
+					}
+					else if (is_instanceof(_value, Vector2))
+					{
+						return ((x1 < _value.x) and (y1 < _value.y) and (x2 < _value.x)
+								and (y2 < _value.y));
+					}
+					else
+					{
+						return ((x1 < _value.x1) and (y1 < _value.y1) and (x2 < _value.x2)
+								and (y2 < _value.y2));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "exceeds()"], _exception);
 				}
 				
 				return false;

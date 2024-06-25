@@ -123,7 +123,8 @@ function Vector2() constructor
 			
 			/// @argument			value {real|Vector2}
 			/// @returns			{bool}
-			/// @description		Check if the respective values are equal to the specified value.
+			/// @description		Check if all values of this Vector2 are the same as the specified
+			///						value or respective values of the specified Vector2.
 			static equals = function(_value)
 			{
 				try
@@ -140,6 +141,56 @@ function Vector2() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "equals()"], _exception);
+				}
+				
+				return false;
+			}
+			
+			/// @argument			value {real|Vector2}
+			/// @returns			{bool}
+			/// @description		Check if all values of this Vector2 are higher than the specified
+			///						value or respective values of the specified Vector2.
+			static exceeds = function(_value)
+			{
+				try
+				{
+					if (is_real(_value))
+					{
+						return ((x > _value) and (y > _value));
+					}
+					else
+					{
+						return ((x > _value.x) and (y > _value.y));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "exceeds()"], _exception);
+				}
+				
+				return false;
+			}
+			
+			/// @argument			value {real|Vector2}
+			/// @returns			{bool}
+			/// @description		Check if all values of this Vector2 are lower than the specified
+			///						value or respective values of the specified Vector2.
+			static subceeds = function(_value)
+			{
+				try
+				{
+					if (is_real(_value))
+					{
+						return ((x < _value) and (y < _value));
+					}
+					else
+					{
+						return ((x < _value.x) and (y < _value.y));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "exceeds()"], _exception);
 				}
 				
 				return false;
