@@ -618,7 +618,7 @@ function Vector4() constructor
 			/// @argument			separate? {bool}
 			/// @returns			{real|Vector2} | On error: {undefined}
 			/// @description		Return the lowest of all values or if the values are specified to
-			///						be separated, the lowest of each value pair.
+			///						be separated, the lowest of each value pair as Vector2.
 			static getMinimum = function(_separate = false)
 			{
 				try
@@ -635,7 +635,7 @@ function Vector4() constructor
 			/// @argument			separate? {bool}
 			/// @returns			{real|Vector2} | On error: {undefined}
 			/// @description		Return the highest of all values or if the values are specified
-			///						to be separated, the highlowest of each value pair.
+			///						to be separated, the highest of each value pair as Vector2.
 			static getMaximum = function(_separate = false)
 			{
 				try
