@@ -250,7 +250,7 @@ function VertexBuffer() constructor
 					/// @description		Initialize this constructor.
 					static construct = function()
 					{
-						static emptyMethodIndex = method_get_index(function() {});
+						static emptyEventIndex = method_get_index(function() {});
 						
 						vertexBuffer = other;
 						primitiveType = argument[0];
@@ -261,13 +261,13 @@ function VertexBuffer() constructor
 						{
 							beforeRender:
 							{
-								callback: emptyMethodIndex,
+								callback: emptyEventIndex,
 								argument: []
 							},
 							
 							afterRender:
 							{
-								callback: emptyMethodIndex,
+								callback: emptyEventIndex,
 								argument: []
 							}
 						};
