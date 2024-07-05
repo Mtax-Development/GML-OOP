@@ -415,7 +415,7 @@ function Vector2() constructor
 			}
 			
 			/// @returns			{real} | On error: {undefined}
-			/// @description		sReturn the lowest of both values.
+			/// @description		Return the lowest of both values.
 			static getMinimum = function()
 			{
 				try
