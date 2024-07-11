@@ -484,8 +484,6 @@ function Layer() constructor
 												 ("Attempted to add an Element to an invalid " +
 												  "Layer: " +
 												  "{" + string(ID) + "}"));
-						
-						return noone;
 					}
 				}
 				catch (_exception)
