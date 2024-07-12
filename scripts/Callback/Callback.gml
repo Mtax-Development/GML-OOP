@@ -76,6 +76,22 @@ function Callback() constructor
 				}
 			}
 			
+			/// @argument			{bool} keepArgumentData?
+			/// @description		Remove references to functions or methods from this constructor, so
+			///						its executions will have no effect when called. Argument data will
+			///						also be removed, unless specified otherwise.
+			static clear = function(_keepArgumentData = false)
+			{
+				ID = undefined;
+				
+				if (!_keepArgumentData)
+				{
+					self.argument = [];
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Setters>
 			
