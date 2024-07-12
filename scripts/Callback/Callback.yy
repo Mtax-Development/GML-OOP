@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Callback",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Callback",
+  "parent":{
+    "name":"Handler",
+    "path":"folders/GML-OOP/Handler.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

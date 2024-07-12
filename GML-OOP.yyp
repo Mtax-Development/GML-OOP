@@ -30,6 +30,7 @@
     {"id":{"name":"ArrayParser","path":"scripts/ArrayParser/ArrayParser.yy",},},
     {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},},
     {"id":{"name":"Buffer","path":"scripts/Buffer/Buffer.yy",},},
+    {"id":{"name":"Callback","path":"scripts/Callback/Callback.yy",},},
     {"id":{"name":"Circle","path":"scripts/Circle/Circle.yy",},},
     {"id":{"name":"Color2","path":"scripts/Color2/Color2.yy",},},
     {"id":{"name":"Color3","path":"scripts/Color3/Color3.yy",},},
