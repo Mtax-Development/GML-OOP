@@ -2,14 +2,14 @@
 /// @argument				depth {int}
 /// @argument				name? {string}
 /// @description			Constructs a Layer resource, used to group graphical elements and sort
-//							their rendering depth.
+///							their rendering depth.
 //							
 //							Construction types:
 //							- New constructor
 //							- Wrapper: name {string}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Layer}, name? {string}
-///							   Information about object instances will not be copied.
+//							   Information about object instances will not be copied.
 function Layer() constructor
 //  @feather	ignore all
 {
