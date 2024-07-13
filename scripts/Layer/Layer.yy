@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"Layer",
   "isCompatibility":false,
   "isDnD":false,

@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"Triangle",
   "isCompatibility":false,
   "isDnD":false,

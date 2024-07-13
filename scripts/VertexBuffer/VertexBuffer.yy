@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"VertexBuffer",
   "isCompatibility":false,
   "isDnD":false,

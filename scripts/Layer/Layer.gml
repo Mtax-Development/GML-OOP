@@ -200,7 +200,7 @@ function Layer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(ID)) and (layer_exists(ID)));
+				return ((is_handle(ID)) and (layer_exists(ID)));
 			}
 			
 			/// @argument			forceDestruction? {bool}

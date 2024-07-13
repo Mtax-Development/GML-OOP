@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"TextAlign",
   "isCompatibility":false,
   "isDnD":false,

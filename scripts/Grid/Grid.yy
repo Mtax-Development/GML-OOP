@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"Grid",
   "isCompatibility":false,
   "isDnD":false,

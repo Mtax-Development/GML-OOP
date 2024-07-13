@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"Ellipse",
   "isCompatibility":false,
   "isDnD":false,

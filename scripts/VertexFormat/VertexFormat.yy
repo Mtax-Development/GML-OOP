@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"VertexFormat",
   "isCompatibility":false,
   "isDnD":false,
