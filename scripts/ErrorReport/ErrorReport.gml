@@ -135,7 +135,7 @@ function ErrorReport() constructor
 					if ((!allowDuplicateReporting) and (_errorData_isArray) and (_errorData_count > 1))
 					{
 						var _i = (_errorData_count - 2);
-						repeat (_i)
+						repeat (_i + 1)
 						{
 							if (_reportData.equals(errorData[_i]))
 							{
@@ -265,21 +265,7 @@ function ErrorReport() constructor
 						{
 							if ((is_array(callstack)) and (is_array(_other.callstack)))
 							{
-								var _callstack_size = array_length(callstack);
-								
-								if (_callstack_size == array_length(_other.callstack))
-								{
-									var _i = 0;
-									repeat (_callstack_size)
-									{
-										if (callstack[_i] != _other.callstack[_i])
-										{
-											return false;
-										}
-										
-										++_i;
-									}
-								}
+								return array_equals(callstack, _other.callstack);
 							}
 							
 							return true;
