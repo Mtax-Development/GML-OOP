@@ -58,18 +58,19 @@ function RangedValue() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			other {RangedValue}
+			/// @argument			value {real|RangedValue}
 			/// @returns			{bool}
-			/// @description		Check if the value is equal to the value of another Ranged Value.
-			static equals = function(_other)
+			/// @description		Check if the value is the same as the specified number or value
+			///						of specified Ranged Value.
+			static equals = function(_value)
 			{
-				try
+				if (is_instanceof(_value, RangedValue))
 				{
-					return (value == _other.value);
+					return (value == _value.value);
 				}
-				catch (_exception)
+				else if (is_real(_value))
 				{
-					new ErrorReport().report([other, self, "equals()"], _exception);
+					return (value == _value);
 				}
 				
 				return false;

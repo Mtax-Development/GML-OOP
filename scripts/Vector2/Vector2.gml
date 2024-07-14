@@ -121,26 +121,25 @@ function Vector2() constructor
 				return false;
 			}
 			
-			/// @argument			value {real|Vector2}
+			/// @argument			value {real|Scale|Vector2|Vector4}
 			/// @returns			{bool}
-			/// @description		Check if all values of this Vector2 are the same as the specified
-			///						value or respective values of the specified Vector2.
+			/// @description		Check if all values of this constructor are the same as the
+			///						specified number or respective values of the specified Scale,
+			///						Vector2 or Vector4.
 			static equals = function(_value)
 			{
-				try
+				if ((is_instanceof(_value, Vector2)) or (is_instanceof(_value, Scale)))
 				{
-					if (is_real(_value))
-					{
-						return ((x == _value) and (y == _value));
-					}
-					else
-					{
-						return ((x == _value.x) and (y == _value.y));
-					}
+					return ((x == _value.x) and (y == _value.y));
 				}
-				catch (_exception)
+				else if (is_real(_value))
 				{
-					new ErrorReport().report([other, self, "equals()"], _exception);
+					return ((x == _value) and (y == _value));
+				}
+				else if (is_instanceof(_value, Vector4))
+				{
+					return ((x == _value.x1) and (y == _value.y1) and (x == _value.x2) and
+							(y == _value.y2));
 				}
 				
 				return false;

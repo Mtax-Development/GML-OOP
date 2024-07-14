@@ -453,25 +453,21 @@ function ArrayParser() constructor
 			}
 			
 			/// @argument			other {any[]|ArrayParser}
-			/// @returns			{bool} | On error: {undefined}
-			/// @description		Check if this and other array have the same content.
+			/// @returns			{bool}
+			/// @description		Check if this and specified array have the same content.
 			static equals = function(_other)
 			{
 				try
 				{
-					if (is_instanceof(_other, ArrayParser))
-					{
-						_other = _other.ID;
-					};
-					
-					return array_equals(ID, _other);
+					return array_equals(ID, ((is_instanceof(_other, ArrayParser)) ? _other.ID
+																				  : _other));
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "equals()"], _exception);
 				}
 				
-				return undefined;
+				return (ID == _other);
 			}
 			
 			/// @argument			position {int}

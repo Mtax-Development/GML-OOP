@@ -57,11 +57,11 @@ function Angle() constructor
 			/// @argument			value {real|Angle}
 			/// @returns			{bool}
 			/// @description		Check if the value of this Angle is equal to the specified one.
-			static equals = function(_value)
+			static equals = function(_other)
 			{
 				try
 				{
-					var _value_other = ((is_real(_value) ? _value : _value.value));
+					var _value_other = ((is_real(_other) ? _other : _other.value));
 					_value_other -= (360 * (floor(_value_other / 360)));
 					var _value_wrapped = (value - (360 * (floor(value / 360))));
 					
@@ -72,7 +72,7 @@ function Angle() constructor
 					new ErrorReport().report([other, self, "equals()"], _exception);
 				}
 				
-				return false;
+				return (value == _other);
 			}
 			
 			/// @argument			value {real|Angle}
