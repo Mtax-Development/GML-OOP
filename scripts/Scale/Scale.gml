@@ -347,7 +347,7 @@ function Scale() constructor
 				return self;
 			}
 			
-			/// @argument			value {real|real[]|Vector2|Scale}
+			/// @argument			value {real|real[]|Scale|Vector2}
 			/// @description		Set all of the values to one specified value or first two values of
 			///						the specified array.
 			static setAll = function(_value)

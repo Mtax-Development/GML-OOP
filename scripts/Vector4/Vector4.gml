@@ -1356,7 +1356,7 @@ function Vector4() constructor
 				return self;
 			}
 			
-			/// @argument			value {real|real[]|Vector2|Vector4|Scale}
+			/// @argument			value {real|real[]|Scale|Vector2|Vector4}
 			/// @description		Set all of values to the ones of the specified value or first four
 			///						values of the specified array.
 			static setAll = function(_value)
@@ -1407,7 +1407,7 @@ function Vector4() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Vector2|Vector4|Scale}
+			/// @argument			value? {real|Scale|Vector2|Vector4}
 			/// @description		Set all of the values of to their equivalents rounded down or the
 			///						ones of the specified value.
 			static setFloor = function(_value)
@@ -1461,7 +1461,7 @@ function Vector4() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Vector2|Vector4|Scale}
+			/// @argument			value? {real|Scale|Vector2|Vector4}
 			/// @description		Set all of the values of to their equivalents rounded down or up
 			///						or the ones of the specified value.
 			static setRound = function(_value)
@@ -1515,7 +1515,7 @@ function Vector4() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Vector2|Vector4|Scale}
+			/// @argument			value? {real|Scale|Vector2|Vector4}
 			/// @description		Set all of the values of to their equivalents rounded up or the
 			///						ones of the specified value.
 			static setCeil = function(_value)
