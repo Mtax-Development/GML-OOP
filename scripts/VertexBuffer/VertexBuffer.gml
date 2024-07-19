@@ -275,6 +275,16 @@ function VertexBuffer() constructor
 						};
 					}
 					
+					/// @returns			{bool}
+					/// @description		Check if this constructor is functional.
+					static isFunctional = function()
+					{
+						return ((is_real(primitiveType))
+								and (is_instanceof(vertexBuffer, VertexBuffer))
+								and (is_instanceof(vertexFormat, VertexFormat)) and ((texture == -1)
+								or (is_ptr(texture))));
+					}
+					
 				#endregion
 				#region <<Execution>>
 					
@@ -285,6 +295,51 @@ function VertexBuffer() constructor
 						script_execute_ext(event.beforeRender.callback, event.beforeRender.argument);
 						vertexBuffer.render(primitiveType, texture);
 						script_execute_ext(event.afterRender.callback, event.afterRender.argument);
+					}
+					
+				#endregion
+				#region <<Conversion>>
+					
+					/// @argument			multiline? {bool}
+					/// @returns			{string}
+					/// @description		Create a string representing this constructor.
+					///						Overrides the string() conversion.
+					///						Content will be represented by rendering details of this
+					///						constructor.
+					static toString = function(_multiline = false)
+					{
+						var _constructorName = "VertexBuffer.PrimitiveRenderData";
+						
+						if (self.isFunctional())
+						{
+							var _mark_separator = ((_multiline) ? "\n" : ", ");
+							var _string_vertexFormat = ((vertexFormat == self.passthroughFormat)
+														? "Passthrough" : (_string_vertexFormat));
+							var _string_texture = ((texture == -1) ? "None" : string(texture));
+							
+							var _string_primitiveType;
+							switch (primitiveType)
+							{
+								case pr_pointlist: _string_primitiveType = "Point List"; break;
+								case pr_linelist: _string_primitiveType = "Line List"; break;
+								case pr_linestrip: _string_primitiveType = "Line Strip"; break;
+								case pr_trianglelist: _string_primitiveType = "Triangle List"; break;
+								case pr_trianglestrip: _string_primitiveType = "Triangle Strip"; break;
+								case pr_trianglefan: _string_primitiveType = "Triangle Fan"; break;
+								default: _string_primitiveType = "Unknown Type"; break;
+							}
+							
+							var _string = ("Primitive Type: " + _string_primitiveType +
+																_mark_separator +
+										   "Vertex Format: " + _string_vertexFormat + _mark_separator +
+										   "Texture: " + _string_texture);
+							
+							return ((_multiline) ? _string : (_constructorName + "(" + _string + ")"));
+						}
+						else
+						{
+							return (_constructorName + "<>");
+						}
 					}
 					
 				#endregion
