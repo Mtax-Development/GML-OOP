@@ -24,7 +24,7 @@ function VertexBuffer() constructor
 			///							  validate a Vertex Buffer.
 			static isFunctional = function()
 			{
-				return (is_handle(ID));
+				return is_handle(ID);
 			}
 			
 			/// @returns			{undefined}
