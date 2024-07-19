@@ -254,8 +254,10 @@ function VertexBuffer() constructor
 						
 						vertexBuffer = other;
 						primitiveType = argument[0];
-						vertexFormat = ((argument_count > 1) ? argument[1] : passthroughFormat);
-						texture = ((argument_count > 2) ? argument[2] : -1);
+						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
+										? argument[1] : self.passthroughFormat);
+						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
+																						 : -1);
 						
 						event =
 						{
