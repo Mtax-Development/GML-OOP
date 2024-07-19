@@ -147,13 +147,13 @@ function TextRenderer() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			scale? {int|Scale}
 			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Return the number of pixels the text would occupy after rendering.
+			/// @description		Return the number of pixels the text would occupy when rendered
+			///						with either its current or specified Scale, or specified Font size.
 			static getPixelSize = function(_scale = scale)
 			{
 				var _font_original = draw_get_font();
-				
-				//+TODO: Document _scale argument.
 				
 				try
 				{
