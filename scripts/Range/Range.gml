@@ -51,6 +51,155 @@ function Range() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			value? {real|Range}
+			/// @returns			{real|Range} | On error: {undefined}
+			/// @description		Return the sum of either the values of this Range or them added to
+			///						the specified value or the ones of the specified Range.
+			static sum = function(_value)
+			{
+				try
+				{
+					var _minimum, _maximum;
+					
+					if (is_real(_value))
+					{
+						_minimum = (minimum + _value);
+						_maximum = (maximum + _value);
+					}
+					else if (is_instanceof(_value, Range))
+					{
+						_minimum = (minimum + _value.minimum);
+						_maximum = (maximum + _value.maximum);
+					}
+					else
+					{
+						return (minimum + maximum);
+					}
+					
+					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "sum()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Range}
+			/// @returns			{real|Range} | On error: {undefined}
+			/// @description		Return the difference between either the values of this Range or
+			///						them and the specified value or the ones of the specified Range.
+			static difference = function(_value)
+			{
+				try
+				{
+					var _minimum, _maximum;
+					
+					if (is_real(_value))
+					{
+						_minimum = abs(minimum - _value);
+						_maximum = abs(maximum - _value);
+					}
+					else if (is_instanceof(_value, Range))
+					{
+						_minimum = abs(minimum - _value.minimum);
+						_maximum = abs(maximum - _value.maximum);
+					}
+					else
+					{
+						return abs(minimum - maximum);
+					}
+					
+					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Range}
+			/// @returns			{real|Range} | On error: {undefined}
+			/// @description		Return the result of multiplication of either the values of this
+			///						Range or them multiplied by the specified value or the ones of the
+			///						specified Range.
+			static product = function(_value)
+			{
+				try
+				{
+					var _minimum, _maximum;
+					
+					if (is_real(_value))
+					{
+						_minimum = (minimum * _value);
+						_maximum = (maximum * _value);
+					}
+					else if (is_instanceof(_value, Range))
+					{
+						_minimum = (minimum * _value.minimum);
+						_maximum = (maximum * _value.maximum);
+					}
+					else
+					{
+						return (minimum * maximum);
+					}
+					
+					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "product()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value {real|Range}
+			/// @returns			{Range} | On error: {undefined}
+			/// @description		Return the result of division of the values of this Range divided
+			///						by the specified value or the ones of the specified Range. Attempts
+			///						of division by 0 are ignored.
+			static quotient = function(_value)
+			{
+				try
+				{
+					var _minimum = minimum;
+					var _maximum = maximum;
+					
+					if (is_real(_value))
+					{
+						if (_value != 0)
+						{
+							_minimum = (minimum * _value);
+							_maximum = (maximum * _value);
+						}
+					}
+					else if (is_instanceof(_value, Range))
+					{
+						if (_value.minimum != 0)
+						{
+							_minimum = (minimum * _value.minimum);
+						}
+						
+						if (_value.maximum != 0)
+						{
+							_maximum = (maximum * _value.maximum);
+						}
+					}
+					
+					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "product()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 			/// @argument			value {real}
 			/// @returns			{real} | On error: {any}
 			/// @description		Restrict the specified number to boundaries of this Range.
