@@ -386,7 +386,8 @@ function ParticleType() constructor
 			
 			/// @argument			shape {constant:pt_shape_*}
 			/// @description		Set the shape property of this Particle Type, which replaces its
-			///						Sprite if it is set.
+			///						Sprite if it is set. This change affects both new and existing
+			///						particles.
 			static setShape = function(_shape)
 			{
 				try
@@ -412,11 +413,11 @@ function ParticleType() constructor
 			/// @argument			matchAnimation? {bool}
 			/// @argument			random? {bool}
 			/// @description		Set the Sprite properties of particles of this Particle Type,
-			///						which replaces its shape is it is set.
-			///						The Sprite can be animated using its own animation speed, unless
-			///						it is set to match the life time of this Particle Type. The
-			///						animation will play from either the start to finish or randomized
-			///						frames if specified.
+			///						which replaces its shape is it is set. Specified Sprite can be
+			///						animated using its own animation speed, unless it is set to match
+			///						the life time of this Particle Type. The animation will play from
+			///						either the start to finish or randomized frames if specified.
+			///						This change affects both new and existing particles.
 			static setSprite = function(_sprite, _animate = false, _matchAnimation = false,
 										_randomize = false)
 			{
@@ -439,8 +440,8 @@ function ParticleType() constructor
 			}
 			
 			/// @argument			scale {Scale}
-			/// @description		Set the Scale of particles of this Particle Type, which stretches
-			///						them on the x and y axes.
+			/// @description		Set the Scale of particles of this Particle Type. This change
+			///						affects both new and existing particles.
 			static setScale = function(_scale)
 			{
 				try
@@ -468,8 +469,8 @@ function ParticleType() constructor
 			/// @argument			size {real|Range}
 			/// @argument			increase? {real}
 			/// @argument			wiggle? {real}
-			/// @description		Set the size properties of this Particle Type, which multiplies
-			///						the Scale of the particles.
+			/// @description		Set the size properties of this Particle Type to multiply the
+			///						Scale of the particles. This change affects only new particles.
 			static setSize = function(_size, _increase = 0, _wiggle = 0)
 			{
 				try
@@ -521,7 +522,9 @@ function ParticleType() constructor
 			/// @argument			speed_increase? {real}
 			/// @argument			speed_wiggle? {real}
 			/// @description		Set the movement speed properties of particles of this Particle
-			///						Type, indicating how fast each will move towards its direction.
+			///						Type to change amount of distance it moves through towards its
+			///						direction each update of its Particle System. This change affects
+			///						only new particles.
 			static setSpeed = function(_speed, _increase = 0, _wiggle = 0)
 			{
 				try
@@ -573,8 +576,8 @@ function ParticleType() constructor
 			/// @argument			increase? {real}
 			/// @argument			wiggle? {real}
 			/// @description		Set the movemement direction properties of particle of this
-			///						Particle Type, which is applied only while the partices have
-			///						any speed, otherwise equaling 0.
+			///						Particle Type, applied only while the partices have any speed.
+			///						This change affects only new particles.
 			static setDirection = function(_direction, _increase = 0, _wiggle = 0)
 			{
 				try
@@ -638,9 +641,9 @@ function ParticleType() constructor
 			/// @argument			wiggle? {real}
 			/// @argument			relative? {bool}
 			/// @description		Set the Angle propierties of the particle of this Particle Type,
-			///						which rotates their visual representation.
-			///						The Angle can be specified to be relative to the direction that
-			///						is applied only if the particle currently has any speed.
+			///						which rotates their visual representation. Specified Angle can be
+			///						relative to the direction that is applied only if the particle
+			///						has any speed. This change affects only new particles.
 			static setAngle = function(_angle, _increase = 0, _wiggle = 0, _relative = false)
 			{
 				try
@@ -703,9 +706,10 @@ function ParticleType() constructor
 			
 			/// @argument			value {real}
 			/// @argument			direction? {Angle}
-			/// @description		Set the gravity properties of the particles of this Particle
-			///						Type, which will move particles towards the specified direction,
-			///						in addition to its own speed.
+			/// @description		Set the gravity properties of the particles of this Particle Type
+			///						to move particles towards the specified direction, while also
+			///						applying their own speed. This change affects both new and
+			///						existing particles.
 			static setGravity = function(_value, _direction)
 			{
 				try
@@ -744,7 +748,8 @@ function ParticleType() constructor
 			
 			/// @argument			life {int|Range}
 			/// @description		Set the life length property of particles of this Particle Type,
-			///						which is the amount of steps after which they are destroyed.
+			///						which is the amount of steps after which they are destroyed. This
+			///						change affects only new particles.
 			static setLife = function(_life)
 			{
 				try
@@ -792,7 +797,8 @@ function ParticleType() constructor
 			/// @argument			color {int:color|Color2|Color3}
 			/// @description		Set the color property of this particles of this Particle Type to
 			///						either one static color or a gradual gradient color change over
-			///						the life time of each particle.
+			///						the life time of each particle. This change affects only new
+			///						particles.
 			static setColor = function(_color)
 			{
 				try
@@ -851,7 +857,7 @@ function ParticleType() constructor
 			
 			/// @argument			color {Color2}
 			/// @description		Set the color property of this Particle Type to a random static
-			///						value between two colors.
+			///						value between two colors. This change affects only new particles.
 			static setColorMix = function(_color)
 			{
 				try
@@ -883,7 +889,8 @@ function ParticleType() constructor
 			/// @argument			blue {real|Range}
 			/// @description		Set the color property of the particles of this Particle Type to
 			///						a static value made from a set of three RGB values, each being
-			///						either a static value or randomized from a 0-255 Range.
+			///						either a static value or randomized from a 0-255 Range. This
+			///						change affects only new particles.
 			static setColorRGB = function(_red, _green, _blue)
 			{
 				try
@@ -977,7 +984,8 @@ function ParticleType() constructor
 			/// @argument			value {real|Range}
 			/// @description		Set the color property of the particles of this Particle Type to
 			///						a static value made from a set of three HSV values, each being
-			///						either a static value or randomized from a 0-255 Range.
+			///						either a static value or randomized from a 0-255 Range. This
+			///						change affects only new particles.
 			static setColorHSV = function(_hue, _saturation, _value)
 			{
 				try
@@ -1070,6 +1078,7 @@ function ParticleType() constructor
 			/// @argument			blend_additive {bool}
 			/// @description		Set the additive blending property of particles of this Particle
 			///						Type, which alters their rendering when their locations overlap.
+			///						This change affects both new and existing particles.
 			static setBlend = function(_blend_additive)
 			{
 				try
@@ -1091,7 +1100,8 @@ function ParticleType() constructor
 			/// @argument			value3? {real}
 			/// @description		Set the alpha property of particle of this Particle Type to
 			///						either one static value or a gradual change over the life time
-			///						of each particle.
+			///						of each particle. This change affects both new and existing
+			///						particles.
 			static setAlpha = function(_value1, _value2, _value3)
 			{
 				try
@@ -1126,8 +1136,9 @@ function ParticleType() constructor
 			/// @argument			type {ParticleType}
 			/// @argument			number? {int}
 			/// @description		Set the step stream properties of particles of this Particle
-			///						Type, which will cause them to stream the particles of other
-			///						Particle Type each step.
+			///						Type, which will cause them to create the specified number of
+			///						particles of a different Particle Type each step. This change
+			///						affects both new and existing particles.
 			static setStep = function(_type, _number = 1)
 			{
 				try
@@ -1159,8 +1170,9 @@ function ParticleType() constructor
 			/// @argument			type {ParticleType}
 			/// @argument			number? {int}
 			/// @description		Set the death stream properties of particles of this Particle
-			///						Type, which will cause them to stream the particles of other
-			///						Particle Type once when their life time ends.
+			///						Type, which will cause them to create the specified number of
+			///						particles of a different Particle Type once when their life time
+			///						ends. This change affects both new and existing particles.
 			static setDeath = function(_type, _number = 1)
 			{
 				try
