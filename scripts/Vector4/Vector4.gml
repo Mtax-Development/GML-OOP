@@ -583,7 +583,7 @@ function Vector4() constructor
 			/// @returns			{Vector2} | On error: {undefined}
 			/// @description		Return the percentage value representing the specified value
 			///						inside of the boundaries made by the values of this Vector4 as a
-			///						numerical value in which one whole number is one full percentage.
+			///						numerical value, in which one whole number is one full percentage.
 			static percent = function(_value)
 			{
 				try

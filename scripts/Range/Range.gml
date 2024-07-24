@@ -219,8 +219,8 @@ function Range() constructor
 			
 			/// @argument			value {real}
 			/// @returns			{real} | On error: {any}
-			/// @description		Return the value at the position within this Range of the 
-			///						specified precentage.
+			/// @description		Return the value at the position within this Range of the specified
+			///						precentage.
 			static interpolate = function(_value)
 			{
 				try
@@ -236,9 +236,9 @@ function Range() constructor
 			}
 			
 			/// @returns			{real} | On error: {any}
-			/// @description		Return the percentage value representing the specified value
-			///						inside of the Range as a numerical value in which one whole
-			///						number is one full percentage.
+			/// @description		Return the percentage value representing the specified value inside
+			///						of the Range as a numerical value, in which one whole number is one
+			///						full percentage.
 			static percent = function(_value)
 			{
 				try

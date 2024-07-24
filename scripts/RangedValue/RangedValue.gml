@@ -78,7 +78,7 @@ function RangedValue() constructor
 			
 			/// @returns			{real} | On error: {undefined}
 			/// @description		Return the percentage value representing the value inside of the
-			///						Range as a numerical value in which one whole number is one full
+			///						Range as a numerical value, in which one whole number is one full
 			///						percentage.
 			static percent = function()
 			{
