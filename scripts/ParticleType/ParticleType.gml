@@ -1124,11 +1124,11 @@ function ParticleType() constructor
 			}
 			
 			/// @argument			type {ParticleType}
-			/// @argument			number {int}
+			/// @argument			number? {int}
 			/// @description		Set the step stream properties of particles of this Particle
 			///						Type, which will cause them to stream the particles of other
 			///						Particle Type each step.
-			static setStep = function(_type, _number)
+			static setStep = function(_type, _number = 1)
 			{
 				try
 				{
@@ -1157,11 +1157,11 @@ function ParticleType() constructor
 			}
 			
 			/// @argument			type {ParticleType}
-			/// @argument			number {int}
+			/// @argument			number? {int}
 			/// @description		Set the death stream properties of particles of this Particle
 			///						Type, which will cause them to stream the particles of other
 			///						Particle Type once when their life time ends.
-			static setDeath = function(_type, _number)
+			static setDeath = function(_type, _number = 1)
 			{
 				try
 				{
