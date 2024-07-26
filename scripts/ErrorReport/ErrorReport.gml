@@ -260,8 +260,12 @@ function ErrorReport() constructor
 					///						same as of the specified one.
 					static equals = function(_other)
 					{
-						if ((string_copy(string(instanceof(_other)), 1, 10) == "ReportData")
-						and (detail == _other.detail))
+						if ((self.isFunctional())
+						and (string_copy(string(instanceof(_other)), 1, 10) == "ReportData"))
+						and (_other.isFunctional()) and ((detail.line == _other.detail.line)
+						and (detail.longMessage == _other.detail.longMessage)
+						and (detail.script == _other.detail.script)
+						and (array_equals(detail.stacktrace, _other.detail.stacktrace)))
 						{
 							if ((is_array(callstack)) and (is_array(_other.callstack)))
 							{
