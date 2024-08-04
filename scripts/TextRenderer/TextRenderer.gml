@@ -197,7 +197,6 @@ function TextRenderer() constructor
 			///						from its origin.
 			static getBoundaryOffset = function()
 			{
-				//+TODO: _scale argument support.
 				var _font_original = draw_get_font();
 				
 				try
