@@ -153,6 +153,29 @@ function Color4() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			/// @argument			value {int:color|Color4}
+			/// @returns			{bool}
+			/// @description		Check if all values of this constructor are the same as the
+			///						specified color or respective values of the specified Color4.
+			static equals = function(_value)
+			{
+				if (is_instanceof(_value, Color4))
+				{
+					return ((color1 == _value.color1) and (color2 == _value.color2)
+							and (color3 == _value.color3) and (color4 == _value.color4));
+				}
+				else if (is_real(_value))
+				{
+					return ((color1 == _value) and (color2 == _value) and (color3 == _value)
+							and (color4 == _value));
+				}
+				
+				return false;
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			/// @description		Invert the order of colors.

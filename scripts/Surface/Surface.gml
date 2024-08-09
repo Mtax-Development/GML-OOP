@@ -367,6 +367,14 @@ function Surface() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			other {Surface}
+			/// @returns			{bool}
+			/// @description		Check if the specified constructor uses the same resource.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, Surface)) and (ID == _other.ID));
+			}
+			
 			/// @argument			location {Vector2}
 			/// @argument			getFull? {bool}
 			/// @returns			{int:color|int:color:abgr32bit} | On error: {undefined}

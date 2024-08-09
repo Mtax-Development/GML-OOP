@@ -174,6 +174,31 @@ function SpriteRenderer() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			/// @argument			other {SpriteRenderer}
+			/// @returns			{bool}
+			/// @description		Check if specified constructor has equivalent properties.
+			static equals = function(_other)
+			{
+				return (((sprite == _other.sprite) or ((is_instanceof(_other.sprite, Sprite))
+						and (sprite.equals(_other.sprite))) and ((location == _other.location)
+						or ((string_copy(instanceof(location), 1, 6) == "Vector")
+						and (location.equals(_other.location)))) and (frame == _other.frame)
+						and ((scale == _other.scale) or ((is_instanceof(scale, Scale)
+						and (scale.equals(_other.scale))))) and ((angle == _other.angle)
+						or ((is_instanceof(angle, Angle) and (angle.equals(_other.angle)))))
+						and ((color == _other.color)
+						or ((string_copy(instanceof(fill_color), 1, 5) == "Color")
+						and (color.equals(_other.color)))) and (alpha == _other.alpha)
+						and ((part == _other.part) or ((is_instanceof(part, Vector4)
+						and (part.equals(_other.part))))) and ((origin == _other.origin)
+						or ((is_instanceof(origin, Vector2) and (origin.equals(_other.origin)))))
+						and ((target == _other.target) or ((is_instanceof(target, Surface)
+						and (target.equals(_other.target)))))));
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			/// @argument			sprite? {Sprite}

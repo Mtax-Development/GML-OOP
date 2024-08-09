@@ -243,6 +243,14 @@ function Font() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			other {Font}
+			/// @returns			{bool}
+			/// @description		Check if the specified constructor uses the same resource.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, Font)) and (ID == _other.ID));
+			}
+			
 			/// @returns			{pointer}
 			/// @description		Get the pointer to texture page of this Font.
 			static getTexture = function()

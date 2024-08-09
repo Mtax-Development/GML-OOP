@@ -66,6 +66,14 @@ function TextAlign() constructor
 		#endregion
 		#region <Getter>
 			
+			/// @argument			other {TextAlign}
+			/// @returns			{bool}
+			/// @description		Check if specified constructor has equivalent properties.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, TextAlign)) and (x == _other.x) and (y == _other.y));
+			}
+			
 			/// @returns			{Vector2} | On error: {undefined}
 			/// @description		Return the multiplications of locations this alignment occupies
 			///						within its possible area.

@@ -128,6 +128,25 @@ function Rectangle() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			other {Rectangle}
+			/// @returns			{bool}
+			/// @description		Check if specified constructor has equivalent properties.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, Rectangle)) and (fill_alpha == _other.fill_alpha)
+						and (outline_size == _other.outline_size)
+						and (outline_alpha == _other.outline_alpha)
+						and ((location == _other.location)
+						or ((string_copy(instanceof(location), 1, 6) == "Vector")
+						and (location.equals(_other.location))))
+						and ((fill_color == _other.fill_color)
+						or ((string_copy(instanceof(fill_color), 1, 5) == "Color")
+						and (fill_color.equals(_other.fill_color))))
+						and ((outline_color == _other.outline_color)
+						or ((string_copy(instanceof(outline_color), 1, 5) == "Color")
+						and (outline_color.equals(_other.outline_color)))));
+			}
+			
 			/// @argument			object {int:object}
 			/// @argument			precise? {bool}
 			/// @argument			excludedInstance? {int:instance}
