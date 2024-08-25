@@ -1,6 +1,7 @@
 //  @function				Callback()
 /// @argument				function {function|function[]}
 /// @argument				argument? {any|any[]|any[+]}
+/// @argument				scope? {int:instance|struct}
 /// @description			Constructs a handler storing a reference to a function, method or an array
 ///							of them and their arguments to execute them at any time.
 ///							Single value specified as an argument will be provided to each execution.
@@ -25,6 +26,7 @@ function Callback() constructor
 				//|Construction type: Empty.
 				ID = undefined;
 				self.argument = [];
+				scope = undefined;
 				
 				if (argument_count > 0)
 				{
@@ -35,12 +37,14 @@ function Callback() constructor
 						
 						ID = _other.ID;
 						self.argument = _other.argument;
+						scope = _other.scope;
 					}
 					else
 					{
 						//|Construction type: New constructor.
 						ID = argument[0];
 						self.argument = ((argument_count > 1) ? argument[1] : []);
+						scope = ((argument_count > 2) ? argument[2] : other);
 					}
 				}
 				
@@ -167,6 +171,7 @@ function Callback() constructor
 					var _argument_array = ((_argument_isArray)
 										   ? self.argument : array_create(_callback_count,
 																		  self.argument));
+					var _scope = scope;
 					var _result = array_create(_callback_count, undefined);
 					var _i = 0;
 					repeat (_callback_count)
@@ -177,12 +182,15 @@ function Callback() constructor
 						
 						try
 						{
-							_result[_i] = script_execute_ext(_callback_index,
-															 ((_argument_direct)
-															  ? _argument_array
-															  : ((is_array(_argument_array[_i]))
-																 ? _argument_array[_i]
-																 : [_argument_array[_i]])));
+							with (other) with (_scope)
+							{
+								_result[_i] = script_execute_ext(_callback_index,
+																 ((_argument_direct)
+																  ? _argument_array
+																  : ((is_array(_argument_array[_i]))
+																	 ? _argument_array[_i]
+																	 : [_argument_array[_i]])));
+							}
 						}
 						catch (_exception)
 						{
