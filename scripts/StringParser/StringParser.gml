@@ -612,35 +612,61 @@ function StringParser() constructor
 			}
 			
 			/// @argument			font? {Font|int:font}
+			/// @argument			scale? {Scale|int}
 			/// @argument			separation? {int}
 			/// @argument			width? {int}
 			/// @returns			{Vector2}
 			/// @description		Return the number of pixels the string would occupy by applying
-			///						either the specified or currently set Font.
+			///						either the specified or currently set Font, at specified Scale
+			///						or size of that Font.
 			///						Limitations of width before forced line-break and separation 
 			///						between lines of text can be specified to be included.
-			static getPixelSize = function(_font, _separation, _width)
+			static getPixelSize = function(_font, _scale, _separation, _width)
 			{
 				var _font_original = draw_get_font();
 				
 				try
 				{
 					var _string = string(ID);
+					var _result = undefined;
 					
 					if (_font != undefined)
 					{
 						draw_set_font((is_instanceof(_font, Font)) ? _font.ID : _font);
 					}
 					
+					var _font_current = draw_get_font();
+					
 					if ((_separation != undefined) and (_width != undefined))
 					{
-						return new Vector2(string_width_ext(_string, _separation, _width),
-										   string_height_ext(_string, _separation, _width));
+						_result = new Vector2(string_width_ext(_string, _separation, _width),
+											  string_height_ext(_string, _separation, _width));
 					}
 					else
 					{
-						return new Vector2(string_width(_string), string_height(_string));
+						_result = new Vector2(string_width(_string), string_height(_string));
 					}
+					
+					var _scale_x = 1;
+					var _scale_y = 1;
+					
+					if (is_instanceof(_scale, Scale))
+					{
+						_scale_x = _scale.x;
+						_scale_y = _scale.y;
+					}
+					else if (is_real(_scale))
+					{
+						var _font_point_size_multiplier = (round(_scale) /
+														   font_get_size(_font_current));
+						_scale_x = _font_point_size_multiplier;
+						_scale_y = _font_point_size_multiplier;
+					}
+					
+					_result.x *= _scale_x;
+					_result.y *= _scale_y;
+					
+					return _result;
 				}
 				catch (_exception)
 				{

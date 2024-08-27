@@ -281,13 +281,17 @@ function TextRenderer() constructor
 		#region <Setters>
 			
 			/// @argument			boundary {Vector2}
+			/// @argument			location? {Vector2}
+			/// @argument			scale? {Scale|int}
 			/// @argument			mark_separator? {string}
 			/// @argument			mark_cut? {string}
 			/// @description		Attempt to fit the text into the specified boundary by adding line
-			///						breaks between words split by the specified separator if they would
-			///						exceed the boundary horizontally upon render. The text will be cut
-			///						short if it would then exceed the vertical boundary.
-			static wrapText = function(_boundary, _mark_separator = " ", _mark_cut = "...")
+			///						breaks between words, split by the specified separator, if they
+			///						would exceed the boundary horizontally if rendered using current or
+			///						specified temporarily replaced location and scale. The text will be
+			///						cut if it would then exceed vertical boundary.
+			static wrapText = function(_boundary, _location = location, _scale = scale,
+									   _mark_separator = " ", _mark_cut = "...")
 			{
 				var _string_original = ID;
 				
@@ -295,7 +299,7 @@ function TextRenderer() constructor
 				{
 					var _parser = new StringParser(ID);
 					
-					if ((location.x + _parser.getPixelSize(font).x +
+					if ((_location.x + _parser.getPixelSize(font).x +
 						 self.getBoundaryOffset().x1) > _boundary.x)
 					{
 						var _text_target = "";
@@ -324,12 +328,12 @@ function TextRenderer() constructor
 							_parser.ID += _word_target;
 							ID = _parser.ID;
 							
-							if ((location.x + _parser.getPixelSize(font).x +
+							if ((_location.x + _parser.getPixelSize(font, _scale).x +
 								 self.getBoundaryOffset().x1) > _boundary.x)
 							{
 								_parser.ID = (_text_target + _newLine + _word[_i]);
 								
-								if ((location.y + _parser.getPixelSize(font).y +
+								if ((_location.y + _parser.getPixelSize(font, _scale).y +
 									 self.getBoundaryOffset().y1) > _boundary.y)
 								{
 									ID = (_text_target + _mark_cut);
@@ -343,7 +347,7 @@ function TextRenderer() constructor
 							}
 							else
 							{
-								if ((location.y + _parser.getPixelSize(font).y +
+								if ((_location.y + _parser.getPixelSize(font, _scale).y +
 									 self.getBoundaryOffset().y1) > _boundary.y)
 								{
 									ID = (_text_target + _mark_cut);
