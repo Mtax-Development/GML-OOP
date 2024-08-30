@@ -1341,6 +1341,17 @@ function Vector4() constructor
 				return self;
 			}
 			
+			/// @description		Round the first set of values down and second set up.
+			static roundToBorder = function()
+			{
+				x1 = floor(x1);
+				y1 = floor(y1);
+				x2 = ceil(x2);
+				y2 = ceil(y2);
+				
+				return self;
+			}
+			
 			/// @argument			x1? {real}
 			/// @argument			y1? {real}
 			/// @argument			x2? {real}
