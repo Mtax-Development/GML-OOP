@@ -175,6 +175,138 @@ function Scale() constructor
 		#endregion
 		#region <Setters>
 			
+			/// @argument			value {real|Scale}
+			/// @description		Add to the values of this Scale the specified value or values of
+			///						other specified Scale.
+			static add = function(_value)
+			{
+				try
+				{
+					var _result_x = x;
+					var _result_y = y;
+					
+					if (is_real(_value))
+					{
+						_result_x += _value;
+						_result_y += _value;
+					}
+					else
+					{
+						_result_x += _value.x;
+						_result_y += _value.y;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "add()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value {real|Scale}
+			/// @description		Substract from the values of this Scale the specified value or
+			///						values of other specified Scale.
+			static substract = function(_value)
+			{
+				try
+				{
+					var _result_x = x;
+					var _result_y = y;
+					
+					if (is_real(_value))
+					{
+						_result_x -= _value;
+						_result_y -= _value;
+					}
+					else
+					{
+						_result_x -= _value.x;
+						_result_y -= _value.y;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "substract()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value {real|Scale}
+			/// @description		Multiply the values of this Scale by specified value or values
+			///						of other specified Scale.
+			static multiply = function(_value)
+			{
+				try
+				{
+					var _result_x = x;
+					var _result_y = y;
+					
+					if (is_real(_value))
+					{
+						_result_x *= _value;
+						_result_y *= _value;
+					}
+					else
+					{
+						_result_x *= _value.x;
+						_result_y *= _value.y;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "multiply()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value {real|Scale}
+			/// @description		Divide the values of this Scale by specified value or values of
+			///						other specified Scale. Attempts of division by 0 are ignored.
+			static divide = function(_value)
+			{
+				try
+				{
+					if (is_real(_value))
+					{
+						if (_value != 0)
+						{
+							x /= _value;
+							y /= _value;
+						}
+					}
+					else
+					{
+						if (_value.x != 0)
+						{
+							x /= _value.x;
+						}
+						
+						if (_value.y != 0)
+						{
+							y /= _value.y;
+						}
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "divide()"], _exception);
+				}
+				
+				return self;
+			}
+			
 			/// @argument			target {Scale}
 			/// @argument			rate {Vector2}
 			/// @description		Move the x and y values towards the specified target with the

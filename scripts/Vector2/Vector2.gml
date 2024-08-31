@@ -521,8 +521,8 @@ function Vector2() constructor
 		#region <Setters>
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Add to the values of this Vector2 the specified value or the
-			///						values of other specified Vector2.
+			/// @description		Add to the values of this Vector2 the specified value or values of
+			///						other specified Vector2.
 			static add = function(_value)
 			{
 				try
@@ -553,7 +553,7 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Substract the values of this Vector2 the specified value or the
+			/// @description		Substract from the values of this Vector2 the specified value or
 			///						values of other specified Vector2.
 			static substract = function(_value)
 			{
@@ -585,8 +585,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Multiply the values of this Vector2 by specified value or the
-			///						values of other specified Vector2.
+			/// @description		Multiply the values of this Vector2 by specified value or values
+			///						of other specified Vector2.
 			static multiply = function(_value)
 			{
 				try
@@ -617,8 +617,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Divide the values of this Vector2 by specified value or the values
-			///						of other specified Vector2. Attempts of division by 0 are ignored.
+			/// @description		Divide the values of this Vector2 by specified value or values of
+			///						other specified Vector2. Attempts of division by 0 are ignored.
 			static divide = function(_value)
 			{
 				try
