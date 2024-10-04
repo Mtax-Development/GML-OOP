@@ -152,12 +152,13 @@ function Callback() constructor
 		#region <Execution>
 			
 			/// @argument			condition? {bool}
+			/// @argument			scope? {int:instance|struct}
 			/// @returns			{any|undefined}
 			/// @description		Execute all functions and methods of this constructor in their
 			///						order by providing them their respective arguments, if any. This
 			///						execution can be additionally controlled by specifying a condition
 			///						to prevent the operation when that condition is not fulfilled.
-			static execute = function(_condition = true)
+			static execute = function(_condition = true, _scope = scope)
 			{
 				if ((ID != undefined) and (_condition))
 				{
@@ -171,7 +172,6 @@ function Callback() constructor
 					var _argument_array = ((_argument_isArray)
 										   ? self.argument : array_create(_callback_count,
 																		  self.argument));
-					var _scope = scope;
 					var _result = array_create(_callback_count, undefined);
 					var _i = 0;
 					repeat (_callback_count)
