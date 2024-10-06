@@ -24,29 +24,10 @@ function Shader() constructor
 				
 				event =
 				{
-					beforeActivation:
-					{
-						callback: undefined,
-						argument: undefined
-					},
-					
-					afterActivation:
-					{
-						callback: undefined,
-						argument: undefined
-					},
-					
-					beforeDeactivation:
-					{
-						callback: undefined,
-						argument: undefined
-					},
-					
-					afterDeactivation:
-					{
-						callback: undefined,
-						argument: undefined
-					}
+					beforeActivation: new Callback(undefined, [], other),
+					afterActivation: new Callback(undefined, [], other),
+					beforeDeactivation: new Callback(undefined, [], other),
+					afterDeactivation: new Callback(undefined, [], other),
 				};
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
@@ -116,40 +97,10 @@ function Shader() constructor
 						
 						if (is_struct(_other.event))
 						{
-							event = {};
-							
-							var _eventList = variable_struct_get_names(_other.event);
-							var _i = [0, 0];
-							repeat (array_length(_eventList))
-							{
-								var _event = {};
-								var _other_event = variable_struct_get(_other.event,
-																	   _eventList[_i[0]]);
-								var _eventPropertyList = variable_struct_get_names(_other_event);
-								
-								_i[1] = 0;
-								repeat (array_length(_eventPropertyList))
-								{
-									var _property = variable_struct_get(_other_event,
-																		_eventPropertyList[_i[1]]);
-									var _value = _property;
-									
-									if (is_array(_property))
-									{
-										_value = [];
-										
-										array_copy(_value, 0, _property, 0, array_length(_property));
-									}
-									
-									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
-									
-									++_i[1];
-								}
-								
-								variable_struct_set(event, _eventList[_i[0]], _event);
-								
-								++_i[0];
-							}
+							event.beforeActivation.setAll(_other.event.beforeActivation);
+							event.afterActivation.setAll(_other.event.afterActivation);
+							event.beforeDeactivation.setAll(_other.event.beforeDeactivation);
+							event.afterDeactivation.setAll(_other.event.afterDeactivation);
 						}
 						else
 						{
@@ -511,182 +462,16 @@ function Shader() constructor
 						switch (_target)
 						{
 							case true:
-								if ((is_struct(event))
-								and (event.beforeActivation.callback != undefined))
-								{
-									var _callback_isArray = is_array(event.beforeActivation.callback);
-									var _argument_isArray = is_array(event.beforeActivation.argument);
-									var _callback = ((_callback_isArray)
-													 ? event.beforeActivation.callback
-													 : [event.beforeActivation.callback]);
-									var _callback_count = array_length(_callback);
-									var _argument = ((_argument_isArray)
-													 ? event.beforeActivation.argument
-													 : array_create(_callback_count,
-																	event.beforeActivation.argument));
-									var _i = 0;
-									repeat (_callback_count)
-									{
-										var _callback_index = ((is_method(_callback[_i]))
-															   ? method_get_index(_callback[_i])
-															   : _callback[_i]);
-										
-										try
-										{
-											script_execute_ext(_callback_index,
-															   (((!_callback_isArray)
-																 and (_argument_isArray))
-																? _argument : ((is_array(_argument[_i])
-																			   ? _argument[_i]
-																			   : [_argument[_i]]))));
-										}
-										catch (_exception)
-										{
-											new ErrorReport().report([other, self, "setActive()",
-																	  "event", "beforeActivation"],
-																	 _exception);
-										}
-									
-									++_i;
-									}
-								}
-								
+								event.beforeActivation.execute();
 								shader_set(ID);
-								
-								if ((is_struct(event))
-								and (event.afterActivation.callback != undefined))
-								{
-									var _callback_isArray = is_array(event.afterActivation.callback);
-									var _argument_isArray = is_array(event.afterActivation.argument);
-									var _callback = ((_callback_isArray)
-													 ? event.afterActivation.callback
-													 : [event.afterActivation.callback]);
-									var _callback_count = array_length(_callback);
-									var _argument = ((_argument_isArray)
-													 ? event.afterActivation.argument
-													 : array_create(_callback_count,
-																	event.afterActivation.argument));
-									var _i = 0;
-									repeat (_callback_count)
-									{
-										var _callback_index = ((is_method(_callback[_i]))
-															   ? method_get_index(_callback[_i])
-															   : _callback[_i]);
-										
-										try
-										{
-											script_execute_ext(_callback_index,
-															   (((!_callback_isArray)
-																 and (_argument_isArray))
-																? _argument : ((is_array(_argument[_i])
-																			   ? _argument[_i]
-																			   : [_argument[_i]]))));
-										}
-										catch (_exception)
-										{
-											new ErrorReport().report([other, self, "setActive()",
-																	  "event", "afterActivation"],
-																	 _exception);
-										}
-									
-										++_i;
-									}
-								}
+								event.afterActivation.execute();
 							break;
 							case false:
 								if (shader_current() == ID)
 								{
-									if ((is_struct(event))
-									and (event.beforeDeactivation.callback != undefined))
-									{
-										var _callback_isArray = is_array(event.beforeDeactivation
-																			  .callback);
-										var _argument_isArray = is_array(event.beforeDeactivation
-																			  .argument);
-										var _callback = ((_callback_isArray)
-														 ? event.beforeDeactivation.callback
-														 : [event.beforeDeactivation.callback]);
-										var _callback_count = array_length(_callback);
-										var _argument = ((_argument_isArray)
-														 ? event.beforeDeactivation.argument
-														 : array_create(_callback_count,
-																		event.beforeDeactivation
-																			 .argument));
-										var _i = 0;
-										repeat (_callback_count)
-										{
-											var _callback_index = ((is_method(_callback[_i]))
-																   ? method_get_index(_callback[_i])
-																   : _callback[_i]);
-											
-											try
-											{
-												script_execute_ext(_callback_index,
-																   (((!_callback_isArray)
-																	 and (_argument_isArray))
-																	? _argument
-																	: ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-											}
-											catch (_exception)
-											{
-												new ErrorReport().report([other, self,
-																		  "setActive()", "event",
-																		  "beforeDeactivation"],
-																		  _exception);
-											}
-									
-											++_i;
-										}
-									}
-									
+									event.beforeDeactivation.execute();
 									shader_reset();
-									
-									if ((is_struct(event))
-									and (event.afterDeactivation.callback != undefined))
-									{
-										var _callback_isArray = is_array(event.afterDeactivation
-																			  .callback);
-										var _argument_isArray = is_array(event.afterDeactivation
-																			  .argument);
-										var _callback = ((_callback_isArray)
-														 ? event.afterDeactivation.callback
-														 : [event.afterDeactivation.callback]);
-										var _callback_count = array_length(_callback);
-										var _argument = ((_argument_isArray)
-														 ? event.afterDeactivation.argument
-														 : array_create(_callback_count,
-																		event.afterDeactivation
-																			 .argument));
-										var _i = 0;
-										repeat (_callback_count)
-										{
-											var _callback_index = ((is_method(_callback[_i]))
-																   ? method_get_index(_callback[_i])
-																   : _callback[_i]);
-											
-											try
-											{
-												script_execute_ext(_callback_index,
-																   (((!_callback_isArray)
-																	 and (_argument_isArray))
-																	? _argument
-																	: ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-											}
-											catch (_exception)
-											{
-												new ErrorReport().report([other, self,
-																		  "setActive()", "event",
-																		  "beforeDeactivation"],
-																		  _exception);
-											}
-									
-											++_i;
-										}
-									}
+									event.afterDeactivation.execute();
 								}
 							break;
 						}

@@ -30,17 +30,8 @@ function Circle() constructor
 				
 				event =
 				{
-					beforeRender:
-					{
-						callback: undefined,
-						argument: undefined
-					},
-					
-					afterRender:
-					{
-						callback: undefined,
-						argument: undefined
-					}
+					beforeRender: new Callback(undefined, [], other),
+					afterRender: new Callback(undefined, [], other)
 				};
 				
 				if (argument_count > 0)
@@ -61,38 +52,8 @@ function Circle() constructor
 						
 						if (is_struct(_other.event))
 						{
-							event = {};
-							
-							var _eventList = variable_struct_get_names(_other.event);
-							var _i = [0, 0];
-							repeat (array_length(_eventList))
-							{
-								var _event = {};
-								var _other_event = variable_struct_get(_other.event,
-																	   _eventList[_i[0]]);
-								var _eventPropertyList = variable_struct_get_names(_other_event);
-								_i[1] = 0;
-								repeat (array_length(_eventPropertyList))
-								{
-									var _property = variable_struct_get(_other_event,
-																		_eventPropertyList[_i[1]]);
-									var _value = _property;
-									
-									if (is_array(_property))
-									{
-										_value = [];
-										array_copy(_value, 0, _property, 0, array_length(_property));
-									}
-									
-									variable_struct_set(_event, _eventPropertyList[_i[1]], _value);
-									
-									++_i[1];
-								}
-								
-								variable_struct_set(event, _eventList[_i[0]], _event);
-								
-								++_i[0];
-							}
+							event.beforeRender.setAll(_other.event.beforeRender);
+							event.afterRender.setAll(_other.event.afterRender);
 						}
 						else
 						{
@@ -452,42 +413,7 @@ function Circle() constructor
 				{
 					if (self.isFunctional())
 					{
-						if ((is_struct(event)) and (event.beforeRender.callback != undefined))
-						{
-							var _callback_isArray = is_array(event.beforeRender.callback);
-							var _argument_isArray = is_array(event.beforeRender.argument);
-							var _callback = ((_callback_isArray)
-											 ? event.beforeRender.callback
-											 : [event.beforeRender.callback]);
-							var _callback_count = array_length(_callback);
-							var _argument = ((_argument_isArray)
-											 ? event.beforeRender.argument
-											 : array_create(_callback_count,
-															event.beforeRender.argument));
-							var _i = 0;
-							repeat (_callback_count)
-							{
-								var _callback_index = ((is_method(_callback[_i]))
-													   ? method_get_index(_callback[_i])
-													   : _callback[_i]);
-								
-								try
-								{
-									script_execute_ext(_callback_index,
-													   (((!_callback_isArray) and (_argument_isArray))
-														? _argument : ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-								}
-								catch (_exception)
-								{
-									new ErrorReport().report([other, self, "render()", "event",
-															  "beforeRender"], _exception);
-								}
-								
-								++_i;
-							}
-						}
+						event.beforeRender.execute();
 						
 						if ((fill_color != undefined) and (fill_alpha > 0))
 						{
@@ -515,42 +441,7 @@ function Circle() constructor
 											  outline_color, true);
 						}
 						
-						if ((is_struct(event)) and (event.afterRender.callback != undefined))
-						{
-							var _callback_isArray = is_array(event.afterRender.callback);
-							var _argument_isArray = is_array(event.afterRender.argument);
-							var _callback = ((_callback_isArray)
-											 ? event.afterRender.callback
-											 : [event.afterRender.callback]);
-							var _callback_count = array_length(_callback);
-							var _argument = ((_argument_isArray)
-											 ? event.afterRender.argument
-											 : array_create(_callback_count,
-															event.afterRender.argument));
-							var _i = 0;
-							repeat (_callback_count)
-							{
-								var _callback_index = ((is_method(_callback[_i]))
-													   ? method_get_index(_callback[_i])
-													   : _callback[_i]);
-								
-								try
-								{
-									script_execute_ext(_callback_index,
-													   (((!_callback_isArray) and (_argument_isArray))
-														? _argument : ((is_array(_argument[_i])
-																	   ? _argument[_i]
-																	   : [_argument[_i]]))));
-								}
-								catch (_exception)
-								{
-									new ErrorReport().report([other, self, "render()", "event",
-															  "afterRender"], _exception);
-								}
-								
-								++_i;
-							}
-						}
+						event.afterRender.execute();
 					}
 					else
 					{
