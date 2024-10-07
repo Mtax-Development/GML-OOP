@@ -1224,223 +1224,107 @@ function ParticleType() constructor
 					{
 						event.beforeCreation.execute();
 						
+						var __createParticle;
+						
+						if (is_real(_color))
+						{
+							__createParticle = function(_particleSystem, _location_x, _location_y,
+														_color)
+							{
+								part_particles_create_color(_particleSystem.ID, _location_x,
+															_location_y, ID, _color, 1);
+							}
+						}
+						else
+						{
+							__createParticle = function(_particleSystem, _location_x, _location_y)
+							{
+								part_particles_create(_particleSystem.ID, _location_x, _location_y,
+													  ID, 1);
+							}
+						}
+						
 						switch (instanceof(_shape))
-						{	
+						{
 							case "Rectangle":
-								if (is_real(_color))
+								repeat (_number)
 								{
-									repeat (_number)
-									{
-										var _location_x = irandom_range(_shape.location.x1,
-																		_shape.location.x2);
-										var _location_y = irandom_range(_shape.location.y1,
-																		_shape.location.y2);
-										
-										part_particles_create_color(_particleSystem.ID, _location_x,
-																	_location_y, ID, _color, 1);
-									}
-								}
-								else
-								{
-									repeat (_number)
-									{
-										part_particles_create(_particleSystem.ID, 
-															  irandom_range(_shape.location.x1,
-																			_shape.location.x2),
-															  irandom_range(_shape.location.y1,
-																			_shape.location.y2),
-															  ID, 1);
-									}
+									__createParticle(_particleSystem,
+													 irandom_range(_shape.location.x1,
+																   _shape.location.x2),
+													 irandom_range(_shape.location.y1,
+																   _shape.location.y2), _color);
 								}
 							break;
-							
 							case "Triangle":
-								if (is_real(_color))
+								repeat (_number)
 								{
-									repeat (_number)
-									{
-										var _random = random(1);
-										var _sqrt = sqrt(random(1));
-										var _location_x = ((1 - _sqrt) * _shape.location1.x) 
-														   + ((_sqrt * (1 - _random))
-														   * _shape.location2.x) + ((_sqrt * _random)
-														   * _shape.location3.x);
-										var _location_y = ((1 - _sqrt) * _shape.location1.y) 
-														   + ((_sqrt * (1 - _random))
-														   * _shape.location2.y) + ((_sqrt * _random)
-														   * _shape.location3.y);
-										
-										part_particles_create_color(_particleSystem.ID, _location_x,
-																	_location_y, ID, _color, 1);
-									}
-								}
-								else
-								{
-									repeat (_number)
-									{
-										var _random = random(1);
-										var _sqrt = sqrt(random(1));
-										var _location_x = ((1 - _sqrt) * _shape.location1.x) 
-														   + ((_sqrt * (1 - _random))
-														   * _shape.location2.x) + ((_sqrt * _random)
-														   * _shape.location3.x);
-										var _location_y = ((1 - _sqrt) * _shape.location1.y) 
-														   + ((_sqrt * (1 - _random))
-														   * _shape.location2.y) 
-														   + ((_sqrt * _random) * _shape.location3.y);
-										
-										part_particles_create(_particleSystem.ID, _location_x,
-															  _location_y, ID, 1);
-									}
+									var _random = random(1);
+									var _sqrt = sqrt(random(1));
+									var _location_x = (((1 - _sqrt) * _shape.location1.x) + ((_sqrt *
+													   (1 - _random)) * _shape.location2.x) +
+													   ((_sqrt * _random) * _shape.location3.x));
+									var _location_y = (((1 - _sqrt) * _shape.location1.y) + ((_sqrt *
+													   (1 - _random)) * _shape.location2.y) +
+													   ((_sqrt * _random) * _shape.location3.y));
+									
+									__createParticle(_particleSystem, _location_x, _location_y,
+													 _color);
 								}
 							break;
-							
 							case "Line":
-								if (is_real(_color))
+								var _distance = point_distance(_shape.location.x1, _shape.location.y1,
+															   _shape.location.x2,
+															   _shape.location.y2);
+								var _angle = point_direction(_shape.location.x1, _shape.location.y1,
+															 _shape.location.x2, _shape.location.y2);
+								var _side_angle = (_angle + 90);
+								var _side_length = (_shape.size * 0.5);
+								repeat (_number)
 								{
-									var _distance = point_distance(_shape.location.x1,
-																   _shape.location.y1,
-																   _shape.location.x2,
-																   _shape.location.y2);
-									var _angle = point_direction(_shape.location.x1,
-																 _shape.location.y1,
-																 _shape.location.x2,
-																 _shape.location.y2);
-									var _side_angle = (_angle + 90);
-									var _side_length = (_shape.size * 0.5);
+									var _length = irandom_range(0, _distance);
+									var _side_position = irandom_range((-_side_length), _side_length);
+									var _location_x = (_shape.location.x1 +
+													   lengthdir_x(_length, _angle) +
+													   lengthdir_x(_side_position, _side_angle));
+									var _location_y = (_shape.location.y1 +
+													   lengthdir_y(_length, _angle) +
+													   lengthdir_y(_side_position, _side_angle));
 									
-									repeat (_number)
-									{
-										var _length = irandom_range(0, _distance);
-										var _location_x = (_shape.location.x1 
-														   + lengthdir_x(_length, _angle));
-										var _location_y = (_shape.location.y1 
-														   + lengthdir_y(_length, _angle));
-										var _side_position = irandom_range((-_side_length),
-																		   _side_length);
-										_location_x += lengthdir_x(_side_position, _side_angle);
-										_location_y += lengthdir_y(_side_position, _side_angle);
-	 									
-										part_particles_create_color(_particleSystem.ID, _location_x,
-																	_location_y, ID, _color, 1);
-									}
-								}
-								else
-								{
-									var _distance = point_distance(_shape.location.x1,
-																   _shape.location.y1,
-																   _shape.location.x2,
-																   _shape.location.y2);
-									var _angle = point_direction(_shape.location.x1,
-																 _shape.location.y1,
-																 _shape.location.x2,
-																 _shape.location.y2);
-									var _side_angle = (_angle + 90);
-									var _side_length = (_shape.size * 0.5);
-									
-									repeat (_number)
-									{
-										var _length = irandom_range(0, _distance);
-										var _location_x = (_shape.location.x1 
-														   + lengthdir_x(_length, _angle));
-										var _location_y = (_shape.location.y1 
-														   + lengthdir_y(_length, _angle));
-										var _side_position = irandom_range((-_side_length),
-																		   _side_length);
-										_location_x += lengthdir_x(_side_position, _side_angle);
-										_location_y += lengthdir_y(_side_position, _side_angle);
-	 									
-										part_particles_create(_particleSystem.ID, _location_x,
-															  _location_y, ID, 1);
-									}
+									__createParticle(_particleSystem, _location_x, _location_y,
+													 _color);
 								}
 							break;
-							
 							case "Circle":
-								if (is_real(_color))
+								repeat (_number)
 								{
-									repeat (_number)
-									{
-										var _r = (_shape.radius * sqrt(random(1)));
-										var _theta = (random(1) * 2 * pi);
-										var _location_x = ceil((_shape.location.x
-															   + (_r * cos(_theta))));
-										var _location_y = ceil((_shape.location.y
-															   + (_r * sin(_theta))));
-										
-										part_particles_create_color(_particleSystem.ID, _location_x,
-																	_location_y, ID, _color, 1);
-									}
-								}
-								else
-								{
-									repeat (_number)
-									{
-										var _r = (_shape.radius * sqrt(random(1)));
-										var _theta = (random(1) * 2 * pi);
-										var _location_x = ceil((_shape.location.x
-															   + (_r * cos(_theta))));
-										var _location_y = ceil((_shape.location.y
-															   + (_r * sin(_theta))));
-										
-										part_particles_create(_particleSystem.ID, _location_x,
-															  _location_y, ID, 1);
-									}
+									var _radius = (_shape.radius * sqrt(random(1)));
+									var _theta = (random(1) * 2 * pi);
+									var _location_x = ceil((_shape.location.x +
+														   (_radius * cos(_theta))));
+									var _location_y = ceil((_shape.location.y +
+														   (_radius * sin(_theta))));
+									
+									__createParticle(_particleSystem, _location_x, _location_y,
+													 _color);
 								}
 							break;
-							
 							case "Ellipse":
-								if (is_real(_color))
+								var _size_x = ((max(_shape.location.x1, _shape.location.x2) -
+												min(_shape.location.x1, _shape.location.x2)) * 0.5);
+								var _size_y = ((max(_shape.location.y1, _shape.location.y2) -
+												min(_shape.location.y1, _shape.location.y2)) * 0.5);
+								repeat (_number)
 								{
-									var _size_x = ((max(_shape.location.x1, _shape.location.x2)
-													- min(_shape.location.x1, _shape.location.x2))
-												   * 0.5);
-									var _size_y = ((max(_shape.location.y1, _shape.location.y2)
-													- min(_shape.location.y1, _shape.location.y2))
-												   * 0.5);
+									var _angle = random((2 * pi));
+									var _point = random(1);
+									var _location_x = (mean(_shape.location.x1, _shape.location.x2) +
+													   ((sqrt(_point) * cos(_angle)) * _size_x));
+									var _location_y = (mean(_shape.location.y1, _shape.location.y2) +
+													   ((sqrt(_point) * sin(_angle)) * _size_y));
 									
-									repeat (_number)
-									{
-										var _angle = random((2 * pi));
-										var _point = random(1);
-										var _location_x = (mean(_shape.location.x1,
-																_shape.location.x2)
-														   + ((sqrt(_point) * cos(_angle))
-															  * _size_x));
-										var _location_y = (mean(_shape.location.y1,
-																_shape.location.y2)
-														   + ((sqrt(_point) * sin(_angle))
-															  * _size_y));
-										
-										part_particles_create_color(_particleSystem.ID, _location_x,
-																	_location_y, ID, _color, 1);
-									}
-								}
-								else
-								{
-									var _size_x = ((max(_shape.location.x1, _shape.location.x2)
-													- min(_shape.location.x1, _shape.location.x2))
-												   * 0.5);
-									var _size_y = ((max(_shape.location.y1, _shape.location.y2)
-													- min(_shape.location.y1, _shape.location.y2))
-												   * 0.5);
-									
-									repeat (_number)
-									{
-										var _angle = random((2 * pi));
-										var _point = random(1);
-										var _location_x = (mean(_shape.location.x1,
-																_shape.location.x2)
-														   + ((sqrt(_point) * cos(_angle))
-															  * _size_x));
-										var _location_y = (mean(_shape.location.y1,
-																_shape.location.y2)
-														   + ((sqrt(_point) * sin(_angle))
-															  * _size_y));
-										
-										part_particles_create(_particleSystem.ID, _location_x,
-															  _location_y, ID, 1);
-									}
+									__createParticle(_particleSystem, _location_x, _location_y,
+													 _color);
 								}
 							break;
 						}
