@@ -4,12 +4,13 @@
 //							Construction types:
 //							- Wrapper: font {int:font}
 //							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
-//										 glyphs {Range}, antialiasing {bool}
+//										 glyphs {Range}, antialiasing? {bool},
+//										 signedDistanceFieldSpread? {int}
 //							- Sprite (UTF-8): sprite {Sprite}, first {int}, proportional {bool},
-//											  separation {int}, antialiasing {bool}
+//											  separation {int}, antialiasing? {bool}
 //							- Sprite (glyph map): sprite {Sprite}, glyphs {string},
 //												  proportional {bool}, separation {int},
-//												  antialiasing {bool}
+//												  antialiasing? {bool}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Font}
 function Font() constructor
@@ -35,6 +36,8 @@ function Font() constructor
 				antialiasing = undefined;
 				proportional = undefined;
 				separation = undefined;
+				signedDistanceField = undefined;
+				signedDistanceFieldSpread = undefined;
 				
 				event =
 				{
@@ -54,12 +57,10 @@ function Font() constructor
 							case "asset":
 								self.construct(_other.ID);
 							break;
-							
 							case "file":
 								self.construct(_other.fontName, _other.size, _other.bold,
 											   _other.italic, _other.glyphs, _other.antialiasing);
 							break;
-							
 							case "sprite (UTF-8)":
 								sprite = ((is_instanceof(_other.sprite, Sprite))
 										  ? new Sprite(_other.sprite) : _other.sprite);
@@ -67,7 +68,6 @@ function Font() constructor
 								self.construct(sprite, _other.first, _other.proportional,
 											   _other.separation, _other.antialiasing);
 							break;
-							
 							case "sprite (glyph map)":
 								sprite = ((is_instanceof(_other.sprite, Sprite))
 										  ? new Sprite(_other.sprite) : _other.sprite);
@@ -97,6 +97,12 @@ function Font() constructor
 						size = font_get_size(ID);
 						bold = font_get_bold(ID);
 						italic = font_get_italic(ID);
+						signedDistanceField = font_get_sdf_enabled(ID);
+						
+						if (signedDistanceField)
+						{
+							signedDistanceFieldSpread = font_get_sdf_spread(ID);
+						}
 					}
 					else if (is_string(argument[0]))
 					{
@@ -107,15 +113,26 @@ function Font() constructor
 						bold = argument[2];
 						italic = argument[3];
 						glyphs = argument[4];
-						antialiasing = argument[5];
+						antialiasing = (((argument_count > 5) and (argument[5] != undefined))
+										? argument[5] : false);
+						signedDistanceFieldSpread = (((argument_count > 6) and
+													 (argument[6] != 0)) ? argument[6] : undefined);
+						signedDistanceField = false;
 						
 						font_add_enable_aa(antialiasing);
-						
 						ID = font_add(fontName, size, bold, italic, glyphs.minimum, glyphs.maximum);
 						
 						if (self.isFunctional())
 						{
 							assetName = font_get_name(ID);
+							
+							if (signedDistanceFieldSpread != undefined)
+							{
+								signedDistanceFieldSpread = clamp(signedDistanceFieldSpread, 2, 32);
+								font_enable_sdf(ID, true);
+								font_sdf_spread(ID, signedDistanceFieldSpread);
+								signedDistanceField = true;
+							}
 						}
 					}
 					else
@@ -132,10 +149,10 @@ function Font() constructor
 								first = argument[1];
 								proportional = argument[2];
 								separation = argument[3];
-								antialiasing = argument[4];
+								antialiasing = (((argument_count > 4) and (argument[4] != undefined))
+												? argument[4] : false);
 								
 								font_add_enable_aa(antialiasing);
-								
 								ID = font_add_sprite(sprite.ID, first, proportional, separation);
 								
 								if (self.isFunctional())
@@ -143,6 +160,7 @@ function Font() constructor
 									assetName = font_get_name(ID);
 									fontName = font_get_fontname(ID);
 									size = font_get_size(ID);
+									signedDistanceField = false;
 								}
 							}
 							else if (is_string(argument[1]))
@@ -153,18 +171,19 @@ function Font() constructor
 								glyphs = argument[1];
 								proportional = argument[2];
 								separation = argument[3];
-								antialiasing = argument[4];
+								antialiasing = (((argument_count > 4) and (argument[4] != undefined))
+												? argument[4] : false);
+								signedDistanceField = false;
 								
 								font_add_enable_aa(antialiasing);
-								
-								ID = font_add_sprite_ext(sprite.ID, glyphs, proportional,
-														 separation);
+								ID = font_add_sprite_ext(sprite.ID, glyphs, proportional, separation);
 								
 								if (self.isFunctional())
 								{
 									assetName = font_get_name(ID);
 									fontName = font_get_fontname(ID);
 									size = font_get_size(ID);
+									signedDistanceField = false;
 								}
 							}
 						}

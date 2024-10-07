@@ -579,8 +579,9 @@ function TextRenderer() constructor
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
 			///						its current data or its specified temporarily replaced parts.
-			///						If a SDF Font is used, rendering data will be returned with event
-			///						setup to resolve SDF rendering through a built-in Shader.
+			///						If a Font stored in a Signed Distance Field is used, rendering 
+			///						data will be returned with event setup to resolve Signed Distance
+			///						Field rendering through a built-in Shader.
 			static toVertexBuffer = function(_string, _font, _location, _align, _scale, _angle, _color,
 											 _alpha)
 			{
