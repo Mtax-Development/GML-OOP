@@ -1270,25 +1270,29 @@ function StringParser() constructor
 				{
 					_buffer = buffer_load(_path);
 					
-					if (!((is_handle(_buffer)) and (buffer_exists(_buffer))))
+					if ((is_handle(_buffer)) and (buffer_exists(_buffer)))
 					{
-						//+TODO: Better error checking, also applied to other methods.
-						throw "";
+						try
+						{
+							var _JSON = buffer_read(_buffer, buffer_string);
+							var _struct = json_parse(_JSON);
+							ID = _JSON;
+							
+							return _struct;
+						}
+						catch (_exception)
+						{
+							new ErrorReport().report([other, self, "fromJSON()"],
+													 ("Attempted to parse a file with invalid JSON " +
+													  "formatting at path: " +
+													  "{" + string(_path) + "}"));
+						}
 					}
-					
-					try
-					{
-						var _JSON = buffer_read(_buffer, buffer_string);
-						var _struct = json_parse(_JSON);
-						ID = _JSON;
-						
-						return _struct;
-					}
-					catch (_exception)
+					else
 					{
 						new ErrorReport().report([other, self, "fromJSON()"],
-												 ("Attempted to parse a file with invalid JSON " +
-												  "formatting at path: " +
+												 ("Attempted to parse a nonexistent or inacessible " +
+												  "file at path: " +
 												  "{" + string(_path) + "}"));
 					}
 				}
