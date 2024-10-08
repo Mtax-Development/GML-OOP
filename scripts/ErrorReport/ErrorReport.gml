@@ -242,12 +242,12 @@ function ErrorReport() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((location != undefined) and (((is_struct(detail))
-								and (is_string(detail[$ "message"]))
+						return ((location != undefined) and ((is_string(detail))
+								or ((is_struct(detail)) and (is_string(detail[$ "message"]))
 								and (is_string(detail[$ "longMessage"]))
 								and (is_string(detail[$ "script"]))
 								and (is_array(detail[$ "stacktrace"]))
-								and (array_length(detail.stacktrace) > 0)) or (is_string(detail)))
+								and (array_length(detail.stacktrace) > 0)))
 								and (is_array(callstack)) and (array_length(callstack) > 0));
 					}
 					
@@ -261,11 +261,14 @@ function ErrorReport() constructor
 					static equals = function(_other)
 					{
 						if ((self.isFunctional())
-						and (string_copy(string(instanceof(_other)), 1, 10) == "ReportData"))
-						and (_other.isFunctional()) and ((detail.line == _other.detail.line)
+						and (string_copy(string(instanceof(_other)), 1, 10) == "ReportData")
+						and (_other.isFunctional()) and (((is_string(detail))
+						and (is_string(_other.detail)) and (detail == _other.detail))
+						or ((is_struct(detail)) and (is_struct(_other.detail))
+						and (detail.line == _other.detail.line)
 						and (detail.longMessage == _other.detail.longMessage)
-						and (detail.script == _other.detail.script)
-						and (array_equals(detail.stacktrace, _other.detail.stacktrace)))
+						and (detail.script == _other.detail.script))
+						and (array_equals(detail.stacktrace, _other.detail.stacktrace))))
 						{
 							if ((is_array(callstack)) and (is_array(_other.callstack)))
 							{
