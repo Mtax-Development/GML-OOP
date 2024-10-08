@@ -664,8 +664,8 @@ function StringParser() constructor
 				
 				try
 				{
-					var _string = string(ID);
 					var _result = undefined;
+					var _string = string(ID);
 					
 					if (_font != undefined)
 					{
@@ -868,9 +868,9 @@ function StringParser() constructor
 			/// @description		Reverse the order of characters in the string.
 			static reverse = function()
 			{
+				var _result = "";
 				var _string = string(ID);
 				var _string_length = string_length(_string);
-				var _result = "";
 				var _i = _string_length;
 				repeat (_string_length)
 				{
