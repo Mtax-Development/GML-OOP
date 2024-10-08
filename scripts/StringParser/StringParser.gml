@@ -570,32 +570,69 @@ function StringParser() constructor
 			/// @argument			substring {any:string}
 			/// @argument			startFromEnd? {bool}
 			/// @argument			startPosition? {int}
-			/// @returns			{int|undefined}
-			/// @description		Return the position of the first instance of a substring in the
-			///						string, starting from its start, end or with offset of either.
-			///						The position will equal the position of the first character of
-			///						the substring, always counting from the start.
-			///						Returns {undefined} if the substring does not exist in the
-			///						string.
-			static getSubstringPosition = function(_substring, _startFromEnd = false, _startPosition)
+			/// @argument			count? {int|all}
+			/// @returns			{int|int[]|undefined}
+			/// @description		Return the first position of a substring instance in a string,
+			///						a specific number of them in an array, or all of them, starting
+			///						from the start or end of the string, or specified offset from
+			///						either. Positions will equal the position of the first character
+			///						of the substring, always counting from the start of the string.
+			///						Returns {undefined} if the string does not contain the specified
+			///						substring.
+			static getSubstringPosition = function(_substring, _startFromEnd = false, _startPosition,
+												   _count = 1)
 			{
 				try
 				{
+					var _result = [];
 					var _string = string(ID);
 					var _string_substring = string(_substring);
-					var _result = undefined;
+					var _iterationCount = _count;
+					var _positionModifier = 1;
+					var __findPosition = string_pos_ext;
+					
+					if (_startPosition == undefined)
+					{
+						_startPosition = ((_startFromEnd) ? string_length(_string) : 0);
+					}
 					
 					if (_startFromEnd)
 					{
-						_result = string_last_pos_ext(_string_substring, _string,
-													  (_startPosition ?? string_length(_string)));
-					}
-					else
-					{
-						_result = string_pos_ext(_string_substring, _string, (_startPosition ?? 0));
+						_positionModifier = -1;
+						__findPosition = string_last_pos_ext;
 					}
 					
-					return ((_result > 0) ? _result : undefined);
+					if (_iterationCount == all)
+					{
+						_iterationCount = string_count(_substring, _string);
+					}
+					
+					repeat (_iterationCount)
+					{
+						var _position = __findPosition(_substring, _string, _startPosition);
+						
+						if (_position > 0)
+						{
+							array_push(_result, _position);
+						}
+						else
+						{
+							break;
+						}
+						
+						_startPosition = (_position + _positionModifier);
+					}
+					
+					switch (_count)
+					{
+						case 0:
+						case 1:
+							return ((array_length(_result) > 0) ? _result[0] : undefined);
+						break;
+						default:
+							return _result;
+						break;
+					}
 				}
 				catch (_exception)
 				{
