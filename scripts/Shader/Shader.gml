@@ -215,19 +215,16 @@ function Shader() constructor
 									return self;
 								}
 							break;
-							
 							case 3:
 								_value = [argument[1], argument[2]];
 								
 								shader_set_uniform_f(_handle, _value[0], _value[1]);
 							break;
-							
 							case 4:
 								_value = [argument[1], argument[2], argument[3]];
 								
 								shader_set_uniform_f(_handle, _value[0], _value[1], _value[2]);
 							break;
-							
 							case 5:
 							default:
 								_value = [argument[1], argument[2], argument[3], argument[4]];
@@ -307,19 +304,16 @@ function Shader() constructor
 									return self;
 								}
 							break;
-							
 							case 3:
 								_value = [argument[1], argument[2]];
 								
 								shader_set_uniform_i(_handle, _value[0], _value[1]);
 							break;
-							
 							case 4:
 								_value = [argument[1], argument[2], argument[3]];
 								
 								shader_set_uniform_i(_handle, _value[0], _value[1], _value[2]);
 							break;
-							
 							case 5:
 							default:
 								_value = [argument[1], argument[2], argument[3], argument[4]];

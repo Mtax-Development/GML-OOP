@@ -473,15 +473,9 @@ function StringParser() constructor
 					
 					switch (array_length(_result))
 					{
-						case 0:
-							return "";
-						break;
-						case 1:
-							return _result[0];
-						break;
-						default:
-							return _result;
-						break;
+						case 0: return ""; break;
+						case 1: return _result[0]; break;
+						default: return _result; break;
 					}
 				}
 				catch (_exception)

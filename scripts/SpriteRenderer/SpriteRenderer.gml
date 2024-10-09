@@ -57,11 +57,9 @@ function SpriteRenderer() constructor
 							case "Vector2":
 								location = new Vector2(_other.location);
 							break;
-							
 							case "Vector4":
 								location = new Vector4(_other.location);
 							break;
-							
 							default:
 								location = _other.location;
 							break;

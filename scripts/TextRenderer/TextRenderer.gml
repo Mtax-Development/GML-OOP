@@ -210,13 +210,11 @@ function TextRenderer() constructor
 							_x1 = 0;
 							_x2 = _size_x;
 						break;
-						
 						case fa_center:
 							var _size_x_half = (_size_x * 0.5);
 							_x1 = (-_size_x_half);
 							_x2 = _size_x_half;
 						break;
-						
 						case fa_right:
 							_x1 = (-_size_x);
 							_x2 = 0;
@@ -229,13 +227,11 @@ function TextRenderer() constructor
 							_y1 = 0;
 							_y2 = _size_y;
 						break;
-						
 						case fa_middle:
 							var _size_y_half = (_size_y * 0.5);
 							_y1 = (-_size_y_half);
 							_y2 = _size_y_half;
 						break;
-						
 						case fa_bottom:
 							_y1 = (-_size_y);
 							_y2 = 0;

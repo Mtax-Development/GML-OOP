@@ -77,11 +77,9 @@ function ParticleType() constructor
 							case "Range":
 								direction = new Range(_other.direction);
 							break;
-							
 							case "Angle":
 								direction = new Angle(_other.direction);
 							break;
-							
 							default:
 								direction = _other.direction;
 							break;
@@ -95,11 +93,9 @@ function ParticleType() constructor
 							case "Range":
 								angle = new Range(_other.angle);
 							break;
-							
 							case "Angle":
 								angle = new Angle(_other.angle);
 							break;
-							
 							default:
 								angle = _other.angle;
 							break;
@@ -114,11 +110,9 @@ function ParticleType() constructor
 							case "Range":
 								gravity = new Range(_other.gravity);
 							break;
-							
 							case "Angle":
 								gravity = new Angle(_other.gravity);
 							break;
-							
 							default:
 								gravity = _other.gravity;
 							break;
@@ -131,11 +125,9 @@ function ParticleType() constructor
 							case "Color2":
 								color = new Color2(_other.color);
 							break;
-							
 							case "Color3":
 								color = new Color3(_other.color);
 							break;
-							
 							default:
 								color = _other.color;
 							break
@@ -183,15 +175,12 @@ function ParticleType() constructor
 							case "Color3":
 								self.setColor(color);
 							break;
-							
 							case "mix":
 								self.setColorMix(color);
 							break;
-							
 							case "RGB":
 								self.setColorRGB(color[0], color[1], color[2]);
 							break;
-							
 							case "HSV":
 								self.setColorHSV(color[0], color[1], color[2]);
 							break;
@@ -549,7 +538,6 @@ function ParticleType() constructor
 							_direction_minimum = _direction.minimum;
 							_direction_maximum = _direction.maximum;
 						break;
-						
 						case "Angle":
 							_direction_minimum = _direction.value;
 							_direction_maximum = _direction.value;
@@ -572,7 +560,6 @@ function ParticleType() constructor
 								direction = new Range(_direction);
 							}
 						break;
-						
 						case "Angle":
 							if (is_instanceof(direction, Angle))
 							{
@@ -639,7 +626,6 @@ function ParticleType() constructor
 								angle = new Range(_angle);
 							}
 						break;
-						
 						case "Angle":
 							if (is_instanceof(angle, Angle))
 							{
@@ -781,7 +767,6 @@ function ParticleType() constructor
 							
 							color_type = "Color3";
 						break;
-						
 						case "Color2":
 							part_type_color2(ID, _color.color1, _color.color2);
 							
@@ -797,7 +782,6 @@ function ParticleType() constructor
 							
 							color_type = "Color2";
 						break;
-						
 						default:
 							part_type_color1(ID, _color);
 							

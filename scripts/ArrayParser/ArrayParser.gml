@@ -250,11 +250,9 @@ function ArrayParser() constructor
 										array_push(ID, _data.ID);
 									}
 								break;
-								
 								case "StringParser":
 									array_push(ID, _data.ID);
 								break;
-								
 								case "Grid":
 								case "Map":
 								case "List":
@@ -278,7 +276,6 @@ function ArrayParser() constructor
 																 _exception);
 									}
 								break;
-								
 								default:
 									array_push(ID, _data);
 								break;

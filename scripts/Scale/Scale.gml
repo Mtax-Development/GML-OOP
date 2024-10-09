@@ -39,7 +39,6 @@ function Scale() constructor
 							x = _other.x;
 							y = _other.y;
 						break;
-						
 						default:
 							switch (argument_count)
 							{
@@ -49,7 +48,7 @@ function Scale() constructor
 										//|Construction type: From array.
 										var _array = argument[0];
 										
-										switch ( array_length(_array))
+										switch (array_length(_array))
 										{
 											case 1:
 												x = _array[0];
@@ -70,7 +69,6 @@ function Scale() constructor
 										y = argument[0];
 									}
 								break;
-								
 								case 2:
 								default:
 									//|Construction type: Two values.

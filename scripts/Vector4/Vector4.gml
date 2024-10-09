@@ -69,14 +69,12 @@ function Vector4() constructor
 											x2 = _array[0];
 											y2 = _array[0];
 										break;
-									
 										case 2:
 											x1 = _array[0];
 											y1 = _array[0];
 											x2 = _array[1];
 											y2 = _array[1];
 										break;
-										
 										case 4:
 										default:
 											x1 = _array[0];
@@ -300,7 +298,6 @@ function Vector4() constructor
 									_sum_x2 = (x2 + _value.x);
 									_sum_y2 = (y2 + _value.y);
 								break;
-								
 								case "Vector4":
 								default:
 									_sum_x1 = (x1 + _value.x1);
@@ -361,7 +358,6 @@ function Vector4() constructor
 									_difference_x2 = abs(x2 - _value.x);
 									_difference_y2 = abs(y2 - _value.y);
 								break;
-								
 								case "Vector4":
 								default:
 									_difference_x1 = abs(x1 - _value.x1);
@@ -422,7 +418,6 @@ function Vector4() constructor
 									_product_x2 = (x2 * _value.x);
 									_product_y2 = (y2 * _value.y);
 								break;
-								
 								case "Vector4":
 								default:
 									_product_x1 = (x1 * _value.x1);
@@ -490,7 +485,6 @@ function Vector4() constructor
 									_quotient_y2 = (y2 / _value.y);
 								}
 							break;
-							
 							case "Vector4":
 							default:
 								if (_value.x1 != 0)
@@ -560,12 +554,10 @@ function Vector4() constructor
 						case "Vector2":
 							return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
 						break;
-						
 						case "Vector4":
 							return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
 											   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
 						break;
-						
 						default:
 							return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
 						break;
@@ -596,7 +588,6 @@ function Vector4() constructor
 							_result_x = ((_value.x - x1) / (x2 - x1));
 							_result_y = ((_value.y - y1) / (y2 - y1));
 						break;
-						
 						default:
 							_result_x = ((_value - x1) / (x2 - x1));
 							_result_y = ((_value - y1) / (y2 - y1));
@@ -840,20 +831,18 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
-						case "Vector4":
-							_result_x1 += _value.x1;
-							_result_y1 += _value.y1;
-							_result_x2 += _value.x2;
-							_result_y2 += _value.y2;
-						break;
-						
 						case "Vector2":
 							_result_x1 += _value.x;
 							_result_y1 += _value.y;
 							_result_x2 += _value.x;
 							_result_y2 += _value.y;
 						break;
-						
+						case "Vector4":
+							_result_x1 += _value.x1;
+							_result_y1 += _value.y1;
+							_result_x2 += _value.x2;
+							_result_y2 += _value.y2;
+						break;
 						default:
 							_result_x1 += _value;
 							_result_y1 += _value;
@@ -889,20 +878,18 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
-						case "Vector4":
-							_result_x1 -= _value.x1;
-							_result_y1 -= _value.y1;
-							_result_x2 -= _value.x2;
-							_result_y2 -= _value.y2;
-						break;
-						
 						case "Vector2":
 							_result_x1 -= _value.x;
 							_result_y1 -= _value.y;
 							_result_x2 -= _value.x;
 							_result_y2 -= _value.y;
 						break;
-						
+						case "Vector4":
+							_result_x1 -= _value.x1;
+							_result_y1 -= _value.y1;
+							_result_x2 -= _value.x2;
+							_result_y2 -= _value.y2;
+						break;
 						default:
 							_result_x1 -= _value;
 							_result_y1 -= _value;
@@ -938,20 +925,18 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
-						case "Vector4":
-							_result_x1 *= _value.x1;
-							_result_y1 *= _value.y1;
-							_result_x2 *= _value.x2;
-							_result_y2 *= _value.y2;
-						break;
-						
 						case "Vector2":
 							_result_x1 *= _value.x;
 							_result_y1 *= _value.y;
 							_result_x2 *= _value.x;
 							_result_y2 *= _value.y;
 						break;
-						
+						case "Vector4":
+							_result_x1 *= _value.x1;
+							_result_y1 *= _value.y1;
+							_result_x2 *= _value.x2;
+							_result_y2 *= _value.y2;
+						break;
 						default:
 							_result_x1 *= _value;
 							_result_y1 *= _value;
@@ -988,6 +973,19 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
+						case "Vector2":
+							if (_value.x != 0)
+							{
+								_result_x1 /= _value.x;
+								_result_x2 /= _value.x;
+							}
+							
+							if (_value.y != 0)
+							{
+								_result_y1 /= _value.y;
+								_result_y2 /= _value.y;
+							}
+						break;
 						case "Vector4":
 							if (_value.x1 != 0)
 							{
@@ -1009,21 +1007,6 @@ function Vector4() constructor
 								_result_y2 /= _value.y2;
 							}
 						break;
-						
-						case "Vector2":
-							if (_value.x != 0)
-							{
-								_result_x1 /= _value.x;
-								_result_x2 /= _value.x;
-							}
-							
-							if (_value.y != 0)
-							{
-								_result_y1 /= _value.y;
-								_result_y2 /= _value.y;
-							}
-						break;
-						
 						default:
 							if (_value != 0)
 							{
@@ -1141,20 +1124,18 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
-						case "Vector4":
-							_result_x1 -= _value.x1;
-							_result_y1 -= _value.y1;
-							_result_x2 += _value.x2;
-							_result_y2 += _value.y2;
-						break;
-						
 						case "Vector2":
 							_result_x1 -= _value.x;
 							_result_y1 -= _value.y;
 							_result_x2 += _value.x;
 							_result_y2 += _value.y;
 						break;
-						
+						case "Vector4":
+							_result_x1 -= _value.x1;
+							_result_y1 -= _value.y1;
+							_result_x2 += _value.x2;
+							_result_y2 += _value.y2;
+						break;
 						default:
 							_result_x1 -= _value;
 							_result_y1 -= _value;
@@ -1191,20 +1172,18 @@ function Vector4() constructor
 					
 					switch (instanceof(_value))
 					{
-						case "Vector4":
-							_result_x1 += _value.x1;
-							_result_y1 += _value.y1;
-							_result_x2 -= _value.x2;
-							_result_y2 -= _value.y2;
-						break;
-						
 						case "Vector2":
 							_result_x1 += _value.x;
 							_result_y1 += _value.y;
 							_result_x2 -= _value.x;
 							_result_y2 -= _value.y;
 						break;
-						
+						case "Vector4":
+							_result_x1 += _value.x1;
+							_result_y1 += _value.y1;
+							_result_x2 -= _value.x2;
+							_result_y2 -= _value.y2;
+						break;
 						default:
 							_result_x1 += _value;
 							_result_y1 += _value;

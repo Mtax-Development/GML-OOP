@@ -36,13 +36,11 @@ function Grid() constructor
 							ID = ds_grid_create(size.x, size.y);
 							ds_grid_copy(ID, _other.ID);
 						break;
-						
 						case "Vector2":
 							//|Construction type: New constructor.
 							size = new Vector2(argument[0]);
 							ID = ds_grid_create(size.x, size.y);
 						break;
-						
 						default:
 							//|Construction type: Wrapper.
 							ID = argument[0];

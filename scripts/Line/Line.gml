@@ -43,14 +43,12 @@ function Line() constructor
 						
 						switch (instanceof(_other.color))
 						{
-							case "Color4":
-								color = new Color4(_other.color);
-							break;
-							
 							case "Color2":
 								color = new Color2(_other.color);
 							break;
-							
+							case "Color4":
+								color = new Color4(_other.color);
+							break;
 							default:
 								color = _other.color;
 							break;
@@ -219,20 +217,18 @@ function Line() constructor
 							
 							switch (instanceof(color))
 							{
-								case "Color4":
-									_color1 = color.color1;
-									_color2 = color.color2;
-									_color3 = color.color3;
-									_color4 = color.color4;
-								break;
-								
 								case "Color2":
 									_color1 = color.color1;
 									_color2 = color.color2;
 									_color3 = color.color2;
 									_color4 = color.color1;
 								break;
-								
+								case "Color4":
+									_color1 = color.color1;
+									_color2 = color.color2;
+									_color3 = color.color3;
+									_color4 = color.color4;
+								break;
 								default:
 									_color1 = color;
 									_color2 = color;

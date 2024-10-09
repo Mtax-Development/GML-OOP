@@ -49,7 +49,6 @@ function Color3() constructor
 								color2 = _color;
 								color3 = _color;
 							break;
-							
 							case 2:
 								//|Construction type: Color2 + color.
 								if (is_instanceof(argument[0], Color2))
@@ -71,7 +70,6 @@ function Color3() constructor
 									color3 = _other.color2;
 								}
 							break;
-							
 							case 3:
 								//|Construction type: New constructor.
 								color1 = argument[0];

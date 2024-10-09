@@ -36,14 +36,12 @@ function Vector2() constructor
 							x = _other.x;
 							y = _other.y;
 						break;
-						
 						case "Scale":
 							//|Construction type: From Scale.
 							var _scale = argument[0];
 							x = _scale.x;
 							y = _scale.y;
 						break;
-						
 						default:
 							switch (argument_count)
 							{
@@ -59,7 +57,6 @@ function Vector2() constructor
 												x = _array[0];
 												y = _array[0];
 											break;
-											
 											case 2:
 											default:
 												x = _array[0];
@@ -74,7 +71,6 @@ function Vector2() constructor
 										y = argument[0];
 									}
 								break;
-								
 								default:
 									//|Construction type: Two numbers.
 									x = argument[0];

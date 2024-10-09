@@ -354,7 +354,6 @@ function Font() constructor
 										   "Signed Distance Field Spread: " +
 										   string(signedDistanceFieldSpread));
 							break;
-							
 							case "file":
 								_string = ("Type: " + string(type) + _mark_separator +
 										   "Asset Name: " + font_get_name(ID) + _mark_separator +
@@ -369,7 +368,6 @@ function Font() constructor
 										   "Signed Distance Field Spread: " +
 										   string(signedDistanceFieldSpread));
 							break;
-							
 							case "sprite (UTF-8)":
 								_string = ("Type: " + string(type) + _mark_separator +
 										   "Asset Name: " + font_get_name(ID) + _mark_separator +
@@ -381,7 +379,6 @@ function Font() constructor
 										   "Separation: " + string(separation) + _mark_separator +
 										   "Antialising: " + string(antialiasing));
 							break;
-							
 							case "sprite (glyph map)":
 								_string = ("Type: " + string(type) + _mark_separator +
 										   "Asset Name: " + font_get_name(ID) + _mark_separator +
@@ -393,7 +390,6 @@ function Font() constructor
 										   "Sepearation: " + string(separation) + _mark_separator +
 										   "Antialising: " + string(antialiasing));
 							break;
-							
 							default:
 								_string = font_get_name(ID);
 							break;

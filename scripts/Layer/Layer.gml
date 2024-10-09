@@ -135,25 +135,20 @@ function Layer() constructor
 							repeat (array_length(_element))
 							{
 								var _type = layer_get_element_type(_element[_i]);
-								
 								switch (_type)
 								{
 									case layerelementtype_instance:
 										instanceList.add(layer_instance_get_instance(_element[_i]));
 									break;
-									
 									case layerelementtype_sprite:
 										new SpriteElement(_element[_i]);
 									break;
-									
 									case layerelementtype_background:
 										new BackgroundElement(_element[_i]);
 									break;
-									
 									case layerelementtype_tilemap:
 										new TilemapElement(_element[_i]);
 									break;
-									
 									case layerelementtype_particlesystem:
 										new ParticleSystem(_element[_i]);
 									break;
@@ -812,7 +807,6 @@ function Layer() constructor
 									layer_sprite_index(ID, frame);
 									layer_sprite_speed(ID, speed);
 								break;
-								
 								case "Sprite":
 									//|Construction type: New element.
 									sprite = argument[0];
@@ -826,7 +820,6 @@ function Layer() constructor
 									frame = 0;
 									speed = 0;
 								break;
-								
 								default:
 									//|Construction type: Wrapper.
 									ID = argument[0];
@@ -1197,7 +1190,6 @@ function Layer() constructor
 									layer_background_index(ID, frame);
 									layer_background_speed(ID, speed);
 								break;
-								
 								case "Sprite":
 									//|Construction type: New element.
 									sprite = argument[0];
@@ -1212,7 +1204,6 @@ function Layer() constructor
 									frame = 0;
 									speed = 0;
 								break;
-								
 								default:
 									//|Construction type: Wrapper.
 									ID = argument[0];
@@ -3152,19 +3143,15 @@ function Layer() constructor
 											case ps_shape_rectangle:
 												_string_shape = "Rectangle";
 											break;
-											
 											case ps_shape_ellipse:
 												_string_shape = "Ellipse";
 											break;
-											
 											case ps_shape_diamond:
 												_string_shape = "Diamond";
 											break;
-											
 											case ps_shape_line:
 												_string_shape = "Line";
 											break;
-											
 											default:
 												_string_shape = string(undefined);
 											break;
@@ -3176,19 +3163,15 @@ function Layer() constructor
 											case ps_distr_linear:
 												_string_distribution = "Linear";
 											break;
-											
 											case ps_distr_gaussian:
 												_string_distribution = "Gaussian";
 											break;
-											
 											case ps_distr_invgaussian:
 												_string_distribution = "Inverse Gaussian";
 											break;
-											
 											default:
 												_string_distribution = string(undefined);
 											break;
-											
 										}
 										
 										_string = ("ID: " + string(ID) + _mark_separator +
