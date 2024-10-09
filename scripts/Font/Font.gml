@@ -349,7 +349,10 @@ function Font() constructor
 										   "Font Name: " + font_get_fontname(ID) + _mark_separator +
 										   "Size: " + string(font_get_size(ID)) + _mark_separator +
 										   "Bold: " + string(font_get_bold(ID)) + _mark_separator +
-										   "Italic: " + string(font_get_italic(ID)));
+										   "Italic: " + string(font_get_italic(ID))
+													  + _mark_separator +
+										   "Signed Distance Field Spread: " +
+										   string(signedDistanceFieldSpread));
 							break;
 							
 							case "file":
@@ -361,7 +364,10 @@ function Font() constructor
 										   "Italic: " + string(font_get_italic(ID))
 													  + _mark_separator +
 										   "Glyphs: " + string(glyphs) + _mark_separator +
-										   "Antialiasing: " + string(antialiasing));
+										   "Antialiasing: " + string(antialiasing)
+															+ _mark_separator +
+										   "Signed Distance Field Spread: " +
+										   string(signedDistanceFieldSpread));
 							break;
 							
 							case "sprite (UTF-8)":
