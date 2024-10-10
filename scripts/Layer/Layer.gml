@@ -656,7 +656,7 @@ function Layer() constructor
 					new ErrorReport().report([other, self, "destroyInstance()"], _exception);
 				}
 				
-				return self;
+				return undefined;
 			}
 			
 			/// @argument			instancesPaused {bool}
