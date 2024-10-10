@@ -620,7 +620,6 @@ function Layer() constructor
 					if (_target == all)
 					{
 						layer_destroy_instances(ID);
-						
 						instanceList.clear();
 					}
 					else
@@ -668,13 +667,11 @@ function Layer() constructor
 					if (_instancesPaused)
 					{
 						instance_deactivate_layer(ID);
-						
 						instancesPaused = true;
 					}
 					else
 					{
 						instance_activate_layer(ID);
-						
 						instancesPaused = false;
 					}
 				}
