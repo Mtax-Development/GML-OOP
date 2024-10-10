@@ -610,6 +610,7 @@ function Layer() constructor
 			}
 			
 			/// @argument			target {int:instance|int:object|all}
+			/// @returns			{undefined}
 			/// @description		Destroy the specified or all instances or objects of this Layer.
 			///						If {all} is specified, the instances will be destroyed instantly.
 			///						Otherwise, they will remain until the next application frame.
