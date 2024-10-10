@@ -632,11 +632,11 @@ function Layer() constructor
 							{
 								var _instance = instanceList.getValue(_i);
 								
-								if ((_instance.id == _target) or (_instance.object_index == _target))
+								if ((instance_exists(_instance)) and ((_instance.id == _target)
+								or (_instance.object_index == _target)))
 								{
-									instance_destroy(_instance);
-									
 									instanceList.removePosition(_i);
+									instance_destroy(_instance);
 								}
 								else
 								{
