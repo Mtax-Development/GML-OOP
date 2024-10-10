@@ -645,7 +645,7 @@ function Layer() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "destroyInstances()"],
+								new ErrorReport().report([other, self, "destroyInstance()"],
 														 _exception);
 							}
 						}
@@ -653,7 +653,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "destroyInstances()"], _exception);
+					new ErrorReport().report([other, self, "destroyInstance()"], _exception);
 				}
 				
 				return self;
