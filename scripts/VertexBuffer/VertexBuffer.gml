@@ -334,6 +334,18 @@ function VertexBuffer() constructor
 								or (is_ptr(texture))));
 					}
 					
+					/// @returns			{undefined}
+					/// @description		Destroy the Vertex Buffer this constructor refers to.
+					static destroy = function()
+					{
+						if (is_instanceof(vertexBuffer, VertexBuffer))
+						{
+							vertexBuffer = vertexBuffer.destroy();
+						}
+						
+						return undefined;
+					}
+					
 				#endregion
 				#region <<Execution>>
 					
