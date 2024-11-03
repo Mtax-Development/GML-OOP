@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Vector3",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Vector3",
+  "parent":{
+    "name":"Container",
+    "path":"folders/GML-OOP/Container.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

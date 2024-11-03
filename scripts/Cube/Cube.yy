@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Cube",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Cube",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/GML-OOP/Shape.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

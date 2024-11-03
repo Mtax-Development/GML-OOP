@@ -51,7 +51,8 @@ function VertexBuffer() constructor
 		#endregion
 		#region <Setters>
 			
-			/// @description		Add position data of a single vertex to this Vertex Buffer.
+			/// @description		Add position data of a single vertex in two-dimensional space to
+			///						this Vertex Buffer.
 			static setLocation = function(_location)
 			{
 				try
@@ -60,7 +61,24 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setLocation()"], _exception);
+					new ErrorReport().report([other, self, "setLocation2D()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			location {Vector3}
+			/// @description		Add position data of a single vertex in three-dimensional space to
+			///						this Vertex Buffer.
+			static setLocation3D = function(_location)
+			{
+				try
+				{
+					vertex_position_3d(ID, _location.x, _location.y, _location.z);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setLocation3D()"], _exception);
 				}
 				
 				return self;
@@ -92,6 +110,23 @@ function VertexBuffer() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "setUV()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			normal {Vector3}
+			/// @description		Add three-dimensional orientation data of a single vertex to this
+			///						Vertex Buffer.
+			static setNormal = function(_normal)
+			{
+				try
+				{
+					vertex_normal(ID, _normal.x, _normal.y, _normal.z);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setNormal()"], _exception);
 				}
 				
 				return self;
@@ -242,6 +277,11 @@ function VertexBuffer() constructor
 				static passthroughFormat = new VertexFormat(vertex_format_add_position,
 															vertex_format_add_color,
 															vertex_format_add_texcoord);
+				
+				static passthroughFormat3D = new VertexFormat(vertex_format_add_position_3d,
+															  vertex_format_add_normal,
+															  vertex_format_add_texcoord,
+															  vertex_format_add_color);
 				
 			#endregion
 			#region [[Methods]]
