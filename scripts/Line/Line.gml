@@ -403,23 +403,23 @@ function Line() constructor
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
-						.setLocation(_vertex.set((location.x1 + lengthdir_x(size, _angle_right)),
-												 (location.y1 + lengthdir_y(size, _angle_right))))
+						.setLocation2D(_vertex.set((location.x1 + lengthdir_x(size, _angle_right)),
+												   (location.y1 + lengthdir_y(size, _angle_right))))
 						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x2 + lengthdir_x(size, _angle_right)),
-												 (location.y2 + lengthdir_y(size, _angle_right))))
+						.setLocation2D(_vertex.set((location.x2 + lengthdir_x(size, _angle_right)),
+												   (location.y2 + lengthdir_y(size, _angle_right))))
 						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x1 + lengthdir_x(size, _angle_left)),
-												 (location.y1 + lengthdir_y(size, _angle_left))))
+						.setLocation2D(_vertex.set((location.x1 + lengthdir_x(size, _angle_left)),
+												   (location.y1 + lengthdir_y(size, _angle_left))))
 						.setColor(color, alpha)
 						.setUV()
 						
-						.setLocation(_vertex.set((location.x2 + lengthdir_x(size, _angle_left)),
-												 (location.y2 + lengthdir_y(size, _angle_left))))
+						.setLocation2D(_vertex.set((location.x2 + lengthdir_x(size, _angle_left)),
+												   (location.y2 + lengthdir_y(size, _angle_left))))
 						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);

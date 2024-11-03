@@ -524,7 +524,7 @@ function Point() constructor
 					
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
-						.setLocation(location)
+						.setLocation2D(location)
 						.setColor(color, alpha)
 						.setUV()
 					 .setActive(false);

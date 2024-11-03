@@ -495,19 +495,19 @@ function SpriteRenderer() constructor
 																		  _texture);
 					_vertexBuffer
 					 .setActive(_renderData.passthroughFormat)
-						.setLocation(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
+						.setLocation2D(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
 						.setColor(_color_x2y1, alpha)
 						.setUV(_uv_x2, _uv_y1)
 						
-						.setLocation(_vertex.set(_location_x2y2[0], _location_x2y2[1]))
+						.setLocation2D(_vertex.set(_location_x2y2[0], _location_x2y2[1]))
 						.setColor(_color_x2y2, alpha)
 						.setUV(_uv_x2, _uv_y2)
 						
-						.setLocation(_vertex.set(_location_x1y1[0], _location_x1y1[1]))
+						.setLocation2D(_vertex.set(_location_x1y1[0], _location_x1y1[1]))
 						.setColor(_color_x1y1, alpha)
 						.setUV(_uv_x1, _uv_y1)
 						
-						.setLocation(_vertex.set(_location_x1y2[0], _location_x1y2[1]))
+						.setLocation2D(_vertex.set(_location_x1y2[0], _location_x1y2[1]))
 						.setColor(_color_x1y2, alpha)
 						.setUV(_uv_x1, _uv_y2)
 					 .setActive(false);

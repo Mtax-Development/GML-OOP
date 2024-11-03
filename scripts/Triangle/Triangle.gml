@@ -584,15 +584,15 @@ function Triangle() constructor
 						
 						_vertexBuffer_fill
 						 .setActive(_renderData_fill.passthroughFormat)
-							.setLocation(location1)
+							.setLocation2D(location1)
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
-							.setLocation(location2)
+							.setLocation2D(location2)
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
-							.setLocation(location3)
+							.setLocation2D(location3)
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 						 .setActive(false);
@@ -610,19 +610,19 @@ function Triangle() constructor
 						
 						_vertexBuffer_outline
 						 .setActive(_renderData_outline.passthroughFormat)
-							.setLocation(location1)
+							.setLocation2D(location1)
 							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
-							.setLocation(location2)
+							.setLocation2D(location2)
 							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
-							.setLocation(location3)
+							.setLocation2D(location3)
 							.setColor(outline_color, outline_alpha)
 							.setUV()
 							
-							.setLocation(location1)
+							.setLocation2D(location1)
 							.setColor(outline_color, outline_alpha)
 							.setUV()
 						 .setActive(false);

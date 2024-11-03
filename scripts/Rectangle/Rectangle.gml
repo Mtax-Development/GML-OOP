@@ -719,19 +719,19 @@ function Rectangle() constructor
 						
 						_vertexBuffer_fill
 						 .setActive(_renderData_fill.passthroughFormat)
-							.setLocation(_vertex.set(location.x1, location.y1))
+							.setLocation2D(_vertex.set(location.x1, location.y1))
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
-							.setLocation(_vertex.set(location.x2, location.y1))
+							.setLocation2D(_vertex.set(location.x2, location.y1))
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
-							.setLocation(_vertex.set(location.x1, location.y2))
+							.setLocation2D(_vertex.set(location.x1, location.y2))
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 							
-							.setLocation(_vertex.set(location.x2, location.y2))
+							.setLocation2D(_vertex.set(location.x2, location.y2))
 							.setColor(fill_color, fill_alpha)
 							.setUV()
 						 .setActive(false);
@@ -774,7 +774,8 @@ function Rectangle() constructor
 									{
 										var _point_current = _point[_i[0]][_i[1]];
 										
-										setLocation(_vertex.set(_point_current[0], _point_current[1]));
+										setLocation2D(_vertex.set(_point_current[0],
+																  _point_current[1]));
 										setColor(other.outline_color, other.outline_alpha);
 										setUV();
 										

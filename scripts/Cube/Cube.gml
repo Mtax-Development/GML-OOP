@@ -197,7 +197,7 @@ function Cube() constructor
 					_vertexBuffer = new VertexBuffer();
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglelist, undefined,
 																		  _texture);
-					_vertexBuffer.setActive(_renderData.passthroughFormat3D);
+					_vertexBuffer.setActive(_renderData.vertexFormat3D);
 					{
 						var _vertex = new Vector3();
 						var _normal = new Vector3();

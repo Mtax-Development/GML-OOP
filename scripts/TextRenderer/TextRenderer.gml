@@ -809,8 +809,8 @@ function TextRenderer() constructor
 															 (_origin_transformed_y * _angle_dcos));
 									
 									_vertexBuffer
-									 .setLocation(_vertex.set(_glyph_location_x,
-															  _glyph_location_y))
+									 .setLocation2D(_vertex.set(_glyph_location_x,
+																_glyph_location_y))
 									 .setColor(color, alpha)
 									 .setUV(_glyphData_current[2], _glyphData_current[3]);
 									

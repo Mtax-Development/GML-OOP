@@ -57,7 +57,7 @@ function VertexBuffer() constructor
 			/// @argument			location {Vector2}
 			/// @description		Add position data of a single vertex in two-dimensional space to
 			///						this Vertex Buffer.
-			static setLocation = function(_location)
+			static setLocation2D = function(_location)
 			{
 				try
 				{
@@ -286,10 +286,10 @@ function VertexBuffer() constructor
 															vertex_format_add_color,
 															vertex_format_add_texcoord);
 				
-				static passthroughFormat3D = new VertexFormat(vertex_format_add_position_3d,
-															  vertex_format_add_normal,
-															  vertex_format_add_texcoord,
-															  vertex_format_add_color);
+				static vertexFormat3D = new VertexFormat(vertex_format_add_position_3d,
+														 vertex_format_add_normal,
+														 vertex_format_add_texcoord,
+														 vertex_format_add_color);
 				
 			#endregion
 			#region [[Methods]]
