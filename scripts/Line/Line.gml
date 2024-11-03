@@ -177,7 +177,7 @@ function Line() constructor
 			/// @argument			color? {int:color|Color2|Color4}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of this Shape as a sprite, using data of this
-			///						constructor or its specified temporarily replaced parts.
+			///						constructor or specified temporarily replaced parts.
 			static render = function(_location, _size, _color, _alpha)
 			{
 				static _pixel = function()
@@ -371,7 +371,7 @@ function Line() constructor
 			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or its specified temporarily replaced parts.
+			///						its current data or specified temporarily replaced parts.
 			///						Either a single value or an array of two values will be returned,
 			///						depending on whether the fill or outline were specified as the only
 			///						returned value or both as {all}.

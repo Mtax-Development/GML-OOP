@@ -356,7 +356,7 @@ function SpriteRenderer() constructor
 			/// @argument			origin? {Vector2}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or its specified temporarily replaced parts.
+			///						its current data or specified temporarily replaced parts.
 			static toVertexBuffer = function(_sprite, _location, _frame, _scale, _angle, _color,
 											 _alpha, _part, _origin)
 			{

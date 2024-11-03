@@ -2,6 +2,9 @@
 /// @description			Constructs a Vertex Buffer for storing and rendering vertices as primitive
 ///							shapes alongside a Vertex Format and a Shader. Used to achieve fast render
 ///							times, particularly for static graphics.
+//							
+//							Construction types:
+//							- New constructor
 function VertexBuffer() constructor
 //  @feather	ignore all
 {
@@ -20,8 +23,8 @@ function VertexBuffer() constructor
 			
 			/// @returns			{bool}
 			/// @description		Check if this constructor is functional.
-			///						NOTE: Returned result is approximate, as there is no way to fully
-			///							  validate a Vertex Buffer.
+			///						NOTE: Returned result is approximate, as there is no way to
+			///							  directly validate a Vertex Buffer.
 			static isFunctional = function()
 			{
 				return is_handle(ID);
@@ -51,6 +54,7 @@ function VertexBuffer() constructor
 		#endregion
 		#region <Setters>
 			
+			/// @argument			location {Vector2}
 			/// @description		Add position data of a single vertex in two-dimensional space to
 			///						this Vertex Buffer.
 			static setLocation = function(_location)
@@ -84,6 +88,8 @@ function VertexBuffer() constructor
 				return self;
 			}
 			
+			/// @argument			color {int:color}
+			/// @argument			alpha? {real}
 			/// @description		Add color and alpha data of a single vertex to this Vertex Buffer.
 			static setColor = function(_color, _alpha = 1)
 			{
@@ -99,6 +105,8 @@ function VertexBuffer() constructor
 				return self;
 			}
 			
+			/// @argument			u? {real}
+			/// @argument			v? {real}
 			/// @description		Add texture coordinate data of a single vertex to this Vertex
 			///						Buffer.
 			static setUV = function(_u = 0, _v = 0)
@@ -292,6 +300,7 @@ function VertexBuffer() constructor
 					{
 						static emptyEventIndex = method_get_index(function() {});
 						
+						//|Construction type: New constructor.
 						vertexBuffer = other;
 						primitiveType = argument[0];
 						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
@@ -335,6 +344,8 @@ function VertexBuffer() constructor
 						script_execute_ext(event.beforeRender.callback, event.beforeRender.argument);
 						vertexBuffer.render(primitiveType, texture);
 						script_execute_ext(event.afterRender.callback, event.afterRender.argument);
+						
+						return self;
 					}
 					
 				#endregion

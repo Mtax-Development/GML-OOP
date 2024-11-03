@@ -159,7 +159,7 @@ function Layer() constructor
 						}
 						else
 						{
-							//Construction type: New constructor.
+							//|Construction type: New constructor.
 							depth = argument[0];
 							location = new Vector2(0, 0);
 							speed = new Vector2(0, 0);
@@ -1997,7 +1997,7 @@ function Layer() constructor
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							var _string = ("ID: " + string(ID) + _mark_separator +
 										   "Tileset: " + tileset_get_name(tileset) + 
-													   _mark_separator +
+														 _mark_separator +
 										   "Location: " + string(location) + _mark_separator +
 										   "Size: " + string(size));
 							

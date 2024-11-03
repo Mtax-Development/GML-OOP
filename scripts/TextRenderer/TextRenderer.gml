@@ -71,7 +71,7 @@ function TextRenderer() constructor
 					}
 					else
 					{
-						//Construction type: New constructor.
+						//|Construction type: New constructor.
 						ID = argument[0];
 						font = ((argument_count > 1) ? argument[1] : undefined);
 						location = ((argument_count > 2) ? argument[2] : undefined);
@@ -363,7 +363,7 @@ function TextRenderer() constructor
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of the text, using data of this constructor or
-			///						its specified temporarily replaced parts.
+			///						specified temporarily replaced parts.
 			static render = function(_string, _font, _location, _align, _scale, _angle, _color, _alpha)
 			{
 				var _string_original = ID;
@@ -574,7 +574,7 @@ function TextRenderer() constructor
 			/// @argument			alpha? {real}
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or its specified temporarily replaced parts.
+			///						its current data or specified temporarily replaced parts.
 			///						If a Font stored in a Signed Distance Field is used, rendering 
 			///						data will be returned with event setup to resolve Signed Distance
 			///						Field rendering through a built-in Shader.

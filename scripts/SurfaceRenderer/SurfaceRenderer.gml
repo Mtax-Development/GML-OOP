@@ -292,7 +292,7 @@ function SurfaceRenderer() constructor
 			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 			/// @description		Return data formatted for rendering this constructor through a
 			///						Vertex Buffer and the default passthrough Shader, using the data
-			///						of this constructor or its specified temporarily replaced parts.
+			///						of this constructor or specified temporarily replaced parts.
 			static toVertexBuffer = function(_surface, _location, _scale, _angle, _color, _alpha,
 											 _part, _origin)
 			{
