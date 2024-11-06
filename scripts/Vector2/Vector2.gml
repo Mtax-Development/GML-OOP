@@ -977,26 +977,39 @@ function Vector2() constructor
 			}
 			
 			/// @argument			device? {int}
-			/// @description		Set all of the values to the ones of the cursor.
-			static setCursor = function(_device)
+			/// @argument			GUI? {bool}
+			/// @see				display_set_gui_size()
+			/// @description		Set all of the values to the ones of the system cursor. A target
+			///						device can be specified for cases where multiple cursor inputs are
+			///						used, and if it is specified, the position can then be translated
+			///						to the GUI layer to depend on its size.
+			static setCursor = function(_device, _GUI = false)
 			{
 				try
 				{
-					var _result_x, _result_y;
+					var _cursor_x, _cursor_y;
 					
-					if (is_real(_device))
+					if (_device == undefined)
 					{
-						_result_x = device_mouse_x(_device);
-						_result_y = device_mouse_y(_device);
+						_cursor_x = mouse_x;
+						_cursor_y = mouse_y;
 					}
 					else
 					{
-						_result_x = mouse_x;
-						_result_y = mouse_y;
+						if (_GUI)
+						{
+							_cursor_x = device_mouse_x_to_gui(_device);
+							_cursor_y = device_mouse_y_to_gui(_device);
+						}
+						else
+						{
+							_cursor_x = device_mouse_x(_device);
+							_cursor_y = device_mouse_y(_device);
+						}
 					}
 					
-					x = _result_x;
-					y = _result_y;
+					x = _cursor_x;
+					y = _cursor_y;
 				}
 				catch (_exception)
 				{

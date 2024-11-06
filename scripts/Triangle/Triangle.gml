@@ -117,9 +117,11 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorOver = function(_device, _GUI = false)
 			{
 				try
@@ -160,10 +162,12 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button is pressed or held.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorHold = function(_button, _device, _GUI = false)
 			{
 				try
@@ -212,10 +216,12 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button was pressed in this frame.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorPressed = function(_button, _device, _GUI = false)
 			{
 				try
@@ -265,10 +271,12 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
 			///						mouse button was released in this frame.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorReleased = function(_button, _device, _GUI = false)
 			{
 				try

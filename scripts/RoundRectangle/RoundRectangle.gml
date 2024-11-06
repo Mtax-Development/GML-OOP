@@ -188,10 +188,11 @@ function RoundRectangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
-			/// @description		Check if the system cursor is over this Shape, treating this Shape
-			///						as an unrounded Rectangle.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			/// @see				display_set_gui_size()
+			/// @description		Check if the system cursor is over this Shape.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorOver = function(_device, _GUI = false)
 			{
 				try
@@ -232,11 +233,12 @@ function RoundRectangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
-			///						mouse button is pressed or held, treating this Shape as an
-			///						unrounded Rectangle.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						mouse button is pressed or held.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorHold = function(_button, _device, _GUI = false)
 			{
 				try
@@ -285,11 +287,12 @@ function RoundRectangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
-			///						mouse button was pressed in this frame, treating this Shape as an
-			///						unrounded Rectangle.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						mouse button was pressed in this frame.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorPressed = function(_button, _device, _GUI = false)
 			{
 				try
@@ -339,11 +342,12 @@ function RoundRectangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
+			/// @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
-			///						mouse button was released in this frame, treating this Shape as an
-			///						unrounded Rectangle.
-			///						If the device is specified, the position of the cursor on the GUI
-			///						layer can be used.
+			///						mouse button was released in this frame.
+			///						A target device can be specified for cases where multiple cursor
+			///						inputs are used, and if it is specified, the position can then be
+			///						translated to the GUI layer to depend on its size.
 			static cursorReleased = function(_button, _device, _GUI = false)
 			{
 				try
