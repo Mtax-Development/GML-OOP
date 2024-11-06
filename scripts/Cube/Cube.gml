@@ -186,14 +186,24 @@ function Cube() constructor
 				
 				try
 				{
-					var _texture = sprite_get_texture(_sprite.ID, 0);
-					var _texelSize_x = texture_get_texel_width(_texture);
-					var _texelSize_y = texture_get_texel_height(_texture);
-					var _uv = texture_get_uvs(_texture);
-					var _uv_x1 = _uv[0];
-					var _uv_y1 = _uv[1];
-					var _uv_x2 = (_uv_x1 + (sprite_get_width(_sprite.ID) * _texelSize_x));
-					var _uv_y2 = (_uv_y1 + (sprite_get_height(_sprite.ID) * _texelSize_y));
+					var _texture = undefined;
+					var _uv_x1 = 0;
+					var _uv_y1 = 0;
+					var _uv_x2 = 0;
+					var _uv_y2 = 0;
+					
+					if (is_instanceof(_sprite, Sprite))
+					{
+						_texture = sprite_get_texture(_sprite.ID, 0);
+						var _texelSize_x = texture_get_texel_width(_texture);
+						var _texelSize_y = texture_get_texel_height(_texture);
+						var _uv = texture_get_uvs(_texture);
+						_uv_x1 = _uv[0];
+						_uv_y1 = _uv[1];
+						_uv_x2 = (_uv_x1 + (sprite_get_width(_sprite.ID) * _texelSize_x));
+						_uv_y2 = (_uv_y1 + (sprite_get_height(_sprite.ID) * _texelSize_y));
+					}
+					
 					_vertexBuffer = new VertexBuffer();
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglelist, undefined,
 																		  _texture);
