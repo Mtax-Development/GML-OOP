@@ -7,7 +7,7 @@
 //							
 //							Construction types:
 //							- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}
-//							- One number for all values: {real} value
+//							- One number for all values: value {real}
 //							- Number pair: first {real}, second {real}
 //							   First number will be set to x1 and y1.
 //							   Second number will be set to x2 and y2.

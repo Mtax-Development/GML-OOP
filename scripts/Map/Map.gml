@@ -635,7 +635,7 @@ function Map() constructor
 							if (is_instanceof(_value, Map))
 							{
 								ds_map_add_map(ID, _key, _value.ID);
-							} 
+							}
 							else if ((is_handle(_value)) and (ds_exists(_value, ds_type_map)))
 							{
 								ds_map_add_map(ID, _key, _value);

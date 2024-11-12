@@ -80,7 +80,7 @@ function Callback() constructor
 				}
 			}
 			
-			/// @argument			{bool} keepArgumentData?
+			/// @argument			keepArgumentData? {bool}
 			/// @description		Remove references to functions or methods from this constructor, so
 			///						its executions will have no effect when called. Argument data will
 			///						also be removed, unless specified otherwise.
