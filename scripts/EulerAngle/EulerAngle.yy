@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"EulerAngle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EulerAngle",
+  "parent":{
+    "name":"Container",
+    "path":"folders/GML-OOP/Container.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

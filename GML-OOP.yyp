@@ -40,6 +40,7 @@
     {"id":{"name":"DateTime","path":"scripts/DateTime/DateTime.yy",},},
     {"id":{"name":"Ellipse","path":"scripts/Ellipse/Ellipse.yy",},},
     {"id":{"name":"ErrorReport","path":"scripts/ErrorReport/ErrorReport.yy",},},
+    {"id":{"name":"EulerAngle","path":"scripts/EulerAngle/EulerAngle.yy",},},
     {"id":{"name":"Font","path":"scripts/Font/Font.yy",},},
     {"id":{"name":"Grid","path":"scripts/Grid/Grid.yy",},},
     {"id":{"name":"Layer","path":"scripts/Layer/Layer.yy",},},
