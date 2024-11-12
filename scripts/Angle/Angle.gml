@@ -107,15 +107,7 @@ function Angle() constructor
 			{
 				try
 				{
-					if (is_real(_value))
-					{
-						value = _value;
-					}
-					else
-					{
-						value = _value.value;
-					}
-					
+					value = ((is_real(_value)) ? _value : _value.value);
 					value -= (360 * (floor(value / 360)));
 				}
 				catch (_exception)
@@ -132,7 +124,7 @@ function Angle() constructor
 			{
 				try
 				{
-					value += ((is_real(_value)) ? _value : (_value.value));
+					value += ((is_real(_value)) ? _value : _value.value);
 					value -= (360 * (floor(value / 360)));
 				}
 				catch (_exception)
