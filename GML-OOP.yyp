@@ -48,6 +48,7 @@
     {"id":{"name":"List","path":"scripts/List/List.yy",},},
     {"id":{"name":"Map","path":"scripts/Map/Map.yy",},},
     {"id":{"name":"ParticleType","path":"scripts/ParticleType/ParticleType.yy",},},
+    {"id":{"name":"Plane","path":"scripts/Plane/Plane.yy",},},
     {"id":{"name":"Point","path":"scripts/Point/Point.yy",},},
     {"id":{"name":"PriorityQueue","path":"scripts/PriorityQueue/PriorityQueue.yy",},},
     {"id":{"name":"Queue","path":"scripts/Queue/Queue.yy",},},

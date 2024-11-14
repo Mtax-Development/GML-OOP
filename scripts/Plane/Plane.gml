@@ -1,18 +1,18 @@
-//  @function				Cube()
+//  @function				Plane()
 /// @argument				location {Vector3}
-/// @argument				scale {Vector3}
+/// @argument				scale {Scale}
 /// @argument				angle? {EulerAngle}
 /// @argument				sprite? {Sprite}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs a three-dimensional Cube shape, bound by six rectangular faces.
-///							Its location is the center of the shape, from which it is scaled.
+/// @description			Constructs a three-dimensional representation of a two-dimensional Plane
+///							shape. Its location is the center of the shape, from which it is scaled.
 //							
 //							Construction types:
 //							- New constructor
 //							- Empty: {void}
-//							- Constructor copy: other {Cube}
-function Cube() constructor
+//							- Constructor copy: other {Plane}
+function Plane() constructor
 //  @feather	ignore all
 {
 	#region [Methods]
@@ -31,15 +31,15 @@ function Cube() constructor
 				
 				if (argument_count > 0)
 				{
-					if (is_instanceof(argument[0], Cube))
+					if (is_instanceof(argument[0], Plane))
 					{
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
 						location = ((is_instanceof(_other.location, Vector3))
 									? new Vector3(_other.location) : _other.location);
-						scale = ((is_instanceof(_other.scale, Vector3)) ? new Vector3(_other.scale)
-																		: _other.scale);
+						scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
+																	  : _other.scale);
 						angle = ((is_instanceof(_other.angle, EulerAngle))
 								 ? new EulerAngle(_other.angle) : _other.angle);
 						sprite = ((is_instanceof(_other.sprite, Vector3)) ? new Vector3(_other.scale)
@@ -169,36 +169,13 @@ function Cube() constructor
 			static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
 											 _sprite = sprite, _color = color, _alpha = alpha)
 			{
-				var _result = [];
 				var _vertexBuffer = undefined;
 				var _renderData = undefined;
-				var _side =
-				[
-					//|Top (Normal Y-):
-					[[(-1), (-1), 1], [(-1), (-1), (-1)], [1, (-1), 1], [1, (-1), 1],
-					 [(-1), (-1), (-1)], [1, (-1), (-1)]],
-					 //|Bottom (Normal Y+):
-					[[(-1), 1, (-1)], [(-1), 1, 1], [1, 1, (-1)], [1, 1, (-1)], [(-1), 1, 1],
-					 [1, 1, 1]],
-					//|Left (Normal X-):
-					[[(-1), 1, (-1)], [(-1), (-1), (-1)], [(-1), 1, 1], [(-1), 1, 1],
-					 [(-1), (-1), (-1)], [(-1), (-1), 1]],
-					 //|Front (Normal Z-):
-					[[1, 1, (-1)], [1, (-1), (-1)], [(-1), 1, (-1)], [(-1), 1, (-1)], [1, (-1), (-1)],
-					 [(-1), (-1), (-1)]],
-					//|Right (Normal X+):
-					[[1, 1, 1], [1, (-1), 1], [1, 1, (-1)], [1, 1, (-1)], [1, (-1), 1],
-					 [1, (-1), (-1)]],
-					//|Back (Normal Z+):
-					[[(-1), 1, 1], [(-1), (-1), 1], [1, 1, 1], [1, 1, 1], [(-1), (-1), 1],
-					 [1, (-1), 1]]
-				];
-				var _side_normal = [[0, 0, 1], [1, 0, 0], [0, 0, (-1)], [(-1), 0, 0], [0, 1, 0],
-									[0, (-1), 0]];
-				var _side_front = _side[3];
 				
 				try
 				{
+					var _offset = [[-1, -1], [1, -1], [-1, 1], [1, 1]];
+					var _offset_count = array_length(_offset);
 					var _angle_x = 0;
 					var _angle_y = 0;
 					var _angle_z = 0;
@@ -210,121 +187,66 @@ function Cube() constructor
 						_angle_z = _angle.z;
 					}
 					
-					var _sprite_frame_data = [[undefined, 0, 0, 0, 0]];
+					var _texture = undefined;
+					var _uv_order;
 					
 					if (is_instanceof(_sprite, Sprite))
 					{
-						var _sprite_frame_count = sprite_get_number(_sprite.ID);
-						_sprite_frame_data = array_create(_sprite_frame_count, undefined);
+						_texture = sprite_get_texture(_sprite.ID, 0);
+						var _texelSize_x = texture_get_texel_width(_texture);
+						var _texelSize_y = texture_get_texel_height(_texture);
 						var _sprite_size_x = sprite_get_width(_sprite.ID);
 						var _sprite_size_y = sprite_get_height(_sprite.ID);
-						
-						var _sprite_image_order = undefined;
-						switch (_sprite_frame_count)
-						{
-							case 1:
-								//|Image order: All sides.
-								_sprite_image_order = [1, 1, 1, 1, 1, 1];
-							break;
-							case 2:
-								//|Image order: Top and bottom, All sides.
-								_sprite_image_order = [1, 1, 2, 2, 2, 2];
-							break;
-							case 3:
-								//|Image order: Top, Bottom, All sides.
-								_sprite_image_order = [1, 2, 3, 3, 3, 3];
-							break;
-							case 4:
-								//|Image order: Top, Bottom, Left and right, Front and back.
-								_sprite_image_order = [1, 2, 3, 4, 3, 4];
-							break;
-							case 5:
-								//|Image order: Top and bottom, Left, Front, Right, Back.
-								_sprite_image_order = [1, 1, 2, 3, 4, 5];
-							break;
-							case 6:
-								//|Image order: Top, Bottom, Left, Front, Right, Back.
-								_sprite_image_order = [1, 2, 3, 4, 5, 6];
-							break;
-						}
-						
+						var _uv = texture_get_uvs(_texture);
+						var _uv_x1 = _uv[0];
+						var _uv_y1 = _uv[1];
+						var _uv_x2 = (_uv_x1 + (_sprite_size_x * _texelSize_x));
+						var _uv_y2 = (_uv_y1 + (_sprite_size_y * _texelSize_y));
+						_uv_order = [[_uv_x1, _uv_y1], [_uv_x1, _uv_y2], [_uv_x2, _uv_y1],
+									 [_uv_x2, _uv_y2]];
+					}
+					else
+					{
+						_uv_order = array_create(_offset_count, [0, 0]);
+					}
+					
+					var _vertex = new Vector3();
+					var _normal = new Vector3(0, 1, 0);
+					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
+														1);
+					_vertexBuffer = new VertexBuffer();
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
+																		  _texture);
+					_vertexBuffer.setActive(_renderData.vertexFormat3D);
+					{
 						var _i = 0;
-						repeat (array_length(_sprite_image_order))
+						repeat (_offset_count)
 						{
-							var _texture = sprite_get_texture(_sprite.ID,
-															  (_sprite_image_order[_i] - 1));
-							var _texelSize_x = texture_get_texel_width(_texture);
-							var _texelSize_y = texture_get_texel_height(_texture);
-							var _uv = texture_get_uvs(_texture);
-							var _uv_x1 = _uv[0];
-							var _uv_y1 = _uv[1];
-							var _uv_x2 = (_uv_x1 + (_sprite_size_x * _texelSize_x));
-							var _uv_y2 = (_uv_y1 + (_sprite_size_y * _texelSize_y));
+							var _offset_current = _offset[_i];
+							var _uv_order_current = _uv_order[_i];
+							var _transform = matrix_transform_vertex(_matrix_rotation,
+																	 (_scale.x * _offset_current[0]),
+																	 (_scale.y * _offset_current[1]),
+																	 0);
 							
-							_sprite_frame_data[_i] = [_texture, _uv_x1, _uv_y1, _uv_x2, _uv_y2];
+							_vertexBuffer
+							 .setLocation3D(_vertex.set((_location.x + _transform[1]),
+														(_location.y + _transform[0]),
+														(_location.z + _transform[2])))
+							 .setNormal(_normal)
+							 .setUV(_uv_order_current[0], _uv_order_current[1])
+							 .setColor(_color, _alpha);
 							
 							++_i;
 						}
 					}
+					_vertexBuffer.setActive(false);
 					
-					var _vertex = new Vector3();
-					var _normal = new Vector3();
-					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
-														1);
-					var _i = [0, 0];
-					repeat (array_length(_side))
-					{
-						var _side_current = _side[_i[0]];
-						var _side_normal_current = _side_normal[(_i[0] div 6)];
-						_normal.set(_side_normal_current[0], _side_normal_current[1],
-								 	_side_normal_current[2]);
-						var _sprite_frame_data_current = _sprite_frame_data[_i[0]];
-						var _uv_topFlipMultiplier = _side_current[0][1];
-						
-						_vertexBuffer = new VertexBuffer();
-						_renderData = _vertexBuffer
-						 .createPrimitiveRenderData(pr_trianglelist, undefined,
-													_sprite_frame_data_current[0]);
-						_vertexBuffer.setActive(_renderData.vertexFormat3D);
-						{
-							_i[1] = 0;
-							repeat (array_length(_side_current))
-							{
-								var _side_vertexOffset_current = _side_current[_i[1]];
-								var _uv_order = _side_front[_i[1]];
-								var _transform = matrix_transform_vertex
-								(
-									_matrix_rotation, (_scale.x * _side_vertexOffset_current[0]),
-									(_scale.y *  _side_vertexOffset_current[1]), ((_scale.z *
-									_side_vertexOffset_current[2]))
-								);
-								
-								_vertexBuffer
-								 .setLocation3D(_vertex.set((_location.x + _transform[0]),
-															(_location.y + _transform[1]),
-															(_location.z + _transform[2])))
-								 .setNormal(_normal)
-								 .setUV(((_uv_order[0] == (-_uv_topFlipMultiplier))
-										 ? _sprite_frame_data_current[1]
-										 : _sprite_frame_data_current[3]),
-								 		((_uv_order[1] == (-_uv_topFlipMultiplier))
-										 ? _sprite_frame_data_current[2]
-										 : _sprite_frame_data_current[4]))
-								 .setColor(_color, _alpha);
-								
-								++_i[1];
-							}
-						}
-						_vertexBuffer.setActive(false);
-						
-						array_push(_result, _renderData);
-						
-						++_i[0];
-					}
+					return _renderData;
 				}
 				catch (_exception)
 				{
-					if ((array_length(_result) == 0) and (_vertexBuffer != undefined))
+					if (_vertexBuffer != undefined)
 					{
 						_vertexBuffer.destroy();
 					}
@@ -332,14 +254,14 @@ function Cube() constructor
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				return _result;
+				return _renderData;
 			}
 			
 		#endregion
 	#endregion
 	#region [Constructor]
 		
-		static constructor = Cube;
+		static constructor = Plane;
 		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
