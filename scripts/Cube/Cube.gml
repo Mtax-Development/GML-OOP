@@ -148,6 +148,7 @@ function Cube() constructor
 					
 					_string = ("Location: " + string(location) + _mark_separator +
 							   "Scale: " + string(scale) + _mark_separator +
+							   "Angle: " + string(angle) + _mark_separator +
 							   "Color: " + _string_color + _mark_separator +
 							   "Alpha: " + string(alpha));
 				}
