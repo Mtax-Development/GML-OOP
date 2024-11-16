@@ -188,7 +188,7 @@ function Plane() constructor
 					}
 					
 					var _texture = undefined;
-					var _uv_order;
+					var _uv_order = undefined;
 					
 					if (is_instanceof(_sprite, Sprite))
 					{
@@ -198,12 +198,8 @@ function Plane() constructor
 						var _sprite_size_x = sprite_get_width(_sprite.ID);
 						var _sprite_size_y = sprite_get_height(_sprite.ID);
 						var _uv = texture_get_uvs(_texture);
-						var _uv_x1 = _uv[0];
-						var _uv_y1 = _uv[1];
-						var _uv_x2 = (_uv_x1 + (_sprite_size_x * _texelSize_x));
-						var _uv_y2 = (_uv_y1 + (_sprite_size_y * _texelSize_y));
-						_uv_order = [[_uv_x1, _uv_y1], [_uv_x1, _uv_y2], [_uv_x2, _uv_y1],
-									 [_uv_x2, _uv_y2]];
+						_uv_order = [[_uv[0], _uv[1]], [_uv[0], _uv[3]], [_uv[2], _uv[1]],
+									 [_uv[2], _uv[3]]];
 					}
 					else
 					{
