@@ -866,8 +866,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents rounded down or the
-			///						ones of the specified value.
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded down.
 			static setFloor = function(_value)
 			{
 				try
@@ -903,8 +903,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents rounded down or up
-			///						or the ones of the specified value.
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded down or up.
 			static setRound = function(_value)
 			{
 				try
@@ -940,8 +940,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents rounded up or the
-			///						ones of the specified value.
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded up.
 			static setCeil = function(_value)
 			{
 				try
