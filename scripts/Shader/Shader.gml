@@ -20,7 +20,6 @@ function Shader() constructor
 				name = undefined;
 				compiled = undefined;
 				uniform = undefined;
-				sampler = undefined;
 				
 				event =
 				{
@@ -71,30 +70,6 @@ function Shader() constructor
 							uniform = _other.uniform;
 						}
 						
-						if (is_struct(_other.sampler))
-						{
-							sampler = {};
-							
-							var _sampler = variable_struct_get_names(_other.sampler);
-							var _i = 0;
-							repeat (array_length(_sampler))
-							{
-								var _other_struct = variable_struct_get(uniform, _uniform[_i]);
-								var _struct = 
-								{
-									handle: _other_struct.handle
-								};
-								
-								variable_struct_set(sampler, _sampler[_i], _struct);
-								
-								++_i;
-							}
-						}
-						else
-						{
-							sampler = _other.sampler;
-						}
-						
 						if (is_struct(_other.event))
 						{
 							event.beforeActivation.setAll(_other.event.beforeActivation);
@@ -114,7 +89,6 @@ function Shader() constructor
 						name = shader_get_name(ID);
 						compiled = shader_is_compiled(ID);
 						uniform = {};
-						sampler = {};
 					}
 				}
 				
@@ -130,34 +104,6 @@ function Shader() constructor
 			
 		#endregion
 		#region <Getters>
-			
-			/// @argument			uniform {string}
-			/// @returns			{int} | On error: {undefined}
-			/// @description		Get a sampler index of a uniform from this Shader
-			static getSampler = function(_uniform)
-			{
-				if (self.isFunctional())
-				{
-					var _sampler = shader_get_sampler_index(ID, _uniform);
-					var _handle = ((_sampler != -1) ? _sampler : undefined)
-					var _struct =
-					{
-						handle: _handle
-					}
-					
-					variable_struct_set(sampler, _uniform, _struct);
-					
-					return _handle;
-				}
-				else
-				{
-					new ErrorReport().report([other, self, "getSampler()"],
-											 ("Attempted to use an invalid Shader: " +
-											  "{" + string(ID) + "}"));
-					
-					return undefined;
-				}
-			}
 			
 			/// @returns			{bool}
 			/// @description		Check whether this Shader is the currently set one.
@@ -398,6 +344,44 @@ function Shader() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "setUniformMatrix()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			uniform {string}
+			/// @argument			texture? {pointer:texture}
+			/// @description		Use the specified sampler uniform to pass to this Shader the
+			///						specified pointer to a texture.
+			static setUniformTexture = function(_uniform, _texture)
+			{
+				try
+				{
+					if (self.isFunctional())
+					{
+						var _handle = shader_get_sampler_index(ID, _uniform);
+						
+						texture_set_stage(_handle, _texture);
+						
+						var _struct = 
+						{
+							handle: _handle,
+							type: "sampler",
+							value: _texture
+						};
+						
+						variable_struct_set(uniform, _uniform, _struct);
+					}
+					else
+					{
+						new ErrorReport().report([other, self, "setUniformTexture()"],
+												 ("Attempted to use an invalid Shader: " +
+												  "{" + string(ID) + "}"));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setUniformTexture()"], _exception);
 				}
 				
 				return self;
