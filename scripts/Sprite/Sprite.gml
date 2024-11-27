@@ -348,20 +348,126 @@ function Sprite() constructor
 				return noone;
 			}
 			
-			/// @argument			frame? {int}
-			/// @returns			{pointer}
-			/// @description		Return a pointer for the texture page of the specified frame
-			///						of this Sprite.
+			/// @argument			frame? {int|int[]|all}
+			/// @returns			{pointer|pointer[]} | On error: {undefined}
+			/// @description		Return pointers to the texture page of specified frames of this
+			///						Sprite.
 			static getTexture = function(_frame = 0)
 			{
+				var _result = undefined;
+				
 				try
 				{
-					return sprite_get_texture(ID, _frame);
+					if (is_real(_frame))
+					{
+						if (_frame == all)
+						{
+							var _count = sprite_get_number(ID);
+							_result = array_create(_count, undefined);
+							var _i = 0;
+							repeat (_count)
+							{
+								_result[_i] = sprite_get_texture(ID, _i);
+								
+								++_i;
+							}
+						}
+						else
+						{
+							_result = sprite_get_texture(ID, _frame);
+						}
+					}
+					else if (is_array(_frame))
+					{
+						var _count = array_length(_frame);
+						_result = array_create(_count, undefined);
+						var _i = 0;
+						repeat (_count)
+						{
+							_result[_i] = sprite_get_texture(ID, _frame[_i]);
+							
+							++_i;
+						}
+					}
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getTexture()"], _exception);
 				}
+				
+				return _result;
+			}
+			
+			/// @argument			frame? {int|int[]|all}
+			/// @argument			full? {bool}
+			/// @returns			{Vector4|real[8]|[]} | On error: {undefined}
+			/// @description		Return the UV coordinates for the location of the specified frames
+			///						of this Sprite on its texture page.
+			///						They will be returned as an Vector4 if the full information is not
+			///						specified. Otherwise, an array with 8 elements will be returned.
+			///						Each of these entries will be nested if information for multiple
+			///						frames was specified. The data of full information is represented
+			///						at following positions:
+			///						- array[0]: UV left {real}
+			///						- array[1]: UV top {real}
+			///						- array[2]: UV right {real}
+			///						- array[3]: UV bottom {real}
+			///						- array[4]: pixels trimmed from left {int}
+			///						- array[5]: pixels trimmed from right {int}
+			///						- array[6]: x percentage of pixels on the texture page {real}
+			///						- array[7]: y percentage of pixels on the texture page {real}
+			static getUV = function(_frame = 0, _full = false)
+			{
+				var _result = undefined;
+				
+				try
+				{
+					if (is_real(_frame))
+					{
+						if (_frame == all)
+						{
+							var _count = sprite_get_number(ID);
+							_result = array_create(_count, undefined);
+							var _i = 0;
+							repeat (_count)
+							{
+								var _uv = sprite_get_uvs(ID, _i);
+								
+								_result[_i] = ((_full) ? _uv
+													   : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
+								
+								++_i;
+							}
+						}
+						else
+						{
+							var _uv = sprite_get_uvs(ID, _frame);
+					
+							return ((_full) ? _uv : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
+						}
+					}
+					else if (is_array(_frame))
+					{
+						var _count = array_length(_frame);
+						_result = array_create(_count, undefined);
+						var _i = 0;
+						repeat (_count)
+						{
+							var _uv = sprite_get_uvs(ID, _frame[_i]);
+							
+							_result[_i] = ((_full) ? _uv
+												   : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
+							
+							++_i;
+						}
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getUV()"], _exception);
+				}
+				
+				return _result;
 			}
 			
 			/// @argument			frame? {int}
@@ -381,38 +487,6 @@ function Sprite() constructor
 				{
 					new ErrorReport().report([other, self, "getTexel()"], _exception);
 				}
-			}
-			
-			/// @argument			frame? {int}
-			/// @argument			full? {bool}
-			/// @returns			{Vector4|real[8]} | On error: {undefined}
-			/// @description		Return the UV coordinates for the location of the specified frame
-			///						of this Sprite on its texture page.
-			///						It will be returned as an Vector4 if the full information is not
-			///						requested. Otherwise, an array with 8 elements will be returned
-			///						with the following data at its respective positions:
-			///						- array[0]: UV left {real}
-			///						- array[1]: UV top {real}
-			///						- array[2]: UV right {real}
-			///						- array[3]: UV bottom {real}
-			///						- array[4]: pixels trimmed from left {int}
-			///						- array[5]: pixels trimmed from right {int}
-			///						- array[6]: x percentage of pixels on the texture page {real}
-			///						- array[7]: y percentage of pixels on the texture page {real}
-			static getUV = function(_frame = 0, _full = false)
-			{
-				try
-				{
-					var _uv = sprite_get_uvs(ID, _frame);
-					
-					return ((_full) ? _uv : new Vector4(_uv[0], _uv[1], _uv[2], _uv[3]));
-				}
-				catch (_exception)
-				{
-					new ErrorReport().report([other, self, "getUV()"], _exception);
-				}
-				
-				return undefined;
 			}
 			
 		#endregion
