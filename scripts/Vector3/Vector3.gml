@@ -121,6 +121,169 @@ function Vector3() constructor
 				return self;
 			}
 			
+			/// @argument			value {real|real[]|Vector3}
+			/// @description		Set all of the values to one specified value or first three values
+			///						of the specified array.
+			static setAll = function(_value)
+			{
+				try
+				{
+					var _result_x, _result_y, _result_z;
+					
+					if (is_real(_value))
+					{
+						_result_x = _value;
+						_result_y = _value;
+						_result_z = _value;
+					}
+					else if (is_array(_value))
+					{
+						_result_x = _value[0];
+						_result_y = _value[1];
+						_result_z = _value[2];
+					}
+					else
+					{
+						_result_x = _value.x;
+						_result_y = _value.y;
+						_result_z = _value.z;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+					z = _result_z;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setAll()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value? {real|Vector3}
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded down.
+			static setFloor = function(_value)
+			{
+				try
+				{
+					var _result_x, _result_y, _result_z;
+					
+					if (_value == undefined)
+					{
+						_result_x = floor(x);
+						_result_y = floor(y);
+						_result_z = floor(z);
+					}
+					else if (is_real(_value))
+					{
+						var _value_floor = floor(_value);
+						_result_x = _value_floor;
+						_result_y = _value_floor;
+						_result_z = _value_floor;
+					}
+					else
+					{
+						_result_x = floor(_value.x);
+						_result_y = floor(_value.y);
+						_result_z = floor(_value.z);
+					}
+					
+					x = _result_x;
+					y = _result_y;
+					z = _result_z;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setFloor()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value? {real|Vector3}
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded down or up.
+			static setRound = function(_value)
+			{
+				try
+				{
+					var _result_x, _result_y, _result_z;
+					
+					if (_value == undefined)
+					{
+						_result_x = round(x);
+						_result_y = round(y);
+						_result_z = round(z);
+					}
+					else if (is_real(_value))
+					{
+						var _value_round = round(_value);
+						_result_x = _value_round;
+						_result_y = _value_round;
+						_result_z = _value_round;
+					}
+					else
+					{
+						_result_x = round(_value.x);
+						_result_y = round(_value.y);
+						_result_z = round(_value.z);
+					}
+					
+					x = _result_x;
+					y = _result_y;
+					z = _result_z;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setRound()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value? {real|Vector3}
+			/// @description		Set all of the values of to their equivalents or the ones of the
+			///						specified value rounded up.
+			static setCeil = function(_value)
+			{
+				try
+				{
+					var _result_x, _result_y, _result_z;
+					
+					if (_value == undefined)
+					{
+						_result_x = ceil(x);
+						_result_y = ceil(y);
+						_result_z = ceil(z);
+					}
+					else if (is_real(_value))
+					{
+						var _value_ceil = ceil(_value);
+						_result_x = _value_ceil;
+						_result_y = _value_ceil;
+						_result_z = _value_ceil;
+					}
+					else
+					{
+						_result_x = ceil(_value.x);
+						_result_y = ceil(_value.y);
+						_result_z = ceil(_value.z);
+					}
+					
+					x = _result_x;
+					y = _result_y;
+					z = _result_z;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "setCeil()"], _exception);
+				}
+				
+				return self;
+			}
+			
 		#endregion
 		#region <Conversion>
 			
