@@ -483,16 +483,16 @@ function SurfaceRenderer() constructor
 			++_i;
 		}
 		
-		argument_original = array_create(argument_count, undefined);
+		var _argument = array_create(argument_count, undefined);
 		var _i = 0;
 		repeat (argument_count)
 		{
-			argument_original[_i] = argument[_i];
+			_argument[_i] = argument[_i];
 			
 			++_i;
 		}
 		
-		script_execute_ext(method_get_index(self.construct), argument_original);
+		script_execute_ext(self.construct, _argument);
 		
 	#endregion
 }
