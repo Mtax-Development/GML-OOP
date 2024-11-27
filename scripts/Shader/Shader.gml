@@ -170,13 +170,13 @@ function Shader() constructor
 		#region <Setters>
 			
 			/// @argument			uniform {string}
-			/// @argument			value1 {real|real[]|Vector2}
+			/// @argument			value1 {real|real[]|Vector2|Vector3}
 			/// @argument			value2? {real}
 			/// @argument			value3? {real}
 			/// @argument			value4? {real}
 			/// @description		Pass one or more float-type numbers as a uniform to this Shader.
-			///						If only one value argument is passed, it can be an array or
-			///						Vector2. Otherwise all value arguments have to be numbers.
+			///						If only one value argument is passed, it can be an array, Vector2
+			///						or a Vector3. Otherwise all value arguments have to be numbers.
 			static setUniformFloat = function(_uniform)
 			{
 				try
@@ -202,6 +202,10 @@ function Shader() constructor
 								else if (is_instanceof(_value, Vector2))
 								{
 									shader_set_uniform_f(_handle, _value.x, _value.y);
+								}
+								else if (is_instanceof(_value, Vector3))
+								{
+									shader_set_uniform_f(_handle, _value.x, _value.y, _value.z);
 								}
 								else
 								{
@@ -259,13 +263,13 @@ function Shader() constructor
 			}
 			
 			/// @argument			uniform {string}
-			/// @argument			value1 {int|int[]|Vector2}
+			/// @argument			value1 {int|int[]|Vector2|Vector3}
 			/// @argument			value2? {int}
 			/// @argument			value3? {int}
 			/// @argument			value4? {int}
 			/// @description		Pass one or more integer values as a uniform to this Shader.
-			///						If only one value argument is passed, it can be an array or
-			///						Vector2. Otherwise all value arguments have to be numbers.
+			///						If only one value argument is passed, it can be an array, Vector2
+			///						or a Vector3. Otherwise all value arguments have to be numbers.
 			static setUniformInt = function(_uniform)
 			{
 				try
@@ -291,6 +295,10 @@ function Shader() constructor
 								else if (is_instanceof(_value, Vector2))
 								{
 									shader_set_uniform_i(_handle, _value.x, _value.y);
+								}
+								else if (is_instanceof(_value, Vector3))
+								{
+									shader_set_uniform_i(_handle, _value.x, _value.y, _value.z);
 								}
 								else
 								{
