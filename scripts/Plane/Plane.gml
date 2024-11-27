@@ -221,14 +221,14 @@ function Plane() constructor
 							var _offset_current = _offset[_i];
 							var _uv_order_current = _uv_order[_i];
 							var _transform = matrix_transform_vertex(_matrix_rotation,
-																	 (_scale.x * _offset_current[0]),
-																	 (_scale.y * _offset_current[1]),
+																	 (_scale.y * _offset_current[0]),
+																	 (_scale.x * _offset_current[1]),
 																	 0);
 							
 							_vertexBuffer
 							 .setLocation3D(_vertex.set((_location.x + _transform[1]),
 														(_location.y + _transform[0]),
-														(_location.z + _transform[2])))
+														((-_location.z) + _transform[2])))
 							 .setNormal(_normal)
 							 .setUV(_uv_order_current[0], _uv_order_current[1])
 							 .setColor(_color, _alpha);

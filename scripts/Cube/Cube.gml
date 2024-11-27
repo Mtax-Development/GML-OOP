@@ -296,7 +296,7 @@ function Cube() constructor
 								_vertexBuffer
 								 .setLocation3D(_vertex.set((_location.x + _transform[0]),
 															(_location.y + _transform[1]),
-															(_location.z + _transform[2])))
+															((-_location.z) + _transform[2])))
 								 .setNormal(_normal)
 								 .setUV(((_uv_order[0] == (-_uv_topFlipMultiplier))
 										 ? _sprite_frame_data_current[1]
