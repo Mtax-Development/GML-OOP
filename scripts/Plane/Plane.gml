@@ -68,8 +68,8 @@ function Plane() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
-						((is_instanceof(scale, Vector3)) and (scale.isFunctional()))
+				return (((is_instanceof(location, Vector3)) and (location.isFunctional()))
+						and ((is_instanceof(scale, Vector3)) and (scale.isFunctional()))
 						and (is_real(color)) and (is_real(alpha)));
 			}
 			
@@ -213,6 +213,7 @@ function Plane() constructor
 					_vertexBuffer = new VertexBuffer();
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
 																		  _texture);
+					
 					_vertexBuffer.setActive(_renderData.vertexFormat3D);
 					{
 						var _i = 0;

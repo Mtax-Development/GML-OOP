@@ -285,7 +285,6 @@ function VertexBuffer() constructor
 				static passthroughFormat = new VertexFormat(vertex_format_add_position,
 															vertex_format_add_color,
 															vertex_format_add_texcoord);
-				
 				static vertexFormat3D = new VertexFormat(vertex_format_add_position_3d,
 														 vertex_format_add_normal,
 														 vertex_format_add_texcoord,

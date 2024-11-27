@@ -2,7 +2,7 @@
 /// @argument				x? {real}
 /// @argument				y? {real}
 /// @description			Constructs a Vector container for x and y coordinate pair.
-//
+//							
 //							Construction types:
 //							- Two numbers: x {real}, y {real}
 //							- One number for all values: value {real}

@@ -68,8 +68,8 @@ function Cube() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
-						((is_instanceof(scale, Vector3)) and (scale.isFunctional()))
+				return (((is_instanceof(location, Vector3)) and (location.isFunctional()))
+						and ((is_instanceof(scale, Vector3)) and (scale.isFunctional()))
 						and (is_real(color)) and (is_real(alpha)));
 			}
 			
@@ -289,7 +289,7 @@ function Cube() constructor
 								var _transform = matrix_transform_vertex
 								(
 									_matrix_rotation, (_scale.x * _side_vertexOffset_current[0]),
-									(_scale.y *  _side_vertexOffset_current[1]), ((_scale.z *
+									(_scale.y * _side_vertexOffset_current[1]), ((_scale.z *
 									_side_vertexOffset_current[2]))
 								);
 								

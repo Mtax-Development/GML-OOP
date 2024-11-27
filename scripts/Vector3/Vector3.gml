@@ -4,7 +4,7 @@
 /// @argument				z? {real}
 /// @description			Constructs a Vector container for three-dimensional coordinates:
 ///							x, y and z.
-//
+//							
 //							Construction types:
 //							- Three numbers: x {real}, y {real}, z {real}
 //							- One number for all values: value {real}
