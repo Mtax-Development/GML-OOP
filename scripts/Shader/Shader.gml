@@ -174,9 +174,10 @@ function Shader() constructor
 			/// @argument			value2? {real}
 			/// @argument			value3? {real}
 			/// @argument			value4? {real}
-			/// @description		Pass one or more float-type numbers as a uniform to this Shader.
-			///						If only one value argument is passed, it can be an array, Vector2
-			///						or a Vector3. Otherwise all value arguments have to be numbers.
+			/// @description		Use the specified uniform to pass to this Shader one or more
+			///						floating-point numbers. If only one value argument is passed, it
+			///						can be an array, Vector2 or a Vector3. Otherwise all value
+			///						arguments have to be numbers.
 			static setUniformFloat = function(_uniform)
 			{
 				try
@@ -267,9 +268,10 @@ function Shader() constructor
 			/// @argument			value2? {int}
 			/// @argument			value3? {int}
 			/// @argument			value4? {int}
-			/// @description		Pass one or more integer values as a uniform to this Shader.
-			///						If only one value argument is passed, it can be an array, Vector2
-			///						or a Vector3. Otherwise all value arguments have to be numbers.
+			/// @description		Use the specified uniform to pass to this Shader one or more
+			///						integer numbers. If only one value argument is passed, it can be an
+			///						array, Vector2 or a Vector3. Otherwise all value arguments have to
+			///						be numbers.
 			static setUniformInt = function(_uniform)
 			{
 				try
@@ -357,8 +359,9 @@ function Shader() constructor
 			
 			/// @argument			uniform {string}
 			/// @argument			value? {real[]}
-			/// @description		Pass the currently set matrix or an array of its values as a
-			///						uniform to this Shader.
+			/// @description		Use the specified uniform to pass to this Shader either the
+			///						specified matrix values or the ones of currently set transform
+			///						matrix.
 			static setUniformMatrix = function(_uniform, _value)
 			{
 				try
@@ -400,8 +403,8 @@ function Shader() constructor
 				return self;
 			}
 			
-			/// @description		Update the uniforms in this Shader with all values held by the
-			///						uniform struct.
+			/// @description		Pass to this Shader values contained in uniform struct through
+			///						uniforms with the same name as its properties.
 			static updateUniforms = function()
 			{
 				try
