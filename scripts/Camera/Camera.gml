@@ -329,26 +329,27 @@ function Camera() constructor
 						size = undefined;
 						clippingPlane = undefined;
 						
-						if ((argument_count > 0) and (argument[0] != undefined))
+						switch (argument_count)
 						{
-							if (string_copy(instanceof(argument[0]), 1, 27) ==
-								"OrtographicProjectionMatrix")
-							{
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								size = ((is_instanceof(_other.size, Vector2))
-										? new Vector2(_other.size) : _other.size);
-								clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
-												 ? new Range(_other.clippingPlane)
-												 : _other.clippingPlane);
-							}
-							else
-							{
+							case 1:
+								if (string_copy(instanceof(argument[0]), 1, 27) ==
+									"OrtographicProjectionMatrix")
+								{
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									size = ((is_instanceof(_other.size, Vector2))
+											? new Vector2(_other.size) : _other.size);
+									clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
+													 ? new Range(_other.clippingPlane)
+													 : _other.clippingPlane);
+								}
+							break;
+							default:
 								//|Construction type: New element.
 								size = argument[0];
 								clippingPlane = argument[1];
-							}
+							break;
 						}
 						
 						return self;
@@ -507,26 +508,27 @@ function Camera() constructor
 						size = undefined;
 						clippingPlane = undefined;
 						
-						if ((argument_count > 0) and (argument[0] != undefined))
+						switch (argument_count)
 						{
-							if (string_copy(instanceof(argument[0]), 1, 27) ==
-								"PerspectiveProjectionMatrix")
-							{
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								size = ((is_instanceof(_other.size, Vector2))
-										? new Vector2(_other.size) : _other.size);
-								clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
-												 ? new Range(_other.clippingPlane)
-												 : _other.clippingPlane);
-							}
-							else
-							{
+							case 1:
+								if (string_copy(instanceof(argument[0]), 1, 27) ==
+									"PerspectiveProjectionMatrix")
+								{
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									size = ((is_instanceof(_other.size, Vector2))
+											? new Vector2(_other.size) : _other.size);
+									clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
+													 ? new Range(_other.clippingPlane)
+													 : _other.clippingPlane);
+								}
+							break
+							default:
 								//|Construction type: New element.
 								size = argument[0];
 								clippingPlane = argument[1];
-							}
+							break;
 						}
 						
 						return self;
@@ -688,28 +690,30 @@ function Camera() constructor
 						aspectRatio = undefined;
 						clippingPlane = undefined;
 						
-						if ((argument_count > 0) and (argument[0] != undefined))
+						switch (argument_count)
 						{
-							if (string_copy(instanceof(argument[0]), 1, 38) ==
-								"PerspectiveFieldOfViewProjectionMatrix")
-							{
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								fieldOfView = ((is_instanceof(_other.fieldOfView, Angle))
-											   ? new Angle(_other.fieldOfView) : _other.fieldOfView);
-								aspectRatio = _other.aspectRatio;
-								clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
-												 ? new Range(_other.clippingPlane)
-												 : _other.clippingPlane);
-							}
-							else
-							{
+							case 1:
+								if (string_copy(instanceof(argument[0]), 1, 38) ==
+									"PerspectiveFieldOfViewProjectionMatrix")
+								{
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									fieldOfView = ((is_instanceof(_other.fieldOfView, Angle))
+												   ? new Angle(_other.fieldOfView)
+												   : _other.fieldOfView);
+									aspectRatio = _other.aspectRatio;
+									clippingPlane = ((is_instanceof(_other.clippingPlane, Range))
+													 ? new Range(_other.clippingPlane)
+													 : _other.clippingPlane);
+								}
+							break;
+							default:
 								//|Construction type: New element.
 								fieldOfView = argument[0];
 								aspectRatio = argument[1];
 								clippingPlane = argument[2];
-							}
+							break;
 						}
 						
 						return self;
@@ -876,28 +880,29 @@ function Camera() constructor
 						target = undefined;
 						upVector = undefined;
 						
-						if ((argument_count > 0) and (argument[0] != undefined))
+						switch (argument_count)
 						{
-							if (string_copy(instanceof(argument[0]), 1, 10) == "ViewMatrix")
-							{
-								//|Construction type: Constructor copy.
-								var _other = argument[0];
-								
-								source = ((is_instanceof(_other.source, Vector3))
-										  ? new Vector3(_other.source) : _other.source);
-								target = ((is_instanceof(_other.target, Vector3))
-										  ? new Vector3(_other.target) : _other.target);
-								upVector = ((is_instanceof(_other.upVector, Vector3))
-											? new Vector3(_other.upVector) : _other.upVector);
-							}
-							else
-							{
+							case 1:
+								if (string_copy(instanceof(argument[0]), 1, 10) == "ViewMatrix")
+								{
+									//|Construction type: Constructor copy.
+									var _other = argument[0];
+									
+									source = ((is_instanceof(_other.source, Vector3))
+											  ? new Vector3(_other.source) : _other.source);
+									target = ((is_instanceof(_other.target, Vector3))
+											  ? new Vector3(_other.target) : _other.target);
+									upVector = ((is_instanceof(_other.upVector, Vector3))
+												? new Vector3(_other.upVector) : _other.upVector);
+								}
+							break;
+							default:
 								//|Construction type: New element.
 								source = argument[0];
 								target = argument[1];
 								upVector = (((argument_count > 2) and (argument[2] != undefined))
 											? argument[2] : new Vector3(0, 1, 0));
-							}
+							break;
 						}
 						
 						return self;
