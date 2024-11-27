@@ -281,6 +281,42 @@ function PriorityQueue() constructor
 				return undefined;
 			}
 			
+			/// @returns			{any|undefined}
+			/// @description		Return the highest priority in this Priority Queue.
+			///						Returns {undefined} if this Priority Queue does not exists or is
+			///						empty.
+			static getFirstPriority = function()
+			{
+				try
+				{
+					return ds_priority_find_priority(ID, ds_priority_find_max(ID));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getFirstPriority()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @returns			{any|undefined}
+			/// @description		Return the lowest priority in this Priority Queue.
+			///						Returns {undefined} if this Priority Queue does not exists or is
+			///						empty.
+			static getLastPriority = function()
+			{
+				try
+				{
+					return ds_priority_find_priority(ID, ds_priority_find_min(ID));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getLastPriority()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 			/// @returns			{int}
 			/// @description		Return the number of values in this Data Structure.
 			static getSize = function()
