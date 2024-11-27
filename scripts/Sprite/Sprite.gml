@@ -470,15 +470,13 @@ function Sprite() constructor
 				return _result;
 			}
 			
-			/// @argument			frame? {int}
 			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Get the texel size of the texture page of the specified frame of
-			///						this Sprite.
-			static getTexel = function(_frame = 0)
+			/// @description		Get the texel size of the texture page of this Sprite.
+			static getTexel = function()
 			{
 				try
 				{
-					var _texture = sprite_get_texture(ID, _frame);
+					var _texture = sprite_get_texture(ID, 0);
 					
 					return new Vector2(texture_get_texel_width(_texture),
 									   texture_get_texel_height(_texture));
