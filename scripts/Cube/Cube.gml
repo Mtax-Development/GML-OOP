@@ -193,6 +193,7 @@ function Cube() constructor
 					[[(-1), 1, 1], [(-1), (-1), 1], [1, 1, 1], [1, 1, 1], [(-1), (-1), 1],
 					 [1, (-1), 1]]
 				];
+				var _side_count = array_length(_side);
 				var _side_normal = [[0, 0, 1], [1, 0, 0], [0, 0, (-1)], [(-1), 0, 0], [0, 1, 0],
 									[0, (-1), 0]];
 				var _side_front = _side[3];
@@ -210,12 +211,11 @@ function Cube() constructor
 						_angle_z = _angle.z;
 					}
 					
-					var _sprite_frame_data = [[undefined, 0, 0, 0, 0]];
+					var _sprite_frame_data = array_create(_side_count, [undefined, 0, 0, 0, 0]);
 					
 					if (is_instanceof(_sprite, Sprite))
 					{
 						var _sprite_frame_count = sprite_get_number(_sprite.ID);
-						_sprite_frame_data = array_create(_sprite_frame_count, undefined);
 						var _sprite_size_x = sprite_get_width(_sprite.ID);
 						var _sprite_size_y = sprite_get_height(_sprite.ID);
 						
@@ -253,15 +253,9 @@ function Cube() constructor
 						{
 							var _texture = sprite_get_texture(_sprite.ID,
 															  (_sprite_image_order[_i] - 1));
-							var _texelSize_x = texture_get_texel_width(_texture);
-							var _texelSize_y = texture_get_texel_height(_texture);
 							var _uv = texture_get_uvs(_texture);
-							var _uv_x1 = _uv[0];
-							var _uv_y1 = _uv[1];
-							var _uv_x2 = (_uv_x1 + (_sprite_size_x * _texelSize_x));
-							var _uv_y2 = (_uv_y1 + (_sprite_size_y * _texelSize_y));
 							
-							_sprite_frame_data[_i] = [_texture, _uv_x1, _uv_y1, _uv_x2, _uv_y2];
+							_sprite_frame_data[_i] = [_texture, _uv[0], _uv[1], _uv[2], _uv[3]];
 							
 							++_i;
 						}
@@ -272,7 +266,7 @@ function Cube() constructor
 					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
 														1);
 					var _i = [0, 0];
-					repeat (array_length(_side))
+					repeat (_side_count)
 					{
 						var _side_current = _side[_i[0]];
 						var _side_normal_current = _side_normal[(_i[0] div 6)];
