@@ -183,15 +183,15 @@ function Cube() constructor
 					//|Left (Normal X-):
 					[[(-1), 1, (-1)], [(-1), (-1), (-1)], [(-1), 1, 1], [(-1), 1, 1],
 					 [(-1), (-1), (-1)], [(-1), (-1), 1]],
-					 //|Front (Normal Z-):
-					[[1, 1, (-1)], [1, (-1), (-1)], [(-1), 1, (-1)], [(-1), 1, (-1)], [1, (-1), (-1)],
-					 [(-1), (-1), (-1)]],
+					 //|Front (Normal Z+):
+					[[1, 1, 1], [1, (-1), 1], [(-1), 1, 1], [(-1), 1, 1], [1, (-1), 1],
+					 [(-1), (-1), 1]],
 					//|Right (Normal X+):
 					[[1, 1, 1], [1, (-1), 1], [1, 1, (-1)], [1, 1, (-1)], [1, (-1), 1],
 					 [1, (-1), (-1)]],
-					//|Back (Normal Z+):
-					[[(-1), 1, 1], [(-1), (-1), 1], [1, 1, 1], [1, 1, 1], [(-1), (-1), 1],
-					 [1, (-1), 1]]
+					//|Back (Normal Z-):
+					[[(-1), 1, (-1)], [(-1), (-1), (-1)], [1, 1, (-1)], [1, 1, (-1)],
+					 [(-1), (-1), (-1)], [1, (-1), (-1)]]
 				];
 				var _side_count = array_length(_side);
 				var _side_normal = [[0, 0, 1], [1, 0, 0], [0, 0, (-1)], [(-1), 0, 0], [0, 1, 0],
@@ -206,9 +206,9 @@ function Cube() constructor
 					
 					if (is_instanceof(_angle, EulerAngle))
 					{
-						_angle_x = _angle.x;
-						_angle_y = _angle.y;
-						_angle_z = _angle.z;
+						_angle_x = (-_angle.y);
+						_angle_y = (-_angle.x);
+						_angle_z = (-_angle.z);
 					}
 					
 					var _sprite_frame_data = array_create(_side_count, [undefined, 0, 0, 0, 0]);
