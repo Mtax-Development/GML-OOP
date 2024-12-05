@@ -164,6 +164,8 @@ function VertexBuffer() constructor
 				{
 					new ErrorReport().report([other, self, "render()"], _exception);
 				}
+				
+				return self;
 			}
 			
 			/// @argument			target {VertexFormat|bool:false}
