@@ -162,12 +162,17 @@ function Plane() constructor
 			/// @argument			sprite? {Sprite}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
+			/// @argument			stretchCroppedTexture? {bool}
 			/// @returns			{VertexBuffer.PrimitiveRenderData[]}
 			/// @description		Return rendering data of this constructor in Vertex Buffers, using
 			///						its current data or specified temporarily replaced parts.
-			///						Rendering data for six faces will be returned in an array.
+			///						If using a Sprite with texture group setting set to crop fully
+			///						transparent pixels around edges of the image, resulting shape
+			///						will be made smaller to remove that transparency, unless specified
+			///						to stretch the image without transparency to full shape size.
 			static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
-											 _sprite = sprite, _color = color, _alpha = alpha)
+											 _sprite = sprite, _color = color, _alpha = alpha,
+											 _stretchCroppedTexture = false)
 			{
 				var _vertexBuffer = undefined;
 				var _renderData = undefined;
@@ -189,6 +194,12 @@ function Plane() constructor
 					
 					var _texture = undefined;
 					var _uv_order = undefined;
+					var _offset_trim_x = 0;
+					var _offset_trim_y = 0;
+					var _scale_uv_x = _scale.x;
+					var _scale_uv_y = _scale.y;
+					var _sprite_size_scale_x = 1;
+					var _sprite_size_scale_y = 1;
 					
 					if (is_instanceof(_sprite, Sprite))
 					{
@@ -200,6 +211,17 @@ function Plane() constructor
 						var _uv = texture_get_uvs(_texture);
 						_uv_order = [[_uv[0], _uv[1]], [_uv[0], _uv[3]], [_uv[2], _uv[1]],
 									 [_uv[2], _uv[3]]];
+						
+						if (!_stretchCroppedTexture)
+						{
+							var _trim = _sprite.getTextureTrim();
+							_sprite_size_scale_x = (_scale.x / _sprite_size_x);
+							_sprite_size_scale_y = (_scale.y / _sprite_size_y);
+							_scale_uv_x = (_scale.x * _uv[6]);
+							_scale_uv_y = (_scale.y * _uv[7]);
+							_offset_trim_x = ((_trim.x1 - _trim.x2) * _sprite_size_scale_x);
+							_offset_trim_y = ((_trim.y1 - _trim.y2) * _sprite_size_scale_y);
+						}
 					}
 					else
 					{
@@ -221,10 +243,12 @@ function Plane() constructor
 						{
 							var _offset_current = _offset[_i];
 							var _uv_order_current = _uv_order[_i];
-							var _transform = matrix_transform_vertex(_matrix_rotation,
-																	 (_scale.y * _offset_current[0]),
-																	 (_scale.x * _offset_current[1]),
-																	 0);
+							var _transform = matrix_transform_vertex
+							(
+								_matrix_rotation,
+								((_scale_uv_y * _offset_current[0]) + _offset_trim_y),
+								((_scale_uv_x * _offset_current[1]) + _offset_trim_x), 0
+							);
 							
 							_vertexBuffer
 							 .setLocation3D(_vertex.set((_location.x + _transform[1]),
@@ -238,8 +262,6 @@ function Plane() constructor
 						}
 					}
 					_vertexBuffer.setActive(false);
-					
-					return _renderData;
 				}
 				catch (_exception)
 				{
