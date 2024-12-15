@@ -2855,7 +2855,7 @@ function Layer() constructor
 					
 				#endregion
 			#endregion
-			#region [[Element]]
+			#region [[Elements]]
 				
 				//  @function			Layer.ParticleSystem.ParticleEmitter()
 				/// @argument			particleType {ParticleType}
