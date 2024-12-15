@@ -404,18 +404,19 @@ function Sprite() constructor
 			/// @description		Return the UV coordinates for the location of the specified frames
 			///						of this Sprite on its texture page.
 			///						They will be returned as an Vector4 if the full information is not
-			///						specified. Otherwise, an array with 8 elements will be returned.
-			///						Each of these entries will be nested if information for multiple
-			///						frames was specified. The data of full information is represented
-			///						at following positions:
+			///						specified. Otherwise, an array with 8 elements will be returned,
+			///						to include information about fully transparent pixels not included
+			///						in texture page during compiling. These entries will be nested if
+			///						information for multiple frames was specified. The data of full
+			///						information is represented at following array positions:
 			///						- array[0]: UV left {real}
 			///						- array[1]: UV top {real}
 			///						- array[2]: UV right {real}
 			///						- array[3]: UV bottom {real}
-			///						- array[4]: pixels trimmed from left {int}
-			///						- array[5]: pixels trimmed from right {int}
-			///						- array[6]: x percentage of pixels on the texture page {real}
-			///						- array[7]: y percentage of pixels on the texture page {real}
+			///						- array[4]: pixels trimmed from left edge {int}
+			///						- array[5]: pixels trimmed from top edge {int}
+			///						- array[6]: x percentage of pixels remaining after trimming {real}
+			///						- array[7]: y percentage of pixels remaining after trimming {real}
 			static getUV = function(_frame = 0, _full = false)
 			{
 				var _result = undefined;
@@ -485,6 +486,36 @@ function Sprite() constructor
 				{
 					new ErrorReport().report([other, self, "getTexel()"], _exception);
 				}
+			}
+			
+			/// @argument			frame? {int}
+			/// @returns			{Vector4}
+			/// @description		Return the number of fully transparent pixels removed from the
+			///						specified frame of this Sprite, applicable only if this Sprite was
+			///						in a texture group with cropping enabled during compilation.
+			static getTextureTrim = function(_frame = 0)
+			{
+				var _trim_left = 0;
+				var _trim_top = 0;
+				var _trim_right = 0;
+				var _trim_bottom = 0;
+				
+				try
+				{
+					var _size_x = sprite_get_width(ID);
+					var _size_y = sprite_get_height(ID);
+					var _uv = sprite_get_uvs(ID, _frame);
+					_trim_left = _uv[4];
+					_trim_top = _uv[5];
+					_trim_right = round(_size_x - (_size_x * _uv[6]) - _trim_left);
+					_trim_bottom = round(_size_y - (_size_y * _uv[7]) - _trim_top);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getTextureTrim()"], _exception);
+				}
+				
+				return new Vector4(_trim_left, _trim_top, _trim_right, _trim_bottom);
 			}
 			
 		#endregion
