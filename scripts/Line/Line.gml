@@ -24,10 +24,11 @@ function Line() constructor
 				color = undefined;
 				alpha = undefined;
 				
+				var _scope = self;
 				event =
 				{
-					beforeRender: new Callback(undefined, [], other),
-					afterRender: new Callback(undefined, [], other)
+					beforeRender: new Callback(undefined, [], _scope),
+					afterRender: new Callback(undefined, [], _scope)
 				};
 				
 				if (argument_count > 0)

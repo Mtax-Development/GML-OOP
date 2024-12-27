@@ -21,12 +21,13 @@ function Shader() constructor
 				compiled = undefined;
 				uniform = undefined;
 				
+				var _scope = self;
 				event =
 				{
-					beforeActivation: new Callback(undefined, [], other),
-					afterActivation: new Callback(undefined, [], other),
-					beforeDeactivation: new Callback(undefined, [], other),
-					afterDeactivation: new Callback(undefined, [], other),
+					beforeActivation: new Callback(undefined, [], _scope),
+					afterActivation: new Callback(undefined, [], _scope),
+					beforeDeactivation: new Callback(undefined, [], _scope),
+					afterDeactivation: new Callback(undefined, [], _scope),
 				};
 				
 				if ((argument_count > 0) and (argument[0] != undefined))

@@ -39,10 +39,11 @@ function Font() constructor
 				signedDistanceField = undefined;
 				signedDistanceFieldSpread = undefined;
 				
+				var _scope = self;
 				event =
 				{
-					beforeActivation: new Callback(undefined, [], other),
-					afterActivation: new Callback(undefined, [], other),
+					beforeActivation: new Callback(undefined, [], _scope),
+					afterActivation: new Callback(undefined, [], _scope),
 				};
 				
 				if ((argument_count > 0) and (argument[0] != undefined))

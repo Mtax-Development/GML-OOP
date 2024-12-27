@@ -48,10 +48,11 @@ function ParticleType() constructor
 				death_type = undefined;
 				death_number = undefined;
 				
+				var _scope = self;
 				event =
 				{
-					beforeCreation: new Callback(undefined, [], other),
-					afterCreation: new Callback(undefined, [], other)
+					beforeCreation: new Callback(undefined, [], _scope),
+					afterCreation: new Callback(undefined, [], _scope)
 				};
 				
 				if (argument_count > 0)

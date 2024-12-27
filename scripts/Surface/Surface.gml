@@ -20,16 +20,17 @@ function Surface() constructor
 				ID = undefined;
 				size = undefined;
 				
+				var _scope = self;
 				event =
 				{
-					beforeCreation: new Callback(undefined, [], other),
-					afterCreation: new Callback(undefined, [], other),
-					beforeActivation: new Callback(undefined, [], other),
-					afterActivation: new Callback(undefined, [], other),
-					beforeDeactivation: new Callback(undefined, [], other),
-					afterDeactivation: new Callback(undefined, [], other),
-					beforeRender: new Callback(undefined, [], other),
-					afterRender: new Callback(undefined, [], other)
+					beforeCreation: new Callback(undefined, [], _scope),
+					afterCreation: new Callback(undefined, [], _scope),
+					beforeActivation: new Callback(undefined, [], _scope),
+					afterActivation: new Callback(undefined, [], _scope),
+					beforeDeactivation: new Callback(undefined, [], _scope),
+					afterDeactivation: new Callback(undefined, [], _scope),
+					beforeRender: new Callback(undefined, [], _scope),
+					afterRender: new Callback(undefined, [], _scope)
 				};
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
