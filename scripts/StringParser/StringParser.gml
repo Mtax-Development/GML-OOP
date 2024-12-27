@@ -774,6 +774,32 @@ function StringParser() constructor
 				return self;
 			}
 			
+			/// @argument			struct {struct}
+			/// @argument			replace? {bool}
+			/// @description		Add to this string or replace it with a readable representation of
+			///						of property names and their values of the specified struct.
+			static formatStruct = function(_struct, _replace = false)
+			{
+				try
+				{
+					var _string_original = ID;
+					var _result = self
+					 .setParser(string(_struct))
+					 .replace("{ ", "{")
+					 .replace(" }", "}")
+					 .replace(" : ", ": ")
+					 .ID;
+					
+					ID = ((_replace) ? _result : (_string_original + _result));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "formatStruct()"], _exception);
+				}
+				
+				return self;
+			}
+			
 			/// @argument			substring {any:string}
 			/// @argument			position {int}
 			/// @description		Insert a specified substring to the left of the specified
