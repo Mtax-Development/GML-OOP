@@ -755,13 +755,15 @@ function StringParser() constructor
 			{
 				try
 				{
+					var _result = string_format(_number, _wholeNumberPlaces, _decimalPlaces);
+					
 					if (_replace)
 					{
-						ID = string_format(_number, _wholeNumberPlaces, _decimalPlaces);
+						ID = _result;
 					}
 					else
 					{
-						ID += string_format(_number, _wholeNumberPlaces, _decimalPlaces);
+						ID += _result;
 					}
 				}
 				catch (_exception)
