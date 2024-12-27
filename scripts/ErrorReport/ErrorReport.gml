@@ -301,7 +301,15 @@ function ErrorReport() constructor
 							}
 							else if (is_struct(_location_part))
 							{
-								_location_object_name = instanceof(_location_part);
+								var _instanceof = instanceof(_location_part)
+								
+								if ((_i == 0) and (_instanceof == "<unknown>"))
+								{
+									//|Room {self} reference.
+									_instanceof = room_get_name(room);
+								}
+								
+								_location_object_name = _instanceof;
 							}
 							else if (instanceof(_location_part) == "instance")
 							{
