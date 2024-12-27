@@ -1561,7 +1561,7 @@ function Vector4() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
-			/// @see				display_set_gui_size()
+			//  @see				display_set_gui_size()
 			/// @description		Set all of the values to the ones of the system cursor. A target
 			///						device can be specified for cases where multiple cursor inputs are
 			///						used, and if it is specified, the position can then be translated

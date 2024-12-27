@@ -117,7 +117,7 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
-			/// @see				display_set_gui_size()
+			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
@@ -162,7 +162,7 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
-			/// @see				display_set_gui_size()
+			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button is pressed or held.
 			///						A target device can be specified for cases where multiple cursor
@@ -216,7 +216,7 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
-			/// @see				display_set_gui_size()
+			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button was pressed in this frame.
 			///						A target device can be specified for cases where multiple cursor
@@ -271,7 +271,7 @@ function Triangle() constructor
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
 			/// @returns			{bool}
-			/// @see				display_set_gui_size()
+			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
 			///						mouse button was released in this frame.
 			///						A target device can be specified for cases where multiple cursor
