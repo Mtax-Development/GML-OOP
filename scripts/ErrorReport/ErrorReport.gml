@@ -124,7 +124,7 @@ function ErrorReport() constructor
 				var _report = (_text_separator + "\n" +
 							   "Error" + " @ " + _text_location + " @ " +  _text_time + ":" + "\n" +
 							   _tabulation + _text_detail + "\n\n" +
-							   "Callstack: " + "\n" +
+							   "Callstack:" + "\n" +
 							   _text_callstack + "\n" +
 							   _text_separator);
 				
