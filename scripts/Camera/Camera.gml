@@ -448,13 +448,13 @@ function Camera() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function()
+				static constructor = function(_parent)
 				{
-					with (other)
+					with (_parent)
 					{
 						return OrtographicProjectionMatrix;
 					}
-				}();
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -627,13 +627,13 @@ function Camera() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function()
+				static constructor = function(_parent)
 				{
-					with (other)
+					with (_parent)
 					{
 						return PerspectiveProjectionMatrix;
 					}
-				}();
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -818,13 +818,13 @@ function Camera() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function()
+				static constructor = function(_parent)
 				{
-					with (other)
+					with (_parent)
 					{
 						return PerspectiveFieldOfViewProjectionMatrix;
 					}
-				}();
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -1004,13 +1004,13 @@ function Camera() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function()
+				static constructor = function(_parent)
 				{
-					with (other)
+					with (_parent)
 					{
 						return ViewMatrix;
 					}
-				}();
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);

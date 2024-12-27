@@ -1090,7 +1090,13 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function() {with (other) {return SpriteElement;}}();
+				static constructor = function(_parent)
+				{
+					with (_parent)
+					{
+						return SpriteElement;
+					}
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -1546,7 +1552,13 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function() {with (other) {return BackgroundElement;}}();
+				static constructor = function(_parent)
+				{
+					with (_parent)
+					{
+						return BackgroundElement;
+					}
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -2407,7 +2419,13 @@ function Layer() constructor
 					#endregion
 					#region [[[Constructor]]]
 						
-						static constructor = function() {with (other) {return TileData;}}();
+						static constructor = function(_parent)
+						{
+							with (_parent)
+							{
+								return TileData;
+							}
+						}(other);
 						
 						static prototype = {};
 						var _property = variable_struct_get_names(prototype);
@@ -2440,7 +2458,13 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function() {with (other) {return TilemapElement;}}();
+				static constructor = function(_parent)
+				{
+					with (_parent)
+					{
+						return TilemapElement;
+					}
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
@@ -3198,7 +3222,13 @@ function Layer() constructor
 					#endregion
 					#region [[[Constructor]]]
 						
-						static constructor = function() {with (other) {return ParticleEmitter;}}();
+						static constructor = function(_parent)
+						{
+							with (_parent)
+							{
+								return ParticleEmitter;
+							}
+						}(other);
 						
 						static prototype = {};
 						var _property = variable_struct_get_names(prototype);
@@ -3231,7 +3261,13 @@ function Layer() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function() {with (other) {return ParticleSystem;}}();
+				static constructor = function(_parent)
+				{
+					with (_parent)
+					{
+						return ParticleSystem;
+					}
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);

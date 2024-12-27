@@ -529,7 +529,13 @@ function ErrorReport() constructor
 			#endregion
 			#region [[Constructor]]
 				
-				static constructor = function() {with (other) {return ReportData;}}();
+				static constructor = function(_parent)
+				{
+					with (_parent)
+					{
+						return ReportData;
+					}
+				}(other);
 				
 				static prototype = {};
 				var _property = variable_struct_get_names(prototype);
