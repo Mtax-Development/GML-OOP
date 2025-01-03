@@ -1099,8 +1099,8 @@ function ParticleType() constructor
 					{
 						new ErrorReport().report([other, self, "setStep()"],
 												 ("Attempted to set a property causing a Particle " +
-												  "Type to spawn particles of it own type, causing " +
-												  "an infinite loop: " +
+												  "Type to create particles of it own type, " +
+												  "causing an infinite loop: " +
 												  "{" + string(ID) + "}"));
 					}
 				}
@@ -1133,8 +1133,8 @@ function ParticleType() constructor
 					{
 						new ErrorReport().report([other, self, "setDeath()"],
 												 ("Attempted to set a property causing a Particle " +
-												  "Type to spawn particles of it own type, causing " +
-												  "an infinite loop: " +
+												  "Type to create particles of it own type, " +
+												  "causing an infinite loop: " +
 												  "{" + string(ID) + "}"));
 					}
 				}
