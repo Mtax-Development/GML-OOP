@@ -274,7 +274,7 @@ function VertexBuffer() constructor
 		
 		//  @function			VertexBuffer.PrimitiveRenderData()
 		/// @argument			primitiveType {constant:pr_*}
-		/// @argument			vertexFormat? {VertexFormat}
+		/// @argument			vertexFormat? {VertexFormat|function:vertex_position_3d}
 		/// @argument			texture? {pointer|int:-1}
 		/// @description		Constructs an element storing Vertex Buffer rendering information.
 		//						
@@ -305,7 +305,9 @@ function VertexBuffer() constructor
 						vertexBuffer = other;
 						primitiveType = argument[0];
 						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
-										? argument[1] : self.passthroughFormat);
+										? ((argument[1] == vertex_position_3d) ? self.vertexFormat3D
+																			   : argument[1])
+										: self.passthroughFormat);
 						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																						 : -1);
 						
@@ -377,9 +379,15 @@ function VertexBuffer() constructor
 						if (self.isFunctional())
 						{
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							var _string_vertexFormat = ((vertexFormat == self.passthroughFormat)
-														? "Passthrough" : (_string_vertexFormat));
 							var _string_texture = ((texture == -1) ? "None" : string(texture));
+							
+							var _string_vertexFormat;
+							switch (vertexFormat)
+							{
+								case passthroughFormat: _string_vertexFormat = "Passthrough"; break;
+								case vertexFormat3D: _string_vertexFormat = "3D Passthrough"; break;
+								default: _string_vertexFormat = string(vertexFormat); break;
+							}
 							
 							var _string_primitiveType;
 							switch (primitiveType)
