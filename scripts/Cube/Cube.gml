@@ -162,15 +162,23 @@ function Cube() constructor
 			/// @argument			sprite? {Sprite}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
+			/// @argument			vertexBuffer? {VertexBuffer}
+			/// @argument			excludedFace? {int|int[]}
 			/// @returns			{VertexBuffer.PrimitiveRenderData[]}
 			/// @description		Return rendering data of this constructor in Vertex Buffers, using
-			///						its current data or specified temporarily replaced parts.
-			///						Rendering data for six faces will be returned in an array.
+			///						its current data or specified temporarily replaced parts. A single
+			///						Vertex Buffer can be specified instead to place rendering data in
+			///						it, instead of creating several new ones. If specified while being
+			///						currently active, it will not be deactivated after this operation.
+			///						Rendering data for six faces will be returned in an array, except
+			///						for faces that were excluded by specifying their numbers, starting
+			///						from 1 in following order: Top, Bottom, Left, Front, Right, Back.
 			static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
-											 _sprite = sprite, _color = color, _alpha = alpha)
+											 _sprite = sprite, _color = color, _alpha = alpha,
+											 _vertexBuffer, _excludedFace = [])
 			{
 				var _result = [];
-				var _vertexBuffer = undefined;
+				var _vertexBuffer_face = undefined;
 				var _renderData = undefined;
 				var _side =
 				[
@@ -200,6 +208,18 @@ function Cube() constructor
 				
 				try
 				{
+					var _vertexBuffer_wasActive = false;
+					
+					if (_vertexBuffer != undefined)
+					{
+						_vertexBuffer_wasActive = _vertexBuffer.active;
+					}
+					
+					if (!is_array(_excludedFace))
+					{
+						_excludedFace = [_excludedFace];
+					}
+					
 					var _angle_x = 0;
 					var _angle_y = 0;
 					var _angle_z = 0;
@@ -268,19 +288,25 @@ function Cube() constructor
 					var _i = [0, 0];
 					repeat (_side_count)
 					{
-						var _side_current = _side[_i[0]];
-						var _side_normal_current = _side_normal[(_i[0] div 6)];
-						_normal.set(_side_normal_current[0], _side_normal_current[1],
-								 	_side_normal_current[2]);
-						var _sprite_frame_data_current = _sprite_frame_data[_i[0]];
-						var _uv_topFlipMultiplier = _side_current[0][1];
-						
-						_vertexBuffer = new VertexBuffer();
-						_renderData = _vertexBuffer
-						 .createPrimitiveRenderData(pr_trianglelist, undefined,
-													_sprite_frame_data_current[0]);
-						_vertexBuffer.setActive(_renderData.vertexFormat3D);
+						if (!array_contains(_excludedFace, (_i[0] + 1)))
 						{
+							var _side_current = _side[_i[0]];
+							var _side_normal_current = _side_normal[(_i[0] div 6)];
+							_normal.set(_side_normal_current[0], _side_normal_current[1],
+									 	_side_normal_current[2]);
+							var _sprite_frame_data_current = _sprite_frame_data[_i[0]];
+							var _uv_topFlipMultiplier = _side_current[0][1];
+							
+							_vertexBuffer_face = (_vertexBuffer ?? new VertexBuffer());
+							_renderData = _vertexBuffer_face
+							 .createPrimitiveRenderData(pr_trianglelist, vertex_position_3d,
+														_sprite_frame_data_current[0]);
+							
+							if (!_vertexBuffer_wasActive)
+							{
+								_vertexBuffer_face.setActive(_renderData.vertexFormat);
+							}
+							
 							_i[1] = 0;
 							repeat (array_length(_side_current))
 							{
@@ -293,7 +319,7 @@ function Cube() constructor
 									_side_vertexOffset_current[2]))
 								);
 								
-								_vertexBuffer
+								_vertexBuffer_face
 								 .setLocation3D(_vertex.set((_location.x + _transform[0]),
 															(_location.y + _transform[1]),
 															((-_location.z) + _transform[2])))
@@ -308,19 +334,29 @@ function Cube() constructor
 								
 								++_i[1];
 							}
+							
+							if (!_vertexBuffer_wasActive)
+							{
+								_vertexBuffer_face.setActive(false);
+							}
+							
+							array_push(_result, _renderData);
 						}
-						_vertexBuffer.setActive(false);
-						
-						array_push(_result, _renderData);
 						
 						++_i[0];
+					}
+					
+					if ((_vertexBuffer != undefined) and (!_vertexBuffer_wasActive))
+					{
+						_vertexBuffer_face.setActive(false);
 					}
 				}
 				catch (_exception)
 				{
-					if ((array_length(_result) == 0) and (_vertexBuffer != undefined))
+					if ((_vertexBuffer == undefined) and (array_length(_result) == 0)
+					and (_vertexBuffer_face != undefined))
 					{
-						_vertexBuffer.destroy();
+						_vertexBuffer_face.destroy();
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
