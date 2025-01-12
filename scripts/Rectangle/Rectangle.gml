@@ -727,7 +727,7 @@ function Rectangle() constructor
 												.createPrimitiveRenderData(pr_trianglestrip);
 						
 						_vertexBuffer_fill
-						 .setActive(_renderData_fill.passthroughFormat)
+						 .setActive(_renderData_fill.vertexFormat)
 							.setLocation2D(_vertex.set(location.x1, location.y1))
 							.setColor(fill_color, fill_alpha)
 							.setUV()
@@ -773,7 +773,7 @@ function Rectangle() constructor
 						
 						with (_vertexBuffer_outline)
 						{
-							setActive(_renderData_outline.passthroughFormat);
+							setActive(_renderData_outline.vertexFormat);
 							{
 								var _i = [0, 0];
 								repeat (array_length(_point))

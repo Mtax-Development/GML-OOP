@@ -403,7 +403,7 @@ function Line() constructor
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip);
 					
 					_vertexBuffer
-					 .setActive(_renderData.passthroughFormat)
+					 .setActive(_renderData.vertexFormat)
 						.setLocation2D(_vertex.set((location.x1 + lengthdir_x(size, _angle_right)),
 												   (location.y1 + lengthdir_y(size, _angle_right))))
 						.setColor(color, alpha)

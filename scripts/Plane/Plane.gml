@@ -233,10 +233,11 @@ function Plane() constructor
 					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
 														1);
 					_vertexBuffer = new VertexBuffer();
-					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
+					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip,
+																		  vertex_position_3d,
 																		  _texture);
 					
-					_vertexBuffer.setActive(_renderData.vertexFormat3D);
+					_vertexBuffer.setActive(_renderData.vertexFormat);
 					{
 						var _i = 0;
 						repeat (_offset_count)

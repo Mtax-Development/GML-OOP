@@ -495,7 +495,7 @@ function SpriteRenderer() constructor
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
 																		  _texture);
 					_vertexBuffer
-					 .setActive(_renderData.passthroughFormat)
+					 .setActive(_renderData.vertexFormat)
 						.setLocation2D(_vertex.set(_location_x2y1[0], _location_x2y1[1]))
 						.setColor(_color_x2y1, alpha)
 						.setUV(_uv_x2, _uv_y1)

@@ -592,7 +592,7 @@ function Triangle() constructor
 												.createPrimitiveRenderData(pr_trianglestrip);
 						
 						_vertexBuffer_fill
-						 .setActive(_renderData_fill.passthroughFormat)
+						 .setActive(_renderData_fill.vertexFormat)
 							.setLocation2D(location1)
 							.setColor(fill_color, fill_alpha)
 							.setUV()
@@ -618,7 +618,7 @@ function Triangle() constructor
 												   .createPrimitiveRenderData(pr_linestrip);
 						
 						_vertexBuffer_outline
-						 .setActive(_renderData_outline.passthroughFormat)
+						 .setActive(_renderData_outline.vertexFormat)
 							.setLocation2D(location1)
 							.setColor(outline_color, outline_alpha)
 							.setUV()

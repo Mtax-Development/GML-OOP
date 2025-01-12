@@ -532,7 +532,7 @@ function Point() constructor
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_pointlist);
 					
 					_vertexBuffer
-					 .setActive(_renderData.passthroughFormat)
+					 .setActive(_renderData.vertexFormat)
 						.setLocation2D(location)
 						.setColor(color, alpha)
 						.setUV()

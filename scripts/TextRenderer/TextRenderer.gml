@@ -779,7 +779,7 @@ function TextRenderer() constructor
 						_renderData.event.afterRender.callback = shader_reset;
 					}
 					
-					_vertexBuffer.setActive(_renderData.passthroughFormat);
+					_vertexBuffer.setActive(_renderData.vertexFormat);
 					{
 						var _line_size_x_affect = sign(_align_multiplier.x);
 						var _align_offset_y = (string_height(ID) * _scale_multiplier.y *
