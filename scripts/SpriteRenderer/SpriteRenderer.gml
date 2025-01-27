@@ -113,13 +113,14 @@ function SpriteRenderer() constructor
 				return self;
 			}
 			
+			/// @argument			skip_location? {bool}
 			/// @returns			{bool}
 			/// @description		Check if this constructor is functional.
-			static isFunctional = function()
+			static isFunctional = function(_skip_location = false)
 			{
 				return ((is_instanceof(sprite, Sprite)) and (sprite.isFunctional())
-						and ((is_instanceof(location, Vector2))
-						or (is_instanceof(location, Vector4))) and (location.isFunctional())
+						and ((_skip_location) or ((is_instanceof(location, Vector2))
+						or (is_instanceof(location, Vector4))) and (location.isFunctional()))
 						and (is_real(frame)) and (is_instanceof(scale, Scale))
 						and (scale.isFunctional()) and (is_instanceof(angle, Angle))
 						and (angle.isFunctional()) and ((is_real(color))
