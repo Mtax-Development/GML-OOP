@@ -466,8 +466,8 @@ function Scale() constructor
 				return self;
 			}
 			
-			/// @argument			target {Scale}
-			/// @argument			rate {Vector2}
+			/// @argument			target {real|Scale}
+			/// @argument			rate {real|Vector2}
 			/// @description		Move the x and y values towards the specified target with the
 			///						specified rate without exceeding it.
 			static approach = function(_target, _rate)
@@ -475,8 +475,10 @@ function Scale() constructor
 				try
 				{
 					var _value_array = [x, y];
-					var _target_array = [_target.x, _target.y];
-					var _rate_array = [abs(_rate.x), abs(_rate.y)];
+					var _target_array = ((is_real(_target)) ? array_create(2, _target)
+															: [_target.x, _target.y]);
+					var _rate_array = ((is_real(_rate)) ? array_create(2, abs(_rate))
+														: [abs(_rate.x), abs(_rate.y)]);
 					var _i = 0;
 					repeat (array_length(_value_array))
 					{

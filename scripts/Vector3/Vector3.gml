@@ -632,8 +632,8 @@ function Vector3() constructor
 				return self;
 			}
 			
-			/// @argument			target {Vector3}
-			/// @argument			rate {Vector3}
+			/// @argument			target {real|Vector3}
+			/// @argument			rate {real|Vector3}
 			/// @description		Move all values towards the specified target with respective rate
 			///						without exceeding it.
 			static approach = function(_target, _rate)
@@ -641,8 +641,10 @@ function Vector3() constructor
 				try
 				{
 					var _value_array = [x, y, z];
-					var _target_array = [_target.x, _target.y, _target.z];
-					var _rate_array = [abs(_rate.x), abs(_rate.y), abs(_rate.z)];
+					var _target_array = ((is_real(_target)) ? array_create(3, _target)
+															: [_target.x, _target.y, _target.z]);
+					var _rate_array = ((is_real(_rate)) ? array_create(3, abs(_rate))
+														: [abs(_rate.x), abs(_rate.y), abs(_rate.z)]);
 					var _i = 0;
 					repeat (array_length(_value_array))
 					{

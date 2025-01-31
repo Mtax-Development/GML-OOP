@@ -1031,8 +1031,8 @@ function Vector4() constructor
 				return self;
 			}
 			
-			/// @argument			target {Vector4}
-			/// @argument			rate {Vector4}
+			/// @argument			target {real|Vector4}
+			/// @argument			rate {real|Vector4}
 			/// @description		Move the x and y values towards the specified target with the
 			///						specified rate without exceeding it.
 			static approach = function(_target, _rate)
@@ -1040,8 +1040,12 @@ function Vector4() constructor
 				try
 				{
 					var _value_array = [x1, y1, x2, y2];
-					var _target_array = [_target.x1, _target.y1, _target.x2, _target.y2];
-					var _rate_array = [abs(_rate.x1), abs(_rate.y1), abs(_rate.x2), abs(_rate.y2)];
+					var _target_array = ((is_real(_target)) ? array_create(4, _target)
+															: [_target.x1, _target.y1, _target.x2,
+															   _target.y2]);
+					var _rate_array = ((is_real(_rate)) ? array_create(4, abs(_rate))
+														: [abs(_rate.x1), abs(_rate.y1),
+														   abs(_rate.x2), abs(_rate.y2)]);
 					var _i = 0;
 					repeat (array_length(_value_array))
 					{
