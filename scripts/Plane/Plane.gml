@@ -49,8 +49,11 @@ function Plane() constructor
 																	  : _other.scale);
 						angle = ((is_instanceof(_other.angle, EulerAngle))
 								 ? new EulerAngle(_other.angle) : _other.angle);
-						sprite = ((is_instanceof(_other.sprite, Sprite)) ? new Sprite(_other.sprite)
-																		 : _other.sprite);
+						sprite = ((is_instanceof(_other.sprite, Sprite))
+								  ? new Sprite(_other.sprite)
+								  : ((is_instanceof(_other.sprite, SpriteRenderer))
+									 ? new SpriteRenderer(_other.sprite)
+									 : _other.sprite));
 						color = _other.color;
 						alpha = _other.alpha;
 						
