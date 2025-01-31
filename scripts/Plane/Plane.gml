@@ -99,6 +99,24 @@ function Plane() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			/// @returns			{real[]:matrix}
+			/// @description		Return current transformation matrix of this shape.
+			static getTransform = function()
+			{
+				var _transform = matrix_multiply(matrix_build(0, 0, 0, (-angle.y), 0, 0, 1, 1, 1),
+												 matrix_build(0, 0, 0, 0, (-angle.x), 0, 1, 1, 1));
+				_transform = matrix_multiply(_transform,
+											 matrix_build(0, 0, 0, 0, 0, (-angle.z), 1, 1, 1));
+				_transform = matrix_multiply(_transform,
+											 matrix_build(location.x, location.y, (-location.z), 0, 0,
+														  0, 1, 1, 1));
+				
+				return _transform;
+			}
+			
+		#endregion
 		#region <Execution>
 			
 			/// @argument			location? {Vector2|Vector4}
@@ -132,16 +150,8 @@ function Plane() constructor
 					{
 						event.beforeRender.execute();
 						
-						var _transform = matrix_multiply(matrix_build(0, 0, 0, (-angle.y), 0, 0, 1, 1,
-																	  1),
-														 matrix_build(0, 0, 0, 0, (-angle.x), 0, 1, 1,
-																	  1));
-						_transform = matrix_multiply(_transform, matrix_build(0, 0, 0, 0, 0,
-																			  (-angle.z), 1, 1, 1));
-						_transform = matrix_multiply(_transform, matrix_build(location.x, location.y,
-																			  (-location.z), 0, 0, 0,
-																			  1, 1, 1));
-						matrix_set(matrix_world, matrix_multiply(_matrix_original, _transform));
+						matrix_set(matrix_world, matrix_multiply(_matrix_original,
+																 self.getTransform()));
 						
 						if (is_instanceof(sprite, Sprite))
 						{
