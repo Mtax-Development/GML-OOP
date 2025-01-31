@@ -138,6 +138,167 @@ function Scale() constructor
 				return false;
 			}
 			
+			/// @argument			value? {real|Scale}
+			/// @returns			{real|Scale} | On error: {undefined}
+			/// @description		Return the sum of either the values of this Scale or them added
+			///						to the specified value or the ones of the specified Scale.
+			static sum = function()
+			{
+				try
+				{
+					if ((argument_count > 0) and (argument[0] != undefined))
+					{
+						var _value = argument[0];
+						var _sum_x, _sum_y;
+						
+						if (is_real(_value))
+						{
+							_sum_x = (x + _value);
+							_sum_y = (y + _value);
+						}
+						else
+						{
+							_sum_x = (x + _value.x);
+							_sum_y = (y + _value.y);
+						}
+						
+						return new Scale(_sum_x, _sum_y);
+					}
+					else
+					{
+						return (x + y);
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "sum()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Scale}
+			/// @returns			{real|Scale} | On error: {undefined}
+			/// @description		Return the difference between either the values of this Scale or
+			///						them and the specified value or the ones of the specified Scale.
+			static difference = function()
+			{
+				try
+				{
+					if ((argument_count > 0) and (argument[0] != undefined))
+					{
+						var _value = argument[0];
+						var _difference_x, _difference_y;
+						
+						if (is_real(_value))
+						{
+							_difference_x = abs(x - _value);
+							_difference_y = abs(y - _value);
+						}
+						else
+						{
+							_difference_x = abs(x - _value.x);
+							_difference_y = abs(y - _value.y);
+						}
+						
+						return new Scale(_difference_x, _difference_y);
+					}
+					else
+					{
+						return abs(x - y);
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Scale}
+			/// @returns			{real|Scale} | On error: {undefined}
+			/// @description		Return the result of multiplication of either the values of this
+			///						Scale or them multiplied by the specified value or the ones of
+			///						the specified Scale.
+			static product = function()
+			{
+				try
+				{
+					if ((argument_count > 0) and (argument[0] != undefined))
+					{
+						var _value = argument[0];
+						var _product_x, _product_y;
+						
+						if (is_real(_value))
+						{
+							_product_x = (x * _value);
+							_product_y = (y * _value);
+						}
+						else
+						{
+							_product_x = (x * _value.x);
+							_product_y = (y * _value.y);
+						}
+						
+						return new Scale(_product_x, _product_y);
+					}
+					else
+					{
+						return (x * y);
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "product()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value {real|Scale}
+			/// @returns			{Scale} | On error: {undefined}
+			/// @description		Return the result of division of the values of this Scale
+			///						divided by the specified value or the ones of the specified
+			///						Scale. Attempts of division by 0 are ignored.
+			static quotient = function(_value)
+			{
+				try
+				{
+					var _quotient_x = x;
+					var _quotient_y = y;
+					
+					if (is_real(_value))
+					{
+						if (_value != 0)
+						{
+							_quotient_x = (x / _value);
+							_quotient_y = (y / _value);
+						}
+					}
+					else
+					{
+						if (_value.x != 0)
+						{
+							_quotient_x = (x / _value.x);
+						}
+						
+						if (_value.y != 0)
+						{
+							_quotient_y = (y / _value.y);
+						}
+					}
+					
+					return new Scale(_quotient_x, _quotient_y);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "product()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 			/// @returns			{real} | On error: {undefined}
 			/// @description		Return the lowest of all values.
 			static getMinimum = function()
