@@ -2522,6 +2522,13 @@ function Layer() constructor
 						drawOrder_newerOnTop = undefined;
 						emitterList = undefined;
 						
+						var _scope = self;
+						event =
+						{
+							beforeDestruction: new Callback(undefined, [], _scope),
+							afterDestruction: new Callback(undefined, [], _scope),
+						};
+						
 						if ((argument_count > 0) and (argument[0] != undefined))
 						{
 							var _instanceof_self = instanceof(self);
@@ -2577,16 +2584,18 @@ function Layer() constructor
 					/// @description		Remove the internal information from the memory.
 					static destroy = function()
 					{
+						if (self.isFunctional())
+						{
+							event.beforeDestruction.execute();
+							part_system_destroy(ID);
+							event.afterDestruction.execute();
+							
+							ID = undefined;
+						}
+						
 						if (is_instanceof(emitterList, List))
 						{
 							emitterList = emitterList.destroy();
-						}
-						
-						if (self.isFunctional())
-						{
-							part_system_destroy(ID);
-							
-							ID = undefined;
 						}
 						
 						return undefined;
