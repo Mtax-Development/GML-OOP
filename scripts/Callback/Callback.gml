@@ -101,11 +101,13 @@ function Callback() constructor
 			
 			/// @argument			function? {function|function[]}
 			/// @argument			argument? {any|any[]|any[+]}
+			/// @argument			scope? {int:instance|struct}
 			/// @description		Set each value of this constructor.
-			static set = function(_function = ID, _argument = self.argument)
+			static set = function(_function = ID, _argument = self.argument, _scope = scope)
 			{
 				ID = _function;
 				self.argument = _argument;
+				scope = _scope;
 				
 				return self;
 			}
