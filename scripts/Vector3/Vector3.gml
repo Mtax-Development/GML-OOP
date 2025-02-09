@@ -463,8 +463,8 @@ function Vector3() constructor
 				{
 					if (_booleanSign)
 					{
-						return new Vector3(((x > 0) ? 1 : -1), ((y > 0) ? 1 : -1),
-										  ((z > 0) ? 1 : -1));
+						return new Vector3(((x > 0) ? 1 : (-1)), ((y > 0) ? 1 : (-1)),
+										  ((z > 0) ? 1 : (-1)));
 					}
 					else
 					{

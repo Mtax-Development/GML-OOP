@@ -775,8 +775,8 @@ function Vector4() constructor
 				{
 					if (_booleanSign)
 					{
-						return new Vector4(((x1 > 0) ? 1 : -1), ((y1 > 0) ? 1 : -1),
-										   ((x2 > 0) ? 1 : -1), ((y2 > 0) ? 1 : -1))
+						return new Vector4(((x1 > 0) ? 1 : (-1)), ((y1 > 0) ? 1 : (-1)),
+										   ((x2 > 0) ? 1 : (-1)), ((y2 > 0) ? 1 : (-1)))
 					}
 					else
 					{

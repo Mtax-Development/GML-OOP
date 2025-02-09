@@ -351,7 +351,7 @@ function Plane() constructor
 				
 				try
 				{
-					var _offset = [[-1, -1], [1, -1], [-1, 1], [1, 1]];
+					var _offset = [[(-1), (-1)], [1, (-1)], [(-1), 1], [1, 1]];
 					var _offset_count = array_length(_offset);
 					var _angle_x = 0;
 					var _angle_y = 0;

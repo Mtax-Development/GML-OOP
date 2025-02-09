@@ -921,9 +921,9 @@ function Layer() constructor
 					{
 						try
 						{
-							if ((_sprite == undefined) or (_sprite == -1))
+							if ((_sprite == undefined) or (_sprite == (-1)))
 							{
-								layer_sprite_change(ID, -1);
+								layer_sprite_change(ID, (-1));
 								
 								sprite = undefined;
 							}
@@ -1313,11 +1313,11 @@ function Layer() constructor
 					{
 						try
 						{
-							if ((_sprite == undefined) or (_sprite == -1))
+							if ((_sprite == undefined) or (_sprite == (-1)))
 							{
 								sprite = undefined;
 								
-								layer_background_change(ID, -1);
+								layer_background_change(ID, (-1));
 							}
 							else
 							{
@@ -1786,7 +1786,7 @@ function Layer() constructor
 													 _exception);
 						}
 						
-						return -1;
+						return (-1);
 					}
 					
 					/// @argument			location {Vector2}
@@ -1949,7 +1949,7 @@ function Layer() constructor
 								_tiledata = _tiledata.ID;
 							}
 							
-							return ((_tiledata != -1)
+							return ((_tiledata != (-1))
 									? tilemap_set(ID, _tiledata, _location.x, _location.y) : false);
 						}
 						catch (_exception)
@@ -1978,7 +1978,7 @@ function Layer() constructor
 								_tiledata = _tiledata.ID;
 							}
 							
-							return ((_tiledata != -1)
+							return ((_tiledata != (-1))
 									? tilemap_set_at_pixel(ID, _tiledata, _location.x, _location.y)
 									: false);
 						}

@@ -154,7 +154,7 @@ function VertexBuffer() constructor
 			///						   and order of types of primitive data as in used Vertex Format.
 			///						 - A Shader is currently active to operate exact the number and
 			///						   types of primitive data used in Vertex Format.
-			static render = function(_primitive_type, _texture = -1)
+			static render = function(_primitive_type, _texture = (-1))
 			{
 				try
 				{
@@ -309,7 +309,7 @@ function VertexBuffer() constructor
 																			   : argument[1])
 										: self.passthroughFormat);
 						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
-																						 : -1);
+																						 : (-1));
 						
 						event =
 						{
@@ -333,7 +333,7 @@ function VertexBuffer() constructor
 					{
 						return ((is_real(primitiveType))
 								and (is_instanceof(vertexBuffer, VertexBuffer))
-								and (is_instanceof(vertexFormat, VertexFormat)) and ((texture == -1)
+								and (is_instanceof(vertexFormat, VertexFormat)) and ((texture == (-1))
 								or (is_ptr(texture))));
 					}
 					
@@ -379,7 +379,7 @@ function VertexBuffer() constructor
 						if (self.isFunctional())
 						{
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							var _string_texture = ((texture == -1) ? "None" : string(texture));
+							var _string_texture = ((texture == (-1)) ? "None" : string(texture));
 							
 							var _string_vertexFormat;
 							switch (vertexFormat)

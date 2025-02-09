@@ -156,9 +156,9 @@ function ArrayParser() constructor
 					if ((_target_position < 0) or (_source_position < 0)
 					or (__condition_copy != undefined) or (__condition_execute != undefined))
 					{
-						var _target_position_boolsign = ((_target_position >= 0) ? 1 : -1);
+						var _target_position_boolsign = ((_target_position >= 0) ? 1 : (-1));
 						var _force_count_backward = ((_count == undefined)
-													 and (_target_position_boolsign == -1));
+													 and (_target_position_boolsign == (-1)));
 						var _count_abs = ((is_real(_count)) ? abs(_count) : _count);
 						var __passthrough = function() {return true;};
 						var _remaining_position_count, _count_boolsign;
@@ -166,7 +166,7 @@ function ArrayParser() constructor
 						if ((_count < 0) or (_force_count_backward))
 						{
 							_remaining_position_count = (_source_position + 1);
-							_count_boolsign = -1;
+							_count_boolsign = (-1);
 						}
 						else
 						{
@@ -725,14 +725,14 @@ function ArrayParser() constructor
 						++_i;
 					}
 					
-					return -1;
+					return (-1);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
 				}
 				
-				return -1;
+				return (-1);
 			}
 			
 			/// @argument			value {any}
@@ -755,14 +755,14 @@ function ArrayParser() constructor
 						--_i;
 					}
 					
-					return -1;
+					return (-1);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getLastPosition()"], _exception);
 				}
 				
-				return -1;
+				return (-1);
 			}
 			
 			/// @argument			value {any}

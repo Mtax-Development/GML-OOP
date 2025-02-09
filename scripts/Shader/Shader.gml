@@ -188,7 +188,7 @@ function Shader() constructor
 						
 						var _struct = 
 						{
-							handle: ((_handle != -1) ? _handle : undefined),
+							handle: ((_handle != (-1)) ? _handle : undefined),
 							type: "float",
 							value: _value
 						};
@@ -282,7 +282,7 @@ function Shader() constructor
 						
 						var _struct = 
 						{
-							handle: ((_handle != -1) ? _handle : undefined),
+							handle: ((_handle != (-1)) ? _handle : undefined),
 							type: "int",
 							value: _value
 						};

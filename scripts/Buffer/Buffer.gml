@@ -255,7 +255,7 @@ function Buffer() constructor
 				try
 				{
 					var _pairCount = (argument_count div 2);
-					var _results = array_create(_pairCount, -1);
+					var _results = array_create(_pairCount, (-1));
 					var _i = 0;
 					repeat (_pairCount)
 					{
@@ -273,7 +273,7 @@ function Buffer() constructor
 					
 					switch (_pairCount)
 					{
-						case 0: return -1; break;
+						case 0: return (-1); break;
 						case 1: return _results[0]; break;
 						default: return _results; break;
 					}
@@ -283,7 +283,7 @@ function Buffer() constructor
 					new ErrorReport().report([other, self, "write()"], _exception);
 				}
 				
-				return array_create((argument_count div 2), -1);
+				return array_create((argument_count div 2), (-1));
 			}
 			
 			/// @argument			type {constant:buffer_[dataType]}
@@ -764,7 +764,7 @@ function Buffer() constructor
 						{
 							var _async_size = argument[2];
 							
-							if (_async_size == all) {_async_size = -1;}
+							if (_async_size == all) {_async_size = (-1);}
 							
 							return buffer_load_async(ID, _path, _offset, _async_size);
 						}

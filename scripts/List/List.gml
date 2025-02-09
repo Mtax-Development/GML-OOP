@@ -280,7 +280,7 @@ function List() constructor
 					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
 				}
 				
-				return -1;
+				return (-1);
 			}
 			
 			/// @argument			value {any}

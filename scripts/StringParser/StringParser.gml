@@ -592,7 +592,7 @@ function StringParser() constructor
 					
 					if (_startFromEnd)
 					{
-						_positionModifier = -1;
+						_positionModifier = (-1);
 						__findPosition = string_last_pos_ext;
 					}
 					

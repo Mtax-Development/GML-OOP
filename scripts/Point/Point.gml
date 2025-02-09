@@ -392,7 +392,7 @@ function Point() constructor
 						
 						if (alpha > 0)
 						{
-							draw_sprite_ext(_pixel, 0, location.x, location.y, -1, -1, 0, color,
+							draw_sprite_ext(_pixel, 0, location.x, location.y, (-1), (-1), 0, color,
 											alpha);
 						}
 						

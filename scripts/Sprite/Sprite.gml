@@ -965,7 +965,7 @@ function Sprite() constructor
 					new ErrorReport().report([other, self, "load()"], _exception);
 				}
 				
-				return -1;
+				return (-1);
 			}
 			
 			/// @argument			other {Sprite|int:sprite}
