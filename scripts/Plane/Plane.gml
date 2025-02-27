@@ -72,7 +72,7 @@ function Plane() constructor
 						//|Construction type: New constructor.
 						location = argument[0];
 						scale = argument[1];
-						angle = ((argument_count > 2) ? argument[2] : undefined);
+						angle = ((argument_count > 2) ? argument[2] : new EulerAngle(0, 0, 0));
 						sprite = ((argument_count > 3) ? argument[3] : undefined);
 						color = (((argument_count > 4) and (argument[4] != undefined)) ? argument[4]
 																					   : c_white);
@@ -166,7 +166,7 @@ function Plane() constructor
 						else if (is_instanceof(sprite, SpriteRenderer))
 						{
 							var _offset = ((is_instanceof(sprite.location, Vector2))
-											 ? sprite.location : new Vector2(0, 0));
+										   ? sprite.location : new Vector2(0, 0));
 							var _sprite_size_x = sprite_get_width(sprite.sprite.ID);
 							var _sprite_size_y = sprite_get_height(sprite.sprite.ID);
 							var _scale_sprite = new Scale((sprite.scale.x * ((scale.x * 2) /
