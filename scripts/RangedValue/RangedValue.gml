@@ -207,7 +207,7 @@ function RangedValue() constructor
 			}
 			
 			/// @argument			value {real}
-			/// @description		Modify the value by the specified number, then continously bounce
+			/// @description		Modify the value by the specified number, then continuously bounce
 			///						it back towards the Range if it would exceed its boundary.
 			static modifyBounce = function(_value)
 			{

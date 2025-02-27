@@ -3055,7 +3055,7 @@ function Layer() constructor
 							}
 							
 							/// @argument			streamEnabled {bool}
-							/// @description		Toggle continous particle streaming.
+							/// @description		Toggle continuous particle streaming.
 							static setStreamEnabled = function(_streamEnabled)
 							{
 								if (self.isFunctional())
@@ -3122,7 +3122,7 @@ function Layer() constructor
 								return self;
 							}
 							
-							/// @description		Continously create Particles using the stream 
+							/// @description		Continuously create Particles using the stream 
 							///						configuration.
 							static stream = function()
 							{
