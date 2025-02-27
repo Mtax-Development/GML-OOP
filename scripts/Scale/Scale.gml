@@ -331,6 +331,33 @@ function Scale() constructor
 				return undefined;
 			}
 			
+			/// @argument			booleanSign? {bool}
+			/// @returns			{Vector2} | On error: {undefined}
+			/// @description		Return a Vector2 with each respective value representing the sign
+			///						of the number: -1 for a negative number, 0 for itself and 1 for a
+			///						positive number. If the result is specified to be returned as the
+			///						boolean sign, -1 will be set for 0 as well.
+			static getSign = function(_booleanSign = false)
+			{
+				try
+				{
+					if (_booleanSign)
+					{
+						return new Vector2(((x > 0) ? 1 : (-1)), ((y > 0) ? 1 : (-1)));
+					}
+					else
+					{
+						return new Vector2(sign(x), sign(y));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getSign()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 		#endregion
 		#region <Setters>
 			
