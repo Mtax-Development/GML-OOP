@@ -133,7 +133,7 @@ function Callback() constructor
 							_argument = _value[1];
 						}
 					}
-					else
+					else if (is_instanceof(_value, Callback))
 					{
 						_callback = _value.ID;
 						_argument = _value.argument;
