@@ -965,7 +965,7 @@ function Vector3() constructor
 			{
 				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _string = ("x: " + string(x) + _mark_separator + "y: " + string(y) +
-							   _mark_separator + "z:" + string(z));
+							   _mark_separator + "z: " + string(z));
 				
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}

@@ -311,8 +311,8 @@ function Room() constructor
 								   "Name: " + string(name) + _mark_separator +
 								   "Persistent: " + string(persistent) + _mark_separator +
 								   "Size: " + string(size) + _mark_separator +
-								   "Added Instance Count:" + _string_addedInstanceCount
-														   + _mark_separator +
+								   "Added Instance Count: " + _string_addedInstanceCount
+															+ _mark_separator +
 								   "Visited: " + string(visited) + _mark_separator +
 								   "Persistence on Visit: " + string(persistenceOnVisit)
 															+ _mark_separator +
