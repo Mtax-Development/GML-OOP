@@ -32,7 +32,7 @@ This project can be imported into other GameMaker projects either from a prepare
 # Credits
 Created, documented and maintained by [Mtax](https://github.com/Mtax-Development).
 
-Contains contributions from the following users:
+Contains contributions made by:
 * [Cereiom](https://github.com/Cereiom)
 * [SirReal](https://github.com/SirReal-1)
 
