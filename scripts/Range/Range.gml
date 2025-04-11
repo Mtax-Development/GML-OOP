@@ -380,4 +380,9 @@ function Range() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static one = new Range(0, 1);
+		
+	#endregion
 }

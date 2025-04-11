@@ -1705,4 +1705,11 @@ function Vector4() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static zero = new Vector4(0, 0, 0, 0);
+		static one = new Vector4(1, 1, 1, 1);
+		static negative = new Vector4((-1), (-1), (-1), (-1));
+		
+	#endregion
 }

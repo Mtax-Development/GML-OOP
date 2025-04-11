@@ -265,4 +265,10 @@ function Color2() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static white = new Color2(c_white, c_white);
+		static black = new Color2(c_black, c_black);
+		
+	#endregion
 }

@@ -1008,4 +1008,17 @@ function Vector3() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static zero = new Vector3(0, 0, 0);
+		static one = new Vector3(1, 1, 1);
+		static negative = new Vector3((-1), (-1), (-1));
+		static left = new Vector3((-1), 0, 0);
+		static right = new Vector3(1, 0, 0);
+		static up = new Vector3(0, (-1), 0);
+		static down = new Vector3(0, 1, 0);
+		static backward = new Vector3(0, 0, (-1));
+		static forward = new Vector3(0, 0, 1);
+		
+	#endregion
 }

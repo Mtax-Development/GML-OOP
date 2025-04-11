@@ -307,4 +307,10 @@ function Color3() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static white = new Color3(c_white, c_white, c_white);
+		static black = new Color3(c_black, c_black, c_black);
+		
+	#endregion
 }

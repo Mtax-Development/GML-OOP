@@ -188,4 +188,9 @@ function Angle() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static zero = new Angle(0);
+		
+	#endregion
 }

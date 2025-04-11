@@ -1075,4 +1075,15 @@ function Vector2() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static zero = new Vector2(0, 0);
+		static one = new Vector2(1, 1);
+		static negative = new Vector2((-1), (-1));
+		static left = new Vector2((-1), 0);
+		static right = new Vector2(1, 0);
+		static up = new Vector2(0, (-1));
+		static down = new Vector2(0, 1);
+		
+	#endregion
 }

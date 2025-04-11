@@ -757,4 +757,13 @@ function Scale() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static zero = new Vector2(0, 0);
+		static one = new Vector2(1, 1);
+		static mirrored = new Vector2((-1), (-1));
+		static mirroredX = new Vector2((-1), 1);
+		static mirroredY = new Vector2(1, (-1));
+		
+	#endregion
 }
