@@ -39,7 +39,7 @@ function TextRenderer() constructor
 					afterRender: new Callback(undefined, [], _scope)
 				};
 				
-				if ((argument_count > 0) and (argument[0] != undefined))
+				if (argument_count > 0)
 				{
 					if (is_instanceof(argument[0], TextRenderer))
 					{
