@@ -36,5 +36,7 @@ Contains contributions made by:
 * [Cereiom](https://github.com/Cereiom)
 * [SirReal](https://github.com/SirReal-1)
 
+Contains code adapted from [GameMaker HTML5 Runtime](https://github.com/YoYoGames/GameMaker-HTML5) code, in cases where achieving perfect graphical reproduction would not be feasible without reference. Exact references are credited above relevant method code in source code files.
+
 GameMaker and GameMaker Language are properties of YoYo Games.    
 This is a third-party project not affiliated with YoYo Games.
