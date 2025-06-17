@@ -825,6 +825,23 @@ function RoundRectangle() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @returns			{real[+]}
+			/// @description		Return an array containing values of all properties of this Shape.
+			///						Properties with multiple values will be returned in nested arrays.
+			static toArray = function()
+			{
+				var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
+				var _radius = ((is_instanceof(radius, Vector2)) ? radius.toArray() : radius);
+				var _fill_color = (((is_instanceof(fill_color, Color2)) or
+								    (is_instanceof(fill_color, Color4))) ? fill_color.toArray()
+																		 : fill_color);
+				var _outline_color = ((is_instanceof(outline_color, Color4))
+									  ? outline_color.toArray() : outline_color);
+				
+				return [_location, _radius, _fill_color, fill_alpha, outline_size, _outline_color,
+						outline_alpha, precision];
+			}
+			
 			/// @argument			outline? {bool|all}
 			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
