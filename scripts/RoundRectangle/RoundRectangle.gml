@@ -170,7 +170,9 @@ function RoundRectangle() constructor
 						and (radius.equals(_other.radius)))) and ((fill_color == _other.fill_color)
 						or ((string_copy(instanceof(fill_color), 1, 5) == "Color")
 						and (fill_color.equals(_other.fill_color))))
-						and (outline_color == _other.outline_color));
+						and ((outline_color == _other.outline_color)
+						or ((is_instanceof(outline_color, Color4)
+						and (outline_color.equals(_other.outline_color))))));
 			}
 			
 			/// @argument			point {Vector2}
