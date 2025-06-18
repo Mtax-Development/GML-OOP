@@ -458,14 +458,16 @@ function RoundRectangle() constructor
 			/// @argument			outline_alpha? {real}
 			/// @argument			outline_size? {int}
 			/// @argument			precision? {int:divisibleBy4}
+			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
 			/// @description		Return an array containg rendering data for each vertex resulting
 			///						in this shape, consisting of its primitive type, location, color
 			///						and alpha value, based on the data of this constructor of its
 			///						specified replaced parts. Up to two nested values will be returned
-			///						in that array, depending on whether the fill and the outline of
-			///						this shape would be rendered, respectively. They will then be
-			///						represented by data nested at following array positions:
+			///						in that array, depending on whether it was specified to return
+			///						only data for outline, not return it and use only fill instead, or
+			///						to return all data. Each will then be represented by data nested
+			///						at following array positions:
 			///						- array[0]: primitive type {constant:pr_*}
 			///						- array[1]: vertex data {any[]}
 			///						  - array[1][0]: location {real[]}
@@ -477,7 +479,7 @@ function RoundRectangle() constructor
 													 _outline_size = outline_size,
 													 _outline_color = outline_color,
 													 _outline_alpha = outline_alpha,
-													 _precision = precision)
+													 _precision = precision, _outline = all)
 			{
 				try
 				{
@@ -487,7 +489,8 @@ function RoundRectangle() constructor
 					var _vertex_location_base = undefined;
 					var _color = _outline_color;
 					
-					if ((_fill_color != undefined) and (_fill_alpha > 0))
+					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
+					and (_fill_alpha > 0))
 					{
 						_vertex_location_base = self.getVertexLocations(undefined, undefined,
 																		undefined, true);
@@ -516,8 +519,8 @@ function RoundRectangle() constructor
 												_color_order_fill]);
 					}
 					
-					if ((outline_color != undefined) and (outline_alpha > 0)
-					and (outline_size >= 1))
+					if (((_outline) or (_outline == all)) and (outline_color != undefined)
+					and (outline_alpha > 0) and (outline_size >= 1))
 					{
 						var _outline_primitive = undefined;
 						var _vertex_location = [];
@@ -842,7 +845,7 @@ function RoundRectangle() constructor
 						outline_alpha, precision];
 			}
 			
-			/// @argument			outline? {bool|all}
+			
 			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
 			/// @argument			fill_color? {int:color|Color2|Color4}
@@ -851,20 +854,23 @@ function RoundRectangle() constructor
 			/// @argument			outline_color? {int:color|Color4}
 			/// @argument			outline_alpha? {real}
 			/// @argument			precision? {int:divisibleBy4}
+			/// @argument			outline? {bool|all}
 			/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer}
 			/// @returns			{VertexBuffer.PrimitiveRenderData|
-			///						 VertexBuffer.PrimitiveRenderData[]|undefined}
-			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified temporarily replaced parts.
-			///						Either a single value or an array of two values will be returned,
-			///						depending on whether the fill or outline were specified as the only
-			///						returned value or both as {all}.
-			static toVertexBuffer = function(_outline = false, _location = location, _radius = radius,
+			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
+			/// @description		Return rendering data of this constructor in a Vertex Buffer,
+			///						using its current data or specified temporarily replaced parts.
+			///						Rendering data for multiple Vertex Buffers can be returned in an
+			///						array, depending on whether it was specified to return only data
+			///						for outline, not return it and use only fill instead, or to return
+			///						all data. Data for invisible or invalid render configuration for
+			///						either will not be included.
+			static toVertexBuffer = function(_location = location, _radius = radius,
 											 _fill_color = fill_color, _fill_alpha = fill_alpha,
 											 _outline_size = outline_size,
 											 _outline_color = outline_color,
 											 _outline_alpha = outline_alpha, _precision = precision,
-											 _vertexBuffer)
+											 _outline = all, _vertexBuffer)
 			{
 				var _vertexBuffer_fill = undefined;
 				var _vertexBuffer_outline = undefined;
@@ -902,7 +908,8 @@ function RoundRectangle() constructor
 						}
 					}
 					
-					if ((!_outline) or (_outline == all))
+					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
+					and (_fill_alpha > 0))
 					{
 						if (!is_instanceof(_vertexBuffer_fill, VertexBuffer))
 						{
@@ -913,7 +920,8 @@ function RoundRectangle() constructor
 												.createPrimitiveRenderData(pr_trianglefan));
 					}
 					
-					if (((_outline) or (_outline == all)) and (_outline_size >= 1))
+					if (((_outline) or (_outline == all)) and (_outline_color != undefined)
+					and (_outline_alpha > 0) and (_outline_size >= 1))
 					{
 						var _primitiveType_outline = ((_outline_size > 1) ? pr_trianglestrip
 																		  : pr_linestrip);
@@ -927,13 +935,14 @@ function RoundRectangle() constructor
 												.createPrimitiveRenderData(_primitiveType_outline));
 					}
 					
-					var _primitive = self.getPrimitiveRenderData(_location, _radius, _fill_color,
-																 _fill_alpha, _outline_size,
-																 _outline_color, _outline_alpha,
-																 _precision);
+					var _primitive = self.getPrimitiveRenderData(_location, _radius,
+																 _fill_color, _fill_alpha,
+																 _outline_size, _outline_color,
+																 _outline_alpha, _precision,
+																 _outline);
 					var _vertex = new Vector2();
 					var _i = [0, 0];
-					repeat (array_length(_renderData))
+					repeat (array_length(_primitive))
 					{
 						var _renderData_current = _renderData[_i[0]];
 						var _primitive_current = _primitive[_i[0]];
