@@ -634,14 +634,14 @@ function RoundRectangle() constructor
 			/// @argument			radius? {Vector2}
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
+			/// @argument			outline_size? {int}
 			/// @argument			outline_color? {int:color|Color4}
 			/// @argument			outline_alpha? {real}
-			/// @argument			outline_size? {int}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @description		Execute the draw of this Shape as a form, using data of this
 			///						constructor or specified temporarily replaced parts.
-			static render = function(_location, _radius, _fill_color, _fill_alpha, _outline_color,
-									 _outline_alpha, _outline_size, _precision)
+			static render = function(_location, _radius, _fill_color, _fill_alpha,  _outline_size,
+									 _outline_color, _outline_alpha, _precision)
 			{
 				var _location_original = location;
 				var _radius_original = radius;
