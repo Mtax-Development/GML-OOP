@@ -372,7 +372,7 @@ function RoundRectangle() constructor
 				return false;
 			}
 			
-			/// @argument			location? {Vector2}
+			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			startWithCenter? {bool}
@@ -452,19 +452,19 @@ function RoundRectangle() constructor
 				return _result;
 			}
 			
-			/// @argument			location? {Vector2}
+			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
+			/// @argument			outline_size? {int}
 			/// @argument			outline_color? {int:color|Color4}
 			/// @argument			outline_alpha? {real}
-			/// @argument			outline_size? {int}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
 			/// @description		Return an array containg rendering data for each vertex resulting
 			///						in this shape, consisting of its primitive type, location, color
-			///						and alpha value, based on the data of this constructor of its
+			///						and alpha value, based on the data of this constructor or its
 			///						specified replaced parts. Up to two nested values will be returned
 			///						in that array, depending on whether it was specified to return
 			///						only data for outline, not return it and use only fill instead, or
@@ -630,7 +630,7 @@ function RoundRectangle() constructor
 		#endregion
 		#region <Execution>
 			
-			/// @argument			location? {Vector2}
+			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
@@ -857,7 +857,7 @@ function RoundRectangle() constructor
 			/// @argument			outline_alpha? {real}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			outline? {bool|all}
-			/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer}
+			/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer[]}
 			/// @returns			{VertexBuffer.PrimitiveRenderData|
 			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer,
