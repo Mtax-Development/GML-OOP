@@ -159,7 +159,7 @@ function RoundRectangle() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			other {Rectangle}
+			/// @argument			other {RoundRectangle}
 			/// @returns			{bool}
 			/// @description		Check if specified constructor has equivalent properties.
 			static equals = function(_other)
