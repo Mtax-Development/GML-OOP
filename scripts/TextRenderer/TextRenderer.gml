@@ -123,9 +123,9 @@ function TextRenderer() constructor
 			
 			/// @argument			scale {int|Scale}
 			/// @returns			{Scale}
-			/// @description		Return relation of the specified Font size to size of a Font of this
-			///						renderer as a Scale. If a Scale is specified, its values will be
-			///						returned in a new Scale.
+			/// @description		Return relation of the specified Font size to size of a Font of
+			///						this renderer as a Scale. If a Scale is specified, its values will
+			///						be returned in a new Scale.
 			static getScaleMultiplier = function(_scale = scale)
 			{
 				var _multiplier_x = 1;
