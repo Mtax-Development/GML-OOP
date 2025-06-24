@@ -88,14 +88,14 @@ function Plane() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location, Vector3)) and (location.isFunctional()))
-						and ((is_instanceof(scale, Scale)) and (scale.isFunctional()))
-						and ((angle == undefined) or ((is_instanceof(angle, EulerAngle))
-						and (angle.isFunctional()))) and ((sprite == undefined)
-						or (((is_instanceof(sprite, Sprite))
-						or (is_instanceof(sprite, SpriteRenderer))) and (sprite.isFunctional(true))))
-						and ((is_real(color)) or ((is_instanceof(color, Color4))
-						and (color.isFunctional()))) and (is_real(alpha)));
+				return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
+						((is_instanceof(scale, Scale)) and (scale.isFunctional())) and
+						((angle == undefined) or ((is_instanceof(angle, EulerAngle)) and
+						 (angle.isFunctional()))) and ((sprite == undefined) or
+						(((is_instanceof(sprite, Sprite)) or
+						 (is_instanceof(sprite, SpriteRenderer))) and (sprite.isFunctional(true)))) and
+						((is_real(color)) or ((is_instanceof(color, Color4)) and
+						 (color.isFunctional()))) and (is_real(alpha)));
 			}
 			
 		#endregion

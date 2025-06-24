@@ -51,8 +51,8 @@ function ErrorReport() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((reportFunctionLimit == undefined) or (reportFunctionLimit > 0))
-						and (is_array(errorData)));
+				return (((reportFunctionLimit == undefined) or (reportFunctionLimit > 0)) and
+						(is_array(errorData)));
 			}
 			
 		#endregion
@@ -242,13 +242,13 @@ function ErrorReport() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((location != undefined) and ((is_string(detail))
-								or ((is_struct(detail)) and (is_string(detail[$ "message"]))
-								and (is_string(detail[$ "longMessage"]))
-								and (is_string(detail[$ "script"]))
-								and (is_array(detail[$ "stacktrace"]))
-								and (array_length(detail.stacktrace) > 0)))
-								and (is_array(callstack)) and (array_length(callstack) > 0));
+						return ((location != undefined) and ((is_string(detail)) or
+								((is_struct(detail)) and (is_string(detail[$ "message"])) and
+								(is_string(detail[$ "longMessage"])) and
+								(is_string(detail[$ "script"])) and
+								(is_array(detail[$ "stacktrace"])) and
+								(array_length(detail.stacktrace) > 0))) and
+								(is_array(callstack)) and (array_length(callstack) > 0));
 					}
 					
 				#endregion

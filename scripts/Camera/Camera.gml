@@ -381,9 +381,9 @@ function Camera() constructor
 							}
 						}
 						
-						return ((_matrix_valid) and ((is_instanceof(size, Vector2))
-								and (size.isFunctional())) and ((is_instanceof(clippingPlane, Range))
-								and (clippingPlane.isFunctional())));
+						return ((_matrix_valid) and ((is_instanceof(size, Vector2)) and
+								(size.isFunctional())) and ((is_instanceof(clippingPlane, Range)) and
+								(clippingPlane.isFunctional())));
 					}
 					
 				#endregion
@@ -560,9 +560,9 @@ function Camera() constructor
 							}
 						}
 						
-						return ((_matrix_valid) and ((is_instanceof(size, Vector2))
-								and (size.isFunctional())) and ((is_instanceof(clippingPlane, Range))
-								and (clippingPlane.isFunctional())));
+						return ((_matrix_valid) and ((is_instanceof(size, Vector2)) and
+								(size.isFunctional())) and ((is_instanceof(clippingPlane, Range)) and
+								(clippingPlane.isFunctional())));
 					}
 					
 				#endregion
@@ -745,10 +745,10 @@ function Camera() constructor
 							}
 						}
 						
-						return ((_matrix_valid) and ((is_instanceof(fieldOfView, Angle))
-								and (fieldOfView.isFunctional())) and (is_real(aspectRatio))
-								and ((is_instanceof(clippingPlane, Range))
-								and (clippingPlane.isFunctional())));
+						return ((_matrix_valid) and ((is_instanceof(fieldOfView, Angle)) and
+								(fieldOfView.isFunctional())) and (is_real(aspectRatio)) and
+								((is_instanceof(clippingPlane, Range)) and
+								(clippingPlane.isFunctional())));
 					}
 					
 				#endregion
@@ -934,10 +934,10 @@ function Camera() constructor
 							}
 						}
 						
-						return ((_matrix_valid) and ((is_instanceof(source, Vector3))
-								and (source.isFunctional())) and ((is_instanceof(target, Vector3))
-								and (target.isFunctional())) and ((is_instanceof(upVector, Vector3))
-								and (upVector.isFunctional())));
+						return ((_matrix_valid) and ((is_instanceof(source, Vector3)) and
+								(source.isFunctional())) and ((is_instanceof(target, Vector3)) and
+								(target.isFunctional())) and ((is_instanceof(upVector, Vector3)) and
+								(upVector.isFunctional())));
 					}
 					
 				#endregion

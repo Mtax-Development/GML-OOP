@@ -380,8 +380,8 @@ function Room() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return (((is_handle(ID)) or (is_real(ID))) and (is_handle(object))
-								and (is_instanceof(location, Vector2)) and (location.isFunctional()));
+						return (((is_handle(ID)) or (is_real(ID))) and (is_handle(object)) and
+								(is_instanceof(location, Vector2)) and (location.isFunctional()));
 					}
 					
 				#endregion

@@ -79,9 +79,9 @@ function EulerAngle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x)) and (is_real(y)) and (is_real(z)) and (!is_nan(x))
-						and (!is_nan(y)) and (!is_nan(z)) and (!is_infinity(x)) and (!is_infinity(y))
-						and (!is_infinity(z)));
+				return ((is_real(x)) and (is_real(y)) and (is_real(z)) and (!is_nan(x)) and
+						(!is_nan(y)) and (!is_nan(z)) and (!is_infinity(x)) and (!is_infinity(y)) and
+						(!is_infinity(z)));
 			}
 			
 		#endregion

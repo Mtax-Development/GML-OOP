@@ -337,10 +337,10 @@ function VertexBuffer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(primitiveType))
-								and (is_instanceof(vertexBuffer, VertexBuffer))
-								and (is_instanceof(vertexFormat, VertexFormat)) and ((texture == (-1))
-								or (is_ptr(texture))));
+						return ((is_real(primitiveType)) and
+								(is_instanceof(vertexBuffer, VertexBuffer)) and
+								(is_instanceof(vertexFormat, VertexFormat)) and ((texture == (-1)) or
+								(is_ptr(texture))));
 					}
 					
 					/// @returns			{undefined}

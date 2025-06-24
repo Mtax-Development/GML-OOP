@@ -89,9 +89,9 @@ function Triangle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location1, Vector2)) and (location1.isFunctional()))
-						and ((is_instanceof(location2, Vector2)) and (location2.isFunctional()))
-						and ((is_instanceof(location3, Vector2)) and (location3.isFunctional())));
+				return (((is_instanceof(location1, Vector2)) and (location1.isFunctional())) and
+						((is_instanceof(location2, Vector2)) and (location2.isFunctional())) and
+						((is_instanceof(location3, Vector2)) and (location3.isFunctional())));
 			}
 			
 		#endregion

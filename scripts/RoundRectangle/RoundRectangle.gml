@@ -151,9 +151,9 @@ function RoundRectangle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location, Vector4)) and (location.isFunctional()))
-						and ((is_instanceof(radius, Vector2)) and (radius.isFunctional()))
-						and (is_real(precision)));
+				return (((is_instanceof(location, Vector4)) and (location.isFunctional())) and
+						((is_instanceof(radius, Vector2)) and (radius.isFunctional())) and
+						(is_real(precision)));
 			}
 			
 		#endregion
@@ -164,19 +164,20 @@ function RoundRectangle() constructor
 			/// @description		Check if specified constructor has equivalent properties.
 			static equals = function(_other)
 			{
-				return ((is_instanceof(_other, RoundRectangle)) and (fill_alpha == _other.fill_alpha)
-						and (outline_size == _other.outline_size)
-						and (outline_alpha == _other.outline_alpha)
-						and (precision == _other.precision) and ((location == _other.location)
-						or ((string_copy(instanceof(location), 1, 6) == "Vector")
-						and (location.equals(_other.location))))
-						and ((radius == _other.radius) or ((is_instanceof(radius, Vector2))
-						and (radius.equals(_other.radius)))) and ((fill_color == _other.fill_color)
-						or ((string_copy(instanceof(fill_color), 1, 5) == "Color")
-						and (fill_color.equals(_other.fill_color))))
-						and ((outline_color == _other.outline_color)
-						or ((is_instanceof(outline_color, Color4)
-						and (outline_color.equals(_other.outline_color))))));
+				return ((is_instanceof(_other, RoundRectangle)) and
+						(fill_alpha == _other.fill_alpha) and
+						(outline_size == _other.outline_size) and
+						(outline_alpha == _other.outline_alpha) and
+						(precision == _other.precision) and ((location == _other.location) or
+						((string_copy(instanceof(location), 1, 6) == "Vector") and
+						 (location.equals(_other.location)))) and
+						((radius == _other.radius) or ((is_instanceof(radius, Vector2)) and
+						 (radius.equals(_other.radius)))) and ((fill_color == _other.fill_color) or
+						((string_copy(instanceof(fill_color), 1, 5) == "Color") and
+						 (fill_color.equals(_other.fill_color)))) and
+						((outline_color == _other.outline_color) or
+						 ((is_instanceof(outline_color, Color4) and
+						 (outline_color.equals(_other.outline_color))))));
 			}
 			
 			/// @argument			point {Vector2}

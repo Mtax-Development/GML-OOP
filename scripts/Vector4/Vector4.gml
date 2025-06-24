@@ -149,10 +149,10 @@ function Vector4() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2))
-						and (!is_nan(x1)) and (!is_nan(y1)) and (!is_nan(x2)) and (!is_nan(y2))
-						and (!is_infinity(x1)) and (!is_infinity(y1)) and (!is_infinity(x2))
-						and (!is_infinity(y2)));
+				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2)) and
+						(!is_nan(x1)) and (!is_nan(y1)) and (!is_nan(x2)) and (!is_nan(y2)) and
+						(!is_infinity(x1)) and (!is_infinity(y1)) and (!is_infinity(x2)) and
+						(!is_infinity(y2)));
 			}
 			
 		#endregion
@@ -189,8 +189,8 @@ function Vector4() constructor
 			{
 				if (is_instanceof(_value, Vector4))
 				{
-					return ((x1 == _value.x1) and (y1 == _value.y1) and (x2 == _value.x2)
-							and (y2 == _value.y2));
+					return ((x1 == _value.x1) and (y1 == _value.y1) and (x2 == _value.x2) and
+							(y2 == _value.y2));
 				}
 				else if (is_real(_value))
 				{
@@ -198,8 +198,8 @@ function Vector4() constructor
 				}
 				else if ((is_instanceof(_value, Vector2)) or (is_instanceof(_value, Scale)))
 				{
-					return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x)
-							and (y2 == _value.y));
+					return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x) and
+							(y2 == _value.y));
 				}
 				
 				return false;

@@ -53,7 +53,7 @@ function VertexFormat() constructor
 						if (is_callable(_source))
 						{
 							if ((_source == vertex_format_add_position)
-							or (_source == vertex_format_add_position_3d))
+							or  (_source == vertex_format_add_position_3d))
 							{
 								_locationExists = true;
 							}

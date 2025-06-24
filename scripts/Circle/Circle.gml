@@ -83,8 +83,8 @@ function Circle() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_instanceof(location, Vector2)) and (location.isFunctional())
-						and (is_real(radius)));
+				return ((is_instanceof(location, Vector2)) and (location.isFunctional()) and
+						(is_real(radius)));
 			}
 			
 		#endregion

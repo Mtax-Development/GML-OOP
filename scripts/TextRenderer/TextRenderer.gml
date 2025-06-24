@@ -96,12 +96,12 @@ function TextRenderer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(alpha)) and (is_instanceof(font, Font)) and (font.isFunctional())
-						and (is_instanceof(location, Vector2)) and (location.isFunctional())
-						and (is_instanceof(align, TextAlign)) and (align.isFunctional())
-						and ((is_real(scale)) or ((is_instanceof(scale, Scale))
-						and (scale.isFunctional()))) and ((is_instanceof(angle, Angle))
-						and (angle.isFunctional())));
+				return ((is_real(alpha)) and (is_instanceof(font, Font)) and (font.isFunctional()) and
+						(is_instanceof(location, Vector2)) and (location.isFunctional()) and
+						(is_instanceof(align, TextAlign)) and (align.isFunctional()) and
+						((is_real(scale)) or ((is_instanceof(scale, Scale)) and
+						 (scale.isFunctional()))) and ((is_instanceof(angle, Angle)) and
+						(angle.isFunctional())));
 			}
 			
 		#endregion
@@ -112,13 +112,13 @@ function TextRenderer() constructor
 			/// @description		Check if specified constructor has equivalent properties.
 			static equals = function(_other)
 			{
-				return ((is_instanceof(_other, TextRenderer)) and (color == _other.color)
-						and (alpha == _other.alpha) and (string(ID) == string(_other.ID))
-						and ((font == _other.font) or ((is_instanceof(font, Font))
-						and (font.equals(_other.font)))) and ((location == _other.location)
-						or ((string_copy(instanceof(location), 1, 6) == "Vector")
-						and (location.equals(_other.location)))) and ((align == _other.align)
-						or ((is_instanceof(align, TextAlign)) and (align.equals(_other.align)))));
+				return ((is_instanceof(_other, TextRenderer)) and (color == _other.color) and
+						(alpha == _other.alpha) and (string(ID) == string(_other.ID)) and
+						((font == _other.font) or ((is_instanceof(font, Font)) and
+						 (font.equals(_other.font)))) and ((location == _other.location) or
+						((string_copy(instanceof(location), 1, 6) == "Vector") and
+						 (location.equals(_other.location)))) and ((align == _other.align) or
+						((is_instanceof(align, TextAlign)) and (align.equals(_other.align)))));
 			}
 			
 			/// @argument			scale {int|Scale}

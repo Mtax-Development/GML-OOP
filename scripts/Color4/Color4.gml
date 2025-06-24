@@ -144,8 +144,8 @@ function Color4() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_real(color1)) and (is_real(color2)) and (is_real(color3))
-						and (is_real(color4)));
+				return ((is_real(color1)) and (is_real(color2)) and (is_real(color3)) and
+						(is_real(color4)));
 			}
 			
 		#endregion
@@ -159,13 +159,13 @@ function Color4() constructor
 			{
 				if (is_instanceof(_value, Color4))
 				{
-					return ((color1 == _value.color1) and (color2 == _value.color2)
-							and (color3 == _value.color3) and (color4 == _value.color4));
+					return ((color1 == _value.color1) and (color2 == _value.color2) and
+							(color3 == _value.color3) and (color4 == _value.color4));
 				}
 				else if (is_real(_value))
 				{
-					return ((color1 == _value) and (color2 == _value) and (color3 == _value)
-							and (color4 == _value));
+					return ((color1 == _value) and (color2 == _value) and (color3 == _value) and
+							(color4 == _value));
 				}
 				
 				return false;

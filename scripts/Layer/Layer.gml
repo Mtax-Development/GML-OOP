@@ -842,8 +842,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (is_instanceof(parent, Layer))
-								and (parent.isFunctional()) and (layer_sprite_exists(parent.ID, ID)));
+						return ((is_real(ID)) and (is_instanceof(parent, Layer)) and
+								(parent.isFunctional()) and (layer_sprite_exists(parent.ID, ID)));
 					}
 					
 					/// @argument			other {Layer|int:layer|string:layer}
@@ -1233,9 +1233,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_real(ID)) and (is_instanceof(parent, Layer))
-								and (parent.isFunctional())
-								and (layer_background_exists(parent.ID, ID)));
+						return ((is_real(ID)) and (is_instanceof(parent, Layer)) and
+								(parent.isFunctional()) and (layer_background_exists(parent.ID, ID)));
 					}
 					
 					/// @argument			other {Layer|int:layer|string:layer}
@@ -1658,9 +1657,8 @@ function Layer() constructor
 					/// @description		Check if this constructor is functional.
 					static isFunctional = function()
 					{
-						return ((is_handle(ID)) and (is_instanceof(parent, Layer))
-								and (parent.isFunctional())
-								and (layer_tilemap_exists(parent.ID, ID)));
+						return ((is_handle(ID)) and (is_instanceof(parent, Layer)) and
+								(parent.isFunctional()) and (layer_tilemap_exists(parent.ID, ID)));
 					}
 					
 					/// @returns			{undefined}
@@ -2965,10 +2963,10 @@ function Layer() constructor
 							/// @description		Check if this constructor is functional.
 							static isFunctional = function()
 							{
-								return ((is_handle(ID))
-										 and (string_copy(string(instanceof(parent)), 1, 14)
-											  == "ParticleSystem") and (parent.isFunctional())
-										 and (part_emitter_exists(parent.ID, ID)))
+								return ((is_handle(ID)) and
+										 (string_copy(string(instanceof(parent)), 1, 14)
+										  == "ParticleSystem") and (parent.isFunctional()) and
+										 (part_emitter_exists(parent.ID, ID)))
 							}
 							
 							/// @returns			{undefined}

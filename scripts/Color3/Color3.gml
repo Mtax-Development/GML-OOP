@@ -101,8 +101,8 @@ function Color3() constructor
 			{
 				if (is_instanceof(_value, Color3))
 				{
-					return ((color1 == _value.color1) and (color2 == _value.color2)
-							and (color3 == _value.color3));
+					return ((color1 == _value.color1) and (color2 == _value.color2) and
+							(color3 == _value.color3));
 				}
 				else if (is_real(_value))
 				{

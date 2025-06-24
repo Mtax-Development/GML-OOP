@@ -87,8 +87,8 @@ function Line() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return ((is_instanceof(location, Vector4)) and (location.isFunctional())
-						and (is_real(size)));
+				return ((is_instanceof(location, Vector4)) and (location.isFunctional()) and
+						(is_real(size)));
 			}
 			
 		#endregion

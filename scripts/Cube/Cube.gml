@@ -68,9 +68,9 @@ function Cube() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function()
 			{
-				return (((is_instanceof(location, Vector3)) and (location.isFunctional()))
-						and ((is_instanceof(scale, Vector3)) and (scale.isFunctional()))
-						and (is_real(color)) and (is_real(alpha)));
+				return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
+						((is_instanceof(scale, Vector3)) and (scale.isFunctional())) and
+						(is_real(color)) and (is_real(alpha)));
 			}
 			
 		#endregion

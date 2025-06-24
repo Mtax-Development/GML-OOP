@@ -118,18 +118,18 @@ function SpriteRenderer() constructor
 			/// @description		Check if this constructor is functional.
 			static isFunctional = function(_skip_location = false)
 			{
-				return ((is_instanceof(sprite, Sprite)) and (sprite.isFunctional())
-						and ((_skip_location) or ((is_instanceof(location, Vector2))
-						or (is_instanceof(location, Vector4))) and (location.isFunctional()))
-						and (is_real(frame)) and (is_instanceof(scale, Scale))
-						and (scale.isFunctional()) and (is_instanceof(angle, Angle))
-						and (angle.isFunctional()) and ((is_real(color))
-						or (is_instanceof(color, Color4))) and (is_real(alpha))
-						and ((part == undefined) or ((is_instanceof(part, Vector4))
-						and (part.isFunctional()))) and ((origin == undefined)
-						or ((is_instanceof(origin, Vector2)) and (origin.isFunctional())))
-						and ((target == undefined) or ((is_real(target))
-						or ((is_instanceof(target, Surface)) and (target.isFunctional())))));
+				return ((is_instanceof(sprite, Sprite)) and (sprite.isFunctional()) and
+						((_skip_location) or ((is_instanceof(location, Vector2)) or
+						 (is_instanceof(location, Vector4))) and (location.isFunctional())) and
+						(is_real(frame)) and (is_instanceof(scale, Scale)) and
+						(scale.isFunctional()) and (is_instanceof(angle, Angle)) and
+						(angle.isFunctional()) and ((is_real(color)) or
+						(is_instanceof(color, Color4))) and (is_real(alpha)) and
+						((part == undefined) or ((is_instanceof(part, Vector4)) and
+						 (part.isFunctional()))) and ((origin == undefined) or
+						((is_instanceof(origin, Vector2)) and (origin.isFunctional()))) and
+						((target == undefined) or ((is_real(target)) or
+						 ((is_instanceof(target, Surface)) and (target.isFunctional())))));
 			}
 			
 		#endregion
@@ -140,21 +140,21 @@ function SpriteRenderer() constructor
 			/// @description		Check if specified constructor has equivalent properties.
 			static equals = function(_other)
 			{
-				return (((sprite == _other.sprite) or ((is_instanceof(_other.sprite, Sprite))
-						and (sprite.equals(_other.sprite))) and ((location == _other.location)
-						or ((string_copy(instanceof(location), 1, 6) == "Vector")
-						and (location.equals(_other.location)))) and (frame == _other.frame)
-						and ((scale == _other.scale) or ((is_instanceof(scale, Scale)
-						and (scale.equals(_other.scale))))) and ((angle == _other.angle)
-						or ((is_instanceof(angle, Angle) and (angle.equals(_other.angle)))))
-						and ((color == _other.color)
-						or ((string_copy(instanceof(fill_color), 1, 5) == "Color")
-						and (color.equals(_other.color)))) and (alpha == _other.alpha)
-						and ((part == _other.part) or ((is_instanceof(part, Vector4)
-						and (part.equals(_other.part))))) and ((origin == _other.origin)
-						or ((is_instanceof(origin, Vector2) and (origin.equals(_other.origin)))))
-						and ((target == _other.target) or ((is_instanceof(target, Surface)
-						and (target.equals(_other.target)))))));
+				return (((sprite == _other.sprite) or ((is_instanceof(_other.sprite, Sprite)) and
+						(sprite.equals(_other.sprite))) and ((location == _other.location) or
+						((string_copy(instanceof(location), 1, 6) == "Vector") and
+						 (location.equals(_other.location)))) and (frame == _other.frame) and
+						((scale == _other.scale) or ((is_instanceof(scale, Scale) and
+						 (scale.equals(_other.scale))))) and ((angle == _other.angle) or
+						((is_instanceof(angle, Angle) and (angle.equals(_other.angle))))) and
+						((color == _other.color) or
+						 ((string_copy(instanceof(fill_color), 1, 5) == "Color") and
+						 (color.equals(_other.color)))) and (alpha == _other.alpha) and
+						((part == _other.part) or ((is_instanceof(part, Vector4) and
+						 (part.equals(_other.part))))) and ((origin == _other.origin) or
+						 ((is_instanceof(origin, Vector2) and (origin.equals(_other.origin))))) and
+						((target == _other.target) or ((is_instanceof(target, Surface) and
+						 (target.equals(_other.target)))))));
 			}
 			
 		#endregion
