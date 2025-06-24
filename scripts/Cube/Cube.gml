@@ -5,8 +5,8 @@
 /// @argument				sprite? {Sprite}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs a three-dimensional Cube shape, bound by six rectangular faces.
-///							Its location is the center of the shape, from which it is scaled.
+/// @description			Constructs a three-dimensional Cube Shape, bound by six rectangular faces.
+///							Its location is its center, from which it is scaled.
 //							
 //							Construction types:
 //							- New constructor

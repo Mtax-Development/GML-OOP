@@ -1,6 +1,6 @@
 //  @function				Surface()
 /// @argument				size {Vector2}
-/// @description			Constructs a Surface resource, a separate canvas for graphics rendering.
+/// @description			Constructs a Surface Resource, a separate canvas for graphics rendering.
 //							
 //							Construction types:
 //							- New constructor
@@ -237,7 +237,7 @@ function Surface() constructor
 			
 			/// @argument			other {Surface}
 			/// @returns			{bool}
-			/// @description		Check if the specified constructor uses the same resource.
+			/// @description		Check if the specified constructor uses the same Resource.
 			static equals = function(_other)
 			{
 				return ((is_instanceof(_other, Surface)) and (ID == _other.ID));

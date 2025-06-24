@@ -1,7 +1,7 @@
 //  @function				Range()
 /// @argument				minimum {real}
 /// @argument				maximum {real}
-/// @description			Constructs a container for two-value numeric Range with different numbers.
+/// @description			Constructs a Container for numeric Range made of two different numbers.
 //							
 //							Construction types:
 //							- New constructor

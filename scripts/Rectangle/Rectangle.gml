@@ -5,7 +5,7 @@
 /// @argument				outline_size? {int}
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
-/// @description			Constructs a Rectangle shape.
+/// @description			Constructs a Rectangle Shape.
 //							
 //							Construction types:
 //							- New constructor
@@ -471,7 +471,7 @@ function Rectangle() constructor
 			/// @argument			startWithCenter? {bool}
 			/// @returns			{real[+]}
 			/// @description		Return an array containing nested arrays with point locations,
-			///						resulting in this shape when connected. Up to two nested values
+			///						resulting in this Shape when connected. Up to two nested values
 			///						will be returned in that array, depending on whether it was
 			///						specified to return only data for outline, not return it and use
 			///						only fill instead, or to contain all of this data. If fill is
@@ -555,7 +555,7 @@ function Rectangle() constructor
 			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
 			/// @description		Return an array containg rendering data for each vertex resulting
-			///						in this shape, consisting of its primitive type, location, color
+			///						in this Shape, consisting of its primitive type, location, color
 			///						and alpha value, based on the data of this constructor or its
 			///						specified replaced parts. Up to two nested values will be returned
 			///						in that array, depending on whether it was specified to return

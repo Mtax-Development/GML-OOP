@@ -1,7 +1,7 @@
 //  @function				Vector2()
 /// @argument				x? {real}
 /// @argument				y? {real}
-/// @description			Constructs a Vector container for x and y coordinate pair.
+/// @description			Constructs a Container for x and y coordinate pair.
 //							
 //							Construction types:
 //							- Two numbers: x {real}, y {real}

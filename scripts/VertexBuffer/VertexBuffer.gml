@@ -1,7 +1,7 @@
 //  @function				VertexBuffer()
-/// @description			Constructs a Vertex Buffer for storing and rendering vertices as primitive
-///							shapes alongside a Vertex Format and a Shader. Used to achieve fast render
-///							times, particularly for static graphics.
+/// @description			Constructs a Vertex Buffer for storing and rendering vertices using
+///							primitive shapes alongside a Vertex Format and a Shader. Contains reusable
+///							graphic data for fast render times, particularly of static graphics.
 //							
 //							Construction types:
 //							- New constructor

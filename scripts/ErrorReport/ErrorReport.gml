@@ -217,7 +217,7 @@ function ErrorReport() constructor
 		/// @argument			detail {string|struct:exception}
 		/// @argument			callstack {string[]}
 		/// @argument			time? {DateTime|string}
-		/// @description		A container constructor storing information about a reported error.
+		/// @description		A Container constructor storing information about a reported error.
 		//						
 		//						Construction types:
 		//						- New element

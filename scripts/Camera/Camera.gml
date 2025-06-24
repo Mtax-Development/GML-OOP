@@ -1,5 +1,5 @@
 //  @function				Camera()
-/// @description			Constructs a Camera resource, used to project part of a three-dimensional
+/// @description			Constructs a Camera Resource, used to project part of a three-dimensional
 ///							scene.
 //							
 //							Construction types:

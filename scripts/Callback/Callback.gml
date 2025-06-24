@@ -2,7 +2,7 @@
 /// @argument				function {function|function[]}
 /// @argument				argument? {any|any[]|any[+]}
 /// @argument				scope? {int:instance|struct}
-/// @description			Constructs a handler storing a reference to a function, method or an array
+/// @description			Constructs a Handler storing a reference to a function, method or an array
 ///							of them and their arguments to execute them at any time.
 ///							Single value specified as an argument will be provided to each execution.
 ///							If multiple functions or methods are being executed, arguments specified in

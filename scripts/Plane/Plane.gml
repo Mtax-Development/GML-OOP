@@ -6,7 +6,7 @@
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
 /// @description			Constructs a three-dimensional representation of a two-dimensional Plane
-///							shape. Its location is the center of the shape, from which it is scaled.
+///							Shape. Its location is its center, from which it is scaled.
 //							
 //							Construction types:
 //							- New constructor
@@ -102,7 +102,7 @@ function Plane() constructor
 		#region <Getters>
 			
 			/// @returns			{real[]:matrix}
-			/// @description		Return current transformation matrix of this shape.
+			/// @description		Return current transformation matrix of this Shape.
 			static getTransform = function()
 			{
 				var _transform = matrix_multiply(matrix_build(0, 0, 0, (-angle.y), 0, 0, 1, 1, 1),
@@ -339,9 +339,9 @@ function Plane() constructor
 			/// @description		Return rendering data of this constructor in Vertex Buffers, using
 			///						its current data or specified temporarily replaced parts.
 			///						If using a Sprite with texture group setting set to crop fully
-			///						transparent pixels around edges of the image, resulting shape
+			///						transparent pixels around edges of the image, resulting Shape
 			///						will be made smaller to remove that transparency, unless specified
-			///						to stretch the image without transparency to full shape size.
+			///						to stretch the image without transparency to full Shape size.
 			static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
 											 _sprite = sprite, _color = color, _alpha = alpha,
 											 _stretchCroppedTexture = false)

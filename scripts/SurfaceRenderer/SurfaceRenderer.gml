@@ -8,7 +8,7 @@
 /// @argument				part? {Vector4}
 /// @argument				origin? {Vector2}
 /// @argument				target? {Surface|int:surface}
-/// @description			Constructs a handler storing information for Surface rendering.
+/// @description			Constructs a Handler storing information for Surface rendering.
 //							
 //							Construction types:
 //							- New constructor

@@ -1,7 +1,7 @@
 //  @function				Room()
 /// @argument				size? {Vector2}
 /// @argument				persistent? {bool}
-/// @description			Constructs a Room resource used to group and execute other resources.
+/// @description			Constructs a Room Resource used to group and execute other Resources.
 //							
 //							Construction types:
 //							- New constructor
@@ -334,8 +334,8 @@ function Room() constructor
 		//  @function			Room.AddedInstance()
 		/// @argument			object {int:object}
 		/// @argument			location? {Vector2}
-		/// @description		A container constructor for properties of instances added to Room
-		///						before its activation.
+		/// @description		Container constructor for properties of instances added to Room before
+		///						its activation.
 		//						
 		//						Construction types:
 		//						- New element

@@ -1,6 +1,6 @@
 //  @function				ArrayParser()
 /// @argument				value? {any:array}
-/// @description			Constructs a handler for parsing arrays.
+/// @description			Constructs a Handler for parsing arrays.
 //							
 //							Construction types:
 //							- New constructor
@@ -219,7 +219,7 @@ function ArrayParser() constructor
 				return self;
 			}
 			
-			/// @argument			data... {any|any[]|constructor:Parser|constructor:DataStructure}
+			/// @argument			data... {any|any[]|constructor:parser|constructor:dataStructure}
 			/// @description		Append to the array the specified values or all values of the
 			///						specified structures.
 			static merge = function()

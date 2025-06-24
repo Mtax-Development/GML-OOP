@@ -1,6 +1,6 @@
 //  @function				Angle()
 /// @argument				value? {real}
-/// @description			Constructs a container for a 360-degree Angle, wrapped from 0 to 359.
+/// @description			Constructs a Container for a 360-degree Angle, wrapped from 0 to 359.
 //							
 //							Construction types:
 //							- New constructor

@@ -1,6 +1,6 @@
 //  @function				VertexFormat()
-/// @description			Constructs a resource designating types of data used in rendering
-///							primitives through a Vertex Buffer and a Shader.
+/// @description			Constructs a Vertex Format Resource designating types of data used in
+///							rendering primitives through a Vertex Buffer and a Shader.
 //							
 //							Construction types:
 //							- New format: dataTypeAddFunction... {function:vertex_format_add_*}

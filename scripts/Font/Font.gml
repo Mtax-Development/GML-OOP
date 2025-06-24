@@ -1,5 +1,5 @@
 //  @function				Font()
-/// @description			Constructs a Font resource defining glyphs used in text rendering.
+/// @description			Constructs a Font Resource defining glyphs used in text rendering.
 //							
 //							Construction types:
 //							- Wrapper: font {int:font}
@@ -224,7 +224,7 @@ function Font() constructor
 			
 			/// @argument			other {Font}
 			/// @returns			{bool}
-			/// @description		Check if the specified constructor uses the same resource.
+			/// @description		Check if the specified constructor uses the same Resource.
 			static equals = function(_other)
 			{
 				return ((is_instanceof(_other, Font)) and (ID == _other.ID));

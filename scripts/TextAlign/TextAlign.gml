@@ -1,7 +1,7 @@
 //  @function				TextAlign()
 /// @argument				x? {constant:fa_[halign]}
 /// @argument				y? {constant:fa_[valign]}
-/// @description			Constructs a container for two text alignment constants, used in text
+/// @description			Constructs a Container for two text alignment constants used in text
 ///							rendering.
 //							
 //							Construction types:

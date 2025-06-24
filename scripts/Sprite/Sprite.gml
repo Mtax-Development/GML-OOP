@@ -1,5 +1,5 @@
 //  @function				Sprite()
-/// @description			Constructs a Sprite resource used to render its image frames.
+/// @description			Constructs a Sprite Resource used to render its image frames.
 //							
 //							Construction types:
 //							- Wrapper: sprite {int:sprite}

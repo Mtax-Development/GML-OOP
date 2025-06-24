@@ -7,7 +7,7 @@
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
 /// @argument				precision? {int}
-/// @description			Constructs a Rounded Rectangle shape with configurable radius of its
+/// @description			Constructs a Rounded Rectangle Shape with configurable radius of its
 ///							corner curves.
 //							
 //							Construction types:
@@ -382,8 +382,8 @@ function RoundRectangle() constructor
 			/// @argument			startWithCenter? {bool}
 			/// @returns			{real[+]}
 			/// @description		Return an array containing nested arrays with point locations,
-			///						resulting in this shape when connected. If specified, the center
-			///						point of this shape will be added at beginning of returned array.
+			///						resulting in this Shape when connected. If specified, the center
+			///						point of this Shape will be added at beginning of returned array.
 			///						The amount of locations returned will be increased by the
 			///						specified curve precision. 
 			//  @author				Adapted from code by YoYo Games (https://github.com/YoYoGames/
@@ -467,7 +467,7 @@ function RoundRectangle() constructor
 			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
 			/// @description		Return an array containg rendering data for each vertex resulting
-			///						in this shape, consisting of its primitive type, location, color
+			///						in this Shape, consisting of its primitive type, location, color
 			///						and alpha value, based on the data of this constructor or its
 			///						specified replaced parts. Up to two nested values will be returned
 			///						in that array, depending on whether it was specified to return

@@ -2,8 +2,7 @@
 /// @argument				x? {real}
 /// @argument				y? {real}
 /// @argument				z? {real}
-/// @description			Constructs a Vector container for three-dimensional coordinates:
-///							x, y and z.
+/// @description			Constructs a Container for three-dimensional coordinates: x, y and z.
 //							
 //							Construction types:
 //							- Three numbers: x {real}, y {real}, z {real}

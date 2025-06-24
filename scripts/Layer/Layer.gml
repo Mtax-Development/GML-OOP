@@ -1,7 +1,7 @@
 //  @function				Layer()
 /// @argument				depth {int}
 /// @argument				name? {string}
-/// @description			Constructs a Layer resource, used to group graphical elements and sort
+/// @description			Constructs a Layer Resource, used to group graphical elements and sort
 ///							their rendering depth.
 //							
 //							Construction types:
@@ -464,7 +464,7 @@ function Layer() constructor
 			
 			/// @argument			sprite {Sprite}
 			/// @returns			{Layer.BackgroundElement} | On error: {noone}
-			/// @description		Create a Background Element on this Layer and return it.
+			/// @description		Create a Background Element Resource on this Layer and return it.
 			static createBackground = function(_sprite)
 			{
 				try
@@ -528,8 +528,8 @@ function Layer() constructor
 			/// @argument			location {Vector2}
 			/// @argument			size {Vector2}
 			/// @returns			{Layer.TilemapElement} | On error: {noone}
-			/// @description		Create a Tilemap Element on this Layer at the specified specified
-			///						location in the room and cell size and return it.
+			/// @description		Create a Tilemap Element Resource on this Layer at the specified
+			///						specified location in the room and cell size and return it.
 			static createTilemap = function(_tileset, _location, _size)
 			{
 				try
@@ -557,7 +557,7 @@ function Layer() constructor
 			/// @argument			sprite {Sprite|Layer.SpriteElement|int:spriteElement}
 			/// @argument			location {Vector2}
 			/// @returns			{Layer.SpriteElement} | On error: {noone}
-			/// @description		Create a Sprite Element on this Layer and return it.
+			/// @description		Create a Sprite Element Resource on this Layer and return it.
 			static createSprite = function(_sprite, _location)
 			{
 				try
@@ -584,7 +584,7 @@ function Layer() constructor
 			
 			/// @argument			persistent? {bool}
 			/// @returns			{Layer.ParticleSystem} | On error: {noone}
-			/// @description		Create a Particle System in this Layer and return it.
+			/// @description		Create a Particle System Resource in this Layer and return it.
 			static createParticleSystem = function(_persistent = false)
 			{
 				try
@@ -2772,7 +2772,8 @@ function Layer() constructor
 					
 					/// @argument			particleType {ParticleType}
 					/// @returns			{ParticleSystem.ParticleEmitter} | On error: {noone}
-					/// @description		Create a Particle Emitter in this Particle System.
+					/// @description		Create a Particle Emitter Resource in this Particle
+					///						System and return it.
 					static createEmitter = function(_particleType)
 					{
 						try
@@ -2892,7 +2893,7 @@ function Layer() constructor
 				
 				//  @function			Layer.ParticleSystem.ParticleEmitter()
 				/// @argument			particleType {ParticleType}
-				/// @description		Constructs a Particle Emitter resource in a Particle System,
+				/// @description		Constructs a Particle Emitter Resource in a Particle System,
 				///						used to create particles of a Particles Type in a region.
 				//						
 				//						Construction types:

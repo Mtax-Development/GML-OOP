@@ -1,7 +1,7 @@
 //  @function				Color2()
 /// @argument				color1? {int:color}
 /// @argument				color2? {int:color}
-/// @description			Constructs a container for two colors.
+/// @description			Constructs a Container for two colors.
 //							
 //							Construction types:
 //							- New constructor

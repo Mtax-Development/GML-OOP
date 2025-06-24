@@ -2,7 +2,7 @@
 /// @argument				x? {real|Angle}
 /// @argument				y? {real|Angle}
 /// @argument				z? {real|Angle}
-/// @description			Constructs a container for three-dimensional 360-degree rotation values,
+/// @description			Constructs a Container for three-dimensional 360-degree rotation values,
 ///							wrapped from 0 to 359.
 //							
 //							Construction types:
