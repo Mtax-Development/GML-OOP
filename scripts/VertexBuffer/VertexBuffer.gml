@@ -180,13 +180,19 @@ function VertexBuffer() constructor
 				{
 					if (is_instanceof(_target, VertexFormat)) and (is_handle(_target.ID))
 					{
-						vertex_begin(ID, _target.ID);
-						
-						active = true;
+						if (!active)
+						{
+							vertex_begin(ID, _target.ID);
+							
+							active = true;
+						}
 					}
 					else if (_target == false)
 					{
-						vertex_end(ID);
+						if (active)
+						{
+							vertex_end(ID);
+						}
 						
 						active = false;
 					}
