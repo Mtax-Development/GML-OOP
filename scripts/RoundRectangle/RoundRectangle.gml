@@ -98,6 +98,10 @@ function RoundRectangle() constructor
 						{
 							fill_color = new Color4(_rectangle.fill_color);
 						}
+						else if (is_instanceof(_rectangle.fill_color, Color2))
+						{
+							fill_color = new Color2(_rectangle.fill_color);
+						}
 						else
 						{
 							fill_color = _rectangle.fill_color;
@@ -468,8 +472,8 @@ function RoundRectangle() constructor
 			///						specified replaced parts. Up to two nested values will be returned
 			///						in that array, depending on whether it was specified to return
 			///						only data for outline, not return it and use only fill instead, or
-			///						to return all data. Each will then be represented by data nested
-			///						at following array positions:
+			///						to contain all of this data. Each will be represented at following
+			///						array positions, nested in the primary array:
 			///						- array[0]: primitive type {constant:pr_*}
 			///						- array[1]: vertex data {any[]}
 			///						  - array[1][0]: location {real[]}
@@ -862,11 +866,11 @@ function RoundRectangle() constructor
 			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
 			/// @description		Return rendering data of this constructor in a Vertex Buffer,
 			///						using its current data or specified temporarily replaced parts.
-			///						Rendering data for multiple Vertex Buffers can be returned in an
-			///						array, depending on whether it was specified to return only data
-			///						for outline, not return it and use only fill instead, or to return
-			///						all data. Data for invisible or invalid render configuration for
-			///						either will not be included.
+			///						Multiple values can be returned in an array, depending on whether
+			///						it was specified to return only data for outline, use only fill
+			///						instead or to return data for all parts. If existing Vertex Buffer
+			///						is to be specified, two separate Vertex Buffers must be specified
+			///						for them. Data for invisible or invalid render will be excluded.
 			static toVertexBuffer = function(_location = location, _radius = radius,
 											 _fill_color = fill_color, _fill_alpha = fill_alpha,
 											 _outline_size = outline_size,
