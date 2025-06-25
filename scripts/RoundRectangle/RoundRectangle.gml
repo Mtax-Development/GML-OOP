@@ -957,10 +957,7 @@ function RoundRectangle() constructor
 						
 						with (_renderData_current.vertexBuffer)
 						{
-							if (!active)
-							{
-								setActive(_renderData_current.vertexFormat);
-							}
+							setActive(vertexFormat);
 							
 							_i[1] = 0;
 							repeat (array_length(_vertex_data))
