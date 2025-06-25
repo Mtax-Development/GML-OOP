@@ -2,7 +2,7 @@
 /// @argument				location {Vector2}
 /// @argument				color? {int:color}
 /// @argument				alpha? {real}
-/// @description			Constructs a Point Shape, which is a single pixel.
+/// @description			Constructs a Point Shape representing a single pixel.
 //							
 //							Construction types:
 //							- New constructor
@@ -73,6 +73,15 @@ function Point() constructor
 			
 		#endregion
 		#region <Getters>
+			
+			/// @argument			other {RoundRectangle}
+			/// @returns			{bool}
+			/// @description		Check if specified constructor has equivalent properties.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, Point)) and (color == _other.color) and
+						(alpha == _other.alpha));
+			}
 			
 			/// @argument			object {int:object}
 			/// @argument			precise? {bool}
@@ -351,6 +360,35 @@ function Point() constructor
 				return false;
 			}
 			
+			/// @argument			location? {Vector2}
+			/// @argument			color? {int:color}
+			/// @argument			alpha? {real}
+			/// @returns			{any[+]} | On error: {undefined}
+			/// @description		Return an array containg rendering data for vertex resulting in
+			///						this Shape, consisting of its primitive type, location, color and
+			///						alpha value, based on the data of this constructor or its specified
+			///						replaced parts. Each will be represented at following array
+			///						positions:
+			///						- array[0]: primitive type {constant:pr_*}
+			///						- array[1]: vertex data {any[]}
+			///						  - array[1][0]: location {real[]}
+			///						  - array[1][1]: color {int:color}
+			///						  - array[1][2]: alpha {real}
+			static getPrimitiveRenderData = function(_location = location, _color = color,
+													 _alpha = alpha)
+			{
+				try
+				{
+					return [pr_pointlist, [[_location.x, _location.y], _color, _alpha]];
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 		#endregion
 		#region <Execution>
 			
@@ -361,21 +399,6 @@ function Point() constructor
 			///						constructor or specified temporarily replaced parts.
 			static render = function(_location, _color, _alpha)
 			{
-				static _pixel = function()
-				{
-					var _surface = surface_create(1, 1);
-					surface_set_target(_surface);
-					{
-						draw_clear(c_white);
-					}
-					surface_reset_target();
-					
-					var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false, false, 0, 0);
-					surface_free(_surface);
-					
-					return _sprite;
-				}();
-				
 				var _location_original = location;
 				var _color_original = color;
 				var _alpha_original = alpha;
@@ -392,8 +415,11 @@ function Point() constructor
 						
 						if (alpha > 0)
 						{
-							draw_sprite_ext(_pixel, 0, location.x, location.y, (-1), (-1), 0, color,
-											alpha);
+							draw_primitive_begin(pr_pointlist);
+							{
+								draw_vertex_color(location.x, location.y, color, alpha);
+							}
+							draw_primitive_end();
 						}
 						
 						event.afterRender.execute();
@@ -503,56 +529,73 @@ function Point() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @returns			{real[+]}
+			/// @description		Return an array containing values of all properties of this Shape.
+			///						Properties with multiple values will be returned in nested arrays.
+			static toArray = function()
+			{
+				var _location = ((is_instanceof(location, Vector2)) ? location.toArray() : location);
+				
+				return [_location, color, alpha];
+			}
+			
 			/// @argument			location? {Vector2}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
-			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
-			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified temporarily replaced parts.
-			///						Either a single value or an array of two values will be returned,
-			///						depending on whether the fill or outline were specified as the only
-			///						returned value or both as {all}.
-			static toVertexBuffer = function(_location, _color, _alpha)
+			/// @argument			vertexBuffer? {VertexBuffer}
+			/// @returns			{VertexBuffer.PrimitiveRenderData|undefined}
+			/// @description		Return rendering data of this constructor in a Vertex Buffer,
+			///						using its current data or specified temporarily replaced parts.
+			///						In case of invisible or invalid render, {undefined} will be
+			///						returned instead.
+			static toVertexBuffer = function(_location = location, _color = color, _alpha = alpha,
+											 _vertexBuffer)
 			{
-				var _vertexBuffer = undefined;
-				var _renderData = undefined;
-				var _location_original = location;
-				var _color_original = color;
-				var _alpha_original = alpha;
-				
-				location = (_location ?? location);
-				color = (_color ?? color);
-				alpha = (_alpha ?? alpha);
+				var _vertexBuffer_point = undefined;
 				
 				try
 				{
-					color = ((is_real(color)) ? color : c_white);
-					alpha = ((alpha > 0) ? alpha : 0);
-					_vertexBuffer = new VertexBuffer();
-					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_pointlist);
-					
-					_vertexBuffer
-					 .setActive(_renderData.vertexFormat)
-						.setLocation2D(location)
-						.setColor(color, alpha)
-						.setUV()
-					 .setActive(false);
+					if ((is_real(_color)) and (_alpha > 0))
+					{
+						var _vertexBuffer_wasActive = false;
+						
+						if (_vertexBuffer != undefined)
+						{
+							_vertexBuffer_wasActive = _vertexBuffer.active;
+							_vertexBuffer_point = _vertexBuffer;
+						}
+						else
+						{
+							_vertexBuffer_point = new VertexBuffer();
+						}
+						
+						var _renderData = _vertexBuffer_point.createPrimitiveRenderData(pr_pointlist);
+						
+						_vertexBuffer_point
+						 .setActive(_renderData.vertexFormat)
+						  .setLocation2D(_location)
+						  .setColor(_color, _alpha)
+						  .setUV();
+						
+						if (!_vertexBuffer_wasActive)
+						{
+							_vertexBuffer_point.setActive(false);
+						}
+						
+						return _renderData;
+					}
 				}	
 				catch (_exception)
 				{
-					if (_vertexBuffer != undefined)
+					if ((_vertexBuffer == undefined) and (_vertexBuffer_point != undefined))
 					{
-						_vertexBuffer.destroy();
+						_vertexBuffer_point.destroy();
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				location = _location_original;
-				color = _color_original;
-				alpha = _alpha_original;
-				
-				return _renderData;
+				return undefined;
 			}
 			
 		#endregion
