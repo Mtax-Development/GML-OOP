@@ -722,7 +722,6 @@ function Rectangle() constructor
 						event.beforeRender.execute();
 						
 						var _primitive = self.getPrimitiveRenderData();
-						
 						var _i = [0, 0];
 						repeat (array_length(_primitive))
 						{

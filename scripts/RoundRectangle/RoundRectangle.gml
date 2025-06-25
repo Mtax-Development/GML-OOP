@@ -852,7 +852,6 @@ function RoundRectangle() constructor
 						outline_alpha, precision];
 			}
 			
-			
 			/// @argument			location? {Vector4}
 			/// @argument			radius? {Vector2}
 			/// @argument			fill_color? {int:color|Color2|Color4}
