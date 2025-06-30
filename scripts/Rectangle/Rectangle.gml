@@ -511,31 +511,27 @@ function Rectangle() constructor
 					
 					if ((_outline) or (_outline == all))
 					{
+						var _outline_x1 = (_location.x1 - _outline_size);
+						var _outline_y1 = (_location.y1 - _outline_size);
+						var _outline_x2 = (_location.x2 + _outline_size);
+						var _outline_y2 = (_location.y2 + _outline_size);
+						
 						array_push(_result,
-								   [[(_location.x2 + _outline_size), (_location.y1 - _outline_size)],
-									[_location.x2, _location.y1],
-									[(_location.x2 + _outline_size), (_location.y2 + _outline_size)],
-									[(_location.x2 + _outline_size), (_location.y2 + _outline_size)],
-									[_location.x2, _location.y1],
-									[_location.x2, _location.y2],
+								   [[_outline_x2, _outline_y1], [_location.x2, _location.y1],
+									[_outline_x2, _outline_y2], [_outline_x2, _outline_y2],
+									[_location.x2, _location.y1], [_location.x2, _location.y2],
 									
 									[_location.x2, _location.y2], [_location.x1, _location.y2],
-									[(_location.x2 + _outline_size), (_location.y2 + _outline_size)],
-									[(_location.x2 + _outline_size), (_location.y2 + _outline_size)],
-									[_location.x1, _location.y2],
-									[(_location.x1 - _outline_size), (_location.y2 + _outline_size)],
+									[_outline_x2, _outline_y2], [_outline_x2, _outline_y2],
+									[_location.x1, _location.y2], [_outline_x1, _outline_y2],
 									
-									[_location.x1, _location.y1],
-									[(_location.x1 - _outline_size), (_location.y1 - _outline_size)],
+									[_location.x1, _location.y1], [_outline_x1, _outline_y1],
 									[_location.x1, _location.y2], [_location.x1, _location.y2],
-									[(_location.x1 - _outline_size), (_location.y1 - _outline_size)],
-									[(_location.x1 - _outline_size), (_location.y2 + _outline_size)],
+									[_outline_x1, _outline_y1], [_outline_x1, _outline_y2],
 									
-									[(_location.x2 + _outline_size), (_location.y1 - _outline_size)],
-								    [(_location.x1 - _outline_size), (_location.y1 - _outline_size)],
+									[_outline_x2, _outline_y1], [_outline_x1, _outline_y1],
 									[_location.x2, _location.y1], [_location.x2, _location.y1],
-									[(_location.x1 - _outline_size), (_location.y1 - _outline_size)],
-									[_location.x1, _location.y1]]);
+									[_outline_x1, _outline_y1], [_location.x1, _location.y1]]);
 					}
 				}
 				catch (_exception)
