@@ -758,11 +758,11 @@ function Scale() constructor
 	#endregion
 	#region [Static Constructions]
 		
-		static zero = new Vector2(0, 0);
-		static one = new Vector2(1, 1);
-		static mirrored = new Vector2((-1), (-1));
-		static mirroredX = new Vector2((-1), 1);
-		static mirroredY = new Vector2(1, (-1));
+		static zero = new Scale(0, 0);
+		static one = new Scale(1, 1);
+		static mirrored = new Scale((-1), (-1));
+		static mirroredX = new Scale((-1), 1);
+		static mirroredY = new Scale(1, (-1));
 		
 	#endregion
 }
