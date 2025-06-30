@@ -696,7 +696,7 @@ function Rectangle() constructor
 			/// @argument			outline_size? {int}
 			/// @argument			outline_color? {int:color|Color4}
 			/// @argument			outline_alpha? {real}
-			/// @description		Execute the draw of this Shape as a form, using data of this
+			/// @description		Execute the draw of this Shape as a primitive, using data of this
 			///						constructor or specified temporarily replaced parts.
 			static render = function(_location, _fill_color, _fill_alpha,  _outline_size,
 									 _outline_color, _outline_alpha)
