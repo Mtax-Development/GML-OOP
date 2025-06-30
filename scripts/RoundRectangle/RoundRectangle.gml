@@ -951,30 +951,27 @@ function RoundRectangle() constructor
 					repeat (array_length(_primitive))
 					{
 						var _renderData_current = _renderData[_i[0]];
+						var _vertexBuffer_current = _renderData_current.vertexBuffer;
 						var _primitive_current = _primitive[_i[0]];
 						var _vertex_data = _primitive_current[1];
-						
-						with (_renderData_current.vertexBuffer)
+						_vertexBuffer_current.setActive(_renderData_current.vertexFormat);
+						_i[1] = 0;
+						repeat (array_length(_vertex_data))
 						{
-							setActive(vertexFormat);
+							var _vertex_data_current = _vertex_data[_i[1]];
+							var _vertex_location_current = _vertex_data_current[0];
 							
-							_i[1] = 0;
-							repeat (array_length(_vertex_data))
-							{
-								var _vertex_data_current = _vertex_data[_i[1]];
-								var _vertex_location_current = _vertex_data_current[0];
-								
-								setLocation2D(_vertex.setAll(_vertex_location_current));
-								setColor(_vertex_data_current[1], _vertex_data_current[2]);
-								setUV();
-								
-								++_i[1];
-							}
+							_vertexBuffer_current
+							 .setLocation2D(_vertex.setAll(_vertex_location_current))
+							 .setColor(_vertex_data_current[1], _vertex_data_current[2])
+							 .setUV();
 							
-							if (!_vertexBuffer_wasActive[_i[0]])
-							{
-								setActive(false);
-							}
+							++_i[1];
+						}
+						
+						if (!_vertexBuffer_wasActive[_i[0]])
+						{
+							_vertexBuffer_current.setActive(false);
 						}
 						
 						++_i[0];
