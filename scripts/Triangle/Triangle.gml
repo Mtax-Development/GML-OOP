@@ -4,6 +4,7 @@
 /// @argument				location3 {Vector2}
 /// @argument				fill_color? {int:color|Color3}
 /// @argument				fill_alpha? {real}
+/// @argument				outline_scale? {real}
 /// @argument				outline_color? {int:color|Color3}
 /// @argument				outline_alpha? {real}
 /// @description			Constructs a Triangle Shape.
@@ -27,6 +28,7 @@ function Triangle() constructor
 				location3 = undefined;
 				fill_color = undefined;
 				fill_alpha = undefined;
+				outline_scale = undefined;
 				outline_color = undefined;
 				outline_alpha = undefined;
 				
@@ -53,6 +55,7 @@ function Triangle() constructor
 						fill_color = ((is_instanceof(_other.fill_color, Color3))
 									  ? new Color3(_other.fill_color) : _other.fill_color);
 						fill_alpha = _other.fill_alpha;
+						outline_scale = _other.outline_scale;
 						outline_color = ((is_instanceof(_other.outline_color, Color3))
 										 ? new Color3(_other.outline_color) : _other.outline_color);
 						outline_alpha = _other.outline_alpha;
@@ -76,9 +79,10 @@ function Triangle() constructor
 						fill_color = ((argument_count > 3) ? argument[3] : undefined);
 						fill_alpha = (((argument_count > 4) and (argument[4] != undefined))
 									  ? argument[4] : 1);
-						outline_color = ((argument_count > 5) ? argument[5] : undefined);
-						outline_alpha = (((argument_count > 6) and (argument[6] != undefined))
-										 ? argument[6] : 1);
+						outline_scale = ((argument_count > 5) ? argument[5] : 0);
+						outline_color = ((argument_count > 6) ? argument[6] : undefined);
+						outline_alpha = (((argument_count > 7) and (argument[7] != undefined))
+										 ? argument[7] : 1);
 					}
 				}
 				
@@ -323,6 +327,171 @@ function Triangle() constructor
 				return false;
 			}
 			
+			/// @argument			location? {Vector4}
+			/// @argument			outline? {bool|all}
+			/// @argument			outline_scale? {real}
+			/// @returns			{real[+]}
+			/// @description		Return an array containing nested arrays with point locations,
+			///						resulting in this Shape when connected. Up to two nested values
+			///						will be returned in that array, depending on whether it was
+			///						specified to return only data for outline, not return it and use
+			///						only fill instead, or to contain all of this data.
+			static getVertexLocations = function(_location1 = location1, _location2 = location2,
+												 _location3 = location3, _outline = false,
+												 _outline_scale = outline_scale)
+			{
+				var _result = [];
+				
+				try
+				{
+					if ((!_outline) or (_outline == all))
+					{
+						array_push(_result,
+								   [[_location1.x, _location1.y], [_location2.x, _location2.y],
+									[_location3.x, _location3.y]]);
+					}
+					
+					if ((_outline) or (_outline == all))
+					{
+						var _center_x = mean(_location1.x, _location2.x, _location3.x);
+						var _center_y = mean(_location1.y, _location2.y, _location3.y);
+						var _outline_x1 = (_center_x + ((_location1.x - _center_x) * _outline_scale));
+						var _outline_y1 = (_center_y + ((_location1.y - _center_y) * _outline_scale));
+						var _outline_x2 = (_center_x + ((_location2.x - _center_x) * _outline_scale));
+						var _outline_y2 = (_center_y + ((_location2.y - _center_y) * _outline_scale));
+						var _outline_x3 = (_center_x + ((_location3.x - _center_x) * _outline_scale));
+						var _outline_y3 = (_center_y + ((_location3.y - _center_y) * _outline_scale));
+						
+						array_push(_result,
+								   [[_outline_x1, _outline_y1], [_outline_x2, _outline_y2],
+								    [_location1.x, _location1.y], [_location1.x, _location1.y],
+									[_outline_x2, _outline_y2], [_location2.x, _location2.y],
+									
+									[_location3.x, _location3.y], [_location2.x, _location2.y],
+									[_outline_x3, _outline_y3], [_outline_x3, _outline_y3],
+									[_location2.x, _location2.y], [_outline_x2, _outline_y2],
+									
+									[_outline_x3, _outline_y3], [_outline_x1, _outline_y1],
+									[_location3.x, _location3.y], [_location3.x, _location3.y],
+									[_outline_x1, _outline_y1], [_location1.x, _location1.y]]);
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+				}
+				
+				return _result;
+			}
+			
+			/// @argument			location1? {Vector2}
+			/// @argument			location2? {Vector2}
+			/// @argument			location3? {Vector2}
+			/// @argument			fill_color? {int:color|Color3}
+			/// @argument			fill_alpha? {real}
+			/// @argument			outline_scale? {real}
+			/// @argument			outline_color? {int:color|Color3}
+			/// @argument			outline_alpha? {real}
+			/// @argument			outline? {bool|all}
+			/// @returns			{any[+]} | On error: {undefined}
+			/// @description		Return an array containg rendering data for each vertex resulting
+			///						in this Shape, consisting of its primitive type, location, color
+			///						and alpha value, based on the data of this constructor or its
+			///						specified replaced parts. Up to two nested values will be returned
+			///						in that array, depending on whether it was specified to return
+			///						only data for outline, not return it and use only fill instead, or
+			///						to contain all of this data. Each will be represented at following
+			///						array positions, nested in the primary array:
+			///						- array[0]: primitive type {constant:pr_*}
+			///						- array[1]: vertex data {any[]}
+			///						  - array[1][0]: location {real[]}
+			///						  - array[1][1]: color {int:color}
+			///						  - array[1][2]: alpha {real}
+			static getPrimitiveRenderData = function(_location1 = location1, _location2 = location2,
+													 _location3 = location3, _fill_color = fill_color,
+													 _fill_alpha = fill_alpha,
+													 _outline_scale = outline_scale,
+													 _outline_color = outline_color,
+													 _outline_alpha = outline_alpha, _outline = all)
+			{
+				try
+				{
+					var _primitive = [];
+					var _fill_color_isColor2 = is_instanceof(_fill_color, Color2);
+					var _vertex_location = self.getVertexLocations(undefined, undefined, undefined,
+																	_outline, _outline_scale);
+					
+					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
+					and (_fill_alpha > 0))
+					{
+						var _vertex_fill = array_first(_vertex_location);
+						var _fill_color1 = _fill_color;
+						var _fill_color2 = _fill_color;
+						var _fill_color3 = _fill_color;
+						
+						if (is_instanceof(_fill_color, Color3))
+						{
+							_fill_color1 = _fill_color.color1;
+							_fill_color2 = _fill_color.color2;
+							_fill_color3 = _fill_color.color3;
+						}
+						
+						var _vertex_data = [[_vertex_fill[0], _fill_color1, _fill_alpha],
+											[_vertex_fill[1], _fill_color2, _fill_alpha],
+											[_vertex_fill[2], _fill_color3, _fill_alpha]];
+						
+						array_push(_primitive, [pr_trianglelist, _vertex_data]);
+					}
+					
+					if (((_outline) or (_outline == all)) and (_outline_color != undefined)
+					and (_outline_alpha > 0))
+					{
+						var _vertex_outline = array_last(_vertex_location);
+						var _outline_color1 = _outline_color;
+						var _outline_color2 = _outline_color;
+						var _outline_color3 = _outline_color;
+						
+						if (is_instanceof(_outline_color, Color3))
+						{
+							_outline_color1 = _outline_color.color1;
+							_outline_color2 = _outline_color.color2;
+							_outline_color3 = _outline_color.color3;
+						}
+						
+						var _vertex_data = [[_vertex_outline[0], _outline_color1, _outline_alpha],
+											[_vertex_outline[1], _outline_color2, _outline_alpha],
+											[_vertex_outline[2], _outline_color1, _outline_alpha],
+											[_vertex_outline[3], _outline_color1, _outline_alpha],
+											[_vertex_outline[4], _outline_color2, _outline_alpha],
+											[_vertex_outline[5], _outline_color2, _outline_alpha],
+											
+											[_vertex_outline[6], _outline_color3, _outline_alpha],
+											[_vertex_outline[7], _outline_color2, _outline_alpha],
+											[_vertex_outline[8], _outline_color3, _outline_alpha],
+											[_vertex_outline[9], _outline_color3, _outline_alpha],
+											[_vertex_outline[10], _outline_color2, _outline_alpha],
+											[_vertex_outline[11], _outline_color2, _outline_alpha],
+											
+											[_vertex_outline[12], _outline_color3, _outline_alpha],
+											[_vertex_outline[13], _outline_color1, _outline_alpha],
+											[_vertex_outline[14], _outline_color3, _outline_alpha],
+											[_vertex_outline[15], _outline_color3, _outline_alpha],
+											[_vertex_outline[16], _outline_color1, _outline_alpha],
+											[_vertex_outline[17], _outline_color1, _outline_alpha]];
+						
+						array_push(_primitive, [pr_trianglelist, _vertex_data]);
+					}
+					
+					return _primitive;
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 		#endregion
 		#region <Execution>
 			
@@ -331,20 +500,20 @@ function Triangle() constructor
 			/// @argument			location3? {Vector2}
 			/// @argument			fill_color? {int:color|Color3}
 			/// @argument			fill_alpha? {real}
+			/// @argument			outline_scale? {real}
 			/// @argument			outline_color? {int:color|Color3}
 			/// @argument			outline_alpha? {real}
-			/// @description		Execute the draw of this Shape as a form.
-			///						NOTE: Form drawing produces inconsistent results across devices
-			///						and export targets due to their technical differences.
-			///						Sprite drawing should be used instead for accurate results.
+			/// @description		Execute the draw of this Shape as a primitive, using data of this
+			///						constructor or specified temporarily replaced parts.
 			static render = function(_location1, _location2, _location3, _fill_color, _fill_alpha,
-									 _outline_color, _outline_alpha)
+									 _outline_scale, _outline_color, _outline_alpha)
 			{
 				var _location1_original = location1;
 				var _location2_original = location2;
 				var _location3_original = location3;
 				var _fill_color_original = fill_color;
 				var _fill_alpha_original = fill_alpha;
+				var _outline_scale_original = outline_scale;
 				var _outline_color_original = outline_color;
 				var _outline_alpha_original = outline_alpha;
 				
@@ -353,6 +522,7 @@ function Triangle() constructor
 				location3 = (_location3 ?? location3);
 				fill_color = (_fill_color ?? fill_color);
 				fill_alpha = (_fill_alpha ?? fill_alpha);
+				outline_scale = (_outline_scale ?? outline_scale);
 				outline_color = (_outline_color ?? outline_color);
 				outline_alpha = (_outline_alpha ?? outline_alpha);
 				
@@ -362,52 +532,32 @@ function Triangle() constructor
 					{
 						event.beforeRender.execute();
 						
-						if ((fill_color != undefined) and (fill_alpha > 0))
+						var _primitive = self.getPrimitiveRenderData();
+						var _i = [0, 0];
+						repeat (array_length(_primitive))
 						{
-							var _color1, _color2, _color3;
+							var _primitive_current = _primitive[_i[0]];
+							var _vertex_data = _primitive_current[1];
 							
-							if (is_instanceof(fill_color, Color3))
+							draw_primitive_begin(_primitive_current[0]);
 							{
-								_color1 = fill_color.color1;
-								_color2 = fill_color.color2;
-								_color3 = fill_color.color3;
+								_i[1] = 0;
+								repeat (array_length(_vertex_data))
+								{
+									var _vertex_data_current = _vertex_data[_i[1]];
+									var _vertex_location_current = _vertex_data_current[0];
+									
+									draw_vertex_color(_vertex_location_current[0],
+													  _vertex_location_current[1],
+													  _vertex_data_current[1],
+													  _vertex_data_current[2]);
+									
+									++_i[1];
+								}
 							}
-							else
-							{
-								_color1 = fill_color;
-								_color2 = fill_color;
-								_color3 = fill_color;
-							}
+							draw_primitive_end();
 							
-							draw_set_alpha(fill_alpha);
-							
-							draw_triangle_color(location1.x, location1.y, location2.x, location2.y,
-												location3.x, location3.y, _color1, _color2, _color3,
-												false);
-						}
-						
-						if ((outline_color != undefined) and (outline_alpha > 0))
-						{
-							var _color1, _color2, _color3;
-							
-							if (is_instanceof(outline_color, Color3))
-							{
-								_color1 = outline_color.color1;
-								_color2 = outline_color.color2;
-								_color3 = outline_color.color3;
-							}
-							else
-							{
-								var _color1 = outline_color;
-								var _color2 = outline_color;
-								var _color3 = outline_color;
-							}
-							
-							draw_set_alpha(outline_alpha);
-							
-							draw_triangle_color(location1.x, location1.y, location2.x, location2.y,
-												location3.x, location3.y, _color1, _color2, _color3,
-												true);
+							++_i[0];
 						}
 						
 						event.afterRender.execute();
@@ -536,6 +686,7 @@ function Triangle() constructor
 											+ string(location3) + ")" + _mark_separator +
 							   "Fill Color: " + _string_color[0] + _mark_separator +
 							   "Fill Alpha: " + string(fill_alpha) + _mark_separator +
+							   "Outline Scale: " + string(outline_scale) + _mark_separator +
 							   "Outline Color: " + _string_color[1] + _mark_separator +
 							   "Outline Alpha: " + string(outline_alpha));
 				}
@@ -543,127 +694,153 @@ function Triangle() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
-			/// @argument			outline? {bool|all}
 			/// @argument			location1? {Vector2}
 			/// @argument			location2? {Vector2}
 			/// @argument			location3? {Vector2}
 			/// @argument			fill_color? {int:color|Color3}
 			/// @argument			fill_alpha? {real}
+			/// @argument			outline_scale? {real}
 			/// @argument			outline_color? {int:color|Color3}
 			/// @argument			outline_alpha? {real}
+			/// @argument			outline? {bool|all}
+			/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer[]}
 			/// @returns			{VertexBuffer.PrimitiveRenderData|
 			///						 VertexBuffer.PrimitiveRenderData[]} | On error: {undefined}
-			/// @description		Return rendering data of this constructor in a Vertex Buffer, using
-			///						its current data or specified temporarily replaced parts.
-			///						Either a single value or an array of two values will be returned,
-			///						depending on whether the fill or outline were specified as the only
-			///						returned value or both as {all}.
-			static toVertexBuffer = function(_outline = false, _location1, _location2, _location3,
-											 _fill_color, _fill_alpha, _outline_color, _outline_alpha)
+			/// @description		Return rendering data of this constructor in a Vertex Buffer,
+			///						using its current data or specified temporarily replaced parts.
+			///						Multiple values can be returned in an array, depending on whether
+			///						it was specified to return only data for outline, use only fill
+			///						instead or to return data for all parts. Data for invisible or
+			///						invalid render will be excluded.
+			static toVertexBuffer = function(_location1 = location1, _location2 = location2,
+											 _location3 = location3, _fill_color = fill_color,
+											 _fill_alpha = fill_alpha, _outline_scale = outline_scale,
+											 _outline_color = outline_color,
+											 _outline_alpha = outline_alpha, _outline = all,
+											 _vertexBuffer)
 			{
 				var _vertexBuffer_fill = undefined;
 				var _vertexBuffer_outline = undefined;
-				var _location1_original = location1;
-				var _location2_original = location2;
-				var _location3_original = location3;
-				var _fill_color_original = fill_color;
-				var _fill_alpha_original = fill_alpha;
-				var _outline_color_original = outline_color;
-				var _outline_alpha_original = outline_alpha;
-				
-				location1 = (_location1 ?? location1);
-				location2 = (_location2 ?? location2);
-				location3 = (_location3 ?? location3);
-				fill_color = (_fill_color ?? fill_color);
-				fill_alpha = (_fill_alpha ?? fill_alpha);
-				outline_color = (_outline_color ?? outline_color);
-				outline_alpha = (_outline_alpha ?? outline_alpha);
 				
 				try
 				{
-					var _result = [];
+					var _renderData = [];
+					var _vertexBuffer_wasActive = ((_outline == all) ? [false, false] : [false]);
 					
-					if ((!_outline) or (_outline == all))
+					if (_vertexBuffer != undefined)
 					{
-						fill_color = ((is_real(fill_color)) ? fill_color : c_white);
-						fill_alpha = ((fill_alpha > 0) ? fill_alpha : 0);
-						_vertexBuffer_fill = new VertexBuffer();
-						var _renderData_fill = _vertexBuffer_fill
-												.createPrimitiveRenderData(pr_trianglestrip);
-						
-						_vertexBuffer_fill
-						 .setActive(_renderData_fill.vertexFormat)
-							.setLocation2D(location1)
-							.setColor(fill_color, fill_alpha)
-							.setUV()
+						if (_outline == all)
+						{
+							if (is_array(_vertexBuffer))
+							{
+								_vertexBuffer_fill = _vertexBuffer[0];
+								_vertexBuffer_outline = _vertexBuffer[1];
+							}
+							else
+							{
+								_vertexBuffer_fill = _vertexBuffer;
+								_vertexBuffer_outline = _vertexBuffer;
+							}
 							
-							.setLocation2D(location2)
-							.setColor(fill_color, fill_alpha)
-							.setUV()
-							
-							.setLocation2D(location3)
-							.setColor(fill_color, fill_alpha)
-							.setUV()
-						 .setActive(false);
-						
-						array_push(_result, _renderData_fill);
+							_vertexBuffer_wasActive = [_vertexBuffer_fill.active,
+													   _vertexBuffer_outline.active];
+						}
+						else if (_outline)
+						{
+							_vertexBuffer_fill = _vertexBuffer;
+							_vertexBuffer_wasActive = [_vertexBuffer_fill.active];
+						}
+						else
+						{
+							_vertexBuffer_outline = _vertexBuffer;
+							_vertexBuffer_wasActive = [_vertexBuffer_outline.active];
+						}
 					}
 					
-					if ((_outline) or (_outline == all))
+					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
+					and (_fill_alpha > 0))
 					{
-						outline_color = ((is_real(outline_color)) ? outline_color : c_white);
-						outline_alpha = ((outline_alpha > 0) ? outline_alpha : 0);
-						_vertexBuffer_outline = new VertexBuffer();
-						var _renderData_outline = _vertexBuffer_outline
-												   .createPrimitiveRenderData(pr_linestrip);
+						if (!is_instanceof(_vertexBuffer_fill, VertexBuffer))
+						{
+							_vertexBuffer_fill = new VertexBuffer();
+						}
 						
-						_vertexBuffer_outline
-						 .setActive(_renderData_outline.vertexFormat)
-							.setLocation2D(location1)
-							.setColor(outline_color, outline_alpha)
-							.setUV()
-							
-							.setLocation2D(location2)
-							.setColor(outline_color, outline_alpha)
-							.setUV()
-							
-							.setLocation2D(location3)
-							.setColor(outline_color, outline_alpha)
-							.setUV()
-							
-							.setLocation2D(location1)
-							.setColor(outline_color, outline_alpha)
-							.setUV()
-						 .setActive(false);
-						 
-						 array_push(_result, _renderData_outline);
+						array_push(_renderData, _vertexBuffer_fill
+												.createPrimitiveRenderData(pr_trianglelist));
 					}
 					
-					return ((array_length(_result) == 1) ? _result[0] : _result);
+					if (((_outline) or (_outline == all)) and (_outline_color != undefined)
+					and (_outline_alpha > 0) and (_outline_scale >= 1))
+					{
+						if (!is_instanceof(_vertexBuffer_outline, VertexBuffer))
+						{
+							_vertexBuffer_outline = new VertexBuffer();
+						}
+						
+						array_push(_renderData, _vertexBuffer_outline
+												.createPrimitiveRenderData(pr_trianglelist));
+					}
+					
+					var _primitive = self.getPrimitiveRenderData(_location1, _location2, _location3,
+																 _fill_color, _fill_alpha,
+																 _outline_scale, _outline_color,
+																 _outline_alpha, _outline);
+					var _primitive_count = array_length(_primitive);
+					var _vertex = new Vector2();
+					var _i = [0, 0];
+					repeat (_primitive_count)
+					{
+						var _renderData_current = _renderData[_i[0]];
+						var _vertexBuffer_current = _renderData_current.vertexBuffer;
+						var _primitive_current = _primitive[_i[0]];
+						var _vertex_data = _primitive_current[1];
+						_vertexBuffer_current.setActive(_renderData_current.vertexFormat);
+						_i[1] = 0;
+						repeat (array_length(_vertex_data))
+						{
+							var _vertex_data_current = _vertex_data[_i[1]];
+							var _vertex_location_current = _vertex_data_current[0];
+							
+							_vertexBuffer_current
+							 .setLocation2D(_vertex.setAll(_vertex_location_current))
+							 .setColor(_vertex_data_current[1], _vertex_data_current[2])
+							 .setUV();
+							
+							++_i[1];
+						}
+						
+						++_i[0];
+					}
+					
+					var _i = 0;
+					repeat (_primitive_count)
+					{
+						if (!_vertexBuffer_wasActive[_i])
+						{
+							_renderData[_i].vertexBuffer.setActive(false);
+						}
+						
+						++_i;
+					}
+					
+					return ((array_length(_renderData) == 1) ? _renderData[0] : _renderData);
 				}
 				catch (_exception)
 				{
-					if (_vertexBuffer_fill != undefined)
+					if (_vertexBuffer == undefined)
 					{
-						_vertexBuffer_fill.destroy();
-					}
-					
-					if (_vertexBuffer_outline != undefined)
-					{
-						_vertexBuffer_outline.destroy();
+						if (_vertexBuffer_fill != undefined)
+						{
+							_vertexBuffer_fill.destroy();
+						}
+						
+						if (_vertexBuffer_outline != undefined)
+						{
+							_vertexBuffer_outline.destroy();
+						}
 					}
 					
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
-				}
-				finally
-				{
-					location1 = _location1_original;
-					location2 = _location2_original;
-					location3 = _location3_original;
-					fill_color = _fill_color_original;
-					fill_alpha = _fill_alpha_original;
-					outline_color = _outline_color_original;
-					outline_alpha = _outline_alpha_original;
 				}
 				
 				return undefined;
