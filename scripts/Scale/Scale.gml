@@ -28,54 +28,52 @@ function Scale() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					switch (instanceof(argument[0]))
+					if ((is_instanceof(argument[0], Scale)) or (is_instanceof(argument[0], Vector2)))
 					{
-						case "Scale":
-						case "Vector2":
-							//|Construction type: Constructor copy.
-							//|Construction type: From Vector2.
-							var _other = argument[0];
-							x = _other.x;
-							y = _other.y;
-						break;
-						default:
-							switch (argument_count)
-							{
-								case 1:
-									if (is_array(argument[0]))
+						//|Construction type: Constructor copy.
+						//|Construction type: From Vector2.
+						var _other = argument[0];
+						x = _other.x;
+						y = _other.y;
+					}
+					else
+					{
+						switch (argument_count)
+						{
+							case 1:
+								if (is_array(argument[0]))
+								{
+									//|Construction type: From array.
+									var _array = argument[0];
+									
+									switch (array_length(_array))
 									{
-										//|Construction type: From array.
-										var _array = argument[0];
-										
-										switch (array_length(_array))
-										{
-											case 1:
-												x = _array[0];
-												y = _array[0];
-											break;
-										
-											case 2:
-											default:
-												x = _array[0];
-												y = _array[1];
-											break;
-										}
+										case 1:
+											x = _array[0];
+											y = _array[0];
+										break;
+									
+										case 2:
+										default:
+											x = _array[0];
+											y = _array[1];
+										break;
 									}
-									else
-									{
-										//|Construction type: One number for all values.
-										x = argument[0];
-										y = argument[0];
-									}
-								break;
-								case 2:
-								default:
-									//|Construction type: Two values.
+								}
+								else
+								{
+									//|Construction type: One number for all values.
 									x = argument[0];
-									y = argument[1];
-								break;
-							}
-						break;
+									y = argument[0];
+								}
+							break;
+							case 2:
+							default:
+								//|Construction type: Two values.
+								x = argument[0];
+								y = argument[1];
+							break;
+						}
 					}
 				}
 				

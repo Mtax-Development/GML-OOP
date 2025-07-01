@@ -53,17 +53,17 @@ function SpriteRenderer() constructor
 						sprite = ((is_instanceof(_other.sprite, Sprite))
 								  ? new Sprite(_other.sprite.ID) : _other.sprite);
 						
-						switch (instanceof(_other.location))
+						if (is_instanceof(_other.location, Vector2))
 						{
-							case "Vector2":
-								location = new Vector2(_other.location);
-							break;
-							case "Vector4":
-								location = new Vector4(_other.location);
-							break;
-							default:
-								location = _other.location;
-							break;
+							location = new Vector2(_other.location);
+						}
+						else if (is_instanceof(_other.location, Vector4))
+						{
+							location = new Vector4(_other.location);
+						}
+						else
+						{
+							location = _other.location;
 						}
 						
 						frame = _other.frame;

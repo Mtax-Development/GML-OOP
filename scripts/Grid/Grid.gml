@@ -25,27 +25,27 @@ function Grid() constructor
 				
 				if ((argument_count > 0) and (argument[0] != undefined))
 				{
-					switch (instanceof(argument[0]))
+					if (is_instanceof(argument[0], Grid))
 					{
-						case "Grid":
-							//|Construction type: Constructor copy.
-							var _other = argument[0];
-							
-							size = ((is_instanceof(_other.size, Vector2)) ? new Vector2(_other.size)
-																		  : _other.size);
-							ID = ds_grid_create(size.x, size.y);
-							ds_grid_copy(ID, _other.ID);
-						break;
-						case "Vector2":
-							//|Construction type: New constructor.
-							size = new Vector2(argument[0]);
-							ID = ds_grid_create(size.x, size.y);
-						break;
-						default:
-							//|Construction type: Wrapper.
-							ID = argument[0];
-							size = new Vector2(ds_grid_width(ID), ds_grid_height(ID));
-						break;
+						//|Construction type: Constructor copy.
+						var _other = argument[0];
+						
+						size = ((is_instanceof(_other.size, Vector2)) ? new Vector2(_other.size)
+																	  : _other.size);
+						ID = ds_grid_create(size.x, size.y);
+						ds_grid_copy(ID, _other.ID);
+					}
+					else if (is_instanceof(argument[0], Vector2))
+					{
+						//|Construction type: New constructor.
+						size = new Vector2(argument[0]);
+						ID = ds_grid_create(size.x, size.y);
+					}
+					else
+					{
+						//|Construction type: Wrapper.
+						ID = argument[0];
+						size = new Vector2(ds_grid_width(ID), ds_grid_height(ID));
 					}
 				}
 				

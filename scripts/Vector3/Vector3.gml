@@ -31,64 +31,62 @@ function Vector3() constructor
 				
 				if (argument_count > 0)
 				{
-					switch (instanceof(argument[0]))
+					if (is_instanceof(argument[0], Vector3))
 					{
-						case "Vector3":
-							//|Construction type: Constructor copy.
-							var _other = argument[0];
-							
-							x = _other.x;
-							y = _other.y;
-							z = _other.z;
-						break;
-						default:
-							switch (argument_count)
-							{
-								case 1:
-									if (is_array(argument[0]))
+						//|Construction type: Constructor copy.
+						var _other = argument[0];
+						x = _other.x;
+						y = _other.y;
+						z = _other.z;
+					}
+					else
+					{
+						switch (argument_count)
+						{
+							case 1:
+								if (is_array(argument[0]))
+								{
+									//|Construction type: From array.
+									var _array = argument[0];
+									switch (array_length(_array))
 									{
-										//|Construction type: From array.
-										var _array = argument[0];
-										switch (array_length(_array))
-										{
-											case 1:
-												x = _array[0];
-												y = _array[0];
-												z = _array[0];
-											break;
-											case 3:
-											default:
-												x = _array[0];
-												y = _array[1];
-												z = _array[2];
-											break;
-										}
+										case 1:
+											x = _array[0];
+											y = _array[0];
+											z = _array[0];
+										break;
+										case 3:
+										default:
+											x = _array[0];
+											y = _array[1];
+											z = _array[2];
+										break;
 									}
-									else
-									{
-										//|Construction type: One number for all values.
-										x = argument[0];
-										y = argument[0];
-										z = argument[0];
-									}
-								break;
-								case 2:
-									//|Construction type: Vector2 + value.
-									var _vector = argument[0];
-									var _value = argument[1];
-									
-									x = _vector.x;
-									y = _vector.y;
-									z = _value;
-								break
-								default:
-									//|Construction type: Three numbers.
+								}
+								else
+								{
+									//|Construction type: One number for all values.
 									x = argument[0];
-									y = argument[1];
-									z = argument[2];
-								break;
-							}
-						break;
+									y = argument[0];
+									z = argument[0];
+								}
+							break;
+							case 2:
+								//|Construction type: Vector2 + value.
+								var _vector = argument[0];
+								var _value = argument[1];
+								
+								x = _vector.x;
+								y = _vector.y;
+								z = _value;
+							break
+							default:
+								//|Construction type: Three numbers.
+								x = argument[0];
+								y = argument[1];
+								z = argument[2];
+							break;
+						}
 					}
 				}
 				

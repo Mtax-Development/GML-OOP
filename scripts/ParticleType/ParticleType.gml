@@ -73,65 +73,66 @@ function ParticleType() constructor
 																	: _other.size);
 						speed = ((is_instanceof(_other.speed, Range)) ? new Range(_other.speed)
 																	  : _other.speed);
-						switch (instanceof(_other.direction))
+						
+						if (is_instanceof(_other.direction, Angle))
 						{
-							case "Range":
-								direction = new Range(_other.direction);
-							break;
-							case "Angle":
-								direction = new Angle(_other.direction);
-							break;
-							default:
-								direction = _other.direction;
-							break;
+							direction = new Angle(_other.direction);
+						}
+						else if (is_instanceof(_other.direction, Range))
+						{
+							direction = new Range(_other.direction);
+						}
+						else
+						{
+							direction = _other.direction;
 						}
 						
 						direction_increase = _other.direction_increase;
 						direction_wiggle = _other.direction_wiggle;
 						
-						switch (instanceof(_other.angle))
+						if (is_instanceof(_other.angle, Angle))
 						{
-							case "Range":
-								angle = new Range(_other.angle);
-							break;
-							case "Angle":
-								angle = new Angle(_other.angle);
-							break;
-							default:
-								angle = _other.angle;
-							break;
+							angle = new Angle(_other.angle);
+						}
+						else if (is_instanceof(_other.angle, Range))
+						{
+							angle = new Range(_other.angle);
+						}
+						else
+						{
+							angle = _other.angle;
 						}
 						
 						angle_increase = _other.angle_increase;
 						angle_wiggle = _other.angle_wiggle;
 						angle_relative = _other.angle_relative;
 						
-						switch (instanceof(_other.gravity))
+						if (is_instanceof(_other.gravity, Angle))
 						{
-							case "Range":
-								gravity = new Range(_other.gravity);
-							break;
-							case "Angle":
-								gravity = new Angle(_other.gravity);
-							break;
-							default:
-								gravity = _other.gravity;
-							break;
+							gravity = new Angle(_other.gravity);
+						}
+						else if (is_instanceof(_other.gravity, Range))
+						{
+							gravity = new Range(_other.gravity);
+						}
+						else
+						{
+							gravity = _other.gravity;
 						}
 						
 						gravity_direction = _other.gravity_direction;
 						
-						switch (instanceof(_other.color))
+						if (is_instanceof(_other.color, Color2))
 						{
-							case "Color2":
-								color = new Color2(_other.color);
-							break;
-							case "Color3":
-								color = new Color3(_other.color);
-							break;
-							default:
-								color = _other.color;
-							break
+							color = new Color2(_other.color);
+						}
+						else if (is_instanceof(_other.color, Color3))
+						{
+							color = new Color3(_other.color);
+						}
+						else
+						{
+							color = _other.color;
 						}
 						
 						color_type = _other.color_type;
@@ -533,44 +534,43 @@ function ParticleType() constructor
 				try
 				{
 					var _direction_minimum, _direction_maximum;
-					switch (instanceof(_direction))
+					
+					if (is_instanceof(_direction, Angle))
 					{
-						case "Range":
-							_direction_minimum = _direction.minimum;
-							_direction_maximum = _direction.maximum;
-						break;
-						case "Angle":
-							_direction_minimum = _direction.value;
-							_direction_maximum = _direction.value;
-						break;
+						_direction_minimum = _direction.value;
+						_direction_maximum = _direction.value;
+					}
+					else if (is_instanceof(_direction, Range))
+					{
+						_direction_minimum = _direction.minimum;
+						_direction_maximum = _direction.maximum;
 					}
 					
 					part_type_direction(ID, _direction_minimum, _direction_maximum, _increase,
 										_wiggle);
 					
-					switch (instanceof(_direction))
+					if (is_instanceof(direction, Angle))
 					{
-						case "Range":
-							if (is_instanceof(direction, Range))
-							{
-								direction.minimum = _direction.minimum;
-								direction.maximum = _direction.maximum;
-							}
-							else
-							{
-								direction = new Range(_direction);
-							}
-						break;
-						case "Angle":
-							if (is_instanceof(direction, Angle))
-							{
-								direction.value = _direction.value;
-							}
-							else
-							{
-								direction = new Angle(_direction);
-							}
-						break;
+						if (is_instanceof(direction, Angle))
+						{
+							direction.value = _direction.value;
+						}
+						else
+						{
+							direction = new Angle(_direction);
+						}
+					}
+					else if (is_instanceof(direction, Range))
+					{
+						if (is_instanceof(direction, Range))
+						{
+							direction.minimum = _direction.minimum;
+							direction.maximum = _direction.maximum;
+						}
+						else
+						{
+							direction = new Range(_direction);
+						}
 					}
 					
 					direction_increase = _increase;
@@ -598,45 +598,42 @@ function ParticleType() constructor
 				{
 					var _angle_minimum, _angle_maximum;
 					
-					switch (instanceof(_angle))
+					if (is_instanceof(_angle, Angle))
 					{
-						case "Range":
-							_angle_minimum = _angle.minimum;
-							_angle_maximum = _angle.maximum;
-						break;
-						
-						case "Angle":
-							_angle_minimum = _angle.value;
-							_angle_maximum = _angle.value;
-						break;
+						_angle_minimum = _angle.value;
+						_angle_maximum = _angle.value;
+					}
+					else if (is_instanceof(_angle, Range))
+					{
+						_angle_minimum = _angle.minimum;
+						_angle_maximum = _angle.maximum;
 					}
 					
 					part_type_orientation(ID, _angle_minimum, _angle_maximum, _increase, _wiggle,
 										  _relative);
 					
-					switch (instanceof(_angle))
+					if (is_instanceof(angle, Angle))
 					{
-						case "Range":
-							if (is_instanceof(angle, Range))
-							{
-								angle.minimum = _angle.minimum;
-								angle.maximum = _angle.maximum;
-							}
-							else
-							{
-								angle = new Range(_angle);
-							}
-						break;
-						case "Angle":
-							if (is_instanceof(angle, Angle))
-							{
-								angle.value = _angle.value;
-							}
-							else
-							{
-								angle = new Angle(_angle);
-							}
-						break;
+						if (is_instanceof(angle, Angle))
+						{
+							angle.value = _angle.value;
+						}
+						else
+						{
+							angle = new Angle(_angle);
+						}
+					}
+					else if (is_instanceof(angle, Range))
+					{
+						if (is_instanceof(angle, Range))
+						{
+							angle.minimum = _angle.minimum;
+							angle.maximum = _angle.maximum;
+						}
+						else
+						{
+							angle = new Range(_angle);
+						}
 					}
 					
 					angle_increase = _increase;
@@ -750,47 +747,46 @@ function ParticleType() constructor
 			{
 				try
 				{
-					switch (instanceof(_color))
+					if (is_instanceof(_color, Color2))
 					{
-						case "Color3":
-							part_type_color3(ID, _color.color1, _color.color2, _color.color3);
-							
-							if (is_instanceof(color, Color3))
-							{
-								color.color1 = _color.color1;
-								color.color2 = _color.color2;
-								color.color3 = _color.color3;
-							}
-							else
-							{
-								color = new Color3(_color);
-							}
-							
-							color_type = "Color3";
-						break;
-						case "Color2":
-							part_type_color2(ID, _color.color1, _color.color2);
-							
-							if (is_instanceof(color, Color2))
-							{
-								color.color1 = _color.color1;
-								color.color2 = _color.color2;
-							}
-							else
-							{
-								color = new Color2(_color);
-							}
-							
-							color_type = "Color2";
-						break;
-						default:
-							part_type_color1(ID, _color);
-							
-							color = _color;
-							color_type = "color";
-						break;
+						part_type_color2(ID, _color.color1, _color.color2);
+						
+						if (is_instanceof(color, Color2))
+						{
+							color.color1 = _color.color1;
+							color.color2 = _color.color2;
+						}
+						else
+						{
+							color = new Color2(_color);
+						}
+						
+						color_type = "Color2";
 					}
-					
+					else if (is_instanceof(_color, Color3))
+					{
+						part_type_color3(ID, _color.color1, _color.color2, _color.color3);
+						
+						if (is_instanceof(color, Color3))
+						{
+							color.color1 = _color.color1;
+							color.color2 = _color.color2;
+							color.color3 = _color.color3;
+						}
+						else
+						{
+							color = new Color3(_color);
+						}
+						
+						color_type = "Color3";
+					}
+					else
+					{
+						part_type_color1(ID, _color);
+						
+						color = _color;
+						color_type = "color"
+					}
 				}
 				catch (_exception)
 				{

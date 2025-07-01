@@ -54,8 +54,6 @@ function Vector4() constructor
 						switch (argument_count)
 						{
 							case 1:
-								var _argument_instanceof = instanceof(argument[0]);
-								
 								if (is_array(argument[0]))
 								{
 									//|Construction type: From array.
@@ -219,13 +217,13 @@ function Vector4() constructor
 					}
 					else if (is_instanceof(_value, Vector2))
 					{
-						return ((x1 > _value.x) and (y1 > _value.y) and (x2 > _value.x)
-								and (y2 > _value.y));
+						return ((x1 > _value.x) and (y1 > _value.y) and (x2 > _value.x) and
+								(y2 > _value.y));
 					}
 					else
 					{
-						return ((x1 > _value.x1) and (y1 > _value.y1) and (x2 > _value.x2)
-								and (y2 > _value.y2));
+						return ((x1 > _value.x1) and (y1 > _value.y1) and (x2 > _value.x2) and
+								(y2 > _value.y2));
 					}
 				}
 				catch (_exception)
@@ -250,13 +248,13 @@ function Vector4() constructor
 					}
 					else if (is_instanceof(_value, Vector2))
 					{
-						return ((x1 < _value.x) and (y1 < _value.y) and (x2 < _value.x)
-								and (y2 < _value.y));
+						return ((x1 < _value.x) and (y1 < _value.y) and (x2 < _value.x) and
+								(y2 < _value.y));
 					}
 					else
 					{
-						return ((x1 < _value.x1) and (y1 < _value.y1) and (x2 < _value.x2)
-								and (y2 < _value.y2));
+						return ((x1 < _value.x1) and (y1 < _value.y1) and (x2 < _value.x2) and
+								(y2 < _value.y2));
 					}
 				}
 				catch (_exception)
@@ -288,34 +286,26 @@ function Vector4() constructor
 							_sum_x2 = (x2 + _value);
 							_sum_y2 = (y2 + _value);
 						}
+						else if (is_instanceof(_value, Vector4))
+						{
+							_sum_x1 = (x1 + _value.x1);
+							_sum_y1 = (y1 + _value.y1);
+							_sum_x2 = (x2 + _value.x2);
+							_sum_y2 = (y2 + _value.y2);
+						}
 						else
 						{
-							switch (instanceof(_value))
-							{
-								case "Vector2":
-									_sum_x1 = (x1 + _value.x);
-									_sum_y1 = (y1 + _value.y);
-									_sum_x2 = (x2 + _value.x);
-									_sum_y2 = (y2 + _value.y);
-								break;
-								case "Vector4":
-								default:
-									_sum_x1 = (x1 + _value.x1);
-									_sum_y1 = (y1 + _value.y1);
-									_sum_x2 = (x2 + _value.x2);
-									_sum_y2 = (y2 + _value.y2);
-								break;
-							}
+							_sum_x1 = (x1 + _value.x);
+							_sum_y1 = (y1 + _value.y);
+							_sum_x2 = (x2 + _value.x);
+							_sum_y2 = (y2 + _value.y);
 						}
 						
 						return new Vector4(_sum_x1, _sum_y1, _sum_x2, _sum_y2);
 					}
 					else
 					{
-						var _sum_x = (x1 + x2);
-						var _sum_y = (y1 + y2);
-						
-						return new Vector2(_sum_x, _sum_y);
+						return new Vector2((x1 + x2), (y1 + y2));
 					}
 				}
 				
@@ -348,24 +338,19 @@ function Vector4() constructor
 							_difference_x2 = abs(x2 - _value);
 							_difference_y2 = abs(y2 - _value);
 						}
+						else if (is_instanceof(_value, Vector4))
+						{
+							_difference_x1 = abs(x1 - _value.x1);
+							_difference_y1 = abs(y1 - _value.y1);
+							_difference_x2 = abs(x2 - _value.x2);
+							_difference_y2 = abs(y2 - _value.y2);
+						}
 						else
 						{
-							switch (instanceof(_value))
-							{
-								case "Vector2":
-									_difference_x1 = abs(x1 - _value.x);
-									_difference_y1 = abs(y1 - _value.y);
-									_difference_x2 = abs(x2 - _value.x);
-									_difference_y2 = abs(y2 - _value.y);
-								break;
-								case "Vector4":
-								default:
-									_difference_x1 = abs(x1 - _value.x1);
-									_difference_y1 = abs(y1 - _value.y1);
-									_difference_x2 = abs(x2 - _value.x2);
-									_difference_y2 = abs(y2 - _value.y2);
-								break;
-							}
+							_difference_x1 = abs(x1 - _value.x);
+							_difference_y1 = abs(y1 - _value.y);
+							_difference_x2 = abs(x2 - _value.x);
+							_difference_y2 = abs(y2 - _value.y);
 						}
 						
 						return new Vector4(_difference_x1, _difference_y1, _difference_x2,
@@ -373,10 +358,7 @@ function Vector4() constructor
 					}
 					else
 					{
-						var _difference_x = abs(x1 - x2);
-						var _difference_y = abs(y1 - y2);
-						
-						return new Vector2(_difference_x, _difference_y);
+						return new Vector2(abs(x1 - x2), abs(y1 - y2));
 					}
 				}
 				catch (_exception)
@@ -408,34 +390,26 @@ function Vector4() constructor
 							_product_x2 = (x2 * _value);
 							_product_y2 = (y2 * _value);
 						}
+						else if (is_instanceof(_value, Vector4))
+						{
+							_product_x1 = (x1 * _value.x1);
+							_product_y1 = (y1 * _value.y1);
+							_product_x2 = (x2 * _value.x2);
+							_product_y2 = (y2 * _value.y2);
+						}
 						else
 						{
-							switch (instanceof(_value))
-							{
-								case "Vector2":
-									_product_x1 = (x1 * _value.x);
-									_product_y1 = (y1 * _value.y);
-									_product_x2 = (x2 * _value.x);
-									_product_y2 = (y2 * _value.y);
-								break;
-								case "Vector4":
-								default:
-									_product_x1 = (x1 * _value.x1);
-									_product_y1 = (y1 * _value.y1);
-									_product_x2 = (x2 * _value.x2);
-									_product_y2 = (y2 * _value.y2);
-								break;
-							}
+							_product_x1 = (x1 * _value.x);
+							_product_y1 = (y1 * _value.y);
+							_product_x2 = (x2 * _value.x);
+							_product_y2 = (y2 * _value.y);
 						}
 						
 						return new Vector4(_product_x1, _product_y1, _product_x2, _product_y2);
 					}
 					else
 					{
-						var _product_x = (x1 * x2);
-						var _product_y = (y1 * y2);
-						
-						return new Vector2(_product_x, _product_y);
+						return new Vector2((x1 * x2), (y1 * y2));
 					}
 				}
 				catch (_exception)
@@ -470,43 +444,41 @@ function Vector4() constructor
 					}
 					else
 					{
-						switch (instanceof(_value))
+						if (is_instanceof(_value, Vector4))
 						{
-							case "Vector2":
-								if (_value.x != 0)
-								{
-									_quotient_x1 = (x1 / _value.x);
-									_quotient_x2 = (x2 / _value.x);
-								}
-								
-								if (_value.y != 0)
-								{
-									_quotient_y1 = (y1 / _value.y);
-									_quotient_y2 = (y2 / _value.y);
-								}
-							break;
-							case "Vector4":
-							default:
-								if (_value.x1 != 0)
-								{
-									_quotient_x1 = (x1 / _value.x1);
-								}
-								
-								if (_value.y1 != 0)
-								{
-									_quotient_y1 = (y1 / _value.y1);
-								}
-								
-								if (_value.x2 != 0)
-								{
-									_quotient_x2 = (x2 / _value.x2);
-								}
-								
-								if (_value.y2 != 0)
-								{
-									_quotient_y2 = (y2 / _value.y2);
-								}
-							break;
+							if (_value.x1 != 0)
+							{
+								_quotient_x1 = (x1 / _value.x1);
+							}
+							
+							if (_value.y1 != 0)
+							{
+								_quotient_y1 = (y1 / _value.y1);
+							}
+							
+							if (_value.x2 != 0)
+							{
+								_quotient_x2 = (x2 / _value.x2);
+							}
+							
+							if (_value.y2 != 0)
+							{
+								_quotient_y2 = (y2 / _value.y2);
+							}
+						}
+						else
+						{
+							if (_value.x != 0)
+							{
+								_quotient_x1 = (x1 / _value.x);
+								_quotient_x2 = (x2 / _value.x);
+							}
+							
+							if (_value.y != 0)
+							{
+								_quotient_y1 = (y1 / _value.y);
+								_quotient_y2 = (y2 / _value.y);
+							}
 						}
 					}
 					
@@ -549,18 +521,18 @@ function Vector4() constructor
 			{
 				try
 				{
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
-						break;
-						case "Vector4":
-							return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
-											   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
-						break;
-						default:
-							return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
-						break;
+						return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
+					}
+					else  if (is_instanceof(_value, Vector4))
+					{
+						return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
+										   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
+					}
+					else
+					{
+						return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
 					}
 				}
 				catch (_exception)
@@ -582,16 +554,15 @@ function Vector4() constructor
 				{
 					var _result_x, _result_y;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x = ((_value.x - x1) / (x2 - x1));
-							_result_y = ((_value.y - y1) / (y2 - y1));
-						break;
-						default:
-							_result_x = ((_value - x1) / (x2 - x1));
-							_result_y = ((_value - y1) / (y2 - y1));
-						break;
+						_result_x = ((_value - x1) / (x2 - x1));
+						_result_y = ((_value - y1) / (y2 - y1));
+					}
+					else
+					{
+						_result_x = ((_value.x - x1) / (x2 - x1));
+						_result_y = ((_value.y - y1) / (y2 - y1));
 					}
 					
 					return new Vector2((is_nan(_result_x) ? 1 : _result_x),
@@ -798,8 +769,8 @@ function Vector4() constructor
 			{
 				try
 				{
-					return ((_location.x == clamp(_location.x, x1, x2)) 
-							and (_location.y == clamp(_location.y, y1, y2)));
+					return ((_location.x == clamp(_location.x, x1, x2)) and
+							(_location.y == clamp(_location.y, y1, y2)));
 				}
 				catch (_exception)
 				{
@@ -829,26 +800,26 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x1 += _value.x;
-							_result_y1 += _value.y;
-							_result_x2 += _value.x;
-							_result_y2 += _value.y;
-						break;
-						case "Vector4":
-							_result_x1 += _value.x1;
-							_result_y1 += _value.y1;
-							_result_x2 += _value.x2;
-							_result_y2 += _value.y2;
-						break;
-						default:
-							_result_x1 += _value;
-							_result_y1 += _value;
-							_result_x2 += _value;
-							_result_y2 += _value;
-						break;
+						_result_x1 += _value;
+						_result_y1 += _value;
+						_result_x2 += _value;
+						_result_y2 += _value;
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_result_x1 += _value.x1;
+						_result_y1 += _value.y1;
+						_result_x2 += _value.x2;
+						_result_y2 += _value.y2;
+					}
+					else
+					{
+						_result_x1 += _value.x;
+						_result_y1 += _value.y;
+						_result_x2 += _value.x;
+						_result_y2 += _value.y;
 					}
 					
 					x1 = _result_x1;
@@ -876,26 +847,26 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x1 -= _value.x;
-							_result_y1 -= _value.y;
-							_result_x2 -= _value.x;
-							_result_y2 -= _value.y;
-						break;
-						case "Vector4":
-							_result_x1 -= _value.x1;
-							_result_y1 -= _value.y1;
-							_result_x2 -= _value.x2;
-							_result_y2 -= _value.y2;
-						break;
-						default:
-							_result_x1 -= _value;
-							_result_y1 -= _value;
-							_result_x2 -= _value;
-							_result_y2 -= _value;
-						break;
+						_result_x1 -= _value;
+						_result_y1 -= _value;
+						_result_x2 -= _value;
+						_result_y2 -= _value;
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_result_x1 -= _value.x1;
+						_result_y1 -= _value.y1;
+						_result_x2 -= _value.x2;
+						_result_y2 -= _value.y2;
+					}
+					else
+					{
+						_result_x1 -= _value.x;
+						_result_y1 -= _value.y;
+						_result_x2 -= _value.x;
+						_result_y2 -= _value.y;
 					}
 					
 					x1 = _result_x1;
@@ -923,26 +894,26 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x1 *= _value.x;
-							_result_y1 *= _value.y;
-							_result_x2 *= _value.x;
-							_result_y2 *= _value.y;
-						break;
-						case "Vector4":
-							_result_x1 *= _value.x1;
-							_result_y1 *= _value.y1;
-							_result_x2 *= _value.x2;
-							_result_y2 *= _value.y2;
-						break;
-						default:
-							_result_x1 *= _value;
-							_result_y1 *= _value;
-							_result_x2 *= _value;
-							_result_y2 *= _value;
-						break;
+						_result_x1 *= _value;
+						_result_y1 *= _value;
+						_result_x2 *= _value;
+						_result_y2 *= _value;
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_result_x1 *= _value.x1;
+						_result_y1 *= _value.y1;
+						_result_x2 *= _value.x2;
+						_result_y2 *= _value.y2;
+					}
+					else
+					{
+						_result_x1 *= _value.x;
+						_result_y1 *= _value.y;
+						_result_x2 *= _value.x;
+						_result_y2 *= _value.y;
 					}
 					
 					x1 = _result_x1;
@@ -971,51 +942,51 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							if (_value.x != 0)
-							{
-								_result_x1 /= _value.x;
-								_result_x2 /= _value.x;
-							}
-							
-							if (_value.y != 0)
-							{
-								_result_y1 /= _value.y;
-								_result_y2 /= _value.y;
-							}
-						break;
-						case "Vector4":
-							if (_value.x1 != 0)
-							{
-								_result_x1 /= _value.x1;
-							}
-							
-							if (_value.y1 != 0)
-							{
-								_result_y1 /= _value.y1;
-							}
-							
-							if (_value.x2 != 0)
-							{
-								_result_x2 /= _value.x2;
-							}
-							
-							if (_value.y2 != 0)
-							{
-								_result_y2 /= _value.y2;
-							}
-						break;
-						default:
-							if (_value != 0)
-							{
-								_result_x1 /= _value;
-								_result_y1 /= _value;
-								_result_x2 /= _value;
-								_result_y2 /= _value;
-							}
-						break;
+						if (_value != 0)
+						{
+							_result_x1 /= _value;
+							_result_y1 /= _value;
+							_result_x2 /= _value;
+							_result_y2 /= _value;
+						}
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						if (_value.x1 != 0)
+						{
+							_result_x1 /= _value.x1;
+						}
+						
+						if (_value.y1 != 0)
+						{
+							_result_y1 /= _value.y1;
+						}
+						
+						if (_value.x2 != 0)
+						{
+							_result_x2 /= _value.x2;
+						}
+						
+						if (_value.y2 != 0)
+						{
+							_result_y2 /= _value.y2;
+						}
+					}
+					else
+					{
+						if (_value.x != 0)
+						{
+							_result_x1 /= _value.x;
+							_result_x2 /= _value.x;
+						}
+						
+						if (_value.y != 0)
+						{
+							_result_y1 /= _value.y;
+							_result_y2 /= _value.y;
+						}
 					}
 					
 					x1 = _result_x1;
@@ -1126,26 +1097,26 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x1 -= _value.x;
-							_result_y1 -= _value.y;
-							_result_x2 += _value.x;
-							_result_y2 += _value.y;
-						break;
-						case "Vector4":
-							_result_x1 -= _value.x1;
-							_result_y1 -= _value.y1;
-							_result_x2 += _value.x2;
-							_result_y2 += _value.y2;
-						break;
-						default:
-							_result_x1 -= _value;
-							_result_y1 -= _value;
-							_result_x2 += _value;
-							_result_y2 += _value;
-						break;
+						_result_x1 -= _value;
+						_result_y1 -= _value;
+						_result_x2 += _value;
+						_result_y2 += _value;
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_result_x1 -= _value.x1;
+						_result_y1 -= _value.y1;
+						_result_x2 += _value.x2;
+						_result_y2 += _value.y2;
+					}
+					else
+					{
+						_result_x1 -= _value.x;
+						_result_y1 -= _value.y;
+						_result_x2 += _value.x;
+						_result_y2 += _value.y;
 					}
 					
 					x1 = _result_x1;
@@ -1174,26 +1145,26 @@ function Vector4() constructor
 					var _result_x2 = x2;
 					var _result_y2 = y2;
 					
-					switch (instanceof(_value))
+					if (is_real(_value))
 					{
-						case "Vector2":
-							_result_x1 += _value.x;
-							_result_y1 += _value.y;
-							_result_x2 -= _value.x;
-							_result_y2 -= _value.y;
-						break;
-						case "Vector4":
-							_result_x1 += _value.x1;
-							_result_y1 += _value.y1;
-							_result_x2 -= _value.x2;
-							_result_y2 -= _value.y2;
-						break;
-						default:
-							_result_x1 += _value;
-							_result_y1 += _value;
-							_result_x2 -= _value;
-							_result_y2 -= _value;
-						break;
+						_result_x1 += _value;
+						_result_y1 += _value;
+						_result_x2 -= _value;
+						_result_y2 -= _value;
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_result_x1 += _value.x1;
+						_result_y1 += _value.y1;
+						_result_x2 -= _value.x2;
+						_result_y2 -= _value.y2;
+					}
+					else
+					{
+						_result_x1 += _value.x;
+						_result_y1 += _value.y;
+						_result_x2 -= _value.x;
+						_result_y2 -= _value.y;
 					}
 					
 					x1 = _result_x1;

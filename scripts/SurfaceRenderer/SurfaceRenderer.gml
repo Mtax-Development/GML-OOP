@@ -51,17 +51,17 @@ function SurfaceRenderer() constructor
 						surface = ((is_instanceof(_other.surface, Surface))
 								   ? new Surface(_other.surface) : _other.surface);
 						
-						switch (instanceof(_other.location))
+						if (is_instanceof(_other.location, Vector2))
 						{
-							case "Vector2":
-								location = new Vector2(_other.location);
-							break;
-							case "Vector4":
-								location = new Vector4(_other.location);
-							break;
-							default:
-								location = _other.location;
-							break;
+							location = new Vector2(_other.location);
+						}
+						else if (is_instanceof(_other.location, Vector4))
+						{
+							location = new Vector4(_other.location);
+						}
+						else
+						{
+							location = _other.location;
 						}
 						
 						scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
