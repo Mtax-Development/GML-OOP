@@ -101,6 +101,31 @@ function Triangle() constructor
 		#endregion
 		#region <Getters>
 			
+			/// @argument			other {Triangle}
+			/// @returns			{bool}
+			/// @description		Check if specified constructor has equivalent properties.
+			static equals = function(_other)
+			{
+				return ((is_instanceof(_other, Triangle)) and (fill_alpha == _other.fill_alpha) and
+						(outline_scale == _other.outline_scale) and
+						(outline_alpha == _other.outline_alpha) and
+						((location1 == _other.location1) or
+						 ((string_copy(instanceof(location1), 1, 6) == "Vector") and
+						 (location1.equals(_other.location1)))) and
+						((location2 == _other.location2) or
+						 ((string_copy(instanceof(location2), 1, 6) == "Vector") and
+						 (location2.equals(_other.location2)))) and
+						((location3 == _other.location3) or
+						 ((string_copy(instanceof(location3), 1, 6) == "Vector") and
+						 (location3.equals(_other.location3)))) and
+						((fill_color == _other.fill_color) or
+						 ((string_copy(instanceof(fill_color), 1, 5) == "Color") and
+						 (fill_color.equals(_other.fill_color)))) and
+						((outline_color == _other.outline_color) or
+						 ((string_copy(instanceof(outline_color), 1, 5) == "Color") and
+						 (outline_color.equals(_other.outline_color)))));
+			}
+			
 			/// @argument			point {Vector2}
 			/// @returns			{bool}
 			/// @description		Checks whether a point in space is within this Triangle.
