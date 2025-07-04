@@ -241,7 +241,7 @@ function Rectangle() constructor
 			
 			/// @argument			point {Vector2}
 			/// @returns			{bool}
-			/// @description		Checks whether a point in space is within this Rectangle.
+			/// @description		Checks whether a point in space is within this Shape.
 			static containsPoint = function(_point)
 			{
 				try

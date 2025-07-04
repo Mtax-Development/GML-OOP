@@ -166,7 +166,7 @@ function Circle() constructor
 			
 			/// @argument			point {Vector2}
 			/// @returns			{bool}
-			/// @description		Check whether a point in space is within this Circle.
+			/// @description		Check whether a point in space is within this Shape.
 			static containsPoint = function(_point)
 			{
 				try

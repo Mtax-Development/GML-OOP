@@ -182,8 +182,7 @@ function RoundRectangle() constructor
 			
 			/// @argument			point {Vector2}
 			/// @returns			{bool}
-			/// @description		Checks whether the specified point in space is within this Rounded
-			///						Rectangle.
+			/// @description		Checks whether the specified point in space is within this Shape.
 			static containsPoint = function(_point)
 			{
 				try
