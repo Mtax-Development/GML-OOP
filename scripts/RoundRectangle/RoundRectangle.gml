@@ -6,14 +6,14 @@
 /// @argument				outline_size? {int}
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
-/// @argument				precision? {int}
+/// @argument				precision? {int:divisibleBy4}
 /// @description			Constructs a Rounded Rectangle Shape with configurable radius of its
 ///							corner curves.
 //							
 //							Construction types:
 //							- New constructor
 //							- From Rectangle: rectangle {Rectangle}, radius? {Vector2},
-//											  precision? {int}
+//											  precision? {int:divisibleBy4}
 //							- Empty: {void}
 //							- Constructor copy: other {RoundRectangle}
 function RoundRectangle() constructor

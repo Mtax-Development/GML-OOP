@@ -1195,7 +1195,7 @@ function ParticleType() constructor
 			/// @argument			number? {int}
 			/// @argument			color? {int:color}
 			/// @description		Directly create any number of Particles of this type in random
-			///						locations within the specified Shape.
+			///						locations within the specified two-dimensional Shape.
 			static createShape = function(_particleSystem, _shape, _number = 1, _color)
 			{
 				try
