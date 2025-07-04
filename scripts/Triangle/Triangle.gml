@@ -716,6 +716,26 @@ function Triangle() constructor
 				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
 			}
 			
+			/// @returns			{real[+]}
+			/// @description		Return an array containing values of all properties of this Shape.
+			///						Properties with multiple values will be returned in nested arrays.
+			static toArray = function()
+			{
+				var _location1 = ((is_instanceof(location1, Vector4)) ? location1.toArray()
+																	  : location1);
+				var _location2 = ((is_instanceof(location2, Vector4)) ? location2.toArray()
+																	  : location2);
+				var _location3 = ((is_instanceof(location3, Vector4)) ? location3.toArray()
+																	  : location3);
+				var _fill_color = ((is_instanceof(fill_color, Color3)) ? fill_color.toArray()
+																	   : fill_color);
+				var _outline_color = ((is_instanceof(outline_color, Color4))
+									  ? outline_color.toArray() : outline_color);
+				
+				return [_location1, _location2, _location3, _fill_color, fill_alpha, outline_scale,
+						_outline_color, outline_alpha];
+			}
+			
 			/// @argument			location1? {Vector2}
 			/// @argument			location2? {Vector2}
 			/// @argument			location3? {Vector2}
