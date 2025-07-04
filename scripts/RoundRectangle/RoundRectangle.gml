@@ -193,7 +193,6 @@ function RoundRectangle() constructor
 					{
 						var _vertex_location = self.getVertexLocations(undefined, undefined, 64,
 																	   true);
-						var _segment = undefined;
 						var _segment_count = 4;
 						var _vertex_count = array_length(_vertex_location);
 						var _vertex_count_outer = (_vertex_count - 2);
@@ -201,16 +200,6 @@ function RoundRectangle() constructor
 						var _center = _vertex_location[0];
 						var _center_x = _center[0];
 						var _center_y = _center[1];
-						var _segment_y_part = real(_point.y < _center_y);
-						
-						if (_point.x < _center_x)
-						{
-							_segment = (1 + _segment_y_part);
-						}
-						else
-						{
-							_segment = (3 * _segment_y_part);
-						}
 						
 						var _i = 0;
 						repeat (_segment_count)
@@ -233,6 +222,9 @@ function RoundRectangle() constructor
 							++_i;
 						}
 						
+						var _segment_y_part = real(_point.y < _center_y);
+						var _segment = ((_point.x < _center_x) ? (1 + _segment_y_part)
+															   : (3 * _segment_y_part));
 						var _i = ((_segment * _vertex_count_segment));
 						repeat (_vertex_count_segment + 1)
 						{
@@ -807,16 +799,14 @@ function RoundRectangle() constructor
 								break;
 							}
 						}
+						if ((is_instanceof(_color[_i], Color4))
+						or  (is_instanceof(_color[_i], Color2)))
+						{
+							_string_color[_i] = _color[_i].toString(false, _colorHSV);
+						}
 						else
 						{
-							if (is_instanceof(_color[_i], Color2))
-							{
-								_string_color[_i] = _color[_i].toString(false, _colorHSV);
-							}
-							else
-							{
-								_string_color[_i] = string(_color[_i]);
-							}
+							_string_color[_i] = string(_color[_i]);
 						}
 						
 						++_i;

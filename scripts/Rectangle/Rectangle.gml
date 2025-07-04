@@ -848,17 +848,15 @@ function Rectangle() constructor
 								break;
 							}
 						}
+						
+						if ((is_instanceof(_color[_i], Color4))
+						or  (is_instanceof(_color[_i], Color2)))
+						{
+							_string_color[_i] = _color[_i].toString(false, _colorHSV);
+						}
 						else
 						{
-							if ((is_instanceof(_color[_i], Color4))
-							or  (is_instanceof(_color[_i], Color2)))
-							{
-								_string_color[_i] = _color[_i].toString(false, _colorHSV);
-							}
-							else
-							{
-								_string_color[_i] = string(_color[_i]);
-							}
+							_string_color[_i] = string(_color[_i]);
 						}
 						
 						++_i;

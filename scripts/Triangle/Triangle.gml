@@ -134,7 +134,7 @@ function Triangle() constructor
 				try
 				{
 					return point_in_triangle(_point.x, _point.y, location1.x, location1.y, location2.x,
-											location2.y, location3.x, location3.y);
+											 location2.y, location3.x, location3.y);
 				}
 				catch (_exception)
 				{
@@ -691,16 +691,13 @@ function Triangle() constructor
 								break;
 							}
 						}
+						else if (is_instanceof(_color[_i], Color3))
+						{
+							_string_color[_i] = _color[_i].toString(false, _colorHSV);
+						}
 						else
 						{
-							if (is_instanceof(_color[_i], Color3))
-							{
-								_string_color[_i] = _color[_i].toString(false, _colorHSV);
-							}
-							else
-							{
-								_string_color[_i] = string(_color[_i]);
-							}
+							_string_color[_i] = string(_color[_i]);
 						}
 						
 						++_i;
