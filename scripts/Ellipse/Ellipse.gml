@@ -121,8 +121,7 @@ function Ellipse() constructor
 					if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
 										   location.y2))
 					{
-						var _vertex_location = self.getVertexLocations(undefined, undefined, 64,
-																	   true);
+						var _vertex_location = self.getVertexLocations(undefined, undefined, true);
 						var _center = _vertex_location[0];
 						var _center_x = _center[0];
 						var _center_y = _center[1];
@@ -469,8 +468,7 @@ function Ellipse() constructor
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
 					{
-						_vertex_location_base = self.getVertexLocations(undefined, undefined,
-																		true);
+						_vertex_location_base = self.getVertexLocations(_location, _precision, true);
 						var _color2 = _fill_color;
 						
 						if (is_instanceof(_fill_color, Color2))
@@ -499,9 +497,10 @@ function Ellipse() constructor
 							_outline_primitive = pr_trianglestrip;
 							_vertex_color_offset_outline = 2;
 							var _vertex_location_inner = ((_vertex_location_base) ??
-							 self.getVertexLocations(undefined, undefined, true));
+							 self.getVertexLocations(_location, _precision, true));
 							var _vertex_location_outer =
-							 self.getVertexLocations(new Vector4(_location).grow(_outline_size));
+							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
+													 _precision);
 							
 							var _i = 0;
 							repeat (array_length(_vertex_location_outer))

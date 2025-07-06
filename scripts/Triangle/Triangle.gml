@@ -443,7 +443,7 @@ function Triangle() constructor
 				{
 					var _primitive = [];
 					var _fill_color_isColor2 = is_instanceof(_fill_color, Color2);
-					var _vertex_location = self.getVertexLocations(undefined, undefined, undefined,
+					var _vertex_location = self.getVertexLocations(_location1, _location2, _location3,
 																	_outline, _outline_scale);
 					
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)

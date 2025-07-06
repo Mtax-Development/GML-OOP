@@ -190,8 +190,8 @@ function RoundRectangle() constructor
 					if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
 										   location.y2))
 					{
-						var _vertex_location = self.getVertexLocations(undefined, undefined, 64,
-																	   true);
+						var _vertex_location = self.getVertexLocations(undefined, undefined,
+																	   undefined, true);
 						var _segment_count = 4;
 						var _vertex_count = array_length(_vertex_location);
 						var _vertex_count_outer = (_vertex_count - 2);
@@ -490,8 +490,8 @@ function RoundRectangle() constructor
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
 					{
-						_vertex_location_base = self.getVertexLocations(undefined, undefined,
-																		undefined, true);
+						_vertex_location_base = self.getVertexLocations(_location, _radius,
+																		_precision, true);
 						var _color2 = _fill_color;
 						var _color_order_fill = undefined;
 						var _vertex_color_offset_fill = 0;
@@ -533,9 +533,10 @@ function RoundRectangle() constructor
 							_outline_primitive = pr_trianglestrip;
 							_vertex_color_offset_outline = 2;
 							var _vertex_location_inner = ((_vertex_location_base) ??
-							 self.getVertexLocations(undefined, undefined, undefined, true));
+							 self.getVertexLocations(_location, _radius, _precision, true));
 							var _vertex_location_outer =
-							 self.getVertexLocations(new Vector4(_location).grow(_outline_size));
+							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
+													 _radius, _precision);
 							
 							var _i = 0;
 							repeat (array_length(_vertex_location_outer))
@@ -553,7 +554,8 @@ function RoundRectangle() constructor
 															  (_location.y1 - 0.5),
 															  (_location.x2 - 0.5),
 															  (_location.y2 + 0.5));
-							var _vertex_location = self.getVertexLocations(_outline_offset);
+							var _vertex_location = self.getVertexLocations(_outline_offset, _radius,
+																		   _precision);
 						}
 						
 						array_push(_primitive, [_outline_primitive, _vertex_location,

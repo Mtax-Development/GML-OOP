@@ -573,7 +573,7 @@ function Rectangle() constructor
 				{
 					var _primitive = [];
 					var _fill_color_isColor2 = is_instanceof(_fill_color, Color2);
-					var _vertex_location = self.getVertexLocations(undefined, _outline, undefined,
+					var _vertex_location = self.getVertexLocations(_location, _outline, _outline_size,
 																   _fill_color_isColor2);
 					
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
