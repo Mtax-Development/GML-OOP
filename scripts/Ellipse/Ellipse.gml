@@ -98,8 +98,7 @@ function Ellipse() constructor
 			/// @description		Check if specified constructor has equivalent properties.
 			static equals = function(_other)
 			{
-				return ((is_instanceof(_other, Ellipse)) and
-						(fill_alpha == _other.fill_alpha) and
+				return ((is_instanceof(_other, Ellipse)) and (fill_alpha == _other.fill_alpha) and
 						(outline_size == _other.outline_size) and
 						(outline_color == _other.outline_color) and
 						(outline_alpha == _other.outline_alpha) and
@@ -429,10 +428,10 @@ function Ellipse() constructor
 			}
 			
 			/// @argument			location? {Vector4}
-			/// @argument			fill_color? {int:color|Color2|Color4}
+			/// @argument			fill_color? {int:color|Color2}
 			/// @argument			fill_alpha? {real}
 			/// @argument			outline_size? {int}
-			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_color? {int:color}
 			/// @argument			outline_alpha? {real}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			outline? {bool|all}
@@ -574,10 +573,10 @@ function Ellipse() constructor
 		#region <Execution>
 			
 			/// @argument			location? {Vector4}
-			/// @argument			fill_color? {int:color|Color2|Color4}
+			/// @argument			fill_color? {int:color|Color2}
 			/// @argument			fill_alpha? {real}
 			/// @argument			outline_size? {int}
-			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_color? {int:color}
 			/// @argument			outline_alpha? {real}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @description		Execute the draw of this Shape as a primitive, using data of this
