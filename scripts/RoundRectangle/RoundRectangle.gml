@@ -532,8 +532,8 @@ function RoundRectangle() constructor
 						{
 							_outline_primitive = pr_trianglestrip;
 							_vertex_color_offset_outline = 2;
-							var _vertex_location_inner = ((_vertex_location_base) ??
-							 self.getVertexLocations(_location, _radius, _precision, true));
+							var _vertex_location_inner = ((_vertex_location_base)
+							 ?? self.getVertexLocations(_location, _radius, _precision, true));
 							var _vertex_location_outer =
 							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
 													 _radius, _precision);

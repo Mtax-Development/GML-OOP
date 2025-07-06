@@ -487,42 +487,25 @@ function Ellipse() constructor
 					if (((_outline) or (_outline == all)) and (outline_color != undefined)
 					and (outline_alpha > 0) and (outline_size >= 1))
 					{
-						var _outline_primitive = undefined;
 						var _vertex_location = [];
-						var _vertex_color_offset_outline = 1;
-						
-						if (outline_size > 1)
+						var _vertex_color_offset_outline = 2;
+						var _vertex_location_inner = ((_vertex_location_base)
+													  ?? self.getVertexLocations(_location, _precision,
+																				 true));
+						var _vertex_location_outer = self.getVertexLocations(new Vector4(_location)
+																			  .grow(_outline_size),
+																			 _precision);
+						var _i = 0;
+						repeat (array_length(_vertex_location_outer))
 						{
-							_outline_primitive = pr_trianglestrip;
-							_vertex_color_offset_outline = 2;
-							var _vertex_location_inner = ((_vertex_location_base) ??
-							 self.getVertexLocations(_location, _precision, true));
-							var _vertex_location_outer =
-							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
-													 _precision);
+							array_push(_vertex_location, _vertex_location_inner[(_i + 1)],
+									   _vertex_location_outer[_i]);
 							
-							var _i = 0;
-							repeat (array_length(_vertex_location_outer))
-							{
-								array_push(_vertex_location, _vertex_location_inner[(_i + 1)],
-										   _vertex_location_outer[_i]);
-								
-								++_i;
-							}
-						}
-						else
-						{
-							_outline_primitive = pr_linestrip;
-							var _outline_offset = new Vector4((_location.x1 + 0.5),
-															  (_location.y1 - 0.5),
-															  (_location.x2 - 0.5),
-															  (_location.y2 + 0.5));
-							var _vertex_location = self.getVertexLocations(_outline_offset);
+							++_i;
 						}
 						
-						array_push(_primitive, [_outline_primitive, _vertex_location,
-												_outline_color, _outline_alpha,
-												_vertex_color_offset_outline]);
+						array_push(_primitive, [pr_trianglestrip, _vertex_location, _outline_color,
+												_outline_alpha, _vertex_color_offset_outline]);
 					}
 					
 					var _i = [0, 0];
