@@ -746,9 +746,7 @@ function RoundRectangle() constructor
 					var _color = [fill_color, outline_color];
 					var _color_count = array_length(_color);
 					var _string_color = array_create(_color_count, "");
-					
 					var _mark_separator_inline = ", ";
-					
 					var _i = 0;
 					repeat (_color_count)
 					{
@@ -800,14 +798,12 @@ function RoundRectangle() constructor
 								break;
 							}
 						}
-						if ((is_instanceof(_color[_i], Color4))
-						or  (is_instanceof(_color[_i], Color2)))
-						{
-							_string_color[_i] = _color[_i].toString(false, _colorHSV);
-						}
 						else
 						{
-							_string_color[_i] = string(_color[_i]);
+							_string_color[_i] = (((is_instanceof(_color[_i], Color4)) or
+												  (is_instanceof(_color[_i], Color2)))
+												 ? _color[_i].toString(false, _colorHSV)
+												 : string(_color[_i]));
 						}
 						
 						++_i;

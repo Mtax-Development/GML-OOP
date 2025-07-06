@@ -639,7 +639,6 @@ function Triangle() constructor
 					var _color_count = array_length(_color);
 					var _string_color = array_create(_color_count, "");
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					
 					var _i = 0;
 					repeat (_color_count)
 					{
@@ -691,13 +690,11 @@ function Triangle() constructor
 								break;
 							}
 						}
-						else if (is_instanceof(_color[_i], Color3))
-						{
-							_string_color[_i] = _color[_i].toString(false, _colorHSV);
-						}
 						else
 						{
-							_string_color[_i] = string(_color[_i]);
+							_string_color[_i] = ((is_instanceof(_color[_i], Color3))
+												 ? _color[_i].toString(false, _colorHSV)
+												 : string(_color[_i]));
 						}
 						
 						++_i;

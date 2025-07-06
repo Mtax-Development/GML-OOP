@@ -347,14 +347,8 @@ function Line() constructor
 					}
 					else
 					{
-						if (is_instanceof(color, Color2))
-						{
-							_string_color = color.toString(false, _colorHSV);
-						}
-						else
-						{
-							_string_color = string(color);
-						}
+						_string_color = ((is_instanceof(color, Color2))
+										 ? color.toString(false, _colorHSV) : string(color));
 					}
 				
 					_string = ("Location: " + string(location) + _mark_separator +
