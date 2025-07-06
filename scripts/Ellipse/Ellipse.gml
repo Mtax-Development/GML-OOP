@@ -10,6 +10,7 @@
 //							
 //							Construction types:
 //							- New constructor
+//							- From Circle: circle {Circle}
 //							- Empty: {void}
 //							- Constructor copy: other {Ellipse}
 function Ellipse() constructor
@@ -62,6 +63,33 @@ function Ellipse() constructor
 						else
 						{
 							event = _other.event;
+						}
+					}
+					else if (is_instanceof(argument[0], Circle))
+					{
+						//|Construction type: From Circle.
+						var _circle = argument[0];
+						
+						location = new Vector4((_circle.location.x - _circle.radius),
+											   (_circle.location.y - _circle.radius),
+											   (_circle.location.x + _circle.radius),
+											   (_circle.location.y + _circle.radius));
+						fill_color = ((is_instanceof(_circle.fill_color, Color2))
+									  ? new Color2(_circle.fill_color) : _circle.fill_color);
+						fill_alpha = _circle.fill_alpha;
+						outline_size = _circle.outline_size;
+						outline_color = _circle.outline_color;
+						outline_alpha = _circle.outline_alpha;
+						precision = _circle.precision;
+						
+						if (is_struct(_circle.event))
+						{
+							event.beforeRender.setAll(_circle.event.beforeRender);
+							event.afterRender.setAll(_circle.event.afterRender);
+						}
+						else
+						{
+							event = _circle.event;
 						}
 					}
 					else
