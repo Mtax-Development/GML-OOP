@@ -51,6 +51,78 @@ function VertexBuffer() constructor
 				return undefined;
 			}
 			
+			/// @argument			other {Buffer|VertexBuffer}
+			/// @argument			size? {int|all}
+			/// @argument			offset? {int}
+			/// @argument			other_offset? {int}
+			/// @description		Copy all data or its segment from other Vertex Buffer or Buffer to
+			///						this one. For both, an offset can be specified for where the
+			///						operation will start and then continue until the end of either the
+			///						specified segment or Buffer was reached. This operation is
+			///						performed differently depending on specified source:
+			///						- Vertex Buffer: Size and offsets are measured in number of
+			///										 vertices affected.
+			///						- Buffer: Size and offsets are measured with number of bytes
+			///								  affected. This Vertex Buffer must already be formatted
+			///								  with a Vertex Format, meaning it was activated and then
+			///								  deactivated, even if no vertices were added to it.
+			static copy = function(_other, _size, _offset = 0, _other_offset = 0)
+			{
+				try
+				{
+					if (!self.isFunctional())
+					{
+						self.construct();
+					}
+					
+					if (is_instanceof(_other, VertexBuffer))
+					{
+						if ((_size == undefined) or (_size == all))
+						{
+							_size = vertex_get_number(_other.ID);
+						}
+						
+						vertex_update_buffer_from_vertex(ID, _offset, _other.ID, _other_offset, _size);
+					}
+					else
+					{
+						if ((_size == undefined) or (_size == all))
+						{
+							_size = buffer_get_size(_other.ID);
+						}
+						
+						vertex_update_buffer_from_buffer(ID, _offset, _other.ID, _other_offset, _size);
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "copy()"], _exception);
+				}
+				
+				return self;
+			}
+			
+		#endregion
+		#region <Getters>
+			
+			/// @argument			sizeInBytes? {bool}
+			/// @returns			{int}
+			/// @description		Return the either the number of vertices contained in this Vertex
+			///						Buffer or if specified, its size in bytes.
+			static getSize = function(_sizeInBytes = false)
+			{
+				try
+				{
+					return ((_sizeInBytes) ? vertex_get_buffer_size(ID) : vertex_get_number(ID));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getSize()"], _exception);
+				}
+				
+				return 0;
+			}
+			
 		#endregion
 		#region <Setters>
 			
@@ -148,12 +220,12 @@ function VertexBuffer() constructor
 			/// @description		Draw vertices contained in this Vertex Buffer to the currently
 			///						active Surface, using the specified primitive type and either the
 			///						specified or no texture, provided following requirements are met:
-			///						 - A number of vertices appropriate for the specified primitive
-			///						   type is contained in this Vertex Buffer.
-			///						 - Vertices were added to this Vertex Buffer with the same number
-			///						   and order of types of primitive data as in used Vertex Format.
-			///						 - A Shader is currently active to operate exact the number and
-			///						   types of primitive data used in Vertex Format.
+			///						- A number of vertices appropriate for the specified primitive
+			///						  type is contained in this Vertex Buffer.
+			///						- Vertices were added to this Vertex Buffer with the same number
+			///						  and order of types of primitive data as in used Vertex Format.
+			///						- A Shader is currently active to operate exact the number and
+			///						  types of primitive data used in Vertex Format.
 			static render = function(_primitive_type, _texture = (-1))
 			{
 				try

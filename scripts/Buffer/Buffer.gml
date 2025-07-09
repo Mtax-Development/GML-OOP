@@ -91,10 +91,10 @@ function Buffer() constructor
 			/// @argument			size? {int|all}
 			/// @argument			offset? {int}
 			/// @argument			other_offset? {int}
-			/// @description		Copy all data or a segment of it from other Buffer to this one.
-			///						For both Buffers, a byte offset can be specified for where the
-			///						operation will start and then continue until either the specified
-			///						size in bytes was affected or the end of this Buffer is reached.
+			/// @description		Copy all data or its segment from other Buffer to this one.
+			///						For both, a byte offset can be specified for where the operation
+			///						will start and then continue until the end of either the specified
+			///						segment or Buffer was reached.
 			static copy = function(_other, _size, _offset = 0, _other_offset = 0)
 			{
 				try
