@@ -7,6 +7,9 @@
 //							
 //							Construction types:
 //							- New constructor
+//							- From VertexBuffer: vertexBuffer {VertexBuffer},
+//												 type {constant:buffer_[bufferType]}, alignment? {int},
+//												 vertex_first? {int}, vertex_count? {int}
 //							- Wrapper: other {int:buffer}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Buffer}
@@ -38,6 +41,19 @@ function Buffer() constructor
 							ID = buffer_create(_size, _type, _aligment);
 							buffer_copy(_other.ID, 0, _size, ID, 0);
 						}
+					}
+					else if (is_instanceof(argument[0], VertexBuffer))
+					{
+						var _vertexBuffer = argument[0];
+						var _type = argument[1];
+						var _aligment = ((argument_count > 2) ? argument[2] : 1);
+						var _vertex_first = ((argument_count > 3) ? argument[3] : 0);
+						var _vertex_count = ((argument_count > 4)
+											 ? argument[4] : (vertex_get_number(_vertexBuffer.ID) -
+															  _vertex_first));
+						
+						ID = buffer_create_from_vertex_buffer_ext(_vertexBuffer.ID, _type, _aligment,
+																  _vertex_first, _vertex_count);
 					}
 					else if (argument_count == 1)
 					{
