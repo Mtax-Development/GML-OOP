@@ -485,27 +485,32 @@ function Rectangle() constructor
 				
 				try
 				{
+					var _location_topLeft = [_location.x1, _location.y1];
+					var _location_topRight = [_location.x2, _location.y1];
+					var _location_bottomLeft = [_location.x1, _location.y2];
+					var _location_bottomRight = [_location.x2, _location.y2];
+					
 					if ((!_outline) or (_outline == all))
 					{
 						if (_startWithCenter)
 						{
-							var _center_x = mean(_location.x1, _location.x2);
-							var _center_y = mean(_location.y1, _location.y2);
+							var _location_center = [mean(_location.x1, _location.x2),
+													mean(_location.y1, _location.y2)];
 							
 							array_push(_result,
-									   [[_center_x, _center_y], [_location.x2, _location.y1],
-										[_location.x2, _location.y2], [_center_x, _center_y],
-										[_location.x2, _location.y2], [_location.x1, _location.y2],
-										[_center_x, _center_y], [_location.x1, _location.y2],
-										[_location.x1, _location.y1], [_center_x, _center_y],
-										[_location.x1, _location.y1], [_location.x2, _location.y1]]);
+									   [_location_center, _location_topRight,
+										_location_bottomRight, _location_center,
+										_location_bottomRight, _location_bottomLeft,
+										_location_center, _location_bottomLeft,
+										_location_topLeft, _location_center,
+										_location_topLeft, _location_topRight]);
 						}
 						else
 						{
 							array_push(_result,
-									   [[_location.x2, _location.y1], [_location.x1, _location.y1],
-										[_location.x2, _location.y2], [_location.x2, _location.y2],
-										[_location.x1, _location.y1], [_location.x1, _location.y2]]);
+									   [_location_topRight, _location_topLeft,
+										_location_bottomRight, _location_bottomRight,
+										_location_topLeft, _location_bottomLeft]);
 						}
 					}
 					
@@ -515,23 +520,44 @@ function Rectangle() constructor
 						var _outline_y1 = (_location.y1 - _outline_size);
 						var _outline_x2 = (_location.x2 + _outline_size);
 						var _outline_y2 = (_location.y2 + _outline_size);
+						var _outline_outerTopLeft = [_outline_x1, _outline_y1];
+						var _outline_outerTopInnerLeft = [_location.x1, _outline_y1];
+						var _outline_innerTopOuterLeft = [_outline_x1, _location.y1];
+						var _outline_outerTopRight = [_outline_x2, _outline_y1];
+						var _outline_outerTopInnerRight = [_location.x2, _outline_y1];
+						var _outline_innerTopOuterRight = [_outline_x2, _location.y1];
+						var _outline_outerBottomLeft = [_outline_x1, _outline_y2];
+						var _outline_outerBottomInnerLeft = [_location.x1, _outline_y2];
+						var _outline_innerBottomOuterLeft = [_outline_x1, _location.y2];
+						var _outline_outerBottomRight = [_outline_x2, _outline_y2];
+						var _outline_outerBottomInnerRight = [_location.x2, _outline_y2];
+						var _outline_innerBottomOuterRight = [_outline_x2, _location.y2];
 						
 						array_push(_result,
-								   [[_outline_x2, _outline_y1], [_location.x2, _location.y1],
-									[_outline_x2, _outline_y2], [_outline_x2, _outline_y2],
-									[_location.x2, _location.y1], [_location.x2, _location.y2],
-									
-									[_location.x2, _location.y2], [_location.x1, _location.y2],
-									[_outline_x2, _outline_y2], [_outline_x2, _outline_y2],
-									[_location.x1, _location.y2], [_outline_x1, _outline_y2],
-									
-									[_location.x1, _location.y1], [_outline_x1, _outline_y1],
-									[_location.x1, _location.y2], [_location.x1, _location.y2],
-									[_outline_x1, _outline_y1], [_outline_x1, _outline_y2],
-									
-									[_outline_x2, _outline_y1], [_outline_x1, _outline_y1],
-									[_location.x2, _location.y1], [_location.x2, _location.y1],
-									[_outline_x1, _outline_y1], [_location.x1, _location.y1]]);
+								   [_outline_outerTopRight, _outline_outerTopInnerRight,
+									_outline_innerTopOuterRight, _outline_innerTopOuterRight,
+									_outline_outerTopInnerRight, _location_topRight,
+									_outline_innerTopOuterRight, _location_topRight,
+									_outline_innerBottomOuterRight, _outline_innerBottomOuterRight,
+									_location_topRight, _location_bottomRight,
+									_outline_innerBottomOuterRight, _location_bottomRight,
+									_outline_outerBottomRight, _outline_outerBottomRight, 
+									_location_bottomRight, _outline_outerBottomInnerRight,
+									_location_bottomRight, _location_bottomLeft,
+									_outline_outerBottomInnerRight, _outline_outerBottomInnerRight,
+									_location_bottomLeft, _outline_outerBottomInnerLeft,
+									_location_bottomLeft, _outline_innerBottomOuterLeft,
+									_outline_outerBottomInnerLeft, _outline_outerBottomInnerLeft, 
+									_outline_innerBottomOuterLeft, _outline_outerBottomLeft,
+									_location_topLeft, _outline_innerTopOuterLeft,
+									_location_bottomLeft,_location_bottomLeft,
+									_outline_innerTopOuterLeft, _outline_innerBottomOuterLeft,
+									_outline_outerTopInnerLeft, _outline_outerTopLeft,
+									_location_topLeft, _location_topLeft,
+									_outline_outerTopLeft, _outline_innerTopOuterLeft,
+									_outline_outerTopInnerRight, _outline_outerTopInnerLeft,
+									_location_topRight, _location_topRight,
+									_outline_outerTopInnerLeft, _location_topLeft]);
 					}
 				}
 				catch (_exception)
@@ -643,31 +669,52 @@ function Rectangle() constructor
 						[
 							[_vertex_outline[0], _color_outline_x2y1, _outline_alpha],
 							[_vertex_outline[1], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[2], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[3], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[2], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[3], _color_outline_x2y1, _outline_alpha],
 							[_vertex_outline[4], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[5], _color_outline_x2y2, _outline_alpha],
-							
-							[_vertex_outline[6], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[7], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[5], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[6], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[7], _color_outline_x2y1, _outline_alpha],
 							[_vertex_outline[8], _color_outline_x2y2, _outline_alpha],
 							[_vertex_outline[9], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[10], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[11], _color_outline_x1y2, _outline_alpha],
-							
-							[_vertex_outline[12], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[13], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[14], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[15], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[16], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[17], _color_outline_x1y2, _outline_alpha],
-							
-							[_vertex_outline[18], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[19], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[20], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[21], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[22], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[23], _color_outline_x1y1, _outline_alpha]
+							[_vertex_outline[10], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[11], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[12], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[13], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[14], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[15], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[16], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[17], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[18], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[19], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[20], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[21], _color_outline_x2y2, _outline_alpha],
+							[_vertex_outline[22], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[23], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[24], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[25], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[26], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[27], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[28], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[29], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[30], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[31], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[32], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[33], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[34], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[35], _color_outline_x1y2, _outline_alpha],
+							[_vertex_outline[36], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[37], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[38], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[39], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[40], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[41], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[42], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[43], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[44], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[45], _color_outline_x2y1, _outline_alpha],
+							[_vertex_outline[46], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[47], _color_outline_x1y1, _outline_alpha],
 						];
 						
 						array_push(_primitive, [pr_trianglelist, _vertex_data]);
