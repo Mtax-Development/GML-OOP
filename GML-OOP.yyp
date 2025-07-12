@@ -28,7 +28,6 @@
   "resources":[
     {"id":{"name":"Angle","path":"scripts/Angle/Angle.yy",},},
     {"id":{"name":"ArrayParser","path":"scripts/ArrayParser/ArrayParser.yy",},},
-    {"id":{"name":"Arrow","path":"scripts/Arrow/Arrow.yy",},},
     {"id":{"name":"Buffer","path":"scripts/Buffer/Buffer.yy",},},
     {"id":{"name":"Callback","path":"scripts/Callback/Callback.yy",},},
     {"id":{"name":"Camera","path":"scripts/Camera/Camera.yy",},},
