@@ -412,7 +412,7 @@ function Circle() constructor
 			}
 			
 			/// @argument			location? {Vector2}
-			/// @argument			radius? {reak}
+			/// @argument			radius? {real}
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			startWithCenter? {bool}
 			/// @returns			{real[+]}
@@ -431,6 +431,11 @@ function Circle() constructor
 				
 				try
 				{
+					if (_radius == 0)
+					{
+						return _result;
+					}
+					
 					var _segment_count = 4;
 					_precision = clamp(((_precision div _segment_count) * _segment_count),
 									   _segment_count, 64);
