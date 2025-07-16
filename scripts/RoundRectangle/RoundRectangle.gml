@@ -486,6 +486,8 @@ function RoundRectangle() constructor
 					var _segment_count = 4;
 					var _vertex_location_base = undefined;
 					var _color = _outline_color;
+					_precision = clamp(((_precision div _segment_count) * _segment_count),
+									   _segment_count, 64);
 					
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
@@ -517,8 +519,8 @@ function RoundRectangle() constructor
 												_color_order_fill]);
 					}
 					
-					if (((_outline) or (_outline == all)) and (outline_color != undefined)
-					and (outline_alpha > 0) and (outline_size >= 1))
+					if (((_outline) or (_outline == all)) and (_outline_color != undefined)
+					and (_outline_alpha > 0) and (_outline_size >= 1))
 					{
 						var _outline_primitive = undefined;
 						var _vertex_location = [];
@@ -527,22 +529,64 @@ function RoundRectangle() constructor
 													   _outline_color.color1, _outline_color.color2]
 													: undefined);
 						var _vertex_color_offset_outline = 1;
+						var _outline_segment_gradient_offset = 0;
 						
-						if (outline_size > 1)
+						if (_outline_size > 1)
 						{
 							_outline_primitive = pr_trianglestrip;
 							_vertex_color_offset_outline = 2;
-							var _vertex_location_inner = ((_vertex_location_base)
+							_outline_segment_gradient_offset = 2;
+							var _vertex_location_outline_inner = ((_vertex_location_base)
 							 ?? self.getVertexLocations(_location, _radius, _precision, true));
-							var _vertex_location_outer =
+							var _vertex_location_outline_outer =
 							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
 													 _radius, _precision);
 							
 							var _i = 0;
-							repeat (array_length(_vertex_location_outer))
+							repeat (array_length(_vertex_location_outline_outer))
 							{
-								array_push(_vertex_location, _vertex_location_inner[(_i + 1)],
-										   _vertex_location_outer[_i]);
+								array_push(_vertex_location, _vertex_location_outline_inner[(_i + 1)],
+										   _vertex_location_outline_outer[_i]);
+								
+								++_i;
+							}
+							
+							var _vertex_location_outline = [_vertex_location_outline_outer,
+															_vertex_location_outline_inner];
+							var _vertex_location_outline_count =
+							 array_length(_vertex_location_outline);
+							var _segment_vertex_count = ((_precision / _segment_count) + 1);
+							var _position_offset = 4;
+							var _outline_first_offset = [[0, 0], [(-1), 0], [0, (-1)], [(-1), 0]];
+							var _outline_second_offset = [[0, (-1)], [(-1), 0], [0, (-1)], [(-1), 0]];
+							var _i = 1;
+							repeat (_segment_count)
+							{
+								var _vertex_first = (_segment_vertex_count * _i);
+								var _vertex_second = (_vertex_first + 1);
+								var _vertex_location_current = ((_vertex_first * 2) +
+																(_position_offset * (_i - 1)));
+								var _outline_first =
+								 _vertex_location_outline[(_i mod _vertex_location_outline_count)];
+								var _outline_second =
+								 _vertex_location_outline[((_i + 1) mod
+														   _vertex_location_outline_count)];
+								var _outline_first_offset_current = _outline_first_offset[(_i - 1)];
+								var _outline_second_offset_current = _outline_second_offset[(_i - 1)];
+								
+								array_insert(_vertex_location, _vertex_location_current,
+											 _vertex_location_outline_inner[_vertex_first],
+											 [_outline_first[_vertex_first +
+															 _outline_first_offset_current[0]][0],
+											  _outline_second[_vertex_first +
+															  _outline_first_offset_current[1]][1]]);
+								
+								array_insert(_vertex_location, (_vertex_location_current + 2),
+											 _vertex_location_outline_inner[_vertex_second],
+											 [_outline_first[(_vertex_second +
+															  _outline_second_offset_current[0])][0],
+											  _outline_second[(_vertex_second +
+											   _outline_second_offset_current[1])][1]]);
 								
 								++_i;
 							}
@@ -582,11 +626,11 @@ function RoundRectangle() constructor
 							repeat (_vertex_count)
 							{
 								var _vertex_location_current = _primitive_location[_i[1]];
-							
+								
 								var _color_segment_current =
-								 (floor(_i[1] / _vertex_count_color_segment) mod
-								  _color_segment_count);
-								_color = _color_order_current[_color_segment_current];
+								 (floor((_i[1] + _outline_segment_gradient_offset) /
+								  _vertex_count_color_segment) mod _color_segment_count);
+								_color = _color_order_current[max(_color_segment_current, 0)];
 								
 								array_push(_vertex_data_current, [_vertex_location_current, _color,
 																  _vertex_alpha]);
@@ -928,11 +972,10 @@ function RoundRectangle() constructor
 												.createPrimitiveRenderData(_primitiveType_outline));
 					}
 					
-					var _primitive = self.getPrimitiveRenderData(_location, _radius,
-																 _fill_color, _fill_alpha,
-																 _outline_size, _outline_color,
-																 _outline_alpha, _precision,
-																 _outline);
+					var _primitive = self.getPrimitiveRenderData(_location, _radius, _fill_color,
+																 _fill_alpha, _outline_size,
+																 _outline_color, _outline_alpha,
+																 _precision, _outline);
 					var _vertex = new Vector2();
 					var _i = [0, 0];
 					repeat (array_length(_primitive))
