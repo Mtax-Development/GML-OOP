@@ -485,17 +485,21 @@ function Rectangle() constructor
 				
 				try
 				{
-					var _location_topLeft = [_location.x1, _location.y1];
-					var _location_topRight = [_location.x2, _location.y1];
-					var _location_bottomLeft = [_location.x1, _location.y2];
-					var _location_bottomRight = [_location.x2, _location.y2];
+					var _location_x1 = min(_location.x1, _location.x2);
+					var _location_x2 = max(_location.x1, _location.x2);
+					var _location_y1 = min(_location.y1, _location.y2);
+					var _location_y2 = max(_location.y1, _location.y2);
+					var _location_topLeft = [_location_x1, _location_y1];
+					var _location_topRight = [_location_x2, _location_y1];
+					var _location_bottomLeft = [_location_x1, _location_y2];
+					var _location_bottomRight = [_location_x2, _location_y2];
 					
 					if ((!_outline) or (_outline == all))
 					{
 						if (_startWithCenter)
 						{
-							var _location_center = [mean(_location.x1, _location.x2),
-													mean(_location.y1, _location.y2)];
+							var _location_center = [mean(_location_x1, _location_x2),
+													mean(_location_y1, _location_y2)];
 							
 							array_push(_result,
 									   [_location_center, _location_topRight,
@@ -516,22 +520,22 @@ function Rectangle() constructor
 					
 					if ((_outline) or (_outline == all))
 					{
-						var _outline_x1 = (_location.x1 - _outline_size);
-						var _outline_y1 = (_location.y1 - _outline_size);
-						var _outline_x2 = (_location.x2 + _outline_size);
-						var _outline_y2 = (_location.y2 + _outline_size);
+						var _outline_x1 = (_location_x1 - _outline_size);
+						var _outline_y1 = (_location_y1 - _outline_size);
+						var _outline_x2 = (_location_x2 + _outline_size);
+						var _outline_y2 = (_location_y2 + _outline_size);
 						var _outline_outerTopLeft = [_outline_x1, _outline_y1];
-						var _outline_outerTopInnerLeft = [_location.x1, _outline_y1];
-						var _outline_innerTopOuterLeft = [_outline_x1, _location.y1];
+						var _outline_outerTopInnerLeft = [_location_x1, _outline_y1];
+						var _outline_innerTopOuterLeft = [_outline_x1, _location_y1];
 						var _outline_outerTopRight = [_outline_x2, _outline_y1];
-						var _outline_outerTopInnerRight = [_location.x2, _outline_y1];
-						var _outline_innerTopOuterRight = [_outline_x2, _location.y1];
+						var _outline_outerTopInnerRight = [_location_x2, _outline_y1];
+						var _outline_innerTopOuterRight = [_outline_x2, _location_y1];
 						var _outline_outerBottomLeft = [_outline_x1, _outline_y2];
-						var _outline_outerBottomInnerLeft = [_location.x1, _outline_y2];
-						var _outline_innerBottomOuterLeft = [_outline_x1, _location.y2];
+						var _outline_outerBottomInnerLeft = [_location_x1, _outline_y2];
+						var _outline_innerBottomOuterLeft = [_outline_x1, _location_y2];
 						var _outline_outerBottomRight = [_outline_x2, _outline_y2];
-						var _outline_outerBottomInnerRight = [_location.x2, _outline_y2];
-						var _outline_innerBottomOuterRight = [_outline_x2, _location.y2];
+						var _outline_outerBottomInnerRight = [_location_x2, _outline_y2];
+						var _outline_innerBottomOuterRight = [_outline_x2, _location_y2];
 						
 						array_push(_result,
 								   [_outline_outerTopRight, _outline_outerTopInnerRight,
