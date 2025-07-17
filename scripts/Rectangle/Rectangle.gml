@@ -486,8 +486,8 @@ function Rectangle() constructor
 				try
 				{
 					var _location_x1 = min(_location.x1, _location.x2);
-					var _location_x2 = max(_location.x1, _location.x2);
 					var _location_y1 = min(_location.y1, _location.y2);
+					var _location_x2 = max(_location.x1, _location.x2);
 					var _location_y2 = max(_location.y1, _location.y2);
 					var _location_topLeft = [_location_x1, _location_y1];
 					var _location_topRight = [_location_x2, _location_y1];
