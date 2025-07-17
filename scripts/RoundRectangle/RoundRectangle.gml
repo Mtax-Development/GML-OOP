@@ -388,6 +388,10 @@ function RoundRectangle() constructor
 				
 				try
 				{
+					var _location_x1 = min(_location.x1, _location.x2);
+					var _location_y1 = min(_location.y1, _location.y2);
+					var _location_x2 = max(_location.x1, _location.x2);
+					var _location_y2 = max(_location.y1, _location.y2);
 					var _segment_count = 4;
 					_precision = clamp(((_precision div _segment_count) * _segment_count),
 									   _segment_count, 64);
@@ -404,12 +408,12 @@ function RoundRectangle() constructor
 						++_i;
 					}
 					
-					var _size_x = abs(_location.x1 - _location.x2);
-					var _size_y = abs(_location.y1 - _location.y2);
+					var _size_x = abs(_location_x1 - _location_x2);
+					var _size_y = abs(_location_y1 - _location_y2);
 					var _radius_x = clamp(_radius.x, 0, _size_x);
 					var _radius_y = clamp(_radius.y, 0, _size_y);
-					var _center_x = mean(_location.x1, _location.x2);
-					var _center_y = mean(_location.y1, _location.y2);
+					var _center_x = mean(_location_x1, _location_x2);
+					var _center_y = mean(_location_y1, _location_y2);
 					var _line_size_x = ((_size_x - _radius_x) * 0.5);
 					var _line_size_y = ((_size_y - _radius_y) * 0.5);
 					var _centerArrayOffset = real(bool(_startWithCenter));
@@ -539,8 +543,8 @@ function RoundRectangle() constructor
 							var _vertex_location_outline_inner = ((_vertex_location_base)
 							 ?? self.getVertexLocations(_location, _radius, _precision, true));
 							var _vertex_location_outline_outer =
-							 self.getVertexLocations(new Vector4(_location).grow(_outline_size),
-													 _radius, _precision);
+							 self.getVertexLocations(new Vector4(_location).sort(true)
+													  .grow(_outline_size), _radius, _precision);
 							
 							var _i = 0;
 							repeat (array_length(_vertex_location_outline_outer))
