@@ -7,7 +7,9 @@
 /// @argument				outline_scale? {real}
 /// @argument				outline_color? {int:color|Color3}
 /// @argument				outline_alpha? {real}
-/// @description			Constructs a Triangle Shape.
+/// @description			Constructs a two-dimensional Triangle Shape, connecting three specified
+///							points. The size of its outline is specified by scaled proportionally to
+///							the fill, enlarging it without altering its proportions.
 //							
 //							Construction types:
 //							- New constructor

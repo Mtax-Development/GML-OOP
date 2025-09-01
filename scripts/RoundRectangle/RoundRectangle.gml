@@ -7,8 +7,9 @@
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
 /// @argument				precision? {int:divisibleBy4}
-/// @description			Constructs a Rounded Rectangle Shape with configurable radius of its
-///							corner curves.
+/// @description			Constructs a two-dimensional Rounded Rectangle Shape with configurable
+///							radius of its corner curves, made of series of triangles, the amount of
+///							which is increased by the specified precision.
 //							
 //							Construction types:
 //							- New constructor

@@ -5,7 +5,8 @@
 /// @argument				outline_size? {int}
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
-/// @description			Constructs a Rectangle Shape.
+/// @description			Constructs a two-dimensional Rectangle Shape, which is an unrotated region
+///							between two specified points.
 //							
 //							Construction types:
 //							- New constructor

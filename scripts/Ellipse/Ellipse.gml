@@ -6,7 +6,10 @@
 /// @argument				outline_color? {int:color}
 /// @argument				outline_alpha? {real}
 /// @argument				precision? {int:divisibleBy4}
-/// @description			Constructs an Ellipse Shape.
+/// @description			Constructs an Ellipse Shape, which is a Circle that can be extended at
+///							single axis to fit between two points of its specified location. It is
+///							a series of triangles placed circularly from center, the amount of which
+///							equals the specified precision.
 //							
 //							Construction types:
 //							- New constructor

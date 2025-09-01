@@ -6,7 +6,9 @@
 /// @argument				outline_size? {int}
 /// @argument				outline_color? {int:color|Color4}
 /// @argument				outline_alpha? {real}
-/// @description			Constructs a Line Shape.
+/// @description			Constructs a two-dimensional Line Shape, which is a Rectangle rotated
+///							towards its middle points, from sides of which it is extended according
+///							to specified size.
 //							
 //							Construction types:
 //							- New constructor

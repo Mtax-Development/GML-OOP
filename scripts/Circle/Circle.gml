@@ -7,7 +7,9 @@
 /// @argument				outline_color? {int:color}
 /// @argument				outline_alpha? {real}
 /// @argument				precision? {int:divisibleBy4}
-/// @description			Constructs a Circle Shape.
+/// @description			Constructs a Circle Shape, which is a region within radius from specified
+///							center. When rendered, it is a series of triangles placed circularly from
+///							center, the amount of which equals the specified precision.
 //							
 //							Construction types:
 //							- New constructor
