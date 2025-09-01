@@ -7,6 +7,9 @@
 /// @argument				alpha? {real}
 /// @description			Constructs a three-dimensional representation of a two-dimensional Plane
 ///							Shape. Its location is its center, from which it is scaled.
+///							A two-dimensional Sprite can be rendered using this Shape. If specified
+///							with SpriteRenderer, its color and alpha will take precedence over these
+///							properties of this Shape during rendering.
 //							
 //							Construction types:
 //							- New constructor
@@ -92,42 +95,244 @@ function Plane() constructor
 						((is_instanceof(scale, Scale)) and (scale.isFunctional())) and
 						((angle == undefined) or ((is_instanceof(angle, EulerAngle)) and
 						 (angle.isFunctional()))) and ((sprite == undefined) or
-						(((is_instanceof(sprite, Sprite)) or
-						 (is_instanceof(sprite, SpriteRenderer))) and (sprite.isFunctional(true)))) and
-						((is_real(color)) or ((is_instanceof(color, Color4)) and
+						 (((sprite == undefined) or ((is_instanceof(sprite, Sprite)) or
+						 (is_instanceof(sprite, SpriteRenderer))) and
+						 (sprite.isFunctional(true))))) and ((is_real(color)) or
+						 ((is_instanceof(color, Color4)) and
 						 (color.isFunctional()))) and (is_real(alpha)));
 			}
 			
 		#endregion
 		#region <Getters>
 			
-			/// @returns			{real[]:matrix}
-			/// @description		Return current transformation matrix of this Shape.
-			static getTransform = function()
+			/// @argument			location? {Vector3}
+			/// @argument			scale? {Scale}
+			/// @argument			angle? {EulerAngle}
+			/// @argument			sprite? {Sprite|SpriteRenderer}
+			/// @returns			{real[+]}
+			/// @description		Return an array containing nested arrays with point locations,
+			///						resulting in this Shape when connected.
+			static getVertexLocations = function(_location = location, _scale = scale, _angle = angle,
+												 _sprite = sprite)
 			{
-				var _transform = matrix_multiply(matrix_build(0, 0, 0, (-angle.y), 0, 0, 1, 1, 1),
-												 matrix_build(0, 0, 0, 0, (-angle.x), 0, 1, 1, 1));
-				_transform = matrix_multiply(_transform,
-											 matrix_build(0, 0, 0, 0, 0, (-angle.z), 1, 1, 1));
-				_transform = matrix_multiply(_transform,
-											 matrix_build(location.x, location.y, (-location.z), 0, 0,
-														  0, 1, 1, 1));
+				var _result = [];
 				
-				return _transform;
+				try
+				{
+					var _vertex_sign = self.getVertexSign();
+					var _vertex_count = array_length(_vertex_sign);
+					var _angle_x = 0;
+					var _angle_y = 0;
+					var _angle_z = 0;
+					var _texture = undefined;
+					var _uv_order = undefined;
+					var _frame = 0;
+					var _offset_spriteRenderer_x = 0;
+					var _offset_spriteRenderer_y = 0;
+					var _offset_trim_x = 0;
+					var _offset_trim_y = 0;
+					var _scale_uv_x = _scale.x;
+					var _scale_uv_y = _scale.y;
+					var _sprite_size_scale_x = 1;
+					var _sprite_size_scale_y = 1;
+					
+					if (is_instanceof(_angle, EulerAngle))
+					{
+						_angle_x = _angle.x;
+						_angle_y = _angle.y;
+						_angle_z = _angle.z;
+					}
+					
+					if (is_instanceof(_sprite, SpriteRenderer))
+					{
+						if (is_instanceof(_sprite.location, Vector2))
+						{
+							_offset_spriteRenderer_x = _sprite.location.x;
+							_offset_spriteRenderer_y = _sprite.location.y;
+						}
+						
+						_frame = _sprite.frame;
+						
+						if (is_instanceof(_sprite.scale, Scale))
+						{
+							_scale = new Scale((_sprite.scale.x * _scale.x),
+											   (_sprite.scale.y * _scale.y));
+						}
+						
+						_sprite = _sprite.sprite;
+					}
+					
+					if (is_instanceof(_sprite, Sprite))
+					{
+						_texture = sprite_get_texture(_sprite.ID, _frame);
+						var _sprite_size_x = sprite_get_width(_sprite.ID);
+						var _sprite_size_y = sprite_get_height(_sprite.ID);
+						var _uv = texture_get_uvs(_texture);
+						var _trim = _sprite.getTextureTrim(_frame);
+						_uv_order = [[_uv[0], _uv[1]], [_uv[0], _uv[3]], [_uv[2], _uv[1]],
+									 [_uv[2], _uv[3]]];
+						_sprite_size_scale_x = (_scale.x / _sprite_size_x);
+						_sprite_size_scale_y = (_scale.y / _sprite_size_y);
+						_scale_uv_x = (_scale.x * _uv[6]);
+						_scale_uv_y = (_scale.y * _uv[7]);
+						_offset_trim_x = ((_trim.x1 - _trim.x2) * _sprite_size_scale_x);
+						_offset_trim_y = ((_trim.y1 - _trim.y2) * _sprite_size_scale_y);
+					}
+					else
+					{
+						_uv_order = array_create(_vertex_count, [0, 0]);
+					}
+					
+					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
+														1);
+					var _i = 0;
+					repeat (_vertex_count)
+					{
+						var _vertex_sign_current = _vertex_sign[_i];
+						var _transform = matrix_transform_vertex
+						(
+							_matrix_rotation,
+							((_scale_uv_y * _vertex_sign_current[0]) + _offset_trim_y +
+							 _offset_spriteRenderer_y),
+							((_scale_uv_x * _vertex_sign_current[1]) + _offset_trim_x +
+							 _offset_spriteRenderer_x), 0
+						);
+						
+						_result[_i] = [(_location.x + _transform[1]), (_location.y + _transform[0]),
+									   ((-_location.z) + _transform[2])];
+						
+						++_i;
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+				}
+				
+				return _result;
+			}
+			
+			/// @argument			sprite? {Sprite|SpriteRenderer}
+			/// @argument			frame? {int}
+			/// @description		Return the UV coordinates for every vertex of the specfied frame
+			///						of the specified Sprite.
+			static getUV = function(_sprite = sprite, _frame = 0)
+			{
+				try
+				{
+					if (is_instanceof(_sprite, SpriteRenderer))
+					{
+						_frame = _sprite.frame;
+						_sprite = _sprite.sprite;
+					}
+					
+					if (is_instanceof(_sprite, Sprite))
+					{
+						var _texture = sprite_get_texture(_sprite.ID, _frame);
+						var _uv = texture_get_uvs(_texture);
+						
+						return [_texture, [[_uv[0], _uv[3]], [_uv[0], _uv[1]], [_uv[2], _uv[3]],
+										   [_uv[2], _uv[1]]]];
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getUV()"], _exception);
+				}
+				
+				var _vertex_count = 4;
+				
+				return [(-1), array_create(_vertex_count, [0, 0])];
+			}
+			
+			/// @argument			location {real[]}
+			/// @returns			{Vector3} | On error: {undefined}
+			/// @see				getVertexLocation()
+			/// @description		Return normalized direction of this Shape, based on the specified
+			///						separate vertex location arrays, nested in an array.
+			static getNormal = function(_location)
+			{
+				try
+				{
+					return new Vector3((_location[1][0] - _location[0][0]),
+									   (_location[1][1] - _location[0][1]),
+									   (_location[1][2] - _location[0][2]))
+							.crossProduct(new Vector3((_location[2][0] - _location[0][0]),
+													  (_location[2][1] - _location[0][1]),
+													  (_location[2][2] - _location[0][2])))
+							.getNormalized();
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getNormal()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			location? {Vector3}
+			/// @argument			angle? {EulerAngle}
+			/// @returns			{real[]:matrix}
+			/// @description		Return current transformation matrix of this Shape, using its data
+			///						or its specified temporarily replaced parts.
+			static getTransform = function(_location = location, _angle = angle)
+			{
+				return matrix_build(_location.x, _location.y, (-_location.z), (-_angle.y), (-_angle.x),
+									(-_angle.z), 1, 1, 1);
+			}
+			
+			/// @returns			{int[+]}
+			/// @description		Return an array containing multipliers for direction of offsets
+			///						used in calculating position of each vertex of this Shape.
+			static getVertexSign = function()
+			{
+				return [[1, (-1)], [(-1), (-1)], [1, 1], [(-1), 1]];
+			}
+			
+			/// @argument			location? {Vector3}
+			/// @argument			scale? {Vector3}
+			/// @argument			angle? {EulerAngle}
+			/// @argument			sprite? {Sprite}
+			/// @returns			{any[+]} | On error: {undefined}
+			/// @description		Return an array containg rendering data for each vertex resulting
+			///						in this Shape, consisting of its primitive type, location and UV
+			///						of each vertex, using its current data or temporarily replaced
+			///						parts. Data will be represented at following array positions:
+			///						- array[0]: primitive type {constant:pr_*}
+			///						- array[1]: vertex locations {real[+]}
+			///						- array[2]: texture data {any[+]}
+			static getPrimitiveRenderData = function(_location = location, _scale = scale,
+													 _angle = angle, _sprite = sprite)
+			{
+				try
+				{
+					var _vertex_location = self.getVertexLocations(_location, _scale, _angle,
+																   _sprite);
+					var _uv = self.getUV(_sprite);
+					
+					return [pr_trianglestrip, _vertex_location, _uv];
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
 			}
 			
 		#endregion
 		#region <Execution>
 			
-			/// @argument			location? {Vector2|Vector4}
+			/// @argument			location? {Vector3}
 			/// @argument			scale? {Scale}
-			/// @argument			angle? {Angle}
+			/// @argument			angle? {EulerAngle}
 			/// @argument			sprite? {Sprite|SpriteRenderer}
-			/// @argument			color? {int:color|Color4}
+			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw, using data of this constructor or its specified
 			///						temporarily replaced parts.
-			static render = function(_location, _scale, _angle, _sprite, _color, _alpha)
+			static render = function(_location = location, _scale = scale, _angle = angle,
+									 _sprite = sprite, _color = color, _alpha = alpha)
 			{
 				var _matrix_original = matrix_get(matrix_world);
 				var _location_original = location;
@@ -137,12 +342,12 @@ function Plane() constructor
 				var _color_original = color;
 				var _alpha_original = alpha;
 				
-				sprite = (_sprite ?? sprite);
-				location = (_location ?? location);
-				scale = (_scale ?? scale);
-				angle = (_angle ?? angle);
-				color = (_color ?? color);
-				alpha = (_alpha ?? alpha);
+				sprite = _sprite;
+				location = _location;
+				scale = _scale;
+				angle = _angle;
+				color = _color;
+				alpha = _alpha;
 				
 				try
 				{
@@ -155,13 +360,16 @@ function Plane() constructor
 						
 						if (is_instanceof(sprite, Sprite))
 						{
-							var _scale_sprite = new Scale(((scale.x * 2) /
+							var _sprite_size_x = sprite_get_width(sprite.ID);
+							var _sprite_size_y = sprite_get_height(sprite.ID);
+							var _sprite_scale = new Scale(((scale.x * 2) /
 														   sprite_get_width(sprite.ID)),
 														  ((scale.y * 2) /
 														   sprite_get_height(sprite.ID)));
+							var _origin = new Vector2((_sprite_size_x * 0.5), (_sprite_size_y * 0.5));
 							
-							sprite.render(new Vector2(((-_scale.x) * 0.5), ((-_scale.y) * 0.5)), 0,
-										  _scale_sprite, undefined, color, alpha);
+							sprite.render(new Vector2(0, 0), 0, _sprite_scale, undefined, color,
+										  alpha, undefined, _origin);
 						}
 						else if (is_instanceof(sprite, SpriteRenderer))
 						{
@@ -169,53 +377,34 @@ function Plane() constructor
 										   ? sprite.location : new Vector2(0, 0));
 							var _sprite_size_x = sprite_get_width(sprite.sprite.ID);
 							var _sprite_size_y = sprite_get_height(sprite.sprite.ID);
-							var _scale_sprite = new Scale((sprite.scale.x * ((scale.x * 2) /
+							var _sprite_scale = new Scale((sprite.scale.x * ((scale.x * 2) /
 														   _sprite_size_x)),
 														  (sprite.scale.y * ((scale.y * 2) /
 														   _sprite_size_y)));
-							var _origin = new Vector2((_sprite_size_x * 0.5), (_sprite_size_y * 0.5))
+							var _origin = new Vector2((_sprite_size_x * 0.5), (_sprite_size_y * 0.5));
 							
-							sprite.render(undefined, _offset, undefined, _scale_sprite, undefined,
+							sprite.render(undefined, _offset, undefined, _sprite_scale, undefined,
 										  undefined, undefined, undefined, _origin);
 						}
 						else
 						{
-							static _pixel = function()
+							var _vertex_sign = self.getVertexSign();
+							
+							draw_primitive_begin(pr_trianglestrip);
 							{
-								var _surface = surface_create(1, 1);
-								surface_set_target(_surface);
+								var _i = 0;
+								repeat (array_length(_vertex_sign))
 								{
-									draw_clear(c_white);
+									var _vertex_sign_current = _vertex_sign[_i];
+									
+									draw_vertex_color((scale.x * _vertex_sign_current[0]),
+													  (scale.y * _vertex_sign_current[1]), color,
+													  alpha);
+									
+									++_i;
 								}
-								surface_reset_target();
-								
-								var _sprite = sprite_create_from_surface(_surface, 0, 0, 1, 1, false,
-																		 false, 0, 0);
-								surface_free(_surface);
-								
-								return _sprite;
-							}();
-							
-							var _color1, _color2, _color3, _color4;
-								
-							if (is_instanceof(color, Color4))
-							{
-								_color1 = color.color1;
-								_color2 = color.color2;
-								_color3 = color.color3;
-								_color4 = color.color4;
 							}
-							else
-							{
-								_color1 = color;
-								_color2 = color;
-								_color3 = color;
-								_color4 = color;
-							}
-							
-							draw_sprite_general(_pixel, 0, 0, 0, 1, 1, (-scale.x), (-scale.y),
-												(scale.x * 2), (scale.y * 2), 0, _color1, _color2,
-												_color3, _color4, alpha);
+							draw_primitive_end();
 						}
 						
 						event.afterRender.execute();
@@ -334,133 +523,69 @@ function Plane() constructor
 			/// @argument			sprite? {Sprite|SpriteRenderer}
 			/// @argument			color? {int:color}
 			/// @argument			alpha? {real}
-			/// @argument			stretchCroppedTexture? {bool}
+			/// @argument			vertexBuffer? {VertexBuffer}
 			/// @returns			{VertexBuffer.PrimitiveRenderData[]}
-			/// @description		Return rendering data of this constructor in Vertex Buffers, using
-			///						its current data or specified temporarily replaced parts.
-			///						If using a Sprite with texture group setting set to crop fully
-			///						transparent pixels around edges of the image, resulting Shape
-			///						will be made smaller to remove that transparency, unless specified
-			///						to stretch the image without transparency to full Shape size.
+			/// @description		Return rendering data of this constructor in a Vertex Buffer,
+			///						using its current data or specified temporarily replaced parts.
 			static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
 											 _sprite = sprite, _color = color, _alpha = alpha,
-											 _stretchCroppedTexture = false)
+											 _vertexBuffer)
 			{
-				var _vertexBuffer = undefined;
-				var _renderData = undefined;
-				
 				try
 				{
-					var _offset = [[(-1), (-1)], [1, (-1)], [(-1), 1], [1, 1]];
-					var _offset_count = array_length(_offset);
-					var _angle_x = 0;
-					var _angle_y = 0;
-					var _angle_z = 0;
-					
-					if (is_instanceof(_angle, EulerAngle))
-					{
-						_angle_x = _angle.x;
-						_angle_y = _angle.y;
-						_angle_z = _angle.z;
-					}
-					
-					var _texture = undefined;
-					var _uv_order = undefined;
-					var _frame = 0;
-					var _offset_spriteRenderer_x = 0;
-					var _offset_spriteRenderer_y = 0;
-					var _offset_trim_x = 0;
-					var _offset_trim_y = 0;
-					var _scale_uv_x = _scale.x;
-					var _scale_uv_y = _scale.y;
-					var _sprite_size_scale_x = 1;
-					var _sprite_size_scale_y = 1;
-					
 					if (is_instanceof(_sprite, SpriteRenderer))
 					{
-						if (is_instanceof(_sprite.location, Vector2))
-						{
-							_offset_spriteRenderer_x = _sprite.location.x;
-							_offset_spriteRenderer_y = _sprite.location.y;
-						}
-						
-						_frame = _sprite.frame;
 						_color = _sprite.color;
 						_alpha = _sprite.alpha;
-						
-						if (is_instanceof(_sprite.scale, Scale))
-						{
-							_scale = new Scale((_sprite.scale.x * _scale.x),
-											   (_sprite.scale.y * _scale.y));
-						}
-						
-						_sprite = _sprite.sprite;
 					}
 					
-					if (is_instanceof(_sprite, Sprite))
+					var _vertexBuffer_wasActive = false;
+					
+					if (is_instanceof(_vertexBuffer, VertexBuffer))
 					{
-						_texture = sprite_get_texture(_sprite.ID, _frame);
-						var _texelSize_x = texture_get_texel_width(_texture);
-						var _texelSize_y = texture_get_texel_height(_texture);
-						var _sprite_size_x = sprite_get_width(_sprite.ID);
-						var _sprite_size_y = sprite_get_height(_sprite.ID);
-						var _uv = texture_get_uvs(_texture);
-						_uv_order = [[_uv[0], _uv[1]], [_uv[0], _uv[3]], [_uv[2], _uv[1]],
-									 [_uv[2], _uv[3]]];
-						
-						if (!_stretchCroppedTexture)
-						{
-							var _trim = _sprite.getTextureTrim(_frame);
-							_sprite_size_scale_x = (_scale.x / _sprite_size_x);
-							_sprite_size_scale_y = (_scale.y / _sprite_size_y);
-							_scale_uv_x = (_scale.x * _uv[6]);
-							_scale_uv_y = (_scale.y * _uv[7]);
-							_offset_trim_x = ((_trim.x1 - _trim.x2) * _sprite_size_scale_x);
-							_offset_trim_y = ((_trim.y1 - _trim.y2) * _sprite_size_scale_y);
-						}
+						_vertexBuffer_wasActive = _vertexBuffer.active;
 					}
 					else
 					{
-						_uv_order = array_create(_offset_count, [0, 0]);
+						_vertexBuffer = new VertexBuffer();
+					}
+					
+					var _primitive = self.getPrimitiveRenderData(_location, _scale, _angle, _sprite);
+					var _primitive_type = _primitive[0];
+					var _vertex_location = _primitive[1];
+					var _texture_data = _primitive[2];
+					var _uv = _texture_data[1];
+					var _normal = self.getNormal(_vertex_location);
+					var _renderData = _vertexBuffer.createPrimitiveRenderData(_primitive_type,
+																			  vertex_position_3d,
+																			  _texture_data[0]);
+					
+					if (!_vertexBuffer_wasActive)
+					{
+						_vertexBuffer.setActive(_renderData.vertexFormat);
 					}
 					
 					var _vertex = new Vector3();
-					var _normal = new Vector3(0, 1, 0);
-					var _matrix_rotation = matrix_build(0, 0, 0, _angle_x, _angle_y, _angle_z, 1, 1,
-														1);
-					_vertexBuffer = new VertexBuffer();
-					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip,
-																		  vertex_position_3d,
-																		  _texture);
-					
-					_vertexBuffer.setActive(_renderData.vertexFormat);
+					var _i = 0;
+					repeat (array_length(_vertex_location))
 					{
-						var _i = 0;
-						repeat (_offset_count)
-						{
-							var _offset_current = _offset[_i];
-							var _uv_order_current = _uv_order[_i];
-							var _transform = matrix_transform_vertex
-							(
-								_matrix_rotation,
-								((_scale_uv_y * _offset_current[0]) + _offset_trim_y +
-								 _offset_spriteRenderer_y),
-								((_scale_uv_x * _offset_current[1]) + _offset_trim_x +
-								 _offset_spriteRenderer_x), 0
-							);
-							
-							_vertexBuffer
-							 .setLocation3D(_vertex.set((_location.x + _transform[1]),
-														(_location.y + _transform[0]),
-														((-_location.z) + _transform[2])))
-							 .setNormal(_normal)
-							 .setUV(_uv_order_current[0], _uv_order_current[1])
-							 .setColor(_color, _alpha);
-							
-							++_i;
-						}
+						var _vertex_uv_current = _uv[_i];
+						
+						_vertexBuffer
+						 .setLocation3D(_vertex.setAll(_vertex_location[_i]))
+						 .setNormal(_normal)
+						 .setUV(_vertex_uv_current[0], _vertex_uv_current[1])
+						 .setColor(_color, _alpha);
+						
+						++_i;
 					}
-					_vertexBuffer.setActive(false);
+					
+					if (!_vertexBuffer_wasActive)
+					{
+						_vertexBuffer.setActive(false);
+					}
+					
+					return _renderData;
 				}
 				catch (_exception)
 				{
@@ -472,7 +597,7 @@ function Plane() constructor
 					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
-				return _renderData;
+				return undefined;
 			}
 			
 		#endregion
