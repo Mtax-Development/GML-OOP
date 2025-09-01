@@ -778,7 +778,7 @@ function Vector3() constructor
 			/// @argument			y? {real}
 			/// @argument			z? {real}
 			/// @description		Set each value of this Vector3.
-			static set = function(_x = x, _y = y, _z)
+			static set = function(_x = x, _y = y, _z = z)
 			{
 				x = _x;
 				y = _y;
