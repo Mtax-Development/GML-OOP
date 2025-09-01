@@ -304,7 +304,7 @@ function RoundRectangle() constructor
 				{
 					return (((_device == undefined) ? mouse_check_button_pressed(_button)
 													: device_mouse_check_button_pressed(_device,
-																					    _button))
+																						_button))
 							and (self.cursorOver(_device, _GUI)));
 				}
 				catch (_exception)
@@ -357,7 +357,7 @@ function RoundRectangle() constructor
 				{
 					return (((_device == undefined) ? mouse_check_button_released(_button)
 													: device_mouse_check_button_released(_device,
-																					     _button))
+																						 _button))
 							and (self.cursorOver(_device, _GUI)));
 				}
 				catch (_exception)
@@ -435,9 +435,9 @@ function RoundRectangle() constructor
 						
 						_result[(_i + _centerArrayOffset)] =
 						 [(_center_x + (_line_size_x * _sign_x[_segment_current]) +
-						  (_radius_x * _curve_cos[(_i - _segment_current)] * 0.5)),
+						   (_radius_x * _curve_cos[(_i - _segment_current)] * 0.5)),
 						  (_center_y + (_line_size_y * _sign_y[_segment_current]) +
-						  (_radius_y * _curve_sin[(_i - _segment_current)] * 0.5))];
+						   (_radius_y * _curve_sin[(_i - _segment_current)] * 0.5))];
 						
 						++_i;
 					}
@@ -880,7 +880,7 @@ function RoundRectangle() constructor
 				var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
 				var _radius = ((is_instanceof(radius, Vector2)) ? radius.toArray() : radius);
 				var _fill_color = (((is_instanceof(fill_color, Color2)) or
-								    (is_instanceof(fill_color, Color4))) ? fill_color.toArray()
+									(is_instanceof(fill_color, Color4))) ? fill_color.toArray()
 																		 : fill_color);
 				var _outline_color = ((is_instanceof(outline_color, Color4))
 									  ? outline_color.toArray() : outline_color);

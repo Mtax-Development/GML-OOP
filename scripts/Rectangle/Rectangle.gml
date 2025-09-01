@@ -216,7 +216,7 @@ function Rectangle() constructor
 							{
 								return collision_rectangle(other.location.x1, other.location.y1, 
 														   other.location.x2, other.location.y2,
-														   _object,  _precise, true);
+														   _object, _precise, true);
 							}
 						}
 						else

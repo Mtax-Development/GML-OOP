@@ -300,7 +300,7 @@ function Line() constructor
 							
 							array_push(_result,
 									   [_location_center, _location_topRight, _location_bottomRight,
-									    _location_center, _location_bottomRight, _location_bottomLeft,
+										_location_center, _location_bottomRight, _location_bottomLeft,
 										_location_center, _location_bottomLeft, _location_topLeft,
 										_location_center, _location_topLeft, _location_topRight]);
 						}
@@ -308,7 +308,7 @@ function Line() constructor
 						{
 							array_push(_result,
 									   [_location_topRight, _location_topLeft, _location_bottomRight,
-									    _location_bottomRight, _location_topLeft,
+										_location_bottomRight, _location_topLeft,
 										_location_bottomLeft]);
 						}
 					}
@@ -348,11 +348,11 @@ function Line() constructor
 						var _outline_outerTopInnerRight = [(_location_topRight[0] +
 															_offset_outline_side[0]),
 														   (_location_topRight[1] +
-														    _offset_outline_side[1])];
+															_offset_outline_side[1])];
 						var _outline_innerTopOuterRight = [(_location_topRight[0] +
 															_offset_outline[0]),
 														   (_location_topRight[1] +
-														    _offset_outline[1])];
+															_offset_outline[1])];
 						var _outline_outerBottomInnerLeft = [(_location_bottomLeft[0] -
 															  _offset_outline_side[0]),
 															 (_location_bottomLeft[1] -
@@ -797,7 +797,7 @@ function Line() constructor
 			///						instead or to return data for all parts. Data for invisible or
 			///						invalid render will be excluded.
 			static toVertexBuffer = function(_location = location, _size = size,
-											 _fill_color = fill_color,  _fill_alpha = fill_alpha,
+											 _fill_color = fill_color, _fill_alpha = fill_alpha,
 											 _outline_size = outline_size,
 											 _outline_color = outline_color,
 											 _outline_alpha = outline_alpha, _outline = all,

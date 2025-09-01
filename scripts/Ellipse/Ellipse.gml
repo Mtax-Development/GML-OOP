@@ -249,7 +249,7 @@ function Ellipse() constructor
 				{
 					return (((_device == undefined) ? mouse_check_button_pressed(_button)
 													: device_mouse_check_button_pressed(_device,
-																					    _button))
+																						_button))
 							and (self.cursorOver(_device, _GUI)));
 				}
 				catch (_exception)
@@ -302,7 +302,7 @@ function Ellipse() constructor
 				{
 					return (((_device == undefined) ? mouse_check_button_released(_button)
 													: device_mouse_check_button_released(_device,
-																					     _button))
+																						 _button))
 							and (self.cursorOver(_device, _GUI)));
 				}
 				catch (_exception)
