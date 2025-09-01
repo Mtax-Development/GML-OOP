@@ -530,8 +530,10 @@ function Triangle() constructor
 			/// @argument			outline_alpha? {real}
 			/// @description		Execute the draw of this Shape as a primitive, using data of this
 			///						constructor or specified temporarily replaced parts.
-			static render = function(_location1, _location2, _location3, _fill_color, _fill_alpha,
-									 _outline_scale, _outline_color, _outline_alpha)
+			static render = function(_location1 = location1, _location2 = location2,
+									 _location3 = location3, _fill_color = fill_color,
+									 _fill_alpha = fill_alpha, _outline_scale = outline_scale,
+									 _outline_color = outline_color, _outline_alpha = outline_alpha)
 			{
 				var _location1_original = location1;
 				var _location2_original = location2;
@@ -542,14 +544,14 @@ function Triangle() constructor
 				var _outline_color_original = outline_color;
 				var _outline_alpha_original = outline_alpha;
 				
-				location1 = (_location1 ?? location1);
-				location2 = (_location2 ?? location2);
-				location3 = (_location3 ?? location3);
-				fill_color = (_fill_color ?? fill_color);
-				fill_alpha = (_fill_alpha ?? fill_alpha);
-				outline_scale = (_outline_scale ?? outline_scale);
-				outline_color = (_outline_color ?? outline_color);
-				outline_alpha = (_outline_alpha ?? outline_alpha);
+				location1 = _location1;
+				location2 = _location2;
+				location3 = _location3;
+				fill_color = _fill_color;
+				fill_alpha = _fill_alpha;
+				outline_scale = _outline_scale;
+				outline_color = _outline_color;
+				outline_alpha = _outline_alpha;
 				
 				try
 				{

@@ -397,15 +397,15 @@ function Point() constructor
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of this Shape as a sprite, using data of this
 			///						constructor or specified temporarily replaced parts.
-			static render = function(_location, _color, _alpha)
+			static render = function(_location = location, _color = color, _alpha = alpha)
 			{
 				var _location_original = location;
 				var _color_original = color;
 				var _alpha_original = alpha;
 				
-				location = (_location ?? location);
-				color = (_color ?? color);
-				alpha = (_alpha ?? alpha);
+				location = _location;
+				color = _color;
+				alpha = _alpha;
 				
 				try
 				{

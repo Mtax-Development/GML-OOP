@@ -582,8 +582,9 @@ function Line() constructor
 			/// @argument			outline_alpha? {real}
 			/// @description		Execute the draw of this Shape as a primitive, using data of this
 			///						constructor or specified temporarily replaced parts.
-			static render = function(_location, _size, _fill_color, _fill_alpha, _outline_size,
-									 _outline_color, _outline_alpha)
+			static render = function(_location = location, _size = size, _fill_color = fill_color,
+									 _fill_alpha = fill_alpha, _outline_size = outline_size,
+									 _outline_color = outline_color, _outline_alpha = outline_alpha)
 			{
 				var _location_original = location;
 				var _size_original = size;
@@ -593,13 +594,13 @@ function Line() constructor
 				var _outline_alpha_original = outline_alpha;
 				var _outline_size_original = outline_size;
 				
-				location = (_location ?? location);
-				size = (_size ?? size);
-				fill_color = (_fill_color ?? fill_color);
-				fill_alpha = (_fill_alpha ?? fill_alpha);
-				outline_color = (_outline_color ?? outline_color);
-				outline_alpha = (_outline_alpha ?? outline_alpha);
-				outline_size = (_outline_alpha ?? outline_size);
+				location = _location;
+				size = _size;
+				fill_color = _fill_color;
+				fill_alpha = _fill_alpha;
+				outline_color = _outline_color;
+				outline_alpha = _outline_alpha;
+				outline_size = _outline_size;
 				
 				try
 				{

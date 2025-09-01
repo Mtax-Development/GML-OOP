@@ -592,8 +592,10 @@ function Ellipse() constructor
 			/// @argument			precision? {int:divisibleBy4}
 			/// @description		Execute the draw of this Shape as a primitive, using data of this
 			///						constructor or specified temporarily replaced parts.
-			static render = function(_location, _fill_color, _fill_alpha,  _outline_size,
-									 _outline_color, _outline_alpha, _precision)
+			static render = function(_location = location, _fill_color = fill_color,
+									 _fill_alpha = fill_alpha, _outline_size = outline_size,
+									 _outline_color = outline_color, _outline_alpha = outline_alpha,
+									 _precision = precision)
 			{
 				var _location_original = location;
 				var _fill_color_original = fill_color;
@@ -603,13 +605,13 @@ function Ellipse() constructor
 				var _outline_size_original = outline_size;
 				var _precision_original = precision;
 				
-				location = (_location ?? location);
-				fill_color = (_fill_color ?? fill_color);
-				fill_alpha = (_fill_alpha ?? fill_alpha);
-				outline_color = (_outline_color ?? outline_color);
-				outline_alpha = (_outline_alpha ?? outline_alpha);
-				outline_size = (_outline_alpha ?? outline_size);
-				precision = (_precision ?? precision);
+				location = _location;
+				fill_color = _fill_color;
+				fill_alpha = _fill_alpha;
+				outline_color = _outline_color;
+				outline_alpha = _outline_alpha;
+				outline_size = _outline_size;
+				precision = _precision;
 				
 				try
 				{
