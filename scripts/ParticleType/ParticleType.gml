@@ -399,7 +399,7 @@ function ParticleType() constructor
 				{
 					part_type_scale(ID, _scale.x, _scale.y);
 					
-					if (is_instanceof(_scale, Scale))
+					if (is_instanceof(scale, Scale))
 					{
 						scale.x = _scale.x;
 						scale.y = _scale.y;
@@ -549,7 +549,7 @@ function ParticleType() constructor
 					part_type_direction(ID, _direction_minimum, _direction_maximum, _increase,
 										_wiggle);
 					
-					if (is_instanceof(direction, Angle))
+					if (is_instanceof(_direction, Angle))
 					{
 						if (is_instanceof(direction, Angle))
 						{
@@ -560,7 +560,7 @@ function ParticleType() constructor
 							direction = new Angle(_direction);
 						}
 					}
-					else if (is_instanceof(direction, Range))
+					else if (is_instanceof(_direction, Range))
 					{
 						if (is_instanceof(direction, Range))
 						{
@@ -612,7 +612,7 @@ function ParticleType() constructor
 					part_type_orientation(ID, _angle_minimum, _angle_maximum, _increase, _wiggle,
 										  _relative);
 					
-					if (is_instanceof(angle, Angle))
+					if (is_instanceof(_angle, Angle))
 					{
 						if (is_instanceof(angle, Angle))
 						{
@@ -623,7 +623,7 @@ function ParticleType() constructor
 							angle = new Angle(_angle);
 						}
 					}
-					else if (is_instanceof(angle, Range))
+					else if (is_instanceof(_angle, Range))
 					{
 						if (is_instanceof(angle, Range))
 						{
