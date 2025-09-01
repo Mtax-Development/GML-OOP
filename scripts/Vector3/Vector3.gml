@@ -197,8 +197,9 @@ function Vector3() constructor
 			
 			/// @argument			value? {real|Vector3}
 			/// @returns			{real|Vector3} | On error: {undefined}
-			/// @description		Return the sum of either the values of this Vector3 or them added
-			///						to the specified value or the ones of the specified Vector3.
+			/// @description		Return the result of respectively adding the values of this
+			///						Vector3 to the specified value or its own properties if the
+			///						value is not specified.
 			static sum = function()
 			{
 				try
@@ -236,17 +237,53 @@ function Vector3() constructor
 				return undefined;
 			}
 			
-			/// @argument			value? {real|Vector3}
-			/// @returns			{real|Vector3} | On error: {undefined}
-			/// @description		Return the difference between either the values of this Vector3 or
-			///						them and the specified value or the ones of the specified Vector3.
-			static difference = function()
+			/// @argument			value {real|Vector3}
+			/// @returns			{Vector3} | On error: {undefined}
+			/// @description		Return the result of respectively substracting the specified
+			///						value from the values of this Vector3.
+			static difference = function(_value)
 			{
 				try
 				{
-					if ((argument_count > 0) and (argument[0] != undefined))
+					var _difference_x, _difference_y, _difference_z;
+					
+					if (is_real(_value))
 					{
-						var _value = argument[0];
+						_difference_x = (x - _value);
+						_difference_y = (y - _value);
+						_difference_z = (z - _value);
+					}
+					else
+					{
+						_difference_x = (x - _value.x);
+						_difference_y = (y - _value.y);
+						_difference_z = (z - _value.z);
+					}
+					
+					return new Vector3(_difference_x, _difference_y, _difference_z);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Vector3}
+			/// @returns			{real|Vector3} | On error: {undefined}
+			/// @description		Return an absolute difference using values of this Vector3. If a
+			///						value is specified, a Vector3 will be returned containing the
+			///						differences between their respective values. If a value was not
+			///						specified, a number representing difference between values of this
+			///						Vector3 will be returned. This calculation ignores order of
+			///						substraction and always results in a non-negative number.
+			static absoluteDifference = function(_value)
+			{
+				try
+				{
+					if (_value != undefined)
+					{
 						var _difference_x, _difference_y, _difference_z;
 						
 						if (is_real(_value))
@@ -279,9 +316,9 @@ function Vector3() constructor
 			
 			/// @argument			value? {real|Vector3}
 			/// @returns			{real|Vector3} | On error: {undefined}
-			/// @description		Return the result of multiplication of either the values of this
-			///						Vector3 or them multiplied by the specified value or the ones of
-			///						the specified Vector3.
+			/// @description		Return the result of respectively multiplying the values of this
+			///						Vector3 by the specified value or its own properties if the value
+			///						is not specified.
 			static product = function()
 			{
 				try
@@ -321,9 +358,8 @@ function Vector3() constructor
 			
 			/// @argument			value {real|Vector3}
 			/// @returns			{Vector3} | On error: {undefined}
-			/// @description		Return the result of division of the values of this Vector3
-			///						divided by the specified value or the ones of the specified
-			///						Vector3. Attempts of division by 0 are ignored.
+			/// @description		Return the result of respectively dividing the values of this
+			///						Vector3 by the specified value, ignoring division by 0.
 			static quotient = function(_value)
 			{
 				try
@@ -547,8 +583,7 @@ function Vector3() constructor
 		#region <Setters>
 			
 			/// @argument			value {real|Vector3}
-			/// @description		Add to the values of this Vector3 the specified value or values of
-			///						other specified Vector3.
+			/// @description		Add the specified value to respective values of this Vector3.
 			static add = function(_value)
 			{
 				try
@@ -583,8 +618,8 @@ function Vector3() constructor
 			}
 			
 			/// @argument			value {real|Vector3}
-			/// @description		Substract from the values of this Vector3 the specified value or
-			///						values of other specified Vector3.
+			/// @description		Substract the specified value from the respective values of this
+			///						Vector3.
 			static substract = function(_value)
 			{
 				try
@@ -619,8 +654,7 @@ function Vector3() constructor
 			}
 			
 			/// @argument			value {real|Vector3}
-			/// @description		Multiply the values of this Vector3 by specified value or values
-			///						of other specified Vector3.
+			/// @description		Multiply the specified value by respective values of this Vector3.
 			static multiply = function(_value)
 			{
 				try
@@ -655,8 +689,8 @@ function Vector3() constructor
 			}
 			
 			/// @argument			value {real|Vector3}
-			/// @description		Divide the values of this Vector3 by specified value or values of
-			///						other specified Vector3. Attempts of division by 0 are ignored.
+			/// @description		Divide respective values of this Vector3 by the specified value,
+			///						ignoring division by 0.
 			static divide = function(_value)
 			{
 				try

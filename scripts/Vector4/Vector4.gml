@@ -267,9 +267,9 @@ function Vector4() constructor
 			
 			/// @argument			value? {real|Vector2|Vector4}
 			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the sum of either the values of this Vector4 as a Vector2
-			///						or them added to the specified value or the ones of the specified
-			///						Vector2 or Vector4 as a Vector4.
+			/// @description		Return the result of respectively adding the values of this
+			///						Vector4 to the specified value or its own properties if the value
+			///						is not specified.
 			static sum = function()
 			{
 				try
@@ -317,18 +317,63 @@ function Vector4() constructor
 				return undefined;
 			}
 			
-			/// @argument			value? {real|Vector2|Vector4}
-			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the difference between either the values of this Vector4
-			///						as a Vector2 or them and the specified value or the ones of the
-			///						specified Vector2 or Vector4 as a Vector4.
-			static difference = function()
+			/// @argument			value {real|Vector2|Vector4}
+			/// @returns			{Vector4} | On error: {undefined}
+			/// @description		Return the result of substracting the specified value from the
+			///						values of this Vector4.
+			static difference = function(_value)
 			{
 				try
 				{
-					if ((argument_count > 0) and (argument[0] != undefined))
+					var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
+					
+					if (is_real(_value))
 					{
-						var _value = argument[0];
+						_difference_x1 = (x1 - _value);
+						_difference_y1 = (y1 - _value);
+						_difference_x2 = (x2 - _value);
+						_difference_y2 = (y2 - _value);
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						_difference_x1 = (x1 - _value.x1);
+						_difference_y1 = (y1 - _value.y1);
+						_difference_x2 = (x2 - _value.x2);
+						_difference_y2 = (y2 - _value.y2);
+					}
+					else
+					{
+						_difference_x1 = (x1 - _value.x);
+						_difference_y1 = (y1 - _value.y);
+						_difference_x2 = (x2 - _value.x);
+						_difference_y2 = (y2 - _value.y);
+					}
+					
+					return new Vector4(_difference_x1, _difference_y1, _difference_x2,
+									   _difference_y2);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Vector2|Vector4}
+			/// @returns			{Vector2|Vector4} | On error: {undefined}
+			/// @description		Return an absolute difference using values of this Vector4. If a
+			///						value is specified, a Vector4 will be returned containing the
+			///						differences between their respective values. Otherwise, a Vector2
+			///						will be returned, containing differences between values of this
+			///						Vector4. This calculation ignores order of substraction and always
+			///						results in a non-negative number.
+			static absoluteDifference = function(_value)
+			{
+				try
+				{
+					if (_value != undefined)
+					{
 						var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
 						
 						if (is_real(_value))
@@ -371,9 +416,9 @@ function Vector4() constructor
 			
 			/// @argument			value? {real|Vector2|Vector4}
 			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the result of multiplication of either the values of this
-			///						Vector4 as a Vector2 or them multiplied by the specified value or
-			///						the ones of the specified Vector2 or Vector4 as a Vector4.
+			/// @description		Return the result of respectively multiplying the values of this
+			///						Vector4 by the specified value or its own properties if the value
+			///						is not specified.
 			static product = function()
 			{
 				try
@@ -420,9 +465,8 @@ function Vector4() constructor
 			
 			/// @argument			value {real|Vector2|Vector4}
 			/// @returns			{Vector4} | On error: {undefined}
-			/// @description		Return the result of division of the values of this Vector4
-			///						divided by the specified value or the ones of the specified
-			///						Vector2 or Vector4. Attempts of division by 0 are ignored.
+			/// @description		Return the result of respectively dividing the values of this
+			///						Vector4 by the specified value, ignoring division by 0.
 			static quotient = function(_value)
 			{
 				try
@@ -789,8 +833,7 @@ function Vector4() constructor
 		#region <Setters>
 			
 			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Add to the values of this Vector4 the specified value or the
-			///						values of other specified Vector4 or Vector2.
+			/// @description		Add the specified value to respective values of this Vector4.
 			static add = function(_value)
 			{
 				try
@@ -836,8 +879,8 @@ function Vector4() constructor
 			}
 			
 			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Substract from the values of this Vector4 the specified value or 
-			///						the values of other specified Vector4 or Vector2.
+			/// @description		Substract the specified value from the respective values of this
+			///						Vector4.
 			static substract = function(_value)
 			{
 				try
@@ -883,8 +926,7 @@ function Vector4() constructor
 			}
 			
 			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Multiply the values of this Vector4 the specified value or the 
-			///						values of other specified Vector4 or Vector2.
+			/// @description		Multiply the specified value by respective values of this Vector4.
 			static multiply = function(_value)
 			{
 				try
@@ -930,9 +972,8 @@ function Vector4() constructor
 			}
 			
 			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Divide the values of this Vector4 the specified value or the 
-			///						values of other specified Vector4 or Vector2. Attempts of
-			///						division by 0 are ignored.
+			/// @description		Divide respective values of this Vector4 by the specified value,
+			///						ignoring division by 0.
 			static divide = function(_value)
 			{
 				try

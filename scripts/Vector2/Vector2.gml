@@ -192,8 +192,9 @@ function Vector2() constructor
 			
 			/// @argument			value? {real|Vector2}
 			/// @returns			{real|Vector2} | On error: {undefined}
-			/// @description		Return the sum of either the values of this Vector2 or them added
-			///						to the specified value or the ones of the specified Vector2.
+			/// @description		Return the result of respectively adding the values of this
+			///						Vector2 to the specified value or its own properties if the value
+			///						is not specified.
 			static sum = function()
 			{
 				try
@@ -229,31 +230,67 @@ function Vector2() constructor
 				return undefined;
 			}
 			
-			/// @argument			value? {real|Vector2}
-			/// @returns			{real|Vector2} | On error: {undefined}
-			/// @description		Return the difference between either the values of this Vector2 or
-			///						them and the specified value or the ones of the specified Vector2.
-			static difference = function()
+			/// @argument			value {real|Vector2|Vector4}
+			/// @returns			{Vector2|Vector4} | On error: {undefined}
+			/// @description		Return the result of substracting the specified value from the
+			///						values of this Vector2. The result will be returned in a Vector2,
+			///						unless the specified value was a Vector4, in which case it will be
+			///						returned in a Vector4.
+			static difference = function(_value)
 			{
 				try
 				{
-					if ((argument_count > 0) and (argument[0] != undefined))
+					if (is_real(_value))
 					{
-						var _value = argument[0];
-						var _difference_x, _difference_y;
-						
+						return new Vector2((x - _value), (y - _value));
+					}
+					else if (is_instanceof(_value, Vector4))
+					{
+						return new Vector4((x - _value.x1), (y - _value.y1), (x - _value.x2),
+										   (y - _value.y2));
+					}
+					else
+					{
+						return new Vector2((x - _value.x), (y - _value.y));
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "difference()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			value? {real|Vector2|Vector4}
+			/// @returns			{Vector2|Vector4} | On error: {undefined}
+			/// @description		Return an absolute difference using values of this Vector2. If a
+			///						value is specified, a constructor will be returned containing the
+			///						differences between their respective values. That constructor is
+			///						Vector4 if the specified value was Vector4 and Vector2 otherwise.
+			///						If a value was not specified, a number representing difference
+			///						between values of this Vector2 will be returned. This calculation
+			///						ignores order of substraction and always results in a non-negative
+			///						number.
+			static absoluteDifference = function(_value)
+			{
+				try
+				{
+					if (_value != undefined)
+					{
 						if (is_real(_value))
 						{
-							_difference_x = abs(x - _value);
-							_difference_y = abs(y - _value);
+							return new Vector2(abs(x - _value), abs(y - _value));
+						}
+						else if (is_instanceof(_value, Vector4))
+						{
+							return new Vector4(abs(x1 - _value.x1), abs(y1 - _value.y1),
+											   abs(x2 - _value.x2), abs(y2 - _value.y2));
 						}
 						else
 						{
-							_difference_x = abs(x - _value.x);
-							_difference_y = abs(y - _value.y);
+							return new Vector2(abs(x - _value.x), abs(y - _value.y))
 						}
-						
-						return new Vector2(_difference_x, _difference_y);
 					}
 					else
 					{
@@ -270,9 +307,9 @@ function Vector2() constructor
 			
 			/// @argument			value? {real|Vector2}
 			/// @returns			{real|Vector2} | On error: {undefined}
-			/// @description		Return the result of multiplication of either the values of this
-			///						Vector2 or them multiplied by the specified value or the ones of
-			///						the specified Vector2.
+			/// @description		Return the result of respectively multiplying the values of this
+			///						Vector2 by the specified value or its own properties if the value
+			///						is not specified.
 			static product = function()
 			{
 				try
@@ -310,9 +347,8 @@ function Vector2() constructor
 			
 			/// @argument			value {real|Vector2}
 			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Return the result of division of the values of this Vector2
-			///						divided by the specified value or the ones of the specified
-			///						Vector2. Attempts of division by 0 are ignored.
+			/// @description		Return the result of respectively dividing the values of this
+			///						Vector2 by the specified value, ignoring divison by 0.
 			static quotient = function(_value)
 			{
 				try
@@ -539,8 +575,7 @@ function Vector2() constructor
 		#region <Setters>
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Add to the values of this Vector2 the specified value or values of
-			///						other specified Vector2.
+			/// @description		Add the specified value to respective values of this Vector2.
 			static add = function(_value)
 			{
 				try
@@ -571,8 +606,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Substract from the values of this Vector2 the specified value or
-			///						values of other specified Vector2.
+			/// @description		Substract the specified value from the respective values of this
+			///						Vector2.
 			static substract = function(_value)
 			{
 				try
@@ -603,8 +638,7 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Multiply the values of this Vector2 by specified value or values
-			///						of other specified Vector2.
+			/// @description		Multiply the specified value by respective values of this Vector2.
 			static multiply = function(_value)
 			{
 				try
@@ -635,8 +669,8 @@ function Vector2() constructor
 			}
 			
 			/// @argument			value {real|Vector2}
-			/// @description		Divide the values of this Vector2 by specified value or values of
-			///						other specified Vector2. Attempts of division by 0 are ignored.
+			/// @description		Divide respective values of this Vector2 by the specified value,
+			///						ignoring division by 0.
 			static divide = function(_value)
 			{
 				try
