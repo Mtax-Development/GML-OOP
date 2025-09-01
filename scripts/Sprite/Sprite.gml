@@ -490,33 +490,49 @@ function Sprite() constructor
 			}
 			
 			/// @argument			frame? {int}
-			/// @returns			{Vector4}
-			/// @description		Return the number of fully transparent pixels removed from the
-			///						specified frame of this Sprite, applicable only if this Sprite was
-			///						in a texture group with cropping enabled during compilation.
-			static getTextureTrim = function(_frame = 0)
+			/// @argument			offsetFromCenterScale? {Scale}
+			/// @returns			{Vector2|Vector4} | On error: {undefined}
+			/// @description		Return the number of fully transparent pixels removed from each
+			///						side of the specified frame during compilation, which occurs if
+			///						this Sprite is in a texture group with automatic cropping enabled.
+			///						The result will be returned in a Vector4, unless a Scale was
+			///						specified, in which case an offset from center of this Sprite will
+			///						be returned in a Vector2, representing offset of pixels remaining
+			///						after cropping, multiplied by that specified Scale.
+			static getTextureTrim = function(_frame = 0, _offsetFromCenterScale)
 			{
-				var _trim_left = 0;
-				var _trim_top = 0;
-				var _trim_right = 0;
-				var _trim_bottom = 0;
-				
 				try
 				{
 					var _size_x = sprite_get_width(ID);
 					var _size_y = sprite_get_height(ID);
 					var _uv = sprite_get_uvs(ID, _frame);
-					_trim_left = _uv[4];
-					_trim_top = _uv[5];
-					_trim_right = round(_size_x - (_size_x * _uv[6]) - _trim_left);
-					_trim_bottom = round(_size_y - (_size_y * _uv[7]) - _trim_top);
+					var _trim_left = _uv[4];
+					var _trim_top = _uv[5];
+					var _trim_right = round(_size_x - (_size_x * _uv[6]) - _trim_left);
+					var _trim_bottom = round(_size_y - (_size_y * _uv[7]) - _trim_top);
+					
+					if (is_instanceof(_offsetFromCenterScale, Scale))
+					{
+						var _sprite_size_scale_x = (_offsetFromCenterScale.x / _size_x);
+						var _sprite_size_scale_y = (_offsetFromCenterScale.y / _size_y);
+						var _scale_uv_x = (_offsetFromCenterScale.x * _uv[6]);
+						var _scale_uv_y = (_offsetFromCenterScale.y * _uv[7]);
+						var _offset_trim_x = ((_trim_left - _trim_right) * _sprite_size_scale_x);
+						var _offset_trim_y = ((_trim_top - _trim_bottom) * _sprite_size_scale_y);
+						
+						return new Vector2(_offset_trim_x, _offset_trim_y);
+					}
+					else
+					{
+						return new Vector4(_trim_left, _trim_top, _trim_right, _trim_bottom);
+					}
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getTextureTrim()"], _exception);
 				}
 				
-				return new Vector4(_trim_left, _trim_top, _trim_right, _trim_bottom);
+				return undefined;
 			}
 			
 		#endregion
