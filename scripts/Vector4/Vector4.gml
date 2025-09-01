@@ -102,7 +102,6 @@ function Vector4() constructor
 									y2 = argument[0];
 								}
 							break;
-							
 							case 2:
 								if ((is_instanceof(argument[0], Vector2))
 								and (is_instanceof(argument[1], Vector2)))
@@ -128,7 +127,6 @@ function Vector4() constructor
 									y2 = _second;
 								}
 							break;
-							
 							default:
 								//|Construction type: Four numbers.
 								x1 = argument[0];
