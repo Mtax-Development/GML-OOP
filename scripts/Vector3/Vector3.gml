@@ -369,6 +369,68 @@ function Vector3() constructor
 				return undefined;
 			}
 			
+			/// @argument			other {Vector3}
+			/// @argument			normalize? {bool}
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return the sum of each value of this and other Vector3 being
+			///						multiplied by their respective other value, which is an expression
+			///						of the angular relationship between its two points. The returned
+			///						value can be normalized, which will place it between -1 and 1.
+			static dotProduct = function(_other, _normalize = false)
+			{
+				try
+				{
+					return ((_normalize) ? dot_product_3d_normalized(x, y, z, _other.x, _other.y,
+																	 _other.z)
+										 : dot_product_3d(x, y, z, _other.x, _other.y, _other.z));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "dotProduct()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			other {Vector3}
+			/// @returns			{Vector3} | On error: {undefined}
+			/// @description		Return the difference between values of this Vector3 multiplied
+			///						by values of different axes of the specified Vector3, which is an
+			///						expression of the normal plane relationship between two points.
+			static crossProduct = function(_other)
+			{
+				try
+				{
+					return new Vector3(((y * _other.z) - (_other.y * z)),
+									   ((z * _other.x) - (_other.z * x)),
+									   ((x * _other.y) - (_other.x * y)));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "crossProduct()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			other {Vector3}
+			/// @returns			{real}
+			/// @description		Return the shortest distance between this and the specified
+			///						Vector3.
+			static getDistance = function(_other)
+			{
+				try
+				{
+					return point_distance_3d(x, y, z, _other.x, _other.y, _other.z);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getDistance()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 			/// @returns			{real} | On error: {undefined}
 			/// @description		Return the lowest of all values.
 			static getMinimum = function()
@@ -401,51 +463,56 @@ function Vector3() constructor
 				return undefined;
 			}
 			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the vector length.
+			/// @returns			{real}
+			/// @description		Return the vector length of this Vector3.
 			static getMagnitude = function()
 			{
 				try
 				{
-					return sqrt((x * x) + (y * y) + (z * z));
+					var _power = ((x * x) + (y * y) + (z * z));
+					
+					return ((_power != 0) ? sqrt(_power) : _power);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getMagnitude()"], _exception);
 				}
 				
-				return undefined;
+				return 0;
 			}
 			
 			/// @argument			magnitude? {real}
-			/// @returns			{Vector3} | On error: {undefined}
+			/// @returns			{Vector3}
 			/// @description		Return the unit vector of this Vector3, which will have its
 			///						values placed between -1 and 1, but with the same direction.
 			///						These values are then multiplied by the specified magnitude.
+			///						If this operation would be invalid, a directionless vector will
+			///						be returned.
 			static getNormalized = function(_magnitude = 1)
 			{
 				try
 				{
-					var _length = sqrt((x * x) + (y * y) + (z * z));
 					var _x = x;
 					var _y = y;
 					var _z = z;
+					var _power = ((_x * _x) + (_y * _y) + (_z * _z));
 					
-					if (_length != 0)
+					if (_power != 0)
 					{
-						_x = ((x / _length) * _magnitude);
-						_y = ((y / _length) * _magnitude);
-						_z = ((z / _length) * _magnitude);
+						var _length = sqrt(_power);
+						_x = ((_x / _length) * _magnitude);
+						_y = ((_y / _length) * _magnitude);
+						_z = ((_z / _length) * _magnitude);
+						
+						return new Vector3(_x, _y, _z);
 					}
-					
-					return new Vector3(_x, _y, _z);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getNormalized()"], _exception);
 				}
 				
-				return undefined;
+				return new Vector3(0, 0, 0);
 			}
 			
 			/// @argument			booleanSign? {bool}

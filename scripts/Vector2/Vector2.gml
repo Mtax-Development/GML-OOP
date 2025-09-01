@@ -373,6 +373,24 @@ function Vector2() constructor
 				return undefined;
 			}
 			
+			/// @argument			other {Vector2}
+			/// @returns			{real} | On error: {undefined}
+			/// @description		Return the difference between values of this Vector2 multiplied
+			///						by values of different axes of the specified Vector2.
+			static crossProduct = function(_other)
+			{
+				try
+				{
+					return ((x * _other.y) - (y * _other.x));
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "crossProduct()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
 			/// @argument			target {Vector2}
 			/// @returns			{Angle} | On error: {undefined}
 			/// @description		Return the Angle from this Vector2 towards the specified one.
@@ -440,49 +458,54 @@ function Vector2() constructor
 				return undefined;
 			}
 			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the vector length.
+			/// @returns			{real}
+			/// @description		Return vector length of this Vector2.
 			static getMagnitude = function()
 			{
 				try
 				{
-					return sqrt((x * x) + (y * y));
+					var _power = ((x * x) + (y * y));
+					
+					return ((_power != 0) ? sqrt(_power) : _power);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getMagnitude()"], _exception);
 				}
 				
-				return undefined;
+				return 0;
 			}
 			
 			/// @argument			magnitude? {real}
-			/// @returns			{Vector2} | On error: {undefined}
+			/// @returns			{Vector2}
 			/// @description		Return the unit vector of this Vector2, which will have its
 			///						values placed between -1 and 1, but with the same direction.
 			///						These values are then multiplied by the specified magnitude.
+			///						If this operation would be invalid, a directionless vector will
+			///						be returned.
 			static getNormalized = function(_magnitude = 1)
 			{
 				try
 				{
-					var _length = sqrt((x * x) + (y * y));
 					var _x = x;
 					var _y = y;
+					var _power = ((_x * _x) + (_y * _y));
 					
-					if (_length != 0)
+					if (_power != 0)
 					{
-						_x = ((x / _length) * _magnitude);
-						_y = ((y / _length) * _magnitude);
+						var _length = sqrt(_power);
+						_x = ((_x / _length) * _magnitude);
+						_y = ((_y / _length) * _magnitude);
+						
+						return new Vector2(_x, _y);
 					}
-					
-					return new Vector2(_x, _y);
 				}
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getNormalized()"], _exception);
 				}
 				
-				return undefined;
+				return new Vector2(0, 0);
 			}
 			
 			/// @argument			booleanSign? {bool}
