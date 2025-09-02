@@ -4,7 +4,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: surface {int:surface}
+//							- Wrapper: surface {handle:surface}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Surface}
 function Surface() constructor
@@ -178,7 +178,7 @@ function Surface() constructor
 			}
 			
 			/// @argument			location {Vector2}
-			/// @argument			other {Surface|int:surface}
+			/// @argument			other {Surface|handle:surface}
 			/// @argument			other_part? {Vector4}
 			/// @description		Copy content of other Surface to a specified location on this
 			///						Surface.
@@ -363,7 +363,7 @@ function Surface() constructor
 			/// @argument			alpha? {real}
 			/// @argument			part? {Vector4}
 			/// @argument			origin? {Vector2}
-			/// @argument			target? {Surface|int:surface}
+			/// @argument			target? {Surface|handle:surface}
 			/// @description		Draw this Surface or a part of it to the currently active or
 			///						specified Surface.
 			static render = function(_location, _scale, _angle, _color = c_white, _alpha = 1, _part,

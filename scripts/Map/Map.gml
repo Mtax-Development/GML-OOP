@@ -6,7 +6,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: map {int:map}
+//							- Wrapper: map {handle:map}
 //							- Empty: {undefined}
 //							- Constructor copy: other {Map}
 function Map() constructor
@@ -568,7 +568,7 @@ function Map() constructor
 			}
 			
 			/// @argument			key... {any}
-			/// @argument			value... {List|int:list}
+			/// @argument			value... {List|handle:list}
 			/// @description		Adds one or more key and value pairs to this Map, where the
 			///						value is a List. The added value will become bound to this
 			///						Map and will be destroyed upon the destruction of this Map.
@@ -613,7 +613,7 @@ function Map() constructor
 			}
 			
 			/// @argument			key... {any}
-			/// @argument			value... {Map|int:map}
+			/// @argument			value... {Map|handle:map}
 			/// @description		Adds one or more key and value pairs to this Map, where the
 			///						value is other Map. The added value will become bound to this
 			///						Map and will be destroyed upon the destruction of this Map.

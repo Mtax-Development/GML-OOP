@@ -2,7 +2,7 @@
 /// @description			Constructs a Font Resource defining glyphs used in text rendering.
 //							
 //							Construction types:
-//							- Wrapper: font {int:font}
+//							- Wrapper: font {handle:font}
 //							- From file: path {string:path}, size {int}, bold {bool}, italic {bool},
 //										 glyphs {Range}, antialiasing? {bool},
 //										 signedDistanceFieldSpread? {int}

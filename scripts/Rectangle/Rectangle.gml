@@ -162,12 +162,12 @@ function Rectangle() constructor
 						 (outline_color.equals(_other.outline_color)))));
 			}
 			
-			/// @argument			object {int:object}
+			/// @argument			object {handle:object|handle:instance}
 			/// @argument			precise? {bool}
-			/// @argument			excludedInstance? {int:instance}
+			/// @argument			excludedInstance? {handle:instance}
 			/// @argument			list? {bool|List}
 			/// @argument			listOrdered? {bool}
-			/// @returns			{int|List}
+			/// @returns			{handle|List}
 			/// @description		Check for a collision within this Shape with instances of the
 			///						specified object.
 			///						Returns the ID of a single colliding instance or noone.

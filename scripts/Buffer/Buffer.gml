@@ -10,7 +10,7 @@
 //							- From VertexBuffer: vertexBuffer {VertexBuffer},
 //												 type {constant:buffer_[bufferType]}, alignment? {int},
 //												 vertex_first? {int}, vertex_count? {int}
-//							- Wrapper: other {int:buffer}
+//							- Wrapper: other {handle:buffer}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Buffer}
 function Buffer() constructor
@@ -666,7 +666,7 @@ function Buffer() constructor
 				return self;
 			}
 			
-			/// @argument			surface {Surface|int:surface}
+			/// @argument			surface {Surface|handle:surface}
 			/// @argument			offset? {int}
 			/// @argument			modulo? {int}
 			/// @description		Copy information from the specified Surface to this Buffer.

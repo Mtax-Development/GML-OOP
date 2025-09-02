@@ -4,7 +4,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: queue {int:queue}
+//							- Wrapper: queue {handle:queue}
 //							- Empty: {undefined}
 //							- Constructor copy: other {Queue}
 function Queue() constructor

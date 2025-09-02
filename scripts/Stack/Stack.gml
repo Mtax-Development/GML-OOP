@@ -4,7 +4,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: stack {int:stack}
+//							- Wrapper: stack {handle:stack}
 //							- Empty: {undefined}
 //							- Constructor copy: other {Stack}
 function Stack() constructor

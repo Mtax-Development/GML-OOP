@@ -1,7 +1,7 @@
 //  @function				Callback()
 /// @argument				function {function|function[]}
 /// @argument				argument? {any|any[]|any[+]}
-/// @argument				scope? {int:instance|struct}
+/// @argument				scope? {handle:instance|struct}
 /// @description			Constructs a Handler storing a reference to a function, method or an array
 ///							of them and their arguments to execute them at any time.
 ///							Single value specified as an argument will be provided to each execution.
@@ -101,7 +101,7 @@ function Callback() constructor
 			
 			/// @argument			function? {function|function[]}
 			/// @argument			argument? {any|any[]|any[+]}
-			/// @argument			scope? {int:instance|struct}
+			/// @argument			scope? {handle:instance|struct}
 			/// @description		Set each value of this constructor.
 			static set = function(_function = ID, _argument = self.argument, _scope = scope)
 			{
@@ -154,7 +154,7 @@ function Callback() constructor
 		#region <Execution>
 			
 			/// @argument			condition? {bool}
-			/// @argument			scope? {int:instance|struct}
+			/// @argument			scope? {handle:instance|struct}
 			/// @returns			{any|undefined}
 			/// @description		Execute all functions and methods of this constructor in their
 			///						order by providing them their respective arguments, if any. This

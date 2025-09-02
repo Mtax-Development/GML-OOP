@@ -58,7 +58,7 @@ function ErrorReport() constructor
 		#endregion
 		#region <Execution>
 			
-			/// @argument			error_location? {int:instance|string|struct|[]}
+			/// @argument			error_location? {handle:instance|string|struct|[]}
 			/// @argument			error_detail? {string|struct:exception}
 			/// @returns			{ErrorReport.ReportData}
 			/// @description		Create an error report, log its data with the function assigned to
@@ -213,7 +213,7 @@ function ErrorReport() constructor
 	#region [Elements]
 		
 		//  @function			ErrorReport.ReportData()
-		/// @argument			location {int:instance|string|struct|[]}
+		/// @argument			location {handle:instance|string|struct|[]}
 		/// @argument			detail {string|struct:exception}
 		/// @argument			callstack {string[]}
 		/// @argument			time? {DateTime|string}

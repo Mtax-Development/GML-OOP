@@ -290,7 +290,7 @@ function Layer() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			instance {int:instance}
+			/// @argument			instance {handle:instance}
 			/// @returns			{bool} | On error: {undefined}
 			/// @description		Check whether the specified instance is bound to this Layer.
 			static hasInstance = function(_instance)
@@ -489,10 +489,10 @@ function Layer() constructor
 				return noone;
 			}
 			
-			/// @argument			object {int:object}
+			/// @argument			object {handle:object}
 			/// @argument			location? {Vector2}
 			/// @argument			added_data? {struct}
-			/// @returns			{int:instance} | On error: {noone}
+			/// @returns			{handle:instance} | On error: {noone}
 			/// @description		Create an instance on this Layer and return its internal ID.
 			static createInstance = function(_object, _location, _added_data)
 			{
@@ -609,7 +609,7 @@ function Layer() constructor
 				return noone;
 			}
 			
-			/// @argument			target {int:instance|int:object|all}
+			/// @argument			target {handle:instance|handle:object|all}
 			/// @returns			{undefined}
 			/// @description		Destroy the specified or all instances or objects of this Layer.
 			///						If {all} is specified, the instances will be destroyed instantly.
@@ -846,7 +846,7 @@ function Layer() constructor
 								(parent.isFunctional()) and (layer_sprite_exists(parent.ID, ID)));
 					}
 					
-					/// @argument			other {Layer|int:layer|string:layer}
+					/// @argument			other {Layer|handle:layer|string:layer}
 					/// @description		Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -1237,7 +1237,7 @@ function Layer() constructor
 								(parent.isFunctional()) and (layer_background_exists(parent.ID, ID)));
 					}
 					
-					/// @argument			other {Layer|int:layer|string:layer}
+					/// @argument			other {Layer|handle:layer|string:layer}
 					/// @description		Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -1588,7 +1588,7 @@ function Layer() constructor
 		}
 		
 		//  @function			Layer.TilemapElement()
-		/// @argument			tileset {int:tileset}
+		/// @argument			tileset {handle:tileset}
 		/// @argument			location {Vector2}
 		/// @argument			size {Vector2}
 		/// @description		Constructs a Tilemap Element used to draw Tiles from a Tileset onto a
@@ -1704,7 +1704,7 @@ function Layer() constructor
 						return self;
 					}
 					
-					/// @argument			other {Layer|int:layer|string:layer}
+					/// @argument			other {Layer|handle:layer|string:layer}
 					/// @description		Move this Element to another Layer.
 					static changeParent = function(_other)
 					{
@@ -1868,7 +1868,7 @@ function Layer() constructor
 						return self;
 					}
 					
-					/// @argument			tileset {int:tileset}
+					/// @argument			tileset {handle:tileset}
 					/// @description		Change the Tileset used by this Tilemap.
 					static setTileset = function(_tileset)
 					{
@@ -2616,7 +2616,7 @@ function Layer() constructor
 						return self;
 					}
 					
-					/// @argument			other {Layer|int:layer|string:layer}
+					/// @argument			other {Layer|handle:layer|string:layer}
 					/// @description		Move this Element to another Layer.
 					static changeParent = function(_other)
 					{

@@ -7,7 +7,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: grid {int:grid}
+//							- Wrapper: grid {handle:grid}
 //							- Empty: {void|undefined}
 //							- Constructor copy: other {Grid}
 function Grid() constructor

@@ -5,7 +5,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: other {int:room}
+//							- Wrapper: other {handle:room}
 //							- Empty: {undefined}
 //							- Constructor copy: other {Room}
 function Room() constructor
@@ -94,7 +94,7 @@ function Room() constructor
 				return (((is_handle(ID)) or (is_real(ID))) and (room_exists(ID)));
 			}
 			
-			/// @argument			other {Room|int:room}
+			/// @argument			other {Room|handle:room}
 			/// @description		Replace the contents and properties of this Room with the ones
 			///						from another one.
 			static copy = function(_other)
@@ -224,7 +224,7 @@ function Room() constructor
 		#endregion
 		#region <Execution>
 			
-			/// @argument			object {int:object}
+			/// @argument			object {handle:object}
 			/// @argument			location? {Vector2}
 			/// @returns			{Room.AddedInstance} | On error: {noone}
 			/// @description		Add an instance of an object to this inactive room.
@@ -332,7 +332,7 @@ function Room() constructor
 	#region [Elements]
 		
 		//  @function			Room.AddedInstance()
-		/// @argument			object {int:object}
+		/// @argument			object {handle:object}
 		/// @argument			location? {Vector2}
 		/// @description		Container constructor for properties of instances added to Room before
 		///						its activation.

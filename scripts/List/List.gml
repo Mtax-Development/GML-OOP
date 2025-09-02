@@ -5,7 +5,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: {int:list} list
+//							- Wrapper: {handle:list} list
 //							- Empty: {undefined}
 //							- Constructor copy: {List} other
 function List() constructor

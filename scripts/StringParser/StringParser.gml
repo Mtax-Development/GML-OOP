@@ -642,7 +642,7 @@ function StringParser() constructor
 				return string_length(string(ID));
 			}
 			
-			/// @argument			font? {Font|int:font}
+			/// @argument			font? {Font|handle:font}
 			/// @argument			scale? {Scale|int}
 			/// @argument			separation? {int}
 			/// @argument			width? {int}

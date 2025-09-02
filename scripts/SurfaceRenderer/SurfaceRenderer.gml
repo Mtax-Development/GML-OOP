@@ -7,7 +7,7 @@
 /// @argument				alpha? {real}
 /// @argument				part? {Vector4}
 /// @argument				origin? {Vector2}
-/// @argument				target? {Surface|int:surface}
+/// @argument				target? {Surface|handle:surface}
 /// @description			Constructs a Handler storing information for Surface rendering.
 //							
 //							Construction types:
@@ -136,7 +136,7 @@ function SurfaceRenderer() constructor
 			/// @argument			alpha? {real}
 			/// @argument			part? {Vector4}
 			/// @argument			origin? {Vector2}
-			/// @argument			target? {Surface|int:surface}
+			/// @argument			target? {Surface|handle:surface}
 			/// @description		Execute the draw, using data of this constructor or its specified
 			///						temporarily replaced parts.
 			static render = function(_surface, _location, _scale, _angle, _color, _alpha,

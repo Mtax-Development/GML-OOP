@@ -4,7 +4,7 @@
 //							
 //							Construction types:
 //							- New constructor
-//							- Wrapper: priorityQueue {int:priorityQueue}
+//							- Wrapper: priorityQueue {handle:priorityQueue}
 //							- Empty: {undefined}
 //							- Constructor copy: other {PriorityQueue}
 function PriorityQueue() constructor

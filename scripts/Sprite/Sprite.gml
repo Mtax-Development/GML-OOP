@@ -2,10 +2,10 @@
 /// @description			Constructs a Sprite Resource used to render its image frames.
 //							
 //							Construction types:
-//							- Wrapper: sprite {int:sprite}
+//							- Wrapper: sprite {handle:sprite}
 //							- From file: path {string:path}, frameCount? {int}, origin? {Vector2},
 //										 removeBackground? {bool}, smoothRemovedBackground? {bool}
-//							- From Surface: surface {int:surface|Surface}, part {Vector4|all},
+//							- From Surface: surface {handle:surface|Surface}, part {Vector4|all},
 //											origin? {Vector2}, removeBackground? {bool},
 //											smoothRemovedBackground? {bool}
 //							- Empty: {void|undefined}
@@ -206,7 +206,7 @@ function Sprite() constructor
 				return undefined;
 			}
 			
-			/// @argument			other {Sprite|int:sprite}
+			/// @argument			other {Sprite|handle:sprite}
 			/// @description		Replace this Sprite with another one.
 			///						Applicable only if this Sprite was created during the runtime.
 			static replace = function(_other)
@@ -273,7 +273,7 @@ function Sprite() constructor
 				return self;
 			}
 			
-			/// @argument			other {Sprite|int:sprite}
+			/// @argument			other {Sprite|handle:sprite}
 			/// @description		Add the frames of another Sprite after the frames of this Sprite.
 			///						The added frames will be resized to the size of this Sprite.
 			static merge = function(_other)
@@ -673,7 +673,7 @@ function Sprite() constructor
 			/// @argument			alpha? {real}
 			/// @argument			part? {Vector4}
 			/// @argument			origin? {Vector2}
-			/// @argument			target? {Surface|int:surface}
+			/// @argument			target? {Surface|handle:surface}
 			/// @description		Draw this Sprite or a part of it to the currently active or
 			///						specified Surface.
 			static render = function(_location, _frame = 0, _scale, _angle, _color = c_white,
@@ -984,7 +984,7 @@ function Sprite() constructor
 				return (-1);
 			}
 			
-			/// @argument			other {Sprite|int:sprite}
+			/// @argument			other {Sprite|handle:sprite}
 			/// @returns			{Sprite} | On error: {noone}
 			/// @description		Multiply the value and saturation of the colors of this Sprite by
 			///						the alpha values of other one and return it as a separate Sprite.

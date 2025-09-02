@@ -180,12 +180,12 @@ function Line() constructor
 						 (outline_color.equals(_other.outline_color)))));
 			}
 			
-			/// @argument			object {int:object}
+			/// @argument			object {handle:object|handle:instance}
 			/// @argument			precise? {bool}
-			/// @argument			excludedInstance? {int:instance}
+			/// @argument			excludedInstance? {handle:instance}
 			/// @argument			list? {bool|List}
 			/// @argument			listOrdered? {bool}
-			/// @returns			{int|List}
+			/// @returns			{handle:int|List}
 			/// @description		Check for a collision within this Shape with instances of the
 			///						specified object, treating the size of this Shape as 1.
 			///						Returns the ID of a single colliding instance or noone.
