@@ -365,10 +365,10 @@ function VertexBuffer() constructor
 				static passthroughFormat = new VertexFormat(vertex_format_add_position,
 															vertex_format_add_color,
 															vertex_format_add_texcoord);
-				static vertexFormat3D = new VertexFormat(vertex_format_add_position_3d,
-														 vertex_format_add_normal,
-														 vertex_format_add_texcoord,
-														 vertex_format_add_color);
+				static passthroughFormat3D = new VertexFormat(vertex_format_add_position_3d,
+															  vertex_format_add_normal,
+															  vertex_format_add_texcoord,
+															  vertex_format_add_color);
 				
 			#endregion
 			#region [[Methods]]
@@ -383,8 +383,8 @@ function VertexBuffer() constructor
 						vertexBuffer = other;
 						primitiveType = argument[0];
 						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
-										? ((argument[1] == vertex_position_3d) ? self.vertexFormat3D
-																			   : argument[1])
+										? ((argument[1] == vertex_position_3d)
+										   ? self.passthroughFormat3D : argument[1])
 										: self.passthroughFormat);
 						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																						 : (-1));
@@ -462,9 +462,15 @@ function VertexBuffer() constructor
 							var _string_vertexFormat;
 							switch (vertexFormat)
 							{
-								case passthroughFormat: _string_vertexFormat = "Passthrough"; break;
-								case vertexFormat3D: _string_vertexFormat = "3D Passthrough"; break;
-								default: _string_vertexFormat = string(vertexFormat); break;
+								case passthroughFormat:
+									_string_vertexFormat = "Passthrough";
+								break;
+								case passthroughFormat3D:
+									_string_vertexFormat = "Passthrough 3D";
+								break;
+								default:
+									_string_vertexFormat = string(vertexFormat);
+								break;
 							}
 							
 							var _string_primitiveType;
