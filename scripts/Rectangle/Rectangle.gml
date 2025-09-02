@@ -478,9 +478,9 @@ function Rectangle() constructor
 			///						only fill instead, or to contain all of this data. If fill is
 			///						specified to be returned, it can also be specified to be built
 			///						from its center.
-			static getVertexLocations = function(_location = location, _outline = false,
-												 _outline_size = outline_size,
-												 _startWithCenter = false)
+			static getVertexLocation = function(_location = location, _outline = false,
+												_outline_size = outline_size,
+												_startWithCenter = false)
 			{
 				var _result = [];
 				
@@ -567,7 +567,7 @@ function Rectangle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -604,8 +604,8 @@ function Rectangle() constructor
 				{
 					var _primitive = [];
 					var _fill_color_isColor2 = is_instanceof(_fill_color, Color2);
-					var _vertex_location = self.getVertexLocations(_location, _outline, _outline_size,
-																   _fill_color_isColor2);
+					var _vertex_location = self.getVertexLocation(_location, _outline, _outline_size,
+																  _fill_color_isColor2);
 					
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))

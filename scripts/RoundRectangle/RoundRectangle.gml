@@ -191,8 +191,8 @@ function RoundRectangle() constructor
 					if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
 										   location.y2))
 					{
-						var _vertex_location = self.getVertexLocations(undefined, undefined,
-																	   undefined, true);
+						var _vertex_location = self.getVertexLocation(undefined, undefined, undefined,
+																	  true);
 						var _segment_count = 4;
 						var _vertex_count = array_length(_vertex_location);
 						var _vertex_count_outer = (_vertex_count - 2);
@@ -382,8 +382,8 @@ function RoundRectangle() constructor
 			//  @author				Adapted from code by YoYo Games (https://github.com/YoYoGames/
 			//						GameMaker-HTML5/blob/9143e2770e2d6a333f2bdcbe640d1f45f7258d6b/
 			//						scripts/yyWebGL.js#L2990-L3124)
-			static getVertexLocations = function(_location = location, _radius = radius,
-												 _precision = precision, _startWithCenter = false)
+			static getVertexLocation = function(_location = location, _radius = radius,
+												_precision = precision, _startWithCenter = false)
 			{
 				var _result = [];
 				
@@ -447,7 +447,7 @@ function RoundRectangle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -497,8 +497,8 @@ function RoundRectangle() constructor
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
 					{
-						_vertex_location_base = self.getVertexLocations(_location, _radius,
-																		_precision, true);
+						_vertex_location_base = self.getVertexLocation(_location, _radius, _precision,
+																	   true);
 						var _color2 = _fill_color;
 						var _color_order_fill = undefined;
 						var _vertex_color_offset_fill = 0;
@@ -542,10 +542,10 @@ function RoundRectangle() constructor
 							_vertex_color_offset_outline = 2;
 							_outline_segment_gradient_offset = 2;
 							var _vertex_location_outline_inner = ((_vertex_location_base)
-							 ?? self.getVertexLocations(_location, _radius, _precision, true));
+							 ?? self.getVertexLocation(_location, _radius, _precision, true));
 							var _vertex_location_outline_outer =
-							 self.getVertexLocations(new Vector4(_location).sort(true)
-													  .grow(_outline_size), _radius, _precision);
+							 self.getVertexLocation(new Vector4(_location).sort(true)
+													 .grow(_outline_size), _radius, _precision);
 							
 							var _i = 0;
 							repeat (array_length(_vertex_location_outline_outer))
@@ -603,8 +603,8 @@ function RoundRectangle() constructor
 															  (_location.y1 - 0.5),
 															  (_location.x2 - 0.5),
 															  (_location.y2 + 0.5));
-							var _vertex_location = self.getVertexLocations(_outline_offset, _radius,
-																		   _precision);
+							var _vertex_location = self.getVertexLocation(_outline_offset, _radius,
+																		  _precision);
 						}
 						
 						array_push(_primitive, [_outline_primitive, _vertex_location,

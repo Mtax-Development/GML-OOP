@@ -426,8 +426,8 @@ function Circle() constructor
 			//  @author				Adapted from code by YoYo Games (https://github.com/YoYoGames/
 			//						GameMaker-HTML5/blob/9143e2770e2d6a333f2bdcbe640d1f45f7258d6b/
 			//						scripts/yyWebGL.js#L3507-L3607)
-			static getVertexLocations = function(_location = location, _radius = radius,
-												 _precision = precision, _startWithCenter = false)
+			static getVertexLocation = function(_location = location, _radius = radius,
+												_precision = precision, _startWithCenter = false)
 			{
 				var _result = [];
 				
@@ -475,7 +475,7 @@ function Circle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -523,8 +523,8 @@ function Circle() constructor
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
 					{
-						_vertex_location_base = self.getVertexLocations(_location, _radius, _precision,
-																		true);
+						_vertex_location_base = self.getVertexLocation(_location, _radius, _precision,
+																	   true);
 						var _color2 = _fill_color;
 						
 						if (is_instanceof(_fill_color, Color2))
@@ -547,10 +547,10 @@ function Circle() constructor
 						var _vertex_location = [];
 						var _vertex_color_offset_outline = 2;
 						var _vertex_location_inner = ((_vertex_location_base)
-													  ?? self.getVertexLocations(_location, _radius,
-																				 _precision, true));
+													  ?? self.getVertexLocation(_location, _radius,
+																				_precision, true));
 						var _vertex_location_outer =
-						 self.getVertexLocations(_location, (_radius + _outline_size), _precision);
+						 self.getVertexLocation(_location, (_radius + _outline_size), _precision);
 						var _i = 0;
 						repeat (array_length(_vertex_location_outer))
 						{

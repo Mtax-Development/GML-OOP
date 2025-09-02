@@ -112,8 +112,8 @@ function Plane() constructor
 			/// @returns			{real[+]}
 			/// @description		Return an array containing nested arrays with point locations,
 			///						resulting in this Shape when connected.
-			static getVertexLocations = function(_location = location, _scale = scale, _angle = angle,
-												 _sprite = sprite)
+			static getVertexLocation = function(_location = location, _scale = scale, _angle = angle,
+												_sprite = sprite)
 			{
 				var _result = [];
 				
@@ -206,7 +206,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -306,8 +306,7 @@ function Plane() constructor
 			{
 				try
 				{
-					var _vertex_location = self.getVertexLocations(_location, _scale, _angle,
-																   _sprite);
+					var _vertex_location = self.getVertexLocation(_location, _scale, _angle, _sprite);
 					var _uv = self.getUV(_sprite);
 					
 					return [pr_trianglestrip, _vertex_location, _uv];

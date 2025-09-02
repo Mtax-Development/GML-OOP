@@ -110,8 +110,8 @@ function Cube() constructor
 			///						- array[0]: vertex location {real[]}
 			///						- array[1]: matrix offset from constructor location {real[]}
 			///						- array[2]: matrix rotation {real[]}
-			static getVertexLocations = function(_location, _scale = scale, _angle = angle,
-												 _sprite = sprite)
+			static getVertexLocation = function(_location, _scale = scale, _angle = angle,
+												_sprite = sprite)
 			{
 				var _result = [];
 				
@@ -317,7 +317,7 @@ function Cube() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -506,8 +506,7 @@ function Cube() constructor
 				try
 				{
 					var _flat = (!is_instanceof(_location, Vector3));
-					var _vertex_location = self.getVertexLocations(_location, _scale, _angle,
-																   _sprite);
+					var _vertex_location = self.getVertexLocation(_location, _scale, _angle, _sprite);
 					var _uv = self.getUV(_sprite, _flat);
 					
 					return [pr_trianglelist, _vertex_location, _uv];

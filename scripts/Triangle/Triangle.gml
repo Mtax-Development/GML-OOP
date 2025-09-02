@@ -363,9 +363,9 @@ function Triangle() constructor
 			///						will be returned in that array, depending on whether it was
 			///						specified to return only data for outline, not return it and use
 			///						only fill instead, or to contain all of this data.
-			static getVertexLocations = function(_location1 = location1, _location2 = location2,
-												 _location3 = location3, _outline = false,
-												 _outline_scale = outline_scale)
+			static getVertexLocation = function(_location1 = location1, _location2 = location2,
+												_location3 = location3, _outline = false,
+												_outline_scale = outline_scale)
 			{
 				var _result = [];
 				
@@ -405,7 +405,7 @@ function Triangle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocations()"], _exception);
+					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -445,8 +445,8 @@ function Triangle() constructor
 				{
 					var _primitive = [];
 					var _fill_color_isColor2 = is_instanceof(_fill_color, Color2);
-					var _vertex_location = self.getVertexLocations(_location1, _location2, _location3,
-																	_outline, _outline_scale);
+					var _vertex_location = self.getVertexLocation(_location1, _location2, _location3,
+																  _outline, _outline_scale);
 					
 					if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 					and (_fill_alpha > 0))
