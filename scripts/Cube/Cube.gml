@@ -3,8 +3,8 @@
 /// @argument				scale {Vector3}
 /// @argument				angle? {EulerAngle}
 /// @argument				sprite? {Sprite}
-/// @argument				color? {int:color}
-/// @argument				alpha? {real}
+/// @argument				color? {int:color|int:color[]}
+/// @argument				alpha? {real|real[]}
 /// @description			Constructs a three-dimensional Cube Shape, made of six rectangular sides.
 ///							Its location is its center, from which it is scaled.
 //							
@@ -54,6 +54,18 @@ function Cube() constructor
 						color = _other.color;
 						alpha = _other.alpha;
 						
+						if (is_array(_other.color))
+						{
+							color = [];
+							array_copy(color, 0, _other.color, 0, array_length(_other.color));
+						}
+						
+						if (is_array(_other.alpha))
+						{
+							alpha = [];
+							array_copy(alpha, 0, _other.alpha, 0, array_length(_other.alpha));
+						}
+						
 						if (is_struct(_other.event))
 						{
 							event.beforeRender.setAll(_other.event.beforeRender);
@@ -87,7 +99,8 @@ function Cube() constructor
 			{
 				return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
 						((is_instanceof(scale, Vector3)) and (scale.isFunctional())) and
-						(is_real(color)) and (is_real(alpha)));
+						((is_real(color)) or (is_array(color))) and ((is_real(alpha)) or
+						(is_array(alpha))));
 			}
 			
 		#endregion
@@ -526,8 +539,8 @@ function Cube() constructor
 			/// @argument			scale? {Scale}
 			/// @argument			angle? {EulerAngle}
 			/// @argument			sprite? {Sprite}
-			/// @argument			color? {int:color}
-			/// @argument			alpha? {real}
+			/// @argument			color? {int:color|int:color[]}
+			/// @argument			alpha? {real|real[]}
 			/// @argument			excludedSide? {int|int[]}
 			/// @description		Execute the draw, using data of this constructor or its specified
 			///						temporarily replaced parts. Each side can be excluded from this
@@ -537,6 +550,7 @@ function Cube() constructor
 									 _sprite = sprite, _color = color, _alpha = alpha,
 									 _excludedSide = [])
 			{
+				var _side_count = 6;
 				var _matrix_original = matrix_get(matrix_world);
 				var _location_original = location;
 				var _scale_original = scale;
@@ -549,8 +563,8 @@ function Cube() constructor
 				scale = _scale;
 				angle = _angle;
 				sprite = _sprite;
-				color = _color;
-				alpha = _alpha;
+				color = ((is_array(_color)) ? array_create(_side_count, _color) : _color);
+				alpha = ((is_array(_alpha)) ? array_create(_side_count, _alpha) : _alpha);
 				
 				try
 				{
@@ -567,19 +581,22 @@ function Cube() constructor
 																	 undefined, true);
 						var _rotation_x_side_vertical = [90, 270];
 						var _primitive_type = _primitive[0];
+						var _transform = _primitive[1];
 						var _texture_data = _primitive[2];
 						var _i = [0, 0];
 						repeat (array_length(_primitive[1]))
 						{
 							if (!array_contains(_excludedSide, (_i[0] + 1)))
 							{
-								var _transform_current = _primitive[1][_i[0]];
+								var _transform_current = _transform[_i[0]];
 								var _location_current = _transform_current[0];
 								var _offset_current = _transform_current[1];
 								var _rotation_current = _transform_current[2];
 								var _texture_data_current = _texture_data[_i[0]];
 								var _texture_current = _texture_data_current[0];
 								var _uv_current = _texture_data_current[1];
+								var _color_current = color[_i[0]];
+								var _alpha_current = alpha[_i[0]];
 								var _matrix_side = _matrix_original;
 								var _matrix_transform = matrix_build
 								(
@@ -611,7 +628,8 @@ function Cube() constructor
 									draw_vertex_texture_color(_vertex_location_current[0],
 															  _vertex_location_current[1],
 															  _vertex_uv_current[0],
-															  _vertex_uv_current[1], color, alpha);
+															  _vertex_uv_current[1],
+															  _color_current, _alpha_current);
 									
 									++_i[1];
 								}
@@ -738,8 +756,8 @@ function Cube() constructor
 			/// @argument			scale? {Vector3}
 			/// @argument			angle? {EulerAngle}
 			/// @argument			sprite? {Sprite}
-			/// @argument			color? {int:color}
-			/// @argument			alpha? {real}
+			/// @argument			color? {int:color|int:color[]}
+			/// @argument			alpha? {real|real[]}
 			/// @argument			excludedSide? {int|int[]}
 			/// @argument			vertexBuffer? {VertexBuffer}
 			/// @returns			{VertexBuffer.PrimitiveRenderData[]}
@@ -777,9 +795,21 @@ function Cube() constructor
 					var _vertex_location = _primitive[1];
 					var _texture_data = _primitive[2];
 					var _normal_side = self.getNormal(_vertex_location);
+					var _side_count = array_length(_vertex_location);
+					
+					if (!is_array(_color))
+					{
+						_color = array_create(_side_count, _color);
+					}
+					
+					if (!is_array(_alpha))
+					{
+						_alpha = array_create(_side_count, _alpha);
+					}
+					
 					var _vertex = new Vector3();
 					var _i = [0, 0];
-					repeat (array_length(_vertex_location))
+					repeat (_side_count)
 					{
 						if (!array_contains(_excludedSide, (_i[0] + 1)))
 						{
@@ -787,6 +817,8 @@ function Cube() constructor
 							var _texture_data_current = _texture_data[_i[0]];
 							var _uv_current = _texture_data_current[1];
 							var _normal_current = _normal_side[_i[0]];
+							var _color_current = _color[_i[0]];
+							var _alpha_current = _alpha[_i[0]];
 							
 							_vertexBuffer_side = (_vertexBuffer ?? new VertexBuffer());
 							var _renderData = _vertexBuffer_side
@@ -808,7 +840,7 @@ function Cube() constructor
 								 .setLocation3D(_vertex.setAll(_vertex_location_current))
 								 .setNormal(_normal_current)
 								 .setUV(_vertex_uv_current[0], _vertex_uv_current[1])
-								 .setColor(_color, _alpha);
+								 .setColor(_color_current, _alpha_current);
 								
 								++_i[1];
 							}
