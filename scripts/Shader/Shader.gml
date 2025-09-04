@@ -50,15 +50,20 @@ function Shader() constructor
 							repeat (array_length(_uniform))
 							{
 								var _other_struct = variable_struct_get(_other.uniform, _uniform[_i]);
+								var _value_current = _other_struct.value;
+								
+								if (is_array(_other_struct.value))
+								{
+									_value_current = [];
+									array_copy(_value_current, 0, _other_struct.value, 0,
+											   array_length(_other_struct));
+								}
 								
 								var _struct = 
 								{
 									handle: _other_struct.handle,
 									type: _other_struct.type,
-									value: ((is_array(_other_struct.value))
-											? array_copy([], 0, _other_struct.value, 0,
-														 array_length(_other_struct))
-											: _other_struct.value)
+									value: _value_current
 								};
 								
 								variable_struct_set(uniform, _uniform[_i], _struct);
