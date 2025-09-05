@@ -392,8 +392,8 @@ function RoundRectangle() constructor
 				{
 					var _location_x1 = min(_location.x1, _location.x2);
 					var _location_y1 = min(_location.y1, _location.y2);
-					var _location_x2 = max(_location.x1, _location.x2);
-					var _location_y2 = max(_location.y1, _location.y2);
+					var _location_x2 = (max(_location.x1, _location.x2) + 0.5);
+					var _location_y2 = (max(_location.y1, _location.y2) + 0.5);
 					var _segment_count = 4;
 					_precision = clamp(((_precision div _segment_count) * _segment_count),
 									   _segment_count, 64);
