@@ -33,7 +33,8 @@ function Cube() constructor
 				event =
 				{
 					beforeRender: new Callback(undefined, [], _scope),
-					afterRender: new Callback(undefined, [], _scope)
+					afterRender: new Callback(undefined, [], _scope),
+					getPrimitiveRenderData: new Callback(function(_data) {return _data;}, [], _scope),
 				};
 				
 				if (argument_count > 0)
@@ -522,7 +523,8 @@ function Cube() constructor
 					var _vertex_location = self.getVertexLocation(_location, _scale, _angle, _sprite);
 					var _uv = self.getUV(_sprite, _flat);
 					
-					return [pr_trianglelist, _vertex_location, _uv];
+					return event.getPrimitiveRenderData.execute(undefined, [[pr_trianglelist,
+																			 _vertex_location, _uv]]);
 				}
 				catch (_exception)
 				{

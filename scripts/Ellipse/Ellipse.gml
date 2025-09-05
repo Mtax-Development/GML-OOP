@@ -38,7 +38,8 @@ function Ellipse() constructor
 				event =
 				{
 					beforeRender: new Callback(undefined, [], _scope),
-					afterRender: new Callback(undefined, [], _scope)
+					afterRender: new Callback(undefined, [], _scope),
+					getPrimitiveRenderData: new Callback(function(_data) {return _data;}, [], _scope),
 				};
 				
 				if (argument_count > 0)
@@ -573,7 +574,7 @@ function Ellipse() constructor
 						++_i[0];
 					}
 					
-					return _result;
+					return event.getPrimitiveRenderData.execute(undefined, [_result]);
 				}
 				catch (_exception)
 				{

@@ -37,7 +37,8 @@ function Line() constructor
 				event =
 				{
 					beforeRender: new Callback(undefined, [], _scope),
-					afterRender: new Callback(undefined, [], _scope)
+					afterRender: new Callback(undefined, [], _scope),
+					getPrimitiveRenderData: new Callback(function(_data) {return _data;}, [], _scope),
 				};
 				
 				if (argument_count > 0)
@@ -562,7 +563,7 @@ function Line() constructor
 						array_push(_primitive, [pr_trianglelist, _vertex_data]);
 					}
 					
-					return _primitive;
+					return event.getPrimitiveRenderData.execute(undefined, [_primitive]);
 				}
 				catch (_exception)
 				{

@@ -26,7 +26,8 @@ function Point() constructor
 				event =
 				{
 					beforeRender: new Callback(undefined, [], _scope),
-					afterRender: new Callback(undefined, [], _scope)
+					afterRender: new Callback(undefined, [], _scope),
+					getPrimitiveRenderData: new Callback(function(_data) {return _data;}, [], _scope),
 				};
 				
 				if (argument_count > 0)
@@ -379,7 +380,9 @@ function Point() constructor
 			{
 				try
 				{
-					return [pr_pointlist, [[_location.x, _location.y], _color, _alpha]];
+					return event.getPrimitiveRenderData
+							.execute(undefined, [[pr_pointlist, [[_location.x,  _location.y],
+												 _color, _alpha]]]);
 				}
 				catch (_exception)
 				{
