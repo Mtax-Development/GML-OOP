@@ -160,20 +160,19 @@ function Callback() constructor
 			///						order by providing them their respective arguments, if any. This
 			///						execution can be additionally controlled by specifying a condition
 			///						to prevent the operation when that condition is not fulfilled.
-			static execute = function(_condition = true, _scope = scope)
+			static execute = function(_condition = true, _argument = self.argument, _scope = scope)
 			{
 				if ((ID != undefined) and (_condition))
 				{
 					var _callback_isArray = is_array(ID);
-					var _argument_isArray = is_array(self.argument);
+					var _argument_isArray = is_array(_argument);
 					var _argument_direct = (((!_callback_isArray) and (_argument_isArray)) or
 											((_argument_isArray) and
-											(array_length(self.argument) == 0)));
+											(array_length(_argument) == 0)));
 					var _callback_array = ((_callback_isArray) ? ID : [ID]);
 					var _callback_count = array_length(_callback_array);
 					var _argument_array = ((_argument_isArray)
-										   ? self.argument : array_create(_callback_count,
-																		  self.argument));
+										   ? _argument : array_create(_callback_count, _argument));
 					var _result = array_create(_callback_count, undefined);
 					var _i = 0;
 					repeat (_callback_count)
