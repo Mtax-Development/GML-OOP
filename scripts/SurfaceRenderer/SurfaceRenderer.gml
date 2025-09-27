@@ -414,13 +414,13 @@ function SurfaceRenderer() constructor
 					
 					var _vertex = new Vector2();
 					var _texture = surface_get_texture(surface.ID);
-					var _texelSize_x = texture_get_texel_width(_texture);
-					var _texelSize_y = texture_get_texel_height(_texture);
+					var _texel_x = texture_get_texel_width(_texture);
+					var _texel_y = texture_get_texel_height(_texture);
 					var _uv = texture_get_uvs(_texture);
-					var _uv_x1 = (_uv[0] + (_part_x1 * _texelSize_x));
-					var _uv_y1 = (_uv[1] + (_part_y1 * _texelSize_y));
-					var _uv_x2 = (_uv_x1 + (_size_x_part * _texelSize_x));
-					var _uv_y2 = (_uv_y1 + (_size_y_part * _texelSize_y));
+					var _uv_x1 = (_uv[0] + (_part_x1 * _texel_x));
+					var _uv_y1 = (_uv[1] + (_part_y1 * _texel_y));
+					var _uv_x2 = (_uv_x1 + (_size_x_part * _texel_x));
+					var _uv_y2 = (_uv_y1 + (_size_y_part * _texel_y));
 					_vertexBuffer = new VertexBuffer();
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
 																		  _texture);

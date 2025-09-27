@@ -450,24 +450,23 @@ function Surface() constructor
 							}
 						}
 						
-						var _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2;
+						var _color_topLeft = _color;
+						var _color_topRight = _color;
+						var _color_bottomLeft = _color;
+						var _color_bottomRight = _color;
 						
-						if (is_real(_color))
+						if (is_instanceof(_color, Color4))
 						{
-							_color_x1y1 = _color;
-							_color_x2y1 = _color;
-							_color_x2y2 = _color;
-							_color_x1y2 = _color;
-						}
-						else
-						{
-							_color_x1y1 = _color.color1;
-							_color_x2y1 = _color.color2;
-							_color_x2y2 = _color.color3;
-							_color_x1y2 = _color.color4;
+							_color_topLeft = _color.color1;
+							_color_topRight = _color.color2;
+							_color_bottomRight = _color.color3;
+							_color_bottomLeft = _color.color4;
 						}
 						
-						var _part_x1, _part_y1, _part_x2, _part_y2;
+						var _part_x1 = 0;
+						var _part_y1 = 0;
+						var _part_x2 = _size_x;
+						var _part_y2 = _size_y;
 						
 						if (_part != undefined)
 						{
@@ -475,13 +474,6 @@ function Surface() constructor
 							_part_y1 = clamp(_part.y1, 0, _size_y);
 							_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
 							_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
-						}
-						else
-						{
-							_part_x1 = 0;
-							_part_y1 = 0;
-							_part_x2 = _size_x;
-							_part_y2 = _size_y;
 						}
 						
 						var _angle_value = 0;
@@ -506,8 +498,8 @@ function Surface() constructor
 						
 						draw_surface_general(ID, _part_x1, _part_y1, _part_x2, _part_y2, _location_x,
 											 _location_y, _scale_x, _scale_y, _angle_value,
-											 _color_x1y1, _color_x2y1, _color_x2y2, _color_x1y2,
-											 _alpha);
+											 _color_topLeft, _color_topRight, _color_bottomRight,
+											 _color_bottomLeft, _alpha);
 						
 						if (is_handle(_targetStack))
 						{

@@ -215,8 +215,9 @@ function Plane() constructor
 			
 			/// @argument			sprite? {Sprite|SpriteRenderer}
 			/// @argument			frame? {int}
-			/// @description		Return the UV coordinates for every vertex of the specfied frame
-			///						of the specified Sprite.
+			/// @returns			{any[+]}
+			/// @description		Return the texture pointer and UV coordinates for every vertex of
+			///						the specfied Sprite and its frame.
 			static getUV = function(_sprite = sprite, _frame = 0)
 			{
 				try
@@ -540,6 +541,7 @@ function Plane() constructor
 						_alpha = _sprite.alpha;
 					}
 					
+					var _vertexBuffer_created = false;
 					var _vertexBuffer_wasActive = false;
 					
 					if (is_instanceof(_vertexBuffer, VertexBuffer))
@@ -549,6 +551,7 @@ function Plane() constructor
 					else
 					{
 						_vertexBuffer = new VertexBuffer();
+						_vertexBuffer_created = true;
 					}
 					
 					var _primitive = self.getPrimitiveRenderData(_location, _scale, _angle, _sprite);
@@ -590,7 +593,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					if (_vertexBuffer != undefined)
+					if (_vertexBuffer_created)
 					{
 						_vertexBuffer.destroy();
 					}

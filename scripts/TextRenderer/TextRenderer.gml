@@ -640,8 +640,8 @@ function TextRenderer() constructor
 					var _linebreak_chain = 0;
 					var _vertex = new Vector2();
 					var _texture = font_get_texture(font.ID);
-					var _texelSize_x = texture_get_texel_width(_texture);
-					var _texelSize_y = texture_get_texel_height(_texture);
+					var _texel_x = texture_get_texel_width(_texture);
+					var _texel_y = texture_get_texel_height(_texture);
 					var _vertex_order = [[0, 1, 2, 3], [2, 3, 0, 1]];
 					var _vertex_order_index = 0;
 					var _vertex_count = array_length(_vertex_order[0]);
@@ -700,10 +700,10 @@ function TextRenderer() constructor
 								var _offset_x = ((struct_get(_char_data, "offset") *
 												 _scale_multiplier.x) ?? 0);
 								var _location_x_offset = (_location_x + _offset_x);
-								var _char_uv_x1 = (_char_data.x * _texelSize_x);
-								var _char_uv_y1 = (_char_data.y * _texelSize_y);
-								var _char_uv_x2 = (_char_uv_x1 + (_char_data.w * _texelSize_x));
-								var _char_uv_y2 = (_char_uv_y1 + (_char_data.h * _texelSize_y));
+								var _char_uv_x1 = (_char_data.x * _texel_x);
+								var _char_uv_y1 = (_char_data.y * _texel_y);
+								var _char_uv_x2 = (_char_uv_x1 + (_char_data.w * _texel_x));
+								var _char_uv_y2 = (_char_uv_y1 + (_char_data.h * _texel_y));
 								var _char_size_x = (_char_data.w * _scale_multiplier.x);
 								var _char_size_y = (_char_data.h * _scale_multiplier.y);
 								
