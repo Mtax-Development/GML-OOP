@@ -299,7 +299,7 @@ function Vector2() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "difference()"], _exception);
+					new ErrorReport().report([other, self, "absoluteDifference()"], _exception);
 				}
 				
 				return undefined;
