@@ -288,4 +288,17 @@ function TextAlign() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static topLeft = new TextAlign(fa_left, fa_top);
+		static topCenter = new TextAlign(fa_center, fa_top);
+		static topRight = new TextAlign(fa_right, fa_top);
+		static middleLeft = new TextAlign(fa_left, fa_middle);
+		static middleCenter = new TextAlign(fa_center, fa_middle);
+		static middleRight = new TextAlign(fa_right, fa_middle);
+		static bottomLeft = new TextAlign(fa_left, fa_bottom);
+		static bottomCenter = new TextAlign(fa_center, fa_bottom);
+		static bottomRight = new TextAlign(fa_right, fa_bottom);
+		
+	#endregion
 }
