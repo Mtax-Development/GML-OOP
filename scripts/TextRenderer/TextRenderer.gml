@@ -365,7 +365,8 @@ function TextRenderer() constructor
 			/// @argument			alpha? {real}
 			/// @description		Execute the draw of the text, using data of this constructor or
 			///						specified temporarily replaced parts.
-			static render = function(_string, _font, _location, _align, _scale, _angle, _color, _alpha)
+			static render = function(_string, _font, _location, _align, _scale, _angle, _color,
+									 _alpha)
 			{
 				var _string_original = ID;
 				var _font_original = font;
