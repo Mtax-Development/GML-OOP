@@ -142,7 +142,8 @@ function RoundRectangle() constructor
 						outline_color = ((argument_count > 5) ? argument[5] : undefined);
 						outline_alpha = (((argument_count > 6) and (argument[6] != undefined))
 										 ? argument[6] : 1);
-						precision = ((argument_count > 7) ? argument[7] : 24);
+						precision = (((argument_count > 7) and (argument[7] != undefined))
+									 ? argument[7] : 24);
 					}
 				}
 				
