@@ -1718,7 +1718,9 @@ function Vector4() constructor
 	#region [Static Constructions]
 		
 		static zero = new Vector4(0, 0, 0, 0);
+		static zeroOne = new Vector4(0, 0, 1, 1);
 		static one = new Vector4(1, 1, 1, 1);
+		static oneZero = new Vector4(1, 1, 0, 0);
 		static negative = new Vector4((-1), (-1), (-1), (-1));
 		
 	#endregion
