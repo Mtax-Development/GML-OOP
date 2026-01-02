@@ -818,6 +818,7 @@ function SpriteRenderer() constructor
 											 _alpha = alpha, _part = part, _origin = origin,
 											 _vertexBuffer)
 			{
+				var _vertexBuffer_created = false;
 				var _renderData = undefined;
 				var _sprite_original = sprite;
 				var _location_original = location;
@@ -848,7 +849,6 @@ function SpriteRenderer() constructor
 					var _texture = _texture_data[0];
 					var _vertex_uv = _texture_data[1];
 					var _vertex = new Vector2();
-					var _vertexBuffer_created = false;
 					var _vertexBuffer_wasActive = false;
 					
 					if (is_instanceof(_vertexBuffer, VertexBuffer))
