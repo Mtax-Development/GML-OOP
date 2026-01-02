@@ -181,9 +181,13 @@ function SpriteRenderer() constructor
 					var _size_y = sprite_get_height(_sprite.ID);
 					var _scale_x = _scale.x;
 					var _scale_y = _scale.y;
+					var _trim = _sprite.getTextureTrim(0);
 					var _nineslice = sprite_get_nineslice(_sprite.ID);
-					
-					var _origin_x, _origin_y;
+					var _location_x, _location_y, _origin_x, _origin_y;
+					var _part_x1 = 0;
+					var _part_y1 = 0;
+					var _part_x2 = _size_x;
+					var _part_y2 = _size_y;
 					
 					if (_origin != undefined)
 					{
@@ -195,8 +199,6 @@ function SpriteRenderer() constructor
 						_origin_x = sprite_get_xoffset(_sprite.ID);
 						_origin_y = sprite_get_yoffset(_sprite.ID);
 					}
-					
-					var _location_x, _location_y;
 					
 					if ((is_instanceof(location, Vector4)))
 					{
@@ -211,30 +213,37 @@ function SpriteRenderer() constructor
 						_location_y = _location.y;
 					}
 					
-					var _part_x1 = 0;
-					var _part_y1 = 0;
-					var _part_x2 = _size_x;
-					var _part_y2 = _size_y;
-					
 					if ((part != undefined) and (!_nineslice.enabled))
 					{
-						_part_x1 = clamp(_part.x1, 0, _size_x);
-						_part_y1 = clamp(_part.y1, 0, _size_y);
-						_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
-						_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
+						_part_x1 = _part.x1;
+						_part_y1 = _part.y1;
+						_part_x2 = _part.x2;
+						_part_y2 = _part.y2;
 					}
 					
-					var _size_x_part = (_size_x - (_size_x - _part_x2));
-					var _size_y_part = (_size_y - (_size_y - _part_y2));
+					_part_x1 = clamp(_part_x1, 0, _size_x);
+					_part_y1 = clamp(_part_y1, 0, _size_y);
+					_part_x2 = clamp((_part_x2 + _trim.x2), 0, (_size_x - _part_x1));
+					_part_y2 = clamp((_part_y2 + _trim.y2), 0, (_size_y - _part_y1));
+					
+					var _part_whitespace_x1 = max(0, (_trim.x1 - _part_x1));
+					var _part_whitespace_y1 = max(0, (_trim.y1 - _part_y1));
+					var _size_x_part = (_size_x - (_size_x - _part_x2) - _trim.x1 - _trim.x2 +
+										(_trim.x1 - _part_whitespace_x1));
+					var _size_y_part = (_size_y - (_size_y - _part_y2) - _trim.y1 - _trim.y2 +
+										(_trim.y1 - _part_whitespace_y1));
 					var _size_x_part_scaled = (_size_x_part * _scale_x);
 					var _size_y_part_scaled = (_size_y_part * _scale_y);
-					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _part_x2),
-																 ((_origin_x * _scale_x) / _size_x)));
-					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _part_y2),
-																 ((_origin_y * _scale_y) / _size_y)));
+					var _origin_transformed_x = (_part_x1 - lerp(_part_x1, (_part_x1 + _size_x),
+																 ((_origin_x * _scale_x) / _size_x)) +
+												 (_part_whitespace_x1 * _scale_x));
+					var _origin_transformed_y = (_part_y1 - lerp(_part_y1, (_part_y1 + _size_y),
+																 ((_origin_y * _scale_y) / _size_y)) +
+												 (_part_whitespace_y1 * _scale_y));
 					var _angle_dcos = dcos(_angle.value);
 					var _angle_dsin = dsin(_angle.value);
 					var _angle_rotated = (_angle.value - 90);
+					
 					var _location_topLeft = [(_location_x + (_origin_transformed_x * _angle_dcos) +
 										  (_origin_transformed_y * _angle_dsin)),
 										  (_location_y - (_origin_transformed_x * _angle_dsin) +
@@ -435,32 +444,39 @@ function SpriteRenderer() constructor
 			///						temporarily replaced parts.
 			static getUV = function(_sprite = sprite, _frame = frame, _part = part)
 			{
+				
 				var _size_x = sprite_get_width(_sprite.ID);
 				var _size_y = sprite_get_height(_sprite.ID);
+				var _trim = _sprite.getTextureTrim(_frame);
 				var _part_x1 = 0;
 				var _part_y1 = 0;
 				var _part_x2 = _size_x;
 				var _part_y2 = _size_y;
 				var _nineslice = sprite_get_nineslice(_sprite.ID);
 				
-				if ((_part != undefined) and (_nineslice.enabled))
+				if ((_part != undefined) and (!_nineslice.enabled))
 				{
-					_part_x1 = clamp(_part.x1, 0, _size_x);
-					_part_y1 = clamp(_part.y1, 0, _size_y);
-					_part_x2 = clamp(_part.x2, 0, (_size_x - _part_x1));
-					_part_y2 = clamp(_part.y2, 0, (_size_y - _part_y1));
+					_part_x1 = _part.x1;
+					_part_y1 = _part.y1;
+					_part_x2 = _part.x2;
+					_part_y2 = _part.y2;
 				}
 				
-				var _size_x_part = (_size_x - (_size_x - _part_x2));
-				var _size_y_part = (_size_y - (_size_y - _part_y2));
+				var _part_trimmed_x1 = clamp((_part_x1 - _trim.x1), 0, _size_x);
+				var _part_trimmed_y1 = clamp((_part_y1 - _trim.y1), 0, _size_y);
+				var _part_trimmed_x2 = clamp(((_size_x - _part_x2) - (_size_x - (_size_x -
+											 _trim.x2)) - _part_x1), 0, _size_x);
+				var _part_trimmed_y2 = clamp(((_size_y - _part_y2) - (_size_y - (_size_y -
+											 _trim.y2)) - _part_y1), 0, _size_y);
 				var _texture = sprite_get_texture(_sprite.ID, _frame);
 				var _texel_x = texture_get_texel_width(_texture);
 				var _texel_y = texture_get_texel_height(_texture);
 				var _uv = texture_get_uvs(_texture);
-				var _uv_x1 = (_uv[0] + (_part_x1 * _texel_x));
-				var _uv_y1 = (_uv[1] + (_part_y1 * _texel_y));
-				var _uv_x2 = (_uv_x1 + (_size_x_part * _texel_x));
-				var _uv_y2 = (_uv_y1 + (_size_y_part * _texel_y));
+				var _uv_x1 = (_uv[0] + (_part_trimmed_x1 * _texel_x));
+				var _uv_y1 = (_uv[1] + (_part_trimmed_y1 * _texel_y));
+				var _uv_x2 = (_uv[2] - (_part_trimmed_x2 * _texel_x));
+				var _uv_y2 = (_uv[3] - (_part_trimmed_y2 * _texel_y));
+				
 				var _uv_topLeft = [_uv_x1, _uv_y1];
 				var _uv_topRight = [_uv_x2, _uv_y1];
 				var _uv_bottomLeft = [_uv_x1, _uv_y2];
