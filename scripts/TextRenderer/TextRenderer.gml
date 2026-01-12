@@ -152,11 +152,12 @@ function TextRenderer() constructor
 				return new Scale(_multiplier_x, _multiplier_y);
 			}
 			
+			/// @argument			string? {any:string}
 			/// @argument			scale? {int|Scale}
 			/// @returns			{Vector2} | On error: {undefined}
 			/// @description		Return the number of pixels the text would occupy when rendered
 			///						with either its current or specified Scale, or specified Font size.
-			static getPixelSize = function(_scale = scale)
+			static getPixelSize = function(_string = ID, _scale = scale)
 			{
 				var _font_original = draw_get_font();
 				
@@ -164,7 +165,7 @@ function TextRenderer() constructor
 				{
 					draw_set_font(font.ID);
 					
-					var _string = string(ID);
+					_string = string(_string);
 					var _scale_multiplier = self.getScaleMultiplier(_scale);
 					var _pixelSize_x = (string_width(_string) * _scale_multiplier.x);
 					var _pixelSize_y = (string_height(_string) * _scale_multiplier.y);
