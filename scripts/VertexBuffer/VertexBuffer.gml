@@ -5,6 +5,7 @@
 //							
 //							Construction types:
 //							- New constructor
+//							- Empty: {undefined}
 function VertexBuffer() constructor
 //  @feather	ignore all
 {
@@ -14,9 +15,18 @@ function VertexBuffer() constructor
 			/// @description		Initialize this constructor.
 			static construct = function()
 			{
-				ID = vertex_create_buffer();
+				//|Construction type: Empty.
+				ID = undefined;
 				active = false;
 				readOnly = false;
+				
+				if (!((argument_count > 0) and (argument[0] == undefined)))
+				{
+					//|Construction type: New constructor.
+					ID = vertex_create_buffer();
+					active = false;
+					readOnly = false;
+				}
 				
 				return self;
 			}
