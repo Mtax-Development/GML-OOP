@@ -618,13 +618,14 @@ function TextRenderer() constructor
 					}
 					
 					ID = string(ID);
-					var _font_data = font_get_info(font.ID);
+					var _glyph = font_get_info(font.ID).glyphs;
+					var _signedDistanceField_spread = (font.signedDistanceFieldSpread ?? 0);
 					var _align_multiplier = align.getMultiplier();
 					var _origin_absolute_x = round(location.x);
 					var _origin_absolute_y = round(location.y);
-					var _origin_x = (_origin_absolute_x - (_font_data.sdfSpread *
+					var _origin_x = (_origin_absolute_x - (_signedDistanceField_spread *
 														   _scale_multiplier.x));
-					var _origin_y = (_origin_absolute_y - (_font_data.sdfSpread *
+					var _origin_y = (_origin_absolute_y - (_signedDistanceField_spread *
 														   _scale_multiplier.y));
 					var _location_x = _origin_x;
 					var _location_y = _origin_y;
@@ -693,8 +694,7 @@ function TextRenderer() constructor
 								}
 							}
 							
-							var _char_data = (struct_get(_font_data.glyphs, _char)
-											  ?? struct_get(_font_data.glyphs, "▯"));
+							var _char_data = (struct_get(_glyph, _char) ?? struct_get(_glyph, "▯"));
 							
 							if (_char_data != undefined)
 							{
@@ -774,7 +774,7 @@ function TextRenderer() constructor
 					_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
 																		  _texture);
 					
-					if (_font_data.sdfEnabled)
+					if (font.signedDistanceField)
 					{
 						_renderData.event.beforeRender.callback = shader_set;
 						array_push(_renderData.event.beforeRender.argument, __yy_sdf_shader);
