@@ -699,8 +699,8 @@ function TextRenderer() constructor
 							if (_char_data != undefined)
 							{
 								_line_text[_line_index] += _char;
-								var _offset_x = ((struct_get(_char_data, "offset") *
-												 _scale_multiplier.x) ?? 0);
+								var _offset_x = ((struct_get(_char_data, "offset") ?? 0) *
+												 _scale_multiplier.x);
 								var _location_x_offset = (_location_x + _offset_x);
 								var _char_uv_x1 = (_char_data.x * _texel_x);
 								var _char_uv_y1 = (_char_data.y * _texel_y);
