@@ -2,9 +2,10 @@
 /// @argument				shader {int:shader}
 /// @description			Constructs a Shader Resource used to alter graphical rendering with
 ///							GLSL or HLSL code executed by the Graphics Processing Unit.
-///							Its code can be supplied with values through Uniforms, which are then
-///							saved in the uniform struct, under the same property name. They contain
-///							subsidiary Uniform constructors, used to further update their values.
+///							Values in its code can be set through Uniforms, the copy of which is then
+///							saved in a property with the same property name in the uniform struct of
+///							this constructor. They are contained in the Uniform constructors, used to
+///							further update their values.
 ///							Values set while a Shader is not active will be ignored by its code.
 //							
 //							Construction types:
