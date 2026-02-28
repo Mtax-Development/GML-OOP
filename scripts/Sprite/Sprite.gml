@@ -162,6 +162,16 @@ function Sprite() constructor
 															_part_y2, _removeBackground,
 															_smoothRemovedBackground, _origin_x,
 															_origin_y);
+							name = sprite_get_name(ID);
+							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							frameCount = sprite_get_number(ID);
+							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
+							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
+												   sprite_get_bbox_right(ID),
+												   sprite_get_bbox_bottom(ID));
+							boundary_mode = sprite_get_bbox_mode(ID);
+							speed = sprite_get_speed(ID);
+							speed_type = sprite_get_speed_type(ID);
 						}
 						else if ((is_handle(argument[0])) or (is_real(argument[0])))
 						{
