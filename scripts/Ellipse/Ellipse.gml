@@ -516,8 +516,8 @@ function Ellipse() constructor
 												_fill_alpha]);
 					}
 					
-					if (((_outline) or (_outline == all)) and (outline_color != undefined)
-					and (outline_alpha > 0) and (outline_size >= 1))
+					if (((_outline) or (_outline == all)) and (_outline_color != undefined)
+					and (_outline_alpha > 0) and (_outline_size >= 1))
 					{
 						var _vertex_location = [];
 						var _vertex_color_offset_outline = 2;
