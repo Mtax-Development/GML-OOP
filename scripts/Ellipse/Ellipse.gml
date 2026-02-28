@@ -142,17 +142,103 @@ function Ellipse() constructor
 						 (fill_color.equals(_other.fill_color)))));
 			}
 			
+			/// @argument			object {handle:object|handle:instance}
+			/// @argument			precise? {bool}
+			/// @argument			excludedInstance? {handle:instance}
+			/// @argument			list? {bool|List}
+			/// @argument			listOrdered? {bool}
+			/// @argument			includeOutline? {bool}
+			/// @returns			{handle:instance|List}
+			/// @description		Check for a collision within this Shape with instances of the
+			///						specified object.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
+			///						Returns the ID of a single colliding instance or noone.
+			///						If List use is specified, a List will be returned instead, either
+			///						empty or containing IDs of the colliding instances.
+			///						The additions to that List can be ordered by distance from the
+			///						center of the Shape if specified.
+			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
+										_listOrdered = false, _includeOutline = false)
+			{
+				var _list_created = false;
+				
+				try
+				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
+					
+					if (_list)
+					{
+						if (!is_instanceof(_list, List))
+						{
+							_list = new List();
+							_list_created = true;
+						}
+						
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+						{
+							with (_excludedInstance)
+							{
+								collision_ellipse_list(_location.x1, _location.y1, _location.x2,
+													   _location.y2, _object, _precise, true,
+													   _list.ID, _listOrdered);
+							}
+						}
+						else
+						{
+							collision_ellipse_list(_location.x1, _location.y1, _location.x2,
+												   _location.y2, object, _precise, false, _list.ID,
+												   _listOrdered);
+						}
+					
+						return _list;
+					}
+					else
+					{
+						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
+						{				
+							with (_excludedInstance)
+							{
+								return collision_ellipse(_location.x1, _location.y1, _location.x2,
+														 _location.y2, _object, _precise, true);
+							}
+						}
+						else
+						{
+							return collision_ellipse(_location.x1, _location.y1, _location.x2,
+													 _location.y2, _object, _precise, false);
+						}
+					}
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "collision()"], _exception);
+					
+					if (_list_created)
+					{
+						_list.destroy();
+					}
+				}
+				
+				return noone;
+			}
+			
 			/// @argument			point {Vector2}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			/// @description		Checks whether the specified point in space is within this Shape.
-			static containsPoint = function(_point)
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
+			static containsPoint = function(_point, _includeOutline = false)
 			{
 				try
 				{
-					if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
-										   location.y2))
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
+					
+					if (point_in_rectangle(_point.x, _point.y, _location.x1, _location.y1,
+										   _location.x2, _location.y2))
 					{
-						var _vertex_location = self.getVertexLocation(undefined, undefined, true);
+						var _vertex_location = self.getVertexLocation(_location, undefined, true);
 						var _center = _vertex_location[0];
 						var _center_x = _center[0];
 						var _center_y = _center[1];
@@ -200,13 +286,16 @@ function Ellipse() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorOver = function(_device, _GUI = false)
+			static cursorOver = function(_device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
@@ -227,7 +316,7 @@ function Ellipse() constructor
 						}
 					}
 					
-					return self.containsPoint(new Vector2(_cursor_x, _cursor_y));
+					return self.containsPoint(new Vector2(_cursor_x, _cursor_y), _includeOutline);
 				}
 				catch (_exception)
 				{
@@ -240,21 +329,24 @@ function Ellipse() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						specified mouse or touch input was pressed this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorPressed = function(_button, _device, _GUI = false)
+			static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button_pressed(_button)
 													: device_mouse_check_button_pressed(_device,
 																						_button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -267,20 +359,23 @@ function Ellipse() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						specified mouse or touch input is being pressed or held.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorHeld = function(_button, _device, _GUI = false)
+			static cursorHeld = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button(_button)
 													: device_mouse_check_button(_device, _button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -293,21 +388,24 @@ function Ellipse() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						the specified mouse or touch input was released this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorReleased = function(_button, _device, _GUI = false)
+			static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button_released(_button)
 													: device_mouse_check_button_released(_device,
 																						 _button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -315,82 +413,6 @@ function Ellipse() constructor
 				}
 				
 				return false;
-			}
-			
-			/// @argument			object {handle:object|handle:instance}
-			/// @argument			precise? {bool}
-			/// @argument			excludedInstance? {handle:instance}
-			/// @argument			list? {bool|List}
-			/// @argument			listOrdered? {bool}
-			/// @returns			{handle:instance|List}
-			/// @description		Check for a collision within this Shape with instances of the
-			///						specified object.
-			///						Returns the ID of a single colliding instance or noone.
-			///						If List use is specified, a List will be returned instead, either
-			///						empty or containing IDs of the colliding instances.
-			///						The additions to that List can be ordered by distance from the
-			///						center of the Shape if specified.
-			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
-										_listOrdered = false)
-			{
-				var _list_created = false;
-				
-				try
-				{
-					if (_list)
-					{
-						if (!is_instanceof(_list, List))
-						{
-							_list = new List();
-							_list_created = true;
-						}
-						
-						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-						{
-							with (_excludedInstance)
-							{
-								collision_ellipse_list(other.location.x1, other.location.y1,
-													   other.location.x2, other.location.y2, _object,
-													   _precise, true, _list.ID, _listOrdered);
-							}
-						}
-						else
-						{
-							collision_ellipse_list(location.x1, location.y1, location.x2, location.y2,
-												   _object, _precise, false, _list.ID, _listOrdered);
-						}
-					
-						return _list;
-					}
-					else
-					{
-						if ((is_real(_excludedInstance)) and (instance_exists(_excludedInstance)))
-						{				
-							with (_excludedInstance)
-							{
-								return collision_ellipse(other.location.x1, other.location.y1,
-														 other.location.x2, other.location.y2,
-														 _object, _precise, true);
-							}
-						}
-						else
-						{
-							return collision_ellipse(location.x1, location.y1, location.x2,
-													 location.y2, _object, _precise, false);
-						}
-					}
-				}
-				catch (_exception)
-				{
-					new ErrorReport().report([other, self, "collision()"], _exception);
-					
-					if (_list_created)
-					{
-						_list.destroy();
-					}
-				}
-				
-				return noone;
 			}
 			
 			/// @argument			location? {Vector4}
@@ -524,9 +546,9 @@ function Ellipse() constructor
 						var _vertex_location_inner = ((_vertex_location_base)
 													  ?? self.getVertexLocation(_location, _precision,
 																				true));
-						var _vertex_location_outer = self.getVertexLocation(new Vector4(_location)
-																			 .grow(_outline_size),
-																			_precision);
+						var _vertex_location_outer =
+						 self.getVertexLocation(self.getOutlineLocation(_location, _outline_size),
+												_precision);
 						var _i = 0;
 						repeat (array_length(_vertex_location_outer))
 						{
@@ -579,6 +601,25 @@ function Ellipse() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			location? {Vector4}
+			/// @argument			outline_size? {int}
+			/// @returns			{Vector4}
+			/// @description		Return the location of outer edge of the outline, using data of
+			///						this constructor or specified temporarily replaced parts.
+			static getOutlineLocation = function(_location = location, _outline_size = outline_size)
+			{
+				try
+				{
+					return new Vector4(_location).sort(true).grow(_outline_size);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getOutlineLocation()"], _exception);
 				}
 				
 				return undefined;

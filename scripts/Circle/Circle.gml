@@ -124,21 +124,27 @@ function Circle() constructor
 			/// @argument			excludedInstance? {handle:instance}
 			/// @argument			list? {bool|List}
 			/// @argument			listOrdered? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{handle:instance|noone|List}
 			/// @description		Check for a collision within this Shape with instances of the
 			///						specified object.
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
 			///						Returns the ID of a single colliding instance or {noone}.
 			///						If List use is specified, a List will be returned instead, either
 			///						empty or containing IDs of the colliding instances.
 			///						The additions to that List can be ordered by distance from the
 			///						center of the Shape if specified.
 			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
-										_listOrdered = false)
+										_listOrdered = false, _includeOutline = false)
 			{
 				var _list_created = false;
 				
 				try
 				{
+					var _location = location;
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
+					
 					if (_list)
 					{
 						if (!is_instanceof(_list, List))
@@ -151,14 +157,14 @@ function Circle() constructor
 						{
 							with (_excludedInstance)
 							{
-								collision_circle_list(other.location.x, other.location.y, other.radius,
-													  _object, _precise, true, _list.ID, _listOrdered);
+								collision_circle_list(_location.x, _location.y, _radius, _object,
+													  _precise, true, _list.ID, _listOrdered);
 							}
 						}
 						else
 						{
-							collision_circle_list(location.x, location.y, radius, _object, _precise,
-												  false, _list.ID, _listOrdered);
+							collision_circle_list(_location.x, _location.y, _radius, _object,
+												  _precise, false, _list.ID, _listOrdered);
 						}
 						
 						return _list;
@@ -169,14 +175,14 @@ function Circle() constructor
 						{
 							with (_excludedInstance)
 							{
-								return collision_circle(other.location.x, other.location.y,
-														other.radius, _object, _precise, true);
+								return collision_circle(_location.x, _location.y, _radius, _object,
+														_precise, true);
 							}
 						}
 						else
 						{
-							return collision_circle(location.x, location.y, radius, _object, _precise,
-													false);
+							return collision_circle(_location.x, _location.y, _radius, _object,
+													_precise, false);
 						}
 					}
 				}
@@ -194,13 +200,18 @@ function Circle() constructor
 			}
 			
 			/// @argument			point {Vector2}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			/// @description		Check whether a point in space is within this Shape.
-			static containsPoint = function(_point)
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
+			static containsPoint = function(_point, _includeOutline = false)
 			{
 				try
 				{
-					return point_in_circle(_point.x, _point.y, location.x, location.y, radius);
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
+					
+					return point_in_circle(_point.x, _point.y, location.x, location.y, _radius);
 				}
 				catch (_exception)
 				{
@@ -212,16 +223,20 @@ function Circle() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape.
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorOver = function(_device, _GUI = false)
+			static cursorOver = function(_device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -243,7 +258,7 @@ function Circle() constructor
 						}
 					}
 					
-					return point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius);
+					return point_in_circle(_cursor_x, _cursor_y, location.x, location.y, _radius);
 				}
 				catch (_exception)
 				{
@@ -256,17 +271,21 @@ function Circle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button is pressed or held.
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorHold = function(_button, _device, _GUI = false)
+			static cursorHold = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -288,7 +307,7 @@ function Circle() constructor
 						}
 					}
 					
-					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, _radius))
 					{	
 						return ((_device == undefined) ? mouse_check_button(_button)
 													   : device_mouse_check_button(_device, _button));
@@ -309,17 +328,21 @@ function Circle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button was pressed in this frame.
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorPressed = function(_button, _device, _GUI = false)
+			static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -341,7 +364,7 @@ function Circle() constructor
 						}
 					}
 					
-					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, _radius))
 					{	
 						return ((_device == undefined) ? mouse_check_button_pressed(_button)
 													   : device_mouse_check_button_pressed(_device,
@@ -363,17 +386,21 @@ function Circle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
 			///						mouse button was released in this frame.
+			///						If specified, the radius can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorReleased = function(_button, _device, _GUI = false)
+			static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -395,7 +422,7 @@ function Circle() constructor
 						}
 					}
 					
-					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, radius))
+					if (point_in_circle(_cursor_x, _cursor_y, location.x, location.y, _radius))
 					{	
 						return ((_device == undefined) ? mouse_check_button_released(_button)
 													   : device_mouse_check_button_released(_device,

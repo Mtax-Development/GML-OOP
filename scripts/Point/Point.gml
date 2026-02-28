@@ -104,6 +104,8 @@ function Point() constructor
 				
 				try
 				{
+					var _location = location;
+					
 					if (_list)
 					{
 						if (!is_instanceof(_list, List))
@@ -116,13 +118,13 @@ function Point() constructor
 						{
 							with (_excludedInstance)
 							{
-								collision_point_list(other.location.x, other.location.y, _object,
-													 _precise, true, _list.ID, _listOrdered);
+								collision_point_list(_location.x, _location.y, _object, _precise,
+													 true, _list.ID, _listOrdered);
 							}
 						}
 						else
 						{
-							collision_point_list(location.x, location.y, _object, _precise, false,
+							collision_point_list(_location.x, _location.y, _object, _precise, false,
 												 _list.ID, _listOrdered);
 						}
 						
@@ -134,13 +136,14 @@ function Point() constructor
 						{
 							with (_excludedInstance)
 							{
-								return collision_point(other.location.x, other.location.y, _object,
-													   _precise, true);
+								return collision_point(_location.x, _location.y, _object, _precise,
+													   true);
 							}
 						}
 						else
 						{
-							return collision_point(location.x, location.y, _object, _precise, false);
+							return collision_point(_location.x, _location.y, _object, _precise,
+												   false);
 						}
 					}
 				}

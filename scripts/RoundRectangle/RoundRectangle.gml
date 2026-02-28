@@ -184,17 +184,22 @@ function RoundRectangle() constructor
 			}
 			
 			/// @argument			point {Vector2}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			/// @description		Checks whether the specified point in space is within this Shape.
-			static containsPoint = function(_point)
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
+			static containsPoint = function(_point, _includeOutline = false)
 			{
 				try
 				{
 					if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
 										   location.y2))
 					{
-						var _vertex_location = self.getVertexLocation(undefined, undefined, undefined,
-																	  true);
+						var _location_outline = ((_includeOutline) ? self.getOutlineLocation()
+																   : undefined);
+						var _vertex_location = self.getVertexLocation(_location_outline, undefined,
+																	  undefined, true);
 						var _segment_count = 4;
 						var _vertex_count = array_length(_vertex_location);
 						var _vertex_count_outer = (_vertex_count - 2);
@@ -254,13 +259,16 @@ function RoundRectangle() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorOver = function(_device, _GUI = false)
+			static cursorOver = function(_device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
@@ -281,7 +289,7 @@ function RoundRectangle() constructor
 						}
 					}
 					
-					return self.containsPoint(new Vector2(_cursor_x, _cursor_y));
+					return self.containsPoint(new Vector2(_cursor_x, _cursor_y), _includeOutline);
 				}
 				catch (_exception)
 				{
@@ -294,21 +302,24 @@ function RoundRectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						specified mouse or touch input was pressed this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorPressed = function(_button, _device, _GUI = false)
+			static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button_pressed(_button)
 													: device_mouse_check_button_pressed(_device,
 																						_button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -321,20 +332,23 @@ function RoundRectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						specified mouse or touch input is being pressed or held.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorHeld = function(_button, _device, _GUI = false)
+			static cursorHeld = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button(_button)
 													: device_mouse_check_button(_device, _button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -347,21 +361,24 @@ function RoundRectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor location is over this Shape while the
 			///						the specified mouse or touch input was released this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for use with multiple cursor
 			///						input sources. Then, the position can also be calculated according
 			///						to the size of the GUI layer.
-			static cursorReleased = function(_button, _device, _GUI = false)
+			static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
 					return (((_device == undefined) ? mouse_check_button_released(_button)
 													: device_mouse_check_button_released(_device,
 																						 _button))
-							and (self.cursorOver(_device, _GUI)));
+							and (self.cursorOver(_device, _GUI, _includeOutline)));
 				}
 				catch (_exception)
 				{
@@ -546,8 +563,8 @@ function RoundRectangle() constructor
 							var _vertex_location_outline_inner = ((_vertex_location_base)
 							 ?? self.getVertexLocation(_location, _radius, _precision, true));
 							var _vertex_location_outline_outer =
-							 self.getVertexLocation(new Vector4(_location).sort(true)
-													 .grow(_outline_size), _radius, _precision);
+							 self.getVertexLocation(self.getOutlineLocation(_location, _outline_size),
+													_radius, _precision);
 							
 							var _i = 0;
 							repeat (array_length(_vertex_location_outline_outer))
@@ -667,6 +684,25 @@ function RoundRectangle() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			location? {Vector4}
+			/// @argument			outline_size? {int}
+			/// @returns			{Vector4}
+			/// @description		Return the location of outer edge of the outline, using data of
+			///						this constructor or specified temporarily replaced parts.
+			static getOutlineLocation = function(_location = location, _outline_size = outline_size)
+			{
+				try
+				{
+					return new Vector4(_location).sort(true).grow(_outline_size);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getOutlineLocation()"], _exception);
 				}
 				
 				return undefined;

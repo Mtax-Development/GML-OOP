@@ -130,14 +130,29 @@ function Triangle() constructor
 			}
 			
 			/// @argument			point {Vector2}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			/// @description		Checks whether a point in space is within this Shape.
-			static containsPoint = function(_point)
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
+			static containsPoint = function(_point, _includeOutline = false)
 			{
 				try
 				{
-					return point_in_triangle(_point.x, _point.y, location1.x, location1.y, location2.x,
-											 location2.y, location3.x, location3.y);
+					var _location1 = location1;
+					var _location2 = location2;
+					var _location3 = location3;
+					
+					if (_includeOutline)
+					{
+						var _location_outline = self.getOutlineLocation();
+						_location1 = _location_outline[0];
+						_location2 = _location_outline[1];
+						_location3 = _location_outline[2];
+					}
+					
+					return point_in_triangle(_point.x, _point.y, _location1.x, _location1.y,
+											 _location2.x, _location2.y, _location3.x, _location3.y);
 				}
 				catch (_exception)
 				{
@@ -149,16 +164,31 @@ function Triangle() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorOver = function(_device, _GUI = false)
+			static cursorOver = function(_device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location1 = location1;
+					var _location2 = location2;
+					var _location3 = location3;
+					
+					if (_includeOutline)
+					{
+						var _location_outline = self.getOutlineLocation();
+						_location1 = _location_outline[0];
+						_location2 = _location_outline[1];
+						_location3 = _location_outline[2];
+					}
+					
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -180,8 +210,8 @@ function Triangle() constructor
 						}
 					}
 					
-					return point_in_triangle(_cursor_x, _cursor_y, location1.x, location1.y,
-											 location2.x, location2.y, location3.x, location3.y);
+					return point_in_triangle(_cursor_x, _cursor_y, _location1.x, _location1.y,
+											 _location2.x, _location2.y, _location3.x, _location3.y);
 				}
 				catch (_exception)
 				{
@@ -194,17 +224,32 @@ function Triangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button is pressed or held.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorHold = function(_button, _device, _GUI = false)
+			static cursorHold = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location1 = location1;
+					var _location2 = location2;
+					var _location3 = location3;
+					
+					if (_includeOutline)
+					{
+						var _location_outline = self.getOutlineLocation();
+						_location1 = _location_outline[0];
+						_location2 = _location_outline[1];
+						_location3 = _location_outline[2];
+					}
+					
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -226,8 +271,8 @@ function Triangle() constructor
 						}
 					}
 					
-					if (point_in_triangle(_cursor_x, _cursor_y, location1.x, location1.y, location2.x,
-										  location2.y, location3.x, location3.y))
+					if (point_in_triangle(_cursor_x, _cursor_y, _location1.x, _location1.y,
+										  _location2.x, _location2.y, _location3.x, _location3.y))
 					{	
 						return ((_device == undefined) ? mouse_check_button(_button)
 													   : device_mouse_check_button(_device, _button))
@@ -248,17 +293,32 @@ function Triangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button was pressed in this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorPressed = function(_button, _device, _GUI = false)
+			static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location1 = location1;
+					var _location2 = location2;
+					var _location3 = location3;
+					
+					if (_includeOutline)
+					{
+						var _location_outline = self.getOutlineLocation();
+						_location1 = _location_outline[0];
+						_location2 = _location_outline[1];
+						_location3 = _location_outline[2];
+					}
+					
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -280,8 +340,8 @@ function Triangle() constructor
 						}
 					}
 					
-					if (point_in_triangle(_cursor_x, _cursor_y, location1.x, location1.y, location2.x,
-										  location2.y, location3.x, location3.y))
+					if (point_in_triangle(_cursor_x, _cursor_y, _location1.x, _location1.y,
+										  _location2.x, _location2.y, _location3.x, _location3.y))
 					{	
 						return ((_device == undefined) ? mouse_check_button_pressed(_button)
 													   : device_mouse_check_button_pressed(_device,
@@ -303,17 +363,32 @@ function Triangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
 			///						mouse button was released in this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorReleased = function(_button, _device, _GUI = false)
+			static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location1 = location1;
+					var _location2 = location2;
+					var _location3 = location3;
+					
+					if (_includeOutline)
+					{
+						var _location_outline = self.getOutlineLocation();
+						_location1 = _location_outline[0];
+						_location2 = _location_outline[1];
+						_location3 = _location_outline[2];
+					}
+					
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -335,8 +410,8 @@ function Triangle() constructor
 						}
 					}
 					
-					if (point_in_triangle(_cursor_x, _cursor_y, location1.x, location1.y, location2.x,
-										  location2.y, location3.x, location3.y))
+					if (point_in_triangle(_cursor_x, _cursor_y, _location1.x, _location1.y,
+										  _location2.x, _location2.y, _location3.x, _location3.y))
 					{	
 						return ((_device == undefined) ? mouse_check_button_released(_button)
 													   : device_mouse_check_button_released(_device,
@@ -381,27 +456,24 @@ function Triangle() constructor
 					
 					if ((_outline) or (_outline == all))
 					{
-						var _center_x = mean(_location1.x, _location2.x, _location3.x);
-						var _center_y = mean(_location1.y, _location2.y, _location3.y);
-						var _outline_x1 = (_center_x + ((_location1.x - _center_x) * _outline_scale));
-						var _outline_y1 = (_center_y + ((_location1.y - _center_y) * _outline_scale));
-						var _outline_x2 = (_center_x + ((_location2.x - _center_x) * _outline_scale));
-						var _outline_y2 = (_center_y + ((_location2.y - _center_y) * _outline_scale));
-						var _outline_x3 = (_center_x + ((_location3.x - _center_x) * _outline_scale));
-						var _outline_y3 = (_center_y + ((_location3.y - _center_y) * _outline_scale));
+						var _outline_location = self.getOutlineLocation(_location1, _location2,
+																		_location3, _outline_scale);
+						var _outline1 = _outline_location[0];
+						var _outline2 = _outline_location[1];
+						var _outline3 = _outline_location[2];
 						
 						array_push(_result,
-								   [[_outline_x1, _outline_y1], [_outline_x2, _outline_y2],
+								   [[_outline1.x, _outline1.y], [_outline2.x, _outline2.y],
 									[_location1.x, _location1.y], [_location1.x, _location1.y],
-									[_outline_x2, _outline_y2], [_location2.x, _location2.y],
+									[_outline2.x, _outline.y], [_location2.x, _location2.y],
 									
 									[_location3.x, _location3.y], [_location2.x, _location2.y],
-									[_outline_x3, _outline_y3], [_outline_x3, _outline_y3],
-									[_location2.x, _location2.y], [_outline_x2, _outline_y2],
+									[_outline3.x, _outline3.y], [_outline3.x, _outline3.y],
+									[_location2.x, _location2.y], [_outline2.x, _outline2.y],
 									
-									[_outline_x3, _outline_y3], [_outline_x1, _outline_y1],
+									[_outline3.x, _outline3.y], [_outline1.x, _outline1.y],
 									[_location3.x, _location3.y], [_location3.x, _location3.y],
-									[_outline_x1, _outline_y1], [_location1.x, _location1.y]]);
+									[_outline1.x, _outline1.y], [_location1.x, _location1.y]]);
 					}
 				}
 				catch (_exception)
@@ -515,6 +587,40 @@ function Triangle() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			location1? {Vector2}
+			/// @argument			location2? {Vector2}
+			/// @argument			location3? {Vector2}
+			/// @argument			outline_scale? {real}
+			/// @returns			{Vector2[]}
+			/// @description		Return the locations of outer edge of the outline, using data of
+			///						this constructor or specified temporarily replaced parts.
+			static getOutlineLocation = function(_location1 = location1, _location2 = location2,
+												 _location3 = location3,
+												 _outline_scale = outline_scale)
+			{
+				try
+				{
+					var _center_x = mean(_location1.x, _location2.x, _location3.x);
+					var _center_y = mean(_location1.y, _location2.y, _location3.y);
+					var _outline_x1 = (_center_x + ((_location1.x - _center_x) * _outline_scale));
+					var _outline_y1 = (_center_y + ((_location1.y - _center_y) * _outline_scale));
+					var _outline_x2 = (_center_x + ((_location2.x - _center_x) * _outline_scale));
+					var _outline_y2 = (_center_y + ((_location2.y - _center_y) * _outline_scale));
+					var _outline_x3 = (_center_x + ((_location3.x - _center_x) * _outline_scale));
+					var _outline_y3 = (_center_y + ((_location3.y - _center_y) * _outline_scale));
+					
+					return [new Vector2(_outline_x1, _outline_y1),
+							new Vector2(_outline_x2, _outline_y2),
+							new Vector2(_outline_x3, _outline_y3)];
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getOutlineLocation()"], _exception);
 				}
 				
 				return undefined;

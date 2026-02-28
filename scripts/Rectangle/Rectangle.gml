@@ -168,21 +168,26 @@ function Rectangle() constructor
 			/// @argument			excludedInstance? {handle:instance}
 			/// @argument			list? {bool|List}
 			/// @argument			listOrdered? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{handle|List}
 			/// @description		Check for a collision within this Shape with instances of the
 			///						specified object.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						Returns the ID of a single colliding instance or noone.
 			///						If List use is specified, a List will be returned instead, either
 			///						empty or containing IDs of the colliding instances.
 			///						If specified, the additions to that List can be ordered by 
 			///						distance from the center of the Shape.
 			static collision = function(_object, _precise = false, _excludedInstance, _list = false,
-										_listOrdered = false)
+										_listOrdered = false, _includeOutline = false)
 			{
 				var _list_created = false;
 				
 				try
 				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
+					
 					if (_list)
 					{
 						if (!is_instanceof(_list, List))
@@ -195,16 +200,15 @@ function Rectangle() constructor
 						{
 							with (_excludedInstance)
 							{
-								collision_rectangle_list(other.location.x1, other.location.y1,
-														 other.location.x2, other.location.y2,
-														 _object, _precise, true, _list.ID,
-														 _listOrdered);
+								collision_rectangle_list(_location.x1, _location.y1, _location.x2,
+														 _location.y2, _object, _precise, true,
+														 _list.ID, _listOrdered);
 							}
 						}
 						else
 						{
-							collision_rectangle_list(location.x1, location.y1, location.x2,
-													 location.y2, _object, _precise, false, _list.ID,
+							collision_rectangle_list(_location.x1, _location.y1, _location.x2,
+													 _location.y2, _object, _precise, false, _list.ID,
 													 _listOrdered);
 						}
 						
@@ -216,15 +220,14 @@ function Rectangle() constructor
 						{
 							with (_excludedInstance)
 							{
-								return collision_rectangle(other.location.x1, other.location.y1, 
-														   other.location.x2, other.location.y2,
-														   _object, _precise, true);
+								return collision_rectangle(_location.x1, _location.y1, _location.x2,
+														   _location.y2, _object, _precise, true);
 							}
 						}
 						else
 						{
-							return collision_rectangle(location.x1, location.y1, location.x2,
-													   location.y2, _object, _precise, false);
+							return collision_rectangle(_location.x1, _location.y1, _location.x2,
+													   _location.y2, _object, _precise, false);
 						}
 					}
 				}
@@ -242,14 +245,19 @@ function Rectangle() constructor
 			}
 			
 			/// @argument			point {Vector2}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			/// @description		Checks whether a point in space is within this Shape.
-			static containsPoint = function(_point)
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
+			static containsPoint = function(_point, _includeOutline = false)
 			{
 				try
 				{
-					return point_in_rectangle(_point.x, _point.y, location.x1, location.y1,
-											  location.x2, location.y2);
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
+					
+					return point_in_rectangle(_point.x, _point.y, _location.x1, _location.y1,
+											  _location.x2, _location.y2);
 				}
 				catch (_exception)
 				{
@@ -261,16 +269,20 @@ function Rectangle() constructor
 			
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorOver = function(_device, _GUI = false)
+			static cursorOver = function(_device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -292,8 +304,8 @@ function Rectangle() constructor
 						}
 					}
 					
-					return ((_cursor_x == clamp(_cursor_x, location.x1, location.x2)) 
-							and (_cursor_y == clamp(_cursor_y, location.y1, location.y2)));
+					return ((_cursor_x == clamp(_cursor_x, _location.x1, _location.x2)) 
+							and (_cursor_y == clamp(_cursor_y, _location.y1, _location.y2)));
 				}
 				catch (_exception)
 				{
@@ -306,17 +318,21 @@ function Rectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button is pressed or held.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorHold = function(_button, _device, _GUI = false)
+			static cursorHold = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -338,8 +354,8 @@ function Rectangle() constructor
 						}
 					}
 					
-					if ((_cursor_x == clamp(_cursor_x, location.x1, location.x2))
-					and (_cursor_y == clamp(_cursor_y, location.y1, location.y2)))
+					if ((_cursor_x == clamp(_cursor_x, _location.x1, _location.x2))
+					and (_cursor_y == clamp(_cursor_y, _location.y1, _location.y2)))
 					{	
 						return ((_device == undefined) ? mouse_check_button(_button)
 													   : device_mouse_check_button(_device, _button))
@@ -360,17 +376,21 @@ function Rectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while its specified
 			///						mouse button was pressed in this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorPressed = function(_button, _device, _GUI = false)
+			static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -392,8 +412,8 @@ function Rectangle() constructor
 						}
 					}
 					
-					if ((_cursor_x == clamp(_cursor_x, location.x1, location.x2))
-					and (_cursor_y == clamp(_cursor_y, location.y1, location.y2)))
+					if ((_cursor_x == clamp(_cursor_x, _location.x1, _location.x2))
+					and (_cursor_y == clamp(_cursor_y, _location.y1, _location.y2)))
 					{	
 						return ((_device == undefined) ? mouse_check_button_pressed(_button)
 													   : device_mouse_check_button_pressed(_device,
@@ -415,17 +435,21 @@ function Rectangle() constructor
 			/// @argument			button {constant:mb_*}
 			/// @argument			device? {int}
 			/// @argument			GUI? {bool}
+			/// @argument			includeOutline? {bool}
 			/// @returns			{bool}
 			//  @see				display_set_gui_size()
 			/// @description		Check if the system cursor is over this Shape while the specified
 			///						mouse button was released in this frame.
+			///						If specified, the location can be extended to include area up to
+			///						outer edge of the outline.
 			///						A target device can be specified for cases where multiple cursor
 			///						inputs are used, and if it is specified, the position can then be
 			///						translated to the GUI layer to depend on its size.
-			static cursorReleased = function(_button, _device, _GUI = false)
+			static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
 			{
 				try
 				{
+					var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
 					var _cursor_x, _cursor_y;
 					
 					if (_device == undefined)
@@ -447,8 +471,8 @@ function Rectangle() constructor
 						}
 					}
 					
-					if ((_cursor_x == clamp(_cursor_x, location.x1, location.x2))
-					and (_cursor_y == clamp(_cursor_y, location.y1, location.y2)))
+					if ((_cursor_x == clamp(_cursor_x, _location.x1, _location.x2))
+					and (_cursor_y == clamp(_cursor_y, _location.y1, _location.y2)))
 					{	
 						return ((_device == undefined) ? mouse_check_button_released(_button)
 													   : device_mouse_check_button_released(_device,
@@ -731,6 +755,25 @@ function Rectangle() constructor
 				catch (_exception)
 				{
 					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+				}
+				
+				return undefined;
+			}
+			
+			/// @argument			location? {Vector4}
+			/// @argument			outline_size? {int}
+			/// @returns			{Vector4}
+			/// @description		Return the location of outer edge of the outline, using data of
+			///						this constructor or specified temporarily replaced parts.
+			static getOutlineLocation = function(_location = location, _outline_size = outline_size)
+			{
+				try
+				{
+					return new Vector4(_location).sort(true).grow(_outline_size);
+				}
+				catch (_exception)
+				{
+					new ErrorReport().report([other, self, "getOutlineLocation()"], _exception);
 				}
 				
 				return undefined;
