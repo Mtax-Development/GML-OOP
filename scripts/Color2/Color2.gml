@@ -58,10 +58,12 @@ function Color2() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			value {int:color|Color2}
+			/// @argument			value {int:color|Color2|[]}
 			/// @returns			{bool}
 			/// @description		Check if all values of this constructor are the same as the
 			///						specified color or respective values of the specified Color2.
+			///						Those values can be specified in an array to check if any of them
+			///						matches all of its values with the ones of this constructor.
 			static equals = function(_value)
 			{
 				if (is_instanceof(_value, Color2))
@@ -71,6 +73,19 @@ function Color2() constructor
 				else if (is_real(_value))
 				{
 					return ((color1 == _value) and (color2 == _value));
+				}
+				else if (is_array(_value))
+				{
+					var _i = 0;
+					repeat (array_length(_value))
+					{
+						if (self.equals(_value[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
 				}
 				
 				return false;

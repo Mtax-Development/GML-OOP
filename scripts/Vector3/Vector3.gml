@@ -127,10 +127,12 @@ function Vector3() constructor
 				return false;
 			}
 			
-			/// @argument			value {real|Vector3}
+			/// @argument			value {real|Vector3|[]}
 			/// @returns			{bool}
 			/// @description		Check if all values of this constructor are the same as the
-			///						specified number or respective values of other Vector3.
+			///						specified number or respective values of other Vector3. Those
+			///						values can be specified in an array to check if any of them
+			///						matches all of its values with the ones of this constructor.
 			static equals = function(_value)
 			{
 				if (is_instanceof(_value, Vector3))
@@ -140,6 +142,19 @@ function Vector3() constructor
 				else if (is_real(_value))
 				{
 					return ((x == _value) and (y == _value) and (z == _value.z));
+				}
+				else if (is_array(_value))
+				{
+					var _i = 0;
+					repeat (array_length(_value))
+					{
+						if (self.equals(_value[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
 				}
 				
 				return false;

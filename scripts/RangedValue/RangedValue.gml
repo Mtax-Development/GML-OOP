@@ -58,10 +58,12 @@ function RangedValue() constructor
 		#endregion
 		#region <Getters>
 			
-			/// @argument			value {real|RangedValue}
+			/// @argument			value {real|RangedValue|[]}
 			/// @returns			{bool}
 			/// @description		Check if the value is the same as the specified number or value
-			///						of specified Ranged Value.
+			///						of specified Ranged Value. Those values can be specified in an
+			///						array to check if any of them matches all of its values with the
+			///						ones of this constructor.
 			static equals = function(_value)
 			{
 				if (is_instanceof(_value, RangedValue))
@@ -71,6 +73,19 @@ function RangedValue() constructor
 				else if (is_real(_value))
 				{
 					return (value == _value);
+				}
+				else if (is_array(_value))
+				{
+					var _i = 0;
+					repeat (array_length(_value))
+					{
+						if (self.equals(_value[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
 				}
 				
 				return false;

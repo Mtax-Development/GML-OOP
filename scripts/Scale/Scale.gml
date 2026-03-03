@@ -111,11 +111,13 @@ function Scale() constructor
 				return false;
 			}
 			
-			/// @argument			value {real|Scale|Vector2|Vector4}
+			/// @argument			value {real|Scale|Vector2|Vector4|[]}
 			/// @returns			{bool}
 			/// @description		Check if all values of this constructor are the same as the
 			///						specified number or respective values of the specified Scale,
-			///						Vector2 or Vector4.
+			///						Vector2 or Vector4. Those values can be specified in an array to
+			///						check if any of them matches all of its values with the ones of
+			///						this constructor.
 			static equals = function(_value)
 			{
 				if ((is_instanceof(_value, Scale)) or (is_instanceof(_value, Vector2)))
@@ -130,6 +132,19 @@ function Scale() constructor
 				{
 					return ((x == _value.x1) and (y == _value.y1) and (x == _value.x2) and
 							(y == _value.y2));
+				}
+				else if (is_array(_value))
+				{
+					var _i = 0;
+					repeat (array_length(_value))
+					{
+						if (self.equals(_value[_i]))
+						{
+							return true;
+						}
+						
+						++_i;
+					}
 				}
 				
 				return false;
