@@ -372,6 +372,7 @@ function VertexBuffer() constructor
 		{
 			#region [[Static Variables]]
 				
+				static emptyEventIndex = method_get_index(function() {});
 				static passthroughFormat = new VertexFormat(vertex_format_add_position,
 															vertex_format_add_color,
 															vertex_format_add_texcoord);
@@ -387,8 +388,6 @@ function VertexBuffer() constructor
 					/// @description		Initialize this constructor.
 					static construct = function()
 					{
-						static emptyEventIndex = method_get_index(function() {});
-						
 						//|Construction type: New constructor.
 						vertexBuffer = other;
 						primitiveType = argument[0];
