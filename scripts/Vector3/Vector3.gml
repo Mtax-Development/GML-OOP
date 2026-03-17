@@ -9,7 +9,7 @@
 //							- One number for all values: value {real}
 //							- From array: array {real[]}
 //							   Array positions will be applied depending on its size:
-//							   1: array[0] will be set to x and y.
+//							   1: array[0] will be set to x, y and z.
 //							   3+: array[0] will be set to x, array[1] will be set to y, array[2] will
 //								   be set to z.
 //							- Vector2 + value: vector {Vector2}, value {real}
