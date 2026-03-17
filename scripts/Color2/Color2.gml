@@ -287,3 +287,5 @@ function Color2() constructor
 		
 	#endregion
 }
+
+new Color2();

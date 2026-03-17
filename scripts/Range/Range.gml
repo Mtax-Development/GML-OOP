@@ -386,3 +386,5 @@ function Range() constructor
 		
 	#endregion
 }
+
+new Range();

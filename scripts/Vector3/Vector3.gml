@@ -1135,3 +1135,5 @@ function Vector3() constructor
 		
 	#endregion
 }
+
+new Vector3();

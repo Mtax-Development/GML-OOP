@@ -302,3 +302,5 @@ function TextAlign() constructor
 		
 	#endregion
 }
+
+new TextAlign();

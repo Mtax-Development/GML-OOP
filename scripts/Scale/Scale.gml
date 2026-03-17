@@ -779,3 +779,5 @@ function Scale() constructor
 		
 	#endregion
 }
+
+new Scale();

@@ -192,3 +192,5 @@ function EulerAngle() constructor
 		
 	#endregion
 }
+
+new EulerAngle();

@@ -1740,3 +1740,5 @@ function Vector4() constructor
 		
 	#endregion
 }
+
+new Vector4();

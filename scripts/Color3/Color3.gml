@@ -329,3 +329,5 @@ function Color3() constructor
 		
 	#endregion
 }
+
+new Color3();

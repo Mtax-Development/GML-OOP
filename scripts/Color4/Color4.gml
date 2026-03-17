@@ -406,3 +406,5 @@ function Color4() constructor
 		
 	#endregion
 }
+
+new Color4();

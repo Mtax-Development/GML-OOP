@@ -430,3 +430,5 @@ function RangedValue() constructor
 		
 	#endregion
 }
+
+new RangedValue();

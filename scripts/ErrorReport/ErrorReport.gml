@@ -593,3 +593,5 @@ function ErrorReport() constructor
 		
 	#endregion
 }
+
+new ErrorReport();
