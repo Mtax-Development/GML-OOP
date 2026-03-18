@@ -121,9 +121,9 @@ function Stack() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Data Structure: " + 
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Data Structure: " + 
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -169,7 +169,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				finally
 				{
@@ -216,7 +216,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "count()"], _exception);
+					ErrorReport.report([other, self, "count()"], _exception);
 				}
 				finally
 				{
@@ -238,7 +238,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirst()"], _exception);
+					ErrorReport.report([other, self, "getFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -276,7 +276,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLast()"], _exception);
+					ErrorReport.report([other, self, "getLast()"], _exception);
 				}
 				finally
 				{
@@ -296,7 +296,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -312,7 +312,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isEmpty()"], _exception);
+					ErrorReport.report([other, self, "isEmpty()"], _exception);
 				}
 				
 				return undefined;
@@ -366,8 +366,7 @@ function Stack() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "forEach()", "function()"],
-													 _exception);
+							ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 						}
 						
 						++_i[0];
@@ -377,7 +376,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				finally
 				{
@@ -405,7 +404,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return self;
@@ -451,7 +450,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "remove()"], _exception);
+					ErrorReport.report([other, self, "remove()"], _exception);
 				}
 				
 				return undefined;
@@ -654,7 +653,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toArray()"], _exception);
+					ErrorReport.report([other, self, "toArray()"], _exception);
 				}
 				finally
 				{
@@ -703,10 +702,10 @@ function Stack() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromArray()"],
-											 ("Attempted to convert an invalid array to a Data" +
-											  "Structure: " +
-											  "{" + string(_array) + "}"));
+					ErrorReport.report([other, self, "fromArray()"],
+									   ("Attempted to convert an invalid array to a Data " +
+										"Structure: " +
+										"{" + string(_array) + "}"));
 				}
 				
 				return self;
@@ -723,7 +722,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -748,7 +747,7 @@ function Stack() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return self;

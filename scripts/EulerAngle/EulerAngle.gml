@@ -104,7 +104,7 @@ function EulerAngle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -125,7 +125,7 @@ function EulerAngle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "modify()"], _exception);
+					ErrorReport.report([other, self, "modify()"], _exception);
 				}
 				
 				return self;

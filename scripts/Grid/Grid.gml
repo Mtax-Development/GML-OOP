@@ -126,7 +126,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "clear()"], _exception);
+					ErrorReport.report([other, self, "clear()"], _exception);
 				}
 				
 				return self;
@@ -158,9 +158,9 @@ function Grid() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Data Structure: " + 
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Data Structure: " + 
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -194,7 +194,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				
 				return false;
@@ -225,7 +225,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "containsRegion()"], _exception);
+					ErrorReport.report([other, self, "containsRegion()"], _exception);
 				}
 				
 				return false;
@@ -257,7 +257,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "containsDisk()"], _exception);
+					ErrorReport.report([other, self, "containsDisk()"], _exception);
 				}
 				
 				return false;
@@ -302,7 +302,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "count()"], _exception);
+					ErrorReport.report([other, self, "count()"], _exception);
 				}
 				
 				return 0;
@@ -321,7 +321,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValue()"], _exception);
+					ErrorReport.report([other, self, "getValue()"], _exception);
 				}
 			}
 			
@@ -335,7 +335,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getCellNumber()"], _exception);
+					ErrorReport.report([other, self, "getCellNumber()"], _exception);
 				}
 				
 				return 0;
@@ -369,7 +369,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getRow()"], _exception);
+					ErrorReport.report([other, self, "getRow()"], _exception);
 				}
 				
 				return [];
@@ -403,7 +403,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getColumn()"], _exception);
+					ErrorReport.report([other, self, "getColumn()"], _exception);
 				}
 			}
 			
@@ -426,7 +426,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMinimum()"], _exception);
+					ErrorReport.report([other, self, "getMinimum()"], _exception);
 				}
 				
 				return undefined;
@@ -449,7 +449,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMinimumDisk()"], _exception);
+					ErrorReport.report([other, self, "getMinimumDisk()"], _exception);
 				}
 				
 				return undefined;
@@ -474,7 +474,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMaximum()"], _exception);
+					ErrorReport.report([other, self, "getMaximum()"], _exception);
 				}
 				
 				return undefined;
@@ -497,7 +497,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMaximumDisk()"], _exception);
+					ErrorReport.report([other, self, "getMaximumDisk()"], _exception);
 				}
 				
 				return undefined;
@@ -520,7 +520,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMean()"], _exception);
+					ErrorReport.report([other, self, "getMean()"], _exception);
 				}
 				
 				return undefined;
@@ -540,7 +540,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMeanDisk()"], _exception);
+					ErrorReport.report([other, self, "getMeanDisk()"], _exception);
 				}
 				
 				return undefined;
@@ -567,7 +567,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSum()"], _exception);
+					ErrorReport.report([other, self, "getSum()"], _exception);
 				}
 				
 				return undefined
@@ -592,7 +592,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSumDisk()"], _exception);
+					ErrorReport.report([other, self, "getSumDisk()"], _exception);
 				}
 				
 				return undefined;
@@ -632,7 +632,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValueLocation()"], _exception);
+					ErrorReport.report([other, self, "getValueLocation()"], _exception);
 				}
 				
 				return undefined;
@@ -660,7 +660,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValueLocationDisk()"], _exception);
+					ErrorReport.report([other, self, "getValueLocationDisk()"], _exception);
 				}
 				
 				return undefined;
@@ -692,7 +692,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSize()"], _exception);
+					ErrorReport.report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
@@ -735,8 +735,8 @@ function Grid() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "forEach()", "function()"],
-														 _exception);
+								ErrorReport.report([other, self, "forEach()", "function()"],
+												   _exception);
 							}
 							
 							++_x;
@@ -749,7 +749,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				finally
 				{
@@ -777,7 +777,7 @@ function Grid() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "set()"], _exception);
+						ErrorReport.report([other, self, "set()"], _exception);
 					}
 					
 					_i += 2;
@@ -806,7 +806,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setRegion()"], _exception);
+					ErrorReport.report([other, self, "setRegion()"], _exception);
 				}
 				
 				return self;
@@ -825,7 +825,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setDisk()"], _exception);
+					ErrorReport.report([other, self, "setDisk()"], _exception);
 				}
 				
 				return self;
@@ -847,7 +847,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setRegionCopied()"], _exception);
+					ErrorReport.report([other, self, "setRegionCopied()"], _exception);
 				}
 				
 				return self;
@@ -873,7 +873,7 @@ function Grid() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "add()"], _exception);
+						ErrorReport.report([other, self, "add()"], _exception);
 					}
 					
 					_i += 2;
@@ -904,7 +904,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "addRegion()"], _exception);
+					ErrorReport.report([other, self, "addRegion()"], _exception);
 				}
 				
 				return self;
@@ -925,7 +925,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "addDisk()"], _exception);
+					ErrorReport.report([other, self, "addDisk()"], _exception);
 				}
 				
 				return self;
@@ -949,7 +949,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "addRegionCopied()"], _exception);
+					ErrorReport.report([other, self, "addRegionCopied()"], _exception);
 				}
 				
 				return self;
@@ -973,7 +973,7 @@ function Grid() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "multiply()"], _exception);
+						ErrorReport.report([other, self, "multiply()"], _exception);
 					}
 					
 					_i += 2;
@@ -1003,7 +1003,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "multiplyRegion()"], _exception);
+					ErrorReport.report([other, self, "multiplyRegion()"], _exception);
 				}
 				
 				return self;
@@ -1022,7 +1022,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "multiplyDisk()"], _exception);
+					ErrorReport.report([other, self, "multiplyDisk()"], _exception);
 				}
 				
 				return self;
@@ -1044,7 +1044,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "multiplyRegionCopied()"], _exception);
+					ErrorReport.report([other, self, "multiplyRegionCopied()"], _exception);
 				}
 				
 				return self;
@@ -1079,7 +1079,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "mirrorX()"], _exception);
+					ErrorReport.report([other, self, "mirrorX()"], _exception);
 				}
 				finally
 				{
@@ -1118,7 +1118,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "mirrorY()"], _exception);
+					ErrorReport.report([other, self, "mirrorY()"], _exception);
 				}
 				finally
 				{
@@ -1166,7 +1166,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "transpose()"], _exception);
+					ErrorReport.report([other, self, "transpose()"], _exception);
 				}
 				finally
 				{
@@ -1189,7 +1189,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "sort()"], _exception);
+					ErrorReport.report([other, self, "sort()"], _exception);
 				}
 				
 				return self;
@@ -1204,7 +1204,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "shuffle()"], _exception);
+					ErrorReport.report([other, self, "shuffle()"], _exception);
 				}
 				
 				return self;
@@ -1420,7 +1420,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "tpArray()"], _exception);
+					ErrorReport.report([other, self, "tpArray()"], _exception);
 				}
 				
 				return [[], []];
@@ -1498,9 +1498,9 @@ function Grid() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromArray()"],
-											 ("Attempted to read an invalid array: " +
-											  "{" + string(_array) + "}"));
+					ErrorReport.report([other, self, "fromArray()"],
+									   ("Attempted to read an invalid array: " +
+										"{" + string(_array) + "}"));
 				}
 				
 				return self;
@@ -1517,7 +1517,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -1542,7 +1542,7 @@ function Grid() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return self;

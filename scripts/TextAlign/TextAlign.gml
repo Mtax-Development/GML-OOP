@@ -207,10 +207,9 @@ function TextAlign() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "setActive"],
-											 ("Attempted to use invalid text alignment for " +
-											  "rendering: " +
-											  "{" + string(self) + "}"));
+					ErrorReport.report([other, self, "setActive"],
+									   ("Attempted to use invalid text alignment for rendering: " +
+										"{" + string(self) + "}"));
 				}
 				
 				return self;

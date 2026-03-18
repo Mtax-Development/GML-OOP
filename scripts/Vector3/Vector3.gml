@@ -179,7 +179,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "exceeds()"], _exception);
+					ErrorReport.report([other, self, "exceeds()"], _exception);
 				}
 				
 				return false;
@@ -204,7 +204,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "exceeds()"], _exception);
+					ErrorReport.report([other, self, "subceeds()"], _exception);
 				}
 				
 				return false;
@@ -246,7 +246,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "sum()"], _exception);
+					ErrorReport.report([other, self, "sum()"], _exception);
 				}
 				
 				return undefined;
@@ -279,7 +279,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "difference()"], _exception);
+					ErrorReport.report([other, self, "difference()"], _exception);
 				}
 				
 				return undefined;
@@ -323,7 +323,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "absoluteDifference()"], _exception);
+					ErrorReport.report([other, self, "absoluteDifference()"], _exception);
 				}
 				
 				return undefined;
@@ -365,7 +365,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "product()"], _exception);
+					ErrorReport.report([other, self, "product()"], _exception);
 				}
 				
 				return undefined;
@@ -414,7 +414,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "product()"], _exception);
+					ErrorReport.report([other, self, "quotient()"], _exception);
 				}
 				
 				return undefined;
@@ -437,7 +437,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "dotProduct()"], _exception);
+					ErrorReport.report([other, self, "dotProduct()"], _exception);
 				}
 				
 				return undefined;
@@ -458,7 +458,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "crossProduct()"], _exception);
+					ErrorReport.report([other, self, "crossProduct()"], _exception);
 				}
 				
 				return undefined;
@@ -476,7 +476,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getDistance()"], _exception);
+					ErrorReport.report([other, self, "getDistance()"], _exception);
 				}
 				
 				return undefined;
@@ -492,7 +492,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMinimum()"], _exception);
+					ErrorReport.report([other, self, "getMinimum()"], _exception);
 				}
 				
 				return undefined;
@@ -508,7 +508,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMaximum()"], _exception);
+					ErrorReport.report([other, self, "getMaximum()"], _exception);
 				}
 				
 				return undefined;
@@ -526,7 +526,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMagnitude()"], _exception);
+					ErrorReport.report([other, self, "getMagnitude()"], _exception);
 				}
 				
 				return 0;
@@ -560,7 +560,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getNormalized()"], _exception);
+					ErrorReport.report([other, self, "getNormalized()"], _exception);
 				}
 				
 				return new Vector3(0, 0, 0);
@@ -588,7 +588,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSign()"], _exception);
+					ErrorReport.report([other, self, "getSign()"], _exception);
 				}
 				
 				return undefined;
@@ -626,7 +626,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return self;
@@ -662,7 +662,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "substract()"], _exception);
+					ErrorReport.report([other, self, "substract()"], _exception);
 				}
 				
 				return self;
@@ -697,7 +697,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "multiply()"], _exception);
+					ErrorReport.report([other, self, "multiply()"], _exception);
 				}
 				
 				return self;
@@ -739,7 +739,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "divide()"], _exception);
+					ErrorReport.report([other, self, "divide()"], _exception);
 				}
 				
 				return self;
@@ -789,7 +789,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "approach()"], _exception);
+					ErrorReport.report([other, self, "approach()"], _exception);
 				}
 				
 				return self;
@@ -826,7 +826,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "grow()"], _exception);
+					ErrorReport.report([other, self, "grow()"], _exception);
 				}
 				
 				return self;
@@ -863,7 +863,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "shrink()"], _exception);
+					ErrorReport.report([other, self, "shrink()"], _exception);
 				}
 				
 				return self;
@@ -884,7 +884,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "mirror()"], _exception);
+					ErrorReport.report([other, self, "mirror()"], _exception);
 				}
 				
 				return self;
@@ -937,7 +937,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setAll()"], _exception);
+					ErrorReport.report([other, self, "setAll()"], _exception);
 				}
 				
 				return self;
@@ -978,7 +978,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setFloor()"], _exception);
+					ErrorReport.report([other, self, "setFloor()"], _exception);
 				}
 				
 				return self;
@@ -1019,7 +1019,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setRound()"], _exception);
+					ErrorReport.report([other, self, "setRound()"], _exception);
 				}
 				
 				return self;
@@ -1060,7 +1060,7 @@ function Vector3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setCeil()"], _exception);
+					ErrorReport.report([other, self, "setCeil()"], _exception);
 				}
 				
 				return self;

@@ -240,7 +240,7 @@ function Font() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTexture()"], _exception);
+					ErrorReport.report([other, self, "getTexture()"], _exception);
 				}
 				
 				return pointer_invalid;
@@ -259,7 +259,7 @@ function Font() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTexel()"], _exception);
+					ErrorReport.report([other, self, "getTexel()"], _exception);
 				}
 				
 				return undefined;
@@ -278,7 +278,7 @@ function Font() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getUV()"], _exception);
+					ErrorReport.report([other, self, "getUV()"], _exception);
 				}
 				
 				return undefined;
@@ -294,7 +294,7 @@ function Font() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isActive()"], _exception);
+					ErrorReport.report([other, self, "isActive()"], _exception);
 				}
 				
 				return false;
@@ -314,7 +314,7 @@ function Font() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "setActive()"], _exception);
+					ErrorReport.report([other, self, "setActive()"], _exception);
 				}
 				
 				return self;

@@ -121,9 +121,9 @@ function PriorityQueue() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Data Structure: " + 
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Data Structure: " + 
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -169,7 +169,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				finally
 				{
@@ -216,7 +216,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "count()"], _exception);
+					ErrorReport.report([other, self, "count()"], _exception);
 				}
 				finally
 				{
@@ -238,7 +238,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirst()"], _exception);
+					ErrorReport.report([other, self, "getFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -256,7 +256,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLast()"], _exception);
+					ErrorReport.report([other, self, "getLast()"], _exception);
 				}
 				
 				return undefined;
@@ -275,7 +275,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPriority()"], _exception);
+					ErrorReport.report([other, self, "getPriority()"], _exception);
 				}
 				
 				return undefined;
@@ -293,7 +293,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirstPriority()"], _exception);
+					ErrorReport.report([other, self, "getFirstPriority()"], _exception);
 				}
 				
 				return undefined;
@@ -311,7 +311,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLastPriority()"], _exception);
+					ErrorReport.report([other, self, "getLastPriority()"], _exception);
 				}
 				
 				return undefined;
@@ -327,7 +327,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -344,7 +344,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isEmpty()"], _exception);
+					ErrorReport.report([other, self, "isEmpty()"], _exception);
 				}
 				
 				return undefined;
@@ -403,8 +403,7 @@ function PriorityQueue() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "forEach()", "function()"],
-													 _exception);
+							ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 						}
 						
 						++_i[0];
@@ -414,7 +413,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				finally
 				{
@@ -444,7 +443,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return self;
@@ -470,7 +469,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "changePriority()"], _exception);
+					ErrorReport.report([other, self, "changePriority()"], _exception);
 				}
 				
 				return self;
@@ -494,7 +493,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "remove()"], _exception);
+					ErrorReport.report([other, self, "remove()"], _exception);
 				}
 				
 				return self;
@@ -537,7 +536,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removeFirst()"], _exception);
+					ErrorReport.report([other, self, "removeFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -580,7 +579,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removeLast()"], _exception);
+					ErrorReport.report([other, self, "removeLast()"], _exception);
 				}
 				
 				return undefined;
@@ -797,7 +796,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toArray()"], _exception);
+					ErrorReport.report([other, self, "toArray()"], _exception);
 				}
 				finally
 				{
@@ -840,10 +839,10 @@ function PriorityQueue() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromArray()"],
-											 ("Attempted to convert an invalid or incorrectly " +
-											  "formatted array to a Data Structure: " +
-											  "{" + string(_array) + "}"));
+					ErrorReport.report([other, self, "fromArray()"],
+									   ("Attempted to convert an invalid or incorrectly formatted " +
+										"array to a Data Structure: " +
+										"{" + string(_array) + "}"));
 				}
 				
 				return self;
@@ -860,7 +859,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -885,7 +884,7 @@ function PriorityQueue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return self;

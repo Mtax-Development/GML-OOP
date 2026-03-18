@@ -131,7 +131,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "copy()"], _exception);
+					ErrorReport.report([other, self, "copy()"], _exception);
 				}
 				
 				return self;
@@ -152,7 +152,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSeekPosition()"], _exception);
+					ErrorReport.report([other, self, "getSeekPosition()"], _exception);
 				}
 				
 				return undefined;
@@ -168,7 +168,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getType()"], _exception);
+					ErrorReport.report([other, self, "getType()"], _exception);
 				}
 				
 				return undefined;
@@ -184,7 +184,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getAlignment()"], _exception);
+					ErrorReport.report([other, self, "getAlignment()"], _exception);
 				}
 				
 				return undefined;
@@ -200,7 +200,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPointer()"], _exception);
+					ErrorReport.report([other, self, "getPointer()"], _exception);
 				}
 				
 				return pointer_invalid;
@@ -216,7 +216,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -250,7 +250,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSeekPosition()"], _exception);
+					ErrorReport.report([other, self, "setSeekPosition()"], _exception);
 				}
 				
 				return self;
@@ -281,7 +281,7 @@ function Buffer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "write()"], _exception);
+							ErrorReport.report([other, self, "write()"], _exception);
 						}
 						
 						_i += 2;
@@ -296,7 +296,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "write()"], _exception);
+					ErrorReport.report([other, self, "write()"], _exception);
 				}
 				
 				return array_create((argument_count div 2), (-1));
@@ -323,7 +323,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fill()"], _exception);
+					ErrorReport.report([other, self, "fill()"], _exception);
 				}
 				
 				return self;
@@ -359,7 +359,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "read()"], _exception);
+					ErrorReport.report([other, self, "read()"], _exception);
 				}
 			}
 			
@@ -402,16 +402,16 @@ function Buffer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "compress()"],
-												 ("Buffer compression failed: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "compress()"],
+										   ("Buffer compression failed: " +
+											"{" + string(ID) + "}"));
 						
 						return undefined;
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "compress()"], _exception);
+					ErrorReport.report([other, self, "compress()"], _exception);
 				}
 				
 				return undefined;
@@ -446,14 +446,14 @@ function Buffer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "decompress()"],
-												 ("Buffer decompression failed: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "decompress()"],
+										   ("Buffer decompression failed: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "decompress()"], _exception);
+					ErrorReport.report([other, self, "decompress()"], _exception);
 				}
 				
 				return undefined;
@@ -473,7 +473,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValue()"], _exception);
+					ErrorReport.report([other, self, "getValue()"], _exception);
 				}
 				
 				return undefined;
@@ -540,7 +540,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toHashMD5()"], _exception);
+					ErrorReport.report([other, self, "toHashMD5()"], _exception);
 				}
 				
 				return string(undefined);
@@ -567,7 +567,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toHashSHA1()"], _exception);
+					ErrorReport.report([other, self, "toHashSHA1()"], _exception);
 				}
 				
 				return string(undefined);
@@ -594,7 +594,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toHashCRC32()"], _exception);
+					ErrorReport.report([other, self, "toHashCRC32()"], _exception);
 				}
 				
 				return string(undefined);
@@ -621,7 +621,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -641,7 +641,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -660,7 +660,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "secureFromMap()"], _exception);
+					ErrorReport.report([other, self, "secureFromMap()"], _exception);
 				}
 				
 				return self;
@@ -689,14 +689,14 @@ function Buffer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "fromSurface()"],
-												 ("Attempted to convert an invalid Surface: " +
-												  "{" + string(_surface) + "}"));
+						ErrorReport.report([other, self, "fromSurface()"],
+										   ("Attempted to convert an invalid Surface: " +
+											"{" + string(_surface) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromSurface()"], _exception);
+					ErrorReport.report([other, self, "fromSurface()"], _exception);
 				}
 				
 				return self;
@@ -744,7 +744,7 @@ function Buffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toFile()"], _exception);
+					ErrorReport.report([other, self, "toFile()"], _exception);
 				}
 				
 				return undefined;
@@ -786,9 +786,9 @@ function Buffer() constructor
 						}
 						else
 						{
-							new ErrorReport().report([other, self, "fromFile()"],
-													 ("Attempted to load a nonexistent file: " +
-													  "{" + string(_path) + "}"));
+							ErrorReport.report([other, self, "fromFile()"],
+											   ("Attempted to load a nonexistent file: " +
+												"{" + string(_path) + "}"));
 							
 							return undefined;
 						}
@@ -801,16 +801,16 @@ function Buffer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "fromFile()"],
-												 ("Attempted to load a nonexistent file: " +
-												  "{" + string(_path) + "}"));
+						ErrorReport.report([other, self, "fromFile()"],
+										   ("Attempted to load a nonexistent file: " +
+											"{" + string(_path) + "}"));
 						
 						return undefined;
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromFile()"], _exception);
+					ErrorReport.report([other, self, "fromFile()"], _exception);
 				}
 				
 				return undefined;
@@ -836,14 +836,14 @@ function Buffer() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "fromFilePart()"], _exception);
+						ErrorReport.report([other, self, "fromFilePart()"], _exception);
 					}
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromFilePart()"],
-											 ("Attempted to load a nonexistent file: " +
-											  "{" + string(_path) + "}"));
+					ErrorReport.report([other, self, "fromFilePart()"],
+									   ("Attempted to load a nonexistent file: " +
+										"{" + string(_path) + "}"));
 				}
 				
 				return self;

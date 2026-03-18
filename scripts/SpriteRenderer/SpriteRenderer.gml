@@ -429,7 +429,7 @@ function SpriteRenderer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
+					ErrorReport.report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -674,10 +674,9 @@ function SpriteRenderer() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "render()"],
-											 ("Attempted to render through an invalid Sprite " +
-											  "renderer: " +
-											  "{" + string(self) + "}"));
+					ErrorReport.report([other, self, "render()"],
+									   ("Attempted to render through an invalid Sprite renderer: " +
+										"{" + string(self) + "}"));
 				}
 				
 				sprite = _sprite_original;
@@ -911,7 +910,7 @@ function SpriteRenderer() constructor
 						_vertexBuffer.destroy();
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				sprite = _sprite_original;

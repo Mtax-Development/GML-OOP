@@ -103,7 +103,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "percent()"], _exception);
+					ErrorReport.report([other, self, "percent()"], _exception);
 				}
 				
 				return undefined;
@@ -119,7 +119,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isBoundary()"], _exception);
+					ErrorReport.report([other, self, "isBoundary()"], _exception);
 				}
 				
 				return false;
@@ -135,7 +135,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isMinimum()"], _exception);
+					ErrorReport.report([other, self, "isMinimum()"], _exception);
 				}
 				
 				return false;
@@ -151,7 +151,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isMaximum()"], _exception);
+					ErrorReport.report([other, self, "isMaximum()"], _exception);
 				}
 				
 				return false;
@@ -170,7 +170,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "modify()"], _exception);
+					ErrorReport.report([other, self, "modify()"], _exception);
 				}
 				
 				return self;
@@ -215,7 +215,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "modifyWrap()"], _exception);
+					ErrorReport.report([other, self, "modifyWrap()"], _exception);
 				}
 				
 				return self;
@@ -273,7 +273,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "modifyBounce()"], _exception);
+					ErrorReport.report([other, self, "modifyBounce()"], _exception);
 				}
 				
 				return self;
@@ -292,7 +292,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "interpolate()"], _exception);
+					ErrorReport.report([other, self, "interpolate()"], _exception);
 				}
 				
 				return self;
@@ -308,7 +308,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -323,7 +323,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setMinimum()"], _exception);
+					ErrorReport.report([other, self, "setMinimum()"], _exception);
 				}
 				
 				return self;
@@ -338,7 +338,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setMaximum()"], _exception);
+					ErrorReport.report([other, self, "setMaximum()"], _exception);
 				}
 				
 				return self;
@@ -362,7 +362,7 @@ function RangedValue() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setMiddle()"], _exception);
+					ErrorReport.report([other, self, "setMiddle()"], _exception);
 				}
 				
 				return self;

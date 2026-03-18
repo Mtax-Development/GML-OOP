@@ -168,7 +168,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "compareDateTime()"], _exception);
+					ErrorReport.report([other, self, "compareDateTime()"], _exception);
 				}
 				
 				return undefined;
@@ -187,7 +187,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "compareDate()"], _exception);
+					ErrorReport.report([other, self, "compareDate()"], _exception);
 				}
 				
 				return undefined;
@@ -206,7 +206,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "compareTime()"], _exception);
+					ErrorReport.report([other, self, "compareTime()"], _exception);
 				}
 				
 				return undefined;
@@ -224,7 +224,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfYears()"], _exception);
+					ErrorReport.report([other, self, "spanOfYears()"], _exception);
 				}
 				
 				return undefined;
@@ -242,7 +242,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfMonths()"], _exception);
+					ErrorReport.report([other, self, "spanOfMonths()"], _exception);
 				}
 				
 				return undefined;
@@ -260,7 +260,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfWeeks()"], _exception);
+					ErrorReport.report([other, self, "spanOfWeeks()"], _exception);
 				}
 				
 				return undefined;
@@ -278,7 +278,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfDays()"], _exception);
+					ErrorReport.report([other, self, "spanOfDays()"], _exception);
 				}
 				
 				return undefined;
@@ -296,7 +296,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfHours()"], _exception);
+					ErrorReport.report([other, self, "spanOfHours()"], _exception);
 				}
 				
 				return undefined;
@@ -314,7 +314,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfMinutes()"], _exception);
+					ErrorReport.report([other, self, "spanOfMinutes()"], _exception);
 				}
 				
 				return undefined;
@@ -332,7 +332,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "spanOfSeconds()"], _exception);
+					ErrorReport.report([other, self, "spanOfSeconds()"], _exception);
 				}
 				
 				return undefined;
@@ -348,7 +348,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getDate()"], _exception);
+					ErrorReport.report([other, self, "getDate()"], _exception);
 				}
 				
 				return undefined;
@@ -364,7 +364,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTime()"], _exception);
+					ErrorReport.report([other, self, "getTime()"], _exception);
 				}
 				
 				return undefined;
@@ -380,7 +380,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getDaysInYear()"], _exception);
+					ErrorReport.report([other, self, "getDaysInYear()"], _exception);
 				}
 				
 				return undefined;
@@ -396,7 +396,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getDaysInMonth()"], _exception);
+					ErrorReport.report([other, self, "getDaysInMonth()"], _exception);
 				}
 				
 				return undefined;
@@ -413,7 +413,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getWeekOfYear()"], _exception);
+					ErrorReport.report([other, self, "getWeekOfYear()"], _exception);
 				}
 				
 				return undefined;
@@ -429,7 +429,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getDayOfYear()"], _exception);
+					ErrorReport.report([other, self, "getDayOfYear()"], _exception);
 				}
 				
 				return undefined;
@@ -445,7 +445,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getHourOfYear()"], _exception);
+					ErrorReport.report([other, self, "getHourOfYear()"], _exception);
 				}
 				
 				return undefined;
@@ -461,7 +461,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMinuteOfYear()"], _exception);
+					ErrorReport.report([other, self, "getMinuteOfYear()"], _exception);
 				}
 				
 				return undefined;
@@ -477,7 +477,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSecondOfYear()"], _exception);
+					ErrorReport.report([other, self, "getSecondOfYear()"], _exception);
 				}
 				
 				return undefined;
@@ -495,7 +495,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getWeekday()"], _exception);
+					ErrorReport.report([other, self, "getWeekday()"], _exception);
 				}
 				
 				return undefined;
@@ -512,7 +512,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isToday()"], _exception);
+					ErrorReport.report([other, self, "isToday()"], _exception);
 				}
 				
 				return undefined;
@@ -529,7 +529,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isLeapYear()"], _exception);
+					ErrorReport.report([other, self, "isLeapYear()"], _exception);
 				}
 				
 				return undefined;
@@ -565,9 +565,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modify()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modify()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -590,9 +590,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyYears()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyYears()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -615,9 +615,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyMonths()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyMonths()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -640,9 +640,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyWeeks()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyWeeks()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -665,9 +665,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyDays()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyDays()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -690,9 +690,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyHours()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyHours()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -715,9 +715,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifyMinutes()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifyMinutes()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -740,9 +740,9 @@ function DateTime() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "modifySeconds()"],
-											 ("Attempted to modify an invalid date: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "modifySeconds()"],
+									   ("Attempted to modify an invalid date: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -847,7 +847,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toStringDate()"], _exception);
+					ErrorReport.report([other, self, "toStringDate()"], _exception);
 				}
 				
 				return string(undefined);
@@ -863,7 +863,7 @@ function DateTime() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toStringTime()"], _exception);
+					ErrorReport.report([other, self, "toStringTime()"], _exception);
 				}
 				
 				return string(undefined);

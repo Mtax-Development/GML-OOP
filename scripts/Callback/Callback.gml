@@ -144,7 +144,7 @@ function Callback() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setAll()"], _exception);
+					ErrorReport.report([other, self, "setAll()"], _exception);
 				}
 				
 				return self;
@@ -195,9 +195,8 @@ function Callback() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "execute()",
-													  ("loop" + "[" + string(_i) + "]")],
-													 _exception);
+							ErrorReport.report([other, self, "execute()",
+											   ("loop" + "[" + string(_i) + "]")], _exception);
 						}
 						
 						++_i;

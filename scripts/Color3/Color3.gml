@@ -189,7 +189,7 @@ function Color3() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setAll()"], _exception);
+					ErrorReport.report([other, self, "setAll()"], _exception);
 				}
 				
 				return self;

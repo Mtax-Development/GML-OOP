@@ -353,7 +353,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setShape()"], _exception);
+					ErrorReport.report([other, self, "setShape()"], _exception);
 				}
 				
 				return self;
@@ -384,7 +384,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSprite()"], _exception);
+					ErrorReport.report([other, self, "setSprite()"], _exception);
 				}
 				
 				return self;
@@ -411,7 +411,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setScale()"], _exception);
+					ErrorReport.report([other, self, "setScale()"], _exception);
 				}
 				
 				return self;
@@ -463,7 +463,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSize()"], _exception);
+					ErrorReport.report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
@@ -517,7 +517,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSpeed()"], _exception);
+					ErrorReport.report([other, self, "setSpeed()"], _exception);
 				}
 				
 				return self;
@@ -578,7 +578,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setDirection()"], _exception);
+					ErrorReport.report([other, self, "setDirection()"], _exception);
 				}
 				
 				return self;
@@ -642,7 +642,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setAngle()"], _exception);
+					ErrorReport.report([other, self, "setAngle()"], _exception);
 				}
 				
 				return self;
@@ -684,7 +684,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setGravity()"], _exception);
+					ErrorReport.report([other, self, "setGravity()"], _exception);
 				}
 				
 				return self;
@@ -732,7 +732,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setLife()"], _exception);
+					ErrorReport.report([other, self, "setLife()"], _exception);
 				}
 				
 				return self;
@@ -790,7 +790,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setColor()"], _exception);
+					ErrorReport.report([other, self, "setColor()"], _exception);
 				}
 				
 				return self;
@@ -819,7 +819,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setColorMix()"], _exception);
+					ErrorReport.report([other, self, "setColorMix()"], _exception);
 				}
 				
 				return self;
@@ -914,7 +914,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setColorRGB()"], _exception);
+					ErrorReport.report([other, self, "setColorRGB()"], _exception);
 				}
 				
 				return self;
@@ -1010,7 +1010,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setColorHSV()"], _exception);
+					ErrorReport.report([other, self, "setColorHSV()"], _exception);
 				}
 				
 				return self;
@@ -1030,7 +1030,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setBlend()"], _exception);
+					ErrorReport.report([other, self, "setBlend()"], _exception);
 				}
 				
 				return self;
@@ -1068,7 +1068,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setAlpha()"], _exception);
+					ErrorReport.report([other, self, "setAlpha()"], _exception);
 				}
 				
 				return self;
@@ -1093,7 +1093,7 @@ function ParticleType() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "setStep()"],
+						ErrorReport.report([other, self, "setStep()"],
 												 ("Attempted to set a property causing a Particle " +
 												  "Type to create particles of it own type, " +
 												  "causing an infinite loop: " +
@@ -1102,7 +1102,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setDeath()"], _exception);
+					ErrorReport.report([other, self, "setDeath()"], _exception);
 				}
 				
 				return self;
@@ -1127,7 +1127,7 @@ function ParticleType() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "setDeath()"],
+						ErrorReport.report([other, self, "setDeath()"],
 												 ("Attempted to set a property causing a Particle " +
 												  "Type to create particles of it own type, " +
 												  "causing an infinite loop: " +
@@ -1136,7 +1136,7 @@ function ParticleType() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setDeath()"], _exception);
+					ErrorReport.report([other, self, "setDeath()"], _exception);
 				}
 				
 				return self;
@@ -1175,16 +1175,16 @@ function ParticleType() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "create()"],
-												 ("Attempted to create particles using an " +
-												  "invalid Particle Type or Particle System:" + "\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Target: " + "{" + string(_particleSystem) + "}"));
+						ErrorReport.report([other, self, "create()"],
+										   ("Attempted to create particles using an invalid " +
+											"Particle Type or Particle System:" + "\n" +
+											"Self: " + "{" + string(self) + "}" + "\n" +
+											"Target: " + "{" + string(_particleSystem) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "create()"], _exception);
+					ErrorReport.report([other, self, "create()"], _exception);
 				}
 				
 				return self;
@@ -1314,11 +1314,11 @@ function ParticleType() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createShape()"],
-												 ("Attempted to create particles using an " +
-												  "invalid Particle Type or Particle System:" + "\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Target: " + "{" + string(_particleSystem) + "}"));
+						ErrorReport.report([other, self, "createShape()"],
+										   ("Attempted to create particles using an invalid " +
+											"Particle Type or Particle System:" + "\n" +
+											"Self: " + "{" + string(self) + "}" + "\n" +
+											"Target: " + "{" + string(_particleSystem) + "}"));
 					}
 				}
 				

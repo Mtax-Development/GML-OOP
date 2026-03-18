@@ -246,7 +246,7 @@ function Line() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "collision()"], _exception);
+					ErrorReport.report([other, self, "collision()"], _exception);
 					
 					if (_list_created)
 					{
@@ -402,7 +402,7 @@ function Line() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
+					ErrorReport.report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -567,7 +567,7 @@ function Line() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+					ErrorReport.report([other, self, "getPrimitiveRenderData()"], _exception);
 				}
 				
 				return undefined;
@@ -643,14 +643,14 @@ function Line() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "render()"],
-												 ("Attempted to render an invalid Shape: " +
-												  "{" + string(self) + "}"));
+						ErrorReport.report([other, self, "render()"],
+										   ("Attempted to render an invalid Shape: " +
+											"{" + string(self) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -927,7 +927,7 @@ function Line() constructor
 						}
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				return undefined;

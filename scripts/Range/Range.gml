@@ -80,7 +80,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "sum()"], _exception);
+					ErrorReport.report([other, self, "sum()"], _exception);
 				}
 				
 				return undefined;
@@ -115,7 +115,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "difference()"], _exception);
+					ErrorReport.report([other, self, "difference()"], _exception);
 				}
 				
 				return undefined;
@@ -151,7 +151,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "product()"], _exception);
+					ErrorReport.report([other, self, "product()"], _exception);
 				}
 				
 				return undefined;
@@ -194,7 +194,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "product()"], _exception);
+					ErrorReport.report([other, self, "quotient()"], _exception);
 				}
 				
 				return undefined;
@@ -211,7 +211,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "clampTo()"], _exception);
+					ErrorReport.report([other, self, "clampTo()"], _exception);
 				}
 				
 				return _value;
@@ -229,7 +229,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "interpolate()"], _exception);
+					ErrorReport.report([other, self, "interpolate()"], _exception);
 				}
 				
 				return _value;
@@ -247,7 +247,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "percent()"], _exception);
+					ErrorReport.report([other, self, "percent()"], _exception);
 				}
 				
 				return _value;
@@ -263,7 +263,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "randomReal()"], _exception);
+					ErrorReport.report([other, self, "randomReal()"], _exception);
 				}
 				
 				return undefined;
@@ -279,7 +279,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "randomInt()"], _exception);
+					ErrorReport.report([other, self, "randomInt()"], _exception);
 				}
 				
 				return undefined;
@@ -295,7 +295,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getMiddle()"], _exception);
+					ErrorReport.report([other, self, "getMiddle()"], _exception);
 				}
 				
 				return undefined;
@@ -312,7 +312,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isBetween()"], _exception);
+					ErrorReport.report([other, self, "isBetween()"], _exception);
 				}
 				
 				return false;

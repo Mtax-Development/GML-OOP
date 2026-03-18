@@ -146,7 +146,7 @@ function TextRenderer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getScaleMultiplier()"], _exception);
+					ErrorReport.report([other, self, "getScaleMultiplier()"], _exception);
 				}
 				
 				return new Scale(_multiplier_x, _multiplier_y);
@@ -174,7 +174,7 @@ function TextRenderer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPixelSize()"], _exception);
+					ErrorReport.report([other, self, "getPixelSize()"], _exception);
 				}
 				finally
 				{
@@ -244,7 +244,7 @@ function TextRenderer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getBoundaryOffset()"], _exception);
+					ErrorReport.report([other, self, "getBoundaryOffset()"], _exception);
 				}
 				finally
 				{
@@ -347,7 +347,7 @@ function TextRenderer() constructor
 				{
 					ID = _string_original;
 					
-					new ErrorReport().report([other, self, "wrapText()"], _exception);
+					ErrorReport.report([other, self, "wrapText()"], _exception);
 				}
 				
 				return self;
@@ -446,7 +446,7 @@ function TextRenderer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -833,7 +833,7 @@ function TextRenderer() constructor
 						_vertexBuffer.destroy();
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				draw_set_font(_font_previous);

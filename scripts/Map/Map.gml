@@ -131,9 +131,9 @@ function Map() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Data Structure: " + 
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Data Structure: " + 
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -177,7 +177,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				
 				return false;
@@ -218,7 +218,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "count()"], _exception);
+					ErrorReport.report([other, self, "count()"], _exception);
 				}
 				
 				return 0;
@@ -246,7 +246,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValue()"], _exception);
+					ErrorReport.report([other, self, "getValue()"], _exception);
 				}
 				
 				return undefined;
@@ -279,7 +279,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getAllValues()"], _exception);
+					ErrorReport.report([other, self, "getAllValues()"], _exception);
 				}
 				
 				return [];
@@ -311,7 +311,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getAllKeys()"], _exception);
+					ErrorReport.report([other, self, "getAllKeys()"], _exception);
 				}
 				
 				return undefined;
@@ -328,7 +328,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirst()"], _exception);
+					ErrorReport.report([other, self, "getFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -345,7 +345,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLast()"], _exception);
+					ErrorReport.report([other, self, "getLast()"], _exception);
 				}
 				
 				return undefined;
@@ -364,7 +364,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPrevious()"], _exception);
+					ErrorReport.report([other, self, "getPrevious()"], _exception);
 				}
 				
 				return undefined;
@@ -383,7 +383,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getNext()"], _exception);
+					ErrorReport.report([other, self, "getNext()"], _exception);
 				}
 				
 				return undefined;
@@ -400,7 +400,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "keyExists()"], _exception);
+					ErrorReport.report([other, self, "keyExists()"], _exception);
 				}
 			}
 			
@@ -417,7 +417,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "valueIsBoundList()"], _exception);
+					ErrorReport.report([other, self, "valueIsBoundList()"], _exception);
 				}
 				
 				return undefined;
@@ -436,7 +436,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "valueIsBoundMap()"], _exception);
+					ErrorReport.report([other, self, "valueIsBoundMap()"], _exception);
 				}
 				
 				return undefined;
@@ -452,7 +452,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -468,7 +468,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isEmpty()"], _exception);
+					ErrorReport.report([other, self, "isEmpty()"], _exception);
 				}
 				
 				return undefined;
@@ -508,8 +508,7 @@ function Map() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "forEach()", "function()"],
-													 _exception);
+							ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 						}
 						
 						_key = ds_map_find_next(_dataCopy, _key);
@@ -521,7 +520,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				finally
 				{
@@ -561,7 +560,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return false;
@@ -598,7 +597,7 @@ function Map() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "addBoundList()"], _exception);
+							ErrorReport.report([other, self, "addBoundList()"], _exception);
 						}
 						
 						_i += 2;
@@ -606,7 +605,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "addBoundList()"], _exception);
+					ErrorReport.report([other, self, "addBoundList()"], _exception);
 				}
 				
 				return self;
@@ -643,7 +642,7 @@ function Map() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "addBoundMap()"], _exception);
+							ErrorReport.report([other, self, "addBoundMap()"], _exception);
 						}
 						
 						_i += 2;
@@ -651,7 +650,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "addBoundMap()"], _exception);
+					ErrorReport.report([other, self, "addBoundMap()"], _exception);
 				}
 				
 				return self;
@@ -675,7 +674,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -731,7 +730,7 @@ function Map() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "replace()"], _exception);
+							ErrorReport.report([other, self, "replace()"], _exception);
 						}
 					
 						_i += 2;
@@ -739,7 +738,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "replace()"], _exception);
+					ErrorReport.report([other, self, "replace()"], _exception);
 				}
 				
 				return self;
@@ -761,7 +760,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "remove()"], _exception);
+					ErrorReport.report([other, self, "remove()"], _exception);
 				}
 				
 				return self;
@@ -969,7 +968,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toArray()"], _exception);
+					ErrorReport.report([other, self, "toArray()"], _exception);
 				}
 				
 				return [[], []];
@@ -1006,10 +1005,10 @@ function Map() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromArray()"],
-											 ("Attempted to convert an invalid or incorrectly " +
-											  "formatted array to a Data Structure: " +
-											  "{" + string(_array) + "}"));
+					ErrorReport.report([other, self, "fromArray()"],
+									   ("Attempted to convert an invalid or incorrectly formatted " +
+										"array to a Data Structure: " +
+										"{" + string(_array) + "}"));
 				}
 				
 				return self;
@@ -1061,7 +1060,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toStruct()"], _exception);
+					ErrorReport.report([other, self, "toStruct()"], _exception);
 				}
 				
 				return {};
@@ -1103,9 +1102,9 @@ function Map() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromStruct()"],
-											 ("Attempted to convert an invalid struct: " + 
-											  "{" + string(_struct) + "}"));
+					ErrorReport.report([other, self, "fromStruct()"],
+									   ("Attempted to convert an invalid struct: " + 
+										"{" + string(_struct) + "}"));
 				}
 				
 				return self;
@@ -1122,7 +1121,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -1147,7 +1146,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return self;
@@ -1165,7 +1164,7 @@ function Map() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "secureToFile()"], _exception);
+					ErrorReport.report([other, self, "secureToFile()"], _exception);
 				}
 				
 				return self;
@@ -1189,9 +1188,9 @@ function Map() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromStruct()"],
-											 ("Attempted to load a nonexistent file: " +
-											  "{" + string(_path) + "}"));
+					ErrorReport.report([other, self, "fromStruct()"],
+									   ("Attempted to load a nonexistent file: " +
+										"{" + string(_path) + "}"));
 				}
 				
 				return undefined;
@@ -1210,10 +1209,10 @@ function Map() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "secureFromBuffer()"],
-											 ("Attempted to convert an invalid Buffer to a Data " +
-											  "Structure: " +
-											  "{" + string(_buffer) + "}"));
+					ErrorReport.report([other, self, "secureFromBuffer()"],
+									   ("Attempted to convert an invalid Buffer to a Data " +
+										"Structure: " +
+										"{" + string(_buffer) + "}"));
 				}
 				
 				return self;

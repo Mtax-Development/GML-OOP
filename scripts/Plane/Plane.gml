@@ -207,7 +207,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getVertexLocation()"], _exception);
+					ErrorReport.report([other, self, "getVertexLocation()"], _exception);
 				}
 				
 				return _result;
@@ -239,7 +239,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getUV()"], _exception);
+					ErrorReport.report([other, self, "getUV()"], _exception);
 				}
 				
 				var _vertex_count = 4;
@@ -266,7 +266,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getNormal()"], _exception);
+					ErrorReport.report([other, self, "getNormal()"], _exception);
 				}
 				
 				return undefined;
@@ -316,7 +316,7 @@ function Plane() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+					ErrorReport.report([other, self, "getPrimitiveRenderData()"], _exception);
 				}
 				
 				return undefined;
@@ -413,14 +413,14 @@ function Plane() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "render()"],
-												 ("Attempted to render an invalid Shape: " +
-												  "{" + string(self) + "}"));
+						ErrorReport.report([other, self, "render()"],
+										   ("Attempted to render an invalid Shape: " +
+											"{" + string(self) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -599,7 +599,7 @@ function Plane() constructor
 						_vertexBuffer.destroy();
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				return undefined;

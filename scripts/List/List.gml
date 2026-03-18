@@ -127,9 +127,9 @@ function List() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Data Structure: " + 
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Data Structure: " + 
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -168,7 +168,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				
 				return false;
@@ -207,7 +207,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "count()"], _exception);
+					ErrorReport.report([other, self, "count()"], _exception);
 				}
 				
 				return 0;
@@ -225,7 +225,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValue()"], _exception);
+					ErrorReport.report([other, self, "getValue()"], _exception);
 				}
 				
 				return undefined;
@@ -242,7 +242,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirst()"], _exception);
+					ErrorReport.report([other, self, "getFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -259,7 +259,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLast()"], _exception);
+					ErrorReport.report([other, self, "getLast()"], _exception);
 				}
 				
 				return undefined;
@@ -277,7 +277,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
+					ErrorReport.report([other, self, "getFirstPosition()"], _exception);
 				}
 				
 				return (-1);
@@ -306,7 +306,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPosition()"], _exception);
+					ErrorReport.report([other, self, "getPosition()"], _exception);
 				}
 				
 				return [];
@@ -322,7 +322,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -338,7 +338,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isEmpty()"], _exception);
+					ErrorReport.report([other, self, "isEmpty()"], _exception);
 				}
 				
 				return undefined;
@@ -377,8 +377,7 @@ function List() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "forEach()", "function()"],
-													 _exception);
+							ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 						}
 						
 						++_i;
@@ -388,7 +387,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				finally
 				{
@@ -416,7 +415,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return self;
@@ -434,7 +433,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -452,7 +451,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "replace()"], _exception);
+					ErrorReport.report([other, self, "replace()"], _exception);
 				}
 				
 				return self;
@@ -469,7 +468,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removePosition()"], _exception);
+					ErrorReport.report([other, self, "removePosition()"], _exception);
 				}
 				
 				return self;
@@ -497,7 +496,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removeValue()"], _exception);
+					ErrorReport.report([other, self, "removeValue()"], _exception);
 				}
 				
 				return self;
@@ -515,7 +514,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "insert()"], _exception);
+					ErrorReport.report([other, self, "insert()"], _exception);
 				}
 				
 				return self;
@@ -532,7 +531,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "sort()"], _exception);
+					ErrorReport.report([other, self, "sort()"], _exception);
 				}
 				
 				return self;
@@ -547,7 +546,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "shuffle()"], _exception);
+					ErrorReport.report([other, self, "shuffle()"], _exception);
 				}
 				
 				return self;
@@ -736,7 +735,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toArray()"], _exception);
+					ErrorReport.report([other, self, "toArray()"], _exception);
 				}
 				
 				return [];
@@ -764,9 +763,9 @@ function List() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "fromArray()"],
-											 ("Attempted to read an invalid array: " +
-											  "{" + string(_array) + "}"));
+					ErrorReport.report([other, self, "fromArray()"],
+									   ("Attempted to read an invalid array: " +
+										"{" + string(_array) + "}"));
 				}
 				
 				return self;
@@ -783,7 +782,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toEncodedString()"], _exception);
+					ErrorReport.report([other, self, "toEncodedString()"], _exception);
 				}
 				
 				return string(undefined);
@@ -809,7 +808,7 @@ function List() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromEncodedString()"], _exception);
+					ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 				}
 				
 				return self;

@@ -149,7 +149,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "collision()"], _exception);
+					ErrorReport.report([other, self, "collision()"], _exception);
 					
 					if (_list_created)
 					{
@@ -197,7 +197,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "cursorOver()"], _exception);
+					ErrorReport.report([other, self, "cursorOver()"], _exception);
 				}
 				
 				return false;
@@ -250,7 +250,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "cursorHold()"], _exception);
+					ErrorReport.report([other, self, "cursorHold()"], _exception);
 				}
 				
 				return false;
@@ -304,7 +304,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "cursorPressed()"], _exception);
+					ErrorReport.report([other, self, "cursorPressed()"], _exception);
 				}
 				
 				return false;
@@ -358,7 +358,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "cursorReleased()"], _exception);
+					ErrorReport.report([other, self, "cursorReleased()"], _exception);
 				}
 				
 				return false;
@@ -389,7 +389,7 @@ function Point() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPrimitiveRenderData()"], _exception);
+					ErrorReport.report([other, self, "getPrimitiveRenderData()"], _exception);
 				}
 				
 				return undefined;
@@ -432,14 +432,14 @@ function Point() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "render()"],
-												 ("Attempted to render an invalid Shape: " +
-												  "{" + string(self) + "}"));
+						ErrorReport.report([other, self, "render()"],
+										   ("Attempted to render an invalid Shape: " +
+											"{" + string(self) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -598,7 +598,7 @@ function Point() constructor
 						_vertexBuffer_point.destroy();
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				return undefined;

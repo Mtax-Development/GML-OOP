@@ -177,15 +177,13 @@ function Shader() constructor
 							}
 							else
 							{
-								new ErrorReport().report
-								(
-									[other, self, "setUniformFloat()"],
-									("Attempted to set an uniform using an unrecognized data " +
-									 "type:" + "\n" +
-									 "Shader: " + "{" + string(name) + "}" + "\n" +
-									 "Uniform: " + "{" + string(_uniform) + "}" + "\n" +
-									 "Value: " + "{" + string(_value_candidate) + "}")
-								);
+								ErrorReport.report([other, self, "setUniformFloat()"],
+												   ("Attempted to set an uniform using an " +
+												    "unrecognized data type:" + "\n" +
+													"Shader: " + "{" + string(name) + "}" + "\n" +
+													"Uniform: " + "{" + string(_uniform) + "}" +
+													"\n" + "Value: " +
+													"{" + string(_value_candidate) + "}"));
 								
 								return self;
 							}
@@ -199,7 +197,7 @@ function Shader() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setUniformFloat()"], _exception);
+					ErrorReport.report([other, self, "setUniformFloat()"], _exception);
 				}
 				
 				return self;
@@ -255,15 +253,13 @@ function Shader() constructor
 							}
 							else
 							{
-								new ErrorReport().report
-								(
-									[other, self, "setUniformInt()"],
-									("Attempted to set an uniform using an unrecognized data " +
-									 "type:" + "\n" +
-									 "Shader: " + "{" + string(name) + "}" + "\n" +
-									 "Uniform: " + "{" + string(_uniform) + "}" + "\n" +
-									 "Value: " + "{" + string(_value_candidate) + "}")
-								);
+								ErrorReport.report([other, self, "setUniformInt()"],
+												   ("Attempted to set an uniform using an " +
+												    "unrecognized data type:" + "\n" +
+													"Shader: " + "{" + string(name) + "}" + "\n" +
+													"Uniform: " + "{" + string(_uniform) + "}" +
+													"\n" + "Value: " +
+													"{" + string(_value_candidate) + "}"));
 								
 								return self;
 							}
@@ -277,7 +273,7 @@ function Shader() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setUniformInt()"], _exception);
+					ErrorReport.report([other, self, "setUniformInt()"], _exception);
 				}
 				
 				return self;
@@ -315,7 +311,7 @@ function Shader() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setUniformMatrix()"], _exception);
+					ErrorReport.report([other, self, "setUniformMatrix()"], _exception);
 				}
 				
 				return self;
@@ -341,7 +337,7 @@ function Shader() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setUniformTexture()"], _exception);
+					ErrorReport.report([other, self, "setUniformTexture()"], _exception);
 				}
 				
 				return self;
@@ -361,13 +357,13 @@ function Shader() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "updateUniforms()"], _exception);
+							ErrorReport.report([other, self, "updateUniforms()"], _exception);
 						}
 					});
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "updateUniforms()"], _exception);
+					ErrorReport.report([other, self, "updateUniforms()"], _exception);
 				}
 				
 				return self;
@@ -403,14 +399,14 @@ function Shader() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "setActive()"],
-												 ("Attempted to use a Shader that is not compiled: " +
-												  "{" + string(name) + "}"));
+						ErrorReport.report([other, self, "setActive()"],
+										   ("Attempted to use a Shader that is not compiled: " +
+											"{" + string(name) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setActive()"], _exception);
+					ErrorReport.report([other, self, "setActive()"], _exception);
 				}
 				
 				return self;
@@ -434,7 +430,7 @@ function Shader() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createUniformData()"], _exception);
+					ErrorReport.report([other, self, "createUniformData()"], _exception);
 				}
 				
 				return self;
@@ -538,16 +534,16 @@ function Shader() constructor
 						{
 							if (!is_array(value))
 							{
-								new ErrorReport().report([other, parent, "uniform", string(name),
-														  "update()"],
-														 ("Attempted to execute the update " + 
-														  "function using a value that is not an " +
-														  "array: " + "{" + string(value) + "}"));
+								ErrorReport.report([other, parent, "uniform", string(name),
+													"update()"],
+												   ("Attempted to execute the update function " + 
+													"using a value that is not an array: " +
+													"{" + string(value) + "}"));
 							}
 							else
 							{
-								new ErrorReport().report([other, parent, "uniform", string(name),
-														  "update()"], _exception);
+								ErrorReport.report([other, parent, "uniform", string(name),
+												   "update()"], _exception);
 							}
 						}
 						

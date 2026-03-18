@@ -193,7 +193,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "charEquals()"], _exception);
+					ErrorReport.report([other, self, "charEquals()"], _exception);
 				}
 				
 				return undefined;
@@ -236,7 +236,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "charIsWhitespace()"], _exception);
+					ErrorReport.report([other, self, "charIsWhitespace()"], _exception);
 				}
 			}
 			
@@ -342,9 +342,8 @@ function StringParser() constructor
 											}
 											catch (_exception)
 											{
-												new ErrorReport().report([other, self, "split()",
-																		  "function()"],
-																		  _exception);
+												ErrorReport.report([other, self, "split()",
+																	"function()"], _exception);
 											}
 											
 											++_i;
@@ -480,7 +479,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getBetween()"], _exception);
+					ErrorReport.report([other, self, "getBetween()"], _exception);
 				}
 			}
 			
@@ -630,7 +629,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSubstringPosition()"], _exception);
+					ErrorReport.report([other, self, "getSubstringPosition()"], _exception);
 				}
 			}
 			
@@ -701,7 +700,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPixelSize()"], _exception);
+					ErrorReport.report([other, self, "getPixelSize()"], _exception);
 				}
 				finally
 				{
@@ -733,7 +732,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "remove()"], _exception);
+					ErrorReport.report([other, self, "remove()"], _exception);
 				}
 				
 				return self;
@@ -768,7 +767,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "formatNumber()"], _exception);
+					ErrorReport.report([other, self, "formatNumber()"], _exception);
 				}
 				
 				return self;
@@ -794,7 +793,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "formatStruct()"], _exception);
+					ErrorReport.report([other, self, "formatStruct()"], _exception);
 				}
 				
 				return self;
@@ -812,7 +811,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "insert()"], _exception);
+					ErrorReport.report([other, self, "insert()"], _exception);
 				}
 				
 				return self;
@@ -846,7 +845,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "duplicate()"], _exception);
+					ErrorReport.report([other, self, "duplicate()"], _exception);
 				}
 				
 				return self;
@@ -881,7 +880,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "replace()"], _exception);
+					ErrorReport.report([other, self, "replace()"], _exception);
 				}
 				
 				return self;
@@ -972,7 +971,7 @@ function StringParser() constructor
 				{
 					ID = _constructor_value_original;
 					
-					new ErrorReport().report([other, self, "trim()"], _exception);
+					ErrorReport.report([other, self, "trim()"], _exception);
 				}
 				
 				return self;
@@ -993,7 +992,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setByte()"], _exception);
+					ErrorReport.report([other, self, "setByte()"], _exception);
 				}
 				
 				return self;
@@ -1052,8 +1051,7 @@ function StringParser() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "forEach()", "function()"],
-												 _exception);
+						ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 					}
 					
 					++_i;
@@ -1163,7 +1161,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toNumber()"], _exception);
+					ErrorReport.report([other, self, "toNumber()"], _exception);
 				}
 				
 				return undefined;
@@ -1212,7 +1210,7 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromArray()"], _exception);
+					ErrorReport.report([other, self, "fromArray()"], _exception);
 				}
 				
 				return self;
@@ -1237,14 +1235,14 @@ function StringParser() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "toFile()"], _exception);
+						ErrorReport.report([other, self, "toFile()"], _exception);
 					}
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "toFile()"],
-											 ("Attempted to write to a file at invalid path: " +
-											  "{" + string(_path) + "}"));
+					ErrorReport.report([other, self, "toFile()"],
+									   ("Attempted to write to a file at invalid path: " +
+										"{" + string(_path) + "}"));
 				}
 				
 				return self;
@@ -1264,10 +1262,10 @@ function StringParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromFile()"],
-											 ("Attempted to parse a nonexistent or inacessible " +
-											  "file at path: " +
-											  "{" + string(_path) + "}"));
+					ErrorReport.report([other, self, "fromFile()"],
+									   ("Attempted to parse a nonexistent or inacessible file as" +
+										"path: " +
+										"{" + string(_path) + "}"));
 				}
 				finally
 				{
@@ -1304,26 +1302,26 @@ function StringParser() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "fromJSON()"],
-													 ("Attempted to parse a file with invalid JSON " +
-													  "formatting at path: " +
-													  "{" + string(_path) + "}"));
+							ErrorReport.report([other, self, "fromJSON()"],
+											   ("Attempted to parse a file with invalid JSON" +
+												"formatting at path: " +
+												"{" + string(_path) + "}"));
 						}
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "fromJSON()"],
-												 ("Attempted to parse a nonexistent or inacessible " +
-												  "file at path: " +
-												  "{" + string(_path) + "}"));
+						ErrorReport.report([other, self, "fromJSON()"],
+										   ("Attempted to parse a nonexistent or inacessible file " +
+											"at path: " +
+											"{" + string(_path) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromJSON()"],
-											 ("Attempted to parse a nonexistent or inacessible " +
-											  "file at path: " +
-											  "{" + string(_path) + "}"));
+					ErrorReport.report([other, self, "fromJSON()"],
+									   ("Attempted to parse a nonexistent or inacessible file at " +
+										"path: " +
+										"{" + string(_path) + "}"));
 				}
 				finally
 				{

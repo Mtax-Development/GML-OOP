@@ -52,7 +52,7 @@ function VertexBuffer() constructor
 					}
 					catch (_exception)
 					{
-						new ErrorReport().report([other, self, "destroy()"], _exception);
+						ErrorReport.report([other, self, "destroy()"], _exception);
 					}
 					
 					ID = undefined;
@@ -106,7 +106,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "copy()"], _exception);
+					ErrorReport.report([other, self, "copy()"], _exception);
 				}
 				
 				return self;
@@ -127,7 +127,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return 0;
@@ -147,7 +147,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setLocation2D()"], _exception);
+					ErrorReport.report([other, self, "setLocation2D()"], _exception);
 				}
 				
 				return self;
@@ -164,7 +164,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setLocation3D()"], _exception);
+					ErrorReport.report([other, self, "setLocation3D()"], _exception);
 				}
 				
 				return self;
@@ -181,7 +181,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setColor()"], _exception);
+					ErrorReport.report([other, self, "setColor()"], _exception);
 				}
 				
 				return self;
@@ -199,7 +199,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setUV()"], _exception);
+					ErrorReport.report([other, self, "setUV()"], _exception);
 				}
 				
 				return self;
@@ -216,7 +216,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setNormal()"], _exception);
+					ErrorReport.report([other, self, "setNormal()"], _exception);
 				}
 				
 				return self;
@@ -244,7 +244,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				
 				return self;
@@ -281,7 +281,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setActive()"], _exception);
+					ErrorReport.report([other, self, "setActive()"], _exception);
 				}
 				
 				return self;
@@ -301,12 +301,12 @@ function VertexBuffer() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "createPrimitiveRenderData()"],
-											 ("Attempted to create render data of an invalid Vertex" +
-											  "Buffer: " + "{" + string(ID) + "}"));
-					
-					return noone;
+					ErrorReport.report([other, self, "createPrimitiveRenderData()"],
+									   ("Attempted to create render data of an invalid Vertex" +
+										"Buffer: " + "{" + string(ID) + "}"));
 				}
+				
+				return noone;
 			}
 			
 			/// @description		Move the contents of this Vertex Buffer to VRAM for faster access
@@ -323,7 +323,7 @@ function VertexBuffer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "makeReadOnly()"], _exception);
+					ErrorReport.report([other, self, "makeReadOnly()"], _exception);
 				}
 				
 				return self;

@@ -122,9 +122,9 @@ function Room() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "copy()"],
-											 ("Attempted to copy from an invalid Room: " +
-											  "{" + string(_other) + "}"));
+					ErrorReport.report([other, self, "copy()"],
+									   ("Attempted to copy from an invalid Room: " +
+										"{" + string(_other) + "}"));
 				}
 				
 				return self;
@@ -166,14 +166,14 @@ function Room() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "setSize()"],
-												 ("Attempted to set a property of a Room in use: " +
-												  "{" + room_get_name(room) + "}"));
+						ErrorReport.report([other, self, "setSize()"],
+										   ("Attempted to set a property of a Room in use: " +
+											"{" + room_get_name(room) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSize()"], _exception);
+					ErrorReport.report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
@@ -197,11 +197,11 @@ function Room() constructor
 						}
 						else
 						{
-							new ErrorReport().report([other, self, "setPersistent()"],
-													 ("Attempted to disable persistency of a Room " +
-													  "that was visited while persistent and is not " +
-													  "currently active: " +
-													  "{" + room_get_name(ID) + "}"));
+							ErrorReport.report([other, self, "setPersistent()"],
+											   ("Attempted to disable persistency of a Room that" +
+												"was visited while persistent and is not currently " +
+												"active: " +
+												"{" + room_get_name(ID) + "}"));
 						}
 					}
 					else
@@ -213,9 +213,9 @@ function Room() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "setPersistent()"],
-											 ("Attempted to change a property of an invalid Room: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "setPersistent()"],
+									   ("Attempted to change a property of an invalid Room: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -238,18 +238,18 @@ function Room() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createInstance()"],
-												 ("Attempted to add an instance to a Room in use: " +
-												  "{" + room_get_name(room) + "}"));
+						ErrorReport.report([other, self, "createInstance()"],
+										   ("Attempted to add an instance to a Room in use: " +
+											"{" + room_get_name(room) + "}"));
 						
 						return noone;
 					}
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "createInstance()"],
-											 ("Attempted to add an instance to an invalid Room: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "createInstance()"],
+									   ("Attempted to add an instance to an invalid Room: " +
+										"{" + string(ID) + "}"));
 					
 					return noone;
 				}
@@ -272,9 +272,9 @@ function Room() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "setActive()"],
-											 ("Attempted to switch to an invalid Room: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "setActive()"],
+									   ("Attempted to switch to an invalid Room: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;

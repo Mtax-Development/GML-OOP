@@ -301,7 +301,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "hasInstance()"], _exception);
+					ErrorReport.report([other, self, "hasInstance()"], _exception);
 				}
 				
 				return undefined;
@@ -317,7 +317,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getElements()"], _exception);
+					ErrorReport.report([other, self, "getElements()"], _exception);
 				}
 				
 				return [];
@@ -339,7 +339,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setLocation()"], _exception);
+					ErrorReport.report([other, self, "setLocation()"], _exception);
 				}
 				
 				return self;
@@ -359,7 +359,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSpeed()"], _exception);
+					ErrorReport.report([other, self, "setSpeed()"], _exception);
 				}
 				
 				return self;
@@ -379,7 +379,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setVisible()"], _exception);
+					ErrorReport.report([other, self, "setVisible()"], _exception);
 				}
 				
 				return self;
@@ -397,7 +397,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setDepth()"], _exception);
+					ErrorReport.report([other, self, "setDepth()"], _exception);
 				}
 				
 				return self;
@@ -415,7 +415,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setShader()"], _exception);
+					ErrorReport.report([other, self, "setShader()"], _exception);
 				}
 				
 				return self;
@@ -434,7 +434,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setFunctionDrawBegin()"], _exception);
+					ErrorReport.report([other, self, "setFunctionDrawBegin()"], _exception);
 				}
 				
 				return self;
@@ -453,7 +453,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setFunctionDrawEnd()"], _exception);
+					ErrorReport.report([other, self, "setFunctionDrawEnd()"], _exception);
 				}
 				
 				return self;
@@ -475,15 +475,14 @@ function Layer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createBackground()"],
-												 ("Attempted to add an Element to an invalid " +
-												  "Layer: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createBackground()"],
+										   ("Attempted to add an Element to an invalid Layer: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createBackground()"], _exception);
+					ErrorReport.report([other, self, "createBackground()"], _exception);
 				}
 				
 				return noone;
@@ -518,7 +517,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createInstance()"], _exception);
+					ErrorReport.report([other, self, "createInstance()"], _exception);
 				}
 				
 				return noone;
@@ -540,15 +539,14 @@ function Layer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createTilemap()"], 
-												 ("Attempted to add an Element to an invalid " +
-												  "Layer: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createTilemap()"], 
+										   ("Attempted to add an Element to an invalid Layer: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createTilemap()"], _exception);
+					ErrorReport.report([other, self, "createTilemap()"], _exception);
 				}
 				
 				return noone;
@@ -568,15 +566,14 @@ function Layer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createSprite()"],
-												 ("Attempted to add an Element to an invalid " +
-												  "Layer: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createSprite()"],
+										   ("Attempted to add an Element to an invalid Layer: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createSprite()"], _exception);
+					ErrorReport.report([other, self, "createSprite()"], _exception);
 				}
 				
 				return noone;
@@ -595,15 +592,14 @@ function Layer() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createParticleSystem()"],
-												 ("Attempted to add an Element to an invalid " +
-												  "Layer: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createParticleSystem()"],
+										   ("Attempted to add an Element to an invalid Layer: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createParticleSystem()"], _exception);
+					ErrorReport.report([other, self, "createParticleSystem()"], _exception);
 				}
 				
 				return noone;
@@ -645,15 +641,14 @@ function Layer() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "destroyInstance()"],
-														 _exception);
+								ErrorReport.report([other, self, "destroyInstance()"], _exception);
 							}
 						}
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "destroyInstance()"], _exception);
+					ErrorReport.report([other, self, "destroyInstance()"], _exception);
 				}
 				
 				return undefined;
@@ -678,7 +673,7 @@ function Layer() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setInstancePause()"], _exception);
+					ErrorReport.report([other, self, "setInstancePause()"], _exception);
 				}
 				
 				return self;
@@ -870,24 +865,21 @@ function Layer() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, parent, "SpriteElement",
-														  "changeParent()"],
-														 ("Attempted a parent change to an invalid " +
-														  "Layer:" + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Parent: " + "{" + string(parent) + "}" +
-														  "\n" +
-														  "Other: " + "{" + string(_other) + "}"));
+								ErrorReport.report([other, parent, "SpriteElement", "changeParent()"],
+												   ("Attempted a parent change to an invalid " +
+													"Layer:" + "\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Parent: " + "{" + string(parent) + "}" + "\n" +
+													"Other: " + "{" + string(_other) + "}"));
 							}
 						}
 						else
 						{
-							new ErrorReport().report([other, parent, "SpriteElement",
-													  "changeParent()"],
-													 ("Attempted a parent change on invalid " +
-													  "Element or invalid Parent:" + "\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Parent: " + "{" + string(parent) + "}"));
+							ErrorReport.report([other, parent, "SpriteElement", "changeParent()"],
+											   ("Attempted a parent change on invalid Element or" +
+												"Element or invalid Parent:" + "\n" +
+												"Self: " + "{" + string(self) + "}" + "\n" +
+												"Parent: " + "{" + string(parent) + "}"));
 						}
 						
 						return self;
@@ -936,8 +928,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setSprite()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setSprite()"],
+											   _exception);
 						}
 						
 						return self;
@@ -956,8 +948,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setScale()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setScale()"],
+											   _exception);
 						}
 						
 						return self;
@@ -975,8 +967,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setColor()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setColor()"],
+											   _exception);
 						}
 						
 						return self;
@@ -994,8 +986,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setAlpha()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setAlpha()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1013,8 +1005,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setFrame()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setFrame()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1033,8 +1025,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "SpriteElement", "setSpeed()"],
-													 _exception);
+							ErrorReport.report([other, parent, "SpriteElement", "setSpeed()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1261,24 +1253,22 @@ function Layer() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, parent, "BackgroundElement",
-														  "changeParent()"],
-														 ("Attempted a parent change to an invalid " +
-														  "Layer:" + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Parent: " + "{" + string(parent) + "}" +
-														  "\n" +
-														  "Other: " + "{" + string(_other) + "}"));
+								ErrorReport.report([other, parent, "BackgroundElement",
+													"changeParent()"],
+												   ("Attempted a parent change to an invalid " +
+													"Layer:" + "\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Parent: " + "{" + string(parent) + "}" + "\n" +
+													"Other: " + "{" + string(_other) + "}"));
 							}
 						}
 						else
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "changeParent()"],
-													 ("Attempted a parent change on invalid " +
-													  "Element or invalid Parent:" + "\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Parent: " + "{" + string(parent) + "}"));
+							ErrorReport.report([other, parent, "BackgroundElement", "changeParent()"],
+											   ("Attempted a parent change on invalid Element " +
+												"or invalid Parent:" + "\n" +
+												"Self: " + "{" + string(self) + "}" + "\n" +
+												"Parent: " + "{" + string(parent) + "}"));
 						}
 						
 						return self;
@@ -1327,8 +1317,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setSprite()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setSprite()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1347,8 +1337,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setScale()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setScale()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1366,8 +1356,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setColor()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setColor()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1385,8 +1375,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setAlpha()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setAlpha()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1404,8 +1394,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setFrame()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setFrame()"],
+											   _exception);
 						}
 						return self;
 					}
@@ -1422,8 +1412,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setSpeed()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setSpeed()"],
+											   _exception);
 						}
 						
 						
@@ -1442,8 +1432,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setStretch()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setStretch()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1473,8 +1463,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setTiled()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setTiled()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1492,8 +1482,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "BackgroundElement",
-													  "setVisible()"], _exception);
+							ErrorReport.report([other, parent, "BackgroundElement", "setVisible()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1697,8 +1687,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "clear()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "clear()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1728,24 +1718,22 @@ function Layer() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, parent, "TilemapElement",
-														 "changeParent()"],
-														 ("Attempted a parent change to an invalid " +
-														  "Layer:" + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Parent: " + "{" + string(parent) + "}" +
-														  "\n" +
-														  "Other: " + "{" + string(_other) + "}"));
+								ErrorReport.report([other, parent, "TilemapElement",
+												   "changeParent()"],
+												   ("Attempted a parent change to an invalid " +
+													"Layer:" + "\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Parent: " + "{" + string(parent) + "}" + "\n" +
+													"Other: " + "{" + string(_other) + "}"));
 							}
 						}
 						else
 						{
-							new ErrorReport().report([other, parent, "SpriteElement",
-													  "changeParent()"],
-													 ("Attempted a parent change on invalid " +
-													  "Element or invalid Parent:" + "\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Parent: " + "{" + string(parent) + "}"));
+							ErrorReport.report([other, parent, "SpriteElement", "changeParent()"],
+											   ("Attempted a parent change on invalid Element " +
+												"or invalid Parent:" + "\n" +
+												"Self: " + "{" + string(self) + "}" + "\n" +
+												"Parent: " + "{" + string(parent) + "}"));
 						}
 						
 						return self;
@@ -1764,8 +1752,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "getFrame()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "getFrame()"],
+											   _exception);
 						}
 					}
 					
@@ -1780,8 +1768,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "getMask()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "getMask()"],
+											   _exception);
 						}
 						
 						return (-1);
@@ -1799,8 +1787,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													 "getTileInCell()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "getTileInCell()"],
+											   _exception);
 						}
 						
 						return new TileData(-1);
@@ -1818,8 +1806,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													  "getTileAtPoint()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "getTileAtPoint()"],
+											   _exception);
 						}
 						
 						return new TileData(-1);
@@ -1841,8 +1829,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													  "getCellAtPoint()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "getCellAtPoint()"],
+											   _exception);
 						}
 						
 						return undefined;
@@ -1861,8 +1849,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "setMask()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "setMask()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1880,8 +1868,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													  "setTileset()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "setTileset()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1901,8 +1889,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "setSize()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "setSize()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1922,8 +1910,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement", "render()"],
-													 _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "render()"],
+											   _exception);
 						}
 						
 						return self;
@@ -1952,8 +1940,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													 "setTileInCell()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "setTileInCell()"],
+											   _exception);
 						}
 						
 						return false;
@@ -1982,8 +1970,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "TilemapElement",
-													  "setTileAtPoint()"], _exception);
+							ErrorReport.report([other, parent, "TilemapElement", "setTileAtPoint()"],
+											   _exception);
 						}
 						
 						return false;
@@ -2080,14 +2068,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "clear()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"clear()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2107,14 +2094,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "getTilesetIndex()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+													   "getTilesetIndex()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2128,14 +2114,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "isEmpty()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"isEmpty()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2150,14 +2135,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "isMirroredX()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"isMirroredX()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2172,14 +2156,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "isMirroredY()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"isMirroredY()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2194,14 +2177,13 @@ function Layer() constructor
 							{
 								if (!self.isFunctional())
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "isRotated()"],
-															 ("Attempted to set a property of an" +
-															  "invalid Tile:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}" + "\n" +
-															  "Clearing the Tile ID to 0."));
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"isRotated()"],
+													   ("Attempted to set a property of an invalid " +
+														"Tile:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}" +
+														"\n" + "Clearing the Tile ID to 0."));
 									
 									ID = 0;
 								}
@@ -2221,15 +2203,15 @@ function Layer() constructor
 								{
 									if (!self.isFunctional())
 									{
-										new ErrorReport().report([other, "Layer", "TilemapElement",
-																 "TileData", "setTilesetIndex()"],
-																 ("Attempted to set a property of" +
-																  "an invalid Tile:" + "\n" +
-																  "Self: " +
-																  "{" + string(self) + "}" + "\n" +
-																  "Parent: " +
-																  "{" + string(parent) + "}" + "\n" +
-																  "Clearing the Tile ID to 0."));
+										ErrorReport.report([other, "Layer", "TilemapElement",
+															"TileData", "setTilesetIndex()"],
+														   ("Attempted to set a property of an " +
+															"invalid Tile:" + "\n" +
+															"Self: " +
+															"{" + string(self) + "}" + "\n" +
+															"Parent: " +
+															"{" + string(parent) + "}" + "\n" +
+															"Clearing the Tile ID to 0."));
 										
 										ID = 0;
 									}
@@ -2238,9 +2220,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "setTilesetIndex()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"setTilesetIndex()"], _exception);
 								}
 								
 								return self;
@@ -2255,15 +2236,15 @@ function Layer() constructor
 								{
 									if (!self.isFunctional())
 									{
-										new ErrorReport().report([other, "Layer", "TilemapElement",
-																 "TileData", "setMirrorX()"],
-																 ("Attempted to set a property of" +
-																  "an invalid Tile:" + "\n" +
-																  "Self: " +
-																  "{" + string(self) + "}" + "\n" +
-																  "Parent: " +
-																  "{" + string(parent) + "}" + "\n" +
-																  "Clearing the Tile ID to 0."));
+										ErrorReport.report([other, "Layer", "TilemapElement",
+															"TileData", "setMirrorX()"],
+														   ("Attempted to set a property of an " +
+															"invalid Tile:" + "\n" +
+															"Self: " +
+															"{" + string(self) + "}" + "\n" +
+															"Parent: " +
+															"{" + string(parent) + "}" + "\n" +
+															"Clearing the Tile ID to 0."));
 										
 										ID = 0;
 									}
@@ -2272,9 +2253,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "setMirrorX()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"setMirrorX()"], _exception);
 								}
 								
 								return self;
@@ -2289,15 +2269,15 @@ function Layer() constructor
 								{
 									if (!self.isFunctional())
 									{
-										new ErrorReport().report([other, "Layer", "TilemapElement",
-																  "TileData", "setMirrorY()"],
-																 ("Attempted to set a property of" +
-																  "an invalid Tile:" + "\n" +
-																  "Self: " +
-																  "{" + string(self) + "}" + "\n" +
-																  "Parent: " +
-																  "{" + string(parent) + "}" + "\n" +
-																  "Clearing the Tile ID to 0."));
+										ErrorReport.report([other, "Layer", "TilemapElement",
+															"TileData", "setMirrorY()"],
+														   ("Attempted to set a property of an " +
+															"invalid Tile:" + "\n" +
+															"Self: " +
+															"{" + string(self) + "}" + "\n" +
+															"Parent: " +
+															"{" + string(parent) + "}" + "\n" +
+															"Clearing the Tile ID to 0."));
 										
 										ID = 0;
 									}
@@ -2306,9 +2286,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "setMirrorY()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"setMirrorY()"], _exception);
 								}
 								
 								return self;
@@ -2323,15 +2302,15 @@ function Layer() constructor
 								{
 									if (!self.isFunctional())
 									{
-										new ErrorReport().report([other, "Layer", "TilemapElement",
-																  "TileData", "setRotate()"],
-																 ("Attempted to set a property of" +
-																  "an invalid Tile:" + "\n" +
-																  "Self: " +
-																  "{" + string(self) + "}" + "\n" +
-																  "Parent: " +
-																  "{" + string(parent) + "}" + "\n" +
-																  "Clearing the Tile ID to 0."));
+										ErrorReport.report([other, "Layer", "TilemapElement",
+															"TileData", "setRotate()"],
+														   ("Attempted to set a property of an " +
+															"invalid Tile:" + "\n" +
+															"Self: " +
+															"{" + string(self) + "}" + "\n" +
+															"Parent: " +
+															"{" + string(parent) + "}" + "\n" +
+															"Clearing the Tile ID to 0."));
 										
 										ID = 0;
 									}
@@ -2340,9 +2319,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "setRotate()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+													   "setRotate()"], _exception);
 								}
 								
 								return self;
@@ -2362,15 +2340,15 @@ function Layer() constructor
 								{
 									if (!self.isFunctional())
 									{
-										new ErrorReport().report([other, "Layer", "TilemapElement",
-																  "TileData", "render()"],
-																 ("Attempted to set a property of" +
-																  "an invalid Tile:" + "\n" +
-																  "Self: " +
-																  "{" + string(self) + "}" + "\n" +
-																  "Parent: " +
-																  "{" + string(parent) + "}" + "\n" +
-																  "Clearing the Tile ID to 0."));
+										ErrorReport.report([other, "Layer", "TilemapElement",
+															"TileData", "render()"],
+														   ("Attempted to set a property of an " +
+															"invalid Tile:" + "\n" +
+															"Self: " +
+															"{" + string(self) + "}" + "\n" +
+															"Parent: " +
+															"{" + string(parent) + "}" + "\n" +
+															"Clearing the Tile ID to 0."));
 										
 										ID = 0;
 									}
@@ -2379,9 +2357,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "TilemapElement",
-															  "TileData", "render()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "TilemapElement", "TileData",
+														"render()"], _exception);
 								}
 								
 								return self;
@@ -2609,8 +2586,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem", "clear()"],
-													 _exception);
+							ErrorReport.report([other, parent, "ParticleSystem", "clear()"],
+											   _exception);
 						}
 						
 						return self;
@@ -2640,24 +2617,22 @@ function Layer() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, parent, "ParticleSystem",
-														 "changeParent()"],
-														 ("Attempted a parent change to an invalid " +
-														  "Layer:" + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Parent: " + "{" + string(parent) + "}" +
-														  "\n" +
-														  "Other: " + "{" + string(_other) + "}"));
+								ErrorReport.report([other, parent, "ParticleSystem",
+													"changeParent()"],
+												   ("Attempted a parent change to an invalid " +
+													"Layer:" + "\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Parent: " + "{" + string(parent) + "}" + "\n" +
+													"Other: " + "{" + string(_other) + "}"));
 							}
 						}
 						else
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													  "changeParent()"],
-													 ("Attempted a parent change on invalid " +
-													  "Element or invalid Parent:" + "\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Parent: " + "{" + string(parent) + "}"));
+							ErrorReport.report([other, parent, "ParticleSystem", "changeParent()"],
+											   ("Attempted a parent change on invalid " +
+												"Element or invalid Parent:" + "\n" +
+												"Self: " + "{" + string(self) + "}" + "\n" +
+												"Parent: " + "{" + string(parent) + "}"));
 						}
 						
 						return self;
@@ -2677,8 +2652,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													 "getParticleCount()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem",
+												"getParticleCount()"], _exception);
 						}
 						
 						return 0;
@@ -2699,8 +2674,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													  "setLocation()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem", "setLocation()"],
+											   _exception);
 						}
 						
 						return self;
@@ -2718,8 +2693,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													  "setDrawOrder()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem", "setDrawOrder()"],
+											   _exception);
 						}
 						
 						return self;
@@ -2738,8 +2713,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													 "setAutomaticUpdate()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem",
+											   "setAutomaticUpdate()"], _exception);
 						}
 						
 						return self;
@@ -2758,8 +2733,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													 "setAutomaticRender()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem",
+											   "setAutomaticRender()"], _exception);
 						}
 						
 						return self;
@@ -2780,8 +2755,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem",
-													 "createEmitter()"], _exception);
+							ErrorReport.report([other, parent, "ParticleSystem",
+											   "createEmitter()"], _exception);
 						}
 						
 						return noone;
@@ -2796,8 +2771,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem", "render()"],
-													 _exception);
+							ErrorReport.report([other, parent, "ParticleSystem", "render()"],
+											   _exception);
 						}
 						
 						return self;
@@ -2817,8 +2792,8 @@ function Layer() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ParticleSystem", "update()"],
-													 _exception);
+							ErrorReport.report([other, parent, "ParticleSystem", "update()"],
+											   _exception);
 						}
 						
 						return self;
@@ -3011,13 +2986,12 @@ function Layer() constructor
 								}
 								else
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "clear()"],
-															 ("Attempted to clear an Element of an " +
-															  "invalid Particle System:" + "\n" +
-															  "Self: " + "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}"));
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+													   "ParticleEmitter", "clear()"],
+													   ("Attempted to clear an Element of an " +
+														"invalid Particle System:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}"));
 								}
 								
 								return self;
@@ -3045,9 +3019,9 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "setRegion()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+														"ParticleEmitter", "setRegion()"],
+													   _exception);
 								}
 								
 								return self;
@@ -3063,14 +3037,12 @@ function Layer() constructor
 								}
 								else
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "setStreamEnabled()"],
-															 ("Attempted to set properties on " +
-															  "invalid Element or Particle System:" +
-															  "\n" + "Self: " +
-															  "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}"));
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+													   "ParticleEmitter", "setStreamEnabled()"],
+													   ("Attempted to set properties on an " +
+														"invalid Element or Particle System:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}"));
 								}
 								
 								return self;
@@ -3087,14 +3059,12 @@ function Layer() constructor
 								}
 								else
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "setStreamCount()"],
-															 ("Attempted to set properties on " +
-															  "invalid Element or Particle System:" +
-															  "\n" + "Self: " +
-															  "{" + string(self) + "}" +
-															  "\n" + "Parent: " +
-															  "{" + string(parent) + "}"));
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+													   "ParticleEmitter", "setStreamCount()"],
+													   ("Attempted to set properties on an " +
+														"invalid Element or Particle System:" + "\n" +
+														"Self: " + "{" + string(self) + "}" + "\n" +
+														"Parent: " + "{" + string(parent) + "}"));
 								}
 								
 								return self;
@@ -3113,9 +3083,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "burst()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+													   "ParticleEmitter", "burst()"], _exception);
 								}
 								
 								return self;
@@ -3133,9 +3102,8 @@ function Layer() constructor
 								}
 								catch (_exception)
 								{
-									new ErrorReport().report([other, "Layer", "ParticleSystem",
-															 "ParticleEmitter", "stream()"],
-															 _exception);
+									ErrorReport.report([other, "Layer", "ParticleSystem",
+													   "ParticleEmitter", "stream()"], _exception);
 								}
 								
 								return self;

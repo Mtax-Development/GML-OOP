@@ -110,7 +110,7 @@ function Camera() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "applySettings()"], _exception);
+					ErrorReport.report([other, self, "applySettings()"], _exception);
 				}
 				
 				return self;
@@ -137,16 +137,16 @@ function Camera() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createOrtographicProjectionMatrix()"],
-												 ("Attempted to add a projection matrix to an " +
-												  "invalid Camera: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createOrtographicProjectionMatrix()"],
+										   ("Attempted to add a projection matrix to an invalid " +
+											"Camera: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createOrtographicProjectionMatrix()"],
-											 _exception);
+					ErrorReport.report([other, self, "createOrtographicProjectionMatrix()"],
+									   _exception);
 				}
 				
 				return noone;
@@ -173,16 +173,16 @@ function Camera() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createPerspectiveProjectionMatrix()"],
-												 ("Attempted to add a projection matrix to an " +
-												  "invalid Camera: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createPerspectiveProjectionMatrix()"],
+										   ("Attempted to add a projection matrix to an invalid " +
+											"Camera: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createPerspectiveProjectionMatrix()"],
-											 _exception);
+					ErrorReport.report([other, self, "createPerspectiveProjectionMatrix()"],
+									   _exception);
 				}
 				
 				return noone;
@@ -215,18 +215,18 @@ function Camera() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self,
-												  "createPerspectiveFieldOfViewProjectionMatrix()"],
-												 ("Attempted to add a projection matrix to an " +
-												  "invalid Camera: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self,
+											"createPerspectiveFieldOfViewProjectionMatrix()"],
+											("Attempted to add a projection matrix to an invalid " +
+											 "Camera: " +
+											 "{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self,
-											  "createPerspectiveFieldOfViewProjectionMatrix()"],
-											 _exception);
+					ErrorReport.report([other, self,
+										"createPerspectiveFieldOfViewProjectionMatrix()"],
+										_exception);
 				}
 				
 				return noone;
@@ -251,15 +251,14 @@ function Camera() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "createViewMatrix()"],
-												 ("Attempted to add a view matrix to an invalid " +
-												  "Camera: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "createViewMatrix()"],
+										   ("Attempted to add a view matrix to an invalid Camera: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "createViewMatrix()"], _exception);
+					ErrorReport.report([other, self, "createViewMatrix()"], _exception);
 				}
 				
 				return noone;
@@ -404,8 +403,8 @@ function Camera() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "OrtographicProjectionMatrix",
-													  "build()"], _exception);
+							ErrorReport.report([other, parent, "OrtographicProjectionMatrix",
+												"build()"], _exception);
 						}
 						
 						return self;
@@ -583,8 +582,8 @@ function Camera() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "PerspectiveProjectionMatrix",
-													  "build()"], _exception);
+							ErrorReport.report([other, parent, "PerspectiveProjectionMatrix",
+											   "build()"], _exception);
 						}
 						
 						return self;
@@ -772,9 +771,9 @@ function Camera() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent,
-													  "PerspectiveFieldOfViewProjectionMatrix",
-													  "build()"], _exception);
+							ErrorReport.report([other, parent,
+												"PerspectiveFieldOfViewProjectionMatrix", "build()"],
+											   _exception);
 						}
 						
 						return self;
@@ -959,8 +958,7 @@ function Camera() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, parent, "ViewMatrix", "build()"],
-													 _exception);
+							ErrorReport.report([other, parent, "ViewMatrix", "build()"], _exception);
 						}
 						
 						return self;

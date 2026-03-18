@@ -105,12 +105,12 @@ function Surface() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "create()"],
-												 ("Attempted to create a Surface of invalid size: " +
-												  "\n" + "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Size: " + "{" + string(size) + "}" + "\n" +
-												  "Replacing the size property with a single pixel " +
-												  "size and creating the Surface with it."));
+						ErrorReport.report([other, self, "create()"],
+										   ("Attempted to create a Surface of invalid size: " + "\n" +
+											"Self: " + "{" + string(self) + "}" + "\n" +
+											"Size: " + "{" + string(size) + "}" + "\n" +
+											"Replacing the size property with a single pixel size" +
+											"and creating the Surface with it."));
 						
 						ID = surface_create(1, 1);
 					}
@@ -171,7 +171,7 @@ function Surface() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "clear()"], _exception);
+					ErrorReport.report([other, self, "clear()"], _exception);
 				}
 				
 				return self;
@@ -194,13 +194,12 @@ function Surface() constructor
 						{
 							if (!self.isFunctional())
 							{
-								new ErrorReport().report([other, self, "copy()"],
-														 ("Attempted to copy part of a Surface to " +
-														  "an invalid Surface: " + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Other: " + "{" + string(_other) + "}" +
-														  "\n" + "Writing it to a recreated " +
-														  "Surface."));
+								ErrorReport.report([other, self, "copy()"],
+												   ("Attempted to copy part of a Surface to an" +
+													"invalid Surface: " + "\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Other: " + "{" + string(_other) + "}" + "\n" +
+													"Writing it to a recreated Surface."));
 								
 								self.create();
 							}
@@ -218,15 +217,15 @@ function Surface() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "copy()"],
-												 ("Attempted to copy data from an invalid Surface: " +
-												  "\n" + "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Other: " + "{" + string(_other) + "}"));
+						ErrorReport.report([other, self, "copy()"],
+										   ("Attempted to copy data from an invalid Surface: " +
+											"\n" + "Self: " + "{" + string(self) + "}" + "\n" +
+											"Other: " + "{" + string(_other) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "copy()"], _exception);
+					ErrorReport.report([other, self, "copy()"], _exception);
 				}
 				
 				return self;
@@ -257,7 +256,7 @@ function Surface() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPixel()"], _exception);
+					ErrorReport.report([other, self, "getPixel()"], _exception);
 				}
 			}
 			
@@ -267,10 +266,10 @@ function Surface() constructor
 			{
 				if (!self.isFunctional())
 				{
-					new ErrorReport().report([other, self, "getTexture()"],
-											 ("Attempted to get texture of an invalid Surface: " +
-											  "{" + string(ID) + "}" + "\n" +
-											  "Recreating the Surface and providing its texture."));
+					ErrorReport.report([other, self, "getTexture()"],
+									   ("Attempted to get texture of an invalid Surface: " +
+										"{" + string(ID) + "}" + "\n" +
+										"Recreating the Surface and providing its texture."));
 					
 					self.create();
 				}
@@ -284,10 +283,10 @@ function Surface() constructor
 			{
 				if (!self.isFunctional())
 				{
-					new ErrorReport().report([other, self, "getTexel()"],
-											 ("Attempted to get texture of an invalid Surface: " +
-											  "{" + string(ID) + "}" + "\n" +
-											  "Recreating the Surface and providing its texture."));
+					ErrorReport.report([other, self, "getTexel()"],
+									   ("Attempted to get texture of an invalid Surface: " +
+										"{" + string(ID) + "}" + "\n" +
+										"Recreating the Surface and providing its texture."));
 					
 					self.create();
 				}
@@ -329,11 +328,10 @@ function Surface() constructor
 					
 					if (!self.isFunctional())
 					{
-						new ErrorReport().report([other, self, "setSize()"],
-												 ("Attempted to change size of an invalid " +
-												  "Surface: " +
-												  "{" + string(ID) + "}" + "\n" +
-												  "Recreating the Surface with the target size."));
+						ErrorReport.report([other, self, "setSize()"],
+										   ("Attempted to change size of an invalid Surface: " +
+											"{" + string(ID) + "}" + "\n" +
+											"Recreating the Surface with target size."));
 						
 						self.create();
 					}
@@ -344,10 +342,10 @@ function Surface() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "setSize()"],
-											 ("Attempted to set invalid size of a Surface: " + "\n" +
-											  "Surface: " + "{" + string(self) + "}" + "\n" +
-											  "Size: " + "{" + string(_size) + "}"));
+					ErrorReport.report([other, self, "setSize()"],
+									   ("Attempted to set invalid size of a Surface: " + "\n" +
+										"Surface: " + "{" + string(self) + "}" + "\n" +
+										"Size: " + "{" + string(_size) + "}"));
 				}
 				
 				return self;
@@ -403,11 +401,10 @@ function Surface() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, self, "render()"],
-														 ("Attempted to render to an invalid " +
-														  "Surface: " + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Other: " + "{" + string(_target) + "}"));
+								ErrorReport.report([other, self, "render()"],
+												   ("Attempted to render to an invalid Surface: " +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Other: " + "{" + string(_target) + "}"));
 							}
 						}
 						
@@ -515,14 +512,14 @@ function Surface() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "render()"],
-												 ("Attempted to render an invalid Surface: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "render()"],
+										   ("Attempted to render an invalid Surface: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -582,14 +579,14 @@ function Surface() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "renderTiled()"],
-												 ("Attempted to render an invalid Surface: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "renderTiled()"],
+										   ("Attempted to render an invalid Surface: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "renderTiled()"], _exception);
+					ErrorReport.report([other, self, "renderTiled()"], _exception);
 				}
 				
 				return self;
@@ -604,11 +601,10 @@ function Surface() constructor
 					case true:
 						if (!self.isFunctional())
 						{
-							new ErrorReport().report([other, self, "setActive()"],
-													 ("Attempted to set an invalid Surface as the " +
-													  "render target: " +  "{" + string(ID) + "}" +
-													  "\n" + "Recreating the Surface and setting " +
-													  "it as target."));
+							ErrorReport.report([other, self, "setActive()"],
+											   ("Attempted to set an invalid Surface as the render " +
+												"target: " +  "{" + string(ID) + "}" + "\n" +
+												"Recreating the Surface and setting it as target."));
 							
 							self.create();
 						}
@@ -678,9 +674,9 @@ function Surface() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "toFile()"],
-												 ("Attempted to convert an invalid Surface: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "toFile()"],
+										   ("Attempted to convert an invalid Surface: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				return self;
@@ -706,7 +702,7 @@ function Surface() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "fromBuffer()"], _exception);
+					ErrorReport.report([other, self, "fromBuffer()"], _exception);
 				}
 				
 				return self;

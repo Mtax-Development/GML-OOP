@@ -170,10 +170,9 @@ function SurfaceRenderer() constructor
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "render()"],
-											 ("Attempted to render through an invalid Surface " +
-											  "renderer: " +
-											  "{" + string(self) + "}"));
+					ErrorReport.report([other, self, "render()"],
+									   ("Attempted to render through an invalid Surface renderer: " +
+										"{" + string(self) + "}"));
 				}
 				
 				surface = _surface_original;
@@ -450,7 +449,7 @@ function SurfaceRenderer() constructor
 						_vertexBuffer.destroy();
 					}
 					
-					new ErrorReport().report([other, self, "toVertexBuffer()"], _exception);
+					ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 				}
 				
 				surface = _surface_original;

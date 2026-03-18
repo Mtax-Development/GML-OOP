@@ -62,7 +62,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setParser()"], _exception);
+					ErrorReport.report([other, self, "setParser()"], _exception);
 				}
 				
 				return self;
@@ -199,7 +199,7 @@ function ArrayParser() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "copy()"], _exception);
+								ErrorReport.report([other, self, "copy()"], _exception);
 							}
 							
 							_source_position_current += _count_boolsign;
@@ -213,7 +213,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "copy()"], _exception);
+					ErrorReport.report([other, self, "copy()"], _exception);
 				}
 				
 				return self;
@@ -272,8 +272,7 @@ function ArrayParser() constructor
 									}
 									catch (_exception)
 									{
-										new ErrorReport().report([other, self, "merge()"],
-																 _exception);
+										ErrorReport.report([other, self, "merge()"], _exception);
 									}
 								break;
 								default:
@@ -291,7 +290,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "merge()"], _exception);
+					ErrorReport.report([other, self, "merge()"], _exception);
 				}
 				
 				return self;
@@ -329,7 +328,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "contains()"], _exception);
+					ErrorReport.report([other, self, "contains()"], _exception);
 				}
 				
 				return false;
@@ -373,7 +372,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "containsAll()"], _exception);
+					ErrorReport.report([other, self, "containsAll()"], _exception);
 				}
 				
 				return false;
@@ -409,8 +408,8 @@ function ArrayParser() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "containsCondition()",
-														  "function()"], _exception);
+								ErrorReport.report([other, self, "containsCondition()", "function()"],
+												   _exception);
 							}
 							
 							
@@ -433,8 +432,8 @@ function ArrayParser() constructor
 							}
 							catch (_exception)
 							{
-								new ErrorReport().report([other, self, "containsCondition()",
-														  "function()"], _exception);
+								ErrorReport.report([other, self, "containsCondition()", "function()"],
+												   _exception);
 							}
 							
 							++_i;
@@ -445,7 +444,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "containsCondition()"], _exception);
+					ErrorReport.report([other, self, "containsCondition()"], _exception);
 				}
 			}
 			
@@ -461,7 +460,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "equals()"], _exception);
+					ErrorReport.report([other, self, "equals()"], _exception);
 				}
 				
 				return (ID == _other);
@@ -480,18 +479,17 @@ function ArrayParser() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "getValue()"],
-												 ("Attempted to read an array value outside its" +
-												  "bounds:" + "\n" +
-												  "Self: " + "{" + string(ID) + "}" + "\n" +
-												  "Position: " + "{" + string(_position) + "}"));
+						ErrorReport.report([other, self, "getValue()"],
+										   ("Attempted to read an array value outside its bounds: " +
+											"\n" + "Self: " + "{" + string(ID) + "}" + "\n" +
+											"Position: " + "{" + string(_position) + "}"));
 						
 						return undefined;
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getValue()"], _exception);
+					ErrorReport.report([other, self, "getValue()"], _exception);
 				}
 				
 				return undefined;
@@ -566,7 +564,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getUniqueValues()"], _exception);
+					ErrorReport.report([other, self, "getUniqueValues()"], _exception);
 				}
 				finally
 				{
@@ -659,7 +657,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSharedValues()"], _exception);
+					ErrorReport.report([other, self, "getSharedValues()"], _exception);
 				}
 				finally
 				{
@@ -681,7 +679,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirst()"], _exception);
+					ErrorReport.report([other, self, "getFirst()"], _exception);
 				}
 				
 				return undefined;
@@ -700,7 +698,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLast()"], _exception);
+					ErrorReport.report([other, self, "getLast()"], _exception);
 				}
 				
 				return undefined;
@@ -729,7 +727,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getFirstPosition()"], _exception);
+					ErrorReport.report([other, self, "getFirstPosition()"], _exception);
 				}
 				
 				return (-1);
@@ -759,7 +757,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getLastPosition()"], _exception);
+					ErrorReport.report([other, self, "getLastPosition()"], _exception);
 				}
 				
 				return (-1);
@@ -788,7 +786,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPositions()"], _exception);
+					ErrorReport.report([other, self, "getPositions()"], _exception);
 				}
 				
 				return [];
@@ -821,8 +819,8 @@ function ArrayParser() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "getPositionsCondition()"],
-													 _exception);
+							ErrorReport.report([other, self, "getPositionsCondition()"],
+											   _exception);
 						}
 						
 						++_i;
@@ -832,7 +830,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getPositionsCondition()"], _exception);
+					ErrorReport.report([other, self, "getPositionsCondition()"], _exception);
 				}
 				
 				return [];
@@ -892,7 +890,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getReduction()"], _exception);
+					ErrorReport.report([other, self, "getReduction()"], _exception);
 				}
 				
 				return undefined;
@@ -924,7 +922,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getColumn()"], _exception);
+					ErrorReport.report([other, self, "getColumn()"], _exception);
 				}
 				
 				return [];
@@ -940,7 +938,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getSize()"], _exception);
+					ErrorReport.report([other, self, "getSize()"], _exception);
 				}
 				
 				return undefined;
@@ -956,7 +954,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "isEmpty()"], _exception);
+					ErrorReport.report([other, self, "isEmpty()"], _exception);
 				}
 				
 				return undefined;
@@ -992,7 +990,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSize()"], _exception);
+					ErrorReport.report([other, self, "setSize()"], _exception);
 				}
 				
 				return self;
@@ -1029,8 +1027,7 @@ function ArrayParser() constructor
 						}
 						catch (_exception)
 						{
-							new ErrorReport().report([other, self, "forEach()", "function()"],
-													 _exception);
+							ErrorReport.report([other, self, "forEach()", "function()"], _exception);
 						}
 						
 						++_i;
@@ -1040,7 +1037,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "forEach()"], _exception);
+					ErrorReport.report([other, self, "forEach()"], _exception);
 				}
 				
 				return [];
@@ -1062,7 +1059,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "add()"], _exception);
+					ErrorReport.report([other, self, "add()"], _exception);
 				}
 				
 				return self;
@@ -1080,7 +1077,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -1106,7 +1103,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "insert()"], _exception);
+					ErrorReport.report([other, self, "insert()"], _exception);
 				}
 				
 				return self;
@@ -1157,7 +1154,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removePosition()"], _exception);
+					ErrorReport.report([other, self, "removePosition()"], _exception);
 				}
 				
 				return undefined;
@@ -1224,7 +1221,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "removeValue()"], _exception);
+					ErrorReport.report([other, self, "removeValue()"], _exception);
 				}
 				
 				return _result;
@@ -1249,7 +1246,7 @@ function ArrayParser() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "sort()"], _exception);
+					ErrorReport.report([other, self, "sort()"], _exception);
 				}
 				
 				return self;

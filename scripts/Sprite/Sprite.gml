@@ -277,7 +277,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "replace()"], _exception);
+					ErrorReport.report([other, self, "replace()"], _exception);
 				}
 				
 				return self;
@@ -306,11 +306,10 @@ function Sprite() constructor
 						}
 						else
 						{
-							new ErrorReport().report([other, self, "merge()"],
-													 ("Attempted to merge a Sprite with an invalid " +
-													  "one:" + "\n" +
-													  "Self: " + "{" + string(self) + "}" + "\n" +
-													  "Other: " + "{" + string(_other) + "}"));
+							ErrorReport.report([other, self, "merge()"],
+											   ("Attempted to merge a Sprite with an invalid one:" +
+												"\n " + "Self: " + "{" + string(self) + "}" + "\n" +
+												"Other: " + "{" + string(_other) + "}"));
 						}
 					}
 					else if ((is_handle(_other)) and (sprite_exists(_other)))
@@ -321,18 +320,17 @@ function Sprite() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "merge()"],
-												 ("Attempted to merge a Sprite with an invalid " +
-												  "one:" + "\n" +
-												  "Self: " + "{" + string(self) + "}" + "\n" +
-												  "Other: " + "{" + string(_other) + "}"));
+						ErrorReport.report([other, self, "merge()"],
+										   ("Attempted to merge a Sprite with an invalid one: " +
+											"\n" + "Self: " + "{" + string(self) + "}" + "\n" +
+											"Other: " + "{" + string(_other) + "}"));
 					}
 				}
 				else
 				{
-					new ErrorReport().report([other, self, "merge()"],
-											 ("Attempted to merge an invalid Sprite: " +
-											  "{" + string(ID) + "}"));
+					ErrorReport.report([other, self, "merge()"],
+									   ("Attempted to merge an invalid Sprite: " +
+										"{" + string(ID) + "}"));
 				}
 				
 				return self;
@@ -353,7 +351,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getNineslice()"], _exception);
+					ErrorReport.report([other, self, "getNineslice()"], _exception);
 				}
 				
 				return noone;
@@ -403,7 +401,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTexture()"], _exception);
+					ErrorReport.report([other, self, "getTexture()"], _exception);
 				}
 				
 				return _result;
@@ -476,7 +474,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getUV()"], _exception);
+					ErrorReport.report([other, self, "getUV()"], _exception);
 				}
 				
 				return _result;
@@ -495,7 +493,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTexel()"], _exception);
+					ErrorReport.report([other, self, "getTexel()"], _exception);
 				}
 			}
 			
@@ -539,7 +537,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "getTextureTrim()"], _exception);
+					ErrorReport.report([other, self, "getTextureTrim()"], _exception);
 				}
 				
 				return undefined;
@@ -559,7 +557,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setNineslice()"], _exception);
+					ErrorReport.report([other, self, "setNineslice()"], _exception);
 				}
 				
 				return self;
@@ -580,7 +578,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setOrigin()"], _exception);
+					ErrorReport.report([other, self, "setOrigin()"], _exception);
 				}
 			}
 			
@@ -598,7 +596,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setSpeed()"], _exception);
+					ErrorReport.report([other, self, "setSpeed()"], _exception);
 				}
 				
 				return self;
@@ -666,7 +664,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "setCollisionMask()"], _exception);
+					ErrorReport.report([other, self, "setCollisionMask()"], _exception);
 				}
 				
 				return self;
@@ -721,11 +719,11 @@ function Sprite() constructor
 							}
 							else
 							{
-								new ErrorReport().report([other, self, "render()"],
-														 ("Attempted to render to an invalid " +
-														  "Surface: " + "\n" +
-														  "Self: " + "{" + string(self) + "}" + "\n" +
-														  "Other: " + "{" + string(_target) + "}"));
+								ErrorReport.report([other, self, "render()"],
+												   ("Attempted to render to an invalid Surface: " +
+													"\n" +
+													"Self: " + "{" + string(self) + "}" + "\n" +
+													"Other: " + "{" + string(_target) + "}"));
 							}
 						}
 						
@@ -842,14 +840,14 @@ function Sprite() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "render()"],
-												 ("Attempted to render an invalid Sprite: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "render()"],
+										   ("Attempted to render an invalid Sprite: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "render()"], _exception);
+					ErrorReport.report([other, self, "render()"], _exception);
 				}
 				finally
 				{
@@ -924,14 +922,14 @@ function Sprite() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "renderTiled()"],
-												 ("Attempted to render an invalid Sprite: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "renderTiled()"],
+										   ("Attempted to render an invalid Sprite: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "renderTiled()"], _exception);
+					ErrorReport.report([other, self, "renderTiled()"], _exception);
 				}
 				
 				return self;
@@ -960,14 +958,14 @@ function Sprite() constructor
 					}
 					else
 					{
-						new ErrorReport().report([other, self, "renderPerspective()"],
-												 ("Attempted to render an invalid Sprite: " +
-												  "{" + string(ID) + "}"));
+						ErrorReport.report([other, self, "renderPerspective()"],
+										   ("Attempted to render an invalid Sprite: " +
+											"{" + string(ID) + "}"));
 					}
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "renderPerspective()"], _exception);
+					ErrorReport.report([other, self, "renderPerspective()"], _exception);
 				}
 				
 				return self;
@@ -988,7 +986,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "load()"], _exception);
+					ErrorReport.report([other, self, "load()"], _exception);
 				}
 				
 				return (-1);
@@ -1013,7 +1011,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "generateAlphaMap()"], _exception);
+					ErrorReport.report([other, self, "generateAlphaMap()"], _exception);
 				}
 				
 				return noone;
@@ -1115,7 +1113,7 @@ function Sprite() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "toFile()"], _exception);
+					ErrorReport.report([other, self, "toFile()"], _exception);
 				}
 				
 				return self;

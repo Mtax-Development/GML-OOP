@@ -69,7 +69,7 @@ function Angle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "equals()"], _exception);
+					ErrorReport.report([other, self, "equals()"], _exception);
 				}
 				
 				return (value == _other);
@@ -92,7 +92,7 @@ function Angle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "difference()"], _exception);
+					ErrorReport.report([other, self, "difference()"], _exception);
 				}
 				
 				return undefined;
@@ -112,7 +112,7 @@ function Angle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "set()"], _exception);
+					ErrorReport.report([other, self, "set()"], _exception);
 				}
 				
 				return self;
@@ -129,7 +129,7 @@ function Angle() constructor
 				}
 				catch (_exception)
 				{
-					new ErrorReport().report([other, self, "modify()"], _exception);
+					ErrorReport.report([other, self, "modify()"], _exception);
 				}
 				
 				return self;
