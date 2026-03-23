@@ -463,8 +463,7 @@ function ErrorReport() constructor
 					{
 						return ("[" + (((is_instanceof(time, DateTime)) and (time.isFunctional()))
 									   ? time.toStringTime()
-									   : ((is_string(time)) ? time : "Unknown time")) +
-								"]");
+									   : ((is_string(time)) ? time : "Unknown time")) + "]");
 					}
 					
 				#endregion
