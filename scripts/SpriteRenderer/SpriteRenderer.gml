@@ -591,6 +591,7 @@ function SpriteRenderer() constructor
 			/// @argument			part? {Vector4}
 			/// @argument			origin? {Vector2}
 			/// @returns			{any[+]}
+			//  @see				getVertexLocation(), getUV()
 			/// @description		Return an array containg rendering data for each vertex rendered
 			///						by this constructor, consisting of its primitive type, location,
 			///						color and alpha value, based on the data of this constructor or

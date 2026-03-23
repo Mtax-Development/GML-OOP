@@ -490,6 +490,7 @@ function Ellipse() constructor
 			/// @argument			precision? {int:divisibleBy4}
 			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
+			//  @see				getVertexLocation()
 			/// @description		Return an array containg rendering data for each vertex resulting
 			///						in this Shape, consisting of its primitive type, location, color
 			///						and alpha value, based on the data of this constructor or its

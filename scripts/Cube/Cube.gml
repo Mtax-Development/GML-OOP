@@ -497,8 +497,7 @@ function Cube() constructor
 			/// @argument			angle? {EulerAngle}
 			/// @argument			sprite? {Sprite}
 			/// @returns			{any[+]} | On error: {undefined}
-			//  @see				getVertexLocation()
-			//  @see				getUV()
+			//  @see				getVertexLocation(), getUV()
 			/// @description		Return an array containg rendering data for each vertex resulting
 			///						in this Shape, consisting of its primitive type, location and UV
 			///						of each vertex nested in arrays for each side, using its current

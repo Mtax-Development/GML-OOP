@@ -296,6 +296,7 @@ function Plane() constructor
 			/// @argument			angle? {EulerAngle}
 			/// @argument			sprite? {Sprite}
 			/// @returns			{any[+]} | On error: {undefined}
+			//  @see				getVertexLocation(), getUV()
 			/// @description		Return an array containg rendering data for each vertex resulting
 			///						in this Shape, consisting of its primitive type, location and UV
 			///						of each vertex, using its current data or temporarily replaced
