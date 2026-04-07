@@ -370,16 +370,9 @@ function VertexBuffer() constructor
 		//						- New element
 		function PrimitiveRenderData() constructor
 		{
-			#region [[Static Variables]]
+			#region [[Static Properties]]
 				
 				static emptyEventIndex = method_get_index(function() {});
-				static passthroughFormat = new VertexFormat(vertex_format_add_position,
-															vertex_format_add_color,
-															vertex_format_add_texcoord);
-				static passthroughFormat3D = new VertexFormat(vertex_format_add_position_3d,
-															  vertex_format_add_normal,
-															  vertex_format_add_texcoord,
-															  vertex_format_add_color);
 				
 			#endregion
 			#region [[Methods]]
@@ -393,8 +386,8 @@ function VertexBuffer() constructor
 						primitiveType = argument[0];
 						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
 										? ((argument[1] == vertex_position_3d)
-										   ? self.passthroughFormat3D : argument[1])
-										: self.passthroughFormat);
+										   ? VertexFormat.passthrough3D : argument[1])
+										: VertexFormat.passthrough);
 						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																						 : (-1));
 						
@@ -468,20 +461,6 @@ function VertexBuffer() constructor
 							var _mark_separator = ((_multiline) ? "\n" : ", ");
 							var _string_texture = ((texture == (-1)) ? "None" : string(texture));
 							
-							var _string_vertexFormat;
-							switch (vertexFormat)
-							{
-								case passthroughFormat:
-									_string_vertexFormat = "Passthrough";
-								break;
-								case passthroughFormat3D:
-									_string_vertexFormat = "Passthrough 3D";
-								break;
-								default:
-									_string_vertexFormat = string(vertexFormat);
-								break;
-							}
-							
 							var _string_primitiveType;
 							switch (primitiveType)
 							{
@@ -491,12 +470,12 @@ function VertexBuffer() constructor
 								case pr_trianglelist: _string_primitiveType = "Triangle List"; break;
 								case pr_trianglestrip: _string_primitiveType = "Triangle Strip"; break;
 								case pr_trianglefan: _string_primitiveType = "Triangle Fan"; break;
-								default: _string_primitiveType = "Unknown Type"; break;
+								default: _string_primitiveType = string(primitiveType); break;
 							}
 							
 							var _string = ("Primitive Type: " + _string_primitiveType +
 																_mark_separator +
-										   "Vertex Format: " + _string_vertexFormat + _mark_separator +
+										   "Vertex Format: " + string(vertexFormat) + _mark_separator +
 										   "Texture: " + _string_texture);
 							
 							return ((_multiline) ? _string : (_constructorName + "(" + _string + ")"));

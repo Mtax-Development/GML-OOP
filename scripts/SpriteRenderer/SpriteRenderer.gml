@@ -879,7 +879,6 @@ function SpriteRenderer() constructor
 					
 					_renderData = _vertexBuffer.createPrimitiveRenderData(_primitive[0], undefined,
 																		  _texture);
-					_vertexBuffer.setActive(_renderData.passthroughFormat);
 					
 					if (!_vertexBuffer_wasActive)
 					{

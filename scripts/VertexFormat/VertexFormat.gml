@@ -114,25 +114,37 @@ function VertexFormat() constructor
 				{
 					var _mark_separator = ((_multiline) ? "\n" : ", ");
 					var _string = "";
-					var _i = 0;
-					repeat (array_length(source))
+					
+					if (self == passthrough)
 					{
-						if (_i != 0)
+						_string = "Passthrough";
+					}
+					else if (self == passthrough3D)
+					{
+						_string = "Passthrough 3D";
+					}
+					else
+					{
+						var _i = 0;
+						repeat (array_length(source))
 						{
-							_string += _mark_separator;
+							if (_i != 0)
+							{
+								_string += _mark_separator;
+							}
+							
+							switch (source[_i])
+							{
+								case vertex_format_add_color: _string += "Color"; break;
+								case vertex_format_add_position:  _string += "Location"; break;
+								case vertex_format_add_position_3d:  _string += "3D Location"; break;
+								case vertex_format_add_texcoord: _string += "UV"; break;
+								case vertex_format_add_normal: _string += "Normal"; break;
+								case vertex_format_add_custom: _string += "Custom"; break;
+							}
+							
+							++_i;
 						}
-						
-						switch (source[_i])
-						{
-							case vertex_format_add_color: _string += "Color"; break;
-							case vertex_format_add_position:  _string += "Location"; break;
-							case vertex_format_add_position_3d:  _string += "3D Location"; break;
-							case vertex_format_add_texcoord: _string += "UV"; break;
-							case vertex_format_add_normal: _string += "Normal"; break;
-							case vertex_format_add_custom: _string += "Custom"; break;
-						}
-						
-						++_i;
 					}
 					
 					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
@@ -174,4 +186,17 @@ function VertexFormat() constructor
 		script_execute_ext(self.construct, _argument);
 		
 	#endregion
+	#region [Static Constructions]
+		
+		static passthrough = new VertexFormat(vertex_format_add_position,
+											  vertex_format_add_color,
+											  vertex_format_add_texcoord);
+		static passthrough3D = new VertexFormat(vertex_format_add_position_3d,
+												vertex_format_add_normal,
+												vertex_format_add_texcoord,
+												vertex_format_add_color);
+		
+	#endregion
 }
+
+new VertexFormat();
