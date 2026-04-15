@@ -535,6 +535,8 @@ function Plane() constructor
 											 _sprite = sprite, _color = color, _alpha = alpha,
 											 _vertexBuffer)
 			{
+				var _vertexBuffer_created = false;
+				
 				try
 				{
 					if (is_instanceof(_sprite, SpriteRenderer))
@@ -543,7 +545,6 @@ function Plane() constructor
 						_alpha = _sprite.alpha;
 					}
 					
-					var _vertexBuffer_created = false;
 					var _vertexBuffer_wasActive = false;
 					
 					if (is_instanceof(_vertexBuffer, VertexBuffer))
