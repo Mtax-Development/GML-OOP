@@ -234,7 +234,7 @@ function Plane() constructor
 						var _uv = texture_get_uvs(_texture);
 						
 						return [_texture, [[_uv[0], _uv[3]], [_uv[0], _uv[1]], [_uv[2], _uv[3]],
-										   [_uv[2], _uv[1]]]];
+										   [_uv[2], _uv[3]], [_uv[0], _uv[1]], [_uv[2], _uv[1]]]];
 					}
 				}
 				catch (_exception)
@@ -242,9 +242,7 @@ function Plane() constructor
 					ErrorReport.report([other, self, "getUV()"], _exception);
 				}
 				
-				var _vertex_count = 4;
-				
-				return [(-1), array_create(_vertex_count, [0, 0])];
+				return [(-1), [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]];
 			}
 			
 			/// @argument			location {real[]}
@@ -288,7 +286,7 @@ function Plane() constructor
 			///						used in calculating position of each vertex of this Shape.
 			static getVertexSign = function()
 			{
-				return [[1, (-1)], [(-1), (-1)], [1, 1], [(-1), 1]];
+				return [[1, (-1)], [(-1), (-1)], [1, 1], [1, 1], [(-1), (-1)], [(-1), 1]];
 			}
 			
 			/// @argument			location? {Vector3}
@@ -312,7 +310,7 @@ function Plane() constructor
 					var _vertex_location = self.getVertexLocation(_location, _scale, _angle, _sprite);
 					var _uv = self.getUV(_sprite);
 					
-					return event.getPrimitiveRenderData.execute(undefined, [[pr_trianglestrip,
+					return event.getPrimitiveRenderData.execute(undefined, [[pr_trianglelist,
 																			 _vertex_location, _uv]]);
 				}
 				catch (_exception)
