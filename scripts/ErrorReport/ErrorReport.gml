@@ -1,13 +1,13 @@
 //  @function				ErrorReport()
-/// @description			Contains static variables and methods of the error reporting system.
+/// @description			Contains static properties and methods of the error reporting system.
 //							
 //							Construction types:
 //							- New constructor
 function ErrorReport() constructor
 //  @feather	ignore all
 {
-	#region [Static variables]
-		#region [[Configurable variables - General]]
+	#region [Static Properties]
+		#region [[Configurable Properties - General]]
 			
 			/// @type			{function}?
 			/// @description	The function called upon a report, called with {string} description
@@ -34,7 +34,7 @@ function ErrorReport() constructor
 			static allowDuplicateReporting = false;
 			
 		#endregion
-		#region [[Configurable variables - Specific]]
+		#region [[Configurable Properties - Specific]]
 			
 			/// @type			{string[]}?
 			/// @example		["ConstructorName.methodName()"]
