@@ -46,7 +46,7 @@ function Sprite() constructor
 					
 						ID = sprite_duplicate(_other.ID);
 						name = sprite_get_name(ID);
-						size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+						size = new Scale(sprite_get_width(ID), sprite_get_height(ID));
 						frameCount = sprite_get_number(ID);
 						origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
 						boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
@@ -98,7 +98,7 @@ function Sprite() constructor
 							ID = sprite_add(_path, _frameCount, _removeBackground,
 											_smoothRemovedBackground, _origin_x, _origin_y);
 							name = sprite_get_name(ID);
-							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							size = new Scale(sprite_get_width(ID), sprite_get_height(ID));
 							frameCount = sprite_get_number(ID);
 							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
 							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
@@ -163,7 +163,7 @@ function Sprite() constructor
 															_smoothRemovedBackground, _origin_x,
 															_origin_y);
 							name = sprite_get_name(ID);
-							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							size = new Scale(sprite_get_width(ID), sprite_get_height(ID));
 							frameCount = sprite_get_number(ID);
 							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
 							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
@@ -178,7 +178,7 @@ function Sprite() constructor
 							//|Construction type: Wrapper.
 							ID = argument[0];
 							name = sprite_get_name(ID);
-							size = new Vector2(sprite_get_width(ID), sprite_get_height(ID));
+							size = new Scale(sprite_get_width(ID), sprite_get_height(ID));
 							frameCount = sprite_get_number(ID);
 							origin = new Vector2(sprite_get_xoffset(ID), sprite_get_yoffset(ID));
 							boundary = new Vector4(sprite_get_bbox_left(ID), sprite_get_bbox_top(ID),
@@ -228,14 +228,14 @@ function Sprite() constructor
 					var _size_x = sprite_get_width(ID);
 					var _size_y = sprite_get_height(ID);
 					
-					if (is_instanceof(size, Vector2))
+					if (is_instanceof(size, Scale))
 					{
 						size.x = _size_x;
 						size.y = _size_y;
 					}
 					else
 					{
-						size = new Vector2(_size_x, _size_y);
+						size = new Scale(_size_x, _size_y);
 					}
 					
 					frameCount = sprite_get_number(ID);
