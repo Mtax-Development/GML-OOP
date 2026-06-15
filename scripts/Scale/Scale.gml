@@ -773,6 +773,7 @@ function Scale() constructor
 		
 		static zero = new Scale(0, 0);
 		static one = new Scale(1, 1);
+		static half = new Scale(0.5, 0.5);
 		static mirrored = new Scale((-1), (-1));
 		static mirroredX = new Scale((-1), 1);
 		static mirroredY = new Scale(1, (-1));
