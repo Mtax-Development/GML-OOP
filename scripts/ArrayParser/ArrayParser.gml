@@ -1065,6 +1065,33 @@ function ArrayParser() constructor
 				return self;
 			}
 			
+			/// @argument			value... {any}
+			/// @description		Add one or more values to the array if it does not already them.
+			static addUnique = function()
+			{
+				try
+				{
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value_current = argument[_i];
+						
+						if (!array_contains(ID, _value_current))
+						{
+							array_push(ID, _value_current);
+						}
+						
+						++_i;
+					}
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "addUnique()"], _exception);
+				}
+				
+				return self;
+			}
+			
 			/// @argument			value {any}
 			/// @argument			position {int}
 			/// @description		Set a specified position of the array to specified value and any
