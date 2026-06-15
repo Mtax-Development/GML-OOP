@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"AudioPlayer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"AudioPlayer",
+  "parent":{
+    "name":"Handler",
+    "path":"folders/GML-OOP/Handler.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
