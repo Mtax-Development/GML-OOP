@@ -1,5 +1,5 @@
 //  @function				SpriteRenderer()
-/// @argument				sprite? {Sprite}
+/// @argument				sprite {Sprite}
 /// @argument				location? {Vector2|Vector4}
 /// @argument				frame? {int}
 /// @argument				scale? {Scale}
@@ -51,8 +51,7 @@ function SpriteRenderer() constructor
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						sprite = ((is_instanceof(_other.sprite, Sprite))
-								  ? new Sprite(_other.sprite.ID) : _other.sprite);
+						sprite = _other.sprite;
 						
 						if (is_instanceof(_other.location, Vector2))
 						{

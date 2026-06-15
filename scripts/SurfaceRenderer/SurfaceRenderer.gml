@@ -1,5 +1,5 @@
 //  @function				SurfaceRenderer()
-/// @argument				surface? {Surface}
+/// @argument				surface {Surface}
 /// @argument				location? {Vector2|Vector4}
 /// @argument				scale? {Scale}
 /// @argument				angle? {Angle}
@@ -48,8 +48,7 @@ function SurfaceRenderer() constructor
 						//|Construction type: Constructor copy.
 						var _other = argument[0];
 						
-						surface = ((is_instanceof(_other.surface, Surface))
-								   ? new Surface(_other.surface) : _other.surface);
+						surface = _other.surface;
 						
 						if (is_instanceof(_other.location, Vector2))
 						{
