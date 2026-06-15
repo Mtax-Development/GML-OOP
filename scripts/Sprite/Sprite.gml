@@ -1025,7 +1025,7 @@ function Sprite() constructor
 			/// @returns			{string}
 			/// @description		Create a string representing this constructor.
 			///						Overrides the string() conversion.
-			///						Content will be represented with the details of this Sprite.
+			///						Content will be represented with the properties of this Resource.
 			static toString = function(_multiline = false, _full = false)
 			{
 				if (self.isFunctional())
