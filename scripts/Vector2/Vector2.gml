@@ -837,7 +837,7 @@ function Vector2() constructor
 			/// @argument			boundary {Vector4}
 			/// @description		Restrict the values of this Vector2 to the boundaries of the
 			///						specified Vector4.
-			static clampTo = function(_boundary)
+			static clamp = function(_boundary)
 			{
 				try
 				{
@@ -854,7 +854,87 @@ function Vector2() constructor
 				}
 				catch (_exception)
 				{
-					ErrorReport.report([other, self, "clampTo()"], _exception);
+					ErrorReport.report([other, self, "clamp()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value... {real|Vector2}
+			/// @description		Set both values to the lowest value among the values of this
+			///						Vector2, a specified number or respective values of specified
+			///						Vector2.
+			static setMinimum = function()
+			{
+				try
+				{
+					var _result_x = x;
+					var _result_y = y;
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value_current = argument[_i];
+						
+						if (is_real(_value_current))
+						{
+							_result_x = min(_result_x, _value_current);
+							_result_y = min(_result_y, _value_current);
+						}
+						else if (is_instanceof(_value_current, Vector2))
+						{
+							_result_x = min(_result_x, _value_current.x);
+							_result_y = min(_result_y, _value_current.y);
+						}
+						
+						++_i;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "setMinimum()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value... {real|Vector2}
+			/// @description		Set both values to the highest value among the values of this
+			///						Vector2, a specified number or respective values of specified
+			///						Vector2.
+			static setMaximum = function()
+			{
+				try
+				{
+					var _result_x = x;
+					var _result_y = y;
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value_current = argument[_i];
+						
+						if (is_real(_value_current))
+						{
+							_result_x = max(_result_x, _value_current);
+							_result_y = max(_result_y, _value_current);
+						}
+						else if (is_instanceof(_value_current, Vector2))
+						{
+							_result_x = max(_result_x, _value_current.x);
+							_result_y = max(_result_y, _value_current.y);
+						}
+						
+						++_i;
+					}
+					
+					x = _result_x;
+					y = _result_y;
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "setMaximum()"], _exception);
 				}
 				
 				return self;
@@ -909,7 +989,8 @@ function Vector2() constructor
 			{
 				try
 				{
-					var _result_x, _result_y;
+					var _result_x = x;
+					var _result_y = y;
 					
 					if (is_real(_value))
 					{
@@ -938,30 +1019,47 @@ function Vector2() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents or the ones of the
-			///						specified value rounded down.
-			static setFloor = function(_value)
+			/// @argument			value1? {real|real[]|Scale|Vector2}
+			/// @argument			value2? {real}
+			/// @description		Set all values to equivalent integers after rounding them down.
+			///						The numbers used are based on what arguments are provided:
+			///						- None: Current constructor properties will be rounded.
+			///						- A single number: Will be used for both values.
+			///						- A single array: First two positions will be used for x and y
+			///										  values, respectively.
+			///						- A single constructor: Respective properties will be used.
+			///						- Two numbers: Will be used for x and y values, respectively.
+			static setFloor = function(_value1, _value2)
 			{
 				try
 				{
-					var _result_x, _result_y;
+					var _result_x = x;
+					var _result_y = y;
 					
-					if (_value == undefined)
+					if (is_real(_value2))
+					{
+						_result_x = floor(_value1);
+						_result_y = floor(_value2);
+					}
+					else if (_value1 == undefined)
 					{
 						_result_x = floor(x);
 						_result_y = floor(y);
 					}
-					else if (is_real(_value))
+					else if (is_real(_value1))
 					{
-						var _value_floor = floor(_value);
-						_result_x = _value_floor;
-						_result_y = _value_floor;
+						_result_x = floor(_value1);
+						_result_y = _result_x;
+					}
+					else if (is_array(_value1))
+					{
+						_result_x = floor(_value1[0]);
+						_result_y = floor(_value1[1]);
 					}
 					else
 					{
-						_result_x = floor(_value.x);
-						_result_y = floor(_value.y);
+						_result_x = floor(_value1.x);
+						_result_y = floor(_value1.y);
 					}
 					
 					x = _result_x;
@@ -975,30 +1073,48 @@ function Vector2() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents or the ones of the
-			///						specified value rounded down or up.
-			static setRound = function(_value)
+			/// @argument			value1? {real|real[]|Scale|Vector2}
+			/// @argument			value2? {real}
+			/// @description		Set all values to equivalent closest integers. Numbers that are
+			///						exactly half-integers will be rounded to closest even integer.
+			///						The numbers used are based on what arguments are provided:
+			///						- None: Current constructor properties will be rounded.
+			///						- A single number: Will be used for both values.
+			///						- A single array: First two positions will be used for x and y
+			///										  values, respectively.
+			///						- A single constructor: Respective properties will be used.
+			///						- Two numbers: Will be used for x and y values, respectively.
+			static setRound = function(_value1, _value2)
 			{
 				try
 				{
-					var _result_x, _result_y;
+					var _result_x = x;
+					var _result_y = y;
 					
-					if (_value == undefined)
+					if (is_real(_value2))
+					{
+						_result_x = round(_value1);
+						_result_y = round(_value2);
+					}
+					else if (_value1 == undefined)
 					{
 						_result_x = round(x);
 						_result_y = round(y);
 					}
-					else if (is_real(_value))
+					else if (is_real(_value1))
 					{
-						var _value_round = round(_value);
-						_result_x = _value_round;
-						_result_y = _value_round;
+						_result_x = round(_value1);
+						_result_y = _result_x;
+					}
+					else if (is_array(_value1))
+					{
+						_result_x = round(_value1[0]);
+						_result_y = round(_value1[1]);
 					}
 					else
 					{
-						_result_x = round(_value.x);
-						_result_y = round(_value.y);
+						_result_x = round(_value1.x);
+						_result_y = round(_value1.y);
 					}
 					
 					x = _result_x;
@@ -1012,30 +1128,47 @@ function Vector2() constructor
 				return self;
 			}
 			
-			/// @argument			value? {real|Scale|Vector2}
-			/// @description		Set all of the values of to their equivalents or the ones of the
-			///						specified value rounded up.
-			static setCeil = function(_value)
+			/// @argument			value1? {real|real[]|Scale|Vector2}
+			/// @argument			value2? {real}
+			/// @description		Set all values to equivalent integers after rounding them up.
+			///						The numbers used are based on what arguments are provided:
+			///						- None: Current constructor properties will be rounded.
+			///						- A single number: Will be used for both values.
+			///						- A single array: First two positions will be used for x and y
+			///										  values, respectively.
+			///						- A single constructor: Respective properties will be used.
+			///						- Two numbers: Will be used for x and y values, respectively.
+			static setCeil = function(_value1, _value2)
 			{
 				try
 				{
-					var _result_x, _result_y;
+					var _result_x = x;
+					var _result_y = y;
 					
-					if (_value == undefined)
+					if (is_real(_value2))
+					{
+						_result_x = ceil(_value1);
+						_result_y = ceil(_value2);
+					}
+					else if (_value1 == undefined)
 					{
 						_result_x = ceil(x);
 						_result_y = ceil(y);
 					}
-					else if (is_real(_value))
+					else if (is_real(_value1))
 					{
-						var _value_ceil = ceil(_value);
-						_result_x = _value_ceil;
-						_result_y = _value_ceil;
+						_result_x = ceil(_value1);
+						_result_y = _result_x;
+					}
+					else if (is_array(_value1))
+					{
+						_result_x = ceil(_value1[0]);
+						_result_y = ceil(_value1[1]);
 					}
 					else
 					{
-						_result_x = ceil(_value.x);
-						_result_y = ceil(_value.y);
+						_result_x = ceil(_value1.x);
+						_result_y = ceil(_value1.y);
 					}
 					
 					x = _result_x;

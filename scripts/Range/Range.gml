@@ -203,7 +203,7 @@ function Range() constructor
 			/// @argument			value {real}
 			/// @returns			{real} | On error: {any}
 			/// @description		Restrict the specified number to boundaries of this Range.
-			static clampTo = function(_value)
+			static clamp = function(_value)
 			{
 				try
 				{
@@ -211,7 +211,7 @@ function Range() constructor
 				}
 				catch (_exception)
 				{
-					ErrorReport.report([other, self, "clampTo()"], _exception);
+					ErrorReport.report([other, self, "clamp()"], _exception);
 				}
 				
 				return _value;

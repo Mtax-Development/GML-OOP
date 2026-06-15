@@ -1112,7 +1112,7 @@ function Vector4() constructor
 			/// @argument			boundary {Vector4}
 			/// @description		Restrict the values of this Vector4 to the boundaries of other
 			///						specified Vector4.
-			static clampTo = function(_boundary)
+			static clamp = function(_boundary)
 			{
 				try
 				{
@@ -1132,7 +1132,118 @@ function Vector4() constructor
 				}
 				catch (_exception)
 				{
-					ErrorReport.report([other, self, "clampTo()"], _exception);
+					ErrorReport.report([other, self, "clamp()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			value... {real|Vector2|Vector4}
+			/// @description		Set both values to the lowest value among the values of this
+			///						Vector2, a specified number or respective values of specified
+			///						Vector2 or Vector4.
+			static setMinimum = function()
+			{
+				try
+				{
+					var _result_x1 = x1;
+					var _result_y1 = y1;
+					var _result_x2 = x2;
+					var _result_y2 = y2;
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value_current = argument[_i];
+						
+						if (is_real(_value_current))
+						{
+							_result_x1 = min(_result_x1, _value_current);
+							_result_y1 = min(_result_y1, _value_current);
+							_result_x2 = min(_result_x2, _value_current);
+							_result_y2 = min(_result_y2, _value_current);
+						}
+						else if (is_instanceof(_value_current, Vector2))
+						{
+							_result_x1 = min(_result_x1, _value_current.x);
+							_result_y1 = min(_result_y1, _value_current.y);
+							_result_x2 = min(_result_x2, _value_current.x);
+							_result_y2 = min(_result_y2, _value_current.y);
+						}
+						else if (is_instanceof(_value_current, Vector4))
+						{
+							_result_x1 = min(_result_x1, _value_current.x1);
+							_result_y1 = min(_result_y1, _value_current.y1);
+							_result_x2 = min(_result_x2, _value_current.x2);
+							_result_y2 = min(_result_y2, _value_current.y2);
+						}
+						
+						++_i;
+					}
+					
+					x1 = _result_x1;
+					y1 = _result_y1;
+					x2 = _result_x2;
+					y2 = _result_y2;
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "setMinimum()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			
+			/// @argument			value... {real|Vector2|Vector4}
+			/// @description		Set both values to the highest value among the values of this
+			///						Vector2, a specified number or respective values of specified
+			///						Vector2 or Vector4.
+			static setMaximum = function()
+			{
+				try
+				{
+					var _result_x1 = x1;
+					var _result_y1 = y1;
+					var _result_x2 = x2;
+					var _result_y2 = y2;
+					var _i = 0;
+					repeat (argument_count)
+					{
+						var _value_current = argument[_i];
+						
+						if (is_real(_value_current))
+						{
+							_result_x1 = max(_result_x1, _value_current);
+							_result_y1 = max(_result_y1, _value_current);
+							_result_x2 = max(_result_x2, _value_current);
+							_result_y2 = max(_result_y2, _value_current);
+						}
+						else if (is_instanceof(_value_current, Vector2))
+						{
+							_result_x1 = max(_result_x1, _value_current.x);
+							_result_y1 = max(_result_y1, _value_current.y);
+							_result_x2 = max(_result_x2, _value_current.x);
+							_result_y2 = max(_result_y2, _value_current.y);
+						}
+						else if (is_instanceof(_value_current, Vector4))
+						{
+							_result_x1 = max(_result_x1, _value_current.x1);
+							_result_y1 = max(_result_y1, _value_current.y1);
+							_result_x2 = max(_result_x2, _value_current.x2);
+							_result_y2 = max(_result_y2, _value_current.y2);
+						}
+						
+						++_i;
+					}
+					
+					x1 = _result_x1;
+					y1 = _result_y1;
+					x2 = _result_x2;
+					y2 = _result_y2;
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "setMinimum()"], _exception);
 				}
 				
 				return self;
@@ -1628,6 +1739,49 @@ function Vector4() constructor
 				catch (_exception)
 				{
 					ErrorReport.report([other, self, "setCursor()"], _exception);
+				}
+				
+				return self;
+			}
+			
+			/// @argument			array {Vector2[]}
+			/// @description		Set all of the values to the lowest and highest x and y values of
+			///						Vector2 in the specified array.
+			static setBoundary = function(_array)
+			{
+				try
+				{
+					var _value_count = array_length(_array);
+					
+					if (_value_count > 0)
+					{
+						var _value_first = _array[0];
+						var _result_x1 = _value_first.x;
+						var _result_y1 = _value_first.y;
+						var _result_x2 = _value_first.x;
+						var _result_y2 = _value_first.y;
+						var _i = 1;
+						repeat (_value_count - _i)
+						{
+							var _value_current = _array[_i];
+							
+							_result_x1 = min(_result_x1, _value_current.x);
+							_result_y1 = min(_result_y1, _value_current.y);
+							_result_x2 = max(_result_x2, _value_current.x);
+							_result_y2 = max(_result_y2, _value_current.y);
+							
+							++_i;
+						}
+						
+						x1 = _result_x1;
+						y1 = _result_y1;
+						x2 = _result_x2;
+						y2 = _result_y2;
+					}
+				}
+				catch (_exception)
+				{
+					ErrorReport.report([other, self, "setBoundary()"], _exception);
 				}
 				
 				return self;
