@@ -173,6 +173,7 @@ function Callback() constructor
 					var _callback_count = array_length(_callback_array);
 					var _argument_array = ((_argument_isArray)
 										   ? _argument : array_create(_callback_count, _argument));
+					var _argument_array_size = array_length(_argument_array);
 					var _result = array_create(_callback_count, undefined);
 					var _i = 0;
 					repeat (_callback_count)
@@ -188,9 +189,11 @@ function Callback() constructor
 								_result[_i] = script_execute_ext(_callback_index,
 																 ((_argument_direct)
 																  ? _argument_array
-																  : ((is_array(_argument_array[_i]))
-																	 ? _argument_array[_i]
-																	 : [_argument_array[_i]])));
+																  : ((_argument_array_size > _i)
+																	 ? ((is_array(_argument_array[_i]))
+																		? _argument_array[_i]
+																		: [_argument_array[_i]])
+																	 : [])));
 							}
 						}
 						catch (_exception)
