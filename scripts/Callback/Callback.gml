@@ -97,6 +97,83 @@ function Callback() constructor
 			}
 			
 		#endregion
+		#region <Getters>
+			
+			/// @argument			argument... {any}
+			/// @description		Return an array containing arguments of this Callback after the
+			///						specified values. It can be used as argument replacement during
+			///						execution of a Callback, so that each function called will be
+			///						provided specified arguments before its respective arguments
+			///						present in the argument property when this method was called.
+			static prependArgument = function()
+			{
+				if (!(argument_count > 0))
+				{
+					return self.argument;
+				}
+				
+				var _result = [];
+				var _callback_isArray = is_array(ID);
+				var _argument_array = array_create(argument_count);
+				var _i = 0;
+				repeat (argument_count)
+				{
+					_argument_array[_i] = argument[_i];
+					
+					++_i;
+				}
+				
+				if (is_array(self.argument))
+				{
+					var _argument_original_count = array_length(self.argument);
+					
+					if (_callback_isArray)
+					{
+						var _i = 0;
+						repeat (max(array_length(ID), _argument_original_count))
+						{
+							if (_argument_original_count > _i)
+							{
+								var _argument_original_current = self.argument[_i];
+								var _argument_nested = [];
+								array_copy(_argument_nested, 0, _argument_array, 0,
+										   argument_count);
+								
+								if (is_array(_argument_original_current))
+								{
+									array_copy(_argument_nested, argument_count,
+											   _argument_original_current, 0,
+											   array_length(_argument_original_current));
+								}
+								else
+								{
+									array_push(_argument_nested, _argument_original_current);
+								}
+								
+								_result[_i] = _argument_nested;
+							}
+							
+							++_i;
+						}
+					}
+					else
+					{
+						array_copy(_result, 0, _argument_array, 0, argument_count);
+						array_copy(_result, argument_count, self.argument, 0,
+								   _argument_original_count);
+					}
+				}
+				else
+				{
+					_argument_array[_i] = self.argument;
+					_result = ((_callback_isArray) ? array_create(array_length(ID), _argument_array)
+												   : _argument_array);
+				}
+				
+				return _result;
+			}
+			
+		#endregion
 		#region <Setters>
 			
 			/// @argument			function? {function|function[]}
