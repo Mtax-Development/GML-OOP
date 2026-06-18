@@ -564,8 +564,8 @@ function Rectangle() constructor
 						var _outline_innerBottomOuterRight = [_outline_x2, _location_y2];
 						
 						array_push(_result,
-								   [_outline_outerTopRight, _outline_outerTopInnerRight,
-									_outline_innerTopOuterRight, _outline_innerTopOuterRight,
+								   [_outline_outerTopRight, _location_topRight,
+									_outline_innerTopOuterRight, _outline_outerTopRight,
 									_outline_outerTopInnerRight, _location_topRight,
 									_outline_innerTopOuterRight, _location_topRight,
 									_outline_innerBottomOuterRight, _outline_innerBottomOuterRight,
@@ -577,14 +577,14 @@ function Rectangle() constructor
 									_outline_outerBottomInnerRight, _outline_outerBottomInnerRight,
 									_location_bottomLeft, _outline_outerBottomInnerLeft,
 									_location_bottomLeft, _outline_innerBottomOuterLeft,
-									_outline_outerBottomInnerLeft, _outline_outerBottomInnerLeft, 
-									_outline_innerBottomOuterLeft, _outline_outerBottomLeft,
+									_outline_outerBottomLeft, _outline_outerBottomInnerLeft, 
+									_location_bottomLeft, _outline_outerBottomLeft,
 									_location_topLeft, _outline_innerTopOuterLeft,
-									_location_bottomLeft,_location_bottomLeft,
+									_location_bottomLeft, _location_bottomLeft,
 									_outline_innerTopOuterLeft, _outline_innerBottomOuterLeft,
-									_outline_outerTopInnerLeft, _outline_outerTopLeft,
-									_location_topLeft, _location_topLeft,
-									_outline_outerTopLeft, _outline_innerTopOuterLeft,
+									_location_topLeft, _outline_outerTopLeft,
+									_outline_innerTopOuterLeft, _outline_outerTopInnerLeft,
+									_outline_outerTopLeft, _location_topLeft, 
 									_outline_outerTopInnerRight, _outline_outerTopInnerLeft,
 									_location_topRight, _location_topRight,
 									_outline_outerTopInnerLeft, _location_topLeft]);
@@ -770,7 +770,10 @@ function Rectangle() constructor
 						array_push(_primitive, [pr_trianglelist, _vertex_data]);
 					}
 					
-					return event.getPrimitiveRenderData.execute(undefined, [_primitive]);
+					return event.getPrimitiveRenderData.execute
+					(
+						undefined, event.getPrimitiveRenderData.prependArgument(_primitive)
+					);
 				}
 				catch (_exception)
 				{
