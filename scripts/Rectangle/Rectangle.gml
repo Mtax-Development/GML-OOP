@@ -3,7 +3,7 @@
 /// @argument				fill_color? {int:color|Color2|Color4}
 /// @argument				fill_alpha? {real}
 /// @argument				outline_size? {int}
-/// @argument				outline_color? {int:color|Color4}
+/// @argument				outline_color? {int:color|Color2|Color4}
 /// @argument				outline_alpha? {real}
 /// @description			Constructs a two-dimensional Rectangle Shape, which is an unrotated region
 ///							between two specified points.
@@ -602,7 +602,7 @@ function Rectangle() constructor
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
 			/// @argument			outline_size? {int}
-			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_color? {int:color|Color2|Color4}
 			/// @argument			outline_alpha? {real}
 			/// @argument			outline? {bool|all}
 			/// @returns			{any[+]} | On error: {undefined}
@@ -683,69 +683,88 @@ function Rectangle() constructor
 					and (_outline_alpha > 0))
 					{
 						var _vertex_outline = array_last(_vertex_location);
-						var _color_outline_x1y1 = _outline_color;
-						var _color_outline_x1y2 = _outline_color;
-						var _color_outline_x2y1 = _outline_color;
-						var _color_outline_x2y2 = _outline_color;
+						var _color_outline_x1y1_inner = _outline_color;
+						var _color_outline_x1y1_outer = _outline_color;
+						var _color_outline_x1y2_inner = _outline_color;
+						var _color_outline_x1y2_outer = _outline_color;
+						var _color_outline_x2y1_inner = _outline_color;
+						var _color_outline_x2y1_outer = _outline_color;
+						var _color_outline_x2y2_inner = _outline_color;
+						var _color_outline_x2y2_outer = _outline_color;
 						
-						if (is_instanceof(_outline_color, Color4))
+						if (is_instanceof(_outline_color, Color2))
 						{
-							_color_outline_x1y1 = _outline_color.color1;
-							_color_outline_x1y2 = _outline_color.color4;
-							_color_outline_x2y1 = _outline_color.color2;
-							_color_outline_x2y2 = _outline_color.color3;
+							_color_outline_x1y1_inner = _outline_color.color1;
+							_color_outline_x1y2_inner = _outline_color.color1;
+							_color_outline_x2y1_inner = _outline_color.color1;
+							_color_outline_x2y2_inner = _outline_color.color1;
+							_color_outline_x1y1_outer = _outline_color.color2;
+							_color_outline_x1y2_outer = _outline_color.color2;
+							_color_outline_x2y1_outer = _outline_color.color2;
+							_color_outline_x2y2_outer = _outline_color.color2;
+						}
+						else if (is_instanceof(_outline_color, Color4))
+						{
+							_color_outline_x1y1_inner = _outline_color.color1;
+							_color_outline_x1y1_outer = _outline_color.color1;
+							_color_outline_x1y2_inner = _outline_color.color4;
+							_color_outline_x1y2_outer = _outline_color.color4;
+							_color_outline_x2y1_inner = _outline_color.color2;
+							_color_outline_x2y1_outer = _outline_color.color2;
+							_color_outline_x2y2_inner = _outline_color.color3;
+							_color_outline_x2y2_outer = _outline_color.color3;
 						}
 						
 						var _vertex_data =
 						[
-							[_vertex_outline[0], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[1], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[2], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[3], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[4], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[5], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[6], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[7], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[8], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[9], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[10], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[11], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[12], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[13], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[14], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[15], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[16], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[17], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[18], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[19], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[20], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[21], _color_outline_x2y2, _outline_alpha],
-							[_vertex_outline[22], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[23], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[24], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[25], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[26], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[27], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[28], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[29], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[30], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[31], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[32], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[33], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[34], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[35], _color_outline_x1y2, _outline_alpha],
-							[_vertex_outline[36], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[37], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[38], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[39], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[40], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[41], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[42], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[43], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[44], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[45], _color_outline_x2y1, _outline_alpha],
-							[_vertex_outline[46], _color_outline_x1y1, _outline_alpha],
-							[_vertex_outline[47], _color_outline_x1y1, _outline_alpha],
+							[_vertex_outline[0], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[1], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[2], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[3], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[4], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[5], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[6], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[7], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[8], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[9], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[10], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[11], _color_outline_x2y2_inner, _outline_alpha],
+							[_vertex_outline[12], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[13], _color_outline_x2y2_inner, _outline_alpha],
+							[_vertex_outline[14], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[15], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[16], _color_outline_x2y2_inner, _outline_alpha],
+							[_vertex_outline[17], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[18], _color_outline_x2y2_inner, _outline_alpha],
+							[_vertex_outline[19], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[20], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[21], _color_outline_x2y2_outer, _outline_alpha],
+							[_vertex_outline[22], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[23], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[24], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[25], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[26], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[27], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[28], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[29], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[30], _color_outline_x1y1_inner, _outline_alpha],
+							[_vertex_outline[31], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[32], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[33], _color_outline_x1y2_inner, _outline_alpha],
+							[_vertex_outline[34], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[35], _color_outline_x1y2_outer, _outline_alpha],
+							[_vertex_outline[36], _color_outline_x1y1_inner, _outline_alpha],
+							[_vertex_outline[37], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[38], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[39], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[40], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[41], _color_outline_x1y1_inner, _outline_alpha],
+							[_vertex_outline[42], _color_outline_x2y1_outer, _outline_alpha],
+							[_vertex_outline[43], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[44], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[45], _color_outline_x2y1_inner, _outline_alpha],
+							[_vertex_outline[46], _color_outline_x1y1_outer, _outline_alpha],
+							[_vertex_outline[47], _color_outline_x1y1_inner, _outline_alpha],
 						];
 						
 						array_push(_primitive, [pr_trianglelist, _vertex_data]);
@@ -787,7 +806,7 @@ function Rectangle() constructor
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
 			/// @argument			outline_size? {int}
-			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_color? {int:color|Color2|Color4}
 			/// @argument			outline_alpha? {real}
 			/// @description		Execute the draw of this Shape as a primitive, using data of this
 			///						constructor or specified temporarily replaced parts.
@@ -987,7 +1006,7 @@ function Rectangle() constructor
 			/// @argument			fill_color? {int:color|Color2|Color4}
 			/// @argument			fill_alpha? {real}
 			/// @argument			outline_size? {int}
-			/// @argument			outline_color? {int:color|Color4}
+			/// @argument			outline_color? {int:color|Color2|Color4}
 			/// @argument			outline_alpha? {real}
 			/// @argument			outline? {bool|all}
 			/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer[]}
