@@ -845,12 +845,9 @@ function PriorityQueue() constructor
 	}
 	
 	/// @argument			string {string}
-	/// @argument			legacy? {bool}
 	/// @description		Decode a string to which a Data Structure of the same type was previously
 	///						encoded into this one.
-	///						Use the "legacy" argument if that string was created in old versions of
-	///						GameMaker with different encoding.
-	static fromEncodedString = function(_string, _legacy = false)
+	static fromEncodedString = function(_string)
 	{
 		try
 		{
@@ -859,7 +856,7 @@ function PriorityQueue() constructor
 				ID = ds_priority_create();
 			}
 			
-			ds_priority_read(ID, _string, _legacy);
+			ds_priority_read(ID, _string);
 		}
 		catch (_exception)
 		{

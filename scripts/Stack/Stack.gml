@@ -710,12 +710,9 @@ function Stack() constructor
 	}
 	
 	/// @argument			string {string}
-	/// @argument			legacy? {bool}
 	/// @description		Decode a string to which a Data Structure of the same type was previously
 	///						encoded into this one.
-	///						Mark it as "legacy" if that string was created in the old version
-	///						of GameMaker with different encoding.
-	static fromEncodedString = function(_string, _legacy = false)
+	static fromEncodedString = function(_string)
 	{
 		try
 		{
@@ -724,7 +721,7 @@ function Stack() constructor
 				ID = ds_stack_create();
 			}
 			
-			ds_stack_read(ID, _string, _legacy);
+			ds_stack_read(ID, _string);
 		}
 		catch (_exception)
 		{
