@@ -191,7 +191,7 @@ function Ellipse() constructor
 				else
 				{
 					collision_ellipse_list(_location.x1, _location.y1, _location.x2, _location.y2,
-										   object, _precise, false, _list.ID, _listOrdered);
+										   _object, _precise, false, _list.ID, _listOrdered);
 				}
 			
 				return _list;
