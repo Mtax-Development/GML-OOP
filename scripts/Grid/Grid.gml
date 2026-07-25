@@ -320,6 +320,8 @@ function Grid() constructor
 		{
 			ErrorReport.report([other, self, "getValue()"], _exception);
 		}
+		
+		return undefined;
 	}
 	
 	/// @returns			{int}
