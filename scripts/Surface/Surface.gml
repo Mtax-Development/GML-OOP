@@ -241,16 +241,16 @@ function Surface() constructor
 	}
 	
 	/// @argument			location {Vector2}
-	/// @argument			getFull? {bool}
+	/// @argument			full? {bool}
 	/// @returns			{int:color|int:color:abgr32bit} | On error: {undefined}
 	/// @description		Get the color on a specific pixel on this Surface. A full abgr 32bit
 	///						information can be obtainted if specified.
-	static getPixel = function(_location, _getFull = false)
+	static getPixel = function(_location, _full = false)
 	{
 		try
 		{
-			return ((_getFull) ? surface_getpixel_ext(ID, _location.x, _location.y)
-							   : surface_getpixel(ID, _location.x, _location.y));
+			return ((_full) ? surface_getpixel_ext(ID, _location.x, _location.y)
+							: surface_getpixel(ID, _location.x, _location.y));
 		}
 		catch (_exception)
 		{
