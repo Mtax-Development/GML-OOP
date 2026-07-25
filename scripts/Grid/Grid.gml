@@ -499,7 +499,7 @@ function Grid() constructor
 	}
 	
 	/// @argument			location? {Vector4}
-	/// @returns			{real} | On error: {undefined}
+	/// @returns			{real}
 	/// @description		Return the mean number of numerical values found in cells within the
 	///						specified region of this Grid. If the region contains no numerical values,
 	///						0 will be returned.
@@ -518,7 +518,7 @@ function Grid() constructor
 			ErrorReport.report([other, self, "getMean()"], _exception);
 		}
 		
-		return undefined;
+		return 0;
 	}
 	
 	/// @argument			location {Vector2}
@@ -538,7 +538,7 @@ function Grid() constructor
 			ErrorReport.report([other, self, "getMeanDisk()"], _exception);
 		}
 		
-		return undefined;
+		return 0;
 	}
 	
 	/// @argument			location? {Vector4}
