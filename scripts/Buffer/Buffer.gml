@@ -639,7 +639,7 @@ function Buffer() constructor
 			ErrorReport.report([other, self, "fromEncodedString()"], _exception);
 		}
 		
-		return string(undefined);
+		return self;
 	}
 	
 	/// @argument			map {Map}
