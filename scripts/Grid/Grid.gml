@@ -99,10 +99,10 @@ function Grid() constructor
 								}
 							}
 							
-							_x++;
+							++_x;
 						}
 						
-						_y++;
+						++_y;
 					}
 				}
 			}
