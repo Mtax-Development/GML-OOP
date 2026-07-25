@@ -407,7 +407,7 @@ function Map() constructor
 	/// @returns			{bool|undefined}
 	/// @description		Check if the specified key is storing a bound List.
 	///						Returns {undefined} if this Data Structure does not exists or if the
-	///						specified key does not hold a Data Structure.
+	///						specified key does not contain a Data Structure.
 	static valueIsBoundList = function(_key)
 	{
 		try
@@ -426,7 +426,7 @@ function Map() constructor
 	/// @returns			{bool|undefined}
 	/// @description		Check if the specified key is storing a bound Map.
 	///						Returns {undefined} if this Data Structure does not exists or if the
-	///						specified key does not hold a Data Structure.
+	///						specified key does not contain a Data Structure.
 	static valueIsBoundMap = function(_key)
 	{
 		try

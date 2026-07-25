@@ -307,7 +307,7 @@ function Layer() constructor
 	}
 	
 	/// @returns			{int[]}
-	/// @description		Return the array of all internal element IDs held by this Layer.
+	/// @description		Return an array with internal IDs of all elements on this Layer.
 	static getElements = function()
 	{
 		try

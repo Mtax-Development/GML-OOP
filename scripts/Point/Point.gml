@@ -213,11 +213,10 @@ function Point() constructor
 	/// @argument			GUI? {bool}
 	/// @returns			{bool}
 	//  @see				display_set_gui_size()
-	/// @description		Check if the system cursor is over this Shape while its specified mouse
-	///						button is pressed or held.
+	
 	/// @description		Check if the system cursor location is over this Shape while its specified
-	///						input was held this frame. A target device can be specified for use with
-	///						multiple cursor input sources. In that case, its position can also be
+	///						input is being held this frame. A target device can be specified for use
+	///						with multiple cursor input sources. In that case, its position can also be
 	///						specified to be calculated according to current GUI layer size.
 	static cursorHold = function(_button, _device, _GUI = false)
 	{

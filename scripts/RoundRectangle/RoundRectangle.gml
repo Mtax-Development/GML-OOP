@@ -333,11 +333,11 @@ function RoundRectangle() constructor
 	/// @returns			{bool}
 	//  @see				display_set_gui_size()
 	/// @description		Check if the system cursor location is over this Shape while its specified
-	///						input was held this frame. The location of this Shape can include the
+	///						input is being held this frame. The location of this Shape can include the
 	///						outer edge of its outline if specified. A target device can be specified
 	///						for use with multiple cursor input sources. In that case, its position can
 	///						also be specified to be calculated according to current GUI layer size.
-	static cursorHeld = function(_button, _device, _GUI = false, _includeOutline = false)
+	static cursorHold = function(_button, _device, _GUI = false, _includeOutline = false)
 	{
 		try
 		{
@@ -347,7 +347,7 @@ function RoundRectangle() constructor
 		}
 		catch (_exception)
 		{
-			ErrorReport.report([other, self, "cursorHeld()"], _exception);
+			ErrorReport.report([other, self, "cursorHold()"], _exception);
 		}
 		
 		return false;
