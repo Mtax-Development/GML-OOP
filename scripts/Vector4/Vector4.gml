@@ -1,1898 +1,1893 @@
-//  @function				Vector4()
-/// @argument				x1? {real}
-/// @argument				y1? {real}
-/// @argument				x2? {real}
-/// @argument				y2? {real}
-/// @description			Constructs a Container for two x and y coordinate pairs.
-//							
-//							Construction types:
-//							- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}
-//							- One number for all values: value {real}
-//							- Number pair: first {real}, second {real}
-//							   First number will be set to x1 and y1.
-//							   Second number will be set to x2 and y2.
-//							- From array: array {real[]}
-//							   Array positions will be applied depending on its size:
-//								1: array[0] will be set to all values.
-//								2: array[0] will be set to x1 and y1, array[1] will be set to 
-//								   x2 and y2.
-//								4+: array[0] will be set to x1, array[1] will be set to y1,
-//									array[2] will be set to x2, array[3] will be set to y2.
-//							- From Scale or Vector2: other {Scale|Vector2}
-//							- Vector2 pair: first {Vector2}, second {Vector2}
-//							- Empty: {void|undefined}
-//							- Constructor copy: other {Vector4}
+//  @function			Vector4()
+/// @argument			x1? {real}
+/// @argument			y1? {real}
+/// @argument			x2? {real}
+/// @argument			y2? {real}
+/// @description		Constructs a Container for two x and y coordinate pairs.
+//						
+//						Construction types:
+//						- Four numbers: x1 {real}, y1 {real}, x2 {real}, y2 {real}
+//						- One number for all values: value {real}
+//						- Number pair: first {real}, second {real}
+//						   First number will be set to x1 and y1.
+//						   Second number will be set to x2 and y2.
+//						- From array: array {real[]}
+//						   Array positions will be applied depending on its size:
+//							1: array[0] will be set to all values.
+//							2: array[0] will be set to x1 and y1, array[1] will be set to 
+//							   x2 and y2.
+//							4+: array[0] will be set to x1, array[1] will be set to y1,
+//								array[2] will be set to x2, array[3] will be set to y2.
+//						- From Scale or Vector2: other {Scale|Vector2}
+//						- Vector2 pair: first {Vector2}, second {Vector2}
+//						- Empty: {void|undefined}
+//						- Constructor copy: other {Vector4}
 function Vector4() constructor
 //  @feather	ignore all
 {
-	#region [Methods]
-		#region <Management>
-			
-			/// @description		Initialize this constructor.
-			static construct = function()
+  #region [Methods]
+   #region <Management>
+	
+	/// @description		Initialize this constructor.
+	static construct = function()
+	{
+		//|Construction type: Empty.
+		x1 = undefined;
+		y1 = undefined;
+		x2 = undefined;
+		y2 = undefined;
+		
+		if (argument_count > 0)
+		{
+			if (is_instanceof(argument[0], Vector4))
 			{
-				//|Construction type: Empty.
-				x1 = undefined;
-				y1 = undefined;
-				x2 = undefined;
-				y2 = undefined;
+				//|Construction type: Constructor copy.
+				var _other = argument[0];
 				
-				if (argument_count > 0)
+				x1 = _other.x1;
+				y1 = _other.y1;
+				x2 = _other.x2;
+				y2 = _other.y2;
+			}
+			else
+			{
+				switch (argument_count)
 				{
-					if (is_instanceof(argument[0], Vector4))
-					{
-						//|Construction type: Constructor copy.
-						var _other = argument[0];
-						
-						x1 = _other.x1;
-						y1 = _other.y1;
-						x2 = _other.x2;
-						y2 = _other.y2;
-					}
-					else
-					{
-						switch (argument_count)
+					case 1:
+						if (is_array(argument[0]))
 						{
-							case 1:
-								if (is_array(argument[0]))
-								{
-									//|Construction type: From array.
-									var _array = argument[0];
-									
-									switch (array_length(_array))
-									{
-										case 1:
-											x1 = _array[0];
-											y1 = _array[0];
-											x2 = _array[0];
-											y2 = _array[0];
-										break;
-										case 2:
-											x1 = _array[0];
-											y1 = _array[0];
-											x2 = _array[1];
-											y2 = _array[1];
-										break;
-										case 4:
-										default:
-											x1 = _array[0];
-											y1 = _array[1];
-											x2 = _array[2];
-											y2 = _array[3];
-										break;
-									}
-								}
-								else if (is_instanceof(argument[0], Vector2))
-								or (is_instanceof(argument[0], Scale))
-								{
-									//|Construction type: From Scale or Vector2.
-									var _other = argument[0];
-									
-									x1 = _other.x;
-									y1 = _other.y;
-									x2 = _other.x;
-									y2 = _other.y;
-								}
-								else
-								{
-									//|Construction type: One number for all values.
-									x1 = argument[0];
-									y1 = argument[0];
-									x2 = argument[0];
-									y2 = argument[0];
-								}
-							break;
-							case 2:
-								if ((is_instanceof(argument[0], Vector2))
-								and (is_instanceof(argument[1], Vector2)))
-								{
-									//|Construction type: Vector2 pair.
-									var _first = argument[0];
-									var _second = argument[1];
-									
-									x1 = _first.x;
-									y1 = _first.y;
-									x2 = _second.x;
-									y2 = _second.y;
-								}
-								else
-								{
-									//|Construction type: Number pair.
-									var _first = argument[0];
-									var _second = argument[1];
-									
-									x1 = _first;
-									y1 = _first;
-									x2 = _second;
-									y2 = _second;
-								}
-							break;
-							default:
-								//|Construction type: Four numbers.
-								x1 = argument[0];
-								y1 = argument[1];
-								x2 = argument[2];
-								y2 = argument[3];
-							break;
+							//|Construction type: From array.
+							var _array = argument[0];
+							
+							switch (array_length(_array))
+							{
+								case 1:
+									x1 = _array[0];
+									y1 = _array[0];
+									x2 = _array[0];
+									y2 = _array[0];
+								break;
+								case 2:
+									x1 = _array[0];
+									y1 = _array[0];
+									x2 = _array[1];
+									y2 = _array[1];
+								break;
+								case 4:
+								default:
+									x1 = _array[0];
+									y1 = _array[1];
+									x2 = _array[2];
+									y2 = _array[3];
+								break;
+							}
 						}
-					}
+						else if (is_instanceof(argument[0], Vector2))
+						or (is_instanceof(argument[0], Scale))
+						{
+							//|Construction type: From Scale or Vector2.
+							var _other = argument[0];
+							
+							x1 = _other.x;
+							y1 = _other.y;
+							x2 = _other.x;
+							y2 = _other.y;
+						}
+						else
+						{
+							//|Construction type: One number for all values.
+							x1 = argument[0];
+							y1 = argument[0];
+							x2 = argument[0];
+							y2 = argument[0];
+						}
+					break;
+					case 2:
+						if ((is_instanceof(argument[0], Vector2))
+						and (is_instanceof(argument[1], Vector2)))
+						{
+							//|Construction type: Vector2 pair.
+							var _first = argument[0];
+							var _second = argument[1];
+							
+							x1 = _first.x;
+							y1 = _first.y;
+							x2 = _second.x;
+							y2 = _second.y;
+						}
+						else
+						{
+							//|Construction type: Number pair.
+							var _first = argument[0];
+							var _second = argument[1];
+							
+							x1 = _first;
+							y1 = _first;
+							x2 = _second;
+							y2 = _second;
+						}
+					break;
+					default:
+						//|Construction type: Four numbers.
+						x1 = argument[0];
+						y1 = argument[1];
+						x2 = argument[2];
+						y2 = argument[3];
+					break;
 				}
-				
-				return self;
+			}
+		}
+		
+		return self;
+	}
+	
+	/// @returns			{bool}
+	/// @description		Check if this constructor is functional.
+	static isFunctional = function()
+	{
+		return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2)) and
+				(!is_nan(x1)) and (!is_nan(y1)) and (!is_nan(x2)) and (!is_nan(y2)) and
+				(!is_infinity(x1)) and (!is_infinity(y1)) and (!is_infinity(x2)) and
+				(!is_infinity(y2)));
+	}
+	
+   #endregion
+   #region <Getters>
+	
+	/// @argument			value... {any}
+	/// @returns			{bool}
+	/// @description		Check if this Vector4 contains at least one of the specified
+	///						values.
+	static contains = function()
+	{
+		var _i = 0;
+		repeat (argument_count)
+		{
+			var _value = argument[_i];
+			
+			if ((x1 == _value) or (y1 == _value) or (x2 == _value) or (y2 == _value))
+			{
+				return true;
 			}
 			
-			/// @returns			{bool}
-			/// @description		Check if this constructor is functional.
-			static isFunctional = function()
+			++_i;
+		}
+		
+		return false;
+	}
+	
+	/// @argument			other {real|Scale|Vector2|Vector4|[]}
+	/// @returns			{bool}
+	/// @description		Check if all values of this constructor are the same as the
+	///						specified number or respective values of the specified Scale,
+	///						Vector2 or Vector4. Those values can be specified in an array to
+	///						check if any of them matches all of its values with the ones of
+	///						this constructor.
+	static equals = function(_value)
+	{
+		if (is_instanceof(_value, Vector4))
+		{
+			return ((x1 == _value.x1) and (y1 == _value.y1) and (x2 == _value.x2) and
+					(y2 == _value.y2));
+		}
+		else if (is_real(_value))
+		{
+			return ((x1 == _value) and (y1 == _value) and (x2 == _value) and (y2 == _value));
+		}
+		else if ((is_instanceof(_value, Vector2)) or (is_instanceof(_value, Scale)))
+		{
+			return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x) and
+					(y2 == _value.y));
+		}
+		else if (is_array(_value))
+		{
+			var _i = 0;
+			repeat (array_length(_value))
 			{
-				return ((is_real(x1)) and (is_real(y1)) and (is_real(x2)) and (is_real(y2)) and
-						(!is_nan(x1)) and (!is_nan(y1)) and (!is_nan(x2)) and (!is_nan(y2)) and
-						(!is_infinity(x1)) and (!is_infinity(y1)) and (!is_infinity(x2)) and
-						(!is_infinity(y2)));
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			/// @argument			value... {any}
-			/// @returns			{bool}
-			/// @description		Check if this Vector4 contains at least one of the specified
-			///						values.
-			static contains = function()
-			{
-				var _i = 0;
-				repeat (argument_count)
+				if (self.equals(_value[_i]))
 				{
-					var _value = argument[_i];
-					
-					if ((x1 == _value) or (y1 == _value) or (x2 == _value) or (y2 == _value))
-					{
-						return true;
-					}
-					
-					++_i;
+					return true;
 				}
 				
-				return false;
+				++_i;
+			}
+		}
+		
+		return false;
+	}
+	
+	/// @argument			other {real|Vector2|Vector4}
+	/// @returns			{bool}
+	/// @description		Check if all values of this Vector4 are higher than the specified
+	///						value or respective values of the specified Vector2 or Vector4.
+	static exceeds = function(_value)
+	{
+		try
+		{
+			if (is_real(_value))
+			{
+				return ((x1 > _value) and (y1 > _value) and (x2 > _value) and (y2 > _value));
+			}
+			else if (is_instanceof(_value, Vector2))
+			{
+				return ((x1 > _value.x) and (y1 > _value.y) and (x2 > _value.x) and
+						(y2 > _value.y));
+			}
+			else
+			{
+				return ((x1 > _value.x1) and (y1 > _value.y1) and (x2 > _value.x2) and
+						(y2 > _value.y2));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "exceeds()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			other {real|Vector2|Vector4}
+	/// @returns			{bool}
+	/// @description		Check if all values of this Vector4 are lower than the specified
+	///						value or respective values of the specified Vector2 or Vector4.
+	static subceeds = function(_value)
+	{
+		try
+		{
+			if (is_real(_value))
+			{
+				return ((x1 < _value) and (y1 < _value) and (x2 < _value) and (y2 < _value));
+			}
+			else if (is_instanceof(_value, Vector2))
+			{
+				return ((x1 < _value.x) and (y1 < _value.y) and (x2 < _value.x) and
+						(y2 < _value.y));
+			}
+			else
+			{
+				return ((x1 < _value.x1) and (y1 < _value.y1) and (x2 < _value.x2) and
+						(y2 < _value.y2));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "subceeds()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			value? {real|Vector2|Vector4}
+	/// @returns			{Vector2|Vector4} | On error: {undefined}
+	/// @description		Return the result of respectively adding the values of this
+	///						Vector4 to the specified value or its own properties if the value
+	///						is not specified.
+	static sum = function()
+	{
+		try
+		{
+			if ((argument_count > 0) and (argument[0] != undefined))
+			{
+				var _value = argument[0];
+				var _sum_x1, _sum_y1, _sum_x2, _sum_y2;
+				
+				if (is_real(_value))
+				{
+					_sum_x1 = (x1 + _value);
+					_sum_y1 = (y1 + _value);
+					_sum_x2 = (x2 + _value);
+					_sum_y2 = (y2 + _value);
+				}
+				else if (is_instanceof(_value, Vector4))
+				{
+					_sum_x1 = (x1 + _value.x1);
+					_sum_y1 = (y1 + _value.y1);
+					_sum_x2 = (x2 + _value.x2);
+					_sum_y2 = (y2 + _value.y2);
+				}
+				else
+				{
+					_sum_x1 = (x1 + _value.x);
+					_sum_y1 = (y1 + _value.y);
+					_sum_x2 = (x2 + _value.x);
+					_sum_y2 = (y2 + _value.y);
+				}
+				
+				return new Vector4(_sum_x1, _sum_y1, _sum_x2, _sum_y2);
+			}
+			else
+			{
+				return new Vector2((x1 + x2), (y1 + y2));
+			}
+		}
+		
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "sum()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @returns			{Vector4} | On error: {undefined}
+	/// @description		Return the result of substracting the specified value from the
+	///						values of this Vector4.
+	static difference = function(_value)
+	{
+		try
+		{
+			var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
+			
+			if (is_real(_value))
+			{
+				_difference_x1 = (x1 - _value);
+				_difference_y1 = (y1 - _value);
+				_difference_x2 = (x2 - _value);
+				_difference_y2 = (y2 - _value);
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				_difference_x1 = (x1 - _value.x1);
+				_difference_y1 = (y1 - _value.y1);
+				_difference_x2 = (x2 - _value.x2);
+				_difference_y2 = (y2 - _value.y2);
+			}
+			else
+			{
+				_difference_x1 = (x1 - _value.x);
+				_difference_y1 = (y1 - _value.y);
+				_difference_x2 = (x2 - _value.x);
+				_difference_y2 = (y2 - _value.y);
 			}
 			
-			/// @argument			other {real|Scale|Vector2|Vector4|[]}
-			/// @returns			{bool}
-			/// @description		Check if all values of this constructor are the same as the
-			///						specified number or respective values of the specified Scale,
-			///						Vector2 or Vector4. Those values can be specified in an array to
-			///						check if any of them matches all of its values with the ones of
-			///						this constructor.
-			static equals = function(_value)
+			return new Vector4(_difference_x1, _difference_y1, _difference_x2, _difference_y2);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "difference()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value? {real|Vector2|Vector4}
+	/// @returns			{Vector2|Vector4} | On error: {undefined}
+	/// @description		Return the difference using values of this Vector4. If a value was
+	///						specified, a Vector4 containing the differences between their respective
+	///						values will be returned. Otherwise, a Vector2 representing the differences
+	///						between values of this Vector4 will be returned. This calculation ignores
+	///						the order of substraction, always returning a non-negative number.
+	static absoluteDifference = function(_value)
+	{
+		try
+		{
+			if (_value != undefined)
+			{
+				var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
+				
+				if (is_real(_value))
+				{
+					_difference_x1 = abs(x1 - _value);
+					_difference_y1 = abs(y1 - _value);
+					_difference_x2 = abs(x2 - _value);
+					_difference_y2 = abs(y2 - _value);
+				}
+				else if (is_instanceof(_value, Vector4))
+				{
+					_difference_x1 = abs(x1 - _value.x1);
+					_difference_y1 = abs(y1 - _value.y1);
+					_difference_x2 = abs(x2 - _value.x2);
+					_difference_y2 = abs(y2 - _value.y2);
+				}
+				else
+				{
+					_difference_x1 = abs(x1 - _value.x);
+					_difference_y1 = abs(y1 - _value.y);
+					_difference_x2 = abs(x2 - _value.x);
+					_difference_y2 = abs(y2 - _value.y);
+				}
+				
+				return new Vector4(_difference_x1, _difference_y1, _difference_x2,
+								   _difference_y2);
+			}
+			else
+			{
+				return new Vector2(abs(x1 - x2), abs(y1 - y2));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "absoluteDifference()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value? {real|Vector2|Vector4}
+	/// @returns			{Vector2|Vector4} | On error: {undefined}
+	/// @description		Return the result of respectively multiplying the values of this
+	///						Vector4 by the specified value or its own properties if the value
+	///						is not specified.
+	static product = function()
+	{
+		try
+		{
+			if ((argument_count > 0) and (argument[0] != undefined))
+			{
+				var _value = argument[0];
+				var _product_x1, _product_y1, _product_x2, _product_y2;
+				
+				if (is_real(_value))
+				{
+					_product_x1 = (x1 * _value);
+					_product_y1 = (y1 * _value);
+					_product_x2 = (x2 * _value);
+					_product_y2 = (y2 * _value);
+				}
+				else if (is_instanceof(_value, Vector4))
+				{
+					_product_x1 = (x1 * _value.x1);
+					_product_y1 = (y1 * _value.y1);
+					_product_x2 = (x2 * _value.x2);
+					_product_y2 = (y2 * _value.y2);
+				}
+				else
+				{
+					_product_x1 = (x1 * _value.x);
+					_product_y1 = (y1 * _value.y);
+					_product_x2 = (x2 * _value.x);
+					_product_y2 = (y2 * _value.y);
+				}
+				
+				return new Vector4(_product_x1, _product_y1, _product_x2, _product_y2);
+			}
+			else
+			{
+				return new Vector2((x1 * x2), (y1 * y2));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "product()"], _exception);
+		}
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @returns			{Vector4} | On error: {undefined}
+	/// @description		Return the result of respectively dividing the values of this
+	///						Vector4 by the specified value, ignoring division by 0.
+	static quotient = function(_value)
+	{
+		try
+		{
+			var _quotient_x1 = x1;
+			var _quotient_y1 = y1;
+			var _quotient_x2 = x2;
+			var _quotient_y2 = y2;
+			
+			if (is_real(_value))
+			{
+				if (_value != 0)
+				{
+					_quotient_x1 = (x1 / _value);
+					_quotient_y1 = (y1 / _value);
+					_quotient_x2 = (x2 / _value);
+					_quotient_y2 = (y2 / _value);
+				}
+			}
+			else
 			{
 				if (is_instanceof(_value, Vector4))
 				{
-					return ((x1 == _value.x1) and (y1 == _value.y1) and (x2 == _value.x2) and
-							(y2 == _value.y2));
-				}
-				else if (is_real(_value))
-				{
-					return ((x1 == _value) and (y1 == _value) and (x2 == _value) and (y2 == _value));
-				}
-				else if ((is_instanceof(_value, Vector2)) or (is_instanceof(_value, Scale)))
-				{
-					return ((x1 == _value.x) and (y1 == _value.y) and (x2 == _value.x) and
-							(y2 == _value.y));
-				}
-				else if (is_array(_value))
-				{
-					var _i = 0;
-					repeat (array_length(_value))
+					if (_value.x1 != 0)
 					{
-						if (self.equals(_value[_i]))
-						{
-							return true;
-						}
-						
-						++_i;
-					}
-				}
-				
-				return false;
-			}
-			
-			/// @argument			other {real|Vector2|Vector4}
-			/// @returns			{bool}
-			/// @description		Check if all values of this Vector4 are higher than the specified
-			///						value or respective values of the specified Vector2 or Vector4.
-			static exceeds = function(_value)
-			{
-				try
-				{
-					if (is_real(_value))
-					{
-						return ((x1 > _value) and (y1 > _value) and (x2 > _value) and (y2 > _value));
-					}
-					else if (is_instanceof(_value, Vector2))
-					{
-						return ((x1 > _value.x) and (y1 > _value.y) and (x2 > _value.x) and
-								(y2 > _value.y));
-					}
-					else
-					{
-						return ((x1 > _value.x1) and (y1 > _value.y1) and (x2 > _value.x2) and
-								(y2 > _value.y2));
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "exceeds()"], _exception);
-				}
-				
-				return false;
-			}
-			
-			/// @argument			other {real|Vector2|Vector4}
-			/// @returns			{bool}
-			/// @description		Check if all values of this Vector4 are lower than the specified
-			///						value or respective values of the specified Vector2 or Vector4.
-			static subceeds = function(_value)
-			{
-				try
-				{
-					if (is_real(_value))
-					{
-						return ((x1 < _value) and (y1 < _value) and (x2 < _value) and (y2 < _value));
-					}
-					else if (is_instanceof(_value, Vector2))
-					{
-						return ((x1 < _value.x) and (y1 < _value.y) and (x2 < _value.x) and
-								(y2 < _value.y));
-					}
-					else
-					{
-						return ((x1 < _value.x1) and (y1 < _value.y1) and (x2 < _value.x2) and
-								(y2 < _value.y2));
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "subceeds()"], _exception);
-				}
-				
-				return false;
-			}
-			
-			/// @argument			value? {real|Vector2|Vector4}
-			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the result of respectively adding the values of this
-			///						Vector4 to the specified value or its own properties if the value
-			///						is not specified.
-			static sum = function()
-			{
-				try
-				{
-					if ((argument_count > 0) and (argument[0] != undefined))
-					{
-						var _value = argument[0];
-						var _sum_x1, _sum_y1, _sum_x2, _sum_y2;
-						
-						if (is_real(_value))
-						{
-							_sum_x1 = (x1 + _value);
-							_sum_y1 = (y1 + _value);
-							_sum_x2 = (x2 + _value);
-							_sum_y2 = (y2 + _value);
-						}
-						else if (is_instanceof(_value, Vector4))
-						{
-							_sum_x1 = (x1 + _value.x1);
-							_sum_y1 = (y1 + _value.y1);
-							_sum_x2 = (x2 + _value.x2);
-							_sum_y2 = (y2 + _value.y2);
-						}
-						else
-						{
-							_sum_x1 = (x1 + _value.x);
-							_sum_y1 = (y1 + _value.y);
-							_sum_x2 = (x2 + _value.x);
-							_sum_y2 = (y2 + _value.y);
-						}
-						
-						return new Vector4(_sum_x1, _sum_y1, _sum_x2, _sum_y2);
-					}
-					else
-					{
-						return new Vector2((x1 + x2), (y1 + y2));
-					}
-				}
-				
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "sum()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @returns			{Vector4} | On error: {undefined}
-			/// @description		Return the result of substracting the specified value from the
-			///						values of this Vector4.
-			static difference = function(_value)
-			{
-				try
-				{
-					var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
-					
-					if (is_real(_value))
-					{
-						_difference_x1 = (x1 - _value);
-						_difference_y1 = (y1 - _value);
-						_difference_x2 = (x2 - _value);
-						_difference_y2 = (y2 - _value);
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_difference_x1 = (x1 - _value.x1);
-						_difference_y1 = (y1 - _value.y1);
-						_difference_x2 = (x2 - _value.x2);
-						_difference_y2 = (y2 - _value.y2);
-					}
-					else
-					{
-						_difference_x1 = (x1 - _value.x);
-						_difference_y1 = (y1 - _value.y);
-						_difference_x2 = (x2 - _value.x);
-						_difference_y2 = (y2 - _value.y);
+						_quotient_x1 = (x1 / _value.x1);
 					}
 					
-					return new Vector4(_difference_x1, _difference_y1, _difference_x2,
-									   _difference_y2);
+					if (_value.y1 != 0)
+					{
+						_quotient_y1 = (y1 / _value.y1);
+					}
+					
+					if (_value.x2 != 0)
+					{
+						_quotient_x2 = (x2 / _value.x2);
+					}
+					
+					if (_value.y2 != 0)
+					{
+						_quotient_y2 = (y2 / _value.y2);
+					}
 				}
-				catch (_exception)
+				else
 				{
-					ErrorReport.report([other, self, "difference()"], _exception);
+					if (_value.x != 0)
+					{
+						_quotient_x1 = (x1 / _value.x);
+						_quotient_x2 = (x2 / _value.x);
+					}
+					
+					if (_value.y != 0)
+					{
+						_quotient_y1 = (y1 / _value.y);
+						_quotient_y2 = (y2 / _value.y);
+					}
+				}
+			}
+			
+			return new Vector4(_quotient_x1, _quotient_y1, _quotient_x2, _quotient_y2);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "quotient()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			normalize? {bool}
+	/// @returns			{real} | On error: {undefined}
+	/// @description		Return the sum of each value of this Vector4 being multiplied by
+	///						its respective other value, which is an expression of the angular
+	///						reliationship between its two points. The returned value can be
+	///						normalized, which will place it between -1 and 1.
+	static dotProduct = function(_normalize = false)
+	{
+		try
+		{
+			return ((_normalize) ? dot_product_normalized(x1, y1, x2, y2)
+								 : dot_product(x1, y1, x2, y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "dotProduct()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @returns			{Vector2|Vector4} | On error: {undefined}
+	/// @description		Return the point at specified respective precentages within the
+	///						x and y values.
+	static interpolate = function(_value)
+	{
+		try
+		{
+			if (is_real(_value))
+			{
+				return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
+			}
+			else  if (is_instanceof(_value, Vector4))
+			{
+				return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
+								   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
+			}
+			else
+			{
+				return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "interpolate()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value {real|Vector2}
+	/// @returns			{Vector2} | On error: {undefined}
+	/// @description		Return the percentage value representing the specified value
+	///						inside of the boundaries made by the values of this Vector4 as a
+	///						numerical value, in which one whole number is one full percentage.
+	static percent = function(_value)
+	{
+		try
+		{
+			var _result_x, _result_y;
+			
+			if (is_real(_value))
+			{
+				_result_x = ((_value - x1) / (x2 - x1));
+				_result_y = ((_value - y1) / (y2 - y1));
+			}
+			else
+			{
+				_result_x = ((_value.x - x1) / (x2 - x1));
+				_result_y = ((_value.y - y1) / (y2 - y1));
+			}
+			
+			return new Vector2((is_nan(_result_x) ? 1 : _result_x),
+							   (is_nan(_result_y) ? 1 : _result_y));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "percent()"], _exception);
+		}
+	}
+	
+	/// @argument			fromSecond? {bool}
+	/// @returns			{Angle} | On error: {undefined}
+	/// @description		Return the Angle from first set of the values of this Vector4
+	///						towards the second, or if specified, from second set of values
+	///						towards the first.
+	static getAngle = function(_fromSecond = false)
+	{
+		try
+		{
+			return ((_fromSecond) ? new Angle(point_direction(x2, y2, x1, y1))
+								  : new Angle(point_direction(x1, y1, x2, y2)));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "sum()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @returns			{real} | On error: {undefined}
+	/// @description		Return the shortest distance between two points.
+	static getDistance = function()
+	{
+		try
+		{
+			return point_distance(x1, y1, x2, y2);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getDistance()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			target {Vector2}
+	/// @returns			{Vector2} | On error: {undefined}
+	/// @description		Return the value pair that is the closest to the specified target.
+	static getClosest = function(_target)
+	{
+		try
+		{
+			var _difference_x1 = abs(_target.x - x1);
+			var _difference_y1 = abs(_target.y - y1);
+			var _difference_x2 = abs(_target.x - x2);
+			var _difference_y2 = abs(_target.y - y2);
+			var _minimum_x = min(_difference_x1, _difference_x2);
+			var _minimum_y = min(_difference_y1, _difference_y2);
+			
+			return new Vector2(((_minimum_x == _difference_x1) ? x1 : x2),
+							   ((_minimum_y == _difference_y1) ? y1 : y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getClosest()"], _exception);
+		}
+	}
+	
+	/// @argument			separate? {bool}
+	/// @returns			{real|Vector2} | On error: {undefined}
+	/// @description		Return the lowest of all values or if the values are specified to
+	///						be separated, the lowest of each value pair as Vector2.
+	static getMinimum = function(_separate = false)
+	{
+		try
+		{
+			return ((_separate) ? new Vector2(min(x1, x2), min(y1, y2))
+								: min(x1, y1, x2, y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getMinimum()"], _exception);
+		}
+	}
+	
+	/// @argument			separate? {bool}
+	/// @returns			{real|Vector2} | On error: {undefined}
+	/// @description		Return the highest of all values or if the values are specified
+	///						to be separated, the highest of each value pair as Vector2.
+	static getMaximum = function(_separate = false)
+	{
+		try
+		{
+			return ((_separate) ? new Vector2(max(x1, x2), max(y1, y2))
+								: max(x1, y1, x2, y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getMaximum()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @returns			{Vector2} | On error: {undefined}
+	/// @description		Return the middle point of this Vector4.
+	static getMiddle = function()
+	{
+		try
+		{
+			return new Vector2(mean(x1, x2), mean(y1, y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getMiddle()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @returns			{real} | On error: {undefined}
+	/// @description		Return the vector length.
+	static getMagnitude = function()
+	{
+		try
+		{
+			return sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getMagnitude()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			magnitude? {real}
+	/// @returns			{Vector4} | On error: {undefined}
+	/// @description		Return the unit vector of this Vector4, which will have its
+	///						values placed between -1 and 1, but with the same direction.
+	///						These values are then multiplied by the specified magnitude.
+	static getNormalized = function(_magnitude = 1)
+	{
+		try
+		{
+			var _length = sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
+			var _x1 = x1;
+			var _y1 = y1;
+			var _x2 = x2;
+			var _y2 = y2;
+			
+			if (_length != 0)
+			{
+				_x1 = ((x1 / _length) * _magnitude);
+				_y1 = ((y1 / _length) * _magnitude);
+				_x2 = ((x2 / _length) * _magnitude);
+				_y2 = ((y2 / _length) * _magnitude);
+			}
+			
+			return new Vector4(_x1, _y1, _x2, _y2);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getNormalized()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			booleanSign? {bool}
+	/// @returns			{Vector4} | On error: {undefined}
+	/// @description		Return a Vector4 with each respective value representing the sign
+	///						of the number: -1 for a negative number, 0 for itself and 1 for a
+	///						positive number. If the result is specified to be returned as the
+	///						boolean sign, -1 will be set for 0 as well.
+	static getSign = function(_booleanSign = false)
+	{
+		try
+		{
+			if (_booleanSign)
+			{
+				return new Vector4(((x1 > 0) ? 1 : (-1)), ((y1 > 0) ? 1 : (-1)),
+								   ((x2 > 0) ? 1 : (-1)), ((y2 > 0) ? 1 : (-1)))
+			}
+			else
+			{
+				return new Vector4(sign(x1), sign(y1), sign(x2), sign(y2));
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getSign()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			location {Vector2}
+	/// @returns			{bool} | On error: {undefined}
+	/// @description		Check if the specified point is within the area of this Vector4.
+	static isBetween = function(_location)
+	{
+		try
+		{
+			return ((_location.x == clamp(_location.x, x1, x2)) and
+					(_location.y == clamp(_location.y, y1, y2)));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "isBetween()"], _exception);
+		}
+	}
+	
+	/// @returns			{bool}
+	/// @description		Check if values of this Vector4 create no area.
+	static isDegenerate = function()
+	{
+		return ((x1 == x2) or (y1 == y2));
+	}
+	
+   #endregion
+   #region <Setters>
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Add the specified value to respective values of this Vector4.
+	static add = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
+			{
+				_result_x1 += _value;
+				_result_y1 += _value;
+				_result_x2 += _value;
+				_result_y2 += _value;
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				_result_x1 += _value.x1;
+				_result_y1 += _value.y1;
+				_result_x2 += _value.x2;
+				_result_y2 += _value.y2;
+			}
+			else
+			{
+				_result_x1 += _value.x;
+				_result_y1 += _value.y;
+				_result_x2 += _value.x;
+				_result_y2 += _value.y;
+			}
+			
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "add()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Substract the specified value from the respective values of this Vector4.
+	static substract = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
+			{
+				_result_x1 -= _value;
+				_result_y1 -= _value;
+				_result_x2 -= _value;
+				_result_y2 -= _value;
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				_result_x1 -= _value.x1;
+				_result_y1 -= _value.y1;
+				_result_x2 -= _value.x2;
+				_result_y2 -= _value.y2;
+			}
+			else
+			{
+				_result_x1 -= _value.x;
+				_result_y1 -= _value.y;
+				_result_x2 -= _value.x;
+				_result_y2 -= _value.y;
+			}
+			
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "substract()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Multiply the specified value by respective values of this Vector4.
+	static multiply = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
+			{
+				_result_x1 *= _value;
+				_result_y1 *= _value;
+				_result_x2 *= _value;
+				_result_y2 *= _value;
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				_result_x1 *= _value.x1;
+				_result_y1 *= _value.y1;
+				_result_x2 *= _value.x2;
+				_result_y2 *= _value.y2;
+			}
+			else
+			{
+				_result_x1 *= _value.x;
+				_result_y1 *= _value.y;
+				_result_x2 *= _value.x;
+				_result_y2 *= _value.y;
+			}
+			
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "multiply()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Divide respective values of this Vector4 by the specified value, ignoring
+	///						division by 0.
+	static divide = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
+			{
+				if (_value != 0)
+				{
+					_result_x1 /= _value;
+					_result_y1 /= _value;
+					_result_x2 /= _value;
+					_result_y2 /= _value;
+				}
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				if (_value.x1 != 0)
+				{
+					_result_x1 /= _value.x1;
 				}
 				
-				return undefined;
-			}
-			
-			/// @argument			value? {real|Vector2|Vector4}
-			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return an absolute difference using values of this Vector4. If a
-			///						value is specified, a Vector4 will be returned containing the
-			///						differences between their respective values. Otherwise, a Vector2
-			///						will be returned, containing differences between values of this
-			///						Vector4. This calculation ignores order of substraction and always
-			///						results in a non-negative number.
-			static absoluteDifference = function(_value)
-			{
-				try
+				if (_value.y1 != 0)
 				{
-					if (_value != undefined)
-					{
-						var _difference_x1, _difference_y1, _difference_x2, _difference_y2;
-						
-						if (is_real(_value))
-						{
-							_difference_x1 = abs(x1 - _value);
-							_difference_y1 = abs(y1 - _value);
-							_difference_x2 = abs(x2 - _value);
-							_difference_y2 = abs(y2 - _value);
-						}
-						else if (is_instanceof(_value, Vector4))
-						{
-							_difference_x1 = abs(x1 - _value.x1);
-							_difference_y1 = abs(y1 - _value.y1);
-							_difference_x2 = abs(x2 - _value.x2);
-							_difference_y2 = abs(y2 - _value.y2);
-						}
-						else
-						{
-							_difference_x1 = abs(x1 - _value.x);
-							_difference_y1 = abs(y1 - _value.y);
-							_difference_x2 = abs(x2 - _value.x);
-							_difference_y2 = abs(y2 - _value.y);
-						}
-						
-						return new Vector4(_difference_x1, _difference_y1, _difference_x2,
-										   _difference_y2);
-					}
-					else
-					{
-						return new Vector2(abs(x1 - x2), abs(y1 - y2));
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "absoluteDifference()"], _exception);
+					_result_y1 /= _value.y1;
 				}
 				
-				return undefined;
-			}
-			
-			/// @argument			value? {real|Vector2|Vector4}
-			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the result of respectively multiplying the values of this
-			///						Vector4 by the specified value or its own properties if the value
-			///						is not specified.
-			static product = function()
-			{
-				try
+				if (_value.x2 != 0)
 				{
-					if ((argument_count > 0) and (argument[0] != undefined))
-					{
-						var _value = argument[0];
-						var _product_x1, _product_y1, _product_x2, _product_y2;
-						
-						if (is_real(_value))
-						{
-							_product_x1 = (x1 * _value);
-							_product_y1 = (y1 * _value);
-							_product_x2 = (x2 * _value);
-							_product_y2 = (y2 * _value);
-						}
-						else if (is_instanceof(_value, Vector4))
-						{
-							_product_x1 = (x1 * _value.x1);
-							_product_y1 = (y1 * _value.y1);
-							_product_x2 = (x2 * _value.x2);
-							_product_y2 = (y2 * _value.y2);
-						}
-						else
-						{
-							_product_x1 = (x1 * _value.x);
-							_product_y1 = (y1 * _value.y);
-							_product_x2 = (x2 * _value.x);
-							_product_y2 = (y2 * _value.y);
-						}
-						
-						return new Vector4(_product_x1, _product_y1, _product_x2, _product_y2);
-					}
-					else
-					{
-						return new Vector2((x1 * x2), (y1 * y2));
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "product()"], _exception);
-				}
-			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @returns			{Vector4} | On error: {undefined}
-			/// @description		Return the result of respectively dividing the values of this
-			///						Vector4 by the specified value, ignoring division by 0.
-			static quotient = function(_value)
-			{
-				try
-				{
-					var _quotient_x1 = x1;
-					var _quotient_y1 = y1;
-					var _quotient_x2 = x2;
-					var _quotient_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						if (_value != 0)
-						{
-							_quotient_x1 = (x1 / _value);
-							_quotient_y1 = (y1 / _value);
-							_quotient_x2 = (x2 / _value);
-							_quotient_y2 = (y2 / _value);
-						}
-					}
-					else
-					{
-						if (is_instanceof(_value, Vector4))
-						{
-							if (_value.x1 != 0)
-							{
-								_quotient_x1 = (x1 / _value.x1);
-							}
-							
-							if (_value.y1 != 0)
-							{
-								_quotient_y1 = (y1 / _value.y1);
-							}
-							
-							if (_value.x2 != 0)
-							{
-								_quotient_x2 = (x2 / _value.x2);
-							}
-							
-							if (_value.y2 != 0)
-							{
-								_quotient_y2 = (y2 / _value.y2);
-							}
-						}
-						else
-						{
-							if (_value.x != 0)
-							{
-								_quotient_x1 = (x1 / _value.x);
-								_quotient_x2 = (x2 / _value.x);
-							}
-							
-							if (_value.y != 0)
-							{
-								_quotient_y1 = (y1 / _value.y);
-								_quotient_y2 = (y2 / _value.y);
-							}
-						}
-					}
-					
-					return new Vector4(_quotient_x1, _quotient_y1, _quotient_x2, _quotient_y2);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "quotient()"], _exception);
+					_result_x2 /= _value.x2;
 				}
 				
-				return undefined;
-			}
-			
-			/// @argument			normalize? {bool}
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the sum of each value of this Vector4 being multiplied by
-			///						its respective other value, which is an expression of the angular
-			///						reliationship between its two points. The returned value can be
-			///						normalized, which will place it between -1 and 1.
-			static dotProduct = function(_normalize = false)
-			{
-				try
+				if (_value.y2 != 0)
 				{
-					return ((_normalize) ? dot_product_normalized(x1, y1, x2, y2)
-										 : dot_product(x1, y1, x2, y2));
+					_result_y2 /= _value.y2;
 				}
-				catch (_exception)
+			}
+			else
+			{
+				if (_value.x != 0)
 				{
-					ErrorReport.report([other, self, "dotProduct()"], _exception);
+					_result_x1 /= _value.x;
+					_result_x2 /= _value.x;
 				}
 				
-				return undefined;
+				if (_value.y != 0)
+				{
+					_result_y1 /= _value.y;
+					_result_y2 /= _value.y;
+				}
 			}
 			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @returns			{Vector2|Vector4} | On error: {undefined}
-			/// @description		Return the point at specified respective precentages within the
-			///						x and y values.
-			static interpolate = function(_value)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "divide()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			target {real|Vector4}
+	/// @argument			rate {real|Vector4}
+	/// @description		Move the x and y values towards the specified target with the specified
+	///						rate without exceeding it.
+	static approach = function(_target, _rate)
+	{
+		try
+		{
+			var _value_array = [x1, y1, x2, y2];
+			var _target_array = ((is_real(_target)) ? array_create(4, _target)
+													: [_target.x1, _target.y1, _target.x2,
+													   _target.y2]);
+			var _rate_array = ((is_real(_rate)) ? array_create(4, abs(_rate))
+												: [abs(_rate.x1), abs(_rate.y1), abs(_rate.x2),
+												   abs(_rate.y2)]);
+			var _i = 0;
+			repeat (array_length(_value_array))
 			{
-				try
+				if (_value_array[_i] > _target_array[_i])
 				{
-					if (is_real(_value))
+					_value_array[_i] -= _rate_array[_i];
+					
+					if (_value_array[_i] < _target_array[_i])
 					{
-						return new Vector2(lerp(x1, x2, _value), lerp(y1, y2, _value));
-					}
-					else  if (is_instanceof(_value, Vector4))
-					{
-						return new Vector4(lerp(x1, x2, _value.x1), lerp(y1, y2, _value.y1),
-										   lerp(x1, x2, _value.x2), lerp(y1, y2, _value.y2));
-					}
-					else
-					{
-						return new Vector2(lerp(x1, x2, _value.x), lerp(y1, y2, _value.y));
+						_value_array[_i] = _target_array[_i];
 					}
 				}
-				catch (_exception)
+				else if (_value_array[_i] < _target_array[_i])
 				{
-					ErrorReport.report([other, self, "interpolate()"], _exception);
+					_value_array[_i] += _rate_array[_i];
+					
+					if (_value_array[_i] > _target_array[_i])
+					{
+						_value_array[_i] = _target_array[_i];
+					}
 				}
 				
-				return undefined;
+				++_i;
 			}
 			
-			/// @argument			value {real|Vector2}
-			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Return the percentage value representing the specified value
-			///						inside of the boundaries made by the values of this Vector4 as a
-			///						numerical value, in which one whole number is one full percentage.
-			static percent = function(_value)
-			{
-				try
-				{
-					var _result_x, _result_y;
-					
-					if (is_real(_value))
-					{
-						_result_x = ((_value - x1) / (x2 - x1));
-						_result_y = ((_value - y1) / (y2 - y1));
-					}
-					else
-					{
-						_result_x = ((_value.x - x1) / (x2 - x1));
-						_result_y = ((_value.y - y1) / (y2 - y1));
-					}
-					
-					return new Vector2((is_nan(_result_x) ? 1 : _result_x),
-									   (is_nan(_result_y) ? 1 : _result_y));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "percent()"], _exception);
-				}
-			}
+			x1 = _value_array[0];
+			y1 = _value_array[1];
+			x2 = _value_array[2];
+			y2 = _value_array[3];
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "approach()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			boundary {Vector4}
+	/// @description		Restrict the values of this Vector4 to the boundaries of other specified
+	///						Vector4.
+	static clamp = function(_boundary)
+	{
+		try
+		{
+			var _minimum_x = min(_boundary.x1, _boundary.x2);
+			var _maximum_x = max(_boundary.x1, _boundary.x2);
+			var _minimum_y = min(_boundary.y1, _boundary.y2);
+			var _maximum_y = max(_boundary.y1, _boundary.y2);
+			var _result_x1 = clamp(x1, _minimum_x, _maximum_x);
+			var _result_y1 = clamp(y1, _minimum_y, _maximum_y);
+			var _result_x2 = clamp(x2, _minimum_x, _maximum_x);
+			var _result_y2 = clamp(y2, _minimum_y, _maximum_y);
 			
-			/// @argument			fromSecond? {bool}
-			/// @returns			{Angle} | On error: {undefined}
-			/// @description		Return the Angle from first set of the values of this Vector4
-			///						towards the second, or if specified, from second set of values
-			///						towards the first.
-			static getAngle = function(_fromSecond = false)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "clamp()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value... {real|Vector2|Vector4}
+	/// @description		Set both values to the lowest value among the values of this Vector2, a
+	///						specified number or respective values of specified Vector2 or Vector4.
+	static setMinimum = function()
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			var _i = 0;
+			repeat (argument_count)
 			{
-				try
+				var _value_current = argument[_i];
+				
+				if (is_real(_value_current))
 				{
-					return ((_fromSecond) ? new Angle(point_direction(x2, y2, x1, y1))
-										  : new Angle(point_direction(x1, y1, x2, y2)));
+					_result_x1 = min(_result_x1, _value_current);
+					_result_y1 = min(_result_y1, _value_current);
+					_result_x2 = min(_result_x2, _value_current);
+					_result_y2 = min(_result_y2, _value_current);
 				}
-				catch (_exception)
+				else if (is_instanceof(_value_current, Vector2))
 				{
-					ErrorReport.report([other, self, "sum()"], _exception);
+					_result_x1 = min(_result_x1, _value_current.x);
+					_result_y1 = min(_result_y1, _value_current.y);
+					_result_x2 = min(_result_x2, _value_current.x);
+					_result_y2 = min(_result_y2, _value_current.y);
+				}
+				else if (is_instanceof(_value_current, Vector4))
+				{
+					_result_x1 = min(_result_x1, _value_current.x1);
+					_result_y1 = min(_result_y1, _value_current.y1);
+					_result_x2 = min(_result_x2, _value_current.x2);
+					_result_y2 = min(_result_y2, _value_current.y2);
 				}
 				
-				return undefined;
+				++_i;
 			}
 			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the shortest distance between two points.
-			static getDistance = function()
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setMinimum()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	
+	/// @argument			value... {real|Vector2|Vector4}
+	/// @description		Set both values to the highest value among the values of this Vector2, a
+	///						specified number or respective values of specified Vector2 or Vector4.
+	static setMaximum = function()
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			var _i = 0;
+			repeat (argument_count)
 			{
-				try
+				var _value_current = argument[_i];
+				
+				if (is_real(_value_current))
 				{
-					return point_distance(x1, y1, x2, y2);
+					_result_x1 = max(_result_x1, _value_current);
+					_result_y1 = max(_result_y1, _value_current);
+					_result_x2 = max(_result_x2, _value_current);
+					_result_y2 = max(_result_y2, _value_current);
 				}
-				catch (_exception)
+				else if (is_instanceof(_value_current, Vector2))
 				{
-					ErrorReport.report([other, self, "getDistance()"], _exception);
+					_result_x1 = max(_result_x1, _value_current.x);
+					_result_y1 = max(_result_y1, _value_current.y);
+					_result_x2 = max(_result_x2, _value_current.x);
+					_result_y2 = max(_result_y2, _value_current.y);
+				}
+				else if (is_instanceof(_value_current, Vector4))
+				{
+					_result_x1 = max(_result_x1, _value_current.x1);
+					_result_y1 = max(_result_y1, _value_current.y1);
+					_result_x2 = max(_result_x2, _value_current.x2);
+					_result_y2 = max(_result_y2, _value_current.y2);
 				}
 				
-				return undefined;
+				++_i;
 			}
 			
-			/// @argument			target {Vector2}
-			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Return the value pair that is the closest to the specified target.
-			static getClosest = function(_target)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setMinimum()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Perform a calculation with the specified value by substracting its
+	///						respective values from the first set of values and adding them to the
+	///						second set.
+	static grow = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
 			{
-				try
-				{
-					var _difference_x1 = abs(_target.x - x1);
-					var _difference_y1 = abs(_target.y - y1);
-					var _difference_x2 = abs(_target.x - x2);
-					var _difference_y2 = abs(_target.y - y2);
-					var _minimum_x = min(_difference_x1, _difference_x2);
-					var _minimum_y = min(_difference_y1, _difference_y2);
-					
-					return new Vector2(((_minimum_x == _difference_x1) ? x1 : x2),
-									   ((_minimum_y == _difference_y1) ? y1 : y2));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getClosest()"], _exception);
-				}
+				_result_x1 -= _value;
+				_result_y1 -= _value;
+				_result_x2 += _value;
+				_result_y2 += _value;
 			}
-			
-			/// @argument			separate? {bool}
-			/// @returns			{real|Vector2} | On error: {undefined}
-			/// @description		Return the lowest of all values or if the values are specified to
-			///						be separated, the lowest of each value pair as Vector2.
-			static getMinimum = function(_separate = false)
+			else if (is_instanceof(_value, Vector4))
 			{
-				try
-				{
-					return ((_separate) ? new Vector2(min(x1, x2), min(y1, y2))
-										: min(x1, y1, x2, y2));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getMinimum()"], _exception);
-				}
+				_result_x1 -= _value.x1;
+				_result_y1 -= _value.y1;
+				_result_x2 += _value.x2;
+				_result_y2 += _value.y2;
 			}
-			
-			/// @argument			separate? {bool}
-			/// @returns			{real|Vector2} | On error: {undefined}
-			/// @description		Return the highest of all values or if the values are specified
-			///						to be separated, the highest of each value pair as Vector2.
-			static getMaximum = function(_separate = false)
+			else
 			{
-				try
-				{
-					return ((_separate) ? new Vector2(max(x1, x2), max(y1, y2))
-										: max(x1, y1, x2, y2));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getMaximum()"], _exception);
-				}
-				
-				return undefined;
+				_result_x1 -= _value.x;
+				_result_y1 -= _value.y;
+				_result_x2 += _value.x;
+				_result_y2 += _value.y;
 			}
 			
-			/// @returns			{Vector2} | On error: {undefined}
-			/// @description		Return the middle point of this Vector4.
-			static getMiddle = function()
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "grow()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value {real|Vector2|Vector4}
+	/// @description		Perform a calculation with the specified value by adding its respective
+	///						values to the first set of values and substracting them from the second
+	///						set.
+	static shrink = function(_value)
+	{
+		try
+		{
+			var _result_x1 = x1;
+			var _result_y1 = y1;
+			var _result_x2 = x2;
+			var _result_y2 = y2;
+			
+			if (is_real(_value))
 			{
-				try
-				{
-					return new Vector2(mean(x1, x2), mean(y1, y2));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getMiddle()"], _exception);
-				}
-				
-				return undefined;
+				_result_x1 += _value;
+				_result_y1 += _value;
+				_result_x2 -= _value;
+				_result_y2 -= _value;
 			}
-			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the vector length.
-			static getMagnitude = function()
+			else if (is_instanceof(_value, Vector4))
 			{
-				try
-				{
-					return sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getMagnitude()"], _exception);
-				}
-				
-				return undefined;
+				_result_x1 += _value.x1;
+				_result_y1 += _value.y1;
+				_result_x2 -= _value.x2;
+				_result_y2 -= _value.y2;
 			}
-			
-			/// @argument			magnitude? {real}
-			/// @returns			{Vector4} | On error: {undefined}
-			/// @description		Return the unit vector of this Vector4, which will have its
-			///						values placed between -1 and 1, but with the same direction.
-			///						These values are then multiplied by the specified magnitude.
-			static getNormalized = function(_magnitude = 1)
+			else
 			{
-				try
-				{
-					var _length = sqrt((x1 * x1) + (y1 * y1) + (x2 * x2) + (y2 * y2));
-					var _x1 = x1;
-					var _y1 = y1;
-					var _x2 = x2;
-					var _y2 = y2;
-					
-					if (_length != 0)
-					{
-						_x1 = ((x1 / _length) * _magnitude);
-						_y1 = ((y1 / _length) * _magnitude);
-						_x2 = ((x2 / _length) * _magnitude);
-						_y2 = ((y2 / _length) * _magnitude);
-					}
-					
-					return new Vector4(_x1, _y1, _x2, _y2);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getNormalized()"], _exception);
-				}
-				
-				return undefined;
+				_result_x1 += _value.x;
+				_result_y1 += _value.y;
+				_result_x2 -= _value.x;
+				_result_y2 -= _value.y;
 			}
 			
-			/// @argument			booleanSign? {bool}
-			/// @returns			{Vector4} | On error: {undefined}
-			/// @description		Return a Vector4 with each respective value representing the sign
-			///						of the number: -1 for a negative number, 0 for itself and 1 for a
-			///						positive number. If the result is specified to be returned as the
-			///						boolean sign, -1 will be set for 0 as well.
-			static getSign = function(_booleanSign = false)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "shrink()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @description		Swap the x and y values.
+	static flip = function()
+	{
+		var _result_x1 = y1;
+		var _result_y1 = x1;
+		var _result_x2 = y2;
+		var _result_y2 = x2;
+		
+		x1 = _result_x1;
+		y1 = _result_y1;
+		x2 = _result_x2;
+		y2 = _result_y2;
+		
+		return self;
+	}
+	
+	/// @description		Reverse the x and y values.
+	static mirror = function()
+	{
+		try
+		{
+			var _result_x1 = (-x1);
+			var _result_y1 = (-y1);
+			var _result_x2 = (-x2);
+			var _result_y2 = (-y2); 
+			
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "mirror()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @description		Reverse the x values.
+	static mirrorX = function()
+	{
+		try
+		{
+			var _result_x1 = (-x1);
+			var _result_x2 = (-x2);
+			
+			x1 = _result_x1;
+			x2 = _result_x2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "mirrorX()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @description		Reverse the y values.
+	static mirrorY = function()
+	{
+		try
+		{
+			var _result_y1 = (-y1);
+			var _result_y2 = (-y2);
+			
+			y1 = _result_y1;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "mirrorY()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			orderAscending {bool}
+	/// @description		Sort the first and second set of values so each of them is higher than the
+	///						other one, depending on the specified order.
+	static sort = function(_orderAscending)
+	{
+		try
+		{
+			var _result_x1, _result_y1, _result_x2, _result_y2;
+			
+			switch (_orderAscending)
 			{
-				try
-				{
-					if (_booleanSign)
-					{
-						return new Vector4(((x1 > 0) ? 1 : (-1)), ((y1 > 0) ? 1 : (-1)),
-										   ((x2 > 0) ? 1 : (-1)), ((y2 > 0) ? 1 : (-1)))
-					}
-					else
-					{
-						return new Vector4(sign(x1), sign(y1), sign(x2), sign(y2));
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getSign()"], _exception);
-				}
-				
-				return undefined;
+				case false:
+					_result_x1 = max(x1, x2);
+					_result_y1 = max(y1, y2);
+					_result_x2 = min(x1, x2);
+					_result_y2 = min(y1, y2);
+				break;
+				case true:
+					_result_x1 = min(x1, x2);
+					_result_y1 = min(y1, y2);
+					_result_x2 = max(x1, x2);
+					_result_y2 = max(y1, y2);
+				break;
 			}
 			
-			/// @argument			location {Vector2}
-			/// @returns			{bool} | On error: {undefined}
-			/// @description		Check if the specified point is within the area of this Vector4.
-			static isBetween = function(_location)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "sort()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @description		Round the first set of values down and second set up.
+	static roundToBorder = function()
+	{
+		x1 = floor(x1);
+		y1 = floor(y1);
+		x2 = ceil(x2);
+		y2 = ceil(y2);
+		
+		return self;
+	}
+	
+	/// @argument			x1? {real}
+	/// @argument			y1? {real}
+	/// @argument			x2? {real}
+	/// @argument			y2? {real}
+	/// @description		Set each value of this Vector4.
+	static set = function(_x1 = x1, _y1 = y1, _x2 = x2, _y2 = y2)
+	{
+		x1 = _x1;
+		y1 = _y1;
+		x2 = _x2;
+		y2 = _y2;
+		
+		return self;
+	}
+	
+	/// @argument			value {real|real[]|Scale|Vector2|Vector4}
+	/// @description		Set all of values to the ones of the specified value or first four values
+	///						of the specified array.
+	static setAll = function(_value)
+	{
+		try
+		{
+			var _result_x1, _result_y1, _result_x2, _result_y2;
+			
+			if (is_real(_value))
 			{
-				try
-				{
-					return ((_location.x == clamp(_location.x, x1, x2)) and
-							(_location.y == clamp(_location.y, y1, y2)));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "isBetween()"], _exception);
-				}
+				_result_x1 = _value;
+				_result_y1 = _value;
+				_result_x2 = _value;
+				_result_y2 = _value;
 			}
-			
-			/// @returns			{bool}
-			/// @description		Check if values of this Vector4 create no area.
-			static isDegenerate = function()
+			else if (is_array(_value))
 			{
-				return ((x1 == x2) or (y1 == y2));
+				_result_x1 = _value[0];
+				_result_y1 = _value[1];
+				_result_x2 = _value[2];
+				_result_y2 = _value[3];
 			}
-			
-		#endregion
-		#region <Setters>
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Add the specified value to respective values of this Vector4.
-			static add = function(_value)
+			else if (is_instanceof(_value, Vector4))
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 += _value;
-						_result_y1 += _value;
-						_result_x2 += _value;
-						_result_y2 += _value;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 += _value.x1;
-						_result_y1 += _value.y1;
-						_result_x2 += _value.x2;
-						_result_y2 += _value.y2;
-					}
-					else
-					{
-						_result_x1 += _value.x;
-						_result_y1 += _value.y;
-						_result_x2 += _value.x;
-						_result_y2 += _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "add()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = _value.x1;
+				_result_y1 = _value.y1;
+				_result_x2 = _value.x2;
+				_result_y2 = _value.y2;
 			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Substract the specified value from the respective values of this
-			///						Vector4.
-			static substract = function(_value)
+			else
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 -= _value;
-						_result_y1 -= _value;
-						_result_x2 -= _value;
-						_result_y2 -= _value;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 -= _value.x1;
-						_result_y1 -= _value.y1;
-						_result_x2 -= _value.x2;
-						_result_y2 -= _value.y2;
-					}
-					else
-					{
-						_result_x1 -= _value.x;
-						_result_y1 -= _value.y;
-						_result_x2 -= _value.x;
-						_result_y2 -= _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "substract()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = _value.x;
+				_result_y1 = _value.y;
+				_result_x2 = _value.x;
+				_result_y2 = _value.y;
 			}
 			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Multiply the specified value by respective values of this Vector4.
-			static multiply = function(_value)
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setAll()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value? {real|Scale|Vector2|Vector4}
+	/// @description		Set all of the values of to their equivalents rounded down or the ones of
+	///						the specified value.
+	static setFloor = function(_value)
+	{
+		try
+		{
+			var _result_x1, _result_y1, _result_x2, _result_y2;
+			
+			if (_value == undefined)
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 *= _value;
-						_result_y1 *= _value;
-						_result_x2 *= _value;
-						_result_y2 *= _value;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 *= _value.x1;
-						_result_y1 *= _value.y1;
-						_result_x2 *= _value.x2;
-						_result_y2 *= _value.y2;
-					}
-					else
-					{
-						_result_x1 *= _value.x;
-						_result_y1 *= _value.y;
-						_result_x2 *= _value.x;
-						_result_y2 *= _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "multiply()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = floor(x1);
+				_result_y1 = floor(y1);
+				_result_x2 = floor(x2);
+				_result_y2 = floor(y2);
 			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Divide respective values of this Vector4 by the specified value,
-			///						ignoring division by 0.
-			static divide = function(_value)
+			else if (is_real(_value))
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						if (_value != 0)
-						{
-							_result_x1 /= _value;
-							_result_y1 /= _value;
-							_result_x2 /= _value;
-							_result_y2 /= _value;
-						}
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						if (_value.x1 != 0)
-						{
-							_result_x1 /= _value.x1;
-						}
-						
-						if (_value.y1 != 0)
-						{
-							_result_y1 /= _value.y1;
-						}
-						
-						if (_value.x2 != 0)
-						{
-							_result_x2 /= _value.x2;
-						}
-						
-						if (_value.y2 != 0)
-						{
-							_result_y2 /= _value.y2;
-						}
-					}
-					else
-					{
-						if (_value.x != 0)
-						{
-							_result_x1 /= _value.x;
-							_result_x2 /= _value.x;
-						}
-						
-						if (_value.y != 0)
-						{
-							_result_y1 /= _value.y;
-							_result_y2 /= _value.y;
-						}
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "divide()"], _exception);
-				}
-				
-				return self;
+				var _value_floor = floor(_value);
+				_result_x1 = _value_floor;
+				_result_y1 = _value_floor;
+				_result_x2 = _value_floor;
+				_result_y2 = _value_floor;
 			}
-			
-			/// @argument			target {real|Vector4}
-			/// @argument			rate {real|Vector4}
-			/// @description		Move the x and y values towards the specified target with the
-			///						specified rate without exceeding it.
-			static approach = function(_target, _rate)
+			else if (is_instanceof(_value, Vector4))
 			{
-				try
-				{
-					var _value_array = [x1, y1, x2, y2];
-					var _target_array = ((is_real(_target)) ? array_create(4, _target)
-															: [_target.x1, _target.y1, _target.x2,
-															   _target.y2]);
-					var _rate_array = ((is_real(_rate)) ? array_create(4, abs(_rate))
-														: [abs(_rate.x1), abs(_rate.y1),
-														   abs(_rate.x2), abs(_rate.y2)]);
-					var _i = 0;
-					repeat (array_length(_value_array))
-					{
-						if (_value_array[_i] > _target_array[_i])
-						{
-							_value_array[_i] -= _rate_array[_i];
-							
-							if (_value_array[_i] < _target_array[_i])
-							{
-								_value_array[_i] = _target_array[_i];
-							}
-						}
-						else if (_value_array[_i] < _target_array[_i])
-						{
-							_value_array[_i] += _rate_array[_i];
-							
-							if (_value_array[_i] > _target_array[_i])
-							{
-								_value_array[_i] = _target_array[_i];
-							}
-						}
-						
-						++_i;
-					}
-					
-					x1 = _value_array[0];
-					y1 = _value_array[1];
-					x2 = _value_array[2];
-					y2 = _value_array[3];
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "approach()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = floor(_value.x1);
+				_result_y1 = floor(_value.y1);
+				_result_x2 = floor(_value.x2);
+				_result_y2 = floor(_value.y2);
 			}
-			
-			/// @argument			boundary {Vector4}
-			/// @description		Restrict the values of this Vector4 to the boundaries of other
-			///						specified Vector4.
-			static clamp = function(_boundary)
+			else
 			{
-				try
-				{
-					var _minimum_x = min(_boundary.x1, _boundary.x2);
-					var _maximum_x = max(_boundary.x1, _boundary.x2);
-					var _minimum_y = min(_boundary.y1, _boundary.y2);
-					var _maximum_y = max(_boundary.y1, _boundary.y2);
-					var _result_x1 = clamp(x1, _minimum_x, _maximum_x);
-					var _result_y1 = clamp(y1, _minimum_y, _maximum_y);
-					var _result_x2 = clamp(x2, _minimum_x, _maximum_x);
-					var _result_y2 = clamp(y2, _minimum_y, _maximum_y);
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "clamp()"], _exception);
-				}
-				
-				return self;
+				var _value_x_floor = floor(_value.x);
+				var _value_y_floor = floor(_value.y);
+				_result_x1 = _value_x_floor;
+				_result_y1 = _value_y_floor;
+				_result_x2 = _value_x_floor;
+				_result_y2 = _value_y_floor;
 			}
 			
-			/// @argument			value... {real|Vector2|Vector4}
-			/// @description		Set both values to the lowest value among the values of this
-			///						Vector2, a specified number or respective values of specified
-			///						Vector2 or Vector4.
-			static setMinimum = function()
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setFloor()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value? {real|Scale|Vector2|Vector4}
+	/// @description		Set all of the values of to their equivalents rounded down or up or the
+	///						ones of the specified value.
+	static setRound = function(_value)
+	{
+		try
+		{
+			var _result_x1, _result_y1, _result_x2, _result_y2;
+			
+			if (_value == undefined)
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					var _i = 0;
-					repeat (argument_count)
-					{
-						var _value_current = argument[_i];
-						
-						if (is_real(_value_current))
-						{
-							_result_x1 = min(_result_x1, _value_current);
-							_result_y1 = min(_result_y1, _value_current);
-							_result_x2 = min(_result_x2, _value_current);
-							_result_y2 = min(_result_y2, _value_current);
-						}
-						else if (is_instanceof(_value_current, Vector2))
-						{
-							_result_x1 = min(_result_x1, _value_current.x);
-							_result_y1 = min(_result_y1, _value_current.y);
-							_result_x2 = min(_result_x2, _value_current.x);
-							_result_y2 = min(_result_y2, _value_current.y);
-						}
-						else if (is_instanceof(_value_current, Vector4))
-						{
-							_result_x1 = min(_result_x1, _value_current.x1);
-							_result_y1 = min(_result_y1, _value_current.y1);
-							_result_x2 = min(_result_x2, _value_current.x2);
-							_result_y2 = min(_result_y2, _value_current.y2);
-						}
-						
-						++_i;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setMinimum()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = round(x1);
+				_result_y1 = round(y1);
+				_result_x2 = round(x2);
+				_result_y2 = round(y2);
 			}
-			
-			
-			/// @argument			value... {real|Vector2|Vector4}
-			/// @description		Set both values to the highest value among the values of this
-			///						Vector2, a specified number or respective values of specified
-			///						Vector2 or Vector4.
-			static setMaximum = function()
+			else if (is_real(_value))
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					var _i = 0;
-					repeat (argument_count)
-					{
-						var _value_current = argument[_i];
-						
-						if (is_real(_value_current))
-						{
-							_result_x1 = max(_result_x1, _value_current);
-							_result_y1 = max(_result_y1, _value_current);
-							_result_x2 = max(_result_x2, _value_current);
-							_result_y2 = max(_result_y2, _value_current);
-						}
-						else if (is_instanceof(_value_current, Vector2))
-						{
-							_result_x1 = max(_result_x1, _value_current.x);
-							_result_y1 = max(_result_y1, _value_current.y);
-							_result_x2 = max(_result_x2, _value_current.x);
-							_result_y2 = max(_result_y2, _value_current.y);
-						}
-						else if (is_instanceof(_value_current, Vector4))
-						{
-							_result_x1 = max(_result_x1, _value_current.x1);
-							_result_y1 = max(_result_y1, _value_current.y1);
-							_result_x2 = max(_result_x2, _value_current.x2);
-							_result_y2 = max(_result_y2, _value_current.y2);
-						}
-						
-						++_i;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setMinimum()"], _exception);
-				}
-				
-				return self;
+				var _value_round = round(_value);
+				_result_x1 = _value_round;
+				_result_y1 = _value_round;
+				_result_x2 = _value_round;
+				_result_y2 = _value_round;
 			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Perform a calculation with the specified value by substracting
-			///						its respective values from the first set of values and adding
-			///						them to the second set.
-			static grow = function(_value)
-			{				
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 -= _value;
-						_result_y1 -= _value;
-						_result_x2 += _value;
-						_result_y2 += _value;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 -= _value.x1;
-						_result_y1 -= _value.y1;
-						_result_x2 += _value.x2;
-						_result_y2 += _value.y2;
-					}
-					else
-					{
-						_result_x1 -= _value.x;
-						_result_y1 -= _value.y;
-						_result_x2 += _value.x;
-						_result_y2 += _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "grow()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			value {real|Vector2|Vector4}
-			/// @description		Perform a calculation with the specified value by adding its
-			///						respective values to the first set of values and substracting
-			///						them from the second set.
-			static shrink = function(_value)
+			else if (is_instanceof(_value, Vector4))
 			{
-				try
-				{
-					var _result_x1 = x1;
-					var _result_y1 = y1;
-					var _result_x2 = x2;
-					var _result_y2 = y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 += _value;
-						_result_y1 += _value;
-						_result_x2 -= _value;
-						_result_y2 -= _value;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 += _value.x1;
-						_result_y1 += _value.y1;
-						_result_x2 -= _value.x2;
-						_result_y2 -= _value.y2;
-					}
-					else
-					{
-						_result_x1 += _value.x;
-						_result_y1 += _value.y;
-						_result_x2 -= _value.x;
-						_result_y2 -= _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "shrink()"], _exception);
-				}
-				
-				return self;
+				_result_x1 = round(_value.x1);
+				_result_y1 = round(_value.y1);
+				_result_x2 = round(_value.x2);
+				_result_y2 = round(_value.y2);
+			}
+			else
+			{
+				var _value_x_round = round(_value.x);
+				var _value_y_round = round(_value.y);
+				_result_x1 = _value_x_round;
+				_result_y1 = _value_y_round;
+				_result_x2 = _value_x_round;
+				_result_y2 = _value_y_round;
 			}
 			
-			/// @description		Swap the x and y values.
-			static flip = function()
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setRound()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			value? {real|Scale|Vector2|Vector4}
+	/// @description		Set all of the values of to their equivalents rounded up or the ones of
+	///						the specified value.
+	static setCeil = function(_value)
+	{
+		try
+		{
+			var _result_x1, _result_y1, _result_x2, _result_y2;
+			
+			if (_value == undefined)
 			{
-				var _result_x1 = y1;
-				var _result_y1 = x1;
-				var _result_x2 = y2;
-				var _result_y2 = x2;
+				_result_x1 = ceil(x1);
+				_result_y1 = ceil(y1);
+				_result_x2 = ceil(x2);
+				_result_y2 = ceil(y2);
+			}
+			else if (is_real(_value))
+			{
+				var _value_ceil = ceil(_value);
+				_result_x1 = _value_ceil;
+				_result_y1 = _value_ceil;
+				_result_x2 = _value_ceil;
+				_result_y2 = _value_ceil;
+			}
+			else if (is_instanceof(_value, Vector4))
+			{
+				_result_x1 = ceil(_value.x1);
+				_result_y1 = ceil(_value.y1);
+				_result_x2 = ceil(_value.x2);
+				_result_y2 = ceil(_value.y2);
+			}
+			else
+			{
+				var _value_x_ceil = ceil(_value.x);
+				var _value_y_ceil = ceil(_value.y);
+				_result_x1 = _value_x_ceil;
+				_result_y1 = _value_y_ceil;
+				_result_x2 = _value_x_ceil;
+				_result_y2 = _value_y_ceil;
+			}
+			
+			x1 = _result_x1;
+			y1 = _result_y1;
+			x2 = _result_x2;
+			y2 = _result_y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setCeil()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			device? {int}
+	/// @argument			GUI? {bool}
+	//  @see				display_set_gui_size()
+	/// @description		Set all of the values to the ones of the system cursor. A target device
+	///						can be specified for cases where multiple cursor inputs are used, and if
+	///						it is specified, the position can then be translated to the GUI layer to
+	///						depend on its size.
+	static setCursor = function(_device, _GUI = false)
+	{
+		try
+		{
+			var _cursor_x, _cursor_y;
+			
+			if (_device == undefined)
+			{
+				_cursor_x = mouse_x;
+				_cursor_y = mouse_y;
+			}
+			else
+			{
+				if (_GUI)
+				{
+					_cursor_x = device_mouse_x_to_gui(_device);
+					_cursor_y = device_mouse_y_to_gui(_device);
+				}
+				else
+				{
+					_cursor_x = device_mouse_x(_device);
+					_cursor_y = device_mouse_y(_device);
+				}
+			}
+			
+			x1 = _cursor_x;
+			y1 = _cursor_y;
+			x2 = _cursor_x;
+			y2 = _cursor_y;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setCursor()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			array {Vector2[]}
+	/// @description		Set all of the values to the lowest and highest x and y values of Vector2
+	///						in the specified array.
+	static setBoundary = function(_array)
+	{
+		try
+		{
+			var _value_count = array_length(_array);
+			
+			if (_value_count > 0)
+			{
+				var _value_first = _array[0];
+				var _result_x1 = _value_first.x;
+				var _result_y1 = _value_first.y;
+				var _result_x2 = _value_first.x;
+				var _result_y2 = _value_first.y;
+				var _i = 1;
+				repeat (_value_count - _i)
+				{
+					var _value_current = _array[_i];
+					
+					_result_x1 = min(_result_x1, _value_current.x);
+					_result_y1 = min(_result_y1, _value_current.y);
+					_result_x2 = max(_result_x2, _value_current.x);
+					_result_y2 = max(_result_y2, _value_current.y);
+					
+					++_i;
+				}
 				
 				x1 = _result_x1;
 				y1 = _result_y1;
 				x2 = _result_x2;
 				y2 = _result_y2;
-				
-				return self;
 			}
-			
-			/// @description		Reverse the x and y values.
-			static mirror = function()
-			{
-				try
-				{
-					var _result_x1 = (-x1);
-					var _result_y1 = (-y1);
-					var _result_x2 = (-x2);
-					var _result_y2 = (-y2); 
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "mirror()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @description		Reverse the x values.
-			static mirrorX = function()
-			{
-				try
-				{
-					var _result_x1 = (-x1);
-					var _result_x2 = (-x2);
-					
-					x1 = _result_x1;
-					x2 = _result_x2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "mirrorX()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @description		Reverse the y values.
-			static mirrorY = function()
-			{
-				try
-				{
-					var _result_y1 = (-y1);
-					var _result_y2 = (-y2);
-					
-					y1 = _result_y1;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "mirrorY()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			orderAscending {bool}
-			/// @description		Sort the first and second set of values so each of them is higher
-			///						than the other one, depending on the specified order.
-			static sort = function(_orderAscending)
-			{
-				try
-				{
-					var _result_x1, _result_y1, _result_x2, _result_y2;
-					
-					switch (_orderAscending)
-					{
-						case false:
-							_result_x1 = max(x1, x2);
-							_result_y1 = max(y1, y2);
-							_result_x2 = min(x1, x2);
-							_result_y2 = min(y1, y2);
-						break;
-						case true:
-							_result_x1 = min(x1, x2);
-							_result_y1 = min(y1, y2);
-							_result_x2 = max(x1, x2);
-							_result_y2 = max(y1, y2);
-						break;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "sort()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @description		Round the first set of values down and second set up.
-			static roundToBorder = function()
-			{
-				x1 = floor(x1);
-				y1 = floor(y1);
-				x2 = ceil(x2);
-				y2 = ceil(y2);
-				
-				return self;
-			}
-			
-			/// @argument			x1? {real}
-			/// @argument			y1? {real}
-			/// @argument			x2? {real}
-			/// @argument			y2? {real}
-			/// @description		Set each value of this Vector4.
-			static set = function(_x1 = x1, _y1 = y1, _x2 = x2, _y2 = y2)
-			{
-				x1 = _x1;
-				y1 = _y1;
-				x2 = _x2;
-				y2 = _y2;
-				
-				return self;
-			}
-			
-			/// @argument			value {real|real[]|Scale|Vector2|Vector4}
-			/// @description		Set all of values to the ones of the specified value or first four
-			///						values of the specified array.
-			static setAll = function(_value)
-			{
-				try
-				{
-					var _result_x1, _result_y1, _result_x2, _result_y2;
-					
-					if (is_real(_value))
-					{
-						_result_x1 = _value;
-						_result_y1 = _value;
-						_result_x2 = _value;
-						_result_y2 = _value;
-					}
-					else if (is_array(_value))
-					{
-						_result_x1 = _value[0];
-						_result_y1 = _value[1];
-						_result_x2 = _value[2];
-						_result_y2 = _value[3];
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 = _value.x1;
-						_result_y1 = _value.y1;
-						_result_x2 = _value.x2;
-						_result_y2 = _value.y2;
-					}
-					else
-					{
-						_result_x1 = _value.x;
-						_result_y1 = _value.y;
-						_result_x2 = _value.x;
-						_result_y2 = _value.y;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setAll()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			value? {real|Scale|Vector2|Vector4}
-			/// @description		Set all of the values of to their equivalents rounded down or the
-			///						ones of the specified value.
-			static setFloor = function(_value)
-			{
-				try
-				{
-					var _result_x1, _result_y1, _result_x2, _result_y2;
-					
-					if (_value == undefined)
-					{
-						_result_x1 = floor(x1);
-						_result_y1 = floor(y1);
-						_result_x2 = floor(x2);
-						_result_y2 = floor(y2);
-					}
-					else if (is_real(_value))
-					{
-						var _value_floor = floor(_value);
-						_result_x1 = _value_floor;
-						_result_y1 = _value_floor;
-						_result_x2 = _value_floor;
-						_result_y2 = _value_floor;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 = floor(_value.x1);
-						_result_y1 = floor(_value.y1);
-						_result_x2 = floor(_value.x2);
-						_result_y2 = floor(_value.y2);
-					}
-					else
-					{
-						var _value_x_floor = floor(_value.x);
-						var _value_y_floor = floor(_value.y);
-						_result_x1 = _value_x_floor;
-						_result_y1 = _value_y_floor;
-						_result_x2 = _value_x_floor;
-						_result_y2 = _value_y_floor;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setFloor()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			value? {real|Scale|Vector2|Vector4}
-			/// @description		Set all of the values of to their equivalents rounded down or up
-			///						or the ones of the specified value.
-			static setRound = function(_value)
-			{
-				try
-				{
-					var _result_x1, _result_y1, _result_x2, _result_y2;
-					
-					if (_value == undefined)
-					{
-						_result_x1 = round(x1);
-						_result_y1 = round(y1);
-						_result_x2 = round(x2);
-						_result_y2 = round(y2);
-					}
-					else if (is_real(_value))
-					{
-						var _value_round = round(_value);
-						_result_x1 = _value_round;
-						_result_y1 = _value_round;
-						_result_x2 = _value_round;
-						_result_y2 = _value_round;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 = round(_value.x1);
-						_result_y1 = round(_value.y1);
-						_result_x2 = round(_value.x2);
-						_result_y2 = round(_value.y2);
-					}
-					else
-					{
-						var _value_x_round = round(_value.x);
-						var _value_y_round = round(_value.y);
-						_result_x1 = _value_x_round;
-						_result_y1 = _value_y_round;
-						_result_x2 = _value_x_round;
-						_result_y2 = _value_y_round;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setRound()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			value? {real|Scale|Vector2|Vector4}
-			/// @description		Set all of the values of to their equivalents rounded up or the
-			///						ones of the specified value.
-			static setCeil = function(_value)
-			{
-				try
-				{
-					var _result_x1, _result_y1, _result_x2, _result_y2;
-					
-					if (_value == undefined)
-					{
-						_result_x1 = ceil(x1);
-						_result_y1 = ceil(y1);
-						_result_x2 = ceil(x2);
-						_result_y2 = ceil(y2);
-					}
-					else if (is_real(_value))
-					{
-						var _value_ceil = ceil(_value);
-						_result_x1 = _value_ceil;
-						_result_y1 = _value_ceil;
-						_result_x2 = _value_ceil;
-						_result_y2 = _value_ceil;
-					}
-					else if (is_instanceof(_value, Vector4))
-					{
-						_result_x1 = ceil(_value.x1);
-						_result_y1 = ceil(_value.y1);
-						_result_x2 = ceil(_value.x2);
-						_result_y2 = ceil(_value.y2);
-					}
-					else
-					{
-						var _value_x_ceil = ceil(_value.x);
-						var _value_y_ceil = ceil(_value.y);
-						_result_x1 = _value_x_ceil;
-						_result_y1 = _value_y_ceil;
-						_result_x2 = _value_x_ceil;
-						_result_y2 = _value_y_ceil;
-					}
-					
-					x1 = _result_x1;
-					y1 = _result_y1;
-					x2 = _result_x2;
-					y2 = _result_y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setCeil()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			device? {int}
-			/// @argument			GUI? {bool}
-			//  @see				display_set_gui_size()
-			/// @description		Set all of the values to the ones of the system cursor. A target
-			///						device can be specified for cases where multiple cursor inputs are
-			///						used, and if it is specified, the position can then be translated
-			///						to the GUI layer to depend on its size.
-			static setCursor = function(_device, _GUI = false)
-			{
-				try
-				{
-					var _cursor_x, _cursor_y;
-					
-					if (_device == undefined)
-					{
-						_cursor_x = mouse_x;
-						_cursor_y = mouse_y;
-					}
-					else
-					{
-						if (_GUI)
-						{
-							_cursor_x = device_mouse_x_to_gui(_device);
-							_cursor_y = device_mouse_y_to_gui(_device);
-						}
-						else
-						{
-							_cursor_x = device_mouse_x(_device);
-							_cursor_y = device_mouse_y(_device);
-						}
-					}
-					
-					x1 = _cursor_x;
-					y1 = _cursor_y;
-					x2 = _cursor_x;
-					y2 = _cursor_y;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setCursor()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			array {Vector2[]}
-			/// @description		Set all of the values to the lowest and highest x and y values of
-			///						Vector2 in the specified array.
-			static setBoundary = function(_array)
-			{
-				try
-				{
-					var _value_count = array_length(_array);
-					
-					if (_value_count > 0)
-					{
-						var _value_first = _array[0];
-						var _result_x1 = _value_first.x;
-						var _result_y1 = _value_first.y;
-						var _result_x2 = _value_first.x;
-						var _result_y2 = _value_first.y;
-						var _i = 1;
-						repeat (_value_count - _i)
-						{
-							var _value_current = _array[_i];
-							
-							_result_x1 = min(_result_x1, _value_current.x);
-							_result_y1 = min(_result_y1, _value_current.y);
-							_result_x2 = max(_result_x2, _value_current.x);
-							_result_y2 = max(_result_y2, _value_current.y);
-							
-							++_i;
-						}
-						
-						x1 = _result_x1;
-						y1 = _result_y1;
-						x2 = _result_x2;
-						y2 = _result_y2;
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setBoundary()"], _exception);
-				}
-				
-				return self;
-			}
-			
-		#endregion
-		#region <Conversion>
-			
-			/// @argument			multiline? {bool}
-			/// @returns			{string}
-			/// @description		Create a string representing this constructor.
-			///						Overrides the string() conversion.
-			///						Content will be represented with the output of X and then Y
-			///						values of this Vector4.
-			static toString = function(_multiline = false)
-			{
-				if (self.isFunctional())
-				{
-					var _mark_separator = ((_multiline) ? "\n" : ", ");
-					var _string = ("x1: " + string(x1) + _mark_separator +
-								   "y1: " + string(y1) + _mark_separator +
-								   "x2: " + string(x2) + _mark_separator +
-								   "y2: " + string(y2));
-					
-					return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
-				}
-				else
-				{
-					return (instanceof(self) + "<>");
-				}
-			}
-			
-			/// @returns			{real[]}
-			/// @description		Return an array containing all values of this Container.
-			static toArray = function()
-			{
-				return [x1, y1, x2, y2];
-			}
-			
-			/// @returns			{Vector2[]}
-			/// @description		Return an array of two Vector2 with the values of this Vector4.
-			static split = function()
-			{
-				return [new Vector2(x1, y1), new Vector2(x2, y2)];
-			}
-			
-			/// @argument			value1 {Vector2}
-			/// @argument			value2 {Vector2}
-			/// @description		Set pairs of values of two Vector2 to the values of this Vector4.
-			static combine = function(_value1, _value2)
-			{
-				try
-				{
-					var _x1 = _value1.x;
-					var _y1 = _value1.y;
-					var _x2 = _value2.x;
-					var _y2 = _value2.y;
-					
-					x1 = _x1;
-					y1 = _y1;
-					x2 = _x2;
-					y2 = _y2;
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "combine()"], _exception);
-				}
-				
-				return self;
-			}
-			
-		#endregion
-	#endregion
-	#region [Constructor]
-		
-		static constructor = Vector4;
-		
-		static prototype = {};
-		var _property = variable_struct_get_names(prototype);
-		var _i = 0;
-		repeat (array_length(_property))
+		}
+		catch (_exception)
 		{
-			var _name = _property[_i];
-			var _value = variable_struct_get(prototype, _name);
-			
-			variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
-			
-			++_i;
+			ErrorReport.report([other, self, "setBoundary()"], _exception);
 		}
 		
-		var _argument = array_create(argument_count, undefined);
-		var _i = 0;
-		repeat (argument_count)
+		return self;
+	}
+	
+   #endregion
+   #region <Conversion>
+	
+	/// @argument			multiline? {bool}
+	/// @returns			{string}
+	/// @description		Create a string representing this constructor.
+	///						Overrides the string() conversion.
+	///						Content will be represented with the output of X and then Y values of this
+	///						Vector4.
+	static toString = function(_multiline = false)
+	{
+		if (self.isFunctional())
 		{
-			_argument[_i] = argument[_i];
+			var _mark_separator = ((_multiline) ? "\n" : ", ");
+			var _string = ("x1: " + string(x1) + _mark_separator +
+						   "y1: " + string(y1) + _mark_separator +
+						   "x2: " + string(x2) + _mark_separator +
+						   "y2: " + string(y2));
 			
-			++_i;
+			return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+		}
+		else
+		{
+			return (instanceof(self) + "<>");
+		}
+	}
+	
+	/// @returns			{real[]}
+	/// @description		Return an array containing all values of this Container.
+	static toArray = function()
+	{
+		return [x1, y1, x2, y2];
+	}
+	
+	/// @returns			{Vector2[]}
+	/// @description		Return an array of two Vector2 with the values of this Vector4.
+	static split = function()
+	{
+		return [new Vector2(x1, y1), new Vector2(x2, y2)];
+	}
+	
+	/// @argument			value1 {Vector2}
+	/// @argument			value2 {Vector2}
+	/// @description		Set pairs of values of two Vector2 to the values of this Vector4.
+	static combine = function(_value1, _value2)
+	{
+		try
+		{
+			var _x1 = _value1.x;
+			var _y1 = _value1.y;
+			var _x2 = _value2.x;
+			var _y2 = _value2.y;
+			
+			x1 = _x1;
+			y1 = _y1;
+			x2 = _x2;
+			y2 = _y2;
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "combine()"], _exception);
 		}
 		
-		script_execute_ext(self.construct, _argument);
+		return self;
+	}
+	
+   #endregion
+  #endregion
+  #region [Constructor]
+	
+	static constructor = Vector4;
+	
+	static prototype = {};
+	var _property = variable_struct_get_names(prototype);
+	var _i = 0;
+	repeat (array_length(_property))
+	{
+		var _name = _property[_i];
+		var _value = variable_struct_get(prototype, _name);
 		
-	#endregion
-	#region [Static Constructions]
+		variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
 		
-		static zero = new Vector4(0, 0, 0, 0);
-		static zeroOne = new Vector4(0, 0, 1, 1);
-		static one = new Vector4(1, 1, 1, 1);
-		static oneZero = new Vector4(1, 1, 0, 0);
-		static negative = new Vector4((-1), (-1), (-1), (-1));
+		++_i;
+	}
+	
+	var _argument = array_create(argument_count, undefined);
+	var _i = 0;
+	repeat (argument_count)
+	{
+		_argument[_i] = argument[_i];
 		
-	#endregion
+		++_i;
+	}
+	
+	script_execute_ext(self.construct, _argument);
+	
+  #endregion
+  #region [Static Constructions]
+	
+	static zero = new Vector4(0, 0, 0, 0);
+	static zeroOne = new Vector4(0, 0, 1, 1);
+	static one = new Vector4(1, 1, 1, 1);
+	static oneZero = new Vector4(1, 1, 0, 0);
+	static negative = new Vector4((-1), (-1), (-1), (-1));
+	
+   #endregion
 }
 
 new Vector4();

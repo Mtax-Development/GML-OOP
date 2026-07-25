@@ -1,390 +1,389 @@
-//  @function				Range()
-/// @argument				minimum {real}
-/// @argument				maximum {real}
-/// @description			Constructs a Container for numeric Range made of two different numbers.
-//							
-//							Construction types:
-//							- New constructor
-//							- Empty: {void|undefined}
-//							- Constructor copy: other {Range}
+//  @function			Range()
+/// @argument			minimum {real}
+/// @argument			maximum {real}
+/// @description		Constructs a Container for numeric Range made of two different numbers.
+//						
+//						Construction types:
+//						- New constructor
+//						- Empty: {void|undefined}
+//						- Constructor copy: other {Range}
 function Range() constructor
 //  @feather	ignore all
 {
-	#region [Methods]
-		#region <Management>
-			
-			/// @description		Initialize this constructor.
-			static construct = function()
-			{
-				//|Construction type: Empty.
-				minimum = undefined;
-				maximum = undefined;
-				
-				if ((argument_count > 0) and (argument[0] != undefined))
-				{
-					if (is_instanceof(argument[0], Range))
-					{
-						//|Construction type: Constructor copy.
-						var _other = argument[0];
-						
-						minimum = _other.minimum;
-						maximum = _other.maximum;
-					}
-					else
-					{
-						//|Construction type: New constructor.
-						minimum = argument[0];
-						maximum = argument[1];
-					}
-				}
-				
-				return self;
-			}
-			
-			/// @returns			{bool}
-			/// @description		Check if this constructor is functional.
-			static isFunctional = function()
-			{
-				return ((is_real(minimum)) and (is_real(maximum)));
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			/// @argument			value? {real|Range}
-			/// @returns			{real|Range} | On error: {undefined}
-			/// @description		Return the sum of either the values of this Range or them added to
-			///						the specified value or the ones of the specified Range.
-			static sum = function(_value)
-			{
-				try
-				{
-					var _minimum, _maximum;
-					
-					if (is_real(_value))
-					{
-						_minimum = (minimum + _value);
-						_maximum = (maximum + _value);
-					}
-					else if (is_instanceof(_value, Range))
-					{
-						_minimum = (minimum + _value.minimum);
-						_maximum = (maximum + _value.maximum);
-					}
-					else
-					{
-						return (minimum + maximum);
-					}
-					
-					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "sum()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value? {real|Range}
-			/// @returns			{real|Range} | On error: {undefined}
-			/// @description		Return the difference between either the values of this Range or
-			///						them and the specified value or the ones of the specified Range.
-			static difference = function(_value)
-			{
-				try
-				{
-					var _minimum, _maximum;
-					
-					if (is_real(_value))
-					{
-						_minimum = abs(minimum - _value);
-						_maximum = abs(maximum - _value);
-					}
-					else if (is_instanceof(_value, Range))
-					{
-						_minimum = abs(minimum - _value.minimum);
-						_maximum = abs(maximum - _value.maximum);
-					}
-					else
-					{
-						return abs(minimum - maximum);
-					}
-					
-					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "difference()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value? {real|Range}
-			/// @returns			{real|Range} | On error: {undefined}
-			/// @description		Return the result of multiplication of either the values of this
-			///						Range or them multiplied by the specified value or the ones of the
-			///						specified Range.
-			static product = function(_value)
-			{
-				try
-				{
-					var _minimum, _maximum;
-					
-					if (is_real(_value))
-					{
-						_minimum = (minimum * _value);
-						_maximum = (maximum * _value);
-					}
-					else if (is_instanceof(_value, Range))
-					{
-						_minimum = (minimum * _value.minimum);
-						_maximum = (maximum * _value.maximum);
-					}
-					else
-					{
-						return (minimum * maximum);
-					}
-					
-					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "product()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value {real|Range}
-			/// @returns			{Range} | On error: {undefined}
-			/// @description		Return the result of division of the values of this Range divided
-			///						by the specified value or the ones of the specified Range. Attempts
-			///						of division by 0 are ignored.
-			static quotient = function(_value)
-			{
-				try
-				{
-					var _minimum = minimum;
-					var _maximum = maximum;
-					
-					if (is_real(_value))
-					{
-						if (_value != 0)
-						{
-							_minimum = (minimum * _value);
-							_maximum = (maximum * _value);
-						}
-					}
-					else if (is_instanceof(_value, Range))
-					{
-						if (_value.minimum != 0)
-						{
-							_minimum = (minimum * _value.minimum);
-						}
-						
-						if (_value.maximum != 0)
-						{
-							_maximum = (maximum * _value.maximum);
-						}
-					}
-					
-					return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "quotient()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value {real}
-			/// @returns			{real} | On error: {any}
-			/// @description		Restrict the specified number to boundaries of this Range.
-			static clamp = function(_value)
-			{
-				try
-				{
-					return clamp(_value, minimum, maximum);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "clamp()"], _exception);
-				}
-				
-				return _value;
-			}
-			
-			/// @argument			value {real}
-			/// @returns			{real} | On error: {any}
-			/// @description		Return the value at the position within this Range of the specified
-			///						precentage.
-			static interpolate = function(_value)
-			{
-				try
-				{
-					return lerp(minimum, maximum, _value);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "interpolate()"], _exception);
-				}
-				
-				return _value;
-			}
-			
-			/// @returns			{real} | On error: {any}
-			/// @description		Return the percentage value representing the specified value inside
-			///						of the Range as a numerical value, in which one whole number is one
-			///						full percentage.
-			static percent = function(_value)
-			{
-				try
-				{
-					return ((_value - minimum) / (maximum - minimum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "percent()"], _exception);
-				}
-				
-				return _value;
-			}
-			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return a random real number from this Range.
-			static randomReal = function()
-			{
-				try
-				{
-					return random_range(minimum, maximum);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "randomReal()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @returns			{int} | On error: {undefined}
-			/// @description		Return a random integer number from this Range.
-			static randomInt = function()
-			{
-				try
-				{
-					return irandom_range(minimum, maximum);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "randomInt()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @returns			{real} | On error: {undefined}
-			/// @description		Return the middle point of this Range.
-			static getMiddle = function()
-			{
-				try
-				{
-					return lerp(minimum, maximum, 0.5);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getMiddle()"], _exception);
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			value {real}
-			/// @returns			{bool}
-			/// @description		Check whether a number is in or equal to borders of this Range.
-			static isBetween = function(_value)
-			{
-				try
-				{
-					return (_value == clamp(_value, minimum, maximum));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "isBetween()"], _exception);
-				}
-				
-				return false;
-			}
-			
-			/// @argument			value {real}
-			/// @returns			{bool}
-			/// @description		Check whether a number is equal to the boundaries of this Range.
-			static isBoundary = function(_value)
-			{
-				return ((_value == minimum) or (_value == maximum));
-			}
-			
-		#endregion
-		#region <Conversion>
-			
-			/// @argument			multiline? {bool}
-			/// @returns			{string}
-			/// @description		Create a string representing this constructor.
-			///						Overrides the string() conversion.
-			///						Content will be represented with the values of this Container.
-			static toString = function(_multiline = false)
-			{
-				var _mark_separator = ((_multiline) ? "\n" : " - ");
-				var _string = (string(minimum) + _mark_separator + string(maximum));
-				
-				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
-			}
-			
-			/// @returns			{real[]}
-			/// @description		Return an array containing all values of this Container.
-			static toArray = function()
-			{
-				return [minimum, maximum];
-			}
-			
-		#endregion
-	#endregion
-	#region [Constructor]
+  #region [Methods]
+   #region <Management>
 		
-		static constructor = Range;
-		
-		static prototype = {};
-		var _property = variable_struct_get_names(prototype);
-		var _i = 0;
-		repeat (array_length(_property))
+		/// @description		Initialize this constructor.
+		static construct = function()
 		{
-			var _name = _property[_i];
-			var _value = variable_struct_get(prototype, _name);
+			//|Construction type: Empty.
+			minimum = undefined;
+			maximum = undefined;
 			
-			variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
+			if ((argument_count > 0) and (argument[0] != undefined))
+			{
+				if (is_instanceof(argument[0], Range))
+				{
+					//|Construction type: Constructor copy.
+					var _other = argument[0];
+					
+					minimum = _other.minimum;
+					maximum = _other.maximum;
+				}
+				else
+				{
+					//|Construction type: New constructor.
+					minimum = argument[0];
+					maximum = argument[1];
+				}
+			}
 			
-			++_i;
+			return self;
 		}
 		
-		var _argument = array_create(argument_count, undefined);
-		var _i = 0;
-		repeat (argument_count)
+		/// @returns			{bool}
+		/// @description		Check if this constructor is functional.
+		static isFunctional = function()
 		{
-			_argument[_i] = argument[_i];
-			
-			++_i;
+			return ((is_real(minimum)) and (is_real(maximum)));
 		}
 		
-		script_execute_ext(self.construct, _argument);
+   #endregion
+   #region <Getters>
+	
+	/// @argument			value? {real|Range}
+	/// @returns			{real|Range} | On error: {undefined}
+	/// @description		Return the sum of either the values of this Range or them added to
+	///						the specified value or the ones of the specified Range.
+	static sum = function(_value)
+	{
+		try
+		{
+			var _minimum, _maximum;
+			
+			if (is_real(_value))
+			{
+				_minimum = (minimum + _value);
+				_maximum = (maximum + _value);
+			}
+			else if (is_instanceof(_value, Range))
+			{
+				_minimum = (minimum + _value.minimum);
+				_maximum = (maximum + _value.maximum);
+			}
+			else
+			{
+				return (minimum + maximum);
+			}
+			
+			return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "sum()"], _exception);
+		}
 		
-	#endregion
-	#region [Static Constructions]
+		return undefined;
+	}
+	
+	/// @argument			value? {real|Range}
+	/// @returns			{real|Range} | On error: {undefined}
+	/// @description		Return the difference between either the values of this Range or them and
+	///						the specified value or the ones of the specified Range.
+	static difference = function(_value)
+	{
+		try
+		{
+			var _minimum, _maximum;
+			
+			if (is_real(_value))
+			{
+				_minimum = abs(minimum - _value);
+				_maximum = abs(maximum - _value);
+			}
+			else if (is_instanceof(_value, Range))
+			{
+				_minimum = abs(minimum - _value.minimum);
+				_maximum = abs(maximum - _value.maximum);
+			}
+			else
+			{
+				return abs(minimum - maximum);
+			}
+			
+			return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "difference()"], _exception);
+		}
 		
-		static one = new Range(0, 1);
+		return undefined;
+	}
+	
+	/// @argument			value? {real|Range}
+	/// @returns			{real|Range} | On error: {undefined}
+	/// @description		Return the result of multiplication of either the values of this Range or
+	///						them multiplied by the specified value or the ones of the specified Range.
+	static product = function(_value)
+	{
+		try
+		{
+			var _minimum, _maximum;
+			
+			if (is_real(_value))
+			{
+				_minimum = (minimum * _value);
+				_maximum = (maximum * _value);
+			}
+			else if (is_instanceof(_value, Range))
+			{
+				_minimum = (minimum * _value.minimum);
+				_maximum = (maximum * _value.maximum);
+			}
+			else
+			{
+				return (minimum * maximum);
+			}
+			
+			return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "product()"], _exception);
+		}
 		
-	#endregion
+		return undefined;
+	}
+	
+	/// @argument			value {real|Range}
+	/// @returns			{Range} | On error: {undefined}
+	/// @description		Return the result of division of the values of this Range divided by the
+	///						specified value or the ones of the specified Range. Attempts of division
+	///						by 0 are ignored.
+	static quotient = function(_value)
+	{
+		try
+		{
+			var _minimum = minimum;
+			var _maximum = maximum;
+			
+			if (is_real(_value))
+			{
+				if (_value != 0)
+				{
+					_minimum = (minimum * _value);
+					_maximum = (maximum * _value);
+				}
+			}
+			else if (is_instanceof(_value, Range))
+			{
+				if (_value.minimum != 0)
+				{
+					_minimum = (minimum * _value.minimum);
+				}
+				
+				if (_value.maximum != 0)
+				{
+					_maximum = (maximum * _value.maximum);
+				}
+			}
+			
+			return new Range(min(_minimum, _maximum), max(_minimum, _maximum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "quotient()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value {real}
+	/// @returns			{real} | On error: {any}
+	/// @description		Restrict the specified number to boundaries of this Range.
+	static clamp = function(_value)
+	{
+		try
+		{
+			return clamp(_value, minimum, maximum);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "clamp()"], _exception);
+		}
+		
+		return _value;
+	}
+	
+	/// @argument			value {real}
+	/// @returns			{real} | On error: {any}
+	/// @description		Return the value at the position within this Range of the specified
+	///						precentage.
+	static interpolate = function(_value)
+	{
+		try
+		{
+			return lerp(minimum, maximum, _value);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "interpolate()"], _exception);
+		}
+		
+		return _value;
+	}
+	
+	/// @returns			{real} | On error: {any}
+	/// @description		Return the percentage value representing the specified value inside of the
+	///						Range as a numerical value, in which one whole number is one full
+	///						percentage.
+	static percent = function(_value)
+	{
+		try
+		{
+			return ((_value - minimum) / (maximum - minimum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "percent()"], _exception);
+		}
+		
+		return _value;
+	}
+	
+	/// @returns			{real} | On error: {undefined}
+	/// @description		Return a random real number from this Range.
+	static randomReal = function()
+	{
+		try
+		{
+			return random_range(minimum, maximum);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "randomReal()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @returns			{int} | On error: {undefined}
+	/// @description		Return a random integer number from this Range.
+	static randomInt = function()
+	{
+		try
+		{
+			return irandom_range(minimum, maximum);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "randomInt()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @returns			{real} | On error: {undefined}
+	/// @description		Return the middle point of this Range.
+	static getMiddle = function()
+	{
+		try
+		{
+			return lerp(minimum, maximum, 0.5);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getMiddle()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
+	/// @argument			value {real}
+	/// @returns			{bool}
+	/// @description		Check whether a number is in or equal to borders of this Range.
+	static isBetween = function(_value)
+	{
+		try
+		{
+			return (_value == clamp(_value, minimum, maximum));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "isBetween()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			value {real}
+	/// @returns			{bool}
+	/// @description		Check whether a number is equal to the boundaries of this Range.
+	static isBoundary = function(_value)
+	{
+		return ((_value == minimum) or (_value == maximum));
+	}
+	
+   #endregion
+   #region <Conversion>
+	
+	/// @argument			multiline? {bool}
+	/// @returns			{string}
+	/// @description		Create a string representing this constructor.
+	///						Overrides the string() conversion.
+	///						Content will be represented with the values of this Container.
+	static toString = function(_multiline = false)
+	{
+		var _mark_separator = ((_multiline) ? "\n" : " - ");
+		var _string = (string(minimum) + _mark_separator + string(maximum));
+		
+		return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+	}
+	
+	/// @returns			{real[]}
+	/// @description		Return an array containing all values of this Container.
+	static toArray = function()
+	{
+		return [minimum, maximum];
+	}
+	
+   #endregion
+  #endregion
+  #region [Constructor]
+	
+	static constructor = Range;
+	
+	static prototype = {};
+	var _property = variable_struct_get_names(prototype);
+	var _i = 0;
+	repeat (array_length(_property))
+	{
+		var _name = _property[_i];
+		var _value = variable_struct_get(prototype, _name);
+		
+		variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
+		
+		++_i;
+	}
+	
+	var _argument = array_create(argument_count, undefined);
+	var _i = 0;
+	repeat (argument_count)
+	{
+		_argument[_i] = argument[_i];
+		
+		++_i;
+	}
+	
+	script_execute_ext(self.construct, _argument);
+	
+  #endregion
+  #region [Static Constructions]
+	
+	static one = new Range(0, 1);
+	
+   #endregion
 }
 
 new Range();

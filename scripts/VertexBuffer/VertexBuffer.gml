@@ -1,535 +1,496 @@
-//  @function				VertexBuffer()
-/// @description			Constructs a Vertex Buffer for storing and rendering vertices using
-///							primitive shapes alongside a Vertex Format and a Shader. Contains reusable
-///							graphic data for fast render times, particularly of static graphics.
-//							
-//							Construction types:
-//							- New constructor
-//							- Empty: {undefined}
+//  @function			VertexBuffer()
+/// @description		Constructs a Vertex Buffer for storing and rendering vertices using primitive
+///						shapes alongside a Vertex Format and a Shader. Contains reusable graphic data
+///						for fast render times, particularly of static graphics.
+//						
+//						Construction types:
+//						- New constructor
+//						- Empty: {undefined}
 function VertexBuffer() constructor
 //  @feather	ignore all
 {
-	#region [Methods]
-		#region <Management>
-			
-			/// @description		Initialize this constructor.
-			static construct = function()
-			{
-				//|Construction type: Empty.
-				ID = undefined;
-				active = false;
-				readOnly = false;
-				
-				if (!((argument_count > 0) and (argument[0] == undefined)))
-				{
-					//|Construction type: New constructor.
-					ID = vertex_create_buffer();
-					active = false;
-					readOnly = false;
-				}
-				
-				return self;
-			}
-			
-			/// @returns			{bool}
-			/// @description		Check if this constructor is functional.
-			///						NOTE: Returned result is approximate, as there is no way to
-			///							  directly validate a Vertex Buffer.
-			static isFunctional = function()
-			{
-				return is_handle(ID);
-			}
-			
-			/// @returns			{undefined}
-			/// @description		Remove the internal information from the memory.
-			static destroy = function()
-			{
-				if (self.isFunctional())
-				{
-					try
-					{
-						vertex_delete_buffer(ID);
-					}
-					catch (_exception)
-					{
-						ErrorReport.report([other, self, "destroy()"], _exception);
-					}
-					
-					ID = undefined;
-				}
-				
-				return undefined;
-			}
-			
-			/// @argument			other {Buffer|VertexBuffer}
-			/// @argument			size? {int|all}
-			/// @argument			offset? {int}
-			/// @argument			other_offset? {int}
-			/// @description		Copy all data or its segment from other Vertex Buffer or Buffer to
-			///						this one. For both, an offset can be specified for where the
-			///						operation will start and then continue until the end of either the
-			///						specified segment or Buffer was reached. This operation is
-			///						performed differently depending on specified source:
-			///						- Vertex Buffer: Size and offsets are measured in number of
-			///										 vertices affected.
-			///						- Buffer: Size and offsets are measured with number of bytes
-			///								  affected. This Vertex Buffer must already be formatted
-			///								  with a Vertex Format, meaning it was activated and then
-			///								  deactivated, even if no vertices were added to it.
-			static copy = function(_other, _size, _offset = 0, _other_offset = 0)
-			{
-				try
-				{
-					if (!self.isFunctional())
-					{
-						self.construct();
-					}
-					
-					if (is_instanceof(_other, VertexBuffer))
-					{
-						if ((_size == undefined) or (_size == all))
-						{
-							_size = vertex_get_number(_other.ID);
-						}
-						
-						vertex_update_buffer_from_vertex(ID, _offset, _other.ID, _other_offset, _size);
-					}
-					else
-					{
-						if ((_size == undefined) or (_size == all))
-						{
-							_size = buffer_get_size(_other.ID);
-						}
-						
-						vertex_update_buffer_from_buffer(ID, _offset, _other.ID, _other_offset, _size);
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "copy()"], _exception);
-				}
-				
-				return self;
-			}
-			
-		#endregion
-		#region <Getters>
-			
-			/// @argument			sizeInBytes? {bool}
-			/// @returns			{int}
-			/// @description		Return the either the number of vertices contained in this Vertex
-			///						Buffer or if specified, its size in bytes.
-			static getSize = function(_sizeInBytes = false)
-			{
-				try
-				{
-					return ((_sizeInBytes) ? vertex_get_buffer_size(ID) : vertex_get_number(ID));
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "getSize()"], _exception);
-				}
-				
-				return 0;
-			}
-			
-		#endregion
-		#region <Setters>
-			
-			/// @argument			location {Vector2}
-			/// @description		Add position data of a single vertex in two-dimensional space to
-			///						this Vertex Buffer.
-			static setLocation2D = function(_location)
-			{
-				try
-				{
-					vertex_position(ID, _location.x, _location.y);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setLocation2D()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			location {Vector3}
-			/// @description		Add position data of a single vertex in three-dimensional space to
-			///						this Vertex Buffer.
-			static setLocation3D = function(_location)
-			{
-				try
-				{
-					vertex_position_3d(ID, _location.x, _location.y, _location.z);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setLocation3D()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			color {int:color}
-			/// @argument			alpha? {real}
-			/// @description		Add color and alpha data of a single vertex to this Vertex Buffer.
-			static setColor = function(_color, _alpha = 1)
-			{
-				try
-				{
-					vertex_color(ID, _color, _alpha);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setColor()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			u? {real}
-			/// @argument			v? {real}
-			/// @description		Add texture coordinate data of a single vertex to this Vertex
-			///						Buffer.
-			static setUV = function(_u = 0, _v = 0)
-			{
-				try
-				{
-					vertex_texcoord(ID, _u, _v);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setUV()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			normal {Vector3}
-			/// @description		Add three-dimensional orientation data of a single vertex to this
-			///						Vertex Buffer.
-			static setNormal = function(_normal)
-			{
-				try
-				{
-					vertex_normal(ID, _normal.x, _normal.y, _normal.z);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setNormal()"], _exception);
-				}
-				
-				return self;
-			}
-			
-		#endregion
-		#region <Execution>
-			
-			/// @argument			primitive_type {constant:pr_*}
-			/// @argument			texture? {pointer|int:-1}
-			/// @description		Draw vertices contained in this Vertex Buffer to the currently
-			///						active Surface, using the specified primitive type and either the
-			///						specified or no texture, provided following requirements are met:
-			///						- A number of vertices appropriate for the specified primitive
-			///						  type is contained in this Vertex Buffer.
-			///						- Vertices were added to this Vertex Buffer with the same number
-			///						  and order of types of primitive data as in used Vertex Format.
-			///						- A Shader is currently active to operate exact the number and
-			///						  types of primitive data used in Vertex Format.
-			static render = function(_primitive_type, _texture = (-1))
-			{
-				try
-				{
-					vertex_submit(ID, _primitive_type, _texture);
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "render()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			target {VertexFormat|bool:false}
-			/// @description		Set whether a primitive is currently being written to this Vertex
-			///						Buffer by specifying its Vertex Format or false to finish it.
-			///						Each type of primitive data used with the specified Vertex Format
-			///						must be added and it must be done so in the same order as specified
-			///						in the Vertex Format.
-			static setActive = function(_target)
-			{
-				try
-				{
-					if (is_instanceof(_target, VertexFormat)) and (is_handle(_target.ID))
-					{
-						if (!active)
-						{
-							vertex_begin(ID, _target.ID);
-							
-							active = true;
-						}
-					}
-					else if (_target == false)
-					{
-						if (active)
-						{
-							vertex_end(ID);
-						}
-						
-						active = false;
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "setActive()"], _exception);
-				}
-				
-				return self;
-			}
-			
-			/// @argument			primitiveType {constant:pr_*}
-			/// @argument			vertexFormat? {VertexFormat}
-			/// @argument			texture? {pointer|int:-1}
-			/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {noone}
-			/// @description		Return a constructor containing the specified rendering information
-			///						of this Vertex Buffer.
-			static createPrimitiveRenderData = function(_primitiveType, _format, _texture)
-			{
-				if (self.isFunctional())
-				{
-					return new PrimitiveRenderData(_primitiveType, _format, _texture);
-				}
-				else
-				{
-					ErrorReport.report([other, self, "createPrimitiveRenderData()"],
-									   ("Attempted to create render data of an invalid Vertex" +
-										"Buffer: " + "{" + string(ID) + "}"));
-				}
-				
-				return noone;
-			}
-			
-			/// @description		Move the contents of this Vertex Buffer to VRAM for faster access
-			///						to its information during rendering by preventing further changes.
-			///						Intended mainly for Vertex Buffers containing a lot of data.
-			static makeReadOnly = function()
-			{
-				try
-				{
-					if ((!readOnly) and (vertex_freeze(ID) == 0))
-					{
-						readOnly = true;
-					}
-				}
-				catch (_exception)
-				{
-					ErrorReport.report([other, self, "makeReadOnly()"], _exception);
-				}
-				
-				return self;
-			}
-			
-		#endregion
-		#region <Conversion>
-			
-			/// @argument			multiline? {bool}
-			/// @returns			{string}
-			/// @description		Create a string representing this constructor.
-			///						Overrides the string() conversion.
-			///						Content will be represented by the data of this Vertex Buffer.
-			static toString = function(_multiline = false)
-			{
-				if (self.isFunctional())
-				{
-					try
-					{
-						var _mark_separator = ((_multiline) ? "\n" : ", ");
-						var _string = ("Vertex Count: " + string(vertex_get_number(ID)) +
-														+ _mark_separator +
-									   "Size: " + string(vertex_get_buffer_size(ID)) + " bytes");
-						
-						return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
-					}
-					catch (_) {}
-				}
-				
-				return (instanceof(self) + "<>");
-			}
-			
-		#endregion
-	#endregion
-	#region [Elements]
+  #region [Methods]
+   #region <Management>
+	
+	/// @description		Initialize this constructor.
+	static construct = function()
+	{
+		//|Construction type: Empty.
+		ID = undefined;
+		active = false;
+		readOnly = false;
 		
-		//  @function			VertexBuffer.PrimitiveRenderData()
-		/// @argument			primitiveType {constant:pr_*}
-		/// @argument			vertexFormat? {VertexFormat|function:vertex_position_3d}
-		/// @argument			texture? {pointer|int:-1}
-		/// @description		Constructs an element storing Vertex Buffer rendering information.
-		//						
-		//						Construction types:
-		//						- New element
-		function PrimitiveRenderData() constructor
+		if (!((argument_count > 0) and (argument[0] == undefined)))
 		{
-			#region [[Static Properties]]
-				
-				static emptyEventIndex = method_get_index(function() {});
-				
-			#endregion
-			#region [[Methods]]
-				#region <<Management>>
-					
-					/// @description		Initialize this constructor.
-					static construct = function()
-					{
-						//|Construction type: New constructor.
-						vertexBuffer = other;
-						primitiveType = argument[0];
-						vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
-										? ((argument[1] == vertex_position_3d)
-										   ? VertexFormat.passthrough3D : argument[1])
-										: VertexFormat.passthrough);
-						texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
-																						 : (-1));
-						
-						event =
-						{
-							beforeRender:
-							{
-								callback: emptyEventIndex,
-								argument: []
-							},
-							
-							afterRender:
-							{
-								callback: emptyEventIndex,
-								argument: []
-							}
-						};
-					}
-					
-					/// @returns			{bool}
-					/// @description		Check if this constructor is functional.
-					static isFunctional = function()
-					{
-						return ((is_real(primitiveType)) and
-								(is_instanceof(vertexBuffer, VertexBuffer)) and
-								(is_instanceof(vertexFormat, VertexFormat)) and ((texture == (-1)) or
-								(is_ptr(texture))));
-					}
-					
-					/// @returns			{undefined}
-					/// @description		Destroy the Vertex Buffer this constructor refers to.
-					static destroy = function()
-					{
-						if (is_instanceof(vertexBuffer, VertexBuffer))
-						{
-							vertexBuffer = vertexBuffer.destroy();
-						}
-						
-						return undefined;
-					}
-					
-				#endregion
-				#region <<Execution>>
-					
-					/// @description		Draw the contents of the Vertex Buffer to the currently
-					///						active Surface.
-					static render = function()
-					{
-						script_execute_ext(event.beforeRender.callback, event.beforeRender.argument);
-						vertexBuffer.render(primitiveType, texture);
-						script_execute_ext(event.afterRender.callback, event.afterRender.argument);
-						
-						return self;
-					}
-					
-				#endregion
-				#region <<Conversion>>
-					
-					/// @argument			multiline? {bool}
-					/// @returns			{string}
-					/// @description		Create a string representing this constructor.
-					///						Overrides the string() conversion.
-					///						Content will be represented by rendering details of this
-					///						constructor.
-					static toString = function(_multiline = false)
-					{
-						var _constructorName = "VertexBuffer.PrimitiveRenderData";
-						
-						if (self.isFunctional())
-						{
-							var _mark_separator = ((_multiline) ? "\n" : ", ");
-							var _string_texture = ((texture == (-1)) ? "None" : string(texture));
-							
-							var _string_primitiveType;
-							switch (primitiveType)
-							{
-								case pr_pointlist: _string_primitiveType = "Point List"; break;
-								case pr_linelist: _string_primitiveType = "Line List"; break;
-								case pr_linestrip: _string_primitiveType = "Line Strip"; break;
-								case pr_trianglelist: _string_primitiveType = "Triangle List"; break;
-								case pr_trianglestrip: _string_primitiveType = "Triangle Strip"; break;
-								case pr_trianglefan: _string_primitiveType = "Triangle Fan"; break;
-								default: _string_primitiveType = string(primitiveType); break;
-							}
-							
-							var _string = ("Primitive Type: " + _string_primitiveType +
-																_mark_separator +
-										   "Vertex Format: " + string(vertexFormat) + _mark_separator +
-										   "Texture: " + _string_texture);
-							
-							return ((_multiline) ? _string : (_constructorName + "(" + _string + ")"));
-						}
-						else
-						{
-							return (_constructorName + "<>");
-						}
-					}
-					
-				#endregion
-			#endregion
-			#region [[Constructor]]
-				
-				static constructor = function(_parent)
-				{
-					with (_parent)
-					{
-						return PrimitiveRenderData;
-					}
-				}(other);
-				
-				static prototype = {};
-				var _property = variable_struct_get_names(prototype);
-				var _i = 0;
-				repeat (array_length(_property))
-				{
-					var _name = _property[_i];
-					var _value = variable_struct_get(prototype, _name);
-					
-					variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value)
-																		  : _value));
-					
-					++_i;
-				}
-				
-				var _argument = array_create(argument_count, undefined);
-				var _i = 0;
-				repeat (argument_count)
-				{
-					_argument[_i] = argument[_i];
-					
-					++_i;
-				}
-				
-				script_execute_ext(self.construct, _argument);
-				
-			#endregion
+			//|Construction type: New constructor.
+			ID = vertex_create_buffer();
+			active = false;
+			readOnly = false;
 		}
 		
-	#endregion
-	#region [Constructor]
+		return self;
+	}
+	
+	/// @returns			{bool}
+	/// @description		Check if this constructor is functional.
+	///						NOTE: Returned result is approximate, as there is no way to directly
+	///							  validate a Vertex Buffer.
+	static isFunctional = function()
+	{
+		return is_handle(ID);
+	}
+	
+	/// @returns			{undefined}
+	/// @description		Remove the internal information from the memory.
+	static destroy = function()
+	{
+		if (self.isFunctional())
+		{
+			try
+			{
+				vertex_delete_buffer(ID);
+			}
+			catch (_exception)
+			{
+				ErrorReport.report([other, self, "destroy()"], _exception);
+			}
+			
+			ID = undefined;
+		}
 		
-		static constructor = VertexBuffer;
+		return undefined;
+	}
+	
+	/// @argument			other {Buffer|VertexBuffer}
+	/// @argument			size? {int|all}
+	/// @argument			offset? {int}
+	/// @argument			other_offset? {int}
+	/// @description		Copy all data or its segment from other Vertex Buffer or Buffer to this
+	///						one. For both, an offset can be specified for where the operation will
+	///						start and then continue until the end of either the specified segment or
+	///						Buffer was reached. This operation is performed differently depending on
+	///						specified source:
+	///						- Vertex Buffer: Size and offsets are measured in number of vertices
+	///										 affected.
+	///						- Buffer: Size and offsets are measured with number of bytes affected.
+	///								  This Vertex Buffer must already be formatted with a Vertex
+	///								  Format, meaning it was activated and then deactivated, even if
+	///								  no vertices were added to it.
+	static copy = function(_other, _size, _offset = 0, _other_offset = 0)
+	{
+		try
+		{
+			if (!self.isFunctional())
+			{
+				self.construct();
+			}
+			
+			if (is_instanceof(_other, VertexBuffer))
+			{
+				if ((_size == undefined) or (_size == all))
+				{
+					_size = vertex_get_number(_other.ID);
+				}
+				
+				vertex_update_buffer_from_vertex(ID, _offset, _other.ID, _other_offset, _size);
+			}
+			else
+			{
+				if ((_size == undefined) or (_size == all))
+				{
+					_size = buffer_get_size(_other.ID);
+				}
+				
+				vertex_update_buffer_from_buffer(ID, _offset, _other.ID, _other_offset, _size);
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "copy()"], _exception);
+		}
+		
+		return self;
+	}
+	
+   #endregion
+   #region <Getters>
+	
+	/// @argument			sizeInBytes? {bool}
+	/// @returns			{int}
+	/// @description		Return the either the number of vertices contained in this Vertex Buffer
+	///						or if specified, its size in bytes.
+	static getSize = function(_sizeInBytes = false)
+	{
+		try
+		{
+			return ((_sizeInBytes) ? vertex_get_buffer_size(ID) : vertex_get_number(ID));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "getSize()"], _exception);
+		}
+		
+		return 0;
+	}
+	
+   #endregion
+   #region <Setters>
+	
+	/// @argument			location {Vector2}
+	/// @description		Add position data of a single vertex in two-dimensional space to this
+	///						Vertex Buffer.
+	static setLocation2D = function(_location)
+	{
+		try
+		{
+			vertex_position(ID, _location.x, _location.y);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setLocation2D()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			location {Vector3}
+	/// @description		Add position data of a single vertex in three-dimensional space to this
+	///						Vertex Buffer.
+	static setLocation3D = function(_location)
+	{
+		try
+		{
+			vertex_position_3d(ID, _location.x, _location.y, _location.z);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setLocation3D()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			color {int:color}
+	/// @argument			alpha? {real}
+	/// @description		Add color and alpha data of a single vertex to this Vertex Buffer.
+	static setColor = function(_color, _alpha = 1)
+	{
+		try
+		{
+			vertex_color(ID, _color, _alpha);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setColor()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			u? {real}
+	/// @argument			v? {real}
+	/// @description		Add texture coordinate data of a single vertex to this Vertex Buffer.
+	static setUV = function(_u = 0, _v = 0)
+	{
+		try
+		{
+			vertex_texcoord(ID, _u, _v);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setUV()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			normal {Vector3}
+	/// @description		Add three-dimensional orientation data of a single vertex to this Vertex
+	///						Buffer.
+	static setNormal = function(_normal)
+	{
+		try
+		{
+			vertex_normal(ID, _normal.x, _normal.y, _normal.z);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setNormal()"], _exception);
+		}
+		
+		return self;
+	}
+	
+   #endregion
+   #region <Execution>
+	
+	/// @argument			primitive_type {constant:pr_*}
+	/// @argument			texture? {pointer|int:-1}
+	/// @description		Draw vertices contained in this Vertex Buffer to the currently active
+	///						Surface, using the specified primitive type and either the specified or no
+	///						texture, provided following requirements are met:
+	///						- A number of vertices appropriate for the specified primitive type is
+	///						  contained in this Vertex Buffer.
+	///						- Vertices were added to this Vertex Buffer with the same number and order
+	///						  of types of primitive data as in used Vertex Format.
+	///						- A Shader is currently active to operate exact the number and types of
+	///						  primitive data used in Vertex Format.
+	static render = function(_primitive_type, _texture = (-1))
+	{
+		try
+		{
+			vertex_submit(ID, _primitive_type, _texture);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "render()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			target {VertexFormat|bool:false}
+	/// @description		Set whether a primitive is currently being written to this Vertex Buffer
+	///						by specifying its Vertex Format or false to finish it.
+	///						Each type of primitive data used with the specified Vertex Format must be
+	///						added and it must be done so in the same order as specified in the Vertex
+	///						Format.
+	static setActive = function(_target)
+	{
+		try
+		{
+			if (is_instanceof(_target, VertexFormat)) and (is_handle(_target.ID))
+			{
+				if (!active)
+				{
+					vertex_begin(ID, _target.ID);
+					
+					active = true;
+				}
+			}
+			else if (_target == false)
+			{
+				if (active)
+				{
+					vertex_end(ID);
+				}
+				
+				active = false;
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "setActive()"], _exception);
+		}
+		
+		return self;
+	}
+	
+	/// @argument			primitiveType {constant:pr_*}
+	/// @argument			vertexFormat? {VertexFormat}
+	/// @argument			texture? {pointer|int:-1}
+	/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {noone}
+	/// @description		Return a constructor containing the specified rendering information of
+	///						this Vertex Buffer.
+	static createPrimitiveRenderData = function(_primitiveType, _format, _texture)
+	{
+		if (self.isFunctional())
+		{
+			return new PrimitiveRenderData(_primitiveType, _format, _texture);
+		}
+		else
+		{
+			ErrorReport.report([other, self, "createPrimitiveRenderData()"],
+							   ("Attempted to create render data of an invalid Vertex Buffer: " +
+								"{" + string(ID) + "}"));
+		}
+		
+		return noone;
+	}
+	
+	/// @description		Move the contents of this Vertex Buffer to VRAM for faster access to its
+	///						information during rendering by preventing further changes.
+	///						Intended mainly for Vertex Buffers containing a high amount of data.
+	static makeReadOnly = function()
+	{
+		try
+		{
+			if ((!readOnly) and (vertex_freeze(ID) == 0))
+			{
+				readOnly = true;
+			}
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "makeReadOnly()"], _exception);
+		}
+		
+		return self;
+	}
+	
+   #endregion
+   #region <Conversion>
+	
+	/// @argument			multiline? {bool}
+	/// @returns			{string}
+	/// @description		Create a string representing this constructor.
+	///						Overrides the string() conversion.
+	///						Content will be represented by the data of this Vertex Buffer.
+	static toString = function(_multiline = false)
+	{
+		if (self.isFunctional())
+		{
+			try
+			{
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				var _string = ("Vertex Count: " + string(vertex_get_number(ID)) + + _mark_separator +
+							   "Size: " + string(vertex_get_buffer_size(ID)) + " bytes");
+				
+				return ((_multiline) ? _string : (instanceof(self) + "(" + _string + ")"));
+			}
+			catch (_) {}
+		}
+		
+		return (instanceof(self) + "<>");
+	}
+	
+   #endregion
+  #endregion
+  #region [Elements]
+	
+	//  @function			VertexBuffer.PrimitiveRenderData()
+	/// @argument			primitiveType {constant:pr_*}
+	/// @argument			vertexFormat? {VertexFormat|function:vertex_position_3d}
+	/// @argument			texture? {pointer|int:-1}
+	/// @description		Constructs an element storing Vertex Buffer rendering information.
+	//						
+	//						Construction types:
+	//						- New element
+	function PrimitiveRenderData() constructor
+	{
+	  #region [[Static Properties]]
+			
+		static emptyEventIndex = method_get_index(function() {});
+			
+	  #endregion
+	  #region [[Methods]]
+	   #region <<Management>>
+		
+		/// @description		Initialize this constructor.
+		static construct = function()
+		{
+			//|Construction type: New constructor.
+			vertexBuffer = other;
+			primitiveType = argument[0];
+			vertexFormat = (((argument_count > 1) and (argument[1] != undefined))
+							? ((argument[1] == vertex_position_3d) ? VertexFormat.passthrough3D
+																   : argument[1])
+							: VertexFormat.passthrough);
+			texture = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2] : (-1));
+			
+			event =
+			{
+				beforeRender:
+				{
+					callback: emptyEventIndex,
+					argument: []
+				},
+				
+				afterRender:
+				{
+					callback: emptyEventIndex,
+					argument: []
+				}
+			};
+		}
+		
+		/// @returns			{bool}
+		/// @description		Check if this constructor is functional.
+		static isFunctional = function()
+		{
+			return ((is_real(primitiveType)) and (is_instanceof(vertexBuffer, VertexBuffer)) and
+					(is_instanceof(vertexFormat, VertexFormat)) and ((texture == (-1)) or
+					(is_ptr(texture))));
+		}
+		
+		/// @returns			{undefined}
+		/// @description		Destroy the Vertex Buffer this constructor refers to.
+		static destroy = function()
+		{
+			if (is_instanceof(vertexBuffer, VertexBuffer))
+			{
+				vertexBuffer = vertexBuffer.destroy();
+			}
+			
+			return undefined;
+		}
+		
+	   #endregion
+	   #region <<Execution>>
+		
+		/// @description		Draw the contents of the Vertex Buffer to the currently active
+		///						Surface.
+		static render = function()
+		{
+			script_execute_ext(event.beforeRender.callback, event.beforeRender.argument);
+			vertexBuffer.render(primitiveType, texture);
+			script_execute_ext(event.afterRender.callback, event.afterRender.argument);
+			
+			return self;
+		}
+		
+	   #endregion
+	   #region <<Conversion>>
+		
+		/// @argument			multiline? {bool}
+		/// @returns			{string}
+		/// @description		Create a string representing this constructor.
+		///						Overrides the string() conversion.
+		///						Content will be represented by rendering details of this constructor.
+		static toString = function(_multiline = false)
+		{
+			var _constructorName = "VertexBuffer.PrimitiveRenderData";
+			
+			if (self.isFunctional())
+			{
+				var _mark_separator = ((_multiline) ? "\n" : ", ");
+				var _string_texture = ((texture == (-1)) ? "None" : string(texture));
+				
+				var _string_primitiveType;
+				switch (primitiveType)
+				{
+					case pr_pointlist: _string_primitiveType = "Point List"; break;
+					case pr_linelist: _string_primitiveType = "Line List"; break;
+					case pr_linestrip: _string_primitiveType = "Line Strip"; break;
+					case pr_trianglelist: _string_primitiveType = "Triangle List"; break;
+					case pr_trianglestrip: _string_primitiveType = "Triangle Strip"; break;
+					case pr_trianglefan: _string_primitiveType = "Triangle Fan"; break;
+					default: _string_primitiveType = string(primitiveType); break;
+				}
+				
+				var _string = ("Primitive Type: " + _string_primitiveType + _mark_separator +
+							   "Vertex Format: " + string(vertexFormat) + _mark_separator +
+							   "Texture: " + _string_texture);
+				
+				return ((_multiline) ? _string : (_constructorName + "(" + _string + ")"));
+			}
+			else
+			{
+				return (_constructorName + "<>");
+			}
+		}
+		
+	   #endregion
+	  #endregion
+	  #region [[Constructor]]
+		
+		static constructor = function(_parent)
+		{
+			with (_parent)
+			{
+				return PrimitiveRenderData;
+			}
+		}(other);
 		
 		static prototype = {};
 		var _property = variable_struct_get_names(prototype);
@@ -555,5 +516,37 @@ function VertexBuffer() constructor
 		
 		script_execute_ext(self.construct, _argument);
 		
-	#endregion
+	  #endregion
+	}
+	
+  #endregion
+  #region [Constructor]
+	
+	static constructor = VertexBuffer;
+	
+	static prototype = {};
+	var _property = variable_struct_get_names(prototype);
+	var _i = 0;
+	repeat (array_length(_property))
+	{
+		var _name = _property[_i];
+		var _value = variable_struct_get(prototype, _name);
+		
+		variable_struct_set(self, _name, ((is_method(_value)) ? method(self, _value) : _value));
+		
+		++_i;
+	}
+	
+	var _argument = array_create(argument_count, undefined);
+	var _i = 0;
+	repeat (argument_count)
+	{
+		_argument[_i] = argument[_i];
+		
+		++_i;
+	}
+	
+	script_execute_ext(self.construct, _argument);
+	
+  #endregion
 }
