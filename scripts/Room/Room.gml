@@ -241,8 +241,6 @@ function Room() constructor
 				ErrorReport.report([other, self, "createInstance()"],
 								   ("Attempted to add an instance to a Room in use: " +
 									"{" + room_get_name(room) + "}"));
-				
-				return noone;
 			}
 		}
 		else
@@ -250,9 +248,9 @@ function Room() constructor
 			ErrorReport.report([other, self, "createInstance()"],
 							   ("Attempted to add an instance to an invalid Room: " +
 								"{" + string(ID) + "}"));
-			
-			return noone;
 		}
+		
+		return noone;
 	}
 	
 	/// @description		Switch the active room to this one.

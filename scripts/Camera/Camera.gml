@@ -117,7 +117,7 @@ function Camera() constructor
 	
 	/// @argument			size {Vector2}
 	/// @argument			clippingPlane {Range}
-	/// @returns			{Camera.OrtographicProjectionMatrix}
+	/// @returns			{Camera.OrtographicProjectionMatrix} | On error: {undefined}
 	/// @description		Create and assign to this Camera the first of matrices needed to display
 	///						graphics, the projection matrix. This projection does not contain
 	///						perspective information, making the view ortographic. Specified values
@@ -146,12 +146,12 @@ function Camera() constructor
 			ErrorReport.report([other, self, "createOrtographicProjectionMatrix()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			size {Vector2}
 	/// @argument			clippingPlane {Range}
-	/// @returns			{Camera.PerspectiveProjectionMatrix}
+	/// @returns			{Camera.PerspectiveProjectionMatrix} | On error: {undefined}
 	/// @description		Create and assign to this Camera the first of matrices needed to display
 	///						graphics, the projection matrix. This projection contains perspective
 	///						information. Specified values change how much of the scene is fit into the
@@ -179,13 +179,13 @@ function Camera() constructor
 			ErrorReport.report([other, self, "createPerspectiveProjectionMatrix()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			fieldOfView {Angle}
 	/// @argument			aspectRatio {real}
 	/// @argument			clippingPlane {Range}
-	/// @returns			{Camera.PerspectiveFieldOfViewProjectionMatrix}
+	/// @returns			{Camera.PerspectiveFieldOfViewProjectionMatrix} | On error: {undefined}
 	/// @description		Create and assign to this Camera the first of matrices needed to display
 	///						graphics, the projection matrix. This projection contains perspective
 	///						information. Specified values change how much of the scene is fit into
@@ -220,12 +220,13 @@ function Camera() constructor
 								_exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			source {Vector3}
 	/// @argument			target {Vector3}
 	/// @argument			upVector? {Vector3}
+	/// @returns			{Camera.ViewMatrix} | On error: {undefined}
 	/// @description		Create and assign to this Camera the second of matrices needed to display
 	///						graphics, the view matrix. It contains specified location from where this
 	///						Camera is heading towards the location it points to, both oriented around
@@ -252,7 +253,7 @@ function Camera() constructor
 			ErrorReport.report([other, self, "createViewMatrix()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
    #endregion

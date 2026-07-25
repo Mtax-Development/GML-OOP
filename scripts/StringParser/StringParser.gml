@@ -1099,20 +1099,19 @@ function StringParser() constructor
 		}
 	}
 	
-	/// @argument			decimalDotCount? {int|noone}
+	/// @argument			decimalDotCount? {int|all}
 	/// @returns			{real} | On error: {undefined}
 	/// @description		Return the string as a number if it contains numerical characters.
-	///						A counter for the dot character can be specified to treat all remaining
-	///						number characters as decimal places after that many dot characters were
-	///						found in the string. Specifying it as 0 will treat the entire number as a
-	///						decimal. Specifying it as {noone} will treat the entire number as an
-	///						integer.
-	static toNumber = function(_decimalDotCount = 1)
+	///						A separator counter can be specified to treat all remaining number
+	///						characters as decimal places after that finding that many dot characters.
+	///						It can also be specified either as 0 to treat the the entire number as a
+	///						decimal or as {all} to treat it as an integer.
+	static toNumber = function(_decimalSeparatorCount = 1)
 	{
 		try
 		{
 			var _string = string(ID);
-			var _string_number = ((_decimalDotCount == 0) ? "." : "");
+			var _string_number = ((_decimalSeparatorCount == 0) ? "." : "");
 			var _dotCount_current = 0;
 			var _i = 1;
 			repeat (string_length(_string))
@@ -1127,7 +1126,7 @@ function StringParser() constructor
 				{
 					++_dotCount_current;
 					
-					if (_dotCount_current == _decimalDotCount)
+					if (_dotCount_current == _decimalSeparatorCount)
 					{
 						_string_number += ".";
 					}

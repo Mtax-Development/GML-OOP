@@ -331,7 +331,7 @@ function Sprite() constructor
    #endregion
    #region <Getters>
 	
-	/// @returns			{struct:nineslice} | On error: {noone}
+	/// @returns			{struct:nineslice} | On error: {undefined}
 	/// @description		Return a struct representing the Nine Slice of this Sprite.
 	///						Changes to the properties of that struct will have an immediate effect.
 	static getNineslice = function()
@@ -345,7 +345,7 @@ function Sprite() constructor
 			ErrorReport.report([other, self, "getNineslice()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			frame? {int|int[]|all}
@@ -969,7 +969,7 @@ function Sprite() constructor
 	}
 	
 	/// @argument			other {Sprite|handle:sprite}
-	/// @returns			{Sprite} | On error: {noone}
+	/// @returns			{Sprite} | On error: {undefined}
 	/// @description		Multiply the value and saturation of the colors of this Sprite by the
 	///						alpha values of other one and return it as a separate Sprite.
 	static generateAlphaMap = function(_other)
@@ -990,7 +990,7 @@ function Sprite() constructor
 			ErrorReport.report([other, self, "generateAlphaMap()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
    #endregion

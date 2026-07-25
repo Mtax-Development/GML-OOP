@@ -289,7 +289,7 @@ function VertexBuffer() constructor
 	/// @argument			primitiveType {constant:pr_*}
 	/// @argument			vertexFormat? {VertexFormat}
 	/// @argument			texture? {pointer|int:-1}
-	/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {noone}
+	/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 	/// @description		Return a constructor containing the specified rendering information of
 	///						this Vertex Buffer.
 	static createPrimitiveRenderData = function(_primitiveType, _format, _texture)
@@ -305,7 +305,7 @@ function VertexBuffer() constructor
 								"{" + string(ID) + "}"));
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @description		Move the contents of this Vertex Buffer to VRAM for faster access to its

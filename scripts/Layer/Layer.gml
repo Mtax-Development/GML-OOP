@@ -461,7 +461,7 @@ function Layer() constructor
    #region <Execution>
 	
 	/// @argument			sprite {Sprite}
-	/// @returns			{Layer.BackgroundElement} | On error: {noone}
+	/// @returns			{Layer.BackgroundElement} | On error: {undefined}
 	/// @description		Create a Background Element Resource on this Layer and return it.
 	static createBackground = function(_sprite)
 	{
@@ -483,7 +483,7 @@ function Layer() constructor
 			ErrorReport.report([other, self, "createBackground()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			object {handle:object}
@@ -524,7 +524,7 @@ function Layer() constructor
 	/// @argument			tileset {tileset}
 	/// @argument			location {Vector2}
 	/// @argument			size {Vector2}
-	/// @returns			{Layer.TilemapElement} | On error: {noone}
+	/// @returns			{Layer.TilemapElement} | On error: {undefined}
 	/// @description		Create a Tilemap Element Resource on this Layer at the specified location
 	///						in the Room and cell size, then return it.
 	static createTilemap = function(_tileset, _location, _size)
@@ -547,12 +547,12 @@ function Layer() constructor
 			ErrorReport.report([other, self, "createTilemap()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			sprite {Sprite|Layer.SpriteElement|int:spriteElement}
 	/// @argument			location {Vector2}
-	/// @returns			{Layer.SpriteElement} | On error: {noone}
+	/// @returns			{Layer.SpriteElement} | On error: {undefined}
 	/// @description		Create a Sprite Element Resource on this Layer and return it.
 	static createSprite = function(_sprite, _location)
 	{
@@ -574,11 +574,11 @@ function Layer() constructor
 			ErrorReport.report([other, self, "createSprite()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			persistent? {bool}
-	/// @returns			{Layer.ParticleSystem} | On error: {noone}
+	/// @returns			{Layer.ParticleSystem} | On error: {undefined}
 	/// @description		Create a Particle System Resource in this Layer and return it.
 	static createParticleSystem = function(_persistent = false)
 	{
@@ -600,7 +600,7 @@ function Layer() constructor
 			ErrorReport.report([other, self, "createParticleSystem()"], _exception);
 		}
 		
-		return noone;
+		return undefined;
 	}
 	
 	/// @argument			target {handle:instance|handle:object|all}
@@ -2654,7 +2654,7 @@ function Layer() constructor
 	   #region <<Execution>>
 		
 		/// @argument			particleType {ParticleType}
-		/// @returns			{ParticleSystem.ParticleEmitter} | On error: {noone}
+		/// @returns			{ParticleSystem.ParticleEmitter} | On error: {undefined}
 		/// @description		Create a Particle Emitter Resource in this Particle System and return
 		///						it.
 		static createEmitter = function(_particleType)
@@ -2668,7 +2668,7 @@ function Layer() constructor
 				ErrorReport.report([other, parent, "ParticleSystem", "createEmitter()"], _exception);
 			}
 			
-			return noone;
+			return undefined;
 		}
 		
 		/// @description		Render the Particles within this Particle System.
