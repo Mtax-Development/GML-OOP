@@ -311,7 +311,9 @@ function Font() constructor
 		}
 		else
 		{
-			ErrorReport.report([other, self, "setActive()"], _exception);
+			ErrorReport.report([other, self, "setActive()"],
+							   ("Attempted to activate an invalid Font: " +
+								"{" + string(ID) + "}"));
 		}
 		
 		return self;
