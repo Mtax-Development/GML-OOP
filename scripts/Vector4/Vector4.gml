@@ -73,7 +73,6 @@ function Vector4() constructor
 									x2 = _array[1];
 									y2 = _array[1];
 								break;
-								case 4:
 								default:
 									x1 = _array[0];
 									y1 = _array[1];

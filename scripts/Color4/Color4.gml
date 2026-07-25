@@ -126,7 +126,7 @@ function Color4() constructor
 							color4 = _color2.color2;
 						}
 					break;
-					case 4:
+					default:
 						//|Construction type: New constructor.
 						color1 = argument[0];
 						color2 = argument[1];

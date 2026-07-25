@@ -52,7 +52,6 @@ function Scale() constructor
 									x = _array[0];
 									y = _array[0];
 								break;
-								case 2:
 								default:
 									x = _array[0];
 									y = _array[1];
@@ -66,7 +65,6 @@ function Scale() constructor
 							y = argument[0];
 						}
 					break;
-					case 2:
 					default:
 						//|Construction type: Two values.
 						x = argument[0];

@@ -52,12 +52,9 @@ function EulerAngle() constructor
 				break;
 				default:
 					//|Construction type: New constructor.
-					x = ((is_instanceof(argument[0], Angle)) ? argument[0].value
-															 : argument[0]);
-					y = ((is_instanceof(argument[1], Angle)) ? argument[1].value
-															 : argument[1]);
-					z = ((is_instanceof(argument[2], Angle)) ? argument[2].value
-															 : argument[2]);
+					x = ((is_instanceof(argument[0], Angle)) ? argument[0].value : argument[0]);
+					y = ((is_instanceof(argument[1], Angle)) ? argument[1].value : argument[1]);
+					z = ((is_instanceof(argument[2], Angle)) ? argument[2].value : argument[2]);
 					x -= (360 * (floor(x / 360)));
 					y -= (360 * (floor(y / 360)));
 					z -= (360 * (floor(z / 360)));

@@ -55,7 +55,6 @@ function Vector3() constructor
 									y = _array[0];
 									z = _array[0];
 								break;
-								case 3:
 								default:
 									x = _array[0];
 									y = _array[1];

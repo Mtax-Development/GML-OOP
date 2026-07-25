@@ -52,24 +52,20 @@ function VertexFormat() constructor
 				
 				if (is_callable(_source))
 				{
-					if ((_source == vertex_format_add_position)
-					or  (_source == vertex_format_add_position_3d))
+					switch (_source)
 					{
-						_locationExists = true;
-					}
-					else
-					{
-						switch (_source)
-						{
-							case vertex_format_add_color:
-							case vertex_format_add_position:
-							case vertex_format_add_position_3d:
-							case vertex_format_add_texcoord:
-							case vertex_format_add_normal:
-							case vertex_format_add_custom:
-							break;
-							default: return false; break;
-						}
+						case vertex_format_add_position:
+						case vertex_format_add_position_3d:
+							_locationExists = true;
+						break;
+						case vertex_format_add_color:
+						case vertex_format_add_texcoord:
+						case vertex_format_add_normal:
+						case vertex_format_add_custom:
+						break;
+						default:
+							return false;
+						break;
 					}
 				}
 				else

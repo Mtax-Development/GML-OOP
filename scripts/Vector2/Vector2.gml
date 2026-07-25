@@ -57,7 +57,6 @@ function Vector2() constructor
 									x = _array[0];
 									y = _array[0];
 								break;
-								case 2:
 								default:
 									x = _array[0];
 									y = _array[1];
