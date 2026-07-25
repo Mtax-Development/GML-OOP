@@ -532,14 +532,15 @@ function DateTime() constructor
    #endregion
    #region <Setters>
 	
-	/// @argument			years {int}
-	/// @argument			months {int}
-	/// @argument			days {int}
-	/// @argument			hours {int}
-	/// @argument			minutes {int}
-	/// @argument			seconds {int}
+	/// @argument			years? {int}
+	/// @argument			months? {int}
+	/// @argument			days? {int}
+	/// @argument			hours? {int}
+	/// @argument			minutes? {int}
+	/// @argument			seconds? {int}
 	/// @description		Modify any component of this DateTime by specified numbers.
-	static modify = function(_years, _months, _days, _hours, _minutes, _seconds)
+	static modify = function(_years = 0, _months = 0, _days = 0, _hours = 0, _minutes = 0,
+							 _seconds = 0)
 	{
 		if (is_real(ID))
 		{
