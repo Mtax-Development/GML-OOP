@@ -574,54 +574,40 @@ function TextRenderer() constructor
 	/// @argument			angle? {Angle}
 	/// @argument			color? {int:color}
 	/// @argument			alpha? {real}
+	/// @argument			vertexBuffer? {VertexBuffer}
 	/// @returns			{VertexBuffer.PrimitiveRenderData} | On error: {undefined}
 	/// @description		Return rendering data of this constructor in a Vertex Buffer, using its
-	///						current data or specified temporarily replaced parts.
+	///						current data or specified temporarily replaced parts. If specifying an
+	///						already activated Vertex Buffer, it have been activated using a texture
+	///						pointer of the exact same Font.
 	///						If a Font stored in a Signed Distance Field is used, rendering data
 	///						will be returned with event setup to resolve Signed Distance Field
 	///						rendering through a built-in Shader.
-	static toVertexBuffer = function(_string, _font, _location, _align, _scale, _angle, _color,
-									 _alpha)
+	static toVertexBuffer = function(_string = ID, _font = font, _location = location, _align = align,
+									 _scale = scale, _angle = angle, _color = color, _alpha = alpha,
+									 _vertexBuffer)
 	{
-		var _vertexBuffer = undefined;
-		var _renderData = undefined;
 		var _font_previous = draw_get_font();
-		var _string_original = ID;
-		var _font_original = font;
-		var _location_original = location;
-		var _align_original = align;
-		var _scale_original = scale;
-		var _angle_original = angle;
-		var _color_original = color;
-		var _alpha_original = alpha;
-		
-		ID = (_string ?? ID);
-		font = (_font ?? font);
-		location = (_location ?? location);
-		align = (_align ?? align);
-		scale = (_scale ?? scale);
-		angle = (_angle ?? angle);
-		color = (_color ?? color);
-		alpha = (_alpha ?? ((alpha > 0) ? alpha : 0));
+		var _vertexBuffer_target = undefined;
 		
 		try
 		{
-			draw_set_font(font.ID);
+			draw_set_font(_font.ID);
 			
-			var _scale_multiplier = self.getScaleMultiplier();
+			var _scale_multiplier = self.getScaleMultiplier(_scale);
 			var _angle_value = 0;
 			
-			if (is_instanceof(angle, Angle))
+			if (is_instanceof(_angle, Angle))
 			{
-				_angle_value = angle.value;
+				_angle_value = _angle.value;
 			}
 			
-			ID = string(ID);
-			var _glyph = font_get_info(font.ID).glyphs;
-			var _signedDistanceField_spread = (font.signedDistanceFieldSpread ?? 0);
-			var _align_multiplier = align.getMultiplier();
-			var _origin_absolute_x = round(location.x);
-			var _origin_absolute_y = round(location.y);
+			_string = string(_string);
+			var _glyph = font_get_info(_font.ID).glyphs;
+			var _signedDistanceField_spread = (_font.signedDistanceFieldSpread ?? 0);
+			var _align_multiplier = _align.getMultiplier();
+			var _origin_absolute_x = round(_location.x);
+			var _origin_absolute_y = round(_location.y);
 			var _origin_x = (_origin_absolute_x - (_signedDistanceField_spread *
 												   _scale_multiplier.x));
 			var _origin_y = (_origin_absolute_y - (_signedDistanceField_spread *
@@ -630,16 +616,17 @@ function TextRenderer() constructor
 			var _location_y = _origin_y;
 			var _angle_dcos = dcos(_angle_value);
 			var _angle_dsin = dsin(_angle_value);
-			var _align_offset_x = (string_width(ID) * _scale_multiplier.x * _align_multiplier.x);
-			var _align_offset_y = (string_height(ID) * _scale_multiplier.y * _align_multiplier.y);
-			var _char_count = string_length(ID);
+			var _align_offset_x = (string_width(_string) * _scale_multiplier.x * _align_multiplier.x);
+			var _align_offset_y = (string_height(_string) * _scale_multiplier.y *
+								   _align_multiplier.y);
+			var _char_count = string_length(_string);
 			var _line_vertexData = [[]];
 			var _line_index = 0;
 			var _line_text = [""];
 			var _linebreak_offset = (string_height("\n") * _scale_multiplier.y);
 			var _linebreak_chain = 0;
 			var _vertex = new Vector2();
-			var _texture = font_get_texture(font.ID);
+			var _texture = font_get_texture(_font.ID);
 			var _texel_x = texture_get_texel_width(_texture);
 			var _texel_y = texture_get_texel_height(_texture);
 			var _vertex_order = [[0, 1, 2, 3], [2, 3, 0, 1]];
@@ -655,16 +642,16 @@ function TextRenderer() constructor
 					break;
 				}
 				
-				var _char = string_char_at(ID, _i[0]);
+				var _char = string_char_at(_string, _i[0]);
 				
 				if ((_char == "\n") or (_char == "\r"))
 				{
-					var _char_next = string_char_at(ID, (_i[0] + 1));
+					var _char_next = string_char_at(_string, (_i[0] + 1));
 					
 					if (((_char == "\n") and (_char_next == "\r")) or ((_char == "\r")
 					and (_char_next == "\n")))
 					{
-						//|Two different line-breaks after each other produce a single offset.
+						//|Produce only a single offset from two different consecutive line-breaks.
 						++_i[0];
 					}
 					
@@ -681,8 +668,7 @@ function TextRenderer() constructor
 						
 						if (_uv_x != undefined)
 						{
-							var _linebreak_vertexData = [_location_x, _location_y, _uv_x,
-														 _uv_y, 0];
+							var _linebreak_vertexData = [_location_x, _location_y, _uv_x, _uv_y, 0];
 							array_push(_line_vertexData[_line_index], _linebreak_vertexData,
 									   _linebreak_vertexData);
 							++_line_index;
@@ -706,8 +692,8 @@ function TextRenderer() constructor
 						var _char_size_x = (_char_data.w * _scale_multiplier.x);
 						var _char_size_y = (_char_data.h * _scale_multiplier.y);
 						
-						//|Vertex ordering is swapped after each character, as their building
-						// finishes at different vertical level each time.
+						//|Vertex ordering is swapped after each character, as their building finishes
+						// at different vertical level each time.
 						var _vertex_order_current = _vertex_order[_vertex_order_index];
 						var _vertex_location = [[_location_x_offset, _location_y],
 												[(_location_x_offset + _char_size_x), _location_y],
@@ -740,7 +726,7 @@ function TextRenderer() constructor
 							
 							if (is_array(_char_kerning))
 							{
-								var _ord_next = string_ord_at(ID, (_i[0] + 1));
+								var _ord_next = string_ord_at(_string, (_i[0] + 1));
 								_i[1] = 0;
 								repeat (array_length(_char_kerning) div 2)
 								{
@@ -762,9 +748,20 @@ function TextRenderer() constructor
 				++_i[0];
 			}
 			
-			_vertexBuffer = new VertexBuffer();
-			_renderData = _vertexBuffer.createPrimitiveRenderData(pr_trianglestrip, undefined,
-																  _texture);
+			var _vertexBuffer_wasActive = false;
+			
+			if (_vertexBuffer != undefined)
+			{
+				_vertexBuffer_wasActive = _vertexBuffer.active;
+				_vertexBuffer_target = _vertexBuffer;
+			}
+			else
+			{
+				_vertexBuffer_target = new VertexBuffer();
+			}
+			
+			var _renderData = _vertexBuffer_target.createPrimitiveRenderData(pr_trianglestrip,
+																			 undefined, _texture);
 			
 			if (font.signedDistanceField)
 			{
@@ -773,7 +770,7 @@ function TextRenderer() constructor
 				_renderData.event.afterRender.callback = shader_reset;
 			}
 			
-			_vertexBuffer.setActive(_renderData.vertexFormat);
+			_vertexBuffer_target.setActive(_renderData.vertexFormat);
 			{
 				var _line_size_x_affect = sign(_align_multiplier.x);
 				var _align_offset_y = (string_height(ID) * _scale_multiplier.y * _align_multiplier.y);
@@ -800,7 +797,7 @@ function TextRenderer() constructor
 													 (_origin_transformed_x * _angle_dsin) +
 													 (_origin_transformed_y * _angle_dcos));
 							
-							_vertexBuffer
+							_vertexBuffer_target
 							 .setLocation2D(_vertex.set(_glyph_location_x, _glyph_location_y))
 							 .setColor(color, alpha)
 							 .setUV(_glyphData_current[2], _glyphData_current[3]);
@@ -812,30 +809,29 @@ function TextRenderer() constructor
 					++_i[0];
 				}
 			}
-			_vertexBuffer.setActive(false);
+			
+			if (!_vertexBuffer_wasActive)
+			{
+				_vertexBuffer_target.setActive(false);
+			}
+			
+			return _renderData;
 		}
 		catch (_exception)
 		{
-			if (_vertexBuffer != undefined)
+			if ((_vertexBuffer == undefined) and (_vertexBuffer_target != undefined))
 			{
-				_vertexBuffer.destroy();
+				_vertexBuffer_target.destroy();
 			}
 			
 			ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
 		}
+		finally
+		{
+			draw_set_font(_font_previous);
+		}
 		
-		draw_set_font(_font_previous);
-		
-		ID = _string_original;
-		font = _font_original;
-		location = _location_original;
-		align = _align_original;
-		scale = _scale_original;
-		angle = _angle_original;
-		color = _color_original;
-		alpha = _alpha_original;
-		
-		return _renderData;
+		return undefined;
 	}
 	
    #endregion
