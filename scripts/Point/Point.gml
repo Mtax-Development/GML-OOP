@@ -556,7 +556,7 @@ function Point() constructor
 	static toVertexBuffer = function(_location = location, _color = color, _alpha = alpha,
 									 _vertexBuffer)
 	{
-		var _vertexBuffer_point = undefined;
+		var _vertexBuffer_target = undefined;
 		
 		try
 		{
@@ -567,16 +567,16 @@ function Point() constructor
 				if (_vertexBuffer != undefined)
 				{
 					_vertexBuffer_wasActive = _vertexBuffer.active;
-					_vertexBuffer_point = _vertexBuffer;
+					_vertexBuffer_target = _vertexBuffer;
 				}
 				else
 				{
-					_vertexBuffer_point = new VertexBuffer();
+					_vertexBuffer_target = new VertexBuffer();
 				}
 				
-				var _renderData = _vertexBuffer_point.createPrimitiveRenderData(pr_pointlist);
+				var _renderData = _vertexBuffer_target.createPrimitiveRenderData(pr_pointlist);
 				
-				_vertexBuffer_point
+				_vertexBuffer_target
 				 .setActive(_renderData.vertexFormat)
 				  .setLocation2D(_location)
 				  .setColor(_color, _alpha)
@@ -584,7 +584,7 @@ function Point() constructor
 				
 				if (!_vertexBuffer_wasActive)
 				{
-					_vertexBuffer_point.setActive(false);
+					_vertexBuffer_target.setActive(false);
 				}
 				
 				return _renderData;
@@ -592,9 +592,9 @@ function Point() constructor
 		}
 		catch (_exception)
 		{
-			if ((_vertexBuffer == undefined) and (_vertexBuffer_point != undefined))
+			if ((_vertexBuffer == undefined) and (_vertexBuffer_target != undefined))
 			{
-				_vertexBuffer_point.destroy();
+				_vertexBuffer_target.destroy();
 			}
 			
 			ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
