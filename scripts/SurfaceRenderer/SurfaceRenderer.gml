@@ -1,6 +1,6 @@
 //  @function			SurfaceRenderer()
 /// @argument			surface {Surface}
-/// @argument			location? {Vector2|Vector4}
+/// @argument			location {Vector2|Vector4}
 /// @argument			scale? {Scale}
 /// @argument			angle? {Angle}
 /// @argument			color? {int:color|Color4}
