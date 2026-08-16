@@ -1,7 +1,7 @@
 //  @function			RoundRectangle()
 /// @argument			location {Vector4}
 /// @argument			radius? {Vector2}
-/// @argument			fill_color? {int:color|Color2|Color4}
+/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 /// @argument			fill_alpha? {real}
 /// @argument			outline_size? {int}
 /// @argument			outline_color? {int:color|Color4}
@@ -71,6 +71,12 @@ function RoundRectangle() constructor
 				else if (is_instanceof(_other.fill_color, Color2))
 				{
 					fill_color = new Color2(_other.fill_color);
+				}
+				else if ((is_array(_other.fill_color)) and (array_length(_other.fill_color) == 2))
+				{
+					fill_color = [_other.fill_color[0],
+								  ((is_instanceof(_other.fill_color[1], Color4))
+								   ? new Color4(_other.fill_color[1]) : _other.fill_color[1])];
 				}
 				else
 				{
@@ -174,18 +180,57 @@ function RoundRectangle() constructor
 	/// @description		Check if specified constructor has equivalent properties.
 	static equals = function(_other)
 	{
-		return ((is_instanceof(_other, RoundRectangle)) and
-				(fill_alpha == _other.fill_alpha) and (outline_size == _other.outline_size) and
-				(outline_alpha == _other.outline_alpha) and (precision == _other.precision) and
-				((location == _other.location) or
-				((string_copy(instanceof(location), 1, 6) == "Vector") and
-				 (location.equals(_other.location)))) and
-				((radius == _other.radius) or ((is_instanceof(radius, Vector2)) and
-				 (radius.equals(_other.radius)))) and ((fill_color == _other.fill_color) or
-				((string_copy(instanceof(fill_color), 1, 5) == "Color") and
-				 (fill_color.equals(_other.fill_color)))) and
-				((outline_color == _other.outline_color) or ((is_instanceof(outline_color, Color4) and
-				 (outline_color.equals(_other.outline_color))))));
+		if (is_instanceof(_other, RoundRectangle))
+		{
+			var _fill_color_array_equal = false;
+			
+			if (is_array(fill_color))
+			{
+				if (is_array(_other.fill_color))
+				{
+					var _fill_color_size = array_length(fill_color);
+					
+					if (_fill_color_size == array_length(_other.fill_color))
+					{
+						_fill_color_array_equal = true;
+						var _i = 0;
+						repeat (_fill_color_size)
+						{
+							var _value_current = fill_color[_i];
+							var _value_other_current = _other.fill_color[_i];
+							
+							if (!((_value_current == _value_other_current)
+							or ((string_copy(instanceof(_value_current), 1, 5) == "Color") and
+								(_value_current.equals(_value_other_current)))))
+							{
+								
+								_fill_color_array_equal = false;
+								
+								break;
+							}
+							
+							++_i;
+						}
+					}
+				}
+			}
+			
+			return (((_fill_color_array_equal) or (fill_color == _other.fill_color) or
+					 ((string_copy(instanceof(fill_color), 1, 5) == "Color") and
+					  (fill_color.equals(_other.fill_color)))) and
+					(fill_alpha == _other.fill_alpha) and (outline_size == _other.outline_size) and
+					(outline_alpha == _other.outline_alpha) and (precision == _other.precision) and
+					((location == _other.location) or
+					((string_copy(instanceof(location), 1, 6) == "Vector") and
+					 (location.equals(_other.location)))) and
+					((radius == _other.radius) or ((is_instanceof(radius, Vector2)) and
+					 (radius.equals(_other.radius)))) and
+					((outline_color == _other.outline_color) or
+					 ((is_instanceof(outline_color, Color4) and
+					 (outline_color.equals(_other.outline_color))))));
+		}
+		
+		return false;
 	}
 	
 	/// @argument			point {Vector2}
@@ -201,8 +246,8 @@ function RoundRectangle() constructor
 								   location.y2))
 			{
 				var _location_outline = ((_includeOutline) ? self.getOutlineLocation() : undefined);
-				var _vertex_location = self.getVertexLocation(_location_outline, undefined, undefined,
-															  true);
+				var _vertex_location = self.getVertexLocation(_location_outline, undefined,
+															  undefined);
 				var _segment_count = 4;
 				var _vertex_count = array_length(_vertex_location);
 				var _vertex_count_outer = (_vertex_count - 2);
@@ -384,7 +429,6 @@ function RoundRectangle() constructor
 	/// @argument			location? {Vector4}
 	/// @argument			radius? {Vector2}
 	/// @argument			precision? {int:divisibleBy4}
-	/// @argument			startWithCenter? {bool}
 	/// @returns			{real[+]}
 	/// @description		Return an array containing nested arrays with point locations,
 	///						resulting in this Shape when connected. If specified, the center
@@ -395,7 +439,7 @@ function RoundRectangle() constructor
 	//						GameMaker-HTML5/blob/9143e2770e2d6a333f2bdcbe640d1f45f7258d6b/
 	//						scripts/yyWebGL.js#L2990-L3124)
 	static getVertexLocation = function(_location = location, _radius = radius,
-										_precision = precision, _startWithCenter = false)
+										_precision = precision)
 	{
 		var _result = [];
 		
@@ -429,33 +473,45 @@ function RoundRectangle() constructor
 			var _center_y = mean(_location_y1, _location_y2);
 			var _line_size_x = ((_size_x - _radius_x) * 0.5);
 			var _line_size_y = ((_size_y - _radius_y) * 0.5);
-			var _centerArrayOffset = real(bool(_startWithCenter));
 			var _curve_vertex_count_total = (_curve_vertex_count * _segment_count);
-			var _vertex_count = (_curve_vertex_count_total + _centerArrayOffset + 1);
-			_result = array_create(_vertex_count, undefined);
-			
-			if (_startWithCenter)
-			{
-				_result[0] = [_center_x, _center_y];
-			}
-			
+			var _vertex_count = (_curve_vertex_count_total + 1);
 			var _sign_x = [1, (-1), (-1), 1];
 			var _sign_y = [1, 1, (-1), (-1)];
+			var _center = [_center_x, _center_y];
+			var _segment_current = 0;
+			_result = array_create(((_precision + 4) * 3), undefined);
 			var _i = 0;
-			repeat (_curve_vertex_count_total)
+			repeat (_precision + 3)
 			{
-				var _segment_current = (_i div _curve_vertex_count);
+				var _trio = (_i * 3);
 				
-				_result[(_i + _centerArrayOffset)] =
-				 [(_center_x + (_line_size_x * _sign_x[_segment_current]) +
-				   (_radius_x * _curve_cos[(_i - _segment_current)] * 0.5)),
-				  (_center_y + (_line_size_y * _sign_y[_segment_current]) +
-				   (_radius_y * _curve_sin[(_i - _segment_current)] * 0.5))];
+				_result[_trio] = _center;
+				
+				_segment_current = (_i div _curve_vertex_count);
+				_result[(_trio + 1)] =
+				[
+					(_center_x + (_line_size_x * _sign_x[_segment_current]) +
+					(_radius_x * _curve_cos[(_i - _segment_current)] * 0.5)),
+					(_center_y + (_line_size_y * _sign_y[_segment_current]) +
+					(_radius_y * _curve_sin[(_i - _segment_current)] * 0.5))
+				];
+				
+				_segment_current = ((_i + 1) div _curve_vertex_count);
+				_result[(_trio + 2)] =
+				[
+					(_center_x + (_line_size_x * _sign_x[_segment_current]) +
+					(_radius_x * _curve_cos[((_i + 1) - _segment_current)] * 0.5)),
+					(_center_y + (_line_size_y * _sign_y[_segment_current]) +
+					(_radius_y * _curve_sin[((_i + 1) - _segment_current)] * 0.5))
+				];
 				
 				++_i;
 			}
 			
-			_result[(_i + _centerArrayOffset)] = _result[_centerArrayOffset];
+			_trio = (_i * 3);
+			_result[_trio] = _center;
+			_result[(_trio + 1)] = _result[1];
+			_result[(_trio + 2)] = _result[(_trio - 1)];
 		}
 		catch (_exception)
 		{
@@ -467,7 +523,7 @@ function RoundRectangle() constructor
 	
 	/// @argument			location? {Vector4}
 	/// @argument			radius? {Vector2}
-	/// @argument			fill_color? {int:color|Color2|Color4}
+	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
 	/// @argument			outline_color? {int:color|Color4}
@@ -502,172 +558,175 @@ function RoundRectangle() constructor
 			var _segment_count = 4;
 			var _vertex_location_base = undefined;
 			var _color = _outline_color;
-			_precision = clamp(((_precision div _segment_count) * _segment_count), _segment_count,
-							   64);
 			
 			if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 			and (_fill_alpha > 0))
 			{
-				_vertex_location_base = self.getVertexLocation(_location, _radius, _precision, true);
-				var _color2 = _fill_color;
-				var _color_order_fill = undefined;
-				var _vertex_color_offset_fill = 0;
+				_vertex_location_base = self.getVertexLocation(_location, _radius, _precision);
+				var _vertex_location_base_count = array_length(_vertex_location_base);
+				var _vertex_data = array_create(_vertex_location_base_count, undefined);
+				var _iteration_count = (_vertex_location_base_count / 3);
+				var _vertex_color = array_create(_iteration_count, [_fill_color, _fill_color,
+																	_fill_color]);
 				
-				if (is_instanceof(_fill_color, Color4))
+				if (is_instanceof(_fill_color, Color2))
 				{
-					_color_order_fill = [_fill_color.color3, _fill_color.color4, _fill_color.color1,
-										 _fill_color.color2];
-					_vertex_color_offset_fill = 1;
-				}
-				else if (is_instanceof(_fill_color, Color2))
-				{
-					_color = _fill_color.color1;
-					_color2 = _fill_color.color2;
+					_vertex_color = array_create(_iteration_count,
+												 [_fill_color.color1, _fill_color.color2,
+												  _fill_color.color2]);
 				}
 				else
 				{
-					_color = _fill_color;
+					var _fill_color_center = undefined;
+					
+					if (is_array(_fill_color))
+					{
+						_fill_color_center = _fill_color[0];
+						_fill_color = _fill_color[1];
+					}
+					
+					if (is_instanceof(_fill_color, Color4))
+					{
+						var _fill_color_order = [_fill_color.color3, _fill_color.color4,
+												 _fill_color.color1, _fill_color.color2];
+						_fill_color_center ??= _fill_color_order[0];
+						var _i = 0;
+						repeat (_iteration_count)
+						{
+							var _trio = (_i * 3);
+							var _segment_current = (_trio div (_vertex_location_base_count /
+															   _segment_count));
+							var _segment_next = (((_trio + 3) div (_vertex_location_base_count /
+																   _segment_count))
+												 mod _segment_count);
+							
+							if (_segment_current < (_segment_count - 1))
+							{
+								_vertex_color[_i] = [_fill_color_center,
+													 _fill_color_order[_segment_current],
+													 _fill_color_order[_segment_next]];
+							}
+							else
+							{
+								_vertex_color[_i] = [_fill_color_center,
+													 _fill_color_order[_segment_next],
+													 _fill_color_order[_segment_current]];
+							}
+							
+							++_i;
+						}
+					}
 				}
 				
-				array_push(_primitive, [pr_trianglefan, _vertex_location_base, _color2, _fill_alpha,
-										_vertex_color_offset_fill, _color_order_fill]);
+				var _i = 0;
+				repeat (_iteration_count)
+				{
+					var _trio = (_i * 3);
+					var _vertex_color_current = _vertex_color[_i];
+					
+					_vertex_data[_trio] = [_vertex_location_base[_trio], _vertex_color_current[0],
+										   _fill_alpha];
+					_vertex_data[(_trio + 1)] = [_vertex_location_base[(_trio + 1)],
+												 _vertex_color_current[1], _fill_alpha];
+					_vertex_data[(_trio + 2)] = [_vertex_location_base[(_trio + 2)],
+												 _vertex_color_current[2], _fill_alpha];
+					
+					++_i;
+				}
+				
+				array_push(_primitive, [pr_trianglelist, _vertex_data]);
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
 			and (_outline_alpha > 0) and (_outline_size >= 1))
 			{
-				var _outline_primitive = undefined;
-				var _vertex_location = [];
-				var _color_order_outline = ((is_instanceof(_outline_color, Color4))
-											? [_outline_color.color3, _outline_color.color4,
-											   _outline_color.color1, _outline_color.color2]
-											: undefined);
-				var _vertex_color_offset_outline = 1;
-				var _outline_segment_gradient_offset = 0;
+				var _vertex_location_inner =
+				(
+					(_vertex_location_base) ?? self.getVertexLocation(_location, _radius, _precision)
+				);
 				
-				if (_outline_size > 1)
+				var _vertex_location_outer = self.getVertexLocation
+				(
+					self.getOutlineLocation(_location, _outline_size), _radius, _precision
+				);
+				
+				var _vertex_count_outline = array_length(_vertex_location_outer);
+				var _iteration_count = (_vertex_count_outline / 3);
+				var _vertex_color = array_create(_iteration_count, array_create(6, _outline_color));
+				
+				if (is_instanceof(_outline_color, Color2))
 				{
-					_outline_primitive = pr_trianglestrip;
-					_vertex_color_offset_outline = 2;
-					_outline_segment_gradient_offset = 2;
-					var _vertex_location_outline_inner = ((_vertex_location_base)
-					 ?? self.getVertexLocation(_location, _radius, _precision, true));
-					var _vertex_location_outline_outer =
-					 self.getVertexLocation(self.getOutlineLocation(_location, _outline_size),
-											_radius, _precision);
-					
+					_vertex_color = array_create(_iteration_count,
+					[
+						_outline_color.color1, _outline_color.color1, _outline_color.color2,
+						_outline_color.color1, _outline_color.color2, _outline_color.color2
+					]);
+				}
+				else if (is_instanceof(_outline_color, Color4))
+				{
+					var _outline_color_order = [_outline_color.color3, _outline_color.color4,
+												_outline_color.color1, _outline_color.color2];
+					var _vertex_color1 = undefined;
+					var _vertex_color2 = undefined;
 					var _i = 0;
-					repeat (array_length(_vertex_location_outline_outer))
+					repeat (_iteration_count)
 					{
-						array_push(_vertex_location, _vertex_location_outline_inner[(_i + 1)],
-								   _vertex_location_outline_outer[_i]);
+						var _trio = (_i * 3);
+						var _segment_current = (_trio div (_vertex_count_outline / _segment_count));
+						var _segment_next = ((_trio + 3) div (_vertex_count_outline /
+															  _segment_count));
+						
+						if (_segment_current == _segment_next)
+						{
+							_vertex_color1 = _outline_color_order[_segment_next];
+							_vertex_color2 = _vertex_color1;
+						}
+						else if (_segment_current == (_segment_count - 1))
+						{
+							_vertex_color1 = _outline_color_order[(_segment_next mod _segment_count)];
+							_vertex_color2 = _outline_color_order[_segment_current];
+						}
+						else
+						{
+							_vertex_color1 = _outline_color_order[_segment_current];
+							_vertex_color2 = _outline_color_order[_segment_next];
+						}
+						
+						_vertex_color[_i] = [_vertex_color1, _vertex_color2, _vertex_color1,
+											 _vertex_color2, _vertex_color1, _vertex_color2];
 						
 						++_i;
 					}
+				}
+				
+				var _vertex_data = array_create((_vertex_count_outline * 2), undefined);
+				var _i = 0;
+				repeat (_iteration_count)
+				{
+					var _trio = (_i * 3);
+					var _index = (_trio * 2);
+					var _vertex_color_current = _vertex_color[_i];
 					
-					var _vertex_location_outline = [_vertex_location_outline_outer,
-													_vertex_location_outline_inner];
-					var _vertex_location_outline_count =
-					 array_length(_vertex_location_outline);
-					var _segment_vertex_count = ((_precision / _segment_count) + 1);
-					var _position_offset = 4;
-					var _outline_first_offset = [[0, 0], [(-1), 0], [0, (-1)], [(-1), 0]];
-					var _outline_second_offset = [[0, (-1)], [(-1), 0], [0, (-1)], [(-1), 0]];
-					var _i = 1;
-					repeat (_segment_count)
-					{
-						var _vertex_first = (_segment_vertex_count * _i);
-						var _vertex_second = (_vertex_first + 1);
-						var _vertex_location_current = ((_vertex_first * 2) +
-														(_position_offset * (_i - 1)));
-						var _outline_first =
-						 _vertex_location_outline[(_i mod _vertex_location_outline_count)];
-						var _outline_second =
-						 _vertex_location_outline[((_i + 1) mod _vertex_location_outline_count)];
-						var _outline_first_offset_current = _outline_first_offset[(_i - 1)];
-						var _outline_second_offset_current = _outline_second_offset[(_i - 1)];
-						
-						array_insert(_vertex_location, _vertex_location_current,
-									 _vertex_location_outline_inner[_vertex_first],
-									 [_outline_first[_vertex_first +
-													 _outline_first_offset_current[0]][0],
-									  _outline_second[_vertex_first +
-													  _outline_first_offset_current[1]][1]]);
-						
-						array_insert(_vertex_location, (_vertex_location_current + 2),
-									 _vertex_location_outline_inner[_vertex_second],
-									 [_outline_first[(_vertex_second +
-													  _outline_second_offset_current[0])][0],
-									  _outline_second[(_vertex_second +
-									   _outline_second_offset_current[1])][1]]);
-						
-						++_i;
-					}
-				}
-				else
-				{
-					_outline_primitive = pr_linestrip;
-					var _vertex_location = self.getVertexLocation(_location, _radius, _precision);
+					_vertex_data[_index] = [_vertex_location_inner[(_trio + 1)],
+											_vertex_color_current[0], _outline_alpha];
+					_vertex_data[(_index + 1)] = [_vertex_location_inner[(_trio + 2)],
+												  _vertex_color_current[1], _outline_alpha];
+					_vertex_data[(_index + 2)] = [_vertex_location_outer[(_trio + 1)],
+												  _vertex_color_current[2], _outline_alpha];
+					_vertex_data[(_index + 3)] = [_vertex_location_inner[(_trio + 2)],
+												  _vertex_color_current[3], _outline_alpha];
+					_vertex_data[(_index + 4)] = [_vertex_location_outer[(_trio + 1)],
+												  _vertex_color_current[4], _outline_alpha];
+					_vertex_data[(_index + 5)] = [_vertex_location_outer[(_trio + 2)],
+												  _vertex_color_current[5], _outline_alpha];
+					
+					++_i;
 				}
 				
-				array_push(_primitive, [_outline_primitive, _vertex_location, _outline_color,
-										_outline_alpha, _vertex_color_offset_outline,
-										_color_order_outline]);
+				array_push(_primitive, [pr_trianglelist, _vertex_data]);
 			}
 			
-			var _i = [0, 0];
-			repeat (array_length(_primitive))
-			{
-				var _vertex_data_current = [];
-				var _primitive_current = _primitive[_i[0]];
-				var _primitive_location = _primitive_current[1];
-				var _vertex_alpha = _primitive_current[3];
-				var _vertex_count = array_length(_primitive_location);
-				var _vertex_count_color_segment = ((_vertex_count - _primitive_current[4]) /
-												   _segment_count);
-				var _color_order_current = _primitive_current[5];
-				var _color_segment_count = array_length(_color_order_current);
-				
-				if (_color_segment_count == _segment_count)
-				{
-					_i[1] = 0;
-					repeat (_vertex_count)
-					{
-						var _vertex_location_current = _primitive_location[_i[1]];
-						
-						var _color_segment_current =
-						 (floor((_i[1] + _outline_segment_gradient_offset) /
-						  _vertex_count_color_segment) mod _color_segment_count);
-						_color = _color_order_current[max(_color_segment_current, 0)];
-						
-						array_push(_vertex_data_current, [_vertex_location_current, _color,
-														  _vertex_alpha]);
-						
-						++_i[1];
-					}
-				}
-				else
-				{
-					var _vertex_color = _primitive_current[2];
-					_i[1] = 0;
-					repeat (_vertex_count)
-					{
-						var _vertex_location_current = _primitive_location[_i[1]];
-						
-						array_push(_vertex_data_current, [_vertex_location_current, _color,
-														  _vertex_alpha]);
-						_color = _vertex_color;
-						
-						++_i[1];
-					}
-				}
-				
-				array_push(_result, [_primitive_current[0], _vertex_data_current]);
-				
-				++_i[0];
-			}
-			
-			return event.getPrimitiveRenderData.execute(undefined, [_result]);
+			return event.getPrimitiveRenderData.execute(undefined, [_primitive]);
 		}
 		catch (_exception)
 		{
@@ -701,7 +760,7 @@ function RoundRectangle() constructor
 	
 	/// @argument			location? {Vector4}
 	/// @argument			radius? {Vector2}
-	/// @argument			fill_color? {int:color|Color2|Color4}
+	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
 	/// @argument			outline_color? {int:color|Color4}
@@ -815,7 +874,16 @@ function RoundRectangle() constructor
 		}
 		else
 		{
+			var _fill_color_arrayFormat = false;
 			var _color = [fill_color, outline_color];
+			
+			if ((is_array(fill_color)) and (array_length(fill_color) == 2)
+			and (is_real(fill_color[0])) and (is_instanceof(fill_color[1], Color4)))
+			{
+				_fill_color_arrayFormat = true;
+				_color = [fill_color[1], outline_color, fill_color[0]];
+			}
+			
 			var _color_count = array_length(_color);
 			var _string_color = array_create(_color_count, "");
 			var _mark_separator_inline = ", ";
@@ -883,7 +951,9 @@ function RoundRectangle() constructor
 			
 			_string = ("Location: " + string(location) + _mark_separator +
 					   "Radius: " + string(radius) + _mark_separator +
-					   "Fill Color: " + _string_color[0] + _mark_separator +
+					   "Fill Color: " + ((_fill_color_arrayFormat)
+										 ? string([_string_color[2], _string_color[0]])
+										 : _string_color[0]) + _mark_separator +
 					   "Fill Alpha: " + string(fill_alpha) + _mark_separator +
 					   "Outline Size: " + string(outline_size) + _mark_separator +
 					   "Outline Color: " + _string_color[1] + _mark_separator +
@@ -901,10 +971,28 @@ function RoundRectangle() constructor
 	{
 		var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
 		var _radius = ((is_instanceof(radius, Vector2)) ? radius.toArray() : radius);
-		var _fill_color = (((is_instanceof(fill_color, Color2)) or
-							(is_instanceof(fill_color, Color4))) ? fill_color.toArray() : fill_color);
 		var _outline_color = ((is_instanceof(outline_color, Color4)) ? outline_color.toArray()
 																	 : outline_color);
+		var _fill_color = undefined;
+		
+		if (is_array(fill_color))
+		{
+			if ((array_length(fill_color) == 2) and (is_instanceof(fill_color[1], Color4)))
+			{
+				_fill_color = fill_color[1].toArray();
+				
+				array_insert(_fill_color, 0, fill_color[0]);
+			}
+			else
+			{
+				_fill_color = fill_color;
+			}
+		}
+		else
+		{
+			_fill_color = (((is_instanceof(fill_color, Color2)) or
+							(is_instanceof(fill_color, Color4))) ? fill_color.toArray() : fill_color);
+		}
 		
 		return [_location, _radius, _fill_color, fill_alpha, outline_size, _outline_color,
 				outline_alpha, precision];
@@ -912,7 +1000,7 @@ function RoundRectangle() constructor
 	
 	/// @argument			location? {Vector4}
 	/// @argument			radius? {Vector2}
-	/// @argument			fill_color? {int:color|Color2|Color4}
+	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
 	/// @argument			outline_color? {int:color|Color4}
@@ -940,19 +1028,21 @@ function RoundRectangle() constructor
 		try
 		{
 			var _renderData = [];
-			var _vertexBuffer_wasActive = ((_outline == all) ? [false, false] : [false]);
+			var _vertexBuffer_wasActive = [false, false];
 			
 			if (_vertexBuffer != undefined)
 			{
 				if (_outline == all)
 				{
-					_vertexBuffer_fill = _vertexBuffer[0];
-					_vertexBuffer_outline = _vertexBuffer[1];
-					
-					if (_vertexBuffer_fill == _vertexBuffer_outline)
+					if (is_array(_vertexBuffer))
 					{
-						throw ("Cannot submit multiple different primitive types into the same " +
-							   "Vertex Buffer.");
+						_vertexBuffer_fill = _vertexBuffer[0];
+						_vertexBuffer_outline = _vertexBuffer[1];
+					}
+					else
+					{
+						_vertexBuffer_fill = _vertexBuffer;
+						_vertexBuffer_outline = _vertexBuffer;
 					}
 					
 					_vertexBuffer_wasActive = [_vertexBuffer_fill.active,
@@ -979,31 +1069,28 @@ function RoundRectangle() constructor
 				}
 				
 				array_push(_renderData, _vertexBuffer_fill
-										.createPrimitiveRenderData(pr_trianglefan));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
 			and (_outline_alpha > 0) and (_outline_size >= 1))
 			{
-				var _primitiveType_outline = ((_outline_size > 1) ? pr_trianglestrip
-																  : pr_linestrip);
-				
 				if (!is_instanceof(_vertexBuffer_outline, VertexBuffer))
 				{
 					_vertexBuffer_outline = new VertexBuffer();
 				}
 				
 				array_push(_renderData, _vertexBuffer_outline
-										.createPrimitiveRenderData(_primitiveType_outline));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			var _primitive = self.getPrimitiveRenderData(_location, _radius, _fill_color,
-														 _fill_alpha, _outline_size,
-														 _outline_color, _outline_alpha,
-														 _precision, _outline);
+														 _fill_alpha, _outline_size, _outline_color,
+														 _outline_alpha, _precision, _outline);
+			var _primitive_count = array_length(_primitive);
 			var _vertex = new Vector2();
 			var _i = [0, 0];
-			repeat (array_length(_primitive))
+			repeat (_primitive_count)
 			{
 				var _renderData_current = _renderData[_i[0]];
 				var _vertexBuffer_current = _renderData_current.vertexBuffer;
@@ -1024,15 +1111,22 @@ function RoundRectangle() constructor
 					++_i[1];
 				}
 				
-				if (!_vertexBuffer_wasActive[_i[0]])
-				{
-					_vertexBuffer_current.setActive(false);
-				}
-				
 				++_i[0];
 			}
 			
-			return ((array_length(_renderData) == 1) ? _renderData[0] : _renderData);
+			var _i = 0;
+			repeat (_primitive_count)
+			{
+				if (!_vertexBuffer_wasActive[_i])
+				{
+					_renderData[_i].vertexBuffer.setActive(false);
+				}
+				
+				++_i;
+			}
+			
+			return ((_vertexBuffer_fill == _vertexBuffer_outline) or
+					(array_length(_renderData) == 1) ? _renderData[0] : _renderData);
 		}
 		catch (_exception)
 		{

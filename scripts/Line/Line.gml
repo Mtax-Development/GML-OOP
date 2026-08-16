@@ -787,7 +787,7 @@ function Line() constructor
 		try
 		{
 			var _renderData = [];
-			var _vertexBuffer_wasActive = ((_outline == all) ? [false, false] : [false]);
+			var _vertexBuffer_wasActive = [false, false];
 			
 			if (_vertexBuffer != undefined)
 			{
@@ -828,7 +828,7 @@ function Line() constructor
 				}
 				
 				array_push(_renderData, _vertexBuffer_fill
-										.createPrimitiveRenderData(pr_trianglelist));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
@@ -840,7 +840,7 @@ function Line() constructor
 				}
 				
 				array_push(_renderData, _vertexBuffer_outline
-										.createPrimitiveRenderData(pr_trianglelist));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			var _primitive = self.getPrimitiveRenderData(_location, _size, _fill_color, _fill_alpha,
@@ -884,7 +884,8 @@ function Line() constructor
 				++_i;
 			}
 			
-			return ((array_length(_renderData) == 1) ? _renderData[0] : _renderData);
+			return ((_vertexBuffer_fill == _vertexBuffer_outline) or
+					(array_length(_renderData) == 1) ? _renderData[0] : _renderData);
 		}
 		catch (_exception)
 		{

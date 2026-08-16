@@ -405,7 +405,7 @@ function SurfaceRenderer() constructor
 				_vertexBuffer_target = new VertexBuffer();
 			}
 			
-			var _renderData = _vertexBuffer_target.createPrimitiveRenderData(pr_trianglestrip,
+			var _renderData = _vertexBuffer_target.createPrimitiveRenderData(pr_trianglelist,
 																			 undefined, _texture);
 			_vertexBuffer_target
 			 .setActive(_renderData.vertexFormat)
@@ -420,6 +420,14 @@ function SurfaceRenderer() constructor
 			  .setLocation2D(_vertex.set(_location_x1y1[0], _location_x1y1[1]))
 			  .setColor(_color_x1y1, _alpha)
 			  .setUV(_uv_x1, _uv_y1)
+			  
+			  .setLocation2D(_vertex.set(_location_x1y1[0], _location_x1y1[1]))
+			  .setColor(_color_x1y1, _alpha)
+			  .setUV(_uv_x1, _uv_y1)
+			  
+			  .setLocation2D(_vertex.set(_location_x2y2[0], _location_x2y2[1]))
+			  .setColor(_color_x2y2, _alpha)
+			  .setUV(_uv_x2, _uv_y2)
 			  
 			  .setLocation2D(_vertex.set(_location_x1y2[0], _location_x1y2[1]))
 			  .setColor(_color_x1y2, _alpha)

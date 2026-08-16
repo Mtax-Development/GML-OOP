@@ -101,6 +101,12 @@ function Rectangle() constructor
 				{
 					fill_color = new Color2(_roundRectangle.fill_color);
 				}
+				else if ((is_array(_roundRectangle.fill_color)
+				and (array_length(_roundRectangle.fill_color) >= 2))
+				and (is_instanceof(_roundRectangle.fill_color[1], Color4)))
+				{
+					fill_color = new Color4(_roundRectangle.fill_color[1]);
+				}
 				else
 				{
 					fill_color = _roundRectangle.fill_color;
@@ -1061,7 +1067,7 @@ function Rectangle() constructor
 				}
 				
 				array_push(_renderData, _vertexBuffer_fill
-										.createPrimitiveRenderData(pr_trianglelist));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
@@ -1073,7 +1079,7 @@ function Rectangle() constructor
 				}
 				
 				array_push(_renderData, _vertexBuffer_outline
-										.createPrimitiveRenderData(pr_trianglelist));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			var _primitive = self.getPrimitiveRenderData(_location, _fill_color, _fill_alpha,
@@ -1117,7 +1123,8 @@ function Rectangle() constructor
 				++_i;
 			}
 			
-			return ((array_length(_renderData) == 1) ? _renderData[0] : _renderData);
+			return ((_vertexBuffer_fill == _vertexBuffer_outline) or
+					(array_length(_renderData) == 1) ? _renderData[0] : _renderData);
 		}
 		catch (_exception)
 		{

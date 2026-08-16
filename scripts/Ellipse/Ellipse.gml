@@ -3,7 +3,7 @@
 /// @argument			fill_color? {int:color|Color2}
 /// @argument			fill_alpha? {real}
 /// @argument			outline_size? {int}
-/// @argument			outline_color? {int:color}
+/// @argument			outline_color? {int:color|Color2}
 /// @argument			outline_alpha? {real}
 /// @argument			precision? {int:divisibleBy4}
 /// @description		Constructs an Ellipse Shape, which is a Circle that can be extended at single
@@ -63,7 +63,8 @@ function Ellipse() constructor
 							  ? new Color2(_other.fill_color) : _other.fill_color);
 				fill_alpha = _other.fill_alpha;
 				outline_size = _other.outline_size;
-				outline_color = _other.outline_color;
+				outline_color = ((is_instanceof(_other.outline_color, Color2))
+								 ? new Color2(_other.outline_color) : _other.outline_color);
 				outline_alpha = _other.outline_alpha;
 				precision = _other.precision;
 				
@@ -89,7 +90,8 @@ function Ellipse() constructor
 				fill_color = ((is_instanceof(_circle.fill_color, Color2))
 							  ? new Color2(_circle.fill_color) : _circle.fill_color);
 				fill_alpha = _circle.fill_alpha;
-				outline_size = _circle.outline_size;
+				outline_color = ((is_instanceof(_circle.outline_color, Color2))
+								 ? new Color2(_circle.outline_color) : _circle.outline_color);
 				outline_color = _circle.outline_color;
 				outline_alpha = _circle.outline_alpha;
 				precision = _circle.precision;
@@ -139,7 +141,10 @@ function Ellipse() constructor
 	static equals = function(_other)
 	{
 		return ((is_instanceof(_other, Ellipse)) and (fill_alpha == _other.fill_alpha) and
-				(outline_size == _other.outline_size) and (outline_color == _other.outline_color) and
+				(outline_size == _other.outline_size) and
+				((outline_color == _other.outline_color) or
+				 ((string_copy(instanceof(outline_color), 1, 5) == "Color") and
+				  (outline_color.equals(_other.outline_color)))) and
 				(outline_alpha == _other.outline_alpha) and (precision == _other.precision) and
 				((location == _other.location) or
 				((string_copy(instanceof(location), 1, 6) == "Vector") and
@@ -240,7 +245,7 @@ function Ellipse() constructor
 			if (point_in_rectangle(_point.x, _point.y, _location.x1, _location.y1, _location.x2,
 								   _location.y2))
 			{
-				var _vertex_location = self.getVertexLocation(_location, undefined, true);
+				var _vertex_location = self.getVertexLocation(_location);
 				var _center = _vertex_location[0];
 				var _center_x = _center[0];
 				var _center_y = _center[1];
@@ -410,18 +415,14 @@ function Ellipse() constructor
 	
 	/// @argument			location? {Vector4}
 	/// @argument			precision? {int:divisibleBy4}
-	/// @argument			startWithCenter? {bool}
 	/// @returns			{real[+]}
 	/// @description		Return nested arrays with point locations resulting in this Shape when
-	///						connected. If specified, the center point of this Shape will be added at
-	///						beginning of returned array.
-	///						The amount of locations returned will be increased by the specified curve
-	///						precision. 
+	///						connected. The amount of locations returned will be increased by the
+	///						specified curve precision. 
 	//  @author				Adapted from code by YoYo Games (https://github.com/YoYoGames/
 	//						GameMaker-HTML5/blob/9143e2770e2d6a333f2bdcbe640d1f45f7258d6b/
 	//						scripts/yyWebGL.js#L3507-L3607)
-	static getVertexLocation = function(_location = location, _precision = precision,
-										_startWithCenter = false)
+	static getVertexLocation = function(_location = location, _precision = precision)
 	{
 		var _result = [];
 		
@@ -435,7 +436,7 @@ function Ellipse() constructor
 			var _curve_sin = array_create((_precision + 1), 0);
 			var _curve_cos = array_create((_precision + 1), 1);
 			var _i = 1;
-			repeat (_precision + 1)
+			repeat (_precision)
 			{
 				_curve_sin[_i] = sin(_i * 2 * _pi / _precision);
 				_curve_cos[_i] = cos(_i * 2 * _pi / _precision);
@@ -447,20 +448,19 @@ function Ellipse() constructor
 			var _center_y = mean(_location.y1, _location.y2);
 			var _radius_x = (abs(_location.x1 - _location.x2) * 0.5);
 			var _radius_y = (abs(_location.y1 - _location.y2) * 0.5);
-			var _centerArrayOffset = real(bool(_startWithCenter));
-			var _vertex_count = (_precision + 1);
-			_result = array_create(_vertex_count, undefined);
+			_result = array_create((_precision * 3), undefined);
 			
-			if (_startWithCenter)
-			{
-				_result[0] = [_center_x, _center_y];
-			}
-			
+			var _center = [_center_x, _center_y];
 			var _i = 0;
-			repeat (_vertex_count)
+			repeat (_precision)
 			{
-				_result[(_i + _centerArrayOffset)] = [(_center_x + (_radius_x * _curve_cos[_i])),
-													  (_center_y + (_radius_y * _curve_sin[_i]))];
+				var _trio = (_i * 3);
+				
+				_result[_trio] = _center;
+				_result[(_trio + 1)] = [(_center_x + (_radius_x * _curve_cos[_i])),
+										(_center_y + (_radius_y * _curve_sin[_i]))];
+				_result[(_trio + 2)] = [(_center_x + (_radius_x * _curve_cos[(_i + 1)])),
+										(_center_y + (_radius_y * _curve_sin[(_i + 1)]))];
 				
 				++_i;
 			}
@@ -477,7 +477,7 @@ function Ellipse() constructor
 	/// @argument			fill_color? {int:color|Color2}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color}
+	/// @argument			outline_color? {int:color|Color2}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @argument			outline? {bool|all}
@@ -512,80 +512,78 @@ function Ellipse() constructor
 			if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 			and (_fill_alpha > 0))
 			{
-				_vertex_location_base = self.getVertexLocation(_location, _precision, true);
-				var _color2 = _fill_color;
+				_vertex_location_base = self.getVertexLocation(_location, _precision);
+				var _vertex_location_base_count = array_length(_vertex_location_base);
+				var _vertex_data = array_create(_vertex_location_base_count, undefined);
+				var _fill_color1 = _fill_color;
+				var _fill_color2 = _fill_color;
 				
 				if (is_instanceof(_fill_color, Color2))
 				{
-					_color = _fill_color.color1;
-					_color2 = _fill_color.color2;
-				}
-				else
-				{
-					_color = _fill_color;
+					_fill_color1 = _fill_color.color1;
+					_fill_color2 = _fill_color.color2;
 				}
 				
-				array_push(_primitive, [pr_trianglefan, _vertex_location_base, _color2, _fill_alpha]);
+				var _i = 0;
+				repeat (_vertex_location_base_count / 3)
+				{
+					_vertex_data[_i] = [_vertex_location_base[_i], _fill_color1, _fill_alpha];
+					_vertex_data[(_i + 1)] = [_vertex_location_base[(_i + 1)], _fill_color2,
+											  _fill_alpha];
+					_vertex_data[(_i + 2)] = [_vertex_location_base[(_i + 2)], _fill_color2,
+											  _fill_alpha];
+					
+					_i += 3;
+				}
+				
+				array_push(_primitive, [pr_trianglelist, _vertex_data]);
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
 			and (_outline_alpha > 0) and (_outline_size >= 1))
 			{
-				var _vertex_location = [];
-				var _vertex_color_offset_outline = 2;
 				var _vertex_location_inner = ((_vertex_location_base)
-											  ?? self.getVertexLocation(_location, _precision, true));
+											  ?? self.getVertexLocation(_location, _precision));
 				var _vertex_location_outer =
 				 self.getVertexLocation(self.getOutlineLocation(_location, _outline_size),
 										_precision);
-				var _i = 0;
-				repeat (array_length(_vertex_location_outer))
+				var _vertex_count_outline = array_length(_vertex_location_outer);
+				var _vertex_data = array_create((_vertex_count_outline * 2), undefined);
+				var _outline_color1 = _outline_color;
+				var _outline_color2 = _outline_color;
+				
+				if (is_instanceof(_outline_color, Color2))
 				{
-					array_push(_vertex_location, _vertex_location_inner[(_i + 1)],
-							   _vertex_location_outer[_i]);
+					_outline_color1 = _outline_color.color1;
+					_outline_color2 = _outline_color.color2;
+				}
+				
+				var _i = 0;
+				repeat (_vertex_count_outline / 3)
+				{
+					var _trio = (_i * 3);
+					var _index = (_trio * 2);
+					
+					_vertex_data[_index] = [_vertex_location_inner[(_trio + 1)], _outline_color1,
+											_outline_alpha];
+					_vertex_data[(_index + 1)] = [_vertex_location_inner[(_trio + 2)],
+												  _outline_color1, _outline_alpha];
+					_vertex_data[(_index + 2)] = [_vertex_location_outer[(_trio + 1)],
+												  _outline_color2, _outline_alpha];
+					_vertex_data[(_index + 3)] = [_vertex_location_inner[(_trio + 2)],
+												  _outline_color1, _outline_alpha];
+					_vertex_data[(_index + 4)] = [_vertex_location_outer[(_trio + 1)],
+												  _outline_color2, _outline_alpha];
+					_vertex_data[(_index + 5)] = [_vertex_location_outer[(_trio + 2)],
+												  _outline_color2, _outline_alpha];
 					
 					++_i;
 				}
 				
-				array_push(_primitive, [pr_trianglestrip, _vertex_location, _outline_color,
-										_outline_alpha, _vertex_color_offset_outline]);
+				array_push(_primitive, [pr_trianglelist, _vertex_data]);
 			}
 			
-			var _i = [0, 0];
-			repeat (array_length(_primitive))
-			{
-				var _vertex_data_current = [];
-				var _primitive_current = _primitive[_i[0]];
-				var _primitive_type = _primitive_current[0];
-				var _primitive_location = _primitive_current[1];
-				var _vertex_color = _primitive_current[2];
-				var _vertex_alpha = _primitive_current[3];
-				var _vertex_count = array_length(_primitive_location);
-				
-				if (_primitive_type != pr_trianglefan)
-				{
-					_color = _vertex_color;
-				}
-				
-				_i[1] = 0;
-				repeat (_vertex_count)
-				{
-					var _vertex_location_current = _primitive_location[_i[1]];
-					
-					array_push(_vertex_data_current, [_vertex_location_current, _color,
-													  _vertex_alpha]);
-					
-					_color = _vertex_color;
-					
-					++_i[1];
-				}
-				
-				array_push(_result, [_primitive_type, _vertex_data_current]);
-				
-				++_i[0];
-			}
-			
-			return event.getPrimitiveRenderData.execute(undefined, [_result]);
+			return event.getPrimitiveRenderData.execute(undefined, [_primitive]);
 		}
 		catch (_exception)
 		{
@@ -621,7 +619,7 @@ function Ellipse() constructor
 	/// @argument			fill_color? {int:color|Color2}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color}
+	/// @argument			outline_color? {int:color|Color2}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @description		Execute the draw of this Shape as a primitive, using data of this
@@ -818,7 +816,7 @@ function Ellipse() constructor
 	/// @argument			fill_color? {int:color|Color2}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color}
+	/// @argument			outline_color? {int:color|Color2}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @argument			outline? {bool|all}
@@ -843,19 +841,21 @@ function Ellipse() constructor
 		try
 		{
 			var _renderData = [];
-			var _vertexBuffer_wasActive = ((_outline == all) ? [false, false] : [false]);
+			var _vertexBuffer_wasActive = [false, false];
 			
 			if (_vertexBuffer != undefined)
 			{
 				if (_outline == all)
 				{
-					_vertexBuffer_fill = _vertexBuffer[0];
-					_vertexBuffer_outline = _vertexBuffer[1];
-					
-					if (_vertexBuffer_fill == _vertexBuffer_outline)
+					if (is_array(_vertexBuffer))
 					{
-						throw ("Cannot submit multiple different primitive types into the same " +
-							   "Vertex Buffer.");
+						_vertexBuffer_fill = _vertexBuffer[0];
+						_vertexBuffer_outline = _vertexBuffer[1];
+					}
+					else
+					{
+						_vertexBuffer_fill = _vertexBuffer;
+						_vertexBuffer_outline = _vertexBuffer;
 					}
 					
 					_vertexBuffer_wasActive = [_vertexBuffer_fill.active,
@@ -881,29 +881,29 @@ function Ellipse() constructor
 					_vertexBuffer_fill = new VertexBuffer();
 				}
 				
-				array_push(_renderData, _vertexBuffer_fill.createPrimitiveRenderData(pr_trianglefan));
+				array_push(_renderData, _vertexBuffer_fill
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
 			and (_outline_alpha > 0) and (_outline_size >= 1))
 			{
-				var _primitiveType_outline = ((_outline_size > 1) ? pr_trianglestrip : pr_linestrip);
-				
 				if (!is_instanceof(_vertexBuffer_outline, VertexBuffer))
 				{
 					_vertexBuffer_outline = new VertexBuffer();
 				}
 				
 				array_push(_renderData, _vertexBuffer_outline
-										.createPrimitiveRenderData(_primitiveType_outline));
+										 .createPrimitiveRenderData(pr_trianglelist));
 			}
 			
 			var _primitive = self.getPrimitiveRenderData(_location, _fill_color, _fill_alpha,
 														 _outline_size, _outline_color,
 														 _outline_alpha, _precision, _outline);
+			var _primitive_count = array_length(_primitive);
 			var _vertex = new Vector2();
 			var _i = [0, 0];
-			repeat (array_length(_primitive))
+			repeat (_primitive_count)
 			{
 				var _renderData_current = _renderData[_i[0]];
 				var _vertexBuffer_current = _renderData_current.vertexBuffer;
@@ -924,15 +924,22 @@ function Ellipse() constructor
 					++_i[1];
 				}
 				
-				if (!_vertexBuffer_wasActive[_i[0]])
-				{
-					_vertexBuffer_current.setActive(false);
-				}
-				
 				++_i[0];
 			}
 			
-			return ((array_length(_renderData) == 1) ? _renderData[0] : _renderData);
+			var _i = 0;
+			repeat (_primitive_count)
+			{
+				if (!_vertexBuffer_wasActive[_i])
+				{
+					_renderData[_i].vertexBuffer.setActive(false);
+				}
+				
+				++_i;
+			}
+			
+			return ((_vertexBuffer_fill == _vertexBuffer_outline) or
+					(array_length(_renderData) == 1) ? _renderData[0] : _renderData);
 		}
 		catch (_exception)
 		{
