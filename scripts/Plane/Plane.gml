@@ -528,7 +528,7 @@ function Plane() constructor
 	static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
 									 _sprite = sprite, _color = color, _alpha = alpha, _vertexBuffer)
 	{
-		var _vertexBuffer_created = false;
+		var _vertexBuffer_target = undefined;
 		
 		try
 		{
@@ -543,11 +543,11 @@ function Plane() constructor
 			if (is_instanceof(_vertexBuffer, VertexBuffer))
 			{
 				_vertexBuffer_wasActive = _vertexBuffer.active;
+				_vertexBuffer_target = _vertexBuffer;
 			}
 			else
 			{
-				_vertexBuffer = new VertexBuffer();
-				_vertexBuffer_created = true;
+				_vertexBuffer_target = new VertexBuffer();
 			}
 			
 			var _primitive = self.getPrimitiveRenderData(_location, _scale, _angle, _sprite);
@@ -556,14 +556,11 @@ function Plane() constructor
 			var _texture_data = _primitive[2];
 			var _uv = _texture_data[1];
 			var _normal = self.getNormal(_vertex_location);
-			var _renderData = _vertexBuffer.createPrimitiveRenderData(_primitive_type,
-																	  vertex_position_3d,
-																	  _texture_data[0]);
+			var _renderData = _vertexBuffer_target.createPrimitiveRenderData(_primitive_type,
+																			 vertex_position_3d,
+																			 _texture_data[0]);
 			
-			if (!_vertexBuffer_wasActive)
-			{
-				_vertexBuffer.setActive(_renderData.vertexFormat);
-			}
+			_vertexBuffer_target.setActive(_renderData.vertexFormat);
 			
 			var _vertex = new Vector3();
 			var _i = 0;
@@ -571,7 +568,7 @@ function Plane() constructor
 			{
 				var _vertex_uv_current = _uv[_i];
 				
-				_vertexBuffer
+				_vertexBuffer_target
 				 .setLocation3D(_vertex.setAll(_vertex_location[_i]))
 				 .setNormal(_normal)
 				 .setUV(_vertex_uv_current[0], _vertex_uv_current[1])
@@ -582,16 +579,16 @@ function Plane() constructor
 			
 			if (!_vertexBuffer_wasActive)
 			{
-				_vertexBuffer.setActive(false);
+				_vertexBuffer_target.setActive(false);
 			}
 			
 			return _renderData;
 		}
 		catch (_exception)
 		{
-			if (_vertexBuffer_created)
+			if ((_vertexBuffer == undefined) and (_vertexBuffer_target != undefined))
 			{
-				_vertexBuffer.destroy();
+				_vertexBuffer_target.destroy();
 			}
 			
 			ErrorReport.report([other, self, "toVertexBuffer()"], _exception);
