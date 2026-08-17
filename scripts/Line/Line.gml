@@ -809,13 +809,13 @@ function Line() constructor
 				}
 				else if (_outline)
 				{
-					_vertexBuffer_fill = _vertexBuffer;
-					_vertexBuffer_wasActive = [_vertexBuffer_fill.active];
+					_vertexBuffer_outline = _vertexBuffer;
+					_vertexBuffer_wasActive = [_vertexBuffer_outline.active];
 				}
 				else
 				{
-					_vertexBuffer_outline = _vertexBuffer;
-					_vertexBuffer_wasActive = [_vertexBuffer_outline.active];
+					_vertexBuffer_fill = _vertexBuffer;
+					_vertexBuffer_wasActive = [_vertexBuffer_fill.active];
 				}
 			}
 			
