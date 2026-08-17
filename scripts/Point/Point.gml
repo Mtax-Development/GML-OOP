@@ -550,9 +550,8 @@ function Point() constructor
 	/// @argument			vertexBuffer? {VertexBuffer}
 	/// @returns			{VertexBuffer.PrimitiveRenderData|undefined}
 	/// @description		Return rendering data of this constructor in a Vertex Buffer, using its
-	///						current data or specified temporarily replaced parts.
-	///						In case of invisible or invalid render, {undefined} will be returned
-	///						instead.
+	///						current data or specified temporarily replaced parts. In case of invisible
+	///						or invalid render, {undefined} will be returned instead.
 	static toVertexBuffer = function(_location = location, _color = color, _alpha = alpha,
 									 _vertexBuffer)
 	{
