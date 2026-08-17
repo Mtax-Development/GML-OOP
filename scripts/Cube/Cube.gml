@@ -746,11 +746,11 @@ function Cube() constructor
 	/// @description		Return rendering data of this constructor in Vertex Buffers, using its
 	///						current data or specified temporarily replaced parts. A single Vertex
 	///						Buffer can be specified instead to place rendering data in it, instead of
-	///						creating several new ones. If specified while being currently active, it
-	///						will not be deactivated after this operation. Rendering data for six sides
-	///						will be returned in an array, except for sides that were excluded by
-	///						specifying their numbers, starting from 1 in following order: Top, Bottom,
-	///						Left, Front, Right, Back.
+	///						creating several new ones, affecting rendered transparency. If specified
+	///						while being currently active, it will not be deactivated after this
+	///						operation. Rendering data for six sides will be returned in an array,
+	///						except for sides that were excluded by specifying their numbers, starting
+	///						from 1 in following order: Top, Bottom, Left, Front, Right, Back.
 	static toVertexBuffer = function(_location = location, _scale = scale, _angle = angle,
 									 _sprite = sprite, _color = color, _alpha = alpha,
 									 _excludedSide = [], _vertexBuffer)
