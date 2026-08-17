@@ -846,11 +846,8 @@ function Circle() constructor
 	///						On error: {undefined}
 	/// @description		Return rendering data of this constructor in a Vertex Buffer, using its
 	///						current data or specified temporarily replaced parts. Multiple values can
-	///						be returned in an array, depending on whether it was specified to return
-	///						only data for outline, use only fill instead or to return data for all
-	///						parts. If existing Vertex Buffer is to be specified, two separate Vertex
-	///						Buffers must be specified for them. Data for invisible or invalid render
-	///						will be excluded.
+	///						be returned in an array if separate Vertex Buffers were specified for fill
+	///						and outline. Data for invisible or invalid render will be excluded.
 	static toVertexBuffer = function(_location = location, _radius = radius,
 									 _fill_color = fill_color, _fill_alpha = fill_alpha,
 									 _outline_size = outline_size, _outline_color = outline_color,
@@ -894,15 +891,15 @@ function Circle() constructor
 					_vertexBuffer_wasActive = [_vertexBuffer_fill.active];
 				}
 			}
+			else
+			{
+				_vertexBuffer_fill = new VertexBuffer();
+				_vertexBuffer_outline = _vertexBuffer_fill;
+			}
 			
 			if (((!_outline) or (_outline == all)) and (_fill_color != undefined)
 			and (_fill_alpha > 0))
 			{
-				if (!is_instanceof(_vertexBuffer_fill, VertexBuffer))
-				{
-					_vertexBuffer_fill = new VertexBuffer();
-				}
-				
 				array_push(_renderData, _vertexBuffer_fill
 										 .createPrimitiveRenderData(pr_trianglelist));
 			}
@@ -910,11 +907,6 @@ function Circle() constructor
 			if (((_outline) or (_outline == all)) and (_outline_color != undefined)
 			and (_outline_alpha > 0) and (_outline_size >= 1))
 			{
-				if (!is_instanceof(_vertexBuffer_outline, VertexBuffer))
-				{
-					_vertexBuffer_outline = new VertexBuffer();
-				}
-				
 				array_push(_renderData, _vertexBuffer_outline
 										 .createPrimitiveRenderData(pr_trianglelist));
 			}
