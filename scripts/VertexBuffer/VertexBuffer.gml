@@ -115,15 +115,16 @@ function VertexBuffer() constructor
    #endregion
    #region <Getters>
 	
-	/// @argument			sizeInBytes? {bool}
+	/// @argument			inBytes? {bool}
 	/// @returns			{int}
 	/// @description		Return the either the number of vertices contained in this Vertex Buffer
-	///						or if specified, its size in bytes.
-	static getSize = function(_sizeInBytes = false)
+	///						or if specified, its size in bytes with a minimum number of 32768 bytes
+	///						pre-allocated upon creation.
+	static getSize = function(_inBytes = false)
 	{
 		try
 		{
-			return ((_sizeInBytes) ? vertex_get_buffer_size(ID) : vertex_get_number(ID));
+			return ((_inBytes) ? vertex_get_buffer_size(ID) : vertex_get_number(ID));
 		}
 		catch (_exception)
 		{
