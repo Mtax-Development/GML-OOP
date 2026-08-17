@@ -242,14 +242,10 @@ function Circle() constructor
 		try
 		{
 			var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -289,14 +285,10 @@ function Circle() constructor
 		try
 		{
 			var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -344,14 +336,10 @@ function Circle() constructor
 		try
 		{
 			var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -399,14 +387,10 @@ function Circle() constructor
 		try
 		{
 			var _radius = ((_includeOutline) ? (radius + outline_size) : radius);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{

@@ -187,6 +187,8 @@ function Triangle() constructor
 			var _location1 = location1;
 			var _location2 = location2;
 			var _location3 = location3;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
 			if (_includeOutline)
 			{
@@ -197,14 +199,7 @@ function Triangle() constructor
 				_location3 = _location_outline[2];
 			}
 			
-			var _cursor_x, _cursor_y;
-			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -247,6 +242,8 @@ function Triangle() constructor
 			var _location1 = location1;
 			var _location2 = location2;
 			var _location3 = location3;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
 			if (_includeOutline)
 			{
@@ -257,14 +254,7 @@ function Triangle() constructor
 				_location3 = _location_outline[2];
 			}
 			
-			var _cursor_x, _cursor_y;
-			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -315,6 +305,8 @@ function Triangle() constructor
 			var _location1 = location1;
 			var _location2 = location2;
 			var _location3 = location3;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
 			if (_includeOutline)
 			{
@@ -325,14 +317,7 @@ function Triangle() constructor
 				_location3 = _location_outline[2];
 			}
 			
-			var _cursor_x, _cursor_y;
-			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -383,6 +368,8 @@ function Triangle() constructor
 			var _location1 = location1;
 			var _location2 = location2;
 			var _location3 = location3;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
 			if (_includeOutline)
 			{
@@ -393,14 +380,7 @@ function Triangle() constructor
 				_location3 = _location_outline[2];
 			}
 			
-			var _cursor_x, _cursor_y;
-			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{

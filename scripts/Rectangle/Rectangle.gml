@@ -292,14 +292,10 @@ function Rectangle() constructor
 		try
 		{
 			var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -340,14 +336,10 @@ function Rectangle() constructor
 		try
 		{
 			var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -396,14 +388,10 @@ function Rectangle() constructor
 		try
 		{
 			var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -452,14 +440,10 @@ function Rectangle() constructor
 		try
 		{
 			var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{

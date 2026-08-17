@@ -177,14 +177,10 @@ function Point() constructor
 	{
 		try
 		{
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -222,14 +218,10 @@ function Point() constructor
 	{
 		try
 		{
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -274,14 +266,10 @@ function Point() constructor
 	{
 		try
 		{
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
@@ -326,14 +314,10 @@ function Point() constructor
 	{
 		try
 		{
-			var _cursor_x, _cursor_y;
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
 			
-			if (_device == undefined)
-			{
-				_cursor_x = mouse_x;
-				_cursor_y = mouse_y;
-			}
-			else
+			if (_device != undefined)
 			{
 				if (_GUI)
 				{
