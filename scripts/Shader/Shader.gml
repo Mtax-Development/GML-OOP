@@ -545,20 +545,22 @@ function Shader() constructor
 			
 			if (self.isFunctional())
 			{
-				var _mark_separator = ((_multiline) ? "\n" : ", ");
 				var _string = "";
+				var _string_value = (((is_array(value)) and (array_length(value) == 1))
+									 ? string(value[0]) : string(value));
 				
 				if (!_full)
 				{
-					_string = ("Name: " + string(name) + _mark_separator +
-							   "Value: " + string(value));
+					_string = (string(name) + ": " + _string_value);
 				}
 				else
 				{
+					var _mark_separator = ((_multiline) ? "\n" : ", ");
+					
 					_string = ("Name: " + string(name) + _mark_separator +
 							   "Handle: " + string(handle) + _mark_separator +
 							   "Type: " + string(type) + _mark_separator +
-							   "Value: " + string(value));
+							   "Value: " + _string_value);
 				}
 				
 				return ((_multiline) ? _string : (_constructorName + "(" + _string + ")"));
