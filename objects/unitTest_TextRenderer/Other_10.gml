@@ -4,9 +4,10 @@ asset = [TestFont1];
 #region [Test: Construction: New constructor / Method: isFunctional()]
 	
 	var _base = ["GML-OOP", new Font(asset[0]), new Vector2(155), new TextAlign(fa_left, fa_middle),
-				 c_green, 0.98];
+				 15, new Angle(55), c_green, 0.98];
 	
-	constructor = new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
+	constructor = new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+								   _base[6], _base[7]);
 	
 	var _result = constructor.isFunctional()
 	var _expectedValue = true;
@@ -29,25 +30,24 @@ asset = [TestFont1];
 #region [Test: Construction: Constructor copy]
 	
 	var _base = ["GML-OOP", new Font(asset[0]), new Vector2(255), new TextAlign(fa_right, fa_bottom),
-				 c_orange, 0.98];
+				 new Scale(5.5, 0.47), new Angle(35), c_orange, 0.98];
 	var _element = [function(_) {return _;}, "argument"];
 	
-	constructor = [new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5])];
-	constructor[0].event.beforeRender.callback = _element[0];
-	constructor[0].event.beforeRender.argument = _element[1];
-	constructor[0].event.afterRender.callback = _element[0];
-	constructor[0].event.afterRender.argument = _element[1];
+	constructor = [new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+									_base[6], _base[7])];
+	constructor[0].event.beforeRender.set(_element[0], _element[1]);
+	constructor[0].event.afterRender.set(_element[0], _element[1]);
 	constructor[1] = new TextRenderer(constructor[0]);
 	
 	var _result = [constructor[1].ID, constructor[1].font.ID, constructor[1].location.x,
 				   constructor[1].location.y, constructor[1].align.x, constructor[1].align.y,
-				   constructor[1].color, constructor[1].alpha,
-				   constructor[1].event.beforeRender.callback,
-				   constructor[1].event.beforeRender.argument,
-				   constructor[1].event.afterRender.callback,
+				   constructor[1].scale.x, constructor[1].scale.y, constructor[1].angle.value,
+				   constructor[1].color, constructor[1].alpha, constructor[1].event.beforeRender.ID,
+				   constructor[1].event.beforeRender.argument, constructor[1].event.afterRender.ID,
 				   constructor[1].event.afterRender.argument];
 	var _expectedValue = [_base[0], _base[1].ID, _base[2].x, _base[2].y, _base[3].x, _base[3].y,
-						  _base[4], _base[5], _element[0], _element[1], _element[0], _element[1]];
+						  _base[4].x, _base[4].y, _base[5].value, _base[6], _base[7], _element[0],
+						  _element[1], _element[0], _element[1]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
@@ -61,7 +61,10 @@ asset = [TestFont1];
 						  _result[8], _expectedValue[8],
 						  _result[9], _expectedValue[9],
 						  _result[10], _expectedValue[10],
-						  _result[11], _expectedValue[11]);
+						  _result[11], _expectedValue[11],
+						  _result[12], _expectedValue[12],
+						  _result[13], _expectedValue[13],
+						  _result[14], _expectedValue[14]);
 	
 #endregion
 #region [Test: Method: getBoundaryOffset()]
@@ -141,10 +144,11 @@ asset = [TestFont1];
 #region [Test: Method: toString(multiline?, full)]
 	
 	var _base = ["GML-OOP", new Font(asset[0]), new Vector2(555), new TextAlign(fa_left, fa_top),
-				 c_red, 0.77];
+				 155, new Angle(5), c_red, 0.77];
 	var _element = [["Red"], ["\n", ", "]];
 	
-	constructor = new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
+	constructor = new TextRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+								   _base[6], _base[7]);
 	
 	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
 	var _expectedValue = [];
@@ -157,8 +161,10 @@ asset = [TestFont1];
 				   "Font: " + string(_base[1]) + _element[1][_i] +
 				   "Location: " + string(_base[2]) + _element[1][_i] +
 				   "Align: " + string(_base[3]) + _element[1][_i] +
+				   "Scale: " + string(_base[4]) + _element[1][_i] +
+				   "Angle: " + string(_base[5]) + _element[1][_i] +
 				   "Color: " + _element[0][0] + _element[1][_i] +
-				   "Alpha: " + string(_base[5]));
+				   "Alpha: " + string(_base[7]));
 		
 		++_i;
 	}
@@ -179,19 +185,25 @@ asset = [TestFont1];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

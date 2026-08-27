@@ -46,19 +46,17 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	constructor[0].setActive(true);
 	constructor[0].setUniformFloat(_element[0][1], _element[1][0]);
 	constructor[0].setActive(false);
-	constructor[0].event.beforeActivation.callback = _element[2][0];
-	constructor[0].event.beforeActivation.argument = _element[2][1];
-	constructor[0].event.afterActivation.callback = _element[2][0];
-	constructor[0].event.afterActivation.argument = _element[2][1];
+	constructor[0].event.beforeActivation.set(_element[2][0], _element[2][1]);
+	constructor[0].event.afterActivation.set(_element[2][0], _element[2][1]);
 	constructor[1] = new Shader(constructor[0]);
 	
 	var _result = [constructor[1].isFunctional(), constructor[1].ID, constructor[1].name,
 				   constructor[1].compiled, (constructor[0].uniform != constructor[1].uniform),
-				   constructor[1].uniform.testFloat.value, constructor[1].uniform.testFloat.type,
-				   (constructor[1].uniform.testFloat.value >= 0),
-				   constructor[1].event.beforeActivation.callback,
+				   constructor[1].uniform.testFloat.value[0], constructor[1].uniform.testFloat.type,
+				   (constructor[1].uniform.testFloat.value[0] >= 0),
+				   constructor[1].event.beforeActivation.ID,
 				   constructor[1].event.beforeActivation.argument,
-				   constructor[1].event.afterActivation.callback,
+				   constructor[1].event.afterActivation.ID,
 				   constructor[1].event.afterActivation.argument];
 	var _expectedValue = [true, constructor[0].ID, constructor[0].name, constructor[0].compiled,
 						  true, _element[1][0], _element[0][2], true, _element[2][0], _element[2][1],
@@ -88,8 +86,8 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	constructor.setUniformInt(_element[0][1], _element[1][0]);
 	constructor.setActive(false);
 	
-	var _result = [constructor.uniform.testInt.value, constructor.uniform.testInt.type,
-				   (constructor.uniform.testInt.value >= 0)];
+	var _result = [constructor.uniform.testInt.value[0], constructor.uniform.testInt.type,
+				   (constructor.uniform.testInt.value[0] >= 0)];
 	var _expectedValue = [_element[1][0], _element[0][2], true];
 	
 	unitTest.assert_equal("Method: setUniformInt()",
@@ -122,14 +120,15 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	constructor.setActive(true);
 	constructor.setUniformFloat(_element[0][1], _element[1][0]);
 	constructor.setUniformInt(_element[0][2], _element[1][1]);
-	++constructor.uniform.testFloat.value;
-	++constructor.uniform.testInt.value;
+	++constructor.uniform.testFloat.value[0];
+	++constructor.uniform.testInt.value[0];
 	constructor.updateUniforms();
 	constructor.setActive(false);
 	
-	var _result = [constructor.uniform.testFloat.value, constructor.uniform.testFloat.type,
-				   (constructor.uniform.testFloat.value >= 0), constructor.uniform.testInt.value,
-				   constructor.uniform.testInt.type, (constructor.uniform.testInt.value >= 0)];
+	var _result = [constructor.uniform.testFloat.value[0], constructor.uniform.testFloat.type,
+				   (constructor.uniform.testFloat.value[0] >= 0),
+				   constructor.uniform.testInt.value[0], constructor.uniform.testInt.type,
+				   (constructor.uniform.testInt.value[0] >= 0)];
 	var _expectedValue = [(_element[1][0] + 1), _element[0][3], true, (_element[1][1] + 1),
 						  _element[0][4], true];
 	
@@ -140,23 +139,6 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5]);
-	
-#endregion
-#region [Test: Method: getSampler()]
-	
-	var _element = [[asset[0], asset[4]]];
-	
-	constructor = new Shader(_element[0][0]);
-	constructor.setActive(true);
-	_element[1][0] = constructor.getSampler(_element[0][1]);
-	constructor.setActive(false);
-	
-	var _result = [constructor.sampler.testSampler2D.handle, (_element[1][0] >= 0)];
-	var _expectedValue = [_element[1][0], true];
-	
-	unitTest.assert_equal("Method: getSampler()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
 	
 #endregion
 #region [Test: Method: toString()]
@@ -196,33 +178,45 @@ asset = [TestShader, "testFloat", "testInt", "testMat4", "testSampler2D"];
 	
 	var _result = [];
 	
-	constructor.event.beforeActivation.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	constructor.event.afterActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
-	constructor.event.afterActivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
+	constructor.event.beforeDeactivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[2]]
+	);
 	
-	constructor.event.afterActivation.argument = [_result, _value[1]];
-	
-	constructor.event.beforeDeactivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
-	
-	constructor.event.afterDeactivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterDeactivation.argument = [_result, _value[3]];
+	constructor.event.afterDeactivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[3]]
+	);
 	
 	constructor.setActive(true).setActive(false);
 	

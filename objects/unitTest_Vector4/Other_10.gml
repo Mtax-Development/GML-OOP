@@ -256,17 +256,17 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: difference()]
+#region [Test: Method: absoluteDifference()]
 	
 	var _base = [52, -29, 25, -5];
 	var _element = new Vector2(abs(_base[0] - _base[2]), abs(_base[1] - _base[3]));
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.difference();
+	var _result = constructor.absoluteDifference();
 	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: difference()",
+	unitTest.assert_equal("Method: absoluteDifference()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -279,14 +279,14 @@
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
 	
-	var _result = constructor.difference(_value);
+	var _result = constructor.absoluteDifference(_value);
 	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: difference(real)",
+	unitTest.assert_equal("Method: absoluteDifference(real)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: difference(Vector2)]
+#region [Test: Method: absoluteDifference(Vector2)]
 	
 	var _base = [[-7.5, 44, 0, 55], [-1.5, 2]];
 	var _element = [new Vector2(_base[1][0], _base[1][1]), new Vector4(abs(_base[0][0] - _base[1][0]),
@@ -295,14 +295,14 @@
 	
 	constructor = new Vector4(_base[0][0], _base[0][1], _base[0][2], _base[0][3]);
 	
-	var _result = constructor.difference(_element[0]);
+	var _result = constructor.absoluteDifference(_element[0]);
 	var _expectedValue = _element[1];
 	
-	unitTest.assert_equal("Method: difference(Vector2)",
+	unitTest.assert_equal("Method: absoluteDifference(Vector2)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: difference(Vector4)]
+#region [Test: Method: absoluteDifference(Vector4)]
 	
 	var _base = [53, -53, 20, 195, 502, 530, 20, 10];
 	var _element = new Vector4(abs(_base[0] - _base[4]), abs(_base[1] - _base[5]),
@@ -311,10 +311,10 @@
 	constructor = [new Vector4(_base[0], _base[1], _base[2], _base[3]),
 				   new Vector4(_base[4], _base[5], _base[6], _base[7])];
 	
-	var _result = constructor[0].difference(constructor[1]);
+	var _result = constructor[0].absoluteDifference(constructor[1]);
 	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: difference(Vector4)",
+	unitTest.assert_equal("Method: absoluteDifference(Vector4)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -939,19 +939,19 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: clampTo()]
+#region [Test: Method: clamp()]
 	
 	var _base = [25, -25, 35, 30];
 	var _value = [15, 15, 30, 30];
 	var _element = new Vector4(_value[0], _value[1], _value[2], _value[3]);
 	
 	constructor = new Vector4(_base[0], _base[1], _base[2], _base[3]);
-	constructor.clampTo(_element);
+	constructor.clamp(_element);
 	
 	var _result = [constructor.x1, constructor.y1, constructor.x2, constructor.y2];
 	var _expectedValue = [_base[0], _value[1], _value[2], _base[3]];
 	
-	unitTest.assert_equal("Method: clampTo()",
+	unitTest.assert_equal("Method: clamp()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],

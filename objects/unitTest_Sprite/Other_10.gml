@@ -89,17 +89,13 @@ asset = [TestSprite];
 	_element[2][0] = sprite_create_from_surface(_element[0][0].ID, 0, 0, 1, 1, false, false, 0, 0);
 	
 	constructor = [new Sprite(_element[2][0])];
-	constructor[0].event.beforeRender.callback = _element[1][0];
-	constructor[0].event.beforeRender.argument = _element[1][1];
-	constructor[0].event.afterRender.callback = _element[1][0];
-	constructor[0].event.afterRender.argument = _element[1][1];
+	constructor[0].event.beforeRender.set(_element[1][0], _element[1][1]);
+	constructor[0].event.afterRender.set(_element[1][0], _element[1][1]);
 	constructor[1] = new Sprite(constructor[0]);
 	
 	var _result = [(constructor[1].ID != _element), constructor[1].isFunctional(),
-				   constructor[1].event.beforeRender.callback,
-				   constructor[1].event.beforeRender.argument,
-				   constructor[1].event.afterRender.callback,
-				   constructor[1].event.afterRender.argument];
+				   constructor[1].event.beforeRender.ID, constructor[1].event.beforeRender.argument,
+				   constructor[1].event.afterRender.ID, constructor[1].event.afterRender.argument];
 	var _expectedValue = [true, true, _element[1][0], _element[1][1], _element[1][0], _element[1][1]];
 	
 	constructor[1].destroy();
@@ -492,19 +488,25 @@ asset = [TestSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render(_element[1]);
 	

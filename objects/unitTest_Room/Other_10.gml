@@ -135,7 +135,7 @@ asset = [TestObject];
 					"Name: " + string(constructor.name) + _element[0][_i] +
 					"Persistent: " + string(_element[1][0]) + _element[0][_i] +
 					"Size: " + string(_element[1][1]) + _element[0][_i] +
-					"Added Instance Count:" + string(1) + _element[0][_i] +
+					"Added Instance Count: " + string(1) + _element[0][_i] +
 					"Visited: " + string(false) + _element[0][_i] +
 					"Persistence on Visit: " + string(undefined) + _element[0][_i] +
 					"Previous Room: " + string(undefined)));

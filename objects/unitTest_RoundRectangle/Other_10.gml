@@ -4,13 +4,16 @@ asset = [TestCollisionSprite];
 #region [Test: Construction: New constructor]
 	
 	var _base = [new Vector4(20, 20, 100, 100), new Vector2(10, 10), new Color2(c_red, c_white),
-				 0.858, c_aqua, 0.75];
+				 0.858, 5.5, c_aqua, 0.75, 32];
 	
-	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
+	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+									 _base[6], _base[7]);
 	
 	var _result = [constructor.location, constructor.radius, constructor.fill_color,
-				   constructor.fill_alpha, constructor.outline_color, constructor.outline_alpha];
-	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]];
+				   constructor.fill_alpha, constructor.outline_size, constructor.outline_color,
+				   constructor.outline_alpha, constructor.precision];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+						  _base[7]];
 	
 	unitTest.assert_equal("Construction: New constructor",
 						  _result[0], _expectedValue[0],
@@ -18,21 +21,26 @@ asset = [TestCollisionSprite];
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
-						  _result[5], _expectedValue[5]);
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7]);
 	
 #endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [new Vector4(100, 100, 200, 200), new Vector2(5, 5), new Color2(c_gray, c_black), 0.9,
-				 c_fuchsia, 0.85];
+				 15, c_fuchsia, 0.85, 64];
 	
-	constructor = [new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5])];
+	constructor = [new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+									  _base[6], _base[7])];
 	constructor[1] = new RoundRectangle(constructor[0]);
 	
 	var _result = [constructor[1].location, constructor[1].radius, constructor[1].fill_color,
-				   constructor[1].fill_alpha, constructor[1].outline_color,
-				   constructor[1].outline_alpha];
-	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]];
+				   constructor[1].fill_alpha, constructor[1].outline_size,
+				   constructor[1].outline_color, constructor[1].outline_alpha,
+				   constructor[1].precision];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+						  _base[7]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
@@ -40,7 +48,9 @@ asset = [TestCollisionSprite];
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
-						  _result[5], _expectedValue[5]);
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7]);
 	
 #endregion
 #region [Test: Constructor: Empty / Method: isFunctional()]
@@ -84,29 +94,11 @@ asset = [TestCollisionSprite];
 						  _result[9], _expectedValue[9]);
 	
 #endregion
-#region [Test: Method: collision()]
-	
-	var _element = 10;
-	var _base = [new Vector4(x, (y - (_element / 2)), (x + _element),
-							 (y - (_element / 2) + _element)),
-				 new Vector4((x + 1), (y - (_element / 2)), (x + 1 + _element),
-							 (y - (_element / 2) + _element))];
-	constructor = [new RoundRectangle(_base[0]), new RoundRectangle(_base[1])];
-	
-	sprite_index = asset[0];
-	
-	var _result = [constructor[0].collision(id), constructor[1].collision(id)];
-	var _expectedValue = [id, noone];
-	
-	unitTest.assert_equal("Method: collision()",
-						  _result[0], _expectedValue[0],
-						  _result[1], _expectedValue[1]);
-	
-#endregion
 #region [Test: Method: containsPoint()]
 	
 	var _base = new Vector4(0, 0, 25, 25);
-	var _element = [new Vector2(_base.x2, _base.y2), new Vector2((_base.x2 + 1), (_base.y2 + 1))];
+	var _element = [new Vector2(mean(_base.x1, _base.x2), mean(_base.y1, _base.y2)),
+					new Vector2((_base.x2 + 1), (_base.y2 + 1))];
 	
 	constructor = new RoundRectangle(_base);
 	
@@ -217,9 +209,10 @@ asset = [TestCollisionSprite];
 	
 	var _element = [["Blue"], ["\n", ", "]];
 	var _base = [new Vector4(25, 12, 155, 162), new Vector2(6, 7),
-				 new Color2(c_lime, make_color_rgb(87, 83, 187)), 0.95, c_blue, 0.8];
+				 new Color2(c_lime, make_color_rgb(87, 83, 187)), 0.95, 12.5, c_blue, 0.8, 12];
 	
-	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
+	constructor = new RoundRectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
+									 _base[6], _base[7]);
 	
 	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
 	var _expectedValue = [];
@@ -232,8 +225,10 @@ asset = [TestCollisionSprite];
 				   "Radius: " + string(_base[1]) + _element[1][_i] +
 				   "Fill Color: " + string(_base[2]) + _element[1][_i] +
 				   "Fill Alpha: " + string(_base[3]) + _element[1][_i] +
+				   "Outline Size: " + string(_base[4]) + _element[1][_i] +
 				   "Outline Color: " + _element[0][0] + _element[1][_i] +
-				   "Outline Alpha: " + string(_base[5]));
+				   "Outline Alpha: " + string(_base[6]) + _element[1][_i] +
+				   "Precision: " + string(_base[7]));
 		
 		++_i;
 	}
@@ -255,19 +250,25 @@ asset = [TestCollisionSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

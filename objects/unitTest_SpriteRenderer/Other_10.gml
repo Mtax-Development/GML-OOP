@@ -47,10 +47,8 @@ asset = [TestSprite];
 	
 	constructor = [new SpriteRenderer(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
 									 _base[6], _base[7], _base[8], _base[9])];
-	constructor[0].event.beforeRender.callback = _element[7];
-	constructor[0].event.beforeRender.argument = _element[8];
-	constructor[0].event.afterRender.callback = _element[7];
-	constructor[0].event.afterRender.argument = _element[8];
+	constructor[0].event.beforeRender.set(_element[7], _element[8]);
+	constructor[0].event.afterRender.set(_element[7], _element[8]);
 	
 	constructor[1] = new SpriteRenderer(constructor[0]);
 	
@@ -60,10 +58,8 @@ asset = [TestSprite];
 				   constructor[1].color, constructor[1].alpha, constructor[1].part.x1,
 				   constructor[1].part.y1, constructor[1].part.x2, constructor[1].part.y2,
 				   constructor[1].origin.x, constructor[1].origin.y, constructor[1].target.ID,
-				   constructor[1].event.beforeRender.callback,
-				   constructor[1].event.beforeRender.argument,
-				   constructor[1].event.afterRender.callback,
-				   constructor[1].event.afterRender.argument];
+				   constructor[1].event.beforeRender.ID, constructor[1].event.beforeRender.argument,
+				   constructor[1].event.afterRender.ID, constructor[1].event.afterRender.argument];
 	var _expectedValue = [_element[0].ID, _element[1].x1, _element[1].y1, _element[1].x2,
 						  _element[1].y2, _base[2], _element[2].x, _element[2].y, _element[3].value,
 						  _base[5], _base[6], _element[4].x1, _element[4].y1, _element[4].x2,
@@ -187,19 +183,25 @@ asset = [TestSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

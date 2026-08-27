@@ -147,19 +147,19 @@
 						  _result, _expectedValue[1]);
 	
 #endregion
-#region [Method: clampTo()]
+#region [Method: clamp()]
 	
 	var _base = [156, 267.74749];
 	
 	constructor = new Range(_base[0], _base[1]);
 	
-	var _result = [constructor.clampTo(_base[0] - 2),
-				   constructor.clampTo(_base[0] - 2.59),
-				   constructor.clampTo(_base[1] + 3),
-				   constructor.clampTo(_base[1] + 3.4567)];
+	var _result = [constructor.clamp(_base[0] - 2),
+				   constructor.clamp(_base[0] - 2.59),
+				   constructor.clamp(_base[1] + 3),
+				   constructor.clamp(_base[1] + 3.4567)];
 	var _expectedValue = [_base[0], _base[0], _base[1], _base[1]];
 	
-	unitTest.assert_equal("Method: clampTo()",
+	unitTest.assert_equal("Method: clamp()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],

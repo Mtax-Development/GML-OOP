@@ -197,19 +197,25 @@ asset = [TestCollisionSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

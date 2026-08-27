@@ -179,16 +179,16 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: difference()]
+#region [Test: Method: absoluteDifference()]
 
 	var _base = [0.4684, 2];
 	
 	constructor = new Vector2(_base[0], _base[1]);
 	
-	var _result = constructor.difference();
+	var _result = constructor.absoluteDifference();
 	var _expectedValue = abs(_base[0] - _base[1]);
 	
-	unitTest.assert_equal("Method: difference()",
+	unitTest.assert_equal("Method: absoluteDifference()",
 						  _result, _expectedValue);
 	
 #endregion
@@ -200,24 +200,24 @@
 	
 	constructor = new Vector2(_base[0], _base[1]);
 	
-	var _result = constructor.difference(_value);
+	var _result = constructor.absoluteDifference(_value);
 	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: difference(real)",
+	unitTest.assert_equal("Method: absoluteDifference(real)",
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: difference(Vector2)]
+#region [Test: Method: absoluteDifference(Vector2)]
 	
 	var _base = [24.42, 2, -653, -235];
 	var _element = new Vector2(abs(_base[0] - _base[2]), abs(_base[1] - _base[3]));
 	
 	constructor = [new Vector2(_base[0], _base[1]), new Vector2(_base[2], _base[3])];
 	
-	var _result = constructor[0].difference(constructor[1]);
+	var _result = constructor[0].absoluteDifference(constructor[1]);
 	var _expectedValue = _element;
 	
-	unitTest.assert_equal("Method: difference(Vector2)",
+	unitTest.assert_equal("Method: absoluteDifference(Vector2)",
 						  _result, _expectedValue);
 	
 #endregion
@@ -580,19 +580,19 @@
 						  _result[7], _expectedValue[7]);
 	
 #endregion
-#region [Test: Method: clampTo()]
+#region [Test: Method: clamp()]
 	
 	var _base = [25, -25];
 	var _value = [15, 15, 30, 30];
 	var _element = new Vector4(_value[0], _value[1], _value[2], _value[3]);
 	
 	constructor = new Vector2(_base[0], _base[1]);
-	constructor.clampTo(_element);
+	constructor.clamp(_element);
 	
 	var _result = [constructor.x, constructor.y];
 	var _expectedValue = [_base[0], _value[1]];
 	
-	unitTest.assert_equal("Method: clampTo()",
+	unitTest.assert_equal("Method: clamp()",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	

@@ -23,16 +23,14 @@ asset = [TestSprite];
 	var _element = [pt_shape_line, function(_) {return _;}, "argument"];
 	
 	constructor = [new ParticleType()];
-	constructor[0].event.beforeCreation.callback = _element[1];
-	constructor[0].event.beforeCreation.argument = _element[2];
-	constructor[0].event.afterCreation.callback = _element[1];
-	constructor[0].event.afterCreation.argument = _element[2];
+	constructor[0].event.beforeCreation.set(_element[1], _element[2]);
+	constructor[0].event.afterCreation.set(_element[1], _element[2]);
 	constructor[0].setShape(_element[0]);
 	constructor[1] = new ParticleType(constructor[0]);
 	
-	var _result = [constructor[1].shape, constructor[1].event.beforeCreation.callback,
+	var _result = [constructor[1].shape, constructor[1].event.beforeCreation.ID,
 				   constructor[1].event.beforeCreation.argument,
-				   constructor[1].event.afterCreation.callback,
+				   constructor[1].event.afterCreation.ID,
 				   constructor[1].event.afterCreation.argument];
 	var _expectedValue = [_element[0], _element[1], _element[2], _element[1], _element[2]];
 	
@@ -628,19 +626,25 @@ asset = [TestSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeCreation.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeCreation.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeCreation.argument = [_result, _value[0]];
-	
-	constructor.event.afterCreation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterCreation.argument = [_result, _value[1]];
+	constructor.event.afterCreation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.create(_element[1][1], _element[0][0]);
 	

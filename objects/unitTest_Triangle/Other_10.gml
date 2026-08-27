@@ -4,15 +4,17 @@ asset = [TestCollisionSprite];
 #region [Test: Construction: New constructor]
 	
 	var _base = [new Vector2(150, 150), new Vector2(100, 150), new Vector2(200, 150),
-				 new Color3(c_yellow, c_blue, c_aqua), 0.9879,
+				 new Color3(c_yellow, c_blue, c_aqua), 0.9879, 0.8,
 				 new Color3(make_color_rgb(222, 111, 11), c_aqua, c_orange), 0.78];
 	
-	constructor = new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]);
+	constructor = new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+							   _base[7]);
 	
 	var _result = [constructor.location1, constructor.location2, constructor.location3,
-				   constructor.fill_color, constructor.fill_alpha, constructor.outline_color,
-				   constructor.outline_alpha];
-	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]];
+				   constructor.fill_color, constructor.fill_alpha, constructor.outline_scale,
+				   constructor.outline_color, constructor.outline_alpha];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+						  _base[7]];
 	
 	unitTest.assert_equal("Construction: New constructor",
 						  _result[0], _expectedValue[0],
@@ -21,22 +23,35 @@ asset = [TestCollisionSprite];
 						  _result[3], _expectedValue[3],
 						  _result[4], _expectedValue[4],
 						  _result[5], _expectedValue[5],
-						  _result[6], _expectedValue[6]);
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7]);
 	
 #endregion
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [new Vector2(150, 150), new Vector2(200, 100), new Vector2(200, 200),
-				 new Color3(c_aqua, c_blue, c_aqua), 0.59,
+				 new Color3(c_aqua, c_blue, c_aqua), 0.59, 0.1,
 				 new Color3(make_color_rgb(1, 11, 111), c_red, c_orange), 0.85];
 	
-	constructor = [new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5],
-								_base[6])];
+	constructor = [new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+								_base[7])];
 	constructor[1] = new Triangle(constructor[0]);
 	
 	var _result = [constructor[1].location1, constructor[1].location2, constructor[1].location3,
-				   constructor[1].fill_color, constructor[1].fill_alpha, constructor[1].outline_color,
-				   constructor[1].outline_alpha];
+				   constructor[1].fill_color, constructor[1].fill_alpha, constructor[1].outline_scale,
+				   constructor[1].outline_color, constructor[1].outline_alpha];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+						  _base[7]];
+	
+	unitTest.assert_equal("Construction: Constructor copy",
+						  _result[0], _expectedValue[0],
+						  _result[1], _expectedValue[1],
+						  _result[2], _expectedValue[2],
+						  _result[3], _expectedValue[3],
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6],
+						  _result[7], _expectedValue[7]);
 	
 #endregion
 #region [Test: Constructor: Empty / Method: isFunctional()]
@@ -201,9 +216,10 @@ asset = [TestCollisionSprite];
 	
 	var _element = [["Lime", "(", ")", ", "], ["\n", ", "]];
 	var _base = [new Vector2(24, 12), new Vector2(155, 162), new Vector2(11, 162),
-				 new Color3(c_yellow, make_color_rgb(234, 254, 1), c_navy), 0.94, c_lime, 1];
+				 new Color3(c_yellow, make_color_rgb(234, 254, 1), c_navy), 0.94, 0.22, c_lime, 1];
 	
-	constructor = new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]);
+	constructor = new Triangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6],
+							   _base[7]);
 	
 	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
 	var _expectedValue = [];
@@ -217,8 +233,9 @@ asset = [TestCollisionSprite];
 								+ _element[0][2] + _element[1][_i] +
 				   "Fill Color: " + string(_base[3]) + _element[1][_i] +
 				   "Fill Alpha: " + string(_base[4]) + _element[1][_i] +
+				   "Outline Scale: " + string(_base[5]) + _element[1][_i] +
 				   "Outline Color: " + _element[0][0] + _element[1][_i] +
-				   "Outline Alpha: " + string(_base[6]));
+				   "Outline Alpha: " + string(_base[7]));
 		
 		++_i;
 	}
@@ -241,19 +258,25 @@ asset = [TestCollisionSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

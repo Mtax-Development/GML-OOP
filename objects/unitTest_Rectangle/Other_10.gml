@@ -3,13 +3,13 @@ asset = [TestCollisionSprite];
 
 #region [Test: Construction: New constructor]
 	
-	var _base = [new Vector4(20, 20, 200, 200), new Color4(c_red, c_green, c_blue, c_black), 0.87,
-				 new Color4(c_yellow, c_blue, c_green, c_red), 2, 0.67]; 
+	var _base = [new Vector4(20, 20, 200, 200), new Color4(c_red, c_green, c_blue, c_black), 0.87, 2,
+				 new Color4(c_yellow, c_blue, c_green, c_red), 0.67]; 
 	
 	constructor = new Rectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
 	
 	var _result = [constructor.location, constructor.fill_color, constructor.fill_alpha,
-				   constructor.outline_color, constructor.outline_size, constructor.outline_alpha];
+				   constructor.outline_size, constructor.outline_color, constructor.outline_alpha];
 	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]];
 	
 	unitTest.assert_equal("Construction: New constructor",
@@ -24,13 +24,13 @@ asset = [TestCollisionSprite];
 #region [Test: Construction: Constructor copy]
 	
 	var _base = [new Vector4(20, 20, 200, 200), new Color4(c_navy, c_green, c_green, c_red),
-				 0.37, new Color4(c_yellow, c_green, c_green, c_red), 1, 0.27]; 
+				 0.37, 1, new Color4(c_yellow, c_green, c_green, c_red), 0.27]; 
 	
 	constructor = [new Rectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5])];
 	constructor[1] = new Rectangle(constructor[0]);
 	
 	var _result = [constructor[1].location, constructor[1].fill_color, constructor[1].fill_alpha,
-				   constructor[1].outline_color, constructor[1].outline_size,
+				   constructor[1].outline_size,constructor[1].outline_color,
 				   constructor[1].outline_alpha];
 	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]];
 	
@@ -209,7 +209,7 @@ asset = [TestCollisionSprite];
 	
 	var _element = [["White"], ["\n", ", "]];
 	var _base = [new Vector4(25, 12, 155, 162),
-				 new Color4(c_lime, make_color_rgb(37, 23, 167), c_navy, c_yellow), 0.95, c_white, 3,
+				 new Color4(c_lime, make_color_rgb(37, 23, 167), c_navy, c_yellow), 0.95, 3, c_white,
 				 1];
 	
 	constructor = new Rectangle(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
@@ -224,8 +224,8 @@ asset = [TestCollisionSprite];
 				   "Location: " + string(_base[0]) + _element[1][_i] +
 				   "Fill Color: " + string(_base[1]) + _element[1][_i] +
 				   "Fill Alpha: " + string(_base[2]) + _element[1][_i] +
+				   "Outline Size: " + string(_base[3]) + _element[1][_i] +
 				   "Outline Color: " + _element[0][0] + _element[1][_i] +
-				   "Outline Size: " + string(_base[4]) + _element[1][_i] +
 				   "Outline Alpha: " + string(_base[5]));
 		
 		++_i;
@@ -248,19 +248,25 @@ asset = [TestCollisionSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

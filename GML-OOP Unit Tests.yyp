@@ -40,7 +40,6 @@
     {"id":{"name":"TestObject","path":"objects/TestObject/TestObject.yy",},},
     {"id":{"name":"unitTest_Angle","path":"objects/unitTest_Angle/unitTest_Angle.yy",},},
     {"id":{"name":"unitTest_ArrayParser","path":"objects/unitTest_ArrayParser/unitTest_ArrayParser.yy",},},
-    {"id":{"name":"unitTest_Arrow","path":"objects/unitTest_Arrow/unitTest_Arrow.yy",},},
     {"id":{"name":"unitTest_Buffer","path":"objects/unitTest_Buffer/unitTest_Buffer.yy",},},
     {"id":{"name":"unitTest_Circle","path":"objects/unitTest_Circle/unitTest_Circle.yy",},},
     {"id":{"name":"unitTest_Color2","path":"objects/unitTest_Color2/unitTest_Color2.yy",},},

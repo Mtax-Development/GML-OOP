@@ -71,15 +71,13 @@ asset = [TestFont1, TestFont2, "TestIncludedFont.ttf", TestFontImage];
 	var _element = [function(_) {return _;}, "argument"];
 	
 	constructor = [new Font(_base)];
-	constructor[0].event.beforeActivation.callback = _element[0];
-	constructor[0].event.beforeActivation.argument = _element[1];
-	constructor[0].event.afterActivation.callback = _element[0];
-	constructor[0].event.afterActivation.argument = _element[1];
+	constructor[0].event.beforeActivation.set(_element[0], _element[1]);
+	constructor[0].event.afterActivation.set(_element[0], _element[1]);
 	constructor[1] = new Font(constructor[0]);
 	
-	var _result = [constructor[1].isFunctional(), constructor[1].event.beforeActivation.callback,
+	var _result = [constructor[1].isFunctional(), constructor[1].event.beforeActivation.ID,
 				   constructor[1].event.beforeActivation.argument,
-				   constructor[1].event.afterActivation.callback,
+				   constructor[1].event.afterActivation.ID,
 				   constructor[1].event.afterActivation.argument];
 	var _expectedValue = [true, _element[0], _element[1], _element[0], _element[1]];
 	
@@ -219,19 +217,25 @@ asset = [TestFont1, TestFont2, "TestIncludedFont.ttf", TestFontImage];
 	
 	var _result = [];
 	
-	constructor.event.beforeActivation.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeActivation.argument = [_result, _value[0]];
-	
-	constructor.event.afterActivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterActivation.argument = [_result, _value[1]];
+	constructor.event.afterActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.setActive();
 	

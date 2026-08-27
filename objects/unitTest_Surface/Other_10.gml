@@ -52,42 +52,31 @@
 	var _base = new Vector2(2, 2);
 	
 	constructor = [new Surface(_base)];
-	constructor[0].event.beforeCreation.callback = _element[0];
-	constructor[0].event.beforeCreation.argument = _element[1];
-	constructor[0].event.afterCreation.callback = _element[0];
-	constructor[0].event.afterCreation.argument = _element[1];
-	constructor[0].event.beforeActivation.callback = _element[0];
-	constructor[0].event.beforeActivation.argument = _element[1];
-	constructor[0].event.afterActivation.callback = _element[0];
-	constructor[0].event.afterActivation.argument = _element[1];
-	constructor[0].event.beforeDeactivation.callback = _element[0];
-	constructor[0].event.beforeDeactivation.argument = _element[1];
-	constructor[0].event.afterDeactivation.callback = _element[0];
-	constructor[0].event.afterDeactivation.argument = _element[1];
-	constructor[0].event.beforeRender.callback = _element[0];
-	constructor[0].event.beforeRender.argument = _element[1];
-	constructor[0].event.afterRender.callback = _element[0];
-	constructor[0].event.afterRender.argument = _element[1];
+	constructor[0].event.beforeCreation.set(_element[0], _element[1]);
+	constructor[0].event.afterCreation.set(_element[0], _element[1]);
+	constructor[0].event.beforeActivation.set(_element[0], _element[1]);
+	constructor[0].event.afterActivation.set(_element[0], _element[1]);
+	constructor[0].event.beforeDeactivation.set(_element[0], _element[1]);
+	constructor[0].event.afterDeactivation.set(_element[0], _element[1]);
+	constructor[0].event.beforeRender.set(_element[0], _element[1]);
+	constructor[0].event.afterRender.set(_element[0], _element[1]);
 	constructor[1] = new Surface(constructor[0]);
 	
 	var _result = [constructor[1].isFunctional(), constructor[1].size,
 				   surface_get_width(constructor[1].ID), surface_get_height(constructor[1].ID),
-				   constructor[1].event.beforeCreation.callback,
+				   constructor[1].event.beforeCreation.ID,
 				   constructor[1].event.beforeCreation.argument,
-				   constructor[1].event.afterCreation.callback,
-				   constructor[1].event.afterCreation.argument,
-				   constructor[1].event.beforeActivation.callback,
+				   constructor[1].event.afterCreation.ID, constructor[1].event.afterCreation.argument,
+				   constructor[1].event.beforeActivation.ID,
 				   constructor[1].event.beforeActivation.argument,
-				   constructor[1].event.afterActivation.callback,
+				   constructor[1].event.afterActivation.ID,
 				   constructor[1].event.afterActivation.argument,
-				   constructor[1].event.beforeDeactivation.callback,
+				   constructor[1].event.beforeDeactivation.ID,
 				   constructor[1].event.beforeDeactivation.argument,
-				   constructor[1].event.afterDeactivation.callback,
+				   constructor[1].event.afterDeactivation.ID,
 				   constructor[1].event.afterDeactivation.argument,
-				   constructor[1].event.beforeRender.callback,
-				   constructor[1].event.beforeRender.argument,
-				   constructor[1].event.afterRender.callback,
-				   constructor[1].event.afterRender.argument];
+				   constructor[1].event.beforeRender.ID, constructor[1].event.beforeRender.argument,
+				   constructor[1].event.afterRender.ID, constructor[1].event.afterRender.argument];
 	var _expectedValue = [true, constructor[0].size, constructor[0].size.x, constructor[0].size.y,
 						  _element[0], _element[1], _element[0], _element[1], _element[0],
 						  _element[1], _element[0], _element[1], _element[0], _element[1],
@@ -403,19 +392,25 @@
 	
 	var _result = [];
 	
-	constructor.event.beforeCreation.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeCreation.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeCreation.argument = [_result, _value[0]];
-	
-	constructor.event.afterCreation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterCreation.argument = [_result, _value[1]];
+	constructor.event.afterCreation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.destroy();
 	constructor.create();
@@ -436,33 +431,45 @@
 	
 	var _result = [];
 	
-	constructor.event.beforeActivation.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeActivation.argument = [_result, _value[0]];
+	constructor.event.afterActivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
-	constructor.event.afterActivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
+	constructor.event.beforeDeactivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[2]]
+	);
 	
-	constructor.event.afterActivation.argument = [_result, _value[1]];
-	
-	constructor.event.beforeDeactivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.beforeDeactivation.argument = [_result, _value[2]];
-	
-	constructor.event.afterDeactivation.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterDeactivation.argument = [_result, _value[3]];
+	constructor.event.afterDeactivation.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[3]]
+	);
 	
 	constructor.setActive(true).setActive(false);
 	
@@ -483,19 +490,25 @@
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	

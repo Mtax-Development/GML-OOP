@@ -3,39 +3,44 @@ asset = [TestCollisionSprite];
 
 #region [Test: Construction: New constructor]
 	
-	var _base = [new Vector4(20, 20, 100, 100), new Color2(c_yellow, c_red), 0.97, c_purple, 0.85];
+	var _base = [new Vector4(20, 20, 100, 100), new Color2(c_yellow, c_red), 0.97, 25, c_purple, 0.85];
 	
-	constructor = new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4]);
+	constructor = new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]);
 	
 	var _result = [constructor.location, constructor.fill_color, constructor.fill_alpha,
-				   constructor.outline_color, constructor.outline_alpha];
-	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4]];
+				   constructor.outline_size, constructor.outline_color, constructor.outline_alpha];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5]];
 	
 	unitTest.assert_equal("Construction: New constructor",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
-						  _result[4], _expectedValue[4]);
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5]);
 	
 #endregion
 #region [Test: Construction: Constructor copy]
 	
-	var _base = [new Vector4(50, 50, 150, 150), new Color2(c_green, c_orange), 0.9, c_lime, 0.8];
+	var _base = [new Vector4(50, 50, 150, 150), new Color2(c_green, c_orange), 0.9, 5.55, c_lime, 0.8,
+				 16];
 	
-	constructor = [new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4])];
+	constructor = [new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6])];
 	constructor[1] = new Ellipse(constructor[0]);
 	
 	var _result = [constructor[1].location, constructor[1].fill_color, constructor[1].fill_alpha,
-				   constructor[1].outline_color, constructor[1].outline_alpha];
-	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4]];
+				   constructor[1].outline_size, constructor[1].outline_color,
+				   constructor[1].outline_alpha, constructor[1].precision];
+	var _expectedValue = [_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]];
 	
 	unitTest.assert_equal("Construction: Constructor copy",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1],
 						  _result[2], _expectedValue[2],
 						  _result[3], _expectedValue[3],
-						  _result[4], _expectedValue[4]);
+						  _result[4], _expectedValue[4],
+						  _result[5], _expectedValue[5],
+						  _result[6], _expectedValue[6]);
 	
 #endregion
 #region [Test: Construction: Empty / Method: isFunctional()]
@@ -124,9 +129,9 @@ asset = [TestCollisionSprite];
 	
 	var _element = [["Blue"], ["\n", ", "]];
 	var _base = [new Vector4(75, 72, 175, 172), new Color2(c_lime, make_color_rgb(37, 23, 167)), 0.97,
-				 c_blue, 0.92];
+				 25, c_blue, 0.92, 20];
 	
-	constructor = new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4]);
+	constructor = new Ellipse(_base[0], _base[1], _base[2], _base[3], _base[4], _base[5], _base[6]);
 	
 	var _result = [constructor.toString(true, true), constructor.toString(false, true)];
 	var _expectedValue = [];
@@ -138,12 +143,15 @@ asset = [TestCollisionSprite];
 				   "Location: " + string(_base[0]) + _element[1][_i] +
 				   "Fill Color: " + string(_base[1]) + _element[1][_i] +
 				   "Fill Alpha: " + string(_base[2]) + _element[1][_i] +
+				   "Outline Size: " + string(_base[3]) + _element[1][_i] +
 				   "Outline Color: " + _element[0][0] + _element[1][_i] +
-				   "Outline Alpha: " + string(_base[4]));
+				   "Outline Alpha: " + string(_base[5]) + _element[1][_i] +
+				   "Precision: " + string(_base[6]));
 		
 		++_i;
 	}
-	
+	show_message(_result[0])
+	show_message(_expectedValue[0])
 	_expectedValue[1] = (constructorName + "(" + _expectedValue[1] + ")");
 	
 	unitTest.assert_equal("Method: toString(multiline?, full)",
@@ -160,19 +168,25 @@ asset = [TestCollisionSprite];
 	
 	var _result = [];
 	
-	constructor.event.beforeRender.callback = function()
-	{
-		array_push(argument[0], argument[1]);
-	}
+	constructor.event.beforeRender.set
+	(
+		function()
+		{
+			array_push(argument[0], argument[1]);
+		},
+		
+		[_result, _value[0]]
+	);
 	
-	constructor.event.beforeRender.argument = [_result, _value[0]];
-	
-	constructor.event.afterRender.callback = function()
-	{
-		array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
-	}
-	
-	constructor.event.afterRender.argument = [_result, _value[1]];
+	constructor.event.afterRender.set
+	(
+		function()
+		{
+			array_push(argument[0], (argument[0][(array_length(argument[0]) - 1)] + argument[1]));
+		},
+		
+		[_result, _value[1]]
+	);
 	
 	constructor.render();
 	
