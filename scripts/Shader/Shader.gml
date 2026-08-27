@@ -528,8 +528,7 @@ function Shader() constructor
 			{
 				if (!is_array(value))
 				{
-					ErrorReport.report([other, parent, "uniform", string(name),
-										"update()"],
+					ErrorReport.report([other, parent, "uniform", string(name), "update()"],
 									   ("Attempted to execute the update function using a value " + 
 										"that is not an array: " +
 										"{" + string(value) + "}"));
