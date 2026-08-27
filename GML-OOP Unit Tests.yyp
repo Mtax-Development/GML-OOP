@@ -1,8 +1,8 @@
 {
-  "$GMProject":"",
+  "$GMProject":"v1",
   "%Name":"GML-OOP Unit Tests",
   "AudioGroups":[
-    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
   "configs":{
     "children":[],
@@ -25,16 +25,17 @@
     {"$GMFolder":"","%Name":"Resources","folderPath":"folders/GML-OOP Unit Tests/Unit Tests/Resources.yy","name":"Resources","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Shapes","folderPath":"folders/GML-OOP Unit Tests/Unit Tests/Shapes.yy","name":"Shapes","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
+  "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.2.0.132",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"GML-OOP Unit Tests",
   "resources":[
-    {"id":{"name":"TestFont2","path":"fonts/TestFont2/TestFont2.yy",},},
     {"id":{"name":"TestFont1","path":"fonts/TestFont1/TestFont1.yy",},},
+    {"id":{"name":"TestFont2","path":"fonts/TestFont2/TestFont2.yy",},},
     {"id":{"name":"PARENT_unitTest","path":"objects/PARENT_unitTest/PARENT_unitTest.yy",},},
     {"id":{"name":"TestObject","path":"objects/TestObject/TestObject.yy",},},
     {"id":{"name":"unitTest_Angle","path":"objects/unitTest_Angle/unitTest_Angle.yy",},},
