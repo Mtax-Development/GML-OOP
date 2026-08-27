@@ -793,7 +793,7 @@ function Ellipse() constructor
 					   "Fill Alpha: " + string(fill_alpha) + _mark_separator +
 					   "Outline Size: " + string(outline_size) + _mark_separator +
 					   "Outline Color: " + string(_string_color[1]) + _mark_separator +
-					   "Outline Alpha: " + string(outline_alpha) +
+					   "Outline Alpha: " + string(outline_alpha) + _mark_separator +
 					   "Precision: " + string(precision));
 		}
 		
