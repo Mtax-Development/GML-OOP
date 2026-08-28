@@ -1161,7 +1161,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Method: toString(lenght cut)]
+#region [Test: Method: toString(length cut)]
 	
 	var _base = new Vector2(2, 1);
 	var _element = [30, "...", "[", "]"];
@@ -1175,7 +1175,7 @@
 	var _expectedValue = (constructorName + "(" + string(_base.x) + "x" + string(_base.y) + " - " +
 						  _element[2] + _value + _element[3] + _element[1] + ")");
 	
-	unitTest.assert_equal("Method: toString(lenght cut)",
+	unitTest.assert_equal("Method: toString(length cut)",
 						  _result, _expectedValue);
 	
 	constructor.destroy();

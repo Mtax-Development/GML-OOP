@@ -308,7 +308,7 @@
 	constructor.destroy();
 	
 #endregion
-#region [Test: Method: toString(lenght cut)]
+#region [Test: Method: toString(length cut)]
 	
 	var _element = [[30, "..."], [2]];
 	var _value = [string_repeat("I", (_element[0][0])), _element[1][0]];
@@ -320,7 +320,7 @@
 	var _expectedValue = (constructorName + "(" + string(array_length(_value)) + " - " +
 						  _value[0] + _element[0][1] + ")");
 	
-	unitTest.assert_equal("Method: toString(lenght cut)",
+	unitTest.assert_equal("Method: toString(length cut)",
 						  _result, _expectedValue);
 	
 	constructor.destroy();

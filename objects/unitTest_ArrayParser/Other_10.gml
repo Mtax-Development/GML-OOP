@@ -602,7 +602,7 @@
 						  _result, _expectedValue);
 	
 #endregion
-#region [Test: Method: toString(lenght cut)]
+#region [Test: Method: toString(length cut)]
 	
 	var _element = [30, "..."];
 	var _value = [[string_repeat("I", (_element[0] + string_length(_element[1]) + 1)),
@@ -616,7 +616,7 @@
 	var _expectedValue = [(constructorName + "(" + "1" + " - " + _value[1][0] + _element[1] + ")"),
 						  (constructorName + "(" + "1" + " - " + _value[0][1] + ")")];
 	
-	unitTest.assert_equal("Method: toString(lenght cut)",
+	unitTest.assert_equal("Method: toString(length cut)",
 						  _result[0], _expectedValue[0],
 						  _result[1], _expectedValue[1]);
 	
