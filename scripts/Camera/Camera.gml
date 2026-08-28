@@ -293,7 +293,7 @@ function Camera() constructor
   #endregion
   #region [Elements]
 	
-	//  @function			Camera.OrtographicProjectionMatrix
+	//  @function			Camera.OrtographicProjectionMatrix()
 	/// @argument			size {Vector2}
 	/// @argument			clippingPlane {Range}
 	/// @description		Constructs a matrix supplying the Camera with two-dimensional projection.
