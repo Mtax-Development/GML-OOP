@@ -38,8 +38,6 @@ function format_links(_text, _constructor_name, _constructor_property, _link_con
 		show_error("Attempted to format a data type that is not a string.", true);
 	}
 	
-	_text = string(_text);
-	
 	var _unicode_newline = "\000a";
 	var _link_manual_language = @"https://manual.yoyogames.com/GameMaker_Language/";
 	var _filter_dataType = ["void", "any", "undefined", "bool", "pointer", "int", "real", "string",
