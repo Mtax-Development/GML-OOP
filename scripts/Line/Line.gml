@@ -280,14 +280,13 @@ function Line() constructor
 			var _angle = point_direction(_location.x1, _location.y1, _location.x2, _location.y2);
 			var _angle_side = (_angle + 90);
 			var _size_half = (_size * 0.5);
-			var _location_topLeft = [(_location.x1 + lengthdir_x(_size_half, _angle_side)),
-									 (_location.y1 + lengthdir_y(_size_half, _angle_side))];
-			var _location_topRight = [(_location.x2 + lengthdir_x(_size_half, _angle_side)),
-									  (_location.y2 + lengthdir_y(_size_half, _angle_side))];
-			var _location_bottomLeft = [(_location.x1 - lengthdir_x(_size_half, _angle_side)),
-										(_location.y1 - lengthdir_y(_size_half, _angle_side))];
-			var _location_bottomRight = [(_location.x2 - lengthdir_x(_size_half, _angle_side)),
-										 (_location.y2 - lengthdir_y(_size_half, _angle_side))];
+			var _lengthdir_x = lengthdir_x(_size_half, _angle_side);
+			var _lengthdir_y = lengthdir_y(_size_half, _angle_side);
+			var _location_topLeft = [(_location.x1 + _lengthdir_x), (_location.y1 + _lengthdir_y)];
+			var _location_topRight = [(_location.x2 + _lengthdir_x), (_location.y2 + _lengthdir_y)];
+			var _location_bottomLeft = [(_location.x1 - _lengthdir_x), (_location.y1 - _lengthdir_y)];
+			var _location_bottomRight = [(_location.x2 - _lengthdir_x),
+										 (_location.y2 - _lengthdir_y)];
 			
 			if ((!_outline) or (_outline == all))
 			{
