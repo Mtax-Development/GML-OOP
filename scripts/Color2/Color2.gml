@@ -91,6 +91,39 @@ function Color2() constructor
 		return false;
 	}
 	
+	/// @argument			other {Color2}
+	/// @argument			value {real}
+	/// @returns			{Color2} | On error: {undefined}
+	/// @description		Return each color with its RGB components blended towards ones of a
+	///						respective other one at a specified percentage.
+	static interpolate = function(_other, _value)
+	{
+		try
+		{
+			var _color1 = make_color_rgb
+			(
+				lerp(color_get_red(color1), color_get_red(_other.color1), _value),
+				lerp(color_get_green(color1), color_get_green(_other.color1), _value),
+				lerp(color_get_blue(color1), color_get_blue(_other.color1), _value)
+			);
+			
+			var _color2 = make_color_rgb
+			(
+				lerp(color_get_red(color2), color_get_red(_other.color2), _value),
+				lerp(color_get_green(color2), color_get_green(_other.color2), _value),
+				lerp(color_get_blue(color2), color_get_blue(_other.color2), _value)
+			);
+			
+			return new Color2(_color1, _color2);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "interpolate()"], _exception);
+		}
+		
+		return undefined;
+	}
+	
    #endregion
    #region <Setters>
 	
