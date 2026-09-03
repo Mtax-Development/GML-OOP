@@ -271,8 +271,8 @@ function Color4() constructor
 	/// @returns			{string}
 	/// @description		Create a string representing this constructor.
 	///						Overrides the string() conversion.
-	///						Content will be represented as color names for built-in constants or RGB
-	///						value, unless use of HSV is specified.
+	///						Content will be represented as color names for built-in constants or
+	///						values of RGB components, unless specified to use HSV components instead.
 	///						NOTE: The constant value for Silver is the same as for Light Gray. It
 	///						cannot be differentiated and will not be represented.
 	static toString = function(_multiline = false, _colorHSV = false)
