@@ -189,12 +189,13 @@ function Line() constructor
 	/// @argument			listOrdered? {bool}
 	/// @returns			{handle:int|List}
 	/// @description		Check for the presence of precise colision masks or bounding boxes of all
-	///						instances of the specified object or a single specified instance, treating
-	///						the size of this Shape as 1. An ID of any matching instance or {noone}
-	///						will be returned, unless specified to return them in a List, in which case
-	///						any matching IDs will be added at the end of it. These additions can be 
-	///						pecified to be ordered by distance from the center of this Shape. An
-	///						instance can be specified to exclude it from the result.
+	///						instances of the specified object or a single specified instance. An ID of
+	///						any matching instance or {noone} will be returned, unless specified to
+	///						return them in a List, in which case any matching IDs will be added at the
+	///						end of it. These additions can be pecified to be ordered by distance from
+	///						the center of this Shape. An instance can be specified to exclude it from
+	///						the result.
+	///						NOTE: The size of this shape will be treated as 1 for this operation.
 	static collision = function(_object, _precise = false, _excludedInstance, _list = false,
 								_listOrdered = false)
 	{
