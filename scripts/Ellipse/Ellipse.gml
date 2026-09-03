@@ -246,39 +246,51 @@ function Ellipse() constructor
 								   _location.y2))
 			{
 				var _vertex_location = self.getVertexLocation(_location);
-				var _center = _vertex_location[0];
-				var _center_x = _center[0];
-				var _center_y = _center[1];
 				var _vertex_count = array_length(_vertex_location);
-				var _vertex_location_start = _vertex_location[1];
-				var _vertex_location_end = _vertex_location[(_vertex_count - 2)];
+				var _vertex_location_overlap_inner_start = _vertex_location[2];
+				var _vertex_location_overlap_inner_end = _vertex_location[(_vertex_count - 2)];
+				var _center_x = mean(_location.x1, _location.x2);
+				var _center_y = mean(_location.y1, _location.y2);
 				
 				if (point_in_triangle(_point.x, _point.y, _center_x, _center_y,
-									  _vertex_location_start[0], _vertex_location_start[1],
-									  _vertex_location_end[0], _vertex_location_end[1]))
+									  _vertex_location_overlap_inner_start[0],
+									  _vertex_location_overlap_inner_start[1],
+									  _vertex_location_overlap_inner_end[0],
+									  _vertex_location_overlap_inner_end[1]))
+				{
+					return true;
+				}
+				
+				var _vertex_location_overlap_outer = _vertex_location[(_vertex_count - 1)];
+				
+				if (point_in_triangle(_point.x, _point.y, _vertex_location_overlap_outer[0],
+									  _vertex_location_overlap_outer[1],
+									  _vertex_location_overlap_inner_start[0],
+									  _vertex_location_overlap_inner_start[1],
+									  _vertex_location_overlap_inner_end[0],
+									  _vertex_location_overlap_inner_end[1]))
 				{
 					return true;
 				}
 				
 				var _segment_count = 4;
-				var _vertex_count_outer = (_vertex_count - 2);
-				var _vertex_count_segment = (_vertex_count_outer / _segment_count);
+				var _vertex_count_segment = (_vertex_count / _segment_count);
 				var _segment_y_part = real(_point.y < _center_y);
-				var _segment = ((_point.x < _center_x) ? (1 + _segment_y_part)
-													   : (3 * _segment_y_part));
-				var _i = ((_segment * _vertex_count_segment));
-				repeat (_vertex_count_segment + 2)
+				var _segment_point = ((_point.x < _center_x) ? (1 + _segment_y_part)
+															 : (3 * _segment_y_part));
+				var _i = ((_segment_point * _vertex_count_segment));
+				repeat ((_vertex_count_segment / 3) + 1)
 				{
-					var _point_current = _vertex_location[(_i mod _vertex_count)];
-					var _point_next = _vertex_location[((_i + 1) mod _vertex_count)];
+					var _point_first = _vertex_location[((_i + 1) mod _vertex_count)];
+					var _point_second = _vertex_location[((_i + 2) mod _vertex_count)];
 					
-					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y, _point_current[0],
-										  _point_current[1], _point_next[0], _point_next[1]))
+					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y, _point_first[0],
+										  _point_first[1], _point_second[0], _point_second[1]))
 					{
 						return true;
 					}
 					
-					++_i;
+					_i += 3;
 				}
 			}
 		}

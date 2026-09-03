@@ -242,32 +242,29 @@ function RoundRectangle() constructor
 	{
 		try
 		{
-			if (point_in_rectangle(_point.x, _point.y, location.x1, location.y1, location.x2,
-								   location.y2))
+			var _location = ((_includeOutline) ? self.getOutlineLocation() : location);
+			
+			if (point_in_rectangle(_point.x, _point.y, _location.x1, _location.y1, _location.x2,
+								   _location.y2))
 			{
-				var _location_outline = ((_includeOutline) ? self.getOutlineLocation() : undefined);
-				var _vertex_location = self.getVertexLocation(_location_outline, undefined,
-															  undefined);
 				var _segment_count = 4;
-				var _vertex_count = array_length(_vertex_location);
-				var _vertex_count_outer = (_vertex_count - 2);
-				var _vertex_count_segment = (_vertex_count_outer / _segment_count);
-				var _center = _vertex_location[0];
-				var _center_x = _center[0];
-				var _center_y = _center[1];
+				var _vertex_location = self.getVertexLocation(_location);
+				var _vertex_count_segment = (array_length(_vertex_location) / _segment_count);
+				var _center_x = mean(_location.x1, _location.x2);
+				var _center_y = mean(_location.y1, _location.y2);
+				var _point_first = undefined;
+				var _point_second = undefined;
 				
+				var _vertex_count_curve = (_vertex_count_segment - 3);
 				var _i = 0;
 				repeat (_segment_count)
 				{
-					var _segment_start = (_i * _vertex_count_segment) + 1;
-					var _vertex_uncurved_start = _vertex_location[(_segment_start +
-																   _vertex_count_segment - 1)];
-					var _vertex_uncurved_end = _vertex_location[(_segment_start +
-																 _vertex_count_segment)];
+					var _trio = ((_i * _vertex_count_segment) + _vertex_count_curve);
+					_point_first = _vertex_location[(_trio + 1)];
+					_point_second = _vertex_location[(_trio + 2)];
 					
-					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y,
-										  _vertex_uncurved_start[0], _vertex_uncurved_start[1],
-										  _vertex_uncurved_end[0], _vertex_uncurved_end[1]))
+					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y, _point_first[0],
+										  _point_first[1], _point_second[0], _point_second[1]))
 					{
 						return true;
 					}
@@ -278,19 +275,19 @@ function RoundRectangle() constructor
 				var _segment_y_part = real(_point.y < _center_y);
 				var _segment = ((_point.x < _center_x) ? (1 + _segment_y_part)
 													   : (3 * _segment_y_part));
-				var _i = ((_segment * _vertex_count_segment));
-				repeat (_vertex_count_segment + 1)
+				var _i = (_segment * _vertex_count_segment);
+				repeat ((_vertex_count_segment / 3) - 1)
 				{
-					var _point_current = _vertex_location[_i];
-					var _point_next = _vertex_location[(_i + 1)];
+					_point_first = _vertex_location[(_i + 1)];
+					_point_second = _vertex_location[(_i + 2)];
 					
-					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y, _point_current[0],
-										  _point_current[1], _point_next[0], _point_next[1]))
+					if (point_in_triangle(_point.x, _point.y, _center_x, _center_y, _point_first[0],
+										  _point_first[1], _point_second[0], _point_second[1]))
 					{
 						return true;
 					}
 					
-					++_i;
+					_i += 3;
 				}
 			}
 		}
