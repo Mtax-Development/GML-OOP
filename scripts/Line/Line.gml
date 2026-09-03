@@ -258,6 +258,172 @@ function Line() constructor
 		return noone;
 	}
 	
+	/// @argument			point {Vector2}
+	/// @argument			includeOutline? {bool}
+	/// @returns			{bool}
+	/// @description		Checks whether a point in space is within this Shape. Its location can
+	///						include the outer edge of the outline if specified.
+	static containsPoint = function(_point, _includeOutline = false)
+	{
+		try
+		{
+			var _size_outlineModifier = 0;
+			var _location = location;
+			
+			if (_includeOutline)
+			{
+				var _angle = point_direction(_location.x1, _location.y1, _location.x2, _location.y2);
+				var _lengthdir_x = lengthdir_x(outline_size, _angle);
+				var _lengthdir_y = lengthdir_y(outline_size, _angle);
+				_size_outlineModifier = ((_includeOutline) ? (outline_size * 2) : 0);
+				_location = new Vector4((location.x1 - _lengthdir_x), (location.y1 - _lengthdir_y),
+										(location.x2 + _lengthdir_x), (location.y2 + _lengthdir_y));
+			}
+			
+			var _vertex_location = self.getVertexLocation(_location,
+														  (size + _size_outlineModifier))[0];
+			
+			return ((point_in_triangle(_point.x, _point.y, _vertex_location[0][0],
+									   _vertex_location[0][1], _vertex_location[1][0],
+									   _vertex_location[1][1], _vertex_location[2][0],
+									   _vertex_location[2][1])) or
+					(point_in_triangle(_point.x, _point.y, _vertex_location[3][0],
+									   _vertex_location[3][1], _vertex_location[4][0],
+									   _vertex_location[4][1], _vertex_location[5][0],
+									   _vertex_location[5][1])));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "containsPoint()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			device? {int}
+	/// @argument			GUI? {bool}
+	/// @argument			includeOutline? {bool}
+	/// @returns			{bool}
+	//  @see				display_set_gui_size()
+	/// @description		Check if the system cursor location is over this Shape. The location of
+	///						this Shape can include the outer edge of its outline if specified. A
+	///						target device can be specified for use with multiple cursor input sources.
+	///						In that case, its position can also be specified to be calculated
+	///						according to current GUI layer size.
+	static cursorOver = function(_device, _GUI = false, _includeOutline = false)
+	{
+		try
+		{
+			var _cursor_x = mouse_x;
+			var _cursor_y = mouse_y;
+			
+			if (_device != undefined)
+			{
+				if (_GUI)
+				{
+					_cursor_x = device_mouse_x_to_gui(_device);
+					_cursor_y = device_mouse_y_to_gui(_device);
+				}
+				else
+				{
+					_cursor_x = device_mouse_x(_device);
+					_cursor_y = device_mouse_y(_device);
+				}
+			}
+			
+			return self.containsPoint(new Vector2(_cursor_x, _cursor_y), _includeOutline);
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "cursorOver()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			button {constant:mb_*}
+	/// @argument			device? {int}
+	/// @argument			GUI? {bool}
+	/// @argument			includeOutline? {bool}
+	/// @returns			{bool}
+	//  @see				display_set_gui_size()
+	/// @description		Check if the system cursor location is over this Shape while its specified
+	///						input was pressed this frame. The location of this Shape can include the
+	///						outer edge of its outline if specified. A target device can be specified
+	///						for use with multiple cursor input sources. In that case, its position can
+	///						also be specified to be calculated according to current GUI layer size.
+	static cursorPressed = function(_button, _device, _GUI = false, _includeOutline = false)
+	{
+		try
+		{
+			return (((_device == undefined)
+					 ? mouse_check_button_pressed(_button)
+					 : device_mouse_check_button_pressed(_device, _button)) and
+					(self.cursorOver(_device, _GUI, _includeOutline)));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "cursorPressed()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			button {constant:mb_*}
+	/// @argument			device? {int}
+	/// @argument			GUI? {bool}
+	/// @argument			includeOutline? {bool}
+	/// @returns			{bool}
+	//  @see				display_set_gui_size()
+	/// @description		Check if the system cursor location is over this Shape while its specified
+	///						input is being held this frame. The location of this Shape can include the
+	///						outer edge of its outline if specified. A target device can be specified
+	///						for use with multiple cursor input sources. In that case, its position can
+	///						also be specified to be calculated according to current GUI layer size.
+	static cursorHold = function(_button, _device, _GUI = false, _includeOutline = false)
+	{
+		try
+		{
+			return (((_device == undefined)
+					 ? mouse_check_button(_button) : device_mouse_check_button(_device, _button)) and
+					(self.cursorOver(_device, _GUI, _includeOutline)));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "cursorHold()"], _exception);
+		}
+		
+		return false;
+	}
+	
+	/// @argument			button {constant:mb_*}
+	/// @argument			device? {int}
+	/// @argument			GUI? {bool}
+	/// @argument			includeOutline? {bool}
+	/// @returns			{bool}
+	//  @see				display_set_gui_size()
+	/// @description		Check if the system cursor location is over this Shape while its specified
+	///						input was released this frame. The location of this Shape can include the
+	///						outer edge of its outline if specified. A target device can be specified
+	///						for use with multiple cursor input sources. In that case, its position can
+	///						also be specified to be calculated according to current GUI layer size.
+	static cursorReleased = function(_button, _device, _GUI = false, _includeOutline = false)
+	{
+		try
+		{
+			return (((_device == undefined)
+					 ? mouse_check_button_released(_button)
+					 : device_mouse_check_button_released(_device, _button)) and
+					(self.cursorOver(_device, _GUI, _includeOutline)));
+		}
+		catch (_exception)
+		{
+			ErrorReport.report([other, self, "cursorReleased()"], _exception);
+		}
+		
+		return false;
+	}
+	
 	/// @argument			location? {Vector4}
 	/// @argument			size? {real}
 	/// @argument			outline? {bool|all}
