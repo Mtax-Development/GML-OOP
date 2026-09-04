@@ -5,7 +5,7 @@
 /// @argument			fill_color? {int:color|Color3}
 /// @argument			fill_alpha? {real}
 /// @argument			outline_scale? {real}
-/// @argument			outline_color? {int:color|Color3}
+/// @argument			outline_color? {int:color|Color2|Color3}
 /// @argument			outline_alpha? {real}
 /// @description		Constructs a two-dimensional Triangle Shape, connecting three specified
 ///						points. The size of its outline is specified by scaled proportionally to the
@@ -67,8 +67,20 @@ function Triangle() constructor
 							  ? new Color3(_other.fill_color) : _other.fill_color);
 				fill_alpha = _other.fill_alpha;
 				outline_scale = _other.outline_scale;
-				outline_color = ((is_instanceof(_other.outline_color, Color3))
-								 ? new Color3(_other.outline_color) : _other.outline_color);
+				
+				if (is_instanceof(_other.outline_color, Color2))
+				{
+					outline_color = new Color2(_other.outline_color);
+				}
+				else if (is_instanceof(_other.outline_color, Color3))
+				{
+					outline_color = new Color3(_other.outline_color);
+				}
+				else
+				{
+					outline_color = _other.outline_color;
+				}
+				
 				outline_alpha = _other.outline_alpha;
 				
 				if (is_struct(_other.event))
@@ -474,7 +486,7 @@ function Triangle() constructor
 	/// @argument			fill_color? {int:color|Color3}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_scale? {real}
-	/// @argument			outline_color? {int:color|Color3}
+	/// @argument			outline_color? {int:color|Color2|Color3}
 	/// @argument			outline_alpha? {real}
 	/// @argument			outline? {bool|all}
 	/// @returns			{any[+]} | On error: {undefined}
@@ -530,37 +542,52 @@ function Triangle() constructor
 			and (_outline_alpha > 0))
 			{
 				var _vertex_outline = array_last(_vertex_location);
-				var _outline_color1 = _outline_color;
-				var _outline_color2 = _outline_color;
-				var _outline_color3 = _outline_color;
+				var _outline_color1_inner = _outline_color;
+				var _outline_color1_outer = _outline_color;
+				var _outline_color2_inner = _outline_color;
+				var _outline_color2_outer = _outline_color;
+				var _outline_color3_inner = _outline_color;
+				var _outline_color3_outer = _outline_color;
 				
-				if (is_instanceof(_outline_color, Color3))
+				if (is_instanceof(_outline_color, Color2))
 				{
-					_outline_color1 = _outline_color.color1;
-					_outline_color2 = _outline_color.color2;
-					_outline_color3 = _outline_color.color3;
+					_outline_color1_inner = _outline_color.color1;
+					_outline_color1_outer = _outline_color.color2;
+					_outline_color2_inner = _outline_color.color1;
+					_outline_color2_outer = _outline_color.color2;
+					_outline_color3_inner = _outline_color.color1;
+					_outline_color3_outer = _outline_color.color2;
+				}
+				else if (is_instanceof(_outline_color, Color3))
+				{
+					_outline_color1_inner = _outline_color.color1;
+					_outline_color1_outer = _outline_color.color1;
+					_outline_color2_inner = _outline_color.color2;
+					_outline_color2_outer = _outline_color.color2;
+					_outline_color3_inner = _outline_color.color3;
+					_outline_color3_outer = _outline_color.color3;
 				}
 				
-				var _vertex_data = [[_vertex_outline[0], _outline_color1, _outline_alpha],
-									[_vertex_outline[1], _outline_color2, _outline_alpha],
-									[_vertex_outline[2], _outline_color1, _outline_alpha],
-									[_vertex_outline[3], _outline_color1, _outline_alpha],
-									[_vertex_outline[4], _outline_color2, _outline_alpha],
-									[_vertex_outline[5], _outline_color2, _outline_alpha],
+				var _vertex_data = [[_vertex_outline[0], _outline_color1_outer, _outline_alpha],
+									[_vertex_outline[1], _outline_color2_outer, _outline_alpha],
+									[_vertex_outline[2], _outline_color1_inner, _outline_alpha],
+									[_vertex_outline[3], _outline_color1_inner, _outline_alpha],
+									[_vertex_outline[4], _outline_color2_outer, _outline_alpha],
+									[_vertex_outline[5], _outline_color2_inner, _outline_alpha],
 									
-									[_vertex_outline[6], _outline_color3, _outline_alpha],
-									[_vertex_outline[7], _outline_color2, _outline_alpha],
-									[_vertex_outline[8], _outline_color3, _outline_alpha],
-									[_vertex_outline[9], _outline_color3, _outline_alpha],
-									[_vertex_outline[10], _outline_color2, _outline_alpha],
-									[_vertex_outline[11], _outline_color2, _outline_alpha],
+									[_vertex_outline[6], _outline_color3_inner, _outline_alpha],
+									[_vertex_outline[7], _outline_color2_inner, _outline_alpha],
+									[_vertex_outline[8], _outline_color3_outer, _outline_alpha],
+									[_vertex_outline[9], _outline_color3_outer, _outline_alpha],
+									[_vertex_outline[10], _outline_color2_inner, _outline_alpha],
+									[_vertex_outline[11], _outline_color2_outer, _outline_alpha],
 									
-									[_vertex_outline[12], _outline_color3, _outline_alpha],
-									[_vertex_outline[13], _outline_color1, _outline_alpha],
-									[_vertex_outline[14], _outline_color3, _outline_alpha],
-									[_vertex_outline[15], _outline_color3, _outline_alpha],
-									[_vertex_outline[16], _outline_color1, _outline_alpha],
-									[_vertex_outline[17], _outline_color1, _outline_alpha]];
+									[_vertex_outline[12], _outline_color3_outer, _outline_alpha],
+									[_vertex_outline[13], _outline_color1_outer, _outline_alpha],
+									[_vertex_outline[14], _outline_color3_inner, _outline_alpha],
+									[_vertex_outline[15], _outline_color3_inner, _outline_alpha],
+									[_vertex_outline[16], _outline_color1_outer, _outline_alpha],
+									[_vertex_outline[17], _outline_color1_inner, _outline_alpha]];
 				
 				array_push(_primitive, [pr_trianglelist, _vertex_data]);
 			}
@@ -616,7 +643,7 @@ function Triangle() constructor
 	/// @argument			fill_color? {int:color|Color3}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_scale? {real}
-	/// @argument			outline_color? {int:color|Color3}
+	/// @argument			outline_color? {int:color|Color2|Color3}
 	/// @argument			outline_alpha? {real}
 	/// @description		Execute the draw of this Shape as a primitive, using data of this
 	///						constructor or specified temporarily replaced parts.
@@ -814,8 +841,9 @@ function Triangle() constructor
 		var _location2 = ((is_instanceof(location2, Vector4)) ? location2.toArray() : location2);
 		var _location3 = ((is_instanceof(location3, Vector4)) ? location3.toArray() : location3);
 		var _fill_color = ((is_instanceof(fill_color, Color3)) ? fill_color.toArray() : fill_color);
-		var _outline_color = ((is_instanceof(outline_color, Color4)) ? outline_color.toArray()
-																	 : outline_color);
+		var _outline_color = (((is_instanceof(outline_color, Color2)) or
+							   (is_instanceof(outline_color, Color3))) ? outline_color.toArray()
+																	   : outline_color);
 		
 		return [_location1, _location2, _location3, _fill_color, fill_alpha, outline_scale,
 				_outline_color, outline_alpha];
@@ -827,7 +855,7 @@ function Triangle() constructor
 	/// @argument			fill_color? {int:color|Color3}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_scale? {real}
-	/// @argument			outline_color? {int:color|Color3}
+	/// @argument			outline_color? {int:color|Color2|Color3}
 	/// @argument			outline_alpha? {real}
 	/// @argument			outline? {bool|all}
 	/// @argument			vertexBuffer? {VertexBuffer|VertexBuffer[]}
