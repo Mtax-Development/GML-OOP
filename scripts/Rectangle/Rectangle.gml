@@ -56,13 +56,13 @@ function Rectangle() constructor
 				location = ((is_instanceof(_other.location, Vector4)) ? new Vector4(_other.location)
 																	  : _other.location);
 				
-				if (is_instanceof(_other.fill_color, Color4))
+				if (is_instanceof(_other.fill_color, Color2))
 				{
-					fill_color = new Color4(_other.fill_color);
+					fill_color = new Color2(_other.fill_color);
 				}
-				else if (is_instanceof(_other.fill_color, Color2))
+				else if (is_instanceof(_other.fill_color, Color4))
 				{
-					fill_color = new Color2(_other.fill_color)
+					fill_color = new Color4(_other.fill_color)
 				}
 				else
 				{
@@ -71,8 +71,20 @@ function Rectangle() constructor
 				
 				fill_alpha = _other.fill_alpha;
 				outline_size = _other.outline_size;
-				outline_color = ((is_instanceof(_other.outline_color, Color4))
-								 ? new Color4(_other.outline_color) : _other.outline_color);
+				
+				if (is_instanceof(_other.outline_color, Color2))
+				{
+					outline_color = new Color2(_other.outline_color);
+				}
+				else if (is_instanceof(_other.outline_color, Color4))
+				{
+					outline_color = new Color4(_other.outline_color);
+				}
+				else
+				{
+					outline_color = _other.outline_color;
+				}
+				
 				outline_alpha = _other.outline_alpha;
 				
 				if (is_struct(_other.event))
@@ -93,13 +105,13 @@ function Rectangle() constructor
 				location = ((is_instanceof(_roundRectangle.location, Vector4))
 							? new Vector4(_roundRectangle.location) : _roundRectangle.location);
 							
-				if (is_instanceof(_roundRectangle.fill_color, Color4))
-				{
-					fill_color = new Color4(_roundRectangle.fill_color);
-				}
-				else if (is_instanceof(_roundRectangle.fill_color, Color2))
+				if (is_instanceof(_roundRectangle.fill_color, Color2))
 				{
 					fill_color = new Color2(_roundRectangle.fill_color);
+				}
+				else if (is_instanceof(_roundRectangle.fill_color, Color4))
+				{
+					fill_color = new Color4(_roundRectangle.fill_color);
 				}
 				else if ((is_array(_roundRectangle.fill_color)
 				and (array_length(_roundRectangle.fill_color) >= 2))
@@ -978,8 +990,9 @@ function Rectangle() constructor
 		var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
 		var _fill_color = (((is_instanceof(fill_color, Color4)) or
 							(is_instanceof(fill_color, Color2))) ? fill_color.toArray() : fill_color);
-		var _outline_color = ((is_instanceof(outline_color, Color4)) ? outline_color.toArray()
-																	 : outline_color);
+		var _outline_color = (((is_instanceof(outline_color, Color2)) or
+							   (is_instanceof(outline_color, Color4))) ? outline_color.toArray()
+																	   : outline_color);
 		
 		return [_location, _fill_color, fill_alpha, outline_size, _outline_color, outline_alpha];
 	}

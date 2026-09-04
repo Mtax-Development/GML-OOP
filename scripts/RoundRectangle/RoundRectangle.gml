@@ -4,7 +4,7 @@
 /// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 /// @argument			fill_alpha? {real}
 /// @argument			outline_size? {int}
-/// @argument			outline_color? {int:color|Color4}
+/// @argument			outline_color? {int:color|Color2|Color4}
 /// @argument			outline_alpha? {real}
 /// @argument			precision? {int:divisibleBy4}
 /// @description		Constructs a two-dimensional Rounded Rectangle Shape with configurable radius
@@ -85,8 +85,20 @@ function RoundRectangle() constructor
 				
 				fill_alpha = _other.fill_alpha;
 				outline_size = _other.outline_size;
-				outline_color = ((is_instanceof(_other.outline_color, Color4))
-								 ? new Color4(_other.outline_color) : _other.outline_color);
+				
+				if (is_instanceof(_other.outline_color, Color2))
+				{
+					outline_color = new Color2(_other.outline_color);
+				}
+				else if (is_instanceof(_other.outline_color, Color4))
+				{
+					outline_color = new Color4(_other.outline_color);
+				}
+				else
+				{
+					outline_color = _other.outline_color;
+				}
+				
 				outline_alpha = _other.outline_alpha;
 				precision = _other.precision;
 				
@@ -125,8 +137,20 @@ function RoundRectangle() constructor
 				
 				fill_alpha = _rectangle.fill_alpha;
 				outline_size = _rectangle.outline_size;
-				outline_color = ((is_instanceof(_rectangle.outline_color, Color4))
-								 ? new Color4(_rectangle.outline_color) : _rectangle.outline_color);
+				
+				if (is_instanceof(_rectangle.outline_color, Color2))
+				{
+					outline_color = new Color2(_rectangle.outline_color);
+				}
+				else if (is_instanceof(_other.outline_color, Color4))
+				{
+					outline_color = new Color4(_rectangle.outline_color);
+				}
+				else
+				{
+					outline_color = _other.outline_color;
+				}
+				
 				outline_alpha = _rectangle.outline_alpha;
 				precision = (((argument_count > 2) and (argument[2] != undefined)) ? argument[2]
 																				   : 24);
@@ -226,8 +250,8 @@ function RoundRectangle() constructor
 					((radius == _other.radius) or ((is_instanceof(radius, Vector2)) and
 					 (radius.equals(_other.radius)))) and
 					((outline_color == _other.outline_color) or
-					 ((is_instanceof(outline_color, Color4) and
-					 (outline_color.equals(_other.outline_color))))));
+					 ((string_copy(instanceof(outline_color), 1, 5) == "Color") and
+					  (outline_color.equals(_other.outline_color)))));
 		}
 		
 		return false;
@@ -521,7 +545,7 @@ function RoundRectangle() constructor
 	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color|Color4}
+	/// @argument			outline_color? {int:color|Color2|Color4}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @argument			outline? {bool|all}
@@ -758,7 +782,7 @@ function RoundRectangle() constructor
 	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color|Color4}
+	/// @argument			outline_color? {int:color|Color2|Color4}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @description		Execute the draw of this Shape as a primitive, using data of this
@@ -966,8 +990,9 @@ function RoundRectangle() constructor
 	{
 		var _location = ((is_instanceof(location, Vector4)) ? location.toArray() : location);
 		var _radius = ((is_instanceof(radius, Vector2)) ? radius.toArray() : radius);
-		var _outline_color = ((is_instanceof(outline_color, Color4)) ? outline_color.toArray()
-																	 : outline_color);
+		var _outline_color = (((is_instanceof(outline_color, Color2)) or
+							   (is_instanceof(outline_color, Color4))) ? outline_color.toArray()
+																	   : outline_color);
 		var _fill_color = undefined;
 		
 		if (is_array(fill_color))
@@ -998,7 +1023,7 @@ function RoundRectangle() constructor
 	/// @argument			fill_color? {int:color|Color2|Color4|[int:color, Color4]}
 	/// @argument			fill_alpha? {real}
 	/// @argument			outline_size? {int}
-	/// @argument			outline_color? {int:color|Color4}
+	/// @argument			outline_color? {int:color|Color2|Color4}
 	/// @argument			outline_alpha? {real}
 	/// @argument			precision? {int:divisibleBy4}
 	/// @argument			outline? {bool|all}
