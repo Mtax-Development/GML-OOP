@@ -449,7 +449,7 @@ function Triangle() constructor
 				array_push(_result,
 						   [[_outline1.x, _outline1.y], [_outline2.x, _outline2.y],
 							[_location1.x, _location1.y], [_location1.x, _location1.y],
-							[_outline2.x, _outline.y], [_location2.x, _location2.y],
+							[_outline2.x, _outline2.y], [_location2.x, _location2.y],
 							
 							[_location3.x, _location3.y], [_location2.x, _location2.y],
 							[_outline3.x, _outline3.y], [_outline3.x, _outline3.y],
