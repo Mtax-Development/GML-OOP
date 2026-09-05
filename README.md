@@ -2,7 +2,7 @@
   <img src="https://i.imgur.com/18BlQJR.png" alt="GML-OOP Logo" width="65%"/>
 </p>
 
-**GameMaker Language Object Overlay Project** is a library created in GameMaker Language used to operate primary functionalities of GameMaker through a set of constructors.
+**GameMaker Language Object Overlay Project** is a library created in GameMaker Language operating and improving primary functionalities of GameMaker through a set of constructors.
 
 Please visit the project [Wiki](https://github.com/Mtax-Development/GML-OOP/wiki) for more information and examples.
 
