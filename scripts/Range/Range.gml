@@ -12,42 +12,42 @@ function Range() constructor
 {
   #region [Methods]
    #region <Management>
+	
+	/// @description		Initialize this constructor.
+	static construct = function()
+	{
+		//|Construction type: Empty.
+		minimum = undefined;
+		maximum = undefined;
 		
-		/// @description		Initialize this constructor.
-		static construct = function()
+		if ((argument_count > 0) and (argument[0] != undefined))
 		{
-			//|Construction type: Empty.
-			minimum = undefined;
-			maximum = undefined;
-			
-			if ((argument_count > 0) and (argument[0] != undefined))
+			if (is_instanceof(argument[0], Range))
 			{
-				if (is_instanceof(argument[0], Range))
-				{
-					//|Construction type: Constructor copy.
-					var _other = argument[0];
-					
-					minimum = _other.minimum;
-					maximum = _other.maximum;
-				}
-				else
-				{
-					//|Construction type: New constructor.
-					minimum = argument[0];
-					maximum = argument[1];
-				}
+				//|Construction type: Constructor copy.
+				var _other = argument[0];
+				
+				minimum = _other.minimum;
+				maximum = _other.maximum;
 			}
-			
-			return self;
+			else
+			{
+				//|Construction type: New constructor.
+				minimum = argument[0];
+				maximum = argument[1];
+			}
 		}
 		
-		/// @returns			{bool}
-		/// @description		Check if this constructor is functional.
-		static isFunctional = function()
-		{
-			return ((is_real(minimum)) and (is_real(maximum)));
-		}
-		
+		return self;
+	}
+	
+	/// @returns			{bool}
+	/// @description		Check if this constructor is functional.
+	static isFunctional = function()
+	{
+		return ((is_real(minimum)) and (is_real(maximum)));
+	}
+	
    #endregion
    #region <Getters>
 	
