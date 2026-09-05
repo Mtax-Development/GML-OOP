@@ -12,8 +12,8 @@
 
 	"properties":
 	{
-		"type": ["{int:shader}", "{string}", "{bool}", "{struct}", "{struct}"],
-		"defaultValue": ["None", "None", "None", "{}", "{}"],
+		"type": ["{handle:shader}", "{string}", "{bool}", "{struct}"],
+		"defaultValue": ["None", "None", "None", "{}"],
 		"modifiable": false
 	},
 

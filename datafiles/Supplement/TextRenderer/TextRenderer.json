@@ -12,8 +12,8 @@
 
 	"properties":
 	{
-		"type": ["{any:string}", "{Font}", "{Vector2}", "{TextAlign}", "{int:color}", "{real}"],
-		"defaultValue": ["None", null, null, "TextAlign()", "c_white", 1],
+		"type": ["{any:string}", "{Font}", "{Vector2}", "{TextAlign}", "{int|Scale}", "{Angle}", "{int:color}", "{real}"],
+		"defaultValue": ["None", null, null, "TextAlign()", "Scale(1, 1)", "Angle(0)", "c_white", 1],
 		"modifiable": true
 	},
 

@@ -12,9 +12,9 @@
 
 	"properties":
 	{
-		"type": ["{function}", "{ErrorReport.ReportData[]}", "{int}", "{int}", "{bool}", "{string[]}"],
+		"type": [],
 		"defaultValue": [],
-		"modifiable": true
+		"modifiable": []
 	},
 
 	"constructionTypes":

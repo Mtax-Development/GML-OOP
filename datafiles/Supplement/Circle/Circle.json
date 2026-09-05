@@ -12,8 +12,8 @@
 
 	"properties":
 	{
-		"type": ["{Vector2}", "{real}", "{int:color|Color2}", "{real}", "{int:color}", "{real}"],
-		"defaultValue": [null, 0, null, 1, null, 1],
+		"type": ["{Vector2}", "{real}", "{int:color|Color2}", "{real}", "{int}", "{int:color|Color2}", "{real}", "{int:divisibleBy4}"],
+		"defaultValue": ["None", 0, null, 1, 0, null, 1, 24],
 		"modifiable": true
 	},
 

@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:priorityQueue}"],
+		"type": ["{handle:priorityQueue}"],
 		"defaultValue": ["None"],
 		"modifiable": [false]
 	},

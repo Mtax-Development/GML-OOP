@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:layer}", "{string}", "{int}", "{Vector2}", "{Vector2}", "{bool}", "{Shader}", "{Shader}", "{function}", "{function}", "{List}", "{List}", "{List}", "{List}", "{List}"],
+		"type": ["{handle:layer}", "{string}", "{int}", "{Vector2}", "{Vector2}", "{bool}", "{Shader}", "{Shader}", "{function}", "{function}", "{List}", "{List}", "{List}", "{List}", "{List}"],
 		"defaultValue": ["None", "None", "None", "Vector2(0, 0)", "Vector2(0, 0)", "true", "false", null, null, null, "List()", "List()", "List()", "List()", "List()"],
 		"modifiable": false
 	},

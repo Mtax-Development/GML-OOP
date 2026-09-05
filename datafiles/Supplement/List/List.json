@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:list}"],
+		"type": ["{handle:list}"],
 		"defaultValue": ["None"],
 		"modifiable": [false]
 	},

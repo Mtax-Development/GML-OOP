@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:queue}"],
+		"type": ["{handle:queue}"],
 		"defaultValue": ["None"],
 		"modifiable": [false]
 	},

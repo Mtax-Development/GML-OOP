@@ -4,7 +4,7 @@
 		"replacement": null,
 		"addendum": null
 	},
-
+	
 	"specification":
 	{
 		"destruction": null
@@ -12,9 +12,9 @@
 
 	"properties":
 	{
-		"type": ["{Vector4}", "{int}", "{int:color}", "{real}"],
-		"defaultValue": [null, 1, "c_white", 1],
-		"modifiable": true
+		"type": ["{real[]}", "{Vector3}", "{Vector3}", "{Vector3}"],
+		"defaultValue": [null, "None", "None", "Vector3(0, 1, 0)"],
+		"modifiable": false
 	},
 
 	"constructionTypes":

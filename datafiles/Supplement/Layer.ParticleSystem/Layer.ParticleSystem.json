@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:particleSystem}", "{bool}", "{Vector2}", "{bool}", "{bool}", "{bool}", "{List}"],
+		"type": ["{handle:particleSystem}", "{bool}", "{Vector2}", "{bool}", "{bool}", "{bool}", "{List}"],
 		"defaultValue": ["None", "false", "Vector2(0, 0)", "true", "true", "true", "List()"],
 		"modifiable": false
 	},

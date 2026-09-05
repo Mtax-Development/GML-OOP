@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:particleEmitter}", "{ParticleType}", "{Vector4}", "{constant:ps_shape_*}", "{constant:ps_distr_*}", "{bool}", "{int}"],
+		"type": ["{handle:particleEmitter}", "{ParticleType}", "{Vector4}", "{constant:ps_shape_*}", "{constant:ps_distr_*}", "{bool}", "{int}"],
 		"defaultValue": ["None", "None", null, null, null, "true", 0],
 		"modifiable": false
 	},

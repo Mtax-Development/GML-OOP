@@ -12,9 +12,9 @@
 
 	"properties":
 	{
-		"type": ["{Vector4}", "{int:color|Color2|Color4}", "{real}", "{int}", "{int:color|Color2|Color4}", "{real}"],
-		"defaultValue": ["None", null, 1, 0, null, 1],
-		"modifiable": true
+		"type": ["{handle:vertexBuffer}", "{bool}", "{bool}"],
+		"defaultValue": ["None", false, false],
+		"modifiable": false
 	},
 
 	"constructionTypes":

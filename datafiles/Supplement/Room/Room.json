@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:room}", "{string}", "{bool}", "Vector2", "{Room.AddedInstance[]}", "{bool}", "{bool}", "{int:room}"],
+		"type": ["{handle:room}", "{string}", "{bool}", "Vector2", "{Room.AddedInstance[]}", "{bool}", "{bool}", "{handle:room}"],
 		"defaultValue": ["None", "string(undefined)", "false", "Vector2(0, 0)", "[]", "false", null, null],
 		"modifiable": false
 	},

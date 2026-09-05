@@ -12,8 +12,8 @@
 
 	"properties":
 	{
-		"type": ["{handle:tilemapElement}", "{handle:tileset}", "Vector2", "Vector2"],
-		"defaultValue": ["None", "None", null, null],
+		"type": ["{int:camera}", "{Camera.OrtographicProjectionMatrix|Camera.PerspectiveProjectionMatrix|Camera.PerspectiveFieldOfViewProjectionMatrix}", "{Camera.ViewMatrix}"],
+		"defaultValue": ["None", null, null],
 		"modifiable": false
 	},
 

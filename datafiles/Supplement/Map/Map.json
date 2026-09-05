@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:map}"],
+		"type": ["{handle:map}"],
 		"defaultValue": ["None"],
 		"modifiable": [false]
 	},

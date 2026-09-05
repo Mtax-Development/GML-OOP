@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:instance}", "{int:object}", "{Vector2}"],
+		"type": ["{handle:instance}", "{handle:object}", "{Vector2}"],
 		"defaultValue": ["None", "None", "Vector2(0, 0)"],
 		"modifiable": false
 	},

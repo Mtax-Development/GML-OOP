@@ -12,8 +12,8 @@
 
 	"properties":
 	{
-		"type": ["{Vector4}", "{real}", "{int:color|Color2|Color4}", "{real}"],
-		"defaultValue": ["None", 1, "c_white", 1],
+		"type": ["{Vector4}", "{real}", "{int:color|Color2|Color4}", "{real}", "{int}", "{int:color|Color2|Color4}", "{real}"],
+		"defaultValue": ["None", 1, "c_white", 1, 0, null, 1],
 		"modifiable": true
 	},
 

@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:surface}", "{Vector2}"],
+		"type": ["{handle:surface}", "{Vector2}"],
 		"defaultValue": "None",
 		"modifiable": false
 	},

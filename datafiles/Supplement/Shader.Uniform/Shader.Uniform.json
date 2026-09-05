@@ -1,0 +1,24 @@
+{
+	"description":
+	{
+		"replacement": null,
+		"addendum": null
+	},
+	
+	"specification":
+	{
+		"destruction": null
+	},
+
+	"properties":
+	{
+		"type": ["{string}", "{int}", "{string}", "{int[]|real[]|pointer:texture[]}", "{function:shader_set_uniform_*_array|function:texture_set_stage}"],
+		"defaultValue": ["None", "None", "None", "None", "function() {}"],
+		"modifiable": [false, false, false, false, true, false]
+	},
+
+	"constructionTypes":
+	{
+		"description": []
+	}
+}

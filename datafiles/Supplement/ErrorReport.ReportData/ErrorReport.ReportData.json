@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:instance|struct|string|[]}", "{struct:exception|string}", "{string[]}", "{DateTime|string}"],
+		"type": ["{handle:instance|struct|string|[]}", "{struct:exception|string}", "{string[]}", "{DateTime|string}"],
 		"defaultValue": "None",
 		"modifiable": false
 	},

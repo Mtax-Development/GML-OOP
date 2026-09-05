@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:grid}", "{Vector2}"],
+		"type": ["{handle:grid}", "{Vector2}"],
 		"defaultValue": "None",
 		"modifiable": false
 	},

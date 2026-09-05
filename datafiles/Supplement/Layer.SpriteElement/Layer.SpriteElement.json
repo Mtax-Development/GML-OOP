@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:spriteElement}", "{Sprite|int:-1}", "{Vector2}", "{Angle}", "{Scale}", "{int:color}", "{real}", "{int}", "{real}"],
+		"type": ["{handle:spriteElement}", "{Sprite|int:-1}", "{Vector2}", "{Angle}", "{Scale}", "{int:color}", "{real}", "{int}", "{real}"],
 		"defaultValue": ["None", "None", "None", "Angle(0)", "Scale(1, 1)", "c_white", 1, 0, 0],
 		"modifiable": false
 	},

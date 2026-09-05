@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:sprite}", "{string}", "{Vector2}", "{int}", "{Vector2}", "{Vector4}", "{constant:bboxmode_*}", "{real}", "{constant:spritespeed_*}"],
+		"type": ["{handle:sprite}", "{string}", "{Scale}", "{int}", "{Vector2}", "{Vector4}", "{constant:bboxmode_*}", "{real}", "{constant:spritespeed_*}"],
 		"defaultValue": ["None", "string(undefined)", "None", "None", "None", "None", "None", "None", "None"],
 		"modifiable": false
 	},

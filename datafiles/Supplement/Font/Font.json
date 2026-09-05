@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:font}", "{string}", "{string}", "{string}", "{Sprite}", "{int}", "{bool}", "{bool}", "{int}", "{string}", "{bool}", "{bool}", "{bool}"],
+		"type": ["{handle:font}", "{string}", "{string}", "{string}", "{Sprite}", "{int}", "{bool}", "{bool}", "{int}", "{string}", "{bool}", "{bool}", "{bool}", "{bool}", "{int}"],
 		"defaultValue": "None",
 		"modifiable": false
 	},

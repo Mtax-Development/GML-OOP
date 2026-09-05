@@ -12,7 +12,7 @@
 
 	"properties":
 	{
-		"type": ["{int:stack}"],
+		"type": ["{handle:stack}"],
 		"defaultValue": ["None"],
 		"modifiable": [false]
 	},
