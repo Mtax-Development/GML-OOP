@@ -83,7 +83,7 @@ function Plane() constructor
 				//|Construction type: New constructor.
 				location = argument[0];
 				scale = argument[1];
-				angle = ((argument_count > 2) ? argument[2] : new EulerAngle(0, 0, 0));
+				angle = ((argument_count > 2) ? argument[2] : undefined);
 				sprite = ((argument_count > 3) ? argument[3] : undefined);
 				color = (((argument_count > 4) and (argument[4] != undefined)) ? argument[4]
 																			   : c_white);
