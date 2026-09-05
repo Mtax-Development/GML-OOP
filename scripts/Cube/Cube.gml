@@ -106,8 +106,10 @@ function Cube() constructor
 	static isFunctional = function()
 	{
 		return (((is_instanceof(location, Vector3)) and (location.isFunctional())) and
-				((is_instanceof(scale, Vector3)) and (scale.isFunctional())) and ((is_real(color)) or
-				(is_array(color))) and ((is_real(alpha)) or (is_array(alpha))));
+				((angle == undefined) or ((is_instanceof(angle, EulerAngle)) and
+				 (angle.isFunctional()))) and ((is_instanceof(scale, Vector3)) and
+				(scale.isFunctional())) and ((is_real(color)) or (is_array(color))) and
+				((is_real(alpha)) or (is_array(alpha))));
 	}
 	
    #endregion
