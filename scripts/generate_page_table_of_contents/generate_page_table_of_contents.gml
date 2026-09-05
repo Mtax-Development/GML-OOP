@@ -13,7 +13,7 @@ function generate_page_table_of_contents()
 				   "<a href=\"Examples\"><b>Examples</b></a>" + _separator_inline +
 				   "<a href=\"Contributing\"><b>Contributing</b></a>" + "\n" +
 				   "<br>" + "\n" +
-				   "<a href=\"Ignored Directories List\"><b>Ignored Directories List</b></a>" + "\n" +
+				   "<a href=\"Ignored-Directories-List\"><b>Ignored Directories List</b></a>" + "\n" +
 				   "</div>");
 	
 	var _constructors = ("<div align=\"center\"><b>Constructors</b></div>" + "\n\n");
