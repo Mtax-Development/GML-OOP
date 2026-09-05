@@ -1,5 +1,5 @@
 //  @function			Shader()
-/// @argument			shader {int:shader}
+/// @argument			shader {handle:shader}
 /// @description		Constructs a Shader Resource used to alter graphical rendering with GLSL or
 ///						HLSL code executed by the Graphics Processing Unit.
 ///						Values in its code can be set through Uniforms, the copy of which is then
