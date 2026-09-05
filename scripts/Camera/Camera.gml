@@ -32,6 +32,10 @@ function Camera() constructor
 				{
 					projectionMatrix = new OrtographicProjectionMatrix(_other.projectionMatrix);
 				}
+				else if (is_instanceof(_other.projectionMatrix, PerspectiveProjectionMatrix))
+				{
+					projectionMatrix = new PerspectiveProjectionMatrix(_other.projectionMatrix);
+				}
 				else if (is_instanceof(_other.projectionMatrix,
 									   PerspectiveFieldOfViewProjectionMatrix))
 				{
