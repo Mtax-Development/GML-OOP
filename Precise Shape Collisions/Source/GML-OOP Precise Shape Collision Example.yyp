@@ -1,0 +1,53 @@
+{
+  "$GMProject":"v1",
+  "%Name":"GML-OOP Precise Shape Collision Example",
+  "AudioGroups":[
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+  "configs":{
+    "children":[],
+    "name":"Default",
+  },
+  "defaultScriptType":1,
+  "Folders":[
+    {"$GMFolder":"","%Name":"Library","folderPath":"folders/Library.yy","name":"Library","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"GML Development Toolbox","folderPath":"folders/Library/GML Development Toolbox.yy","name":"GML Development Toolbox","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Script","folderPath":"folders/Library/GML Development Toolbox/Script.yy","name":"Script","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Callback","folderPath":"folders/Library/GML Development Toolbox/Script/Callback.yy","name":"Callback","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Computation","folderPath":"folders/Library/GML Development Toolbox/Script/Computation.yy","name":"Computation","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Data Structure","folderPath":"folders/Library/GML Development Toolbox/Script/Data Structure.yy","name":"Data Structure","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Struct","folderPath":"folders/Library/GML Development Toolbox/Script/Data Structure/Struct.yy","name":"Struct","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Global","folderPath":"folders/Library/GML Development Toolbox/Script/Global.yy","name":"Global","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"GML Instantiable Constructors","folderPath":"folders/Library/GML Instantiable Constructors.yy","name":"GML Instantiable Constructors","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Blueprint Object","folderPath":"folders/Library/GML Instantiable Constructors/Blueprint Object.yy","name":"Blueprint Object","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Instantiable Constructor","folderPath":"folders/Library/GML Instantiable Constructors/Instantiable Constructor.yy","name":"Instantiable Constructor","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"GML-OOP","folderPath":"folders/Library/GML-OOP.yy","name":"GML-OOP","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Container","folderPath":"folders/Library/GML-OOP/Container.yy","name":"Container","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Data Structure","folderPath":"folders/Library/GML-OOP/Data Structure.yy","name":"Data Structure","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Debug","folderPath":"folders/Library/GML-OOP/Debug.yy","name":"Debug","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Handler","folderPath":"folders/Library/GML-OOP/Handler.yy","name":"Handler","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Resource","folderPath":"folders/Library/GML-OOP/Resource.yy","name":"Resource","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Shape","folderPath":"folders/Library/GML-OOP/Shape.yy","name":"Shape","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
+  "ForcedPrefabProjectReferences":[],
+  "IncludedFiles":[],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{
+    "IDEVersion":"2026.0.0.16",
+  },
+  "name":"GML-OOP Precise Shape Collision Example",
+  "resources":[
+    {"id":{"name":"PreciseShapeCollisionExample","path":"rooms/PreciseShapeCollisionExample/PreciseShapeCollisionExample.yy",},},
+    {"id":{"name":"Renderer_Shape","path":"scripts/Renderer_Shape/Renderer_Shape.yy",},},
+  ],
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[
+    {"roomId":{"name":"PreciseShapeCollisionExample","path":"rooms/PreciseShapeCollisionExample/PreciseShapeCollisionExample.yy",},},
+  ],
+  "templateType":"game",
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+}
