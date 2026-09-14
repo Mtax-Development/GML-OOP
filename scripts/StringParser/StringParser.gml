@@ -481,8 +481,8 @@ function StringParser() constructor
 		return string_byte_at(string(ID), _position);
 	}
 	
-	/// @returns				{int}
-	/// @description			Return the number of how many bytes the string occupies.
+	/// @returns			{int}
+	/// @description		Return the number of how many bytes the string occupies.
 	static getByteLength = function()
 	{
 		return string_byte_length(string(ID));
