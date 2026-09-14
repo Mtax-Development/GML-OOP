@@ -369,7 +369,7 @@ function VertexBuffer() constructor
 	//						- New element
 	function PrimitiveRenderData() constructor
 	{
-	  #region [[Static Properties]]
+	  #region [[Properties]]
 			
 		static emptyEventIndex = method_get_index(function() {});
 			

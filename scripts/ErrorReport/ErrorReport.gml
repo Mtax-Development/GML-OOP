@@ -6,8 +6,7 @@
 function ErrorReport() constructor
 //  @feather	ignore all
 {
-  #region [Static Properties]
-   #region [[Configurable Properties - General]]
+  #region [Properties]
 	
 	/// @type				{function}?
 	/// @description		The function called upon a report, called with {string} description of the
@@ -33,16 +32,12 @@ function ErrorReport() constructor
 	///						report with the same description and callstack was already created.
 	static allowDuplicateReporting = false;
 	
-   #endregion
-   #region [[Configurable Properties - Specific]]
-	
 	/// @type				{string[]}?
 	/// @example			["ConstructorName.methodName()"]
 	/// @description		Contains strings of locations after formatting, for which the report
 	///						function will not be called upon an error.
 	static ignoredErrorLocation = undefined;
 	
-   #endregion
   #endregion
   #region [Methods]
    #region <Management>
