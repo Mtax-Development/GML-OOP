@@ -543,4 +543,11 @@ function Callback() constructor
 	script_execute_ext(self.construct, _argument);
 	
   #endregion
+  #region [Static Constructions]
+	
+	static empty = new Callback();
+	
+  #endregion
 }
+
+new Callback();
