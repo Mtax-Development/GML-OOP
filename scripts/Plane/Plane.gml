@@ -249,7 +249,7 @@ function Plane() constructor
 	
 	/// @argument			location {real[]}
 	/// @returns			{Vector3} | On error: {undefined}
-	/// @see				getVertexLocation()
+	//  @see				getVertexLocation()
 	/// @description		Return normalized direction of this Shape, based on specified separate
 	///						vertex location arrays, nested in an array.
 	static getNormal = function(_location)

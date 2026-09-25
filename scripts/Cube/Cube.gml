@@ -376,7 +376,7 @@ function Cube() constructor
 	
 	/// @argument			location {real[]}
 	/// @returns			{Vector3[]} | On error: {undefined}
-	/// @see				getVertexLocation()
+	//  @see				getVertexLocation()
 	/// @description		Return normalized direction of each side of this Shape, based on the
 	///						specified separate vertex location arrays, nested in arrays, which
 	///						themselves are nested in an array for each side.
