@@ -319,7 +319,8 @@ function TextRenderer() constructor
 						}
 						else
 						{
-							_text_target += (_newLine + _word[_i]);
+							_text_target += ((string_length(_text_target) > 0)
+											 ? (_newLine + _word[_i]) : _word[_i]);
 						}
 					}
 					else
