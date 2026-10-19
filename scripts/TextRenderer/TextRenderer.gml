@@ -47,7 +47,7 @@ function TextRenderer() constructor
 				var _other = argument[0];
 				
 				ID = _other.ID;
-				font = ((is_instanceof(_other.font, Font)) ? new Font(_other.font.ID) : _other.font);
+				font = _other.font;
 				location = ((is_instanceof(_other.location, Vector2)) ? new Vector2(_other.location)
 																	  : _other.location);
 				scale = ((is_instanceof(_other.scale, Scale)) ? new Scale(_other.scale)
