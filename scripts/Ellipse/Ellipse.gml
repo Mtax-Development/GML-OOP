@@ -72,6 +72,7 @@ function Ellipse() constructor
 				{
 					event.beforeRender.setAll(_other.event.beforeRender);
 					event.afterRender.setAll(_other.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_other.event.getPrimitiveRenderData);
 				}
 				else
 				{
@@ -100,6 +101,7 @@ function Ellipse() constructor
 				{
 					event.beforeRender.setAll(_circle.event.beforeRender);
 					event.afterRender.setAll(_circle.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_circle.event.getPrimitiveRenderData);
 				}
 				else
 				{

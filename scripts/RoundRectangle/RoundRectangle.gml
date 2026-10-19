@@ -106,6 +106,7 @@ function RoundRectangle() constructor
 				{
 					event.beforeRender.setAll(_other.event.beforeRender);
 					event.afterRender.setAll(_other.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_other.event.getPrimitiveRenderData);
 				}
 				else
 				{
@@ -159,6 +160,7 @@ function RoundRectangle() constructor
 				{
 					event.beforeRender.setAll(_rectangle.event.beforeRender);
 					event.afterRender.setAll(_rectangle.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_rectangle.event.getPrimitiveRenderData);
 				}
 				else
 				{

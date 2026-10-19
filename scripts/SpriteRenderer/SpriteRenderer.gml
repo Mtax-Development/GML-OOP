@@ -91,6 +91,7 @@ function SpriteRenderer() constructor
 				{
 					event.beforeRender.setAll(_other.event.beforeRender);
 					event.afterRender.setAll(_other.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_other.event.getPrimitiveRenderData);
 				}
 				else
 				{

@@ -91,6 +91,7 @@ function Rectangle() constructor
 				{
 					event.beforeRender.setAll(_other.event.beforeRender);
 					event.afterRender.setAll(_other.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_other.event.getPrimitiveRenderData);
 				}
 				else
 				{
@@ -135,6 +136,7 @@ function Rectangle() constructor
 				{
 					event.beforeRender.setAll(_roundRectangle.event.beforeRender);
 					event.afterRender.setAll(_roundRectangle.event.afterRender);
+					event.getPrimitiveRenderData.setAll(_roundRectangle.event.getPrimitiveRenderData);
 				}
 				else
 				{
