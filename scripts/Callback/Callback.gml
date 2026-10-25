@@ -547,6 +547,16 @@ function Callback() constructor
 	
 	static empty = new Callback();
 	
+	static returnFalse = new Callback(function()
+	{
+		return false;
+	});
+	
+	static returnTrue = new Callback(function()
+	{
+		return true;
+	});
+	
   #endregion
 }
 
