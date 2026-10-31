@@ -557,6 +557,16 @@ function Callback() constructor
 		return true;
 	});
 	
+	static returnEmptyStruct = new Callback(function()
+	{
+		return {};
+	});
+	
+	static passthrough = new Callback(function(_argument)
+	{
+		return _argument;
+	});
+	
   #endregion
 }
 
